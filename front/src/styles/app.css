@@ -1,0 +1,23 @@
+@font-face {
+    font-family: 'REX';
+    src: url('../assets/fonts/Overpass/overpass-regular.woff') format('woff'),
+         url('../assets/fonts/Overpass/overpass-regular.woff2') format('woff2'),
+         url('../assets/fonts/Overpass/overpass-regular.ttf') format('truetype'),
+         url('../assets/fonts/Overpass/overpass-regular.eot') format('embedded-opentype'),
+         url('../assets/fonts/Overpass/overpass-regular.svg') format('svg');
+    font-style: normal;
+}
+
+
+*{
+    font-family: 'REX', sans-serif !important;
+    font-weight: 500;
+    margin: 0;
+    padding: 0;
+    color: #fff;
+}
+p{
+    margin: 0;
+    padding: 0;
+    font-family: 'REX', sans-serif !important;
+}

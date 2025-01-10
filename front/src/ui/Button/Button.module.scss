@@ -1,0 +1,26 @@
+@import "./../../styles/colors.scss";
+
+.ButtonCont{
+    button{
+        width: 376px;
+        height: 116px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 30px;
+        border: 1px 0px 0px 0px;
+        opacity: 0px;
+        background-color: var(--GreenColorDefault);
+        color: #fff;
+        font-size: 30px;
+        border: none;
+        cursor: pointer;
+        transition: 0.05s linear all;
+        &:hover{
+            background-color: var(--GreenColorHover);
+        }
+        &:active{
+            background-color: var(--GreenColorActive);
+        }
+    }
+}
