@@ -1,75 +1,75 @@
-
-@font-face {
-	font-family: 'REX';
-	src: url('./../../assets/fonts/Overpass/overpass-regular.woff') format('woff'),
-        url('./../../assets/fonts/Overpass/overpass-regular.woff2') format('woff2'),
-        url('./../../assets/fonts/Overpass/overpass-regular.ttf') format('truetype'),
-        url('./../../assets/fonts/Overpass/overpass-regular.eot') format('embedded-opentype'),
-        url('./../../assets/fonts/Overpass/overpass-regular.svg') format('svg');
-	font-weight: normal;
-	font-style: normal;
-}
-
-
-header{
-    height: 180px;
+header {
+    height: 11.25rem; /* 180px в rem */
     display: flex;
     align-items: center;
     position: absolute;
     left: 0;
     top: 0;
     z-index: 2;
-    .logo{
-        margin: 0px 180px 0px 20px;
+    width: 100vw;
+    .logo {
+        margin: 0 11.25rem 0 1.25rem; /* Отступы */
     }
-    .HeaderContainer{
+
+    .HeaderContainer {
+        height: 11.25rem; /* 180px в rem */
         display: flex;
-        .TitleText{
+        background-color: #fff;
+        align-items: center;
+        padding-right:20px ;
+        border-radius: 0px 0px 50px 0px;
+        .TitleText {
             display: flex;
-            img{
-                width: 1000px;
-            }
-            }
-    }
-    .HeaderMenu{
-        margin-top: 10px;
-        width: 400px;
-        ul{
-            list-style: none;
-            margin-left: 80px;
-            li{
-               margin: 20px;
-               color: #fff;
-               transition: 0.05s linear all;
-               display: flex;
-               align-items: center;
-               .arowLi{
-                display: none;
-               }
-               img{
-                position: relative;
-                left: 5px;
-                top: 2px;
-               }
-               &:hover{
-               padding-left: 35px;
-               cursor: pointer;
-               .arowLi{
-                display: block;
-               }
-               }
+            img {
+                width: 62.5rem; /* 1000px в rem */
             }
         }
     }
-    .HeaderLocarion{
+    .HeaderMenuContainer{
+        width: 100vw;
         position: relative;
-        right: -50px;
-        top: -60px;
+    }
+    .HeaderMenu {
+        position: absolute;
+        left: 72px;
+        top: -90px; /* 60px в rem */
+        ul {
+            list-style: none;
+            li {
+                margin: 1.25rem 0; /* 20px в rem */
+                color: #fff;
+                transition: 0.05s linear all;
+                display: flex;
+                align-items: center;
+                .arowLi {
+                    display: none;
+                }
+                img {
+                    position: relative;
+                    left: 0.3125rem; /* 5px в rem */
+                    top: 0.125rem; /* 2px в rem */
+                }
+                &:hover {
+                    padding-left: 2.1875rem; /* 35px в rem */
+                    cursor: pointer;
+                    .arowLi {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+    .HeaderLocarion {
+        position: absolute;
+        right: 100px; /* 50px в rem */
+        top: -65px;
         display: flex;
-        img{
-            margin-left: 5px;
+        text-align: start;
+        width: 30px;
+        img {
+            margin-left: 0.3125rem; /* 5px в rem */
         }
     }
 
+   
 }
-

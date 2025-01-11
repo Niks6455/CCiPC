@@ -1,65 +1,102 @@
-.TopHeader{
+.TopHeader {
     position: absolute;
     left: 0;
     top: 0;
-    img{
-      pointer-events: none;
+    width: 98%; /* Задний фон занимает 98% ширины */
+    height: 100%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        pointer-events: none;
     }
-  }
-  .mainTopTextContainer{
-        position: absolute;
-        bottom: 0;
-        left: 300px;
-        width:1813px;
-        display: flex;
-  }
-  .mainTopText{
-     position: relative;
-     width: 100%;
-      .mainTopDate{
-          p{
-              font-size: 32px;
-              font-weight: 900;
-          }
-      }
-      .mainTopList{
-          ul{
-              display: flex;
-              list-style: none;
-              width: 857px;
-              justify-content: space-between;
-              margin: 50px 0px;
-              li{
-                  display: flex;
-                  align-items: center;              
-                  img{
-                      margin-left: 24px;
-                  }
-                  .clicker{
-                      background-image: url("./../../assets/img/UI/ArrDefault.svg");
-                      width: 48px;
-                      height: 48px;
-                      background-size: contain;
-                      background-repeat: no-repeat;
-                      margin-left: 24px;
-                      cursor: pointer;
-                      &:hover{
-                          background-image: url("./../../assets/img/UI/ArrHover.svg");     
-                      }
-                      &:active{
-                                  background-image: url("./../../assets/img/UI/ArrClick.svg");
-                      }
-                  }
-              }
-          }
-      }
-  }
-  .buttonClicker{
+}
+
+.topContainer {
     position: relative;
-    top: 110px;
-    left: -500px;
- }
-  .topContainer{
-      position: relative;
-      height: 870px;
-  }
+    height: 56.375rem; /* 870px в rem */
+    margin: 0 auto;
+
+}
+
+.mainTopTextContainer {
+    position: absolute;
+    bottom: 0;
+    left: 300px; /* Отступ слева */
+    display: flex;
+    width: 880px;
+
+}
+
+.mainTopText {
+    position: relative;
+    width: 100%;
+    .mainTopDate {
+        p {
+            font-size: 2rem; /* 32px в rem */
+            font-weight: 900;
+            margin: 0;
+        }
+    }
+    .mainTopList {
+        ul {
+            display: flex;
+            list-style: none;
+            justify-content: space-between;
+            margin: 3rem 0; /* Отступы сверху и снизу */
+            padding: 0;
+            width: 100%;
+            li {
+                display: flex;
+                align-items: center;
+                font-size: 1.5rem; /* Размер текста */
+                img {
+                    margin-left: 1.5rem; /* Отступ для иконки */
+                }
+                .clicker {
+                    background-image: url("./../../assets/img/UI/ArrDefault.svg");
+                    width: 3rem; /* 48px в rem */
+                    height: 3rem;
+                    background-size: contain;
+                    background-repeat: no-repeat;
+                    margin-left: 1.5rem;
+                    cursor: pointer;
+                    &:hover {
+                        background-image: url("./../../assets/img/UI/ArrHover.svg");
+                    }
+                    &:active {
+                        background-image: url("./../../assets/img/UI/ArrClick.svg");
+                    }
+                }
+            }
+        }
+    }
+}
+
+.buttonClicker {
+    position: absolute;
+    bottom: -1px;
+    right: 0px;
+    margin: 0 auto;
+    text-align: center;
+    background-color: #fff;
+    // width: calc(100vw / 3);
+    width: 700px;
+    padding: 15px;
+    border-radius: 50px 0px 0px 0px;
+    .buttonClickerInner{
+        position: relative;
+        .leftBot{
+            position: absolute;
+            left: -52.5px;
+            bottom: -16px;
+        }
+        .leftTop{
+            position: absolute;
+            left: 626px;
+            top: -53px;
+            z-index: 2;
+        }
+    }
+}
