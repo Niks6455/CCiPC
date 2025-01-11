@@ -34,9 +34,11 @@ function TopMainInfo() {
                         <Button text={"Подать заявку"} />
                         <img className={styles.leftTop} src="/img/rect.png" alt="Background"/>
                     </div>
-                  
-                    </div>
+                </div>
             </main>
+            <div>
+                <a><div className={styles.imgArrowTop}></div></a>
+            </div>
         </div>
     );
 }

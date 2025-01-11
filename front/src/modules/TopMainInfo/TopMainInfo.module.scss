@@ -61,6 +61,7 @@
                     background-size: contain;
                     background-repeat: no-repeat;
                     margin-left: 1.5rem;
+                    transition: 0.08s linear all;
                     cursor: pointer;
                     &:hover {
                         background-image: url("./../../assets/img/UI/ArrHover.svg");
@@ -99,5 +100,25 @@
             top: -52px;
             z-index: 2;
         }
+    }
+}
+
+.imgArrowTop{
+    background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: fixed;
+    right: 100px;
+    bottom: 100px;
+    z-index: 2;
+    transition: 0.08s linear all;
+    &:hover {
+        background-image: url("./../../assets/img/UI/ArrTopHover.svg");
+    }
+    &:active {
+        background-image: url("./../../assets/img/UI/ArrTopActive.svg");
     }
 }
