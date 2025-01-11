@@ -2,7 +2,7 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 98%; /* Задний фон занимает 98% ширины */
+    width: calc(100vw - 50px); /* Задний фон занимает 98% ширины */
     height: 100%;
 
     img {
@@ -77,14 +77,15 @@
 .buttonClicker {
     position: absolute;
     bottom: -1px;
-    right: 0px;
+    right: -1px;
     margin: 0 auto;
     text-align: center;
     background-color: #fff;
     // width: calc(100vw / 3);
-    width: 700px;
-    padding: 15px;
+    width: 600px;
+    padding: 15px 0px 15px 15px;
     border-radius: 50px 0px 0px 0px;
+    margin-right: 50px;
     .buttonClickerInner{
         position: relative;
         .leftBot{
@@ -94,8 +95,8 @@
         }
         .leftTop{
             position: absolute;
-            left: 626px;
-            top: -53px;
+            right: -1px;
+            top: -52px;
             z-index: 2;
         }
     }

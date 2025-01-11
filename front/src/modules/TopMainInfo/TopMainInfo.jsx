@@ -32,8 +32,7 @@ function TopMainInfo() {
                     <div className={styles.buttonClickerInner}>
                         <img className={styles.leftBot} src="/img/rect.png" alt="Background"/>
                         <Button text={"Подать заявку"} />
-                        {/* <img className={styles.leftTop} src="/img/rect.png" alt="Background"/> */}
-
+                        <img className={styles.leftTop} src="/img/rect.png" alt="Background"/>
                     </div>
                   
                     </div>
