@@ -1,80 +1,130 @@
-@import "./../../styles/colors.scss";
 
+@import "./../../styles/colors.scss";
 
 .sliderContainer {
     position: relative;
     width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
     overflow: hidden;
-    border-radius: 10px;
     margin-bottom: 150px;
   }
   
   .sliderWrapper {
     display: flex;
     transition: transform 0.5s ease-in-out;
-    
   }
-  
+
   .slide {
     min-width: 100%;
-    display: flex;
-    background-color: var(--GreenColorDefault); /* Зеленый фон */
+    display: grid;
+    grid-template-columns: 50% 50%;
     color: white;
     height: 600px;
+    overflow: hidden;
+    .SliderBg {
+      background-color: var(--GreenColorDefault); /* Зеленый фон */
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      position: relative;
+      display: flex;
+      padding-top: 50px;
+      padding-left: 50px;
+      color: #fff;
+      .SliderTitle{
+        font-size: 32px;
+        margin-bottom:30px ;
+        font-weight: 700;
+      }
+      .SliderText{
+        font-size: 20px;
+        line-height: 26px;
+        font-weight: 400;
+        p{
+          margin: 15px 0px;
+        }
+      }
+    }
+
+    .textContent {
+      max-width: 500px;
+      z-index: 2;
+    }
+
+    .Sliderimage {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      left: -135px;
+      img {
+        max-height: 600px;
+        object-fit: contain;
+        border-radius: 0px 20px 20px 0px;
+      }
+    }
   }
-  .SliderBg{
-    
+
+  .chet {
+    .SliderBg {
+      clip-path: polygon(70% 0, 0 0, 0 100%, 100% 100%);
+    }
   }
   
-  .textContent {
-    flex: 1;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  .nechet {
+    .SliderBg {
+      /* Разворачиваем полигон в обратную сторону */
+      clip-path: polygon(0% 0, 100% 0, 100% 100%, 30% 100%);
+    }
+  
+    direction: rtl; /* Меняет порядок колонок с лево на право */
   }
   
-  .textContent h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-  }
-  
-  .textContent p {
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
-  
-  .image {
-    flex: 1;
-    background-size: cover;
-    background-position: center;
-    border-radius: 10px;
-  }
   
   .controls {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     width: 100%;
     display: flex;
     justify-content: space-between;
+    padding: 0 50px;
+    z-index: 2;
+    box-sizing: border-box;
   }
   
   .arrow {
     background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    color: rgb(0, 0, 0);
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 1.5rem;
   }
   
   .arrow:hover {
     background-color: rgba(0, 0, 0, 0.8);
   }
-  
+  .allNews{
+    background-image: url("./../../assets/img/UI/newsDefault.svg");
+    width: 185px;
+    height: 46px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-left: 1.5rem;
+    transition: 0.08s linear all;
+    position: absolute;
+    right: 0;
+    bottom: 15px;
+    z-index: 3;
+    cursor: pointer;
+    &:hover {
+        background-image: url("./../../assets/img/UI/newsHover.svg");
+    }
+    &:active {
+        background-image: url("./../../assets/img/UI/newsActive.svg");
+    }
+  }
