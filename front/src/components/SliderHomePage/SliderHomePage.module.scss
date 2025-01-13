@@ -1,0 +1,80 @@
+@import "./../../styles/colors.scss";
+
+
+.sliderContainer {
+    position: relative;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 10px;
+    margin-bottom: 150px;
+  }
+  
+  .sliderWrapper {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    
+  }
+  
+  .slide {
+    min-width: 100%;
+    display: flex;
+    background-color: var(--GreenColorDefault); /* Зеленый фон */
+    color: white;
+    height: 600px;
+  }
+  .SliderBg{
+    
+  }
+  
+  .textContent {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .textContent h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .textContent p {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+  
+  .image {
+    flex: 1;
+    background-size: cover;
+    background-position: center;
+    border-radius: 10px;
+  }
+  
+  .controls {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .arrow {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .arrow:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  

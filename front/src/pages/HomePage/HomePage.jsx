@@ -6,9 +6,10 @@ import styles from "./HomePage.module.scss";
 import TopMainInfo from "../../modules/TopMainInfo/TopMainInfo";
 import SliderHomePageTop from "../../modules/SliderHomePageTop/SliderHomePageTop";
 import { textDataHomePage } from "./date";
+import SliderHomePage from "../../components/SliderHomePage/SliderHomePage";
 function HomePage() {
     const context = useContext(DataContext);
-    console.log("context", context)
+    const textData = textDataHomePage;
     return ( 
         <div className={styles.HomePage}>
             <Header/>
@@ -40,22 +41,22 @@ function HomePage() {
             </section>
             <section className={styles.clickerSection}>
                 <div>
-                        <div className={styles.Title}>
-                            <p >
-                                НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ
-                            </p>
-                        </div>
-                        <div>
-                            {textDataHomePage.map((el, idnex) => {
-                                <div>
-                                    
-                                </div>
-                            })
-                            }
-                        </div>
+                    <div className={styles.Title}>
+                        <p >
+                            НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ
+                        </p>
+                    </div>
+                    <div className={styles.blockTextCompetitionsInner}>
+                        {textData.map((el, index) => (
+                            <div key={index} className={styles.blockTextCompetitions}>
+                            <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </section>
             </Layout>
+            <SliderHomePage/>
         </div>
 
      );
