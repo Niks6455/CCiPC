@@ -1,0 +1,38 @@
+.HomePage{
+    .textSection{
+        margin: 150px 0px;
+        .textSectionIner{
+            display: grid;
+            grid-template-columns: 50% 50%;
+            .textSectionInerText{
+                margin-top: 100px;
+                .textSectionInerTextTile{
+                    margin-bottom: -30px;
+                    font-weight: 700;
+                }
+                p{
+                    color: #333333;
+                    margin: 50px 0px;
+                    font-size: 20px;
+                    line-height: 26px;
+                    font-weight: 400;
+                }
+                .textSectionInerTextLine{
+                    border-left: 4px solid #58B191;
+                    height: 100%;
+                    padding-left: 20px;
+                }
+            }
+        }
+    }
+    .clickerSection{
+    
+    }
+    .Title{
+         p{
+             font-size: 30px;
+             font-weight: 900; 
+             line-height: 39px;
+         }
+     }
+}

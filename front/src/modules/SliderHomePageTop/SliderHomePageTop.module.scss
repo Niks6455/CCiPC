@@ -1,0 +1,58 @@
+.SliderHomePageTop {
+    margin-top: 70px;
+    p {
+        color: var(--GreenColorText);
+    }
+    .SliderHomePageTopInner {
+        overflow: hidden; /* Чтобы скрыть лишние элементы */
+        position: relative;
+        width: 100%;
+        margin-top: 20px;
+    }
+    .line{
+        content: "";
+        position: relative;
+        width: 100%;
+        border: 1px solid var(--GreenColorText);
+        margin: 13px 0px;
+    }
+    .Slider {
+        display: flex;
+        animation: scroll 30s linear infinite; /* Анимация для бесконечного скролла */
+        font-size: 18px;
+        ul {
+            list-style: none;
+            display: flex;
+            padding: 0;
+            margin: 0;
+        }
+        li {
+            color: var(--GreenColorText);
+            margin: 0 20px; /* Отступы между элементами */
+            width: 335px;
+            display: flex;
+            align-items: center;
+            .sliderLine{
+                margin: 0 20px;
+            }
+            .date{
+                font-weight: 900;
+            }
+        }
+    }
+
+    /* Анимация для бесконечного скролла */
+    @keyframes scroll {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-100%);
+        }
+    }
+
+    /* Остановка анимации при наведении */
+    .Slider:hover {
+        animation-play-state: paused;
+    }
+}

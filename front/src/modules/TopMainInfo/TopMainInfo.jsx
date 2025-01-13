@@ -1,4 +1,5 @@
 import Button from "../../ui/Button/Button";
+import Layout from "../../ui/Layout/Layout";
 import styles from "./TopMainInfo.module.scss";
 
 function TopMainInfo() {
@@ -10,7 +11,8 @@ function TopMainInfo() {
             <main>
                 <div className={styles.mainTopTextContainer}>
                     <div className={styles.mainTopText}>
-                        <div className={styles.mainTopDate}>
+                    <Layout>
+                    <div className={styles.mainTopDate}>
                             <p>23 - 29 сентября 2025 года <br /> пос. Нижний Архыз</p>
                         </div>
                         <div className={styles.mainTopList}>
@@ -26,13 +28,14 @@ function TopMainInfo() {
                                 </li>
                             </ul>
                         </div>
+                    </Layout>
                     </div>
                 </div>
                 <div className={styles.buttonClicker}>
                     <div className={styles.buttonClickerInner}>
-                        <img className={styles.leftBot} src="/img/rect.png" alt="Background"/>
-                        <Button text={"Подать заявку"} />
-                        <img className={styles.leftTop} src="/img/rect.png" alt="Background"/>
+                        <img className={styles.leftBot} src="/img/rect.svg" alt="Background"/>
+                            <Button text={"Подать заявку"} />
+                        <img className={styles.leftTop} src="/img/rect.svg" alt="Background"/>
                     </div>
                 </div>
             </main>
