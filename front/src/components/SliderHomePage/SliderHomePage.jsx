@@ -12,8 +12,8 @@ const slides = [
   },
   {
     id: 2,
-    title: "Конференция продолжается!",
-    text: "Подробности в наших новостях. Не пропустите ключевые моменты и интересные выступления.",
+    title: "!Конференция продолжается",
+    text: "Подробности в наших новостях. Не пропустите ключевые моменты и интересные выступления",
     image: "/img/img1.svg",
   },
 ];
@@ -39,7 +39,7 @@ const SliderHomePage = () => {
   }, [currentSlide]);
 
   return (
-    <Layout>
+    <div className={styles.SliderHomePage}>
       <div className={styles.sliderContainer}>
       <div
         className={styles.sliderWrapper}
@@ -49,8 +49,8 @@ const SliderHomePage = () => {
           <div key={slide.id} className={`${styles.slide} ${styles[checkPosition(currentSlide)]}`}>
             <div className={styles.SliderBg}>
               <div className={styles.textContent}>
-                <p className={styles.SliderTitle}>{slide.title}</p>
-                <p className={styles.SliderText}>{slide.text}</p>
+                <p className={styles.SliderTitle}>{slides[currentSlide].title}</p>
+                <p className={styles.SliderText}>{slides[currentSlide].text}</p>
               </div>
             </div>
             <div className={styles.Sliderimage}>
@@ -61,11 +61,12 @@ const SliderHomePage = () => {
         ))}
       </div>
         <div className={styles.controls}>
-          <button onClick={prevSlide} className={styles.arrow}>←</button>
-          <button onClick={nextSlide} className={styles.arrow}>→</button>
+          <button onClick={prevSlide} className={`${styles.arrow} ${styles.arrowLeft}`}><span></span></button>
+          <p>0{currentSlide+1}</p>
+          <button onClick={nextSlide} className={styles.arrow}><span></span></button>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 
