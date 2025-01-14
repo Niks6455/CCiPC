@@ -57,6 +57,34 @@ function HomePage() {
             </section>
             </Layout>
             <SliderHomePage/>
+            <Layout>
+                <section className={styles.imgSection}>
+                    <div className={styles.Title}>
+                        <p >
+                            Организаторы
+                        </p>
+                    </div>
+                    <div className={styles.imgSectionInner}>
+                        <img src="/img/UI/1img.svg"/>
+                        <img src="/img/UI/2img.svg"/>
+                        <img src="/img/UI/3img.svg"/>
+                        <img src="/img/UI/4img.svg"/>
+                    </div>
+                </section>
+                <section className={styles.imgSection}>
+                    <div className={styles.Title}>
+                        <p >
+                            Партнёры
+                        </p>
+                    </div>
+                    <div className={styles.imgSectionInner}>
+                        <img src="/img/UI/1img.svg"/>
+                        <img src="/img/UI/2img.svg"/>
+                        <img src="/img/UI/3img.svg"/>
+                        <img src="/img/UI/4img.svg"/>
+                    </div>
+                </section>
+            </Layout>
         </div>
 
      );

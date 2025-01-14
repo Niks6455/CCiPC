@@ -73,16 +73,15 @@
     }
   }
 }
-
 .chet {
   grid-template-columns: 50% 45%;
   .SliderBg {
     background-position: -100% 0; /* Фон будет начинаться слева */
     z-index: 2;
     position: relative;
-    animation: slideBack 1s ease-out forwards;
+    animation: slideBack 0.6s ease-in-out forwards;
   }
-  .allNews{
+  .allNews {
     right: 15px;
   }
   .Sliderimage {
@@ -90,20 +89,21 @@
     z-index: 1;
     left: -280px;
     height: 600px;
-    animation: slideIgTo 1s linear forwards;
+    animation: slideIgTo 0.6s ease-in-out forwards;
     img {
-      border-radius: 0px 20px 20px 0px;
+      border-radius: 0 20px 20px 0;
       height: 600px;
+      transition: transform 0.6s ease, border-radius 0.5s ease;
     }
   }
 }
 
 .nechet {
   grid-template-columns: 50% 45%;
-  .allNews{
-    left: 15px;
+  .allNews {
+    left: 0px;
   }
-  .textContent{
+  .textContent {
     margin-right: 50px;
     text-align: right;
     position: relative;
@@ -114,80 +114,96 @@
     position: relative;
     z-index: 2;
     background-position: 100% 0; /* Фон будет начинаться справа */
-    animation: slide 1s ease-out forwards;
+    animation: slide 0.6s ease-in-out forwards;
   }
   .Sliderimage {
     position: relative;
     z-index: 1;
     height: 600px;
-    animation: slideIgBack 1s linear forwards;
+    animation: slideIgBack 0.6s ease-in-out forwards;
+    transform: translateX(-75%);
     img {
       height: 600px;
-      border-radius: 0px 20px 20px 0px;
+      border-radius: 0 20px 20px 0;
+      transition: transform 0.6s ease, border-radius 0.5s ease;
     }
   }
-  // direction: rtl; /* Меняет порядок колонок с лево на право */
 }
 
 @keyframes slide {
   0% {
     transform: translateX(0);
-    width: 100%;
+    opacity: 1;
   }
   50%{
-    width: 0%;
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  51%{
+    transform: translateX(100%);
+    opacity: 0;
   }
   100% {
     transform: translateX(100%);
     clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0% 100%);
-    width: 100%;
+    opacity: 1;
 
   }
 }
 @keyframes slideBack {
   0% {
     transform: translateX(100%);
-    width: 100%;
+    opacity: 1;
   }
   50%{
-    width: 0%;
+    transform: translateX(200%);
+    opacity: 0;
   }
+  51%{
+    transform: translateX(0);
+    opacity: 0;
+  }
+
   100% {
-    width: 100%;
     transform: translateX(0);
     clip-path: polygon(80% 0, 0 0, 0 100%, 100% 100%);
+    opacity: 1;
 
     
   }
 }
 
-@keyframes slideIgTo{
+@keyframes slideIgTo {
   0% {
-    transform: translateX(-75%);
+    transform: translateX(-100%) scale(0.95);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(1);
     opacity: 0;
   }
-  50%{
-    opacity: 0;
-  }
+  
   100% {
-    transform: translateX(0);
+    transform: translateX(0) scale(1);
     opacity: 1;
   }
 }
 
 @keyframes slideIgBack {
   0% {
-    transform: translateX(0);
-    opacity: 0;
+    transform: translateX(100%) scale(0.95);
+    opacity: 1;
   }
-  50%{
+  50% {
+    transform: translateX(50%) scale(1);
     opacity: 0;
   }
   100% {
-    transform: translateX(-75%);
+    transform: translateX(-75%) scale(1);
     opacity: 1;
   }
 }
+
 
 .controls {
   position: absolute;

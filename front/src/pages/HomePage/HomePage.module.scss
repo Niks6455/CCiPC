@@ -63,5 +63,13 @@
             }
         }
     }
-  
+    .imgSection{
+        margin: 50px 0px 150px 0px;
+        .imgSectionInner{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
 }
