@@ -4,7 +4,9 @@ function Footer() {
     return ( 
         <footer className={styles.footer}>
             <Layout>
-
+                <div className={styles.footerContainer}>
+                    <img src="/img/FooterText.svg" alt="logo"/>
+                </div>
             </Layout>
         </footer>
      );

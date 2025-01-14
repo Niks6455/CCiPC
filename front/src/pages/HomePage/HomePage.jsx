@@ -7,6 +7,7 @@ import TopMainInfo from "../../modules/TopMainInfo/TopMainInfo";
 import SliderHomePageTop from "../../modules/SliderHomePageTop/SliderHomePageTop";
 import { textDataHomePage } from "./date";
 import SliderHomePage from "../../components/SliderHomePage/SliderHomePage";
+import Footer from "../../components/Footer/Footer";
 function HomePage() {
     const context = useContext(DataContext);
     const textData = textDataHomePage;
@@ -85,6 +86,7 @@ function HomePage() {
                     </div>
                 </section>
             </Layout>
+            <Footer/>
         </div>
 
      );

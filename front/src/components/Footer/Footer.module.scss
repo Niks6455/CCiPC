@@ -1,3 +1,10 @@
+@import "../../styles/colors.scss";
 .footer{
     height: 256px;
+    background-color: var(--GreenColorDefault);
+    display:flex;
+    align-items:center;
+    .footerContainer{
+        
+    }
 }
