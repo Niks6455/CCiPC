@@ -7,13 +7,13 @@ const slides = [
   {
     id: 1,
     title: "Конференция открыта!",
-    text: "Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще!",
+    text: `Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! <br/><br/> Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще!`,
     image: "/img/img2.svg",
   },
   {
     id: 2,
-    title: "!Конференция продолжается",
-    text: "Подробности в наших новостях. Не пропустите ключевые моменты и интересные выступления",
+    title: "Конференция продолжается!",
+    text: `Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! <br/><br/> Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще!`,
     image: "/img/img1.svg",
   },
 ];
@@ -49,8 +49,8 @@ const SliderHomePage = () => {
           <div key={slide.id} className={`${styles.slide} ${styles[checkPosition(currentSlide)]}`}>
             <div className={styles.SliderBg}>
               <div className={styles.textContent}>
-                <p className={styles.SliderTitle}>{slides[currentSlide].title}</p>
-                <p className={styles.SliderText}>{slides[currentSlide].text}</p>
+                <p className={styles.SliderTitle} dangerouslySetInnerHTML={{ __html: slides[currentSlide].title }}></p>
+                <p className={styles.SliderText} dangerouslySetInnerHTML={{ __html: slides[currentSlide].text }}></p>
               </div>
             </div>
             <div className={styles.Sliderimage}>
@@ -62,7 +62,7 @@ const SliderHomePage = () => {
       </div>
         <div className={styles.controls}>
           <button onClick={prevSlide} className={`${styles.arrow} ${styles.arrowLeft}`}><span></span></button>
-          <p>0{currentSlide+1}</p>
+            <p>0{currentSlide+1}</p>
           <button onClick={nextSlide} className={styles.arrow}><span></span></button>
         </div>
       </div>

@@ -1,0 +1,53 @@
+@import "./../../styles/colors.scss";
+
+.Input{
+    display: flex;
+    position: relative;
+    img{
+        position: absolute;
+        left: 25px;
+        top: 35px;
+    }
+    input{
+        width: 490px;
+        height: 64px;
+        border-radius: 10px;
+        border: none;
+        border: 1px solid var(--InputColors);
+        background-color: inherit;
+        margin: 15px 0px;
+        font-size: 20px;
+        color: #000;
+        box-sizing: border-box;
+        &::placeholder{
+            color: var(--InputTextColor);
+        }
+        &:focus{
+            outline: none;
+        }
+    }
+    .errorInput {
+        border: 1px solid var(--ErrorColor);
+    }
+
+    .errorText {
+        color: var(--ErrorColor);
+        font-size: 16px;
+        margin-top: 4px;
+        position: absolute;
+        right: 20px;
+        top: 0px;
+        padding: 0px 5px;
+        background-color: #F0F3F2;
+    }
+    .placeholderClose{
+        color: #858B89;
+        font-size: 16px;
+        margin-top: 4px;
+        position: absolute;
+        left: 20px;
+        top: 0px;
+        padding: 0px 5px;
+        background-color: #F0F3F2;
+    }
+}

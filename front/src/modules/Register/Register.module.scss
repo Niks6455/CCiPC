@@ -1,0 +1,125 @@
+.Login{
+    .LoginLogo{
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+    .LoginTitle{
+        p{
+            text-align: center;
+            &:first-child{
+                font-size: 32px;
+                line-height: 38px;
+                font-weight: 900;
+                margin: 40px 0px 20px 0px;
+            }
+            &:last-child{
+                font-size: 18px;
+                font-weight: 300;
+                line-height: 21px;
+                margin-bottom: 25px;
+            }
+        }
+    }
+    .input{
+        display: flex;
+        justify-content: center;
+    }
+    .inputInnerBlock{
+        display: flex;
+        width: 1080px;
+        justify-content: space-between;
+    }
+    .Maybe{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 30px 0px;
+        .MaybeInner{
+            width: 490px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            p{
+                width: max-content;
+                text-align: center;
+            }
+            .lineOne{
+                position: relative;
+                content: "";
+                height: 1px;
+                background-color: var(--InputColors);
+                width: 214px;
+            }
+            .lineTwo{
+                position: relative;
+                content: "";
+                height: 1px;
+                background-color: var(--InputColors);
+                width: 214px;
+            }
+        }
+    }
+    .loginButtonSfedu{
+        display: flex;
+        justify-content: center;
+        button{
+            width: 490px;
+            text-align: start;
+            border: none;
+            border: 1px solid var(--InputColors);
+            border-radius: 10px;
+            color: #333;
+            font-size: 20px;
+            height: 66px;
+            align-items: center;
+            display: flex;
+            background-color: inherit;
+            padding-left: 20px;
+            cursor: pointer;
+            img{
+                margin-right: 15px;
+            }
+        }
+    }
+    .submitButton{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 30px 0px 15px 0px;
+        button{
+            border: none;
+            border-radius: 10px;
+            background-color: var(--GreenColorDefault);
+            cursor: pointer;
+            color: #fff;
+            width: 490px;
+            height: 66px;
+            font-size: 22px;
+            &:hover{
+                background-color: var(--GreenColorHover);
+            }
+            &:active{
+                background-color: var(--GreenColorActive);
+            }
+        }
+    }
+    .noAccount{
+        display: flex;
+        color: #333;
+        justify-content: center;
+        margin-bottom: 150px;
+        p{
+            &:last-child{
+                color: var(--GreenColorText);
+                margin-left: 10px;
+                cursor: pointer;
+                transition: 0.05s linear all;
+                &:hover{
+                   border-bottom: 1px solid var(--GreenColorText);
+                }
+            }
+        }
+    }
+}

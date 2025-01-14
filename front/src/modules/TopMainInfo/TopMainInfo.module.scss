@@ -103,7 +103,7 @@
     }
 }
 
-.imgArrowTop{
+.greenArrow{
     background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
     width: 80px;
     height: 80px;
@@ -113,7 +113,7 @@
     position: fixed;
     right: 50px;
     bottom: 50px;
-    z-index: 2;
+    z-index: 500;
     transition: 0.08s linear all;
     &:hover {
         background-image: url("./../../assets/img/UI/ArrTopHover.svg");

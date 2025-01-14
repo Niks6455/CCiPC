@@ -55,6 +55,8 @@
   .textContent {
     max-width: 500px;
     z-index: 2;
+    font-size: 20px;
+    font-weight: 400;
   }
 
   .Sliderimage {
@@ -81,6 +83,12 @@
     position: relative;
     animation: slideBack 0.6s ease-in-out forwards;
   }
+  .textContent {
+    margin-right: 50px;
+    text-align: start;
+    position: relative;
+    left: 100px;
+  }
   .allNews {
     right: 15px;
   }
@@ -105,9 +113,9 @@
   }
   .textContent {
     margin-right: 50px;
-    text-align: right;
+    text-align: start;
     position: relative;
-    right: -200px;
+    right: -150px;
   }
   .SliderBg {
     /* Разворачиваем полигон в обратную сторону */
@@ -217,13 +225,26 @@
   align-items: center;
   color: #fff;
   font-size: 60px;
+  button{
+    display: flex;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    span{
+      width: 100px;
+      height: 100px;
+    }
+  }
   .arrowLeft{
     transform: rotate(180deg);
+    position: relative;
+    top: -12px;
+
   }
 }
 
 .arrow {
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: inherit;
   color: rgb(255, 255, 255);
   border: none;
   border-radius: 50%;

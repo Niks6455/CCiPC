@@ -4,7 +4,58 @@
     background-color: var(--GreenColorDefault);
     display:flex;
     align-items:center;
+    justify-content: space-between;
+    width:100%;
     .footerContainer{
-        
+        display:flex;
+        justify-content: space-between;
+        width:1340px;
+        .footerContainerLeft{
+            display: flex;
+            color: #fff;
+            .footerText{
+                font-size: 20px;
+                line-height: 26px;
+                margin-left: 30px;
+                p{
+                    &:first-child{
+                        margin: 15px 0px 50px 0px;
+                        font-size: 28px;
+                        line-height: 39px;
+                        font-weight: 500;
+                    }
+                    &:last-child{
+                        margin-bottom: 0px;
+                        font-size: 22px;
+                        font-weight: 300;
+                        line-height: 26px;
+                    }
+                }
+            }
+        }
+        .footerLink{
+            color: #fff;
+            display: flex;
+            align-items: end;
+            p{
+                font-size: 20px;
+                font-weight: 400;
+            }
+            .link{
+                display: flex;
+                font-size: 18px;
+                font-weight: 300;
+                a{
+                    text-decoration: none;
+                    color: var(--ColorLink);
+                    margin-left: 5px;
+                    cursor: pointer;
+                    &:hover{
+                        opacity: 0.6;
+                    }
+                }
+            }
+           
+        }
     }
 }

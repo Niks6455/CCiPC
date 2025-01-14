@@ -3,7 +3,7 @@ import styles from "./Header.module.scss";
 function Header() {
     return ( 
         <header>
-            <div className={styles.HeaderContainer}>
+            <div className={styles.HeaderContainer} id="top">
                 <div className={styles.logo}>
                     <img src="/img/logo.svg" alt="logo" />
                 </div>
@@ -21,10 +21,9 @@ function Header() {
                     </ul>
                 </div>
                 <div className={styles.HeaderLocarion}>
-                        <p>Ru</p>
-                        <img src="/img/arrow.svg" alt="Language Selector" />
-                    </div>
-             
+                    <p>Ru</p>
+                    <img src="/img/arrow.svg" alt="Language Selector" />
+                </div>
             </div>
             
         </header>
