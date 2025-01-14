@@ -80,6 +80,7 @@ function Login() {
                         placeholder="Пароль"
                         imgSrc="/img/password.svg"
                         error={errors.password}
+                        type="password"
                     />
                     <div className={styles.forgetPassword}>
                         <p>Забыли пароль?</p>
