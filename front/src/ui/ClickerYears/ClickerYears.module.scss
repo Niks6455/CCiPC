@@ -1,0 +1,22 @@
+.ClickerYears{
+    display: flex;
+    font-size: 18px;
+    .ClickerYearsEl{
+        cursor: pointer;
+        border: #001C14 1px solid;
+        background-color: #0045290A;
+        color: #001C14;
+        border-radius: 10px;
+        width: 98px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0px 12px;
+        img{
+            margin-left: 5px;
+            position: relative;
+            top: -1px;
+        }
+    }
+}

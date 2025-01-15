@@ -1,7 +1,32 @@
-.NewsPage{
-    .NewsPageContainer{
+
+.NewsPage {
+    margin-top: 170px;
+    .NewsPageContainer {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Адаптивные колонки */
+      gap: 32px; /* Расстояние между карточками */
+      justify-content: center;
+      padding: 16px; /* Отступы вокруг контейнера */
+      box-sizing: border-box;
+      grid-auto-rows: auto; /* Фиксированная высота строк */
+      /* Дополнительное ограничение для адаптивности */
+      @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+    .Title{
         display: flex;
         justify-content: center;
-        flex-wrap: wrap;
+        p{
+            font-size: 30px;
+            font-weight: 600; 
+            line-height: 39px;
+        }
     }
-}
+  }
+  .ClickerYears{
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+  }
+  
