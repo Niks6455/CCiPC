@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import DataContext from "./context";
 import "./styles/app.css";
 import AuthPage from "./pages/AuthPage/AuthPage";
+import NoteFoundPage from "./pages/NoteFoundPage/NoteFoundPage";
 function App() {
 
   const [authPage, setAuthPage] = useState("Auth");
@@ -25,6 +26,8 @@ function App() {
         <Routes>
           <Route path="/" element={<AuthPage />}></Route>
           <Route path="/HomePage" element={<HomePage />}></Route>
+          <Route path="*" element={<NoteFoundPage />} /> {/* Добавление 404 страницы */}
+
         </Routes>
       </main>
     </BrowserRouter>

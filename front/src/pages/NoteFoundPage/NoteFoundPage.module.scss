@@ -1,0 +1,67 @@
+@import "../../styles/colors.scss";
+
+.NoteFoundPage{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 140px;
+    .Title{
+        margin: 200px 0px 70px 0px;
+        display: flex;
+        justify-content: center;
+        p{
+            font-size: 54px;
+            font-weight: 500; 
+            line-height: 64px;
+        }
+    }
+    .NoteFoundPageText{
+        display: flex;
+        .NoteFoundPageTextContainer{
+            max-width: 656px;
+            p{
+                &:first-child{
+                    font-size: 190px;
+                    line-height: 228px;
+                    color: var(--GreenColorHover);
+                    margin-top: -30px;
+                }
+                &:nth-child(2){
+                    font-size: 20px;
+                    line-height: 32px;
+                    font-weight: 300;
+                    color: #333;
+                    span{
+                        color: var(--ColorLink);
+                        cursor: pointer;
+                        &:hover{
+                            text-decoration: underline;
+                        }
+                    }
+                   
+                }
+            }
+            button{
+                margin-top: 40px;
+                width: 100%;
+                height: 64px;
+                color: #fff;
+                background-color: var(--GreenColorDefault);
+                border-radius: 10px;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                &:hover{
+                    background-color: var(--GreenColorHover);
+                }
+                &:active{
+                    background-color: var(--GreenColorActive);
+                }
+            }
+        }
+        img{
+            margin-left: 50px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+    }
+}

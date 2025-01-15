@@ -1,0 +1,52 @@
+.HeaderSecond{
+    padding-top: 15px;
+    overflow: hidden;
+    .HeaderSecondInner{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        img{
+            width: 110px;
+            height: 110px;
+            margin-left: 20px;
+            margin-top: 0px;
+        }
+        .HeaderMenu {
+            margin-right: 90px;
+            ul {
+              list-style: none;
+              text-align: right; /* Выравнивание текста по правому краю */
+              padding: 0; /* Убираем отступы у списка */
+              margin: 0; /* Убираем внешние отступы у списка */
+              li {
+                margin: 1.25rem 0; /* Отступы между элементами списка */
+                color: var(--GreenColorDefault);
+                transition: 0.05s linear all;
+                display: flex;
+                justify-content: flex-end; /* Выравниваем элементы внутри li */
+                align-items: center;
+                text-align: right; /* Для текста внутри li */
+                
+                .arowLi {
+                  display: none;
+                }
+                
+                img {
+                  position: relative;
+                  width: 10px;
+                  height: 10px;
+                  margin-left: 5px; /* Отступ между текстом и иконкой */
+                }
+                
+                &:hover {
+                  cursor: pointer;
+                  .arowLi {
+                    display: block;
+                  }
+                }
+              }
+            }
+          }
+          
+    }
+}
