@@ -1,0 +1,66 @@
+.newsCard {
+    position: relative;
+    width: 300px;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    // background: #fff;
+    transition: box-shadow 0.3s ease, transform 0.3s ease, height 0.3s ease;
+    margin: 16px;
+    box-sizing: border-box;
+  }
+  
+  .newsCard:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    transform: translateY(-5px);
+    height: 450px; /* Увеличение высоты карточки */
+  }
+  
+  .newsCard img {
+    position: absolute;
+    top: -50%; /* Изначально картинка частично скрыта сверху */
+    left: 0;
+    width: 100%;
+    height: auto;
+    transition: top 0.3s ease, transform 0.3s ease;
+  }
+  
+  .newsCard:hover {
+    img{
+  top: 0; /* При наведении картинка становится видимой полностью */
+    transform: scale(1.1); /* Легкое увеличение картинки */
+    }
+
+  
+    .newsCardContent{
+      padding-top: 100px;
+    }
+  }
+  
+  .newsCardContent {
+    position: relative;
+    z-index: 2;
+    // background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    transition: background 0.3s ease;
+  }
+  
+  .newsCardDate {
+    font-size: 0.875rem;
+    color: #888;
+    margin-bottom: 8px;
+  }
+  
+  .newsCardTitle {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #333;
+  }
+  
+  .newsCardText {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #555;
+  }
+  

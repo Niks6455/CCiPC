@@ -124,7 +124,8 @@
                 cursor: pointer;
                 transition: 0.05s linear all;
                 &:hover{
-                   border-bottom: 1px solid var(--GreenColorText);
+                    text-decoration: underline;
+
                 }
             }
         }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./SliderHomePage.module.scss"; // Ваши стили
-import Layout from "../../ui/Layout/Layout";
+import { useNavigate } from "react-router-dom";
 
 // Данные для слайдов
 const slides = [
@@ -38,6 +38,7 @@ const SliderHomePage = () => {
     console.log("Current slide:", currentSlide, "Flag:", checkPosition(currentSlide));
   }, [currentSlide]);
 
+  const navigate = useNavigate()
   return (
     <div className={styles.SliderHomePage}>
       <div className={styles.sliderContainer}>
@@ -55,15 +56,17 @@ const SliderHomePage = () => {
             </div>
             <div className={styles.Sliderimage}>
               <img src={slides[currentSlide].image} alt={slide.title} />
-              <div className={styles.allNews}></div>
+              <div className={styles.allNews} onClick={() => navigate("/NewsPage")}></div>
             </div>
           </div>
         ))}
       </div>
         <div className={styles.controls}>
-          <button onClick={prevSlide} className={`${styles.arrow} ${styles.arrowLeft}`}><span></span></button>
-            <p>0{currentSlide+1}</p>
-          <button onClick={nextSlide} className={styles.arrow}><span></span></button>
+          <div className={styles.controlsInner}>
+            <button onClick={prevSlide} className={`${styles.arrow} ${styles.arrowLeft}`}><span></span></button>
+              <p>0{currentSlide+1}</p>
+            <button onClick={nextSlide} className={styles.arrow}><span></span></button>
+          </div>
         </div>
       </div>
     </div>
