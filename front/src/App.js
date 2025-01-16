@@ -11,11 +11,15 @@ function App() {
 
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
+  const [activeModule, setActiveModule] = useState(false);
+
   const context = {
     setAuthPage,
     authPage,
     setMailValue,
-    mailValue
+    mailValue,
+    activeModule,
+    setActiveModule
   };
 
 
