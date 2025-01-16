@@ -70,7 +70,7 @@
             border: none;
             border: 1px solid var(--InputColors);
             border-radius: 10px;
-            color: #333;
+            color: var(--GrayTextDefault);
             font-size: 20px;
             height: 66px;
             align-items: center;
@@ -107,7 +107,7 @@
     }
     .noAccount{
         display: flex;
-        color: #333;
+        color: var(--GrayTextDefault);
         justify-content: center;
         margin-bottom: 150px;
         p{

@@ -18,7 +18,7 @@
     background-color: #fff;
     border-radius: 10px;
     .newsCardDate{
-      color: #858B89;
+      color: var(--GrayOne);
       font-size: 18px;
       line-height: 21px;
     }
@@ -28,7 +28,7 @@
       line-height: 44px;
     }
     .newsCardText{
-      color: #5B605E;
+      color: var(--GraySecond);
       font-size: 20px;
       font-weight: 400;
       line-height: 26px;

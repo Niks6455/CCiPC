@@ -15,7 +15,7 @@ function Header() {
                 <div className={styles.HeaderMenu}>
                     <ul>
                         <li>Автору <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                        <li>Участнику <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
+                        <li>Участники <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li>Оргкомитет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li>Вход/Регистрация <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                     </ul>

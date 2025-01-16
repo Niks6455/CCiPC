@@ -13,6 +13,9 @@
         align-items: center;
         justify-content: center;
         margin: 0px 12px;
+        .Active{
+            background-color: red;
+        }
         img{
             margin-left: 5px;
             position: relative;
