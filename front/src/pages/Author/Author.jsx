@@ -41,7 +41,7 @@ function Author() {
             <div className={styles.registration}>
               <p className={styles.registration_text_1}>
                 Для участия в конференции необходимо{' '}
-                <a className={styles.green_link} href="#link">
+                <a className={styles.green_link} href="#link" target="_blank">
                   зарегистрироваться
                 </a>
                 <span className={styles.bold}>
@@ -49,7 +49,7 @@ function Author() {
                   на платформе и подать заявку
                 </span>
                 , заполнив регистрационную форму в{' '}
-                <a className={styles.green_link} href="#link">
+                <a className={styles.green_link} href="#link" target="_blank">
                   {' '}
                   личном кабинете
                 </a>
@@ -64,7 +64,7 @@ function Author() {
               </p>
               <p className={styles.registration_text_3}>
                 1) доклад, оформленный по{' '}
-                <a href="#link" className={styles.green_link}>
+                <a href="#link" target="_blank" className={styles.green_link}>
                   шаблону
                 </a>{' '}
                 в Word;

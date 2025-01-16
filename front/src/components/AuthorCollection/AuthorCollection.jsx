@@ -14,6 +14,7 @@ export default function AuthorCollection({ children }) {
       <FolderIcon stroke={isActive ? '#005935' : '#333333'}></FolderIcon>
       <a
         href="#link"
+        target="_blank"
         className={`${styles.collection_element_text} ${
           isActive && styles.active_text
         }`}
