@@ -1,0 +1,121 @@
+@import '../../styles/colors.scss';
+
+.DocumentsLk{
+    width: calc(100vw - 700px);
+    position: relative;
+    margin: 0 auto;
+    .Title{
+        font-size: 32px;
+        color: var(--GrayTextDefault);
+        font-weight: 500;
+        margin-bottom: 30px;
+    }
+    .addDocument{
+        display: flex;
+        justify-content: center;
+        button{
+            background-color: inherit;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--GrayTextDefault);
+            font-weight: 500;
+        }
+    }
+    .DocumentLkCont{
+        width: 100%;
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        max-width: 1200px;
+        border: 1px solid var(--GrayTextDefault);
+        border-radius: 10px;
+        height: 100px;
+        align-items: center;
+        margin: 16px 0px;
+        .DocumentLkContOne{
+            width: 100%;
+            display: flex;
+            align-items: center;
+            img{
+                margin: 0px 20px 0px 29px;
+            }
+        }
+        .DocumentLkContEdit{
+            display: flex;
+            align-items: center;
+            margin-right: 22px;
+            img{
+                width: 24px;
+                height: 24px;
+                margin: 0px 10px;
+                cursor: pointer;
+                transition: 0.1s linear all;
+                &:hover{
+                    transform: scale(1.1);
+                }
+            }
+        }
+    }
+    .DocumentLkContText{
+        p{
+            font-size: 20px;
+            color: var(--GrayTextDefault);
+        }
+    }
+    .notDocument{
+        display: flex;
+        justify-content: center;
+        height: calc(100vh - 356px);
+        align-items: center;
+        .notDocumentInner{
+            .notDocumentInnerImg{
+                display: flex;
+                justify-content: center;
+                margin-bottom: 40px;
+                img{
+                    width: 40px;
+                    height: 40px;
+                }
+            }
+            .notDocumentTitle{
+                p{
+                    font-size: 32px;
+                    font-weight: 500;
+                    color: var(--GrayTextDefault);
+                    text-align: center;
+                }
+            }
+            .notDocumentSubTitle{
+                margin: 5px 0px 20px 0px;
+
+                p{
+                    font-size: 20px;
+                    font-weight: 400;
+                    color: var(--GraySecond);
+                }
+            }
+            .notDocumentButton{
+                display: flex;
+                justify-content: center;
+                button{
+                    background-color: var(--GreenColorDefault);
+                    border: none;
+                    border-radius: 10px;
+                    cursor: pointer;
+                    color: #fff;
+                    width: 189px;
+                    height: 52px;
+                    font-size: 22px;
+                    &:hover{
+                        background-color: var(--GreenColorHover);
+                    }
+                    &:active{
+                        background-color: var(--GreenColorActive);
+                    }
+                }
+            }
+          
+        }
+    }
+}

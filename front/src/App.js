@@ -7,19 +7,22 @@ import AuthPage from "./pages/AuthPage/AuthPage";
 import NoteFoundPage from "./pages/NoteFoundPage/NoteFoundPage";
 import NewsPage from "./pages/NewsPage/NewsPage";
 import Author from "./pages/Author/Author";
+import Lks from "./pages/Lks/Lks";
 function App() {
 
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
   const [activeModule, setActiveModule] = useState(false);
-
+  const [selectFrameLks, setSelectFrameLks] = useState("Lks");
   const context = {
     setAuthPage,
     authPage,
     setMailValue,
     mailValue,
     activeModule,
-    setActiveModule
+    setActiveModule,
+    selectFrameLks,
+    setSelectFrameLks,
   };
 
 
@@ -30,8 +33,9 @@ function App() {
     <BrowserRouter>
       <main style={{ fontFamily: "REX" }}>
         <Routes>
-          <Route path="/" element={<AuthPage />}></Route>
-          <Route path="/HomePage" element={<HomePage />}></Route>
+          <Route path="/AuthPage" element={<AuthPage />}></Route>
+          <Route path="/" element={<HomePage />}></Route>
+          <Route path="/Lks" element={<Lks />}></Route>
           <Route path="/NewsPage" element={<NewsPage />}></Route>
           <Route path="/Author" element={<Author />}></Route>
           <Route path="*" element={<NoteFoundPage />} /> {/* Добавление 404 страницы */}
