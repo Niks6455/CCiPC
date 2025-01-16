@@ -22,7 +22,7 @@ const SliderHomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+   setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
   const prevSlide = () => {

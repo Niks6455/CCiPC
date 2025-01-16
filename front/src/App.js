@@ -6,6 +6,7 @@ import "./styles/app.css";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import NoteFoundPage from "./pages/NoteFoundPage/NoteFoundPage";
 import NewsPage from "./pages/NewsPage/NewsPage";
+import Author from "./pages/Author/Author";
 function App() {
 
   const [authPage, setAuthPage] = useState("Auth");
@@ -28,8 +29,9 @@ function App() {
           <Route path="/" element={<AuthPage />}></Route>
           <Route path="/HomePage" element={<HomePage />}></Route>
           <Route path="/NewsPage" element={<NewsPage />}></Route>
+          <Route path="/Author" element={<Author />}></Route>
           <Route path="*" element={<NoteFoundPage />} /> {/* Добавление 404 страницы */}
-
+          
         </Routes>
       </main>
     </BrowserRouter>
