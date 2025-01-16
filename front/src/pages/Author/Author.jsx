@@ -79,14 +79,38 @@ function Author() {
           {selectedButton === 'Collection' && (
             <div className={styles.collection}>
               {[
-                { num: 'IV', year: 2011 },
-                { num: 'VII', year: 2015 },
-                { num: 'VIII', year: 2017 },
-                { num: 'IX', year: 2019 },
-                { num: 'X', year: 2021 },
-                { num: 'XI', year: 2022 },
+                {
+                  num: 'IV',
+                  year: 2011,
+                  link: '404',
+                },
+                {
+                  num: 'VII',
+                  year: 2015,
+                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2015.pdf',
+                },
+                {
+                  num: 'VIII',
+                  year: 2017,
+                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2017.pdf',
+                },
+                {
+                  num: 'IX',
+                  year: 2019,
+                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2019.pdf',
+                },
+                {
+                  num: 'X',
+                  year: 2021,
+                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2021.pdf',
+                },
+                {
+                  num: 'XI',
+                  year: 2022,
+                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2022.pdf',
+                },
               ].map((param) => (
-                <AuthorCollection>
+                <AuthorCollection link={param.link}>
                   Сборник научных трудов {param.num} Международной научной
                   конференции "Системный синтез и прикладная синергетика" (ССПС-
                   {param.year})
