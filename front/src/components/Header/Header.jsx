@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 
 function Header() {
+    const navigate = useNavigate();
     return ( 
         <header>
             <div className={styles.HeaderContainer} id="top">
@@ -14,7 +16,7 @@ function Header() {
             <div className={styles.HeaderMenuContainer}>
                 <div className={styles.HeaderMenu}>
                     <ul>
-                        <li>Автору <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
+                        <li onClick={()=>navigate('/Author')}>Автору <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li>Участники <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li>Оргкомитет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li>Вход/Регистрация <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
