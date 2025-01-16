@@ -36,26 +36,45 @@ function Author() {
               <span className={styles.book_active}></span>
             </div>
           </div>
-          {/* first */}
           {selectedButton === 'Registration' && (
-            <div>
-              <p>
-                Для участия в конференции необходимо зарегистрироваться на
-                платформе и подать заявку, заполнив регистрационную форму в
-                личном кабинете. В срок до XX.XX.XX необходимо прислать заявку
-                на доклад, заполнив обязательные поля, а в срок до ХХ.ХХ.ХХХХ
-                загрузить статью и экспертное заключение.
+            <div className={styles.registration}>
+              <p className={styles.registration_text_1}>
+                Для участия в конференции необходимо{' '}
+                <a className={styles.green_link} href="#link">
+                  зарегистрироваться
+                </a>
+                <span className={styles.bold}>
+                  {' '}
+                  на платформе и подать заявку
+                </span>
+                , заполнив регистрационную форму в{' '}
+                <a className={styles.green_link} href="#link">
+                  {' '}
+                  личном кабинете
+                </a>
+                . В срок до XX.XX.XX необходимо прислать заявку на доклад,
+                заполнив обязательные поля, а в срок до ХХ.ХХ.ХХХХ загрузить
+                статью и экспертное заключение.
               </p>
-              <p>При подаче заявки прикрепляются:</p>
-              <p>1) доклад, оформленный по шаблону в Word;</p>
-              <p>
+              <p className={styles.registration_text_2}>
+                <span className={styles.bold}>
+                  При подаче заявки прикрепляются:
+                </span>
+              </p>
+              <p className={styles.registration_text_3}>
+                1) доклад, оформленный по{' '}
+                <a href="#link" className={styles.green_link}>
+                  шаблону
+                </a>{' '}
+                в Word;
+              </p>
+              <p className={styles.registration_text_4}>
                 2) файл с отсканированным изображением экспертного заключения о
                 возможности публикации с подписью председателя экспертной
                 комиссии и печатью организации.
               </p>
             </div>
           )}
-          {/* second */}
           <div>{selectedButton === 'Collection' && <div>lol</div>}</div>
         </div>
       </Layout>
