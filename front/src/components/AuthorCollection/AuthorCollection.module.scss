@@ -1,0 +1,15 @@
+.collection_element {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .collection_element_text {
+    color: #333333;
+    text-decoration: none;
+  }
+
+  .active_text {
+    color: #005935;
+    text-decoration: underline;
+  }
+}

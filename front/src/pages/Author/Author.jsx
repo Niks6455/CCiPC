@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Layout from '../../ui/Layout/Layout';
 import Footer from '../../components/Footer/Footer';
 import styles from './Author.module.scss';
+import AuthorCollection from '../../components/AuthorCollection/AuthorCollection';
 function Author() {
   const [selectedButton, setSelectedButton] = useState('Registration');
 
@@ -77,72 +78,20 @@ function Author() {
           )}
           {selectedButton === 'Collection' && (
             <div className={styles.collection}>
-              <div className={styles.collection_element}>
-                <img
-                  className={styles.collection_element_img}
-                  src="/img/Folder.svg"
-                  alt="folder"
-                ></img>
-                <a href="#link" className={styles.collection_element_text}>
-                  Сборник научных трудов IV Международной научной конференции
-                  "Системный синтез и прикладная синергетика" (ССПС-2011)
-                </a>
-              </div>
-              <div className={styles.collection_element}>
-                <img
-                  className={styles.collection_element_img}
-                  src="/img/Folder.svg"
-                  alt="folder"
-                ></img>
-                <a href="#link" className={styles.collection_element_text}>
-                  Сборник научных трудов IV Международной научной конференции
-                  "Системный синтез и прикладная синергетика" (ССПС-2015)
-                </a>
-              </div>
-              <div className={styles.collection_element}>
-                <img
-                  className={styles.collection_element_img}
-                  src="/img/Folder.svg"
-                  alt="folder"
-                ></img>
-                <a href="#link" className={styles.collection_element_text}>
-                  Сборник научных трудов IV Международной научной конференции
-                  "Системный синтез и прикладная синергетика" (ССПС-2017)
-                </a>
-              </div>
-              <div className={styles.collection_element}>
-                <img
-                  className={styles.collection_element_img}
-                  src="/img/Folder.svg"
-                  alt="folder"
-                ></img>
-                <a href="#link" className={styles.collection_element_text}>
-                  Сборник научных трудов IV Международной научной конференции
-                  "Системный синтез и прикладная синергетика" (ССПС-2019)
-                </a>
-              </div>
-              <div className={styles.collection_element}>
-                <img
-                  className={styles.collection_element_img}
-                  src="/img/Folder.svg"
-                  alt="folder"
-                ></img>
-                <a href="#link" className={styles.collection_element_text}>
-                  Сборник научных трудов IV Международной научной конференции
-                  "Системный синтез и прикладная синергетика" (ССПС-2021)
-                </a>
-              </div>
-              <div className={styles.collection_element}>
-                <img
-                  className={styles.collection_element_img}
-                  src="/img/Folder.svg"
-                  alt="folder"
-                ></img>
-                <a href="#link" className={styles.collection_element_text}>
-                  Сборник научных трудов IV Международной научной конференции
-                  "Системный синтез и прикладная синергетика" (ССПС-2022)
-                </a>
-              </div>
+              {[
+                { num: 'IV', year: 2011 },
+                { num: 'VII', year: 2015 },
+                { num: 'VIII', year: 2017 },
+                { num: 'IX', year: 2019 },
+                { num: 'X', year: 2021 },
+                { num: 'XI', year: 2022 },
+              ].map((param) => (
+                <AuthorCollection>
+                  Сборник научных трудов {param.num} Международной научной
+                  конференции "Системный синтез и прикладная синергетика" (ССПС-
+                  {param.year})
+                </AuthorCollection>
+              ))}
             </div>
           )}
         </div>

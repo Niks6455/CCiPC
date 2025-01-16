@@ -71,15 +71,4 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-
-  .collection_element {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-
-    .collection_element_text {
-      color: #333333;
-      text-decoration: none;
-    }
-  }
 }
