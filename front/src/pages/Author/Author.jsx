@@ -75,7 +75,76 @@ function Author() {
               </p>
             </div>
           )}
-          <div>{selectedButton === 'Collection' && <div>lol</div>}</div>
+          {selectedButton === 'Collection' && (
+            <div className={styles.collection}>
+              <div className={styles.collection_element}>
+                <img
+                  className={styles.collection_element_img}
+                  src="/img/Folder.svg"
+                  alt="folder"
+                ></img>
+                <a href="#link" className={styles.collection_element_text}>
+                  Сборник научных трудов IV Международной научной конференции
+                  "Системный синтез и прикладная синергетика" (ССПС-2011)
+                </a>
+              </div>
+              <div className={styles.collection_element}>
+                <img
+                  className={styles.collection_element_img}
+                  src="/img/Folder.svg"
+                  alt="folder"
+                ></img>
+                <a href="#link" className={styles.collection_element_text}>
+                  Сборник научных трудов IV Международной научной конференции
+                  "Системный синтез и прикладная синергетика" (ССПС-2015)
+                </a>
+              </div>
+              <div className={styles.collection_element}>
+                <img
+                  className={styles.collection_element_img}
+                  src="/img/Folder.svg"
+                  alt="folder"
+                ></img>
+                <a href="#link" className={styles.collection_element_text}>
+                  Сборник научных трудов IV Международной научной конференции
+                  "Системный синтез и прикладная синергетика" (ССПС-2017)
+                </a>
+              </div>
+              <div className={styles.collection_element}>
+                <img
+                  className={styles.collection_element_img}
+                  src="/img/Folder.svg"
+                  alt="folder"
+                ></img>
+                <a href="#link" className={styles.collection_element_text}>
+                  Сборник научных трудов IV Международной научной конференции
+                  "Системный синтез и прикладная синергетика" (ССПС-2019)
+                </a>
+              </div>
+              <div className={styles.collection_element}>
+                <img
+                  className={styles.collection_element_img}
+                  src="/img/Folder.svg"
+                  alt="folder"
+                ></img>
+                <a href="#link" className={styles.collection_element_text}>
+                  Сборник научных трудов IV Международной научной конференции
+                  "Системный синтез и прикладная синергетика" (ССПС-2021)
+                </a>
+              </div>
+              <div className={styles.collection_element}>
+                <img
+                  className={styles.collection_element_img}
+                  src="/img/Folder.svg"
+                  alt="folder"
+                ></img>
+                <a href="#link" className={styles.collection_element_text}>
+                  Сборник научных трудов IV Международной научной конференции
+                  "Системный синтез и прикладная синергетика" (ССПС-2022)
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </Layout>
       <Footer />
