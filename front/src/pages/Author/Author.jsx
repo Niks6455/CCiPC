@@ -22,7 +22,7 @@ function Author() {
               <span className={`${styles.button_text}`}>
                 Оформление участия в конференции
               </span>
-              <span className={styles.cap_active}></span>
+              <img src="/img/Cap.svg" alt="Cap"></img>
             </div>
             <div
               className={`${styles.button} ${
@@ -33,7 +33,7 @@ function Author() {
               onClick={() => setSelectedButton('Collection')}
             >
               <span>Сборники прошлых лет</span>
-              <span className={styles.book_active}></span>
+              <img src="/img/Book.svg" alt="Book"></img>
             </div>
           </div>
           {selectedButton === 'Registration' && (
