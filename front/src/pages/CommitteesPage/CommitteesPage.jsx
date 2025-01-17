@@ -57,7 +57,7 @@ export default function CommitteesPage() {
     <>
       <div>
         <Layout>
-          <main>
+          <main className={styles.organizationComiteMain}>
             {/* organization commite */}
             <div className={styles.organizationComite}>
               <h2>ОРГАНИЗАЦИОННЫЙ КОМИТЕТ</h2>
