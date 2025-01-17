@@ -2,7 +2,9 @@ import Layout from '../../ui/Layout/Layout';
 import Footer from '../../components/Footer/Footer';
 import styles from './CommitteesPage.module.scss';
 import ChangeButtons from '../../ui/ChangeButtons/ChangeButtons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import ProfileCard from '../../components/ProfileCard/ProfileCard';
+import { data } from './data';
 export default function CommitteesPage() {
   const [setOrganizationComite, setProgrammingComite] = useState(0);
 
@@ -15,7 +17,6 @@ export default function CommitteesPage() {
             <h2>ОРГАНИЗАЦИОННЫЙ КОМИТЕТ</h2>
             {/* buttons */}
             <div className={styles.organizationComiteButtons}>
-              <div></div>
               <ChangeButtons
                 buttonArray={[
                   {
@@ -23,7 +24,7 @@ export default function CommitteesPage() {
                     Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
                   },
                   {
-                    text: 'Сопредседатели',
+                    text: 'Члены комитета',
                     Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
                   },
                 ]}
@@ -32,7 +33,14 @@ export default function CommitteesPage() {
             </div>
             {/* images */}
             <div className={styles.organizationComiteImages}>
-              {[].map(() => 0)}
+              {data.map((el, index) => (
+                <ProfileCard
+                  key={index}
+                  Image={() => <img src={el.photo} alt="profile" />}
+                  name={el.name}
+                  university={el.university}
+                />
+              ))}
             </div>
           </div>
           {/* programming comite */}
