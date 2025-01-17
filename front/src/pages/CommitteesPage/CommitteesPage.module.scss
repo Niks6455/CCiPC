@@ -6,7 +6,6 @@ main {
 }
 
 h2 {
-  text-align: center;
   font-size: 30px;
   font-weight: 600;
 }
@@ -21,5 +20,40 @@ h2 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+  }
+}
+
+.programmingComite {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+  margin-bottom: 150px;
+
+  .programmingComiteImages {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+
+
+.greenArrow{
+  background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
+  width: 80px;
+  height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 500;
+  transition: 0.08s linear all;
+  &:hover {
+      background-image: url("./../../assets/img/UI/ArrTopHover.svg");
+  }
+  &:active {
+      background-image: url("./../../assets/img/UI/ArrTopActive.svg");
   }
 }

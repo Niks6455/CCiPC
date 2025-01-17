@@ -2,82 +2,99 @@ import Layout from '../../ui/Layout/Layout';
 import Footer from '../../components/Footer/Footer';
 import styles from './CommitteesPage.module.scss';
 import ChangeButtons from '../../ui/ChangeButtons/ChangeButtons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
-import { data } from './data';
+import { organizationComiteData, programmingComiteData } from './data';
 export default function CommitteesPage() {
-  const [setOrganizationComite, setProgrammingComite] = useState(0);
+  const [organizationComite, setOrganizationComite] = useState(0);
+  const [programmingComite, setProgrammingComite] = useState(0);
+  const [datePeopleOne, setDatePeopleOne] = useState(organizationComiteData);
+  const [datePeopleSecond, setDatePeopleSecond] = useState(
+    programmingComiteData
+  );
+
+  useEffect(() => {
+    console.log(organizationComite);
+  }, [organizationComite]);
+
+  useEffect(() => {
+    console.log(programmingComite);
+  }, [programmingComite]);
 
   return (
-    <div>
-      <Layout>
-        <main>
-          {/* organization commite */}
-          <div className={styles.organizationComite}>
-            <h2>ОРГАНИЗАЦИОННЫЙ КОМИТЕТ</h2>
-            {/* buttons */}
-            <div className={styles.organizationComiteButtons}>
-              <ChangeButtons
-                buttonArray={[
-                  {
-                    text: 'Сопредседатели',
-                    Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                  },
-                  {
-                    text: 'Члены комитета',
-                    Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                  },
-                ]}
-                setIndex={setProgrammingComite}
-              />
-            </div>
-            {/* images */}
-            <div className={styles.organizationComiteImages}>
-              {data.map((el, index) => (
-                <ProfileCard
-                  key={index}
-                  Image={() => <img src={el.photo} alt="profile" />}
-                  name={el.name}
-                  university={el.university}
+    <>
+      <div>
+        <Layout>
+          <main>
+            {/* organization commite */}
+            <div className={styles.organizationComite}>
+              <h2>ОРГАНИЗАЦИОННЫЙ КОМИТЕТ</h2>
+              {/* buttons */}
+              <div className={styles.organizationComiteButtons}>
+                <ChangeButtons
+                  buttonArray={[
+                    {
+                      text: 'Сопредседатели',
+                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+                    },
+                    {
+                      text: 'Члены комитета',
+                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+                    },
+                  ]}
+                  setIndex={setOrganizationComite}
                 />
-              ))}
+              </div>
+              {/* images */}
+              <div className={styles.organizationComiteImages}>
+                {datePeopleOne.map((el, index) => (
+                  <ProfileCard data={el} key={index} />
+                ))}
+              </div>
             </div>
-          </div>
-          {/* programming comite */}
-          <div className={styles.programmingComite}>
-            <h2>ПРОГРАММНЫЙ КОМИТЕТ</h2>
-            {/* buttons */}
-            <div className={styles.programmingComiteButtons}>
-              <ChangeButtons
-                buttonArray={[
-                  {
-                    text: 'Почетный председатель',
-                    Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                  },
-                  {
-                    text: 'Cопредседатели',
-                    Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                  },
-                  {
-                    text: 'Заместитель председателя',
-                    Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                  },
-                  {
-                    text: 'Члены комитета',
-                    Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                  },
-                ]}
-                setIndex={setProgrammingComite}
-              />
+            {/* programming comite */}
+            <div className={styles.programmingComite}>
+              <h2>ПРОГРАММНЫЙ КОМИТЕТ</h2>
+              {/* buttons */}
+              <div className={styles.programmingComiteButtons}>
+                <ChangeButtons
+                  buttonArray={[
+                    {
+                      text: 'Почетный председатель',
+                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+                    },
+                    {
+                      text: 'Cопредседатели',
+                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+                    },
+                    {
+                      text: 'Заместитель председателя',
+                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+                    },
+                    {
+                      text: 'Члены комитета',
+                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+                    },
+                  ]}
+                  setIndex={setProgrammingComite}
+                />
+              </div>
+              {/* images */}
+              <div className={styles.programmingComiteImages}>
+                {datePeopleSecond.map((el, index) => (
+                  <ProfileCard data={el} key={index} />
+                ))}
+              </div>
             </div>
-            {/* images */}
-            <div className={styles.programmingComiteImages}>
-              {[].map(() => 0)}
-            </div>
-          </div>
-        </main>
-      </Layout>
+          </main>
+        </Layout>
+      </div>{' '}
+      <div>
+        <a href="#top">
+          <div className={styles.greenArrow}></div>
+        </a>
+      </div>
       <Footer />
-    </div>
+    </>
   );
 }
