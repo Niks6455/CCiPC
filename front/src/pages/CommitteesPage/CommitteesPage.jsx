@@ -21,6 +21,38 @@ export default function CommitteesPage() {
     console.log(programmingComite);
   }, [programmingComite]);
 
+  const ButtonOneDats = [
+    {
+      text: 'Сопредседатели',
+      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+    },
+    {
+      text: 'Члены комитета',
+      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+    },
+  ]
+
+  const ButtonSecondDats = [
+    {
+      text: 'Почетный председатель',
+      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+    },
+    {
+      text: 'Cопредседатели',
+      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+    },
+    {
+      text: 'Заместитель председателя',
+      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+    },
+    {
+      text: 'Члены комитета',
+      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+    },
+  ]
+
+  
+  
   return (
     <>
       <div>
@@ -32,16 +64,7 @@ export default function CommitteesPage() {
               {/* buttons */}
               <div className={styles.organizationComiteButtons}>
                 <ChangeButtons
-                  buttonArray={[
-                    {
-                      text: 'Сопредседатели',
-                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                    },
-                    {
-                      text: 'Члены комитета',
-                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                    },
-                  ]}
+                  buttonArray={ButtonOneDats}
                   setIndex={setOrganizationComite}
                 />
               </div>
@@ -58,24 +81,7 @@ export default function CommitteesPage() {
               {/* buttons */}
               <div className={styles.programmingComiteButtons}>
                 <ChangeButtons
-                  buttonArray={[
-                    {
-                      text: 'Почетный председатель',
-                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                    },
-                    {
-                      text: 'Cопредседатели',
-                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                    },
-                    {
-                      text: 'Заместитель председателя',
-                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                    },
-                    {
-                      text: 'Члены комитета',
-                      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
-                    },
-                  ]}
+                  buttonArray={ButtonSecondDats}
                   setIndex={setProgrammingComite}
                 />
               </div>
