@@ -17,7 +17,7 @@ function Header() {
                 <div className={styles.HeaderMenu}>
                     <ul>
                         <li onClick={()=>navigate('/Author')}>Автору <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                        <li>Участники <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
+                        <li onClick={()=>navigate('/Participants')}>Участники <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li>Оргкомитет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li onClick={()=>navigate('/Lks')}>Личный кабинет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                     </ul>

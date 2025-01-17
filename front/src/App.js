@@ -8,6 +8,7 @@ import NoteFoundPage from "./pages/NoteFoundPage/NoteFoundPage";
 import NewsPage from "./pages/NewsPage/NewsPage";
 import Author from "./pages/Author/Author";
 import Lks from "./pages/Lks/Lks";
+import Participants from "./pages/Participants/Participants";
 function App() {
 
   const [authPage, setAuthPage] = useState("Auth");
@@ -34,6 +35,7 @@ function App() {
       <main style={{ fontFamily: "REX" }}>
         <Routes>
           <Route path="/AuthPage" element={<AuthPage />}></Route>
+          <Route path="/Participants" element={<Participants />}></Route>
           <Route path="/" element={<HomePage />}></Route>
           <Route path="/Lks" element={<Lks />}></Route>
           <Route path="/NewsPage" element={<NewsPage />}></Route>
