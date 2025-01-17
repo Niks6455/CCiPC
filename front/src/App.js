@@ -10,9 +10,8 @@ import Author from "./pages/Author/Author";
 import Lks from "./pages/Lks/Lks";
 import Participants from "./pages/Participants/Participants";
 function App() {
-
-  const [authPage, setAuthPage] = useState("Auth");
-  const [mailValue, setMailValue] = useState("test@sfedu.ru");
+  const [authPage, setAuthPage] = useState('Auth');
+  const [mailValue, setMailValue] = useState('test@sfedu.ru');
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState("Lks");
   const context = {
@@ -25,7 +24,6 @@ function App() {
     selectFrameLks,
     setSelectFrameLks,
   };
-
 
   return (
     <DataContext.Provider
