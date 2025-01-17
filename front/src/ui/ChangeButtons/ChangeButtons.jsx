@@ -1,34 +1,37 @@
-import { useState } from 'react';
-import styles from './ChangeButton.module.scss';
+import { useEffect, useState } from 'react';
+import styles from './ChangeButtons.module.scss';
 
-export default function ChangeButtons({ buttonArray }) {
-  const [activeButton, setActiveButton] = useState(buttonArray[0].name);
+export default function ChangeButtons({ buttonArray, setIndex }) {
+  const [activeButton, setActiveButton] = useState(0);
+
+  useEffect(() => {
+    setIndex(activeButton);
+  }, [activeButton]);
+
   return (
     <div className={styles.buttons}>
       {buttonArray.map((button, index) => (
         <Button
           key={index}
           {...button}
-          isActive={activeButton === button.name}
-          setActive={setActiveButton}
+          isActive={activeButton === index}
+          setActive={() => setActiveButton(index)}
         />
       ))}
     </div>
   );
 }
 
-function Button({ isActive, Icon, setActive, name }) {
+function Button({ isActive, Icon, setActive, text }) {
   return (
     <div
       className={`${styles.button} ${
         isActive ? styles.button_active : styles.button_passive
       }`}
-      onClick={() => setActive(name)}
+      onClick={() => setActive()}
     >
-      <span className={`${styles.button_text}`}>
-        Оформление участия в конференции
-      </span>
-      <Icon></Icon>
+      <span className={`${styles.button_text}`}>{text}</span>
+      {Icon && <Icon></Icon>}
     </div>
   );
 }
