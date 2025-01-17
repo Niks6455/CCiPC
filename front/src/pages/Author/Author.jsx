@@ -3,6 +3,9 @@ import Layout from '../../ui/Layout/Layout';
 import Footer from '../../components/Footer/Footer';
 import styles from './Author.module.scss';
 import AuthorCollection from '../../components/AuthorCollection/AuthorCollection';
+import { dataLink } from "./data.js";
+import { Link } from 'react-router-dom';
+import HeaderSecond from '../../components/HeaderSecond/HeaderSecond';
 function Author() {
   const [selectedButton, setSelectedButton] = useState('Registration');
 
@@ -41,18 +44,13 @@ function Author() {
             <div className={styles.registration}>
               <p className={styles.registration_text_1}>
                 Для участия в конференции необходимо{' '}
-                <a className={styles.green_link} href="#link" target="_blank">
-                  зарегистрироваться
-                </a>
+                <Link className={styles.green_link} to="/AuthPage">зарегистрироваться</Link>
                 <span className={styles.bold}>
                   {' '}
                   на платформе и подать заявку
                 </span>
                 , заполнив регистрационную форму в{' '}
-                <a className={styles.green_link} href="#link" target="_blank">
-                  {' '}
-                  личном кабинете
-                </a>
+                <Link className={styles.green_link} to="/Lks"> личном кабинете</Link>
                 . В срок до XX.XX.XX необходимо прислать заявку на доклад,
                 заполнив обязательные поля, а в срок до ХХ.ХХ.ХХХХ загрузить
                 статью и экспертное заключение.
@@ -64,7 +62,7 @@ function Author() {
               </p>
               <p className={styles.registration_text_3}>
                 1) доклад, оформленный по{' '}
-                <a href="#link" target="_blank" className={styles.green_link}>
+                <a href="#" target="_blank" className={styles.green_link}>
                   шаблону
                 </a>{' '}
                 в Word;
@@ -78,38 +76,7 @@ function Author() {
           )}
           {selectedButton === 'Collection' && (
             <div className={styles.collection}>
-              {[
-                {
-                  num: 'IV',
-                  year: 2011,
-                  link: '404',
-                },
-                {
-                  num: 'VII',
-                  year: 2015,
-                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2015.pdf',
-                },
-                {
-                  num: 'VIII',
-                  year: 2017,
-                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2017.pdf',
-                },
-                {
-                  num: 'IX',
-                  year: 2019,
-                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2019.pdf',
-                },
-                {
-                  num: 'X',
-                  year: 2021,
-                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2021.pdf',
-                },
-                {
-                  num: 'XI',
-                  year: 2022,
-                  link: 'https://webictis.sfedu.ru/ssas/SSAS_2022.pdf',
-                },
-              ].map((param) => (
+              {dataLink.map((param) => (
                 <AuthorCollection link={param.link}>
                   Сборник научных трудов {param.num} Международной научной
                   конференции "Системный синтез и прикладная синергетика" (ССПС-
