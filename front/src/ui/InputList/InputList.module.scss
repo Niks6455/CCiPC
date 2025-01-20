@@ -1,0 +1,127 @@
+@import "./../../styles/colors.scss";
+
+.InputList {
+  display: flex;
+  position: relative;
+  //   img {
+  //     position: absolute;
+  //     left: 25px;
+  //     top: 35px;
+  //   }
+  .arrow {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 20px;
+    bottom: 0;
+    // transform: translateY(-50%) scaleY(-1);
+    cursor: pointer;
+    box-sizing: border-box;
+    img {
+      width: 14.52px;
+      height: 10.52px;
+    }
+  }
+  input {
+    width: 490px;
+    height: 64px;
+    border-radius: 10px;
+    border: none;
+    border: 1px solid var(--InputColors);
+    background-color: inherit;
+    margin: 15px 0px;
+    font-size: 20px;
+    color: #000;
+    box-sizing: border-box;
+    &::placeholder {
+      color: var(--InputTextColor);
+    }
+    &:focus {
+      outline: none;
+    }
+  }
+  .errorInputList {
+    border: 1px solid var(--ErrorColor);
+  }
+
+  .List {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.3s linear;
+    position: absolute;
+    background-color: #f0f3f2;
+    z-index: 100;
+    bottom: 0;
+    width: 100%;
+    border: 1px solid #c8d0ce;
+    border-radius: 10px;
+    transform: translateY(100%);
+
+    ul {
+      outline: none;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 12px; /* Ширина вертикального скролла */
+        height: 12px; /* Высота горизонтального скролла */
+      }
+
+      &::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Цвет фона трека скролла */
+        border-radius: 10px; /* Закругление углов трека */
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: #888; /* Цвет ползунка скролла */
+        border-radius: 10px; /* Закругление углов ползунка */
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Цвет ползунка при наведении */
+      }
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      min-height: 64px;
+      padding: 20px;
+      box-sizing: border-box;
+      &:hover {
+        background-color: #0045290a;
+      }
+    }
+  }
+  .open {
+    max-height: 560px;
+    opacity: 1;
+    transition: max-height 0.3s linear;
+  }
+
+  .errorText {
+    color: var(--ErrorColor);
+    font-size: 16px;
+    margin-top: 4px;
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    padding: 0px 5px;
+    background-color: #f0f3f2;
+  }
+  .placeholderClose {
+    color: #858b89;
+    font-size: 16px;
+    margin-top: 4px;
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    padding: 0px 5px;
+    background-color: #f0f3f2;
+  }
+}
