@@ -1,8 +1,36 @@
+@import '../../styles/colors.scss'; 
+
+
 .Profile{
-width: 100%;
+width: calc(100vw - 700px);
     .ProfileImg{
         position: absolute;
         left: 0;
         top: 0;
+    }
+    .noPhotoLk{
+        position: absolute;
+        left: 40px;
+        top: 40px;
+    }
+    .mainSection{
+        color: var(--GrayTextDefault);
+        margin-top: 95px;
+        .mainSectionInfoPeople{
+            margin-left: 360px;
+            p{
+                font-size: 20px;
+                &:first-child{
+                    font-weight: 500;
+                    font-size: 32px;
+                }
+                &:nth-child(2){
+                    margin: 10px 0px 20px 0px;
+                }
+                span{
+                    font-weight: 600;
+                }
+            }
+        }
     }
 }
