@@ -6,6 +6,7 @@ import LeftMenuLk from "../../modules/LeftMenuLK/LeftMenuLK";
 import { useContext } from "react";
 import DataContext from "../../context";
 import DocumentsLk from "../../modules/DocumentsLk/DocumentsLk";
+import Profile from "../../modules/Profile/Profile";
 function Lks() {
     const context = useContext(DataContext);
     return ( 
@@ -15,6 +16,7 @@ function Lks() {
                     <Layout>
                         <div className={styles.LksContainer}>
                             {context.selectFrameLks === "documents" && <DocumentsLk/>}
+                            {context.selectFrameLks === "profile" && <Profile/>}
                         </div>
                     </Layout>
                 <RightMenuLk/>
