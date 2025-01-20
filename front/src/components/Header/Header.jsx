@@ -7,7 +7,7 @@ function Header() {
         <header>
             <div className={styles.HeaderContainer} id="top">
                 <div className={styles.logo}>
-                    <img src="/img/logo.svg" alt="logo" />
+                    <img src="/img/logo.png" alt="logo" />
                 </div>
                 <div className={styles.TitleText}>
                     <img src="/img/text.svg" alt="Conference Title" />

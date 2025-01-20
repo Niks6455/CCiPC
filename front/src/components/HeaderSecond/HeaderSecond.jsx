@@ -5,7 +5,7 @@ function HeaderSecond() {
         <header className={styles.HeaderSecond}>
             <div className={styles.HeaderSecondInner}>
                 <div>
-                    <img src="/img/logo.svg"/>
+                    <img src="/img/logo.png"/>
                 </div>
                 <div className={styles.HeaderMenu}>
                     <ul>

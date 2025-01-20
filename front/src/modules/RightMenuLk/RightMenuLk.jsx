@@ -51,6 +51,24 @@ function RightMenuLk() {
                             )}
                         </li>
                     </ul>
+                    <div className={styles.RightMenuText}>
+                        <div className={styles.RightMenuTextCont}>
+                            <p className={styles.RightMenuTextGroup}>01.09.2024</p>
+                            <p>Представление текстов докладов и регистрационных форм</p>
+                        </div>
+                        <div className={styles.RightMenuTextCont}>
+                            <p className={styles.RightMenuTextGroup}>08.09.2024</p>
+                            <p>Информирование авторов о результатах экспертизы докладов</p>
+                        </div>
+                        <div className={styles.RightMenuTextCont}>
+                            <p className={styles.RightMenuTextGroup}>15.09.2024</p>
+                            <p>Оплата оргвзноса за опубликование принятых докладов</p>
+                        </div>
+                        <div className={styles.RightMenuTextCont}>
+                            <p className={styles.RightMenuTextGroup}>23.09.2024</p>
+                            <p>Начало работы конференции</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

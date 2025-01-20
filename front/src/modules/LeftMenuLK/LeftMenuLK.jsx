@@ -6,7 +6,7 @@ function LeftMenuLk() {
     return ( 
         <section className={styles.LeftMenuLk}>
             <div>
-                <img src="/img/logo.svg"/>
+                <img src="/img/logo.png" className={styles.LogoImg}/>
                 <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
                 <ul className={styles.LeftMenuLkList}>
                     <li className={context.selectFrameLks === 'profile' ? styles.Active : ""} onClick={() => context.setSelectFrameLks('profile')}><img src="/img/UI/user.svg"/> Профиль</li>

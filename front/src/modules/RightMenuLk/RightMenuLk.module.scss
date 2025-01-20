@@ -5,7 +5,7 @@
     width: 310px;
     min-height: calc(100vh - 256px);
     box-sizing: border-box;
-
+    position: relative;
     .RightMenuLkContainer {
         .RightMenuLkList {
             display: flex;
@@ -72,6 +72,25 @@
                     }
                 }
             }
+        }
+    }
+    .RightMenuText{
+        position: absolute;
+        bottom: 63px;
+        right: 20px;
+        width: 210px;
+        text-align: end;
+        color: var(--InputTextColor);
+        line-height: 19px;
+        font-size: 16px;
+        .RightMenuTextCont{
+            margin-bottom: 20px;
+        }
+        .RightMenuTextGroup{
+            font-weight: 700;
+        }
+        P{
+            font-weight: 500;
         }
     }
 }
