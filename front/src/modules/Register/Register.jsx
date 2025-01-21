@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import Input from "../../ui/Input/Input";
 import styles from "./Register.module.scss";
 import DataContext from "../../context";
-import logo from "./../../assets/img/logo.png"
+import logo from "./../../assets/img/logo.png";
 import InputList from "../../ui/InputList/InputList";
 
 function Register() {
@@ -159,18 +159,28 @@ function Register() {
     }
   };
 
-  const refCalendar = useRef(null);
-  //   useEffect(() => {
-  //     const handleClickOutside = (event) => {
-  //       if (refCalendar.current && !refCalendar.current.contains(event.target)) {
-  //         funOpenList("");
-  //       }
-  //     };
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //     return () => {
-  //       document.removeEventListener("mousedown", handleClickOutside);
-  //     };
-  //   }, []);
+  // const refCalendar = useRef(null);
+  // массив из ref
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const ref3 = useRef(null);
+  const ref4 = useRef(null);
+  const refList = [ref1, ref2, ref3, ref4];
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        refList.every(
+          (item) => item.current && !item.current.contains(event.target)
+        )
+      ) {
+        funOpenList("");
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <section className={styles.Login}>
@@ -214,7 +224,7 @@ function Register() {
               placeholder="Направление конференции"
               open={openList === "napravlenieKonferencii"}
               funOpen={funOpenList}
-              divRef={refCalendar}
+              divRef={refList[0]}
               list={napravlenieKonferenciiList}
               funSelectElement={funSelectedElement}
               error={errors.napravlenieKonferencii}
@@ -243,7 +253,7 @@ function Register() {
               placeholder="Ученое звание"
               open={openList === "zwanie"}
               funOpen={funOpenList}
-              divRef={refCalendar}
+              divRef={refList[1]}
               list={zwanieList}
               funSelectElement={funSelectedElement}
             />
@@ -263,7 +273,7 @@ function Register() {
               placeholder="Степень"
               open={openList === "stepen"}
               funOpen={funOpenList}
-              divRef={refCalendar}
+              divRef={refList[2]}
               list={stepenList}
               funSelectElement={funSelectedElement}
             />
@@ -284,7 +294,7 @@ function Register() {
               placeholder="Должность*"
               open={openList === "doljnost"}
               funOpen={funOpenList}
-              divRef={refCalendar}
+              divRef={refList[3]}
               list={doljnostList}
               funSelectElement={funSelectedElement}
               error={errors.doljnost}

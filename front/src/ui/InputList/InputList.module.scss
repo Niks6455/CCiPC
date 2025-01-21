@@ -24,6 +24,7 @@
       height: 10.52px;
     }
   }
+
   input {
     width: 490px;
     height: 64px;
@@ -42,6 +43,10 @@
       outline: none;
     }
   }
+  .openInput {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
   .errorInputList {
     border: 1px solid var(--ErrorColor);
   }
@@ -55,10 +60,12 @@
     background-color: #f0f3f2;
     z-index: 100;
     bottom: 0;
-    width: 100%;
+    width: calc(100% - 2px);
     border: 1px solid #c8d0ce;
     border-radius: 10px;
-    transform: translateY(100%);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    transform: translateY(calc(100% - 16px));
 
     ul {
       outline: none;
@@ -86,16 +93,20 @@
         background: #555; /* Цвет ползунка при наведении */
       }
     }
-
+    .active {
+      background-color: #00452940;
+    }
+    li:not(.active) {
+      &:hover {
+        background-color: #0045290a;
+      }
+    }
     li {
       display: flex;
       align-items: center;
       min-height: 64px;
       padding: 20px;
       box-sizing: border-box;
-      &:hover {
-        background-color: #0045290a;
-      }
     }
   }
   .open {
