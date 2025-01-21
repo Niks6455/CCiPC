@@ -1,4 +1,4 @@
-![alt text]([[https://ssas.dev.rdcenter.ru/static/media/logo.c58d6a915d2715db0aeb.png](https://drive.google.com/file/d/1GXCEYwjc2hTNGnnMjNxK5m6Lh2R_goL8/view?usp=sharing)])
+![alt text](./front/src/assets/img/logo.png)
 
 # Сайт '13 Всероссийской научной конференции "Системный синтез и прикладная синергетика"'
 
