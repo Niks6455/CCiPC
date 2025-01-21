@@ -1,53 +1,56 @@
-.Participants{
-    margin: 100px 0px 70px 0px;
-    min-height: calc(100vh - 426px);
-    .Title{
+.Participants {
+  margin: 100px 0px 70px 0px;
+  min-height: calc(100vh - 426px);
+  .Title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+
+    margin-bottom: 40px;
+    p {
+      font-size: 30px;
+      font-weight: 600;
+      line-height: 39px;
+    }
+  }
+  .ParticipantsInner {
+    .inputComponentInner {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-content: center;
+      .inputComponentInnerContainer {
+        position: relative;
         display: flex;
         justify-content: center;
-        margin-bottom: 40px;
-        p{
-            font-size: 30px;
-            font-weight: 600; 
-            line-height: 39px;
+      }
+      img {
+        width: 19px;
+        height: 19px;
+        position: relative;
+        left: 30px;
+        top: 16px;
+      }
+      .inputComponent {
+        height: 50px;
+        width: 412px;
+        border: 1px solid var(--InputColors);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 20px;
+        margin-bottom: 30px;
+        background-color: inherit;
+        font-size: 20px;
+        color: var(--GrayTextDefault);
+        font-weight: 400;
+        padding-left: 40px;
+        &::placeholder {
+          color: var(--InputTextColor);
         }
+      }
     }
-    .ParticipantsInner{
-        .inputComponentInner{
-            display: flex;
-            justify-content: center;
-            align-content: center;
-            .inputComponentInnerContainer{
-                position: relative;
-            }
-            img{
-                width: 19px;
-                height: 19px;
-                position: absolute;
-                left: 15px;
-                top: 16px;
-            }
-            .inputComponent{
-                height: 50px;
-                width: 412px;
-                border: 1px solid var(--InputColors);
-                border-radius: 10px;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 0px 20px;
-                margin-bottom: 30px;
-                background-color: inherit;
-                font-size: 20px;
-                color: var(--GrayTextDefault);
-                font-weight: 400;
-                padding-left: 40px;
-                &::placeholder{
-                    color: var(--InputTextColor);
-
-                }
-            }
-        }
-       
-    }
+  }
 }
-
