@@ -1,124 +1,123 @@
 .TopHeader {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: calc(100% - 50px); /* Задний фон занимает 98% ширины */
-    height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: calc(100% - 50px); /* Задний фон занимает 98% ширины */
+  height: 100%;
 
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        pointer-events: none;
-    }
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+  }
 }
 
 .topContainer {
-    position: relative;
-    height: 56.375rem; /* 870px в rem */
-    margin: 0 auto;
-
+  position: relative;
+  height: 56.375rem; /* 870px в rem */
+  margin: 0 auto;
 }
 
 .mainTopTextContainer {
-    position: absolute;
-    bottom: 0;
-    left: 0px; /* Отступ слева */
-    display: flex;
-    width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0px; /* Отступ слева */
+  display: flex;
+  width: 100%;
 }
 
 .mainTopText {
-    position: relative;
-    width: 100%;
-    color: #fff;
-    .mainTopDate {
-        p {
-            font-size: 2rem; /* 32px в rem */
-            font-weight: 900;
-            margin: 0;
-        }
+  position: relative;
+  width: 100%;
+  color: #fff;
+  .mainTopDate {
+    p {
+      font-size: 2rem; /* 32px в rem */
+      font-weight: 900;
+      margin: 0;
     }
-    .mainTopList {
-        ul {
-            display: flex;
-            list-style: none;
-            justify-content: space-between;
-            margin: 3rem 0; /* Отступы сверху и снизу */
-            padding: 0;
-            width: 900px;
-            li {
-                display: flex;
-                align-items: center;
-                font-size: 1.5rem; /* Размер текста */
-                img {
-                    margin-left: 1.5rem; /* Отступ для иконки */
-                }
-                .clicker {
-                    background-image: url("./../../assets/img/UI/ArrDefault.svg");
-                    width: 3rem; /* 48px в rem */
-                    height: 3rem;
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    margin-left: 1.5rem;
-                    transition: 0.08s linear all;
-                    cursor: pointer;
-                    &:hover {
-                        background-image: url("./../../assets/img/UI/ArrHover.svg");
-                    }
-                    &:active {
-                        background-image: url("./../../assets/img/UI/ArrClick.svg");
-                    }
-                }
-            }
+  }
+  .mainTopList {
+    ul {
+      display: flex;
+      list-style: none;
+      justify-content: space-between;
+      margin: 3rem 0; /* Отступы сверху и снизу */
+      padding: 0;
+      width: 900px;
+      li {
+        display: flex;
+        align-items: center;
+        font-size: 1.5rem; /* Размер текста */
+        img {
+          margin-left: 1.5rem; /* Отступ для иконки */
         }
+        .clicker {
+          background-image: url("./../../assets/img/UI/ArrDefault.svg");
+          width: 3rem; /* 48px в rem */
+          height: 3rem;
+          background-size: contain;
+          background-repeat: no-repeat;
+          margin-left: 1.5rem;
+          transition: 0.08s linear all;
+          cursor: pointer;
+          &:hover {
+            background-image: url("./../../assets/img/UI/ArrHover.svg");
+          }
+          &:active {
+            background-image: url("./../../assets/img/UI/ArrClick.svg");
+          }
+        }
+      }
     }
+  }
 }
 
 .buttonClicker {
-    position: absolute;
-    bottom: -1px;
-    right: -1px;
-    margin: 0 auto;
-    text-align: center;
-    background-color: var(--BodyBgColor);
-    // width: calc(100vw / 3);
-    width: 475px;
-    padding: 15px 0px 15px 15px;
-    border-radius: 50px 0px 0px 0px;
-    margin-right: 50px;
-    .buttonClickerInner{
-        position: relative;
-        .leftBot{
-            position: absolute;
-            left: -96px;
-            bottom: -16px;
-        }
-        .leftTop{
-            position: absolute;
-            right: 0px;
-            top: -96px;
-            z-index: 2;
-        }
+  position: absolute;
+  bottom: -1px;
+  right: -1px;
+  margin: 0 auto;
+  text-align: center;
+  background-color: var(--BodyBgColor);
+  // width: calc(100vw / 3);
+  width: 475px;
+  padding: 15px 0px 15px 15px;
+  border-radius: 50px 0px 0px 0px;
+  margin-right: 50px;
+  .buttonClickerInner {
+    position: relative;
+    .leftBot {
+      position: absolute;
+      left: -96px;
+      bottom: -16px;
     }
+    .leftTop {
+      position: absolute;
+      right: 0px;
+      top: -96px;
+      z-index: 2;
+    }
+  }
 }
 
-.greenArrow{
-    background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
-    width: 80px;
-    height: 80px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    position: fixed;
-    right: 50px;
-    bottom: 50px;
-    z-index: 500;
-    transition: 0.08s linear all;
-    &:hover {
-        background-image: url("./../../assets/img/UI/ArrTopHover.svg");
-    }
-    &:active {
-        background-image: url("./../../assets/img/UI/ArrTopActive.svg");
-    }
+.greenArrow {
+  background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
+  width: 80px;
+  height: 80px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+  z-index: 500;
+  transition: 0.08s linear all;
+  &:hover {
+    background-image: url("./../../assets/img/UI/ArrTopHover.svg");
+  }
+  &:active {
+    background-image: url("./../../assets/img/UI/ArrTopActive.svg");
+  }
 }

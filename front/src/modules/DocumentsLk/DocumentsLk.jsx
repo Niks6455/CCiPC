@@ -1,6 +1,9 @@
 import { dataDicument } from "./testData";
 import React from "react";
 import styles from "./DocumentsLk.module.scss";
+import union from "./../../assets/img//Union.svg";
+import edit from "./../../assets/img//edit.svg";
+import trash from "./../../assets/img//trash.svg";
 function DocumentsLk() {
     return ( 
         <section className={styles.DocumentsLk}>
@@ -12,15 +15,15 @@ function DocumentsLk() {
                             <div key={item.id}  className={styles.DocumentLkCont}>
                                 <div className={styles.DocumentLkContOne}>
                                     <div>
-                                        <img src="/img/Union.svg"/>
+                                        <img src={union}/>
                                     </div>
                                     <div className={styles.DocumentLkContText}>
                                         <p>{item.title}</p>
                                     </div>
                                 </div>
                                 <div className={styles.DocumentLkContEdit}>
-                                    <img src="/img/edit.svg"/>
-                                    <img src="/img/trash.svg"/>
+                                    <img src={edit}/>
+                                    <img src={trash}/>
                                 </div>
                                
                             </div>

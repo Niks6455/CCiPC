@@ -1,12 +1,13 @@
 import { useContext } from "react";
 import styles from "./LeftMenuLK.module.scss";
 import DataContext from "../../context";
+import logo from "./../../assets/img/logo.png"
 function LeftMenuLk() {
     const context = useContext(DataContext);
     return ( 
         <section className={styles.LeftMenuLk}>
             <div>
-                <img src="/img/logo.svg"/>
+                <img src={logo} className={styles.LogoImg}/>
                 <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
                 <ul className={styles.LeftMenuLkList}>
                     <li className={context.selectFrameLks === 'profile' ? styles.Active : ""} onClick={() => context.setSelectFrameLks('profile')}><img src="/img/UI/user.svg"/> Профиль</li>

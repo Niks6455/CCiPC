@@ -3,7 +3,8 @@ import Input from "../../ui/Input/Input";
 import styles from "./Login.module.scss";
 import DataContext from "../../context";
 import { useNavigate } from "react-router-dom";
-
+import logo from "./../../assets/img/logo.png"
+import sfeduLogo from "./../../assets/img/SfeduLogo.svg"
 function Login() {
     const context = useContext(DataContext);
     const navigate = useNavigate();
@@ -57,7 +58,7 @@ function Login() {
     return (
         <section className={styles.Login}>
             <div className={styles.LoginLogo}>
-                <img src="/img/logo.svg" alt="Logo" />
+                <img src={logo} alt="Logo" />
             </div>
             <div className={styles.LoginTitle}>
                 <p>Добро пожаловать</p>
@@ -97,7 +98,7 @@ function Login() {
                 </div>
            </div>
            <div className={styles.loginButtonSfedu}>
-                <button><img src="/img/SfeduLogo.svg"/>Войти через аккаунт @sfedu</button>
+                <button><img src={sfeduLogo}/>Войти через аккаунт @sfedu</button>
            </div>
            <div className={styles.submitButton}>
                 <button onClick={handleSubmit}>Войти</button>
