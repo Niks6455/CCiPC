@@ -2,6 +2,7 @@ import styles from "./Profile.module.scss"
 import ProfilePictureBackground from "./../../assets/img/ProfilePictureBackground.svg"
 import noPhotoLk from "./../../assets/img/noPhotoLk.svg"
 import editPhotoLk from "./../../assets/img/EditPhotoLk.png"
+import editProfileData from "./../../assets/img/UI/editProfile.svg"
 function Profile() {
     const testData = [
         {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
@@ -22,6 +23,7 @@ function Profile() {
                     <p><span>Степень:</span> Доктор технических наук</p>
                  </div>
             </div>
+            <button className={styles.editProfileData}>Редактировать данные<img src={editProfileData}/></button>
             <div className={styles.containerMoreInfo}>
                 <div className={styles.containerMoreInfoOne}>
                     <p><span>Организация:</span> Южный федеральный университет</p>
