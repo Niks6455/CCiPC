@@ -7,7 +7,7 @@ function InputList(props) {
     props.funOpen("");
   };
   return (
-    <div className={styles.InputList} ref={props?.divRef}>
+    <div className={`${styles.InputList}`} ref={props?.divRef}>
       {!props?.value && props?.imgSrc && (
         <img src={props?.imgSrc} alt={props?.name} />
       )}
@@ -16,7 +16,9 @@ function InputList(props) {
         onChange={props?.onChange}
         value={props?.value}
         placeholder={props?.placeholder}
-        className={props?.error ? styles.errorInputList : ""}
+        className={`${props?.error ? styles.errorInputList : ""} ${
+          props?.open && styles.openInput
+        }`}
         type={props.type || "text"}
         style={{
           paddingLeft:
@@ -41,7 +43,11 @@ function InputList(props) {
       <div className={`${styles.List} ${props?.open && styles.open}`}>
         <ul>
           {props.list?.map((item, index) => (
-            <li key={index} onClick={() => liClick(item)}>
+            <li
+              key={index}
+              onClick={() => liClick(item)}
+              className={`${props?.value === item.text && styles.active}`}
+            >
               {item.text}
             </li>
           ))}
