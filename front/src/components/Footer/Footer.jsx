@@ -1,5 +1,6 @@
 import Layout from "../../ui/Layout/Layout";
 import styles from "./Footer.module.scss";
+import footerLogo from "../../assets/img/FooterText.svg"
 function Footer() {
     return ( 
         <footer className={styles.footer}>
@@ -7,7 +8,7 @@ function Footer() {
                 <div className={styles.footerContainer}>
                     <div className={styles.footerContainerLeft}>
                         <div>
-                            <img src="/img/FooterText.svg" alt="logo"/>
+                            <img src={footerLogo} alt="logo"/>
                         </div>
                         <div className={styles.footerText}>
                             <p>Всероссийская научная конференция<br/> "Системный синтез и прикладная синергетика"</p>

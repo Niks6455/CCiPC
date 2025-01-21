@@ -1,11 +1,11 @@
 import styles from "./HeaderSecond.module.scss";
-
+import logo from "./../../assets/img/logo.png"
 function HeaderSecond() {
     return ( 
         <header className={styles.HeaderSecond}>
             <div className={styles.HeaderSecondInner}>
                 <div>
-                    <img src="/img/logo.png"/>
+                    <img src={logo}/>
                 </div>
                 <div className={styles.HeaderMenu}>
                     <ul>

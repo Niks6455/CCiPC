@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import Input from "../../ui/Input/Input";
 import styles from "./Register.module.scss";
 import DataContext from "../../context";
-
+import logo from "./../../assets/img/logo.png"
 function Register() {
     const context = useContext(DataContext);
 
@@ -96,7 +96,7 @@ function Register() {
     return (
         <section className={styles.Login}>
             <div className={styles.LoginLogo}>
-                <img src="/img/logo.svg" alt="Logo" />
+                <img src={logo} alt="Logo" />
             </div>
             <div className={styles.LoginTitle}>
                 <p>Добро пожаловать</p>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './RightMenuLk.module.scss';
 import { useNavigate } from 'react-router-dom';
-
+import arrowBot from "./../../assets/img/ArrowBotGreen.svg"
 function RightMenuLk() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ function RightMenuLk() {
                         >
                             Главная
                             <img
-                                src="/img/ArrowBotGreen.svg"
+                                src={arrowBot}
                                 alt="Arrow"
                                 className={styles.arrowTopMenu}
                             />

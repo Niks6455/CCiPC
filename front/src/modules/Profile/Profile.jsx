@@ -1,5 +1,7 @@
 import styles from "./Profile.module.scss"
-
+import ProfilePictureBackground from "./../../assets/img/ProfilePictureBackground.svg"
+import noPhotoLk from "./../../assets/img/noPhotoLk.svg"
+import editPhotoLk from "./../../assets/img/EditPhotoLk.png"
 function Profile() {
     const testData = [
         {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
@@ -9,9 +11,9 @@ function Profile() {
     return ( 
         <section className={styles.Profile}>
             <div>
-                <img src="/img/ProfilePictureBackground.svg" className={styles.ProfileImg}/>
-                <img src="/img/noPhotoLk.svg" className={styles.noPhotoLk}/>
-                <img src="/img/EditPhotoLk.png" className={styles.editPhotoLk}/>
+                <img src={ProfilePictureBackground} className={styles.ProfileImg}/>
+                <img src={noPhotoLk} className={styles.noPhotoLk}/>
+                <img src={editPhotoLk} className={styles.editPhotoLk}/>
             </div>
             <div className={styles.mainSection}>
                  <div className={styles.mainSectionInfoPeople}>

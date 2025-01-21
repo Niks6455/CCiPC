@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import Button from "../../ui/Button/Button";
 import Layout from "../../ui/Layout/Layout";
 import styles from "./TopMainInfo.module.scss";
-
+import Bg from "../../assets/img/Bg.jpeg";
+import rect from "../../assets/img/rect.svg";
 function TopMainInfo() {
     const arrowRef = useRef(null); // Реф для стрелки
     const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
@@ -40,7 +41,7 @@ function TopMainInfo() {
     return (
         <div className={styles.topContainer}>
             <div className={styles.TopHeader}>
-                <img src="/img/Bg.jpeg" alt="Background" />
+                <img src={Bg} alt="Background" />
             </div>
             <main>
                 <div className={styles.mainTopTextContainer}>
@@ -67,9 +68,9 @@ function TopMainInfo() {
                 </div>
                 <div className={styles.buttonClicker}>
                     <div className={styles.buttonClickerInner}>
-                        <img className={styles.leftBot} src="/img/rect.svg" alt="Background" />
+                        <img className={styles.leftBot} src={rect} alt="Background" />
                         <Button text={"Подать заявку"} />
-                        <img className={styles.leftTop} src="/img/rect.svg" alt="Background" />
+                        <img className={styles.leftTop} src={rect} alt="Background" />
                     </div>
                 </div>
             </main>

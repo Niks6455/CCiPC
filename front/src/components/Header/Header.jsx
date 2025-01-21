@@ -1,16 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
-
+import LogoHomePage from "./../../assets/img/logo.png"
+import TextLogo from "./../../assets/img/text.svg"
+import arrow from "./../../assets/img/arrow.svg"
 function Header() {
     const navigate = useNavigate();
     return ( 
         <header>
             <div className={styles.HeaderContainer} id="top">
                 <div className={styles.logo}>
-                    <img src="/img/logo.png" alt="logo" />
+                    <img src={LogoHomePage} alt="logo" />
                 </div>
                 <div className={styles.TitleText}>
-                    <img src="/img/text.svg" alt="Conference Title" />
+                    <img src={TextLogo} alt="Conference Title" />
                 </div>
             </div>
             <div className={styles.HeaderMenuContainer}>
@@ -24,7 +26,7 @@ function Header() {
                 </div>
                 <div className={styles.HeaderLocarion}>
                     <p>Ru</p>
-                    <img src="/img/arrow.svg" alt="Language Selector" />
+                    <img src={arrow} alt="Language Selector" />
                 </div>
             </div>
             
