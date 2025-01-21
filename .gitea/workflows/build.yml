@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: https://github.com/docker/metadata-action@v4
         with:
-          images: ${{ vars.SERVER_DOMAIN }}/${{ gitea.repository }}/${{ gitea.repository }}-frontend
+          images: ${{ vars.SERVER_DOMAIN }}/${{ gitea.repository }}-frontend
 
       - name: Build and push Docker image
         uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
