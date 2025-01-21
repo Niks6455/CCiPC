@@ -13,12 +13,12 @@ function Lks() {
         <>
             <main className={styles.Lks}>
                 <LeftMenuLk/>
-                    <Layout>
+                    {/* <Layout> */}
                         <div className={styles.LksContainer}>
                             {context.selectFrameLks === "documents" && <DocumentsLk/>}
                             {context.selectFrameLks === "profile" && <Profile/>}
                         </div>
-                    </Layout>
+                    {/* </Layout> */}
                 <RightMenuLk/>
             </main>
             <Footer/>
