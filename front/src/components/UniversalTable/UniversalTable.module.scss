@@ -9,22 +9,22 @@
     border-collapse: collapse; /* Убирает отступы между ячейками */
     min-height: auto;
     border-radius: 8px;
-    min-height: 100px;  
+    min-height: 100px;
     overflow-x: scroll;
     font-size: 16px;
     thead {
       position: sticky;
       top: 0;
       z-index: 1;
-      background-color: var(--GrenColor); // Убедитесь, что эта переменная определена в colors.scss
+      background-color: #e7eae9;
       th {
-        position: relative;
-        align-items: center;
-        padding: 10px;
-        text-align: center;
-        z-index: 10;
         border-bottom: 2px solid #ccc; /* Горизонтальная линия под заголовком */
-        color: #ffffff;
+        position: relative;
+
+        border-bottom: none;
+
+        padding: 15px;
+        z-index: 10;
         &:nth-child(1) {
           border-radius: 8px 0 0 0;
         }
@@ -35,6 +35,10 @@
     }
 
     tbody {
+      &:first-child {
+        border-top: none;
+        background-color: red;
+      }
       tr {
         transition: background-color 0.3s; /* Плавный переход цвета при наведении */
         border-bottom: 1px solid #e0e0e0; /* Горизонтальные линии между строками */
@@ -47,9 +51,16 @@
       }
       td {
         padding: 10px;
-        align-items: center;
-        text-align: center;
         background-color: #f7f7f7;
+        border: 1px solid #c8d0ce;
+        border-top: none;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 21px;
+
+      }
+      td[name='number'] {
+        text-align: center;
       }
     }
 
@@ -66,22 +77,22 @@
     padding: 5px 10px;
     border-radius: 8px;
     transition: 0.08s linear all;
-    &:hover{
+    &:hover {
       opacity: 0.6;
     }
   }
   .setectedTr td {
     background-color: var(--TableSelectedTr) !important;
   }
-  .infoContainer{
+  .infoContainer {
     width: 100%;
     display: flex;
     justify-content: center;
-    a{
+    a {
       text-decoration: none;
     }
   }
-  .info{
+  .info {
     display: flex;
     align-items: center;
     padding: 5px 10px;
@@ -93,24 +104,24 @@
     cursor: pointer;
     width: 150px;
     transition: 0.1s all linear;
-    &:hover{
+    &:hover {
       background-color: var(--GrenColorHover);
     }
-    &:active{
+    &:active {
       background-color: var(--GrenColorActive);
     }
   }
 }
 .tableNotData {
-  height: 65vh;
+  height: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 18px;
   color: var(--GrayColorInput);
-  width: 1436px;
+  width: 1309px;
   position: absolute;
-  pointer-events: none;  
+  pointer-events: none;
 }
 
 /* Стили для скроллбара */
@@ -130,9 +141,9 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #aaa; /* Цвет ползунка при наведении */
 }
-.CheckListContainer{
+.CheckListContainer {
   position: relative;
-  .statusList{
+  .statusList {
     position: absolute;
     left: -100px;
     top: 0px;
@@ -143,26 +154,26 @@
     border-radius: 8px;
     text-align: start;
     list-style: none;
-    li{
+    li {
       padding: 5px 10px;
-      &:hover{
+      &:hover {
         cursor: pointer;
         background-color: var(--TableColorMouse);
       }
     }
   }
 }
-.RoleClicker{
+.RoleClicker {
   padding: 3px 0px;
   background-color: var(--GrenColor);
   border-radius: 8px;
   color: #fff;
   cursor: pointer;
   transition: 0.1s all linear;
-  &:hover{
+  &:hover {
     background-color: var(--GrenColorHover);
   }
-  &:active{
+  &:active {
     background-color: var(--GrenColorActive);
   }
 }

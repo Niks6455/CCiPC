@@ -1,27 +1,22 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import styles from "./UniversalTable.module.scss";
-import DataContext from "../../context";
-
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import styles from './UniversalTable.module.scss';
 
 function UniversalTable(props) {
-  const context = useContext(DataContext);
   const [tableHeaderData, setTableHeaderData] = useState([]);
   const [tableBodyData, setTableBodyData] = useState([]);
   const tableRef = useRef(null); // Реф для таблицы
-
 
   useEffect(() => {
     setTableHeaderData(props?.tableHeader);
     setTableBodyData(props?.tableBody);
   }, [props?.tableHeader, props?.tableBody]);
 
- 
   const getValue = (value, key, rowIndex, rowId, row) => {
     switch (key) {
-      case "number":
+      case 'number':
         return rowIndex + 1;
       default:
-        return value || "___";
+        return value || '___';
     }
   };
 
@@ -37,9 +32,7 @@ function UniversalTable(props) {
         </thead>
         <tbody>
           {tableBodyData?.map((row, rowIndex) => (
-            <tr
-              key={rowIndex}
-            >
+            <tr key={rowIndex}>
               {tableHeaderData.map((header) => (
                 <td key={header.key} name={header.key} className={header.key}>
                   {getValue(row[header.key], header.key, rowIndex, row.id, row)}
