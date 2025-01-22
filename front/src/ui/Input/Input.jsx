@@ -54,7 +54,8 @@ function Input(props) {
           alt="!"
         />
       )}
-      {/* //! лист множественных ошибок */}
+
+      {/* лсит множественных ошибок */}
       {errorListShow && (
         <div className={styles.errorsListContainer}>
           <ul>
@@ -72,6 +73,12 @@ function Input(props) {
           </ul>
         </div>
       )}
+      {props.labelText && (
+        <div className={styles.labelText}>
+          <span>{props.labelText}</span>
+        </div>
+      )}
+
       <input
         name={props?.name}
         onChange={(e) => {
@@ -95,7 +102,14 @@ function Input(props) {
       {props?.value && !props?.error && (
         <div className={styles.placeholderClose}>{props?.placeholder}</div>
       )}
-      {props?.error && <div className={styles.errorText}>{props?.error}</div>}
+      {props?.error && (
+        <div
+          className={styles.errorText}
+          style={props.inputerrorStyle ? props.inputerrorStyle : {}}
+        >
+          {props?.error}
+        </div>
+      )}
     </div>
   );
 }

@@ -3,6 +3,7 @@
 .InputList {
   display: flex;
   position: relative;
+  flex-direction: column;
   //   img {
   //     position: absolute;
   //     left: 25px;
@@ -24,7 +25,16 @@
       height: 10.52px;
     }
   }
-
+  .labelText {
+    font-family: Overpass, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.6px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    transform: translateY(5px);
+  }
   input {
     width: 490px;
     height: 64px;

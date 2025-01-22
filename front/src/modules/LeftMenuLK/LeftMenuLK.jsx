@@ -2,9 +2,11 @@ import { useContext, useState } from "react";
 import styles from "./LeftMenuLK.module.scss";
 import DataContext from "../../context";
 import logo from "./../../assets/img/logo.png";
+import { useNavigate } from "react-router-dom";
 function LeftMenuLk() {
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
+  const navigate = useNavigate();
   return (
     <section className={styles.LeftMenuLk}>
       <div>
@@ -15,7 +17,10 @@ function LeftMenuLk() {
             className={
               context.selectFrameLks === "profile" ? styles.Active : ""
             }
-            onClick={() => context.setSelectFrameLks("profile")}
+            onClick={
+              // () => context.setSelectFrameLks("profile")
+              () => navigate("profile")
+            }
           >
             <img src="/img/UI/user.svg" /> Профиль
           </li>
@@ -23,7 +28,10 @@ function LeftMenuLk() {
             className={
               context.selectFrameLks === "documents" ? styles.Active : ""
             }
-            onClick={() => context.setSelectFrameLks("documents")}
+            onClick={
+              // () => context.setSelectFrameLks("documents")
+              () => navigate("documents")
+            }
           >
             <img src="/img/UI/document.svg" /> Мои доклады
           </li>
@@ -51,7 +59,9 @@ function LeftMenuLk() {
               setingOpen && styles.setingOpen
             }`}
           >
-            <li>Профиль</li>
+            <li onClick={() => navigate("settings/profile")}>
+              Изменить профиль
+            </li>
             <li>Сменить пароль</li>
           </div>
 
