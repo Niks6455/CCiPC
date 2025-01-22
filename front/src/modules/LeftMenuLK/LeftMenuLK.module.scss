@@ -1,42 +1,52 @@
-@import '../../styles/colors.scss'; 
+@import "../../styles/colors.scss";
 
-.LeftMenuLk{
-    padding: 10px 0px 0px 20px;
-    display: block;
-    border-right: 1px solid var(--InputColors);
-    width: 310px;
-    min-height: calc(100vh - 256px);
-    box-sizing: border-box;
-    .LogoImg{
-        width: 110px;
-        height: 110px;
+.LeftMenuLk {
+  padding: 10px 0px 0px 20px;
+  display: block;
+  border-right: 1px solid var(--InputColors);
+  width: 310px;
+  min-height: calc(100vh - 256px);
+  box-sizing: border-box;
+  .LogoImg {
+    width: 110px;
+    height: 110px;
+  }
+  .LeftMenuLkTitle {
+    margin: 48px 0px 40px 0px;
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .LeftMenuLkList {
+    list-style: none;
+    padding-left: 30px;
+    li {
+      display: flex;
+      justify-content: start;
+      align-items: center;
+      margin: 10px 33px 0px 0px;
+      height: 46px;
+      cursor: pointer;
+      padding-left: 10px;
+      img {
+        margin-right: 10px;
+      }
+      &:hover {
+        background-color: var(--MenuHover);
+      }
     }
-    .LeftMenuLkTitle{
-        margin: 48px 0px 40px 0px;
-        font-size: 22px;
-        font-weight: 700;
+    .Active {
+      background-color: var(--MenuHover);
     }
-    .LeftMenuLkList{
-        list-style: none;
-        padding-left: 30px;
-        li{
-            display: flex;
-            justify-content: start;
-            align-items: center;
-            margin: 10px 33px 0px 0px;
-            height: 46px;
-            cursor: pointer;
-            padding-left: 10px;
-            img{
-                margin-right: 10px;
-            }
-            &:hover{
-                background-color: var(--MenuHover);
-            }
-           
-        }
-        .Active{
-            background-color: var(--MenuHover);
-        }
+    .listSetings {
+      padding-left: 34px;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s linear;
     }
+    .setingOpen {
+      height: auto;
+      max-height: 258px;
+      transition: max-height 0.3s linear;
+    }
+  }
 }

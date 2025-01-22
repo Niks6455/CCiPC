@@ -28,6 +28,7 @@ function InputList(props) {
                 : ""
               : "25px",
         }}
+        autoComplete={!props.autoComplete && "new-password"}
       />
       <div className={styles.arrow} onClick={() => props.funOpen(props.name)}>
         <img

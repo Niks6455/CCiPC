@@ -1,0 +1,19 @@
+services:
+  web:
+    image: git.rdcenter.ru/rdcenter/ccipc-frontend:main
+    ports:
+      - "2922:80"
+    depends_on:
+      - app
+    restart: unless-stopped
+
+  # db:
+  #   image: postgres:17-alpine
+  #   environment:
+  #     - POSTGRES_USER=${DATABASE_USERNAME}
+  #     - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+  #   volumes:
+  #     - ./postgres:/var/lib/postgresql/data
+  #   ports:
+  #     - '5432'
+  #   restart: always
