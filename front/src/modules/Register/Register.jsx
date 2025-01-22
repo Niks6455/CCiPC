@@ -7,6 +7,7 @@ import InputList from "../../ui/InputList/InputList";
 import listErrorNoHover from "./../../assets/img/UI/listErrorNoActive.svg";
 import listErrorOnHover from "./../../assets/img/UI/listError.svg";
 import lock from "./../../assets/img/UI/lock.svg";
+import { doljnostList, stepenList, zwanieList } from "../../utils/List";
 
 function Register() {
   const context = useContext(DataContext);
@@ -75,32 +76,6 @@ function Register() {
     return { id: "2", done: hasDigit };
   }
 
-  const zwanieList = [
-    { id: "1", text: "Не выбрано" },
-    { id: "2", text: "Профессор" },
-    { id: "3", text: "Кандидат наук" },
-    { id: "4", text: "Академик" },
-    { id: "5", text: "Корреспондент академии наук" },
-    { id: "6", text: "Доктор наук" },
-    { id: "7", text: "Доцент" },
-    // { id: "8", text: "Другое..." },
-  ];
-
-  const stepenList = [
-    { id: "1", text: "Не выбрано" },
-    { id: "2", text: "Кандидат наук" },
-    { id: "3", text: "Доктор наук" },
-  ];
-
-  const doljnostList = [
-    { id: "1", text: "Не выбрано" },
-    { id: "2", text: "Студент" },
-    { id: "3", text: "Лаборант" },
-    { id: "4", text: "Старший преподаватель" },
-    { id: "5", text: "Профессор" },
-    { id: "6", text: "Заведующий кафедрой" },
-  ];
-
   // const napravlenieKonferenciiList = [
   //   { id: "1", text: "Название 1" },
   //   { id: "2", text: "Название 2" },
@@ -116,6 +91,7 @@ function Register() {
       return;
     }
     console.log("key", key);
+    setErrors({ ...errors, [key]: "" });
     setFormData({ ...formData, [key]: value });
   };
 
@@ -266,18 +242,6 @@ function Register() {
               placeholder="Email (логин)*"
               error={errors.login}
             />
-            {/* <InputList
-              name="napravlenieKonferencii"
-              onChange={handleChange}
-              value={formData.napravlenieKonferencii}
-              placeholder="Направление конференции"
-              open={openList === "napravlenieKonferencii"}
-              funOpen={funOpenList}
-              divRef={refList[0]}
-              list={napravlenieKonferenciiList}
-              funSelectElement={funSelectedElement}
-              error={errors.napravlenieKonferencii}
-            /> */}
           </div>
           <div className={styles.inputInnerBlock}>
             <Input

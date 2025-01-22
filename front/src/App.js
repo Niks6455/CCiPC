@@ -10,9 +10,12 @@ import Author from "./pages/Author/Author";
 import Lks from "./pages/Lks/Lks";
 import Participants from "./pages/Participants/Participants";
 import CommitteesPage from "./pages/CommitteesPage/CommitteesPage";
+import DocumentsLk from "./modules/DocumentsLk/DocumentsLk";
+import Profile from "./modules/Profile/Profile";
+import ProfileEditing from "./modules/ProfileEditing/ProfileEditing";
 function App() {
-  const [authPage, setAuthPage] = useState('Auth');
-  const [mailValue, setMailValue] = useState('test@sfedu.ru');
+  const [authPage, setAuthPage] = useState("Auth");
+  const [mailValue, setMailValue] = useState("test@sfedu.ru");
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState("Lks");
   const context = {
@@ -27,24 +30,30 @@ function App() {
   };
 
   return (
-    <DataContext.Provider
-  value={context}
-  >
-    <BrowserRouter>
-      <main style={{ fontFamily: "REX" }}>
-        <Routes>
-          <Route path="/AuthPage" element={<AuthPage />}></Route>
-          <Route path="/Participants" element={<Participants />}></Route>
-          <Route path="/Lks" element={<Lks />}></Route>
-          <Route path="/NewsPage" element={<NewsPage />}></Route>
-          <Route path="/Author" element={<Author />}></Route>
-          <Route path="/OrganizationComite" element={<CommitteesPage />}></Route>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="*" element={<NoteFoundPage />} /> {/* Добавление 404 страницы */}
-        </Routes>
-      </main>
-    </BrowserRouter>
-  </DataContext.Provider>
+    <DataContext.Provider value={context}>
+      <BrowserRouter>
+        <main style={{ fontFamily: "REX" }}>
+          <Routes>
+            <Route path="/AuthPage" element={<AuthPage />}></Route>
+            <Route path="/Participants" element={<Participants />}></Route>
+            <Route path="/Lks" element={<Lks />}>
+              <Route path="documents" element={<DocumentsLk />}></Route>
+              <Route path="profile" element={<Profile />}></Route>
+              <Route path="settings/profile" element={<ProfileEditing />} />
+            </Route>
+            <Route path="/NewsPage" element={<NewsPage />}></Route>
+            <Route path="/Author" element={<Author />}></Route>
+            <Route
+              path="/OrganizationComite"
+              element={<CommitteesPage />}
+            ></Route>
+            <Route path="/" element={<HomePage />}></Route>
+            <Route path="*" element={<NoteFoundPage />} />{" "}
+            {/* Добавление 404 страницы */}
+          </Routes>
+        </main>
+      </BrowserRouter>
+    </DataContext.Provider>
   );
 }
 
