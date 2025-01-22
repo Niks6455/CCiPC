@@ -5,6 +5,7 @@ import ChangeButtons from '../../ui/ChangeButtons/ChangeButtons';
 import { useEffect, useState } from 'react';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import { organizationComiteData, programmingComiteData } from './data';
+import NavBar from '../../components/NavBar/NavBar';
 export default function CommitteesPage() {
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
@@ -55,6 +56,7 @@ export default function CommitteesPage() {
   
   return (
     <>
+      <NavBar/>
       <div>
         <Layout>
           <main className={styles.organizationComiteMain}>

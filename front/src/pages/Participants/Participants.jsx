@@ -8,22 +8,10 @@ function Participants() {
   const [filter, setFilter] = useState('');
   const [filteredTable, setFilteredTable] = useState(tableData);
 
-  /**
-   * Searches for a string in the table data
-   * @param {Object[]} data - table data
-   * @param {string} searchText - string to search for
-   * @returns {Object[]} filtered table data
-   */
   const searchInData = (data, searchText) => {
-    // Filter the table data based on the search string
-    // Iterate over each item in the data array
     return data.filter((item) =>
-      // Iterate over each value in the item object
       Object.values(item).some(
         (value) =>
-          // Check if the value is a string and if it includes the search string
-          // Use the includes() method to check if the search string is present
-          // Use the toLowerCase() method to make the search case-insensitive
           typeof value === 'string' &&
           value.toLowerCase().includes(searchText.toLowerCase())
       )

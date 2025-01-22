@@ -1,0 +1,120 @@
+@import "../../styles/colors.scss";
+
+.NavBar{
+    position: fixed;
+    right: 45px;
+    top: 45px;
+    .NavBarButton{
+        display: flex;
+        align-items: center;
+        background: none;
+        border: none;
+        color: var(--GreenColorDefault);
+        p{
+            font-size: 20px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        .NavBarMenu{
+            span{
+                display: flex;
+                justify-content: end;
+                height: 4px;
+                background-color: #fff;
+                margin-bottom: 5px;
+                transition: 0.2s linear all;
+                width: 100%;
+                border-radius: 3px;
+                &:nth-child(1){
+                    content: "";
+                    position: relative;
+                    width: 37px;
+                    background-color: var(--GreenColorDefault);
+                }
+                &:nth-child(2){
+                    content: "";
+                    position: relative;
+                    width: 27px;
+                    background-color: var(--GreenColorDefault);
+                    margin-left: 10px;
+                }
+                &:nth-child(3){
+                    content: "";
+                    position: relative;
+                    width: 37px;
+                    background-color: var(--GreenColorDefault);
+                }
+                   
+            }
+        }
+        &:hover{
+            cursor: pointer;
+            .NavBarMenu{
+                span{
+                    &:nth-child(1){
+                        content: "";
+                        position: relative;
+                        width: 37px;
+                        background-color: var(--GreenColorDefault);
+                    }
+                    &:nth-child(2){
+                        content: "";
+                        position: relative;
+                        width: 27px;
+                        background-color: var(--GreenColorDefault);
+                       margin-left: 0px;
+                    }
+                    &:nth-child(3){
+                        content: "";
+                        position: relative;
+                        width: 22px;
+                        background-color: var(--GreenColorDefault);
+                    }
+                }
+            }
+        }
+    }
+    .menu{
+        background-color: var(--GreenColorDefault);
+        width: 0px;
+        transition: 0.15s ease-in-out all;
+        transform: translateX(310px);
+        text-align: end;
+        padding: 25px;
+        button{
+            background: none;
+            border: none;
+            align-items: center;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+            &:hover{
+                img{
+                    transform: rotate(90deg);
+                }
+             }
+            img{
+                margin-left: 10px;
+                position: relative;
+                top: 4px;
+                transition: 0.10s linear all;
+
+            }
+           
+        }
+    }
+    .menu.active{
+        position: fixed;
+        transform: translateX(0px);
+        top: 0;
+        right: 0;
+        width: 310px;
+        height: 100vh;
+        .NavBarButton{
+            display: none;
+        }
+       
+    }
+    
+  
+}
