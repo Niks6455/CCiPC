@@ -47,6 +47,9 @@
       height: auto;
       max-height: 258px;
       transition: max-height 0.3s linear;
+      li {
+        margin-right: 0;
+      }
     }
   }
 }
