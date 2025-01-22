@@ -4,6 +4,9 @@ import styles from "./Register.module.scss";
 import DataContext from "../../context";
 import logo from "./../../assets/img/logo.png";
 import InputList from "../../ui/InputList/InputList";
+import listErrorNoHover from "./../../assets/img/UI/listErrorNoActive.svg";
+import listErrorOnHover from "./../../assets/img/UI/listError.svg";
+import lock from "./../../assets/img/UI/lock.svg";
 
 function Register() {
   const context = useContext(DataContext);
@@ -33,6 +36,45 @@ function Register() {
     number: "",
   });
 
+  const [errorListPassword, setErrorListPassword] = useState([
+    {
+      id: "0",
+      text: "Не менее 8 символов",
+      done: false,
+      functionCheck: funEightSymbols,
+    },
+    {
+      id: "1",
+      text: "Не менее 1 заглавной буквы",
+      done: false,
+      functionCheck: funCapitalLetter,
+    },
+    {
+      id: "2",
+      text: "Не менее 1 цифры",
+      done: false,
+      functionCheck: funDigit,
+    },
+  ]);
+
+  //! функция проверки не менее 8 символов
+  function funEightSymbols(text) {
+    const isValid = [...text].length >= 8; // Проверяем, что длина текста не менее 8 символов
+    return { id: "0", done: isValid };
+  }
+
+  //! проверка не меенее 1 заглавной буквы
+  function funCapitalLetter(text) {
+    const hasCapitalLetter = /[A-ZА-ЯЁ]/.test(text);
+    return { id: "1", done: hasCapitalLetter };
+  }
+
+  function funDigit(text) {
+    // Проверяем, есть ли хотя бы одна цифра
+    const hasDigit = /\d/.test(text);
+    return { id: "2", done: hasDigit };
+  }
+
   const zwanieList = [
     { id: "1", text: "Не выбрано" },
     { id: "2", text: "Профессор" },
@@ -59,14 +101,14 @@ function Register() {
     { id: "6", text: "Заведующий кафедрой" },
   ];
 
-  const napravlenieKonferenciiList = [
-    { id: "1", text: "Название 1" },
-    { id: "2", text: "Название 2" },
-    { id: "3", text: "Название 3" },
-    { id: "4", text: "Название 4" },
-    { id: "5", text: "Название 5" },
-    { id: "6", text: "Название 6" },
-  ];
+  // const napravlenieKonferenciiList = [
+  //   { id: "1", text: "Название 1" },
+  //   { id: "2", text: "Название 2" },
+  //   { id: "3", text: "Название 3" },
+  //   { id: "4", text: "Название 4" },
+  //   { id: "5", text: "Название 5" },
+  //   { id: "6", text: "Название 6" },
+  // ];
 
   const funSelectedElement = (key, value) => {
     //! проверка что такой ключь есть в formData
@@ -217,7 +259,14 @@ function Register() {
               placeholder="Фамилия*"
               error={errors.surname}
             />
-            <InputList
+            <Input
+              name="login"
+              onChange={handleChange}
+              value={formData.login}
+              placeholder="Email (логин)*"
+              error={errors.login}
+            />
+            {/* <InputList
               name="napravlenieKonferencii"
               onChange={handleChange}
               value={formData.napravlenieKonferencii}
@@ -228,7 +277,7 @@ function Register() {
               list={napravlenieKonferenciiList}
               funSelectElement={funSelectedElement}
               error={errors.napravlenieKonferencii}
-            />
+            /> */}
           </div>
           <div className={styles.inputInnerBlock}>
             <Input
@@ -238,11 +287,11 @@ function Register() {
               placeholder="Отчество"
             />
             <Input
-              name="login"
+              name="number"
               onChange={handleChange}
-              value={formData.login}
-              placeholder="Email (логин)*"
-              error={errors.login}
+              value={formData.number}
+              placeholder="Номер телефона*"
+              error={errors.number}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -258,11 +307,17 @@ function Register() {
               funSelectElement={funSelectedElement}
             />
             <Input
-              name="number"
+              name="password"
               onChange={handleChange}
-              value={formData.number}
-              placeholder="Номер телефона*"
-              error={errors.number}
+              value={formData.password}
+              placeholder="Придумайте пароль*"
+              error={errors.password}
+              type="password"
+              errorList={errorListPassword}
+              setErrorList={setErrorListPassword}
+              errorListImgHover={listErrorOnHover}
+              errorListImgNoHover={listErrorNoHover}
+              imgSrc={lock}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -278,12 +333,13 @@ function Register() {
               funSelectElement={funSelectedElement}
             />
             <Input
-              name="password"
+              name="confirmPassword"
               onChange={handleChange}
-              value={formData.password}
-              placeholder="Пароль*"
-              error={errors.password}
+              value={formData.confirmPassword}
+              placeholder="Повторите пароль*"
+              error={errors.confirmPassword}
               type="password"
+              imgSrc={lock}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -298,14 +354,6 @@ function Register() {
               list={doljnostList}
               funSelectElement={funSelectedElement}
               error={errors.doljnost}
-            />
-            <Input
-              name="confirmPassword"
-              onChange={handleChange}
-              value={formData.confirmPassword}
-              placeholder="Повторите пароль*"
-              error={errors.confirmPassword}
-              type="password"
             />
           </div>
         </div>
