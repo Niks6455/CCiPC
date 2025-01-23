@@ -13,6 +13,7 @@ import CommitteesPage from "./pages/CommitteesPage/CommitteesPage";
 import DocumentsLk from "./modules/DocumentsLk/DocumentsLk";
 import Profile from "./modules/Profile/Profile";
 import ProfileEditing from "./modules/ProfileEditing/ProfileEditing";
+import ChangePassword from "./modules/ChangePassword/ChangePassword";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
@@ -40,6 +41,10 @@ function App() {
               <Route path="documents" element={<DocumentsLk />}></Route>
               <Route path="profile" element={<Profile />}></Route>
               <Route path="settings/profile" element={<ProfileEditing />} />
+              <Route
+                path="settings/changepassword"
+                element={<ChangePassword />}
+              />
             </Route>
             <Route path="/NewsPage" element={<NewsPage />}></Route>
             <Route path="/Author" element={<Author />}></Route>

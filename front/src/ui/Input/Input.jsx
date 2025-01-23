@@ -78,7 +78,16 @@ function Input(props) {
           <span>{props.labelText}</span>
         </div>
       )}
-
+      {props.rigthImg && (
+        <img
+          onClick={props.rigthImgClick ? props.rigthImgClick : () => {}}
+          className={styles.rigthImg}
+          src={
+            props.rigthImgActiveAction ? props.rigthImgActive : props.rigthImg
+          }
+          alt="показать пароль"
+        />
+      )}
       <input
         name={props?.name}
         onChange={(e) => {
@@ -97,7 +106,7 @@ function Input(props) {
                 : ""
               : "25px",
         }}
-        autoComplete={!props.autoComplete ? "new-password" : "on"}
+        autoComplete={props.autoComplete ? props.autoComplete : "on"}
       />
       {props?.value && !props?.error && (
         <div className={styles.placeholderClose}>{props?.placeholder}</div>

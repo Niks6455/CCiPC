@@ -42,6 +42,9 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s linear;
+      li {
+        margin-right: 0;
+      }
     }
     .setingOpen {
       height: auto;

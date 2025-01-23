@@ -218,6 +218,7 @@ function Register() {
               value={formData.name}
               placeholder="Имя*"
               error={errors.name}
+              autoComplete={"new-password"}
             />
             <Input
               name="oraganization"
@@ -225,6 +226,7 @@ function Register() {
               value={formData.oraganization}
               placeholder="Организация*"
               error={errors.oraganization}
+              autoComplete={"new-password"}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -234,6 +236,7 @@ function Register() {
               value={formData.surname}
               placeholder="Фамилия*"
               error={errors.surname}
+              autoComplete={"new-password"}
             />
             <Input
               name="login"
@@ -241,6 +244,7 @@ function Register() {
               value={formData.login}
               placeholder="Email (логин)*"
               error={errors.login}
+              autoComplete={"new-password"}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -249,6 +253,7 @@ function Register() {
               onChange={handleChange}
               value={formData.patronymic}
               placeholder="Отчество"
+              autoComplete={"new-password"}
             />
             <Input
               name="number"
@@ -256,6 +261,7 @@ function Register() {
               value={formData.number}
               placeholder="Номер телефона*"
               error={errors.number}
+              autoComplete={"new-password"}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -282,6 +288,7 @@ function Register() {
               errorListImgHover={listErrorOnHover}
               errorListImgNoHover={listErrorNoHover}
               imgSrc={lock}
+              autoComplete={"new-password"}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -304,6 +311,7 @@ function Register() {
               error={errors.confirmPassword}
               type="password"
               imgSrc={lock}
+              autoComplete={"new-password"}
             />
           </div>
           <div className={styles.inputInnerBlock}>

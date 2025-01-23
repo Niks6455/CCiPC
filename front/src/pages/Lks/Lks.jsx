@@ -17,12 +17,6 @@ function Lks() {
         <div className={styles.LksContainer}>
           <Outlet />
         </div>
-        {/* <Layout> */}
-        {/* <div className={styles.LksContainer}>
-          {context.selectFrameLks === "documents" && <DocumentsLk />}
-          {context.selectFrameLks === "profile" && <Profile />}
-        </div> */}
-        {/* </Layout> */}
         <RightMenuLk />
       </main>
       <Footer />

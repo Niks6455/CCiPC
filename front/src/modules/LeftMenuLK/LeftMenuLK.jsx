@@ -62,7 +62,9 @@ function LeftMenuLk() {
             <li onClick={() => navigate("settings/profile")}>
               Изменить профиль
             </li>
-            <li>Сменить пароль</li>
+            <li onClick={() => navigate("settings/changepassword")}>
+              Сменить пароль
+            </li>
           </div>
 
           <li
