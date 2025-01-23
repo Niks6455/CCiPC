@@ -2,10 +2,11 @@ import Layout from '../../ui/Layout/Layout';
 import Footer from '../../components/Footer/Footer';
 import styles from './CommitteesPage.module.scss';
 import ChangeButtons from '../../ui/ChangeButtons/ChangeButtons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import { organizationComiteData, programmingComiteData } from './data';
 import NavBar from '../../components/NavBar/NavBar';
+import DataContext from '../../context';
 export default function CommitteesPage() {
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
@@ -13,6 +14,7 @@ export default function CommitteesPage() {
   const [datePeopleSecond, setDatePeopleSecond] = useState(
     programmingComiteData
   );
+  const context = useContext(DataContext);
 
   useEffect(() => {
     console.log(organizationComite);
@@ -97,11 +99,14 @@ export default function CommitteesPage() {
           </main>
         </Layout>
       </div>{' '}
-      <div>
-        <a href="#top">
-          <div className={styles.greenArrow}></div>
-        </a>
-      </div>
+      {
+        !context.activeMenu &&
+        <div>
+          <a href="#top">
+            <div className={styles.greenArrow}></div>
+          </a>
+        </div>
+      }
       <Footer />
     </>
   );

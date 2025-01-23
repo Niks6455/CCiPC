@@ -4,6 +4,7 @@ import UniversalTable from '../../components/UniversalTable/UniversalTable';
 import Layout from '../../ui/Layout/Layout';
 import styles from './Participants.module.scss';
 import { useEffect, useState } from 'react';
+import NavBar from '../../components/NavBar/NavBar.jsx';
 function Participants() {
   const [filter, setFilter] = useState('');
   const [filteredTable, setFilteredTable] = useState(tableData);
@@ -24,6 +25,7 @@ function Participants() {
 
   return (
     <>
+    <NavBar/>
       <main className={styles.Participants}>
         <Layout>
           <div className={styles.ParticipantsInner}>

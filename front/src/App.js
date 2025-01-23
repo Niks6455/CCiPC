@@ -18,6 +18,8 @@ function App() {
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState("profile");
+  const [activeMenu, setActiveMenu] = useState(false);
+
   const context = {
     setAuthPage,
     authPage,
@@ -27,6 +29,8 @@ function App() {
     setActiveModule,
     selectFrameLks,
     setSelectFrameLks,
+    activeMenu,
+    setActiveMenu,
   };
 
   return (

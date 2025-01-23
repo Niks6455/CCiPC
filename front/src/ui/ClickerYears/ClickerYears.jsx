@@ -6,7 +6,7 @@ function ClickerYears() {
 
     return (
         <div className={styles.ClickerYears}>
-            <div 
+            {/* <div 
                 className={`${styles.ClickerYearsEl} ${activeYears === 2023 ? styles.Active : ""}`}
                 onClick={() => setActiveYears(2023)}
             >
@@ -17,7 +17,7 @@ function ClickerYears() {
                 onClick={() => setActiveYears(2024)}
             >
                 2024<img src="/img/Calendar.svg" alt="Calendar"/>
-            </div>
+            </div> */}
             <div 
                 className={`${styles.ClickerYearsEl} ${activeYears === 2025 ? styles.Active : ""}`}
                 onClick={() => setActiveYears(2025)}

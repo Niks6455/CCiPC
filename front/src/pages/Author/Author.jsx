@@ -6,11 +6,13 @@ import AuthorCollection from '../../components/AuthorCollection/AuthorCollection
 import { dataLink } from "./data.js";
 import { Link } from 'react-router-dom';
 import HeaderSecond from '../../components/HeaderSecond/HeaderSecond';
+import NavBar from '../../components/NavBar/NavBar.jsx';
 function Author() {
   const [selectedButton, setSelectedButton] = useState('Registration');
 
   return (
     <main>
+    <NavBar/>
       <Layout>
         <div className={styles.author}>
           <h1 className={styles.h1}>заявка на участие</h1>
