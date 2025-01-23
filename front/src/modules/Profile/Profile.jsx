@@ -23,7 +23,7 @@ function Profile() {
                     <p><span>Степень:</span> Доктор технических наук</p>
                  </div>
             </div>
-            <button className={styles.editProfileData}>Редактировать данные<img src={editProfileData}/></button>
+            {/* <button className={styles.editProfileData}>Редактировать данные<img src={editProfileData}/></button> */}
             <div className={styles.containerMoreInfo}>
                 <div className={styles.containerMoreInfoOne}>
                     <p><span>Организация:</span> Южный федеральный университет</p>

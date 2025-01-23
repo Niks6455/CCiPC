@@ -21,7 +21,7 @@ function Header() {
                         <li onClick={()=>navigate('/Author')}>Автору <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li onClick={()=>navigate('/Participants')}>Участники <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                         <li onClick={()=>navigate('/OrganizationComite')}>Оргкомитет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                        <li onClick={()=>navigate('/Lks')}>Личный кабинет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
+                        <li onClick={()=>navigate('/Lks/profile')}>Личный кабинет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
                     </ul>
                 </div>
                 <div className={styles.HeaderLocarion}>
