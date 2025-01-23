@@ -5,26 +5,16 @@ import editPhotoLk from "./../../assets/img/EditPhotoLk.png";
 import { ReactComponent as Close } from "./../../assets/img/UI/bigX.svg";
 import { useState } from "react";
 function Profile() {
-  const [showProfilePhoto, setShowProfilePhoto] = useState(false);
-  const testData = [
-    {
-      name: "Название доклада №1:",
-      text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»",
-    },
-    {
-      name: "Название доклада №1:",
-      text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»",
-    },
-    {
-      name: "Название доклада №1:",
-      text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»",
-    },
-  ];
-
-  //! функция открытия фото профиля
-  const funOpenPhotoProfile = () => {
-    setShowProfilePhoto(!showProfilePhoto);
-  };
+    const testData = [
+        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
+        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
+        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
+    ]  
+    const [showProfilePhoto, setShowProfilePhoto] = useState(false);
+    //! функция открытия фото профиля
+    const funOpenPhotoProfile = () => {
+        setShowProfilePhoto(!showProfilePhoto);
+        };
 
   return (
     <section className={styles.Profile}>

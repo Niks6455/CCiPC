@@ -3,12 +3,13 @@ import Layout from "../../ui/Layout/Layout";
 import styles from "./TopMainInfo.module.scss";
 import Bg from "../../assets/img/Bg.jpeg";
 import rect from "../../assets/img/rect.svg";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import DataContext from "../../context";
 
 function TopMainInfo() {
   const arrowRef = useRef(null); // Реф для стрелки
   const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
-
+  const context = useContext(DataContext);
   return (
     <div className={styles.topContainer}>
       <div className={styles.TopHeader}>
@@ -58,14 +59,18 @@ function TopMainInfo() {
           </div>
         </div>
       </main>
-      <div className={styles.arrowTop}>
-        <a href="#top">
-          <div
-            ref={arrowRef}
-            className={`${styles.imgArrowTop} ${arrowColor}`}
-          ></div>
-        </a>
-      </div>
+      {
+        !context.activeMenu &&
+          <div className={styles.arrowTop}>
+          <a href="#top">
+            <div
+              ref={arrowRef}
+              className={`${styles.imgArrowTop} ${arrowColor}`}
+            ></div>
+          </a>
+        </div>
+      }
+    
     </div>
   );
 }

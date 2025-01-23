@@ -5,11 +5,13 @@ import Layout from "../../ui/Layout/Layout";
 import HeaderSecond from "../../components/HeaderSecond/HeaderSecond";
 import Footer from "../../components/Footer/Footer";
 import ClickerYears from "../../ui/ClickerYears/ClickerYears";
-
+import NavBar from "../../components/NavBar/NavBar";
+import logoHeader from "./../../assets/img/logo.png";
 function NewsPage() {
   return (
     <>
-      <HeaderSecond/>
+    <img src={logoHeader} className={styles.logo}/>
+      <NavBar/>
       <main className={styles.NewsPage}>
         <Layout>
           <div className={styles.Title}>
