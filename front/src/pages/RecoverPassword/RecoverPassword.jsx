@@ -15,6 +15,7 @@ import {
   funDigit,
   funEightSymbols,
 } from "../../utils/PasswordValidation";
+import { useNavigate } from "react-router-dom";
 
 function RecoverPassword() {
   //! востановление по почте true по телефону false
@@ -50,6 +51,8 @@ function RecoverPassword() {
     newpassword: "",
     rewnewpassword: "",
   });
+
+  const navigate = useNavigate();
 
   const [errorListPassword, setErrorListPassword] = useState([
     {
@@ -150,6 +153,12 @@ function RecoverPassword() {
       newErrors.newpassword = "Пароли не совпадают";
       isValid = false;
     }
+
+    if (errorListPassword.find((el) => !el.done)) {
+      newErrors.newpassword = "Некорректный пароль";
+      isValid = false;
+    }
+
     setErrorsPassword(newErrors);
     return isValid;
   };
@@ -157,6 +166,7 @@ function RecoverPassword() {
   const handleSubmitPassword = () => {
     if (validate()) {
       console.log("Форма отправлена", formData);
+      navigate("/");
     }
   };
 
