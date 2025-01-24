@@ -8,6 +8,11 @@ import listErrorNoHover from "./../../assets/img/UI/listErrorNoActive.svg";
 import listErrorOnHover from "./../../assets/img/UI/listError.svg";
 import lock from "./../../assets/img/UI/lock.svg";
 import { doljnostList, stepenList, zwanieList } from "../../utils/List";
+import {
+  funCapitalLetter,
+  funDigit,
+  funEightSymbols,
+} from "../../utils/PasswordValidation";
 
 function Register() {
   const context = useContext(DataContext);
@@ -58,23 +63,23 @@ function Register() {
     },
   ]);
 
-  //! функция проверки не менее 8 символов
-  function funEightSymbols(text) {
-    const isValid = [...text].length >= 8; // Проверяем, что длина текста не менее 8 символов
-    return { id: "0", done: isValid };
-  }
+  // //! функция проверки не менее 8 символов
+  // function funEightSymbols(text) {
+  //   const isValid = [...text].length >= 8; // Проверяем, что длина текста не менее 8 символов
+  //   return { id: "0", done: isValid };
+  // }
 
   //! проверка не меенее 1 заглавной буквы
-  function funCapitalLetter(text) {
-    const hasCapitalLetter = /[A-ZА-ЯЁ]/.test(text);
-    return { id: "1", done: hasCapitalLetter };
-  }
+  // function funCapitalLetter(text) {
+  //   const hasCapitalLetter = /[A-ZА-ЯЁ]/.test(text);
+  //   return { id: "1", done: hasCapitalLetter };
+  // }
 
-  function funDigit(text) {
-    // Проверяем, есть ли хотя бы одна цифра
-    const hasDigit = /\d/.test(text);
-    return { id: "2", done: hasDigit };
-  }
+  // function funDigit(text) {
+  //   // Проверяем, есть ли хотя бы одна цифра
+  //   const hasDigit = /\d/.test(text);
+  //   return { id: "2", done: hasDigit };
+  // }
 
   // const napravlenieKonferenciiList = [
   //   { id: "1", text: "Название 1" },

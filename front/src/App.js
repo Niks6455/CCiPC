@@ -14,9 +14,11 @@ import DocumentsLk from "./modules/DocumentsLk/DocumentsLk";
 import Profile from "./modules/Profile/Profile";
 import ProfileEditing from "./modules/ProfileEditing/ProfileEditing";
 import ChangePassword from "./modules/ChangePassword/ChangePassword";
+import RecoverPassword from "./pages/RecoverPassword/RecoverPassword";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
+  const [numberValue, setNumberValue] = useState("79805005050");
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState("profile");
   const [activeMenu, setActiveMenu] = useState(false);
@@ -32,6 +34,8 @@ function App() {
     setSelectFrameLks,
     activeMenu,
     setActiveMenu,
+    numberValue,
+    setNumberValue,
   };
 
   return (
@@ -52,6 +56,10 @@ function App() {
             </Route>
             <Route path="/NewsPage" element={<NewsPage />}></Route>
             <Route path="/Author" element={<Author />}></Route>
+            <Route
+              path="/recoverpassword"
+              element={<RecoverPassword />}
+            ></Route>
             <Route
               path="/OrganizationComite"
               element={<CommitteesPage />}

@@ -86,7 +86,7 @@ function Login() {
             autoComplete={true}
           />
           <div className={styles.forgetPassword}>
-            <p>Забыли пароль?</p>
+            <p onClick={() => navigate("/recoverpassword")}>Забыли пароль?</p>
           </div>
         </div>
       </div>
