@@ -3,7 +3,9 @@
     width: 100%;
     justify-content: space-between;
     .LksContainer{
-        padding: 40px;
+        padding: 50px 80px;
+        box-sizing: border-box;
         position: relative;
+        max-width: 1230px;
     }
 }

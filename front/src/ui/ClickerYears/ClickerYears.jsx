@@ -1,6 +1,6 @@
 import { useState } from "react";
 import styles from "./ClickerYears.module.scss";
-
+import Calendar from "./../../assets/img/Calendar.svg";
 function ClickerYears() {
     const [activeYears, setActiveYears] = useState(2024);
 
@@ -22,7 +22,7 @@ function ClickerYears() {
                 className={`${styles.ClickerYearsEl} ${activeYears === 2025 ? styles.Active : ""}`}
                 onClick={() => setActiveYears(2025)}
             >
-                2025<img src="/img/Calendar.svg" alt="Calendar"/>
+                2025<img src={Calendar} alt="Calendar"/>
             </div>
         </div>
     );

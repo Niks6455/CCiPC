@@ -1,0 +1,39 @@
+.photoGrid {
+    display: flex;
+    flex-wrap: wrap;
+    grid-auto-flow: dense;
+    gap: 10px;
+    width: 100%;
+}
+
+.photoItem {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.photoItem img {
+    width: 500px;
+    height: auto;
+    object-fit: cover;
+    display: block;
+    border-radius: 10px;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.1);
+        cursor: pointer;
+    }
+}
+
+.photoTitle {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 14px;
+}

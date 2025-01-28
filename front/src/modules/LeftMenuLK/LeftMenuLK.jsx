@@ -3,6 +3,12 @@ import styles from "./LeftMenuLK.module.scss";
 import DataContext from "../../context";
 import logo from "./../../assets/img/logo.png";
 import { useNavigate } from "react-router-dom";
+import documentImg from "./../../assets/img/UI/document.png";
+import exitImg from "./../../assets/img/UI/exit.png";
+import deleteImg from "./../../assets/img/UI/delete.png";
+import SettingsImg from "./../../assets/img/UI/settings.png";
+import ArchiveiMG from "./../../assets/img/UI/archive.png";
+import Lk from "./../../assets/img/UI/lk.png";
 function LeftMenuLk() {
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
@@ -22,26 +28,23 @@ function LeftMenuLk() {
               () => navigate("profile")
             }
           >
-            <img src="/img/UI/user.svg" /> Профиль
+            <img src={Lk} /> Профиль
           </li>
           <li
             className={
               context.selectFrameLks === "documents" ? styles.Active : ""
             }
-            onClick={
-              // () => context.setSelectFrameLks("documents")
-              () => navigate("documents")
-            }
+            onClick={() => { context.setSelectFrameLks("documents"); navigate("documents")}}
           >
-            <img src="/img/UI/document.svg" /> Мои доклады
+            <img src={documentImg} /> Мои доклады
           </li>
           <li
             className={
-              context.selectFrameLks === "pictures" ? styles.Active : ""
+              context.selectFrameLks === "ArchivPhoto" ? styles.Active : ""
             }
-            onClick={() => context.setSelectFrameLks("pictures")}
+            onClick={() => {context.setSelectFrameLks("ArchivPhoto"); navigate("ArchivPhoto")}}
           >
-            <img src="/img/UI/picture.svg" /> Архив фото
+            <img src={ArchiveiMG} /> Архив фото
           </li>
           <li
             className={
@@ -52,7 +55,7 @@ function LeftMenuLk() {
               setSetingOpen(!setingOpen);
             }}
           >
-            <img src="/img/UI/settings.svg" /> Настройки
+            <img src={SettingsImg} /> Настройки
           </li>
           <div
             className={`${styles.listSetings} ${
@@ -68,16 +71,22 @@ function LeftMenuLk() {
           </div>
 
           <li
-            className={context.selectFrameLks === "logout" ? styles.Active : ""}
-            onClick={() => context.setSelectFrameLks("logout")}
+            className={context.selectFrameLks === "ExitAccount" ? styles.Active : ""}
+            onClick={
+              () => {navigate("ExitAccount")
+              context.setSelectFrameLks("ExitAccount")}
+            }
           >
-            <img src="/img/UI/logout.svg" /> Выйти из аккаунта
+            <img src={exitImg} /> Выйти из аккаунта
           </li>
           <li
-            className={context.selectFrameLks === "delete" ? styles.Active : ""}
-            onClick={() => context.setSelectFrameLks("delete")}
+            className={context.selectFrameLks === "DeleteAccount" ? styles.Active : ""}
+            onClick={
+              () =>{navigate("DeleteAccount")
+              context.setSelectFrameLks("DeleteAccount")}
+            }
           >
-            <img src="/img/UI/cancel.svg" /> Удалить аккаунт
+            <img src={deleteImg} /> Удалить аккаунт
           </li>
         </ul>
       </div>

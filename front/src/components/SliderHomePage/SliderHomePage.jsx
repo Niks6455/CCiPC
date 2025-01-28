@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./SliderHomePage.module.scss"; // Ваши стили
 import { useNavigate } from "react-router-dom";
 
+
 // Данные для слайдов
 const slides = [
   {
