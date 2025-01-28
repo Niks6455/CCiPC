@@ -1,0 +1,62 @@
+@import "../../../styles/colors.scss";
+
+.DocumentsLk {
+  width: calc(100vw - 700px);
+  position: relative;
+  margin: 0 auto;
+
+  .notDocument {
+    display: flex;
+    justify-content: center;
+    // height: calc(100vh - 356px);
+    margin-top: 225px;
+    .notDocumentInner {
+      .notDocumentInnerImg {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 40px;
+        img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+      .notDocumentTitle {
+        p {
+          font-size: 32px;
+          font-weight: 500;
+          color: var(--GrayTextDefault);
+          text-align: center;
+        }
+      }
+      .notDocumentSubTitle {
+        margin: 5px 0px 20px 0px;
+
+        p {
+          font-size: 20px;
+          font-weight: 400;
+          color: var(--GraySecond);
+        }
+      }
+      .notDocumentButton {
+        display: flex;
+        justify-content: center;
+        button {
+          background-color: var(--GreenColorDefault);
+          border: none;
+          border-radius: 10px;
+          cursor: pointer;
+          color: #fff;
+          width: 189px;
+          height: 52px;
+          font-size: 22px;
+          &:hover {
+            background-color: var(--GreenColorHover);
+          }
+          &:active {
+            background-color: var(--GreenColorActive);
+          }
+        }
+      }
+    }
+  }
+}

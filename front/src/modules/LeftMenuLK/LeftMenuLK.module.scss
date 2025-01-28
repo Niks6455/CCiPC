@@ -21,6 +21,7 @@
     padding-left: 30px;
     li {
       display: flex;
+      position: relative;
       justify-content: start;
       align-items: center;
       margin: 10px 33px 0px 0px;
@@ -33,6 +34,26 @@
       &:hover {
         background-color: var(--MenuHover);
       }
+      .arrow {
+        position: absolute;
+        z-index: 10;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: transform 0.15s linear;
+
+        &:hover {
+          * {
+            fill: var(--GreenColorDefault);
+            transition: all 0.15s linear;
+          }
+        }
+      }
+
+      .open {
+        transform: translateY(-50%) scaleY(-1);
+        transition: transform 0.15s linear;
+      }
     }
     .Active {
       background-color: var(--MenuHover);
@@ -44,6 +65,7 @@
       transition: max-height 0.3s linear;
       li {
         margin-right: 0;
+        position: static;
       }
     }
     .setingOpen {
@@ -53,6 +75,25 @@
       li {
         margin-right: 0;
       }
+    }
+    .repName {
+      position: absolute;
+      max-width: 340px;
+      z-index: 100;
+      right: -400;
+      top: 0;
+      background-color: #fff;
+      padding: 10px;
+      font-family: Overpass, sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19.2px;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      color: #5b605e;
+      border-radius: 6px;
+      border: 1px solid #e7eae9;
     }
   }
 }

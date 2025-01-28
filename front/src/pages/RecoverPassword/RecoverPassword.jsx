@@ -289,7 +289,7 @@ function RecoverPassword() {
                 onChange={handleChangePassword}
                 value={formData.newpassword}
                 placeholder="Придумайте пароль"
-                error={errorsPassword.newpassword}
+                // error={errorsPassword.newpassword}
                 setErrorList={setErrorListPassword}
                 errorListImgHover={listErrorOnHover}
                 errorListImgNoHover={listErrorNoHover}
@@ -312,7 +312,7 @@ function RecoverPassword() {
                 setErrorList={setErrorListPassword}
                 errorListImgHover={listErrorOnHover}
                 errorListImgNoHover={listErrorNoHover}
-                error={errorsPassword.rewnewpassword}
+                // error={errorsPassword.rewnewpassword}
                 type={inputTypes.rewnewpassword}
                 rigthImg={glaz}
                 rigthImgActive={noglaz}

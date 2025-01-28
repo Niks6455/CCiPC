@@ -10,11 +10,12 @@ import Author from "./pages/Author/Author";
 import Lks from "./pages/Lks/Lks";
 import Participants from "./pages/Participants/Participants";
 import CommitteesPage from "./pages/CommitteesPage/CommitteesPage";
-import DocumentsLk from "./modules/DocumentsLk/DocumentsLk";
 import Profile from "./modules/Profile/Profile";
 import ProfileEditing from "./modules/ProfileEditing/ProfileEditing";
 import ChangePassword from "./modules/ChangePassword/ChangePassword";
 import RecoverPassword from "./pages/RecoverPassword/RecoverPassword";
+import CreateReport from "./modules/Reports/CreateReport/CreateReport";
+import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
@@ -47,6 +48,7 @@ function App() {
             <Route path="/Participants" element={<Participants />}></Route>
             <Route path="/Lks" element={<Lks />}>
               <Route path="documents" element={<DocumentsLk />}></Route>
+              <Route path="createreport" element={<CreateReport />} />
               <Route path="profile" element={<Profile />}></Route>
               <Route path="settings/profile" element={<ProfileEditing />} />
               <Route
