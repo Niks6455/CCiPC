@@ -69,6 +69,7 @@ const reportCreateSlice = createSlice({
           organization: "",
           email: "",
           phone: "",
+          formParticipation: "",
         },
       ];
     },
@@ -76,13 +77,18 @@ const reportCreateSlice = createSlice({
     deleteCoauthor(state, action) {
       const { index } = action.payload;
       console.log("index", index);
-      state.soauthors = state.soauthors.splice(index, 1);
+      state.soauthors = state.soauthors.filter((_, i) => i !== index);
       console.log("state.soauthors", state.soauthors);
+    },
+
+    setValueCoauthors(state, action) {
+      const { index, key, value } = action.payload;
+      state.soauthors[index][key] = value;
     },
   },
 });
 
-export const { setValue, addSoauthors, deleteCoauthor } =
+export const { setValue, addSoauthors, deleteCoauthor, setValueCoauthors } =
   reportCreateSlice.actions;
 
 export default reportCreateSlice.reducer;

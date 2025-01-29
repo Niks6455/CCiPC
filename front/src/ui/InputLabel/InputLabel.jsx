@@ -9,6 +9,9 @@ function InputLabel(props) {
         type={props.type}
         placeholder={props.placeholder}
         value={props.value}
+        onChange={(e) =>
+          props.funChange(props.index, props.itemKey, e.target.value)
+        }
       />
     </div>
   );

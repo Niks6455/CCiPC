@@ -8,6 +8,7 @@ import errorList from "./../../../assets/img/UI/errorZnak.svg";
 import {
   addSoauthors,
   deleteCoauthor,
+  setValueCoauthors,
 } from "../../../store/reportCreateSlice/reportCreateSlice";
 import InputLabel from "../../../ui/InputLabel/InputLabel";
 import trash from "./../../../assets/img/UI/trash.svg";
@@ -57,13 +58,17 @@ function AddCoauthor() {
       id: "6",
       label: "Номер*",
       placeholder: "+7-900-000-00-00",
-      type: "phone",
+      type: "tel",
       key: "phone",
     },
   ];
 
   const funDeleteCoauthor = (index) => {
     dispatch(deleteCoauthor({ index }));
+  };
+
+  const funChangeInput = (index, key, value) => {
+    dispatch(setValueCoauthors({ index, key, value }));
   };
 
   return (
@@ -99,7 +104,10 @@ function AddCoauthor() {
               <InputLabel
                 label={inp.label}
                 type={inp.type}
+                index={index}
+                itemKey={inp.key}
                 value={soauthtor[inp.key]}
+                funChange={funChangeInput}
                 placeholder={inp.placeholder}
               />
             </div>
