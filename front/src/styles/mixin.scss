@@ -36,12 +36,24 @@
   font-weight: 400;
   text-align: center;
   color: #fff;
+  cursor: pointer;
   &:hover {
     background-color: var(--GreenColorHover);
     transition: all 0.15s linear;
   }
   &:active {
     background-color: var(--GreenColorActive);
+    transition: all 0.15s linear;
+  }
+}
+
+@mixin HoverActive() {
+  &:hover {
+    background-color: #0045290a;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: #0045291a;
     transition: all 0.15s linear;
   }
 }

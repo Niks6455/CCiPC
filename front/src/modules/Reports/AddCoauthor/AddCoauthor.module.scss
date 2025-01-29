@@ -1,0 +1,43 @@
+@import "../../../styles/mixin.scss";
+
+.AddCoauthor {
+  width: calc(100vw - 700px);
+  position: relative;
+  margin: 0 auto;
+
+  .title {
+    display: flex;
+    justify-content: center;
+    font-family: Overpass, sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    color: #333333;
+    margin: 0;
+  }
+  .slider {
+    position: relative;
+    background-color: #e7eae9;
+    width: 100%;
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 10px;
+
+    .sliderInner {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      background-color: #00452980;
+      transition: all 0.15s linear;
+    }
+  }
+  .backImg {
+    display: flex;
+    margin-top: 10px;
+    img {
+      cursor: pointer;
+      border-radius: 5px;
+      @include HoverActive;
+    }
+  }
+}

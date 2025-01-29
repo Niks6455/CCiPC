@@ -12,10 +12,10 @@ import { setValue } from "../../../store/reportCreateSlice/reportCreateSlice";
 import InputListForma from "../../../components/InputListForma/InputListForma";
 import download from "./../../../assets/img/UI/download.svg";
 import exampleFile from "./../../../utils/files/template.docx";
+import { useNavigate } from "react-router-dom";
 
 function CreateReport() {
-  const [sliderState, setSliderState] = useState(20);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
 
@@ -60,7 +60,10 @@ function CreateReport() {
       <div className={styles.slider}>
         <div
           className={styles.sliderInner}
-          style={{ width: `${sliderState}%`, transition: "all 0.15s linear" }}
+          style={{
+            width: `${report.sliderState}%`,
+            transition: "all 0.15s linear",
+          }}
         ></div>
       </div>
       <p className={styles.nameReport}>Полное название доклада</p>
@@ -158,7 +161,9 @@ function CreateReport() {
             до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
           </span>
         </div>
-        <button>Следующий шаг</button>
+        <button onClick={() => navigate("/Lks/addcoauthor")}>
+          Следующий шаг
+        </button>
       </div>
     </div>
   );

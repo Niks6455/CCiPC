@@ -16,13 +16,13 @@ const reportCreateSlice = createSlice({
     id: "id1",
     status: "save",
     number: 1,
-    name: "Сравнительный анализ характеристик мониторинга технологического процесса с использованием линейного и нелинейного метода главных компонент",
-    directionConference: "Информационная безопасность",
-    formParticipation: "Очно",
-    participationStatus: "Студент",
+    name: "",
+    directionConference: "",
+    formParticipation: "",
+    participationStatus: "",
     fileArticle: null,
     fileExpertOpinion: null,
-    comments: "Комментарий к докладу",
+    comments: "",
     soauthors: [
       {
         name: "Артур",
@@ -33,15 +33,14 @@ const reportCreateSlice = createSlice({
         phone: "79034005695",
       },
     ],
+    sliderState: 0,
   },
 
   reducers: {
     setValue(state, action) {
       const { key, value } = action.payload;
       console.log("key, value", key, value);
-      if (state[key]) {
-        state[key] = value;
-      }
+      state[key] = value;
     },
   },
 });
