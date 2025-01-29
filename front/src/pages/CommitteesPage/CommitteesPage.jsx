@@ -7,6 +7,7 @@ import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import { organizationComiteData, programmingComiteData } from './data';
 import NavBar from '../../components/NavBar/NavBar';
 import DataContext from '../../context';
+import Cap from "../../assets/img/Cap.svg";
 export default function CommitteesPage() {
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
@@ -27,30 +28,30 @@ export default function CommitteesPage() {
   const ButtonOneDats = [
     {
       text: 'Сопредседатели',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Члены комитета',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
   ]
 
   const ButtonSecondDats = [
     {
       text: 'Почетный председатель',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Cопредседатели',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Заместитель председателя',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Члены комитета',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
   ]
 

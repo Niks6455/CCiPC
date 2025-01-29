@@ -3,7 +3,7 @@ import styles from './NavBar.module.scss';
 import closeImg from "./../../assets/img/closeImg.png";
 import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
-
+import ArrowMenu from "./../../assets/img/ArrowMenu.png"
 function NavBar() {
     const context = useContext(DataContext);
     const navigate = useNavigate();
@@ -26,12 +26,12 @@ function NavBar() {
 
                 <button>Скрыть <img src={closeImg} alt="Close"/></button>
                 <ul>
-                    <li onClick={()=>{navigate('/Lks/profile'); context.setActiveMenu(false)}}>Личный кабинет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                    <li onClick={()=>{navigate('/'); context.setActiveMenu(false)}}>Главная <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                    <li onClick={()=>{navigate('/Author'); context.setActiveMenu(false)}}>Автору <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                    <li onClick={()=>{navigate('/NewsPage'); context.setActiveMenu(false)}}>Новости <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                    <li onClick={()=>{navigate('/Participants'); context.setActiveMenu(false)}}>Участники <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                    <li onClick={()=>{navigate('/OrganizationComite'); context.setActiveMenu(false)}}>Оргкомитет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
+                    <li onClick={()=>{navigate('/Lks/profile'); context.setActiveMenu(false)}}>Личный кабинет <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                    <li onClick={()=>{navigate('/'); context.setActiveMenu(false)}}>Главная <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                    <li onClick={()=>{navigate('/Author'); context.setActiveMenu(false)}}>Автору <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                    <li onClick={()=>{navigate('/NewsPage'); context.setActiveMenu(false)}}>Новости <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                    <li onClick={()=>{navigate('/Participants'); context.setActiveMenu(false)}}>Участники <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                    <li onClick={()=>{navigate('/OrganizationComite'); context.setActiveMenu(false)}}>Оргкомитет <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
                 </ul>
                 <div className={styles.RightMenuText}>
                         <div className={styles.RightMenuTextCont}>

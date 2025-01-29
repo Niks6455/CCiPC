@@ -7,6 +7,8 @@ import { dataLink } from "./data.js";
 import { Link } from 'react-router-dom';
 import HeaderSecond from '../../components/HeaderSecond/HeaderSecond';
 import NavBar from '../../components/NavBar/NavBar.jsx';
+import Book from '../../assets/img/Book.svg';
+import Cap from '../../assets/img/Cap.svg';
 function Author() {
   const [selectedButton, setSelectedButton] = useState('Registration');
 
@@ -28,7 +30,7 @@ function Author() {
               <span className={`${styles.button_text}`}>
                 Оформление участия в конференции
               </span>
-              <img src="/img/Cap.svg" alt="Cap"></img>
+              <img src={Cap} alt="Cap"></img>
             </div>
             <div
               className={`${styles.button} ${
@@ -39,7 +41,7 @@ function Author() {
               onClick={() => setSelectedButton('Collection')}
             >
               <span>Сборники прошлых лет</span>
-              <img src="/img/Book.svg" alt="Book"></img>
+              <img src={Book} alt="Book"></img>
             </div>
           </div>
           {selectedButton === 'Registration' && (

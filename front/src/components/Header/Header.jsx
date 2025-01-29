@@ -4,6 +4,7 @@ import LogoHomePage from "./../../assets/img/logo.png"
 import TextLogo from "./../../assets/img/text.svg"
 import arrow from "./../../assets/img/arrow.svg"
 import footerLogo from "./../../assets/img/Headernumber.png"
+import ArrowMenu from "./../../assets/img/ArrowMenu.png"
 function Header() {
     const navigate = useNavigate();
     return ( 
@@ -20,10 +21,10 @@ function Header() {
             <div className={styles.HeaderMenuContainer}>
                 <div className={styles.HeaderMenu}>
                     <ul>
-                        <li onClick={()=>navigate('/Author')}>Автору <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                        <li onClick={()=>navigate('/Participants')}>Участники <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                        <li onClick={()=>navigate('/OrganizationComite')}>Оргкомитет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
-                        <li onClick={()=>navigate('/Lks/profile')}>Личный кабинет <span className={styles.arowLi}><img src="/img/ArrowMenu.png" alt="Arrow" /></span></li>
+                        <li onClick={()=>navigate('/Author')}>Автору <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                        <li onClick={()=>navigate('/Participants')}>Участники <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                        <li onClick={()=>navigate('/OrganizationComite')}>Оргкомитет <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
+                        <li onClick={()=>navigate('/Lks/profile')}>Личный кабинет <span className={styles.arowLi}><img src={ArrowMenu} alt="Arrow" /></span></li>
                     </ul>
                 </div>
                 <div className={styles.HeaderLocarion}>

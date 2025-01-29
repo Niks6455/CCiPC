@@ -14,6 +14,9 @@ import Profile from "./modules/Profile/Profile";
 import ProfileEditing from "./modules/ProfileEditing/ProfileEditing";
 import ChangePassword from "./modules/ChangePassword/ChangePassword";
 import RecoverPassword from "./pages/RecoverPassword/RecoverPassword";
+import DeleteAccount from "./modules/DeleteAccount/DeleteAccount";
+import ExitAccount from "./modules/ExitAccount/ExitAccount";
+import ArchivPhoto from "./modules/ArchivPhoto/ArchivPhoto";
 import CreateReport from "./modules/Reports/CreateReport/CreateReport";
 import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
 import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
@@ -52,6 +55,9 @@ function App() {
               <Route path="createreport" element={<CreateReport />} />
               <Route path="addcoauthor" element={<AddCoauthor />} />
               <Route path="profile" element={<Profile />}></Route>
+              <Route path="DeleteAccount" element={<DeleteAccount />}></Route>
+              <Route path="ExitAccount" element={<ExitAccount />}></Route>
+              <Route path="ArchivPhoto" element={<ArchivPhoto />}></Route>
               <Route path="settings/profile" element={<ProfileEditing />} />
               <Route
                 path="settings/changepassword"

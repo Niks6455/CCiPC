@@ -5,6 +5,7 @@ import Layout from '../../ui/Layout/Layout';
 import styles from './Participants.module.scss';
 import { useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar.jsx';
+import Search from '../../assets/img/search.svg';
 function Participants() {
   const [filter, setFilter] = useState('');
   const [filteredTable, setFilteredTable] = useState(tableData);
@@ -34,7 +35,7 @@ function Participants() {
             </div>
             <div className={styles.inputComponentInner}>
               <div className={styles.inputComponentInnerContainer}>
-                <img src="/img/search.svg" />
+                <img src={Search} />
                 <input
                   className={styles.inputComponent}
                   placeholder="Поиск"

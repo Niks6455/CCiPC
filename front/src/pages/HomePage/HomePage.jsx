@@ -8,6 +8,10 @@ import SliderHomePageTop from "../../modules/SliderHomePageTop/SliderHomePageTop
 import { textDataHomePage } from "./date";
 import SliderHomePage from "../../components/SliderHomePage/SliderHomePage";
 import Footer from "../../components/Footer/Footer";
+import Organization1 from "../../assets/img/UI/org1.png";
+import Organization2 from "../../assets/img/UI/org2.png";
+import Organization3 from "../../assets/img/UI/org3.png";
+import Organization4 from "../../assets/img/UI/org4.png";
 function HomePage() {
     const context = useContext(DataContext);
     const textData = textDataHomePage;
@@ -63,10 +67,10 @@ function HomePage() {
                         </p>
                     </div>
                     <div className={styles.imgSectionInner}>
-                        <img src="/img/UI/1img.svg"/>
-                        <img src="/img/UI/2img.svg"/>
-                        <img src="/img/UI/3img.svg"/>
-                        <img src="/img/UI/4img.svg"/>
+                        <img src={Organization1}/>
+                        <img src={Organization2}/>
+                        <img src={Organization3}/>
+                        <img src={Organization4}/>
                     </div>
                 </section>
                 <section className={styles.imgSection}>
@@ -76,10 +80,10 @@ function HomePage() {
                         </p>
                     </div>
                     <div className={styles.imgSectionInner}>
-                        <img src="/img/UI/1img.svg"/>
-                        <img src="/img/UI/2img.svg"/>
-                        <img src="/img/UI/3img.svg"/>
-                        <img src="/img/UI/4img.svg"/>
+                        <img src={Organization1}/>
+                        <img src={Organization2}/>
+                        <img src={Organization3}/>
+                        <img src={Organization4}/>
                     </div>
                 </section>
             </Layout>
