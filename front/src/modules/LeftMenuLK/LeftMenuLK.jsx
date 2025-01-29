@@ -69,7 +69,7 @@ function LeftMenuLk() {
               context.setSelectFrameLks("documents")
             }}
           >
-            <img src="/img/UI/document.svg" />
+            <img src={documentImg} />
             <span>Мои доклады</span>
             <BlackArrowBottom
               className={`${styles.arrow} ${dokladOpen ? styles.open : ""}`}
@@ -120,7 +120,7 @@ function LeftMenuLk() {
               context.setSelectFrameLks("settings");
             }}
           >
-            <img src="/img/UI/settings.svg" />
+            <img src={SettingsImg} />
             <span>Настройки</span>
             <BlackArrowBottom
               className={`${styles.arrow} ${setingOpen ? styles.open : ""}`}
