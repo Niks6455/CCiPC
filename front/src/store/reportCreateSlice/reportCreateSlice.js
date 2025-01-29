@@ -10,6 +10,17 @@ import { createSlice } from "@reduxjs/toolkit";
     soauthors - сооавторы
 */
 
+const keys = [
+  "name",
+  "directionConference",
+  "formParticipation",
+  "participationStatus",
+  "fileArticle",
+  "fileExpertOpinion",
+  "comments",
+  "soauthors",
+];
+
 const reportCreateSlice = createSlice({
   name: "reportCreate",
   initialState: {
@@ -23,16 +34,7 @@ const reportCreateSlice = createSlice({
     fileArticle: null,
     fileExpertOpinion: null,
     comments: "",
-    soauthors: [
-      {
-        name: "Артур",
-        surname: "Тоноян",
-        patronymic: "Арменович",
-        organization: "ЮФУ",
-        email: "atonoian@sfedu.ru",
-        phone: "79034005695",
-      },
-    ],
+    soauthors: [],
     sliderState: 0,
   },
 
@@ -41,10 +43,46 @@ const reportCreateSlice = createSlice({
       const { key, value } = action.payload;
       console.log("key, value", key, value);
       state[key] = value;
+      //! считаем прогресс
+      let slider = 0;
+      keys.map((key) => {
+        if (key === "soauthors") {
+          if (state.soauthors.length > 0) {
+            slider += 1;
+          }
+        } else {
+          if (state[key] !== "" && state[key] !== null) {
+            slider += 1;
+          }
+        }
+      });
+      state.sliderState = (100 / keys.length) * slider;
+    },
+
+    addSoauthors(state) {
+      state.soauthors = [
+        ...state.soauthors,
+        {
+          name: "",
+          surname: "",
+          patronymic: "",
+          organization: "",
+          email: "",
+          phone: "",
+        },
+      ];
+    },
+
+    deleteCoauthor(state, action) {
+      const { index } = action.payload;
+      console.log("index", index);
+      state.soauthors = state.soauthors.splice(index, 1);
+      console.log("state.soauthors", state.soauthors);
     },
   },
 });
 
-export const { setValue } = reportCreateSlice.actions;
+export const { setValue, addSoauthors, deleteCoauthor } =
+  reportCreateSlice.actions;
 
 export default reportCreateSlice.reducer;

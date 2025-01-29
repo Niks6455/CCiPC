@@ -51,7 +51,7 @@ function CreateReport() {
   const handleFileChangeZakl = (event) => {
     const file = event.target.files[0];
     if (file) {
-      dispatch(setValue({ key: "fileConclusion", value: file })); // Сохраняем файл в Redux
+      dispatch(setValue({ key: "fileExpertOpinion", value: file })); // Сохраняем файл в Redux
     }
   };
   return (

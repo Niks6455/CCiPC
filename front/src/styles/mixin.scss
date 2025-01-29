@@ -47,6 +47,53 @@
   }
 }
 
+@mixin ButtonLight($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #004529;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--MenuHover);
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: var(--MenuHoverActive);
+    transition: all 0.15s linear;
+  }
+}
+
+@mixin ButtonRed($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #b32020;
+
+  cursor: pointer;
+  &:hover {
+    background-color: #efe1e1;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: #eab7b7;
+    transition: all 0.15s linear;
+  }
+}
+
 @mixin HoverActive() {
   &:hover {
     background-color: #0045290a;

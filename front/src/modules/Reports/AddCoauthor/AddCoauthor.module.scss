@@ -21,7 +21,7 @@
     width: 100%;
     border-radius: 5px;
     height: 5px;
-    margin-top: 10px;
+    // margin-top: 10px;
 
     .sliderInner {
       position: absolute;
@@ -33,11 +33,78 @@
   }
   .backImg {
     display: flex;
-    margin-top: 10px;
+    transform: translateY(-10px);
     img {
       cursor: pointer;
       border-radius: 5px;
       @include HoverActive;
+    }
+  }
+  .addsoaftor {
+    display: flex;
+    justify-content: center;
+    @include ButtonLight;
+    padding: 16px 0;
+    width: 240px;
+    height: 54px;
+    margin: 0 auto;
+    margin-top: 25px;
+    box-sizing: border-box;
+    img {
+      margin-left: 10px;
+    }
+  }
+
+  .srokContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 100px;
+    .text {
+      display: flex;
+      align-items: start;
+      flex-direction: row;
+      width: 796px;
+      margin-top: 8px;
+      img {
+        margin-right: 6px;
+      }
+    }
+    button {
+      @include ButtonGreen;
+      padding: 20px;
+      width: 350px;
+      height: 64px;
+    }
+  }
+  .inputContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .inputbox {
+    display: flex;
+    width: 350px;
+    height: 86px;
+    margin-bottom: 25px;
+  }
+  .deletecoauthor {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include ButtonRed(18px);
+      padding: 16px;
+      img {
+        margin-left: 10px;
+      }
     }
   }
 }
