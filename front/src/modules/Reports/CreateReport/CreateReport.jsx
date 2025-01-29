@@ -29,10 +29,10 @@ function CreateReport() {
     document.body.removeChild(link);
   };
 
-  const fileInputRef = useRef(null);
+  const fileInputStatyaRef = useRef(null);
   //! загрузить файл со статьей
   const funUploadFileStatya = () => {
-    fileInputRef.current.click(); // Программно кликаем по input
+    fileInputStatyaRef.current.click(); // Программно кликаем по input
   };
 
   const handleFileChange = (event) => {
@@ -42,6 +42,18 @@ function CreateReport() {
     }
   };
 
+  //! загрузить файл с заключением
+  const fileInputZaklRef = useRef(null);
+  const funUploadFileZakl = () => {
+    fileInputZaklRef.current.click(); // Программно кликаем по input
+  };
+
+  const handleFileChangeZakl = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      dispatch(setValue({ key: "fileConclusion", value: file })); // Сохраняем файл в Redux
+    }
+  };
   return (
     <div className={styles.CreateReport}>
       <h2 className={styles.title}>Доклад №{report.number}</h2>
@@ -87,7 +99,7 @@ function CreateReport() {
           <div className={styles.fileContur}>
             <input
               type="file"
-              ref={fileInputRef}
+              ref={fileInputStatyaRef}
               onChange={handleFileChange}
               style={{ display: "none" }} // Скрываем input
             />
@@ -95,6 +107,7 @@ function CreateReport() {
               src={fileImport}
               alt="загрузить файл"
               onClick={funUploadFileStatya}
+              draggable="false"
             />
             <div className={styles.downloadShablon}>
               <div className={styles.shablon} onClick={funDownloadShablon}>
@@ -107,7 +120,18 @@ function CreateReport() {
         <div className={styles.box}>
           <p>Добавить файл с экспертным заключением</p>
           <div className={styles.fileContur}>
-            <img src={fileImport} alt="загрузить файл" />
+            <input
+              type="file"
+              ref={fileInputZaklRef}
+              onChange={handleFileChangeZakl}
+              style={{ display: "none" }} // Скрываем input
+            />
+            <img
+              src={fileImport}
+              alt="загрузить файл"
+              draggable="false"
+              onClick={funUploadFileZakl}
+            />
           </div>
         </div>
       </div>

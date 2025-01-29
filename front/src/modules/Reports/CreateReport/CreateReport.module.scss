@@ -61,6 +61,10 @@
         margin-top: 10px;
         img {
           cursor: pointer;
+          &:hover {
+            background-color: #0045290a;
+            transition: all 0.15s linear;
+          }
         }
       }
       .downloadShablon {
