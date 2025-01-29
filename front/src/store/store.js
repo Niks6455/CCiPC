@@ -12,15 +12,20 @@ import {
 import storage from "redux-persist/lib/storage";
 import basicSlice from "./basicSlice/basic.Slice.js";
 
+import reportsSlice from "./reportsSlice/reportsSlice.js";
+import reportCreateSlice from "./reportCreateSlice/reportCreateSlice.js";
+
 const rootReducer = combineReducers({
   BasicSlice: basicSlice,
+  reportsSlice: reportsSlice,
+  reportCreateSlice: reportCreateSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["BasicSlice",],
-  // blacklist: ["editColumTableSlice", "isCheckedSlice"],
+  whitelist: ["BasicSlice"],
+  blacklist: ["reportsSlice", "reportCreateSlice"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

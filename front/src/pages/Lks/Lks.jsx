@@ -5,8 +5,6 @@ import Footer from "../../components/Footer/Footer";
 import LeftMenuLk from "../../modules/LeftMenuLK/LeftMenuLK";
 import { useContext } from "react";
 import DataContext from "../../context";
-import DocumentsLk from "../../modules/DocumentsLk/DocumentsLk";
-import Profile from "../../modules/Profile/Profile";
 import { Outlet } from "react-router-dom";
 function Lks() {
   const context = useContext(DataContext);

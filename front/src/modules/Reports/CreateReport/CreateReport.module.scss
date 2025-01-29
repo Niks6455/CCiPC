@@ -1,0 +1,127 @@
+@import "./../../../styles/mixin.scss";
+
+.CreateReport {
+  width: calc(100vw - 700px);
+  position: relative;
+  margin: 0 auto;
+
+  .title {
+    display: flex;
+    justify-content: center;
+    font-family: Overpass, sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    color: #333333;
+    margin: 0;
+  }
+  .slider {
+    position: relative;
+    background-color: #e7eae9;
+    width: 100%;
+    border-radius: 5px;
+    height: 5px;
+    margin-top: 20px;
+
+    .sliderInner {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      background-color: #00452980;
+      transition: all 0.15s linear;
+    }
+  }
+  .nameReport {
+    @include InputTitle();
+    margin-top: 25px;
+  }
+  .nameReportInput {
+    margin-top: 10px;
+    @include TextArea;
+  }
+  .inputsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 25px;
+  }
+  .fileContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+
+    .box {
+      width: 548px;
+      margin-top: 40px;
+      p {
+        @include InputTitle(18px);
+      }
+      .fileContur {
+        margin-top: 10px;
+        img {
+          cursor: pointer;
+          &:hover {
+            background-color: #0045290a;
+            transition: all 0.15s linear;
+          }
+        }
+      }
+      .downloadShablon {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: end;
+        font-family: Overpass, sans-serif;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21.6px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: #004529;
+        img {
+          margin-left: 5px;
+        }
+        .shablon {
+          cursor: pointer;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+    }
+  }
+  .context {
+    margin-top: 40px;
+    p {
+      @include InputTitle(18px);
+      margin-bottom: 10px;
+    }
+    textarea {
+      @include TextArea;
+    }
+  }
+  .srokContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 35px;
+    .text {
+      display: flex;
+      align-items: start;
+      flex-direction: row;
+      width: 796px;
+      margin-top: 8px;
+      img {
+        margin-right: 6px;
+      }
+    }
+    button {
+      @include ButtonGreen;
+      padding: 20px;
+      width: 350px;
+      height: 64px;
+    }
+  }
+}

@@ -1,0 +1,47 @@
+@import "./colors.scss";
+
+@mixin InputTitle($fs: 18px) {
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 500;
+  line-height: 21.6px;
+  text-align: left;
+  color: #333333;
+}
+
+@mixin TextArea($fs: 18px) {
+  border-radius: 10px;
+  height: 120px;
+  width: 100%;
+  border: 1px solid #c8d0ce;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  line-height: 21.6px;
+  text-align: left;
+  color: #333333;
+  outline: none;
+  padding: 20px;
+  resize: none;
+  background-color: inherit;
+  box-sizing: border-box;
+}
+
+@mixin ButtonGreen($fs: 20px) {
+  background-color: #004529;
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #fff;
+  &:hover {
+    background-color: var(--GreenColorHover);
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: var(--GreenColorActive);
+    transition: all 0.15s linear;
+  }
+}

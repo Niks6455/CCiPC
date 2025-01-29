@@ -1,0 +1,50 @@
+@import "../../styles/mixin.scss";
+
+.InputListForma {
+  p {
+    @include InputTitle();
+    margin-bottom: 10px;
+  }
+  input {
+    width: 350px;
+    height: 54px;
+    border-radius: 10px;
+    font-family: Overpass, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.6px;
+    text-align: left;
+    color: #333333;
+    padding: 16px 20px;
+    padding-right: 45px;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid #c8d0ce;
+    background-color: inherit;
+    cursor: pointer;
+  }
+  .active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .boxInner {
+    position: relative;
+    width: 350px;
+  }
+  .ArrowBottom {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.15s linear;
+    cursor: pointer;
+    &:hover * {
+      fill: var(--GreenColorDefault);
+      transition: all 0.15s linear;
+    }
+  }
+  .openArrow {
+    transform: translateY(-50%) scaleY(-1);
+    transition: all 0.15s linear;
+  }
+}

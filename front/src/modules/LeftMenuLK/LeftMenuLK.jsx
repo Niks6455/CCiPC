@@ -9,10 +9,39 @@ import deleteImg from "./../../assets/img/UI/delete.png";
 import SettingsImg from "./../../assets/img/UI/settings.png";
 import ArchiveiMG from "./../../assets/img/UI/archive.png";
 import Lk from "./../../assets/img/UI/lk.png";
+import { ReactComponent as BlackArrowBottom } from "./../../assets/img/UI/blackArrowBottom.svg";
+import { useSelector } from "react-redux";
+
 function LeftMenuLk() {
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
+  const [dokladOpen, setDokladOpen] = useState(false);
   const navigate = useNavigate();
+  const reports = useSelector((state) => state.reportsSlice);
+
+  //! появление названия
+  const [showTooltip, setShowTooltip] = useState(null);
+  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const [tooltipTimeout, setTooltipTimeout] = useState(null);
+
+  const handleMouseEnter = (index) => {
+    // Устанавливаем таймер для задержки
+    const timeout = setTimeout(() => {
+      setShowTooltip(index);
+    }, 500); // Задержка в 300 мс
+
+    setTooltipTimeout(timeout);
+  };
+
+  const handleMouseLeave = () => {
+    // Очищаем таймер и скрываем подсказку
+    clearTimeout(tooltipTimeout);
+    setShowTooltip(null);
+  };
+
+  const handleMouseMove = (event) => {
+    setCoordinates({ x: event.clientX, y: event.clientY });
+  };
   return (
     <section className={styles.LeftMenuLk}>
       <div>
@@ -34,10 +63,45 @@ function LeftMenuLk() {
             className={
               context.selectFrameLks === "documents" ? styles.Active : ""
             }
-            onClick={() => { context.setSelectFrameLks("documents"); navigate("documents")}}
+            onClick={() => {
+              navigate("documents");
+              setDokladOpen(!dokladOpen);
+              context.setSelectFrameLks("documents")
+            }}
           >
-            <img src={documentImg} /> Мои доклады
+            <img src="/img/UI/document.svg" />
+            <span>Мои доклады</span>
+            <BlackArrowBottom
+              className={`${styles.arrow} ${dokladOpen ? styles.open : ""}`}
+            />
           </li>
+          <div
+            className={`${styles.listSetings} ${
+              dokladOpen && styles.setingOpen
+            }`}
+          >
+            {reports.data.map((rep, index) => (
+              <li
+                key={index}
+                onMouseEnter={() => handleMouseEnter(index)}
+                onMouseLeave={() => handleMouseLeave()}
+                onMouseMove={handleMouseMove}
+              >
+                {index === showTooltip && (
+                  <div
+                    style={{
+                      left: coordinates.x + 50,
+                      top: coordinates.y - 20,
+                    }}
+                    className={styles.repName}
+                  >
+                    {rep.name}
+                  </div>
+                )}
+                <span>Доклад №{rep.number}</span>
+              </li>
+            ))}
+          </div>
           <li
             className={
               context.selectFrameLks === "ArchivPhoto" ? styles.Active : ""
@@ -53,9 +117,14 @@ function LeftMenuLk() {
             onClick={() => {
               context.setSelectFrameLks("settings");
               setSetingOpen(!setingOpen);
+              context.setSelectFrameLks("settings");
             }}
           >
-            <img src={SettingsImg} /> Настройки
+            <img src="/img/UI/settings.svg" />
+            <span>Настройки</span>
+            <BlackArrowBottom
+              className={`${styles.arrow} ${setingOpen ? styles.open : ""}`}
+            />
           </li>
           <div
             className={`${styles.listSetings} ${
