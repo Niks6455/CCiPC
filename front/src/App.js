@@ -20,6 +20,8 @@ import ArchivPhoto from "./modules/ArchivPhoto/ArchivPhoto";
 import CreateReport from "./modules/Reports/CreateReport/CreateReport";
 import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
 import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
+import ViewReports from "./modules/Reports/ViewReports/ViewReports";
+import EditReport from "./modules/Reports/EditReport/EditReport";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
@@ -59,10 +61,9 @@ function App() {
               <Route path="ExitAccount" element={<ExitAccount />}></Route>
               <Route path="ArchivPhoto" element={<ArchivPhoto />}></Route>
               <Route path="settings/profile" element={<ProfileEditing />} />
-              <Route
-                path="settings/changepassword"
-                element={<ChangePassword />}
-              />
+              <Route path="settings/changepassword" element={<ChangePassword />}/>
+              <Route path="ViewReports" element={<ViewReports />}/>
+              <Route path="editReport" element={<EditReport />}/>
             </Route>
             <Route path="/NewsPage" element={<NewsPage />}></Route>
             <Route path="/Author" element={<Author />}></Route>

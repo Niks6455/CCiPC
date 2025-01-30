@@ -84,6 +84,7 @@ function LeftMenuLk() {
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={() => handleMouseLeave()}
                 onMouseMove={handleMouseMove}
+                onClick={() => navigate(`ViewReports?idReport=${rep.id}`)}
               >
                 {index === showTooltip && (
                   <div

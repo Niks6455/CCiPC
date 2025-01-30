@@ -122,7 +122,6 @@ function CreateReport() {
 
             {report.fileArticle ? (
               <>
-                {" "}
                 <div className={styles.fileName}>
                   <span>{report.fileArticle?.name || "Документ.pdf"}</span>
                 </div>

@@ -4,7 +4,7 @@ import { dataSlider } from "./date";
 import LineSlider from "../../assets/img/LineSlider.svg"
 function SliderHomePageTop() {
     // Дублируем массив данных для бесконечного скролла
-    const repeatedData = [...dataSlider, ...dataSlider, ...dataSlider];
+    const repeatedData = [...dataSlider, ...dataSlider, ...dataSlider, ];
 
     return (
         <div className={styles.SliderHomePageTop}>
