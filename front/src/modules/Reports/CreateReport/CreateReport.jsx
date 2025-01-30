@@ -5,20 +5,22 @@ import {
   formParticipationList,
   participationStatus,
 } from "../../../utils/List";
-import fileImport from "./../../../assets/img/fileImport.svg";
+import { ReactComponent as FileImport } from "./../../../assets/img/fileImport.svg";
 import errorList from "./../../../assets/img/UI/errorZnak.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { setValue } from "../../../store/reportCreateSlice/reportCreateSlice";
 import InputListForma from "../../../components/InputListForma/InputListForma";
 import download from "./../../../assets/img/UI/download.svg";
 import exampleFile from "./../../../utils/files/template.docx";
+import { useNavigate } from "react-router-dom";
+import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
+import trashBeliy from "./../../../assets/img/UI/trashBeliy.svg";
 
 function CreateReport() {
-  const [sliderState, setSliderState] = useState(20);
-
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
-
+  console.log("report", report);
   //! функция скачивания шаблока
   const funDownloadShablon = () => {
     const link = document.createElement("a");
@@ -51,16 +53,30 @@ function CreateReport() {
   const handleFileChangeZakl = (event) => {
     const file = event.target.files[0];
     if (file) {
-      dispatch(setValue({ key: "fileConclusion", value: file })); // Сохраняем файл в Redux
+      dispatch(setValue({ key: "fileExpertOpinion", value: file })); // Сохраняем файл в Redux
     }
   };
+
+  const deleteFile = (key) => {
+    dispatch(setValue({ key: key, value: null })); // Сохраняем файл в Redux
+    if (key === "fileArticle") {
+      fileInputStatyaRef.current.value = "";
+    }
+    if (key === "fileExpertOpinion") {
+      fileInputZaklRef.current.value = "";
+    }
+  };
+
   return (
     <div className={styles.CreateReport}>
       <h2 className={styles.title}>Доклад №{report.number}</h2>
       <div className={styles.slider}>
         <div
           className={styles.sliderInner}
-          style={{ width: `${sliderState}%`, transition: "all 0.15s linear" }}
+          style={{
+            width: `${report.sliderState}%`,
+            transition: "all 0.15s linear",
+          }}
         ></div>
       </div>
       <p className={styles.nameReport}>Полное название доклада</p>
@@ -103,12 +119,29 @@ function CreateReport() {
               onChange={handleFileChange}
               style={{ display: "none" }} // Скрываем input
             />
-            <img
-              src={fileImport}
-              alt="загрузить файл"
-              onClick={funUploadFileStatya}
-              draggable="false"
-            />
+
+            {report.fileArticle ? (
+              <>
+                {" "}
+                <div className={styles.fileName}>
+                  <span>{report.fileArticle?.name || "Документ.pdf"}</span>
+                </div>
+                <img
+                  src={trashBeliy}
+                  className={styles.trash}
+                  alt="удалить"
+                  onClick={() => deleteFile("fileArticle")}
+                />
+                <BlockFile className={styles.blockFile} />
+              </>
+            ) : (
+              <FileImport
+                className={styles.fileImport}
+                onClick={funUploadFileStatya}
+                draggable="false"
+              />
+            )}
+
             <div className={styles.downloadShablon}>
               <div className={styles.shablon} onClick={funDownloadShablon}>
                 <span>Шаблон</span>
@@ -126,12 +159,28 @@ function CreateReport() {
               onChange={handleFileChangeZakl}
               style={{ display: "none" }} // Скрываем input
             />
-            <img
-              src={fileImport}
-              alt="загрузить файл"
-              draggable="false"
-              onClick={funUploadFileZakl}
-            />
+            {report.fileExpertOpinion ? (
+              <>
+                <div className={styles.fileName}>
+                  <span>
+                    {report.fileExpertOpinion?.name || "Документ.pdf"}
+                  </span>
+                </div>
+                <img
+                  src={trashBeliy}
+                  className={styles.trash}
+                  alt="удалить"
+                  onClick={() => deleteFile("fileExpertOpinion")}
+                />
+                <BlockFile className={styles.blockFile} />
+              </>
+            ) : (
+              <FileImport
+                className={styles.fileImport}
+                draggable="false"
+                onClick={funUploadFileZakl}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -158,7 +207,9 @@ function CreateReport() {
             до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
           </span>
         </div>
-        <button>Следующий шаг</button>
+        <button onClick={() => navigate("/Lks/addcoauthor")}>
+          Следующий шаг
+        </button>
       </div>
     </div>
   );

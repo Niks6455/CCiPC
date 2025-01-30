@@ -1,24 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./DocumentsLk.module.scss";
 import { useNavigate } from "react-router-dom";
+import document from "./../../../assets/img/document.svg";
+import plus from "./../../../assets/img/UI/plusLigth.svg";
+import { useSelector } from "react-redux";
+
 function DocumentsLk() {
   const navigate = useNavigate();
+  const reports = useSelector((state) => state.reportsSlice.data);
+  const [length, setLength] = useState(reports.length);
+  useEffect(() => {
+    setLength(reports.length);
+  }, [reports]);
+
   return (
     <section className={styles.DocumentsLk}>
       <div className={styles.notDocument}>
         <div className={styles.notDocumentInner}>
           <div className={styles.notDocumentInnerImg}>
-            <img src="/img/ui/document.svg" />
+            <img src={document} alt="Документ" />
           </div>
           <div className={styles.notDocumentTitle}>
-            <p>Создайте доклад</p>
+            <p>{length > 0 ? "Добавть доклад" : "Создайте доклад"}</p>
           </div>
           <div className={styles.notDocumentSubTitle}>
-            <p>У Вас пока нет зарегистрированных докладов</p>
+            {length === 0 && <p>У Вас пока нет зарегистрированных докладов</p>}
           </div>
+
           <div className={styles.notDocumentButton}>
             <button onClick={() => navigate("/Lks/createreport")}>
-              + Создать
+              <img src={plus} alt="+" /> <span>Создать</span>
             </button>
           </div>
         </div>

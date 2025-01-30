@@ -1,0 +1,26 @@
+@import "./../../styles/mixin.scss";
+
+.InputLabel {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  .label {
+    @include InputTitle(18px);
+    margin-bottom: 10px;
+    color: #333333;
+  }
+  .maininput {
+    display: flex;
+    padding: 16px 20px;
+    box-sizing: border-box;
+    border: 1px solid #c8d0ce;
+    border-radius: 10px;
+    outline: none;
+    background-color: var(--BodyBgColor);
+    font-family: Overpass, sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 21.6px;
+  }
+}

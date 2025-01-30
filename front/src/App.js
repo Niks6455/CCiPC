@@ -19,6 +19,7 @@ import ExitAccount from "./modules/ExitAccount/ExitAccount";
 import ArchivPhoto from "./modules/ArchivPhoto/ArchivPhoto";
 import CreateReport from "./modules/Reports/CreateReport/CreateReport";
 import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
+import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("test@sfedu.ru");
@@ -52,6 +53,7 @@ function App() {
             <Route path="/Lks" element={<Lks />}>
               <Route path="documents" element={<DocumentsLk />}></Route>
               <Route path="createreport" element={<CreateReport />} />
+              <Route path="addcoauthor" element={<AddCoauthor />} />
               <Route path="profile" element={<Profile />}></Route>
               <Route path="DeleteAccount" element={<DeleteAccount />}></Route>
               <Route path="ExitAccount" element={<ExitAccount />}></Route>
