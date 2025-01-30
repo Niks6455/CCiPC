@@ -44,7 +44,7 @@ function LeftMenuLk() {
   };
   return (
     <section className={styles.LeftMenuLk}>
-      <div>
+      <div className={styles.LeftMenuLkInner}>
         <img src={logo} className={styles.LogoImg} />
         <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
         <ul className={styles.LeftMenuLkList}>
@@ -52,10 +52,8 @@ function LeftMenuLk() {
             className={
               context.selectFrameLks === "profile" ? styles.Active : ""
             }
-            onClick={
-              // () => context.setSelectFrameLks("profile")
-              () => navigate("profile")
-            }
+            onClick={ () =>{context.setSelectFrameLks("profile");navigate("profile")}}
+              
           >
             <img src={Lk} /> Профиль
           </li>
@@ -131,10 +129,10 @@ function LeftMenuLk() {
               setingOpen && styles.setingOpen
             }`}
           >
-            <li onClick={() => navigate("settings/profile")}>
+            <li onClick={() => {navigate("settings/profile") ; context.setSelectFrameLks("settings/profile")}}   className={context.selectFrameLks === "settings/profile" ? styles.Active : ""}>
               Изменить профиль
             </li>
-            <li onClick={() => navigate("settings/changepassword")}>
+            <li onClick={() => {navigate("settings/changepassword") ; context.setSelectFrameLks("settings/changepassword")}} className={context.selectFrameLks === "settings/changepassword" ? styles.Active : ""}>
               Сменить пароль
             </li>
           </div>
