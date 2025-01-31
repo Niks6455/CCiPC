@@ -8,6 +8,11 @@
   min-width: 310px;
   min-height: calc(100vh - 256px);
   box-sizing: border-box;
+  .LeftMenuLkInner{
+    position: fixed;
+    width: 310px;
+    min-width: 310px;
+  }
   .LogoImg {
     width: 110px;
     height: 110px;
@@ -27,8 +32,11 @@
       align-items: center;
       margin: 10px 33px 0px 0px;
       height: 46px;
+      // width: 240px;
       cursor: pointer;
       padding-left: 10px;
+      box-sizing: border-box;
+      border-radius: 10px;
       img {
         margin-right: 10px;
       }
@@ -58,13 +66,16 @@
     }
     .Active {
       background-color: var(--MenuHover);
+      box-sizing: border-box;
     }
     .listSetings {
       padding-left: 34px;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s linear;
-      li {
+      width: 205px!important;
+      border-radius: 10px;
+    li {
         margin-right: 0;
         position: static;
       }

@@ -33,6 +33,13 @@ const reportsSlice = createSlice({
             organization: "ЮФУ",
             email: "atonoian@sfedu.ru",
             phone: "79034005695",
+          },{
+            name: "Никита",
+            surname: "Капылов",
+            patronymic: "Максимович",
+            organization: "ЮФУ",
+            email: "niks@sfedu.ru",
+            phone: "79007777777",
           },
         ],
       },

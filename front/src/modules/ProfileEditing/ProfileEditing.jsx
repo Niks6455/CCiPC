@@ -2,11 +2,13 @@ import styles from "./ProfileEditing.module.scss";
 import profilePhoto from "./../../assets/img/noPhotoLk.svg";
 import Input from "../../ui/Input/Input";
 import InputList from "../../ui/InputList/InputList";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { stepenList, zwanieList } from "../../utils/List";
+import { useNavigate } from "react-router-dom";
+import DataContext from "../../context";
 function ProfileEditing() {
   const [openList, setOpenList] = useState("");
-
+  const context = useContext(DataContext);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -197,7 +199,7 @@ function ProfileEditing() {
       console.log("Форма отправлена", formData);
     }
   };
-
+  const navigate = useNavigate();
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const refList = [ref1, ref2];
@@ -279,7 +281,8 @@ function ProfileEditing() {
                 </div>
               )
           )}
-          <button onClick={() => handleSubmit()}>Сохранить изменения</button>
+          <button className={styles.SaveButton} onClick={() => handleSubmit()}>Сохранить изменения</button>
+          <button className={styles.noSaveButton}  onClick={ () =>{context.setSelectFrameLks("profile");navigate("/Lks/profile")}}>Выйти без сохранения</button>
         </div>
       </div>
     </div>

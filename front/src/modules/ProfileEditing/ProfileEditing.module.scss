@@ -1,3 +1,5 @@
+@import "../../styles/mixin.scss";
+
 .ProfileEditing {
   width: calc(100vw - 700px);
   display: flex;
@@ -70,7 +72,7 @@
       display: flex;
       flex-direction: column;
 
-      button {
+      .SaveButton {
         border-radius: 10px;
         padding: 16px 25px;
         font-family: Overpass, sans-serif;
@@ -85,7 +87,7 @@
         border: none;
         color: #fff;
         margin-top: 25px;
-
+        height: 60px;
         &:hover {
           background-color: #002d1b;
           transition: all 0.1s linear;
@@ -94,6 +96,11 @@
           background-color: #001c14;
           transition: all 0.1s linear;
         }
+      }
+      .noSaveButton{
+        @include ButtonLightBorder;
+        height: 60px;
+        margin-top: 25px;
       }
     }
     .item {

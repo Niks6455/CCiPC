@@ -12,6 +12,8 @@ import {
 } from "../../../store/reportCreateSlice/reportCreateSlice";
 import InputLabel from "../../../ui/InputLabel/InputLabel";
 import trash from "./../../../assets/img/UI/trash.svg";
+import InputListForma from "../../../components/InputListForma/InputListForma";
+import { formParticipationList } from "../../../utils/List";
 
 function AddCoauthor() {
   const navigate = useNavigate();
@@ -111,7 +113,15 @@ function AddCoauthor() {
                 placeholder={inp.placeholder}
               />
             </div>
+            
           ))}
+          <div className={styles.inputbox}>
+            <InputListForma
+            name={"Форма участия"}
+            list={formParticipationList}
+            itemKey={"formParticipation"}
+            value={report.formParticipation}
+          /></div>
         </div>
       ))}
       <button

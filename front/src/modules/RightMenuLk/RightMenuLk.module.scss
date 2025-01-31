@@ -3,6 +3,7 @@
     display: block;
     border-left: 1px solid var(--InputColors);
     width: 310px;
+    min-width: 310px;
     min-height: calc(100vh - 256px);
     box-sizing: border-box;
     position: relative;
