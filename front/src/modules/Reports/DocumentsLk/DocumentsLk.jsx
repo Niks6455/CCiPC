@@ -28,7 +28,7 @@ function DocumentsLk() {
           </div>
 
           <div className={styles.notDocumentButton}>
-            <button onClick={() => navigate("/Lks/createreport")}>
+            <button onClick={() => navigate("/account/createreport")}>
               <img src={plus} alt="+" /> <span>Создать</span>
             </button>
           </div>

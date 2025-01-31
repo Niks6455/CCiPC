@@ -21,6 +21,25 @@ const keys = [
   "soauthors",
 ];
 
+//! функция расчета sliderState
+const calculateSliderState = (state) => {
+  let slider = 0;
+  let length = keys.length;
+  keys.map((key) => {
+    if (key === "soauthors") {
+      if (state.soauthors.length > 0) {
+        length = keys.length + state.soauthors.length * 7;
+        slider += 1;
+      }
+    } else {
+      if (state[key] !== "" && state[key] !== null) {
+        slider += 1;
+      }
+    }
+  });
+  return (100 / length) * slider;
+};
+
 const reportCreateSlice = createSlice({
   name: "reportCreate",
   initialState: {
@@ -44,19 +63,7 @@ const reportCreateSlice = createSlice({
       console.log("key, value", key, value);
       state[key] = value;
       //! считаем прогресс
-      let slider = 0;
-      keys.map((key) => {
-        if (key === "soauthors") {
-          if (state.soauthors.length > 0) {
-            slider += 1;
-          }
-        } else {
-          if (state[key] !== "" && state[key] !== null) {
-            slider += 1;
-          }
-        }
-      });
-      state.sliderState = (100 / keys.length) * slider;
+      state.sliderState = calculateSliderState(state);
     },
 
     addSoauthors(state) {
@@ -72,6 +79,8 @@ const reportCreateSlice = createSlice({
           formParticipation: "",
         },
       ];
+      //! считаем прогресс
+      state.sliderState = calculateSliderState(state);
     },
 
     deleteCoauthor(state, action) {
@@ -79,11 +88,14 @@ const reportCreateSlice = createSlice({
       console.log("index", index);
       state.soauthors = state.soauthors.filter((_, i) => i !== index);
       console.log("state.soauthors", state.soauthors);
+      state.sliderState = calculateSliderState(state);
     },
 
     setValueCoauthors(state, action) {
       const { index, key, value } = action.payload;
       state.soauthors[index][key] = value;
+      //! считаем прогресс
+      state.sliderState = calculateSliderState(state);
     },
   },
 });

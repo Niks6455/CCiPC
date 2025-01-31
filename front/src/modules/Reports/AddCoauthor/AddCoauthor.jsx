@@ -73,6 +73,11 @@ function AddCoauthor() {
     dispatch(setValueCoauthors({ index, key, value }));
   };
 
+  //! функция onClange на InputListForm
+  const handleChangeForm = (key, value, index) => {
+    dispatch(setValueCoauthors({ index, key, value }));
+  };
+
   return (
     <div className={styles.AddCoauthor}>
       <h2 className={styles.title}>Соавторы</h2>
@@ -113,15 +118,17 @@ function AddCoauthor() {
                 placeholder={inp.placeholder}
               />
             </div>
-            
           ))}
           <div className={styles.inputbox}>
             <InputListForma
-            name={"Форма участия"}
-            list={formParticipationList}
-            itemKey={"formParticipation"}
-            value={report.formParticipation}
-          /></div>
+              name={"Форма участия*"}
+              list={formParticipationList}
+              itemKey={"formParticipation"}
+              value={report.soauthors[index].formParticipation}
+              handleChangeForm={handleChangeForm}
+              index={index}
+            />
+          </div>
         </div>
       ))}
       <button
@@ -140,7 +147,9 @@ function AddCoauthor() {
             до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
           </span>
         </div>
-        <button onClick={() => navigate("/Lks/addcoauthor")}>Сохранить</button>
+        <button onClick={() => navigate("/account/addcoauthor")}>
+          Сохранить
+        </button>
       </div>
     </div>
   );

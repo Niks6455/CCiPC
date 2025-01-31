@@ -8,14 +8,16 @@
   min-width: 310px;
   min-height: calc(100vh - 256px);
   box-sizing: border-box;
-  .LeftMenuLkInner{
+  .LeftMenuLkInner {
     position: fixed;
     width: 310px;
     min-width: 310px;
+    z-index: 10000;
   }
   .LogoImg {
     width: 110px;
     height: 110px;
+    cursor: pointer;
   }
   .LeftMenuLkTitle {
     margin: 48px 0px 40px 0px;
@@ -73,9 +75,9 @@
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s linear;
-      width: 205px!important;
+      width: 205px !important;
       border-radius: 10px;
-    li {
+      li {
         margin-right: 0;
         position: static;
       }
@@ -91,7 +93,8 @@
     .repName {
       position: absolute;
       max-width: 340px;
-      z-index: 100;
+      width: max-content;
+      z-index: 10000;
       right: -400;
       top: 0;
       background-color: #fff;

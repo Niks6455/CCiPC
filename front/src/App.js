@@ -50,29 +50,32 @@ function App() {
       <BrowserRouter>
         <main style={{ fontFamily: "REX" }}>
           <Routes>
-            <Route path="/AuthPage" element={<AuthPage />}></Route>
-            <Route path="/Participants" element={<Participants />}></Route>
-            <Route path="/Lks" element={<Lks />}>
+            <Route path="/authorization" element={<AuthPage />}></Route>
+            <Route path="/participants" element={<Participants />}></Route>
+            <Route path="/account" element={<Lks />}>
               <Route path="documents" element={<DocumentsLk />}></Route>
               <Route path="createreport" element={<CreateReport />} />
               <Route path="addcoauthor" element={<AddCoauthor />} />
               <Route path="profile" element={<Profile />}></Route>
-              <Route path="DeleteAccount" element={<DeleteAccount />}></Route>
-              <Route path="ExitAccount" element={<ExitAccount />}></Route>
-              <Route path="ArchivPhoto" element={<ArchivPhoto />}></Route>
+              <Route path="deleteaccount" element={<DeleteAccount />}></Route>
+              <Route path="exitaccount" element={<ExitAccount />}></Route>
+              <Route path="archivephoto" element={<ArchivPhoto />}></Route>
               <Route path="settings/profile" element={<ProfileEditing />} />
-              <Route path="settings/changepassword" element={<ChangePassword />}/>
-              <Route path="ViewReports" element={<ViewReports />}/>
-              <Route path="editReport" element={<EditReport />}/>
+              <Route
+                path="settings/changepassword"
+                element={<ChangePassword />}
+              />
+              <Route path="viewreports" element={<ViewReports />} />
+              <Route path="editreport" element={<EditReport />} />
             </Route>
-            <Route path="/NewsPage" element={<NewsPage />}></Route>
-            <Route path="/Author" element={<Author />}></Route>
+            <Route path="/news" element={<NewsPage />}></Route>
+            <Route path="/author" element={<Author />}></Route>
             <Route
               path="/recoverpassword"
               element={<RecoverPassword />}
             ></Route>
             <Route
-              path="/OrganizationComite"
+              path="/organizationcomite"
               element={<CommitteesPage />}
             ></Route>
             <Route path="/" element={<HomePage />}></Route>

@@ -39,10 +39,12 @@ function InputListForma(props) {
         />
         {listOpen && (
           <ListInput
+            index={props.index}
             list={props.list}
             value={props.value}
             name={props.itemKey}
             setListOpen={setListOpen}
+            handleChangeForm={props.handleChangeForm}
           />
         )}
       </div>

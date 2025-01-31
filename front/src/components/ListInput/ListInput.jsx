@@ -4,10 +4,11 @@ import { useDispatch } from "react-redux";
 
 function ListInput(props) {
   console.log("props", props);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const funClickLi = (text) => {
-    dispatch(setValue({ key: props.name, value: text }));
+    // dispatch(setValue({ key: props.name, value: text }));
+    props.handleChangeForm(props.name, text, props.index);
     props.setListOpen(false);
   };
 

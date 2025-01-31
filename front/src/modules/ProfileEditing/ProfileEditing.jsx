@@ -281,8 +281,18 @@ function ProfileEditing() {
                 </div>
               )
           )}
-          <button className={styles.SaveButton} onClick={() => handleSubmit()}>Сохранить изменения</button>
-          <button className={styles.noSaveButton}  onClick={ () =>{context.setSelectFrameLks("profile");navigate("/Lks/profile")}}>Выйти без сохранения</button>
+          <button className={styles.SaveButton} onClick={() => handleSubmit()}>
+            Сохранить изменения
+          </button>
+          <button
+            className={styles.noSaveButton}
+            onClick={() => {
+              context.setSelectFrameLks("profile");
+              navigate("/account/profile");
+            }}
+          >
+            Выйти без сохранения
+          </button>
         </div>
       </div>
     </div>

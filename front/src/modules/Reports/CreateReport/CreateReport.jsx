@@ -67,6 +67,12 @@ function CreateReport() {
     }
   };
 
+  //! функция onClange на InputListForm
+  const handleChangeForm = (name, text) => {
+    dispatch(setValue({ key: name, value: text }));
+    console.log("name", name);
+  };
+
   return (
     <div className={styles.CreateReport}>
       <h2 className={styles.title}>Доклад №{report.number}</h2>
@@ -95,18 +101,21 @@ function CreateReport() {
           list={directionConferenceList}
           itemKey={"directionConference"}
           value={report.directionConference}
+          handleChangeForm={handleChangeForm}
         />
         <InputListForma
           name={"Форма участия"}
           list={formParticipationList}
           itemKey={"formParticipation"}
           value={report.formParticipation}
+          handleChangeForm={handleChangeForm}
         />
         <InputListForma
           name={"Статус участия"}
           list={participationStatus}
           itemKey={"participationStatus"}
           value={report.participationStatus}
+          handleChangeForm={handleChangeForm}
         />
       </div>
       <div className={styles.fileContainer}>
@@ -206,7 +215,7 @@ function CreateReport() {
             до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
           </span>
         </div>
-        <button onClick={() => navigate("/Lks/addcoauthor")}>
+        <button onClick={() => navigate("/account/addcoauthor")}>
           Следующий шаг
         </button>
       </div>

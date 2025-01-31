@@ -45,15 +45,21 @@ function LeftMenuLk() {
   return (
     <section className={styles.LeftMenuLk}>
       <div className={styles.LeftMenuLkInner}>
-        <img src={logo} className={styles.LogoImg} />
+        <img
+          src={logo}
+          className={styles.LogoImg}
+          onClick={() => navigate("/")}
+        />
         <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
         <ul className={styles.LeftMenuLkList}>
           <li
             className={
               context.selectFrameLks === "profile" ? styles.Active : ""
             }
-            onClick={ () =>{context.setSelectFrameLks("profile");navigate("profile")}}
-              
+            onClick={() => {
+              context.setSelectFrameLks("profile");
+              navigate("profile");
+            }}
           >
             <img src={Lk} /> Профиль
           </li>
@@ -64,7 +70,7 @@ function LeftMenuLk() {
             onClick={() => {
               navigate("documents");
               setDokladOpen(!dokladOpen);
-              context.setSelectFrameLks("documents")
+              context.setSelectFrameLks("documents");
             }}
           >
             <img src={documentImg} />
@@ -84,7 +90,7 @@ function LeftMenuLk() {
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={() => handleMouseLeave()}
                 onMouseMove={handleMouseMove}
-                onClick={() => navigate(`ViewReports?idReport=${rep.id}`)}
+                onClick={() => navigate(`viewreports?idReport=${rep.id}`)}
               >
                 {index === showTooltip && (
                   <div
@@ -105,7 +111,10 @@ function LeftMenuLk() {
             className={
               context.selectFrameLks === "ArchivPhoto" ? styles.Active : ""
             }
-            onClick={() => {context.setSelectFrameLks("ArchivPhoto"); navigate("ArchivPhoto")}}
+            onClick={() => {
+              context.setSelectFrameLks("ArchivPhoto");
+              navigate("archivephoto");
+            }}
           >
             <img src={ArchiveiMG} /> Архив фото
           </li>
@@ -130,29 +139,53 @@ function LeftMenuLk() {
               setingOpen && styles.setingOpen
             }`}
           >
-            <li onClick={() => {navigate("settings/profile") ; context.setSelectFrameLks("settings/profile")}}   className={context.selectFrameLks === "settings/profile" ? styles.Active : ""}>
+            <li
+              onClick={() => {
+                navigate("settings/profile");
+                context.setSelectFrameLks("settings/profile");
+              }}
+              className={
+                context.selectFrameLks === "settings/profile"
+                  ? styles.Active
+                  : ""
+              }
+            >
               Изменить профиль
             </li>
-            <li onClick={() => {navigate("settings/changepassword") ; context.setSelectFrameLks("settings/changepassword")}} className={context.selectFrameLks === "settings/changepassword" ? styles.Active : ""}>
+            <li
+              onClick={() => {
+                navigate("settings/changepassword");
+                context.setSelectFrameLks("settings/changepassword");
+              }}
+              className={
+                context.selectFrameLks === "settings/changepassword"
+                  ? styles.Active
+                  : ""
+              }
+            >
               Сменить пароль
             </li>
           </div>
 
           <li
-            className={context.selectFrameLks === "ExitAccount" ? styles.Active : ""}
-            onClick={
-              () => {navigate("ExitAccount")
-              context.setSelectFrameLks("ExitAccount")}
+            className={
+              context.selectFrameLks === "ExitAccount" ? styles.Active : ""
             }
+            onClick={() => {
+              navigate("exitaccount");
+              context.setSelectFrameLks("ExitAccount");
+            }}
           >
             <img src={exitImg} /> Выйти из аккаунта
           </li>
           <li
-            className={context.selectFrameLks === "DeleteAccount" ? styles.Active : ""}
-            onClick={
-              () =>{navigate("DeleteAccount")
-              context.setSelectFrameLks("DeleteAccount")}
+            className={
+              context.selectFrameLks === "DeleteAccount" ? styles.Active : ""
             }
+            onClick={() => {
+              navigate("deleteaccount");
+              context.setSelectFrameLks("DeleteAccount");
+            }}
           >
             <img src={deleteImg} /> Удалить аккаунт
           </li>
