@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styles from "./AddCoauthor.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,78 +7,75 @@ import errorList from "./../../../assets/img/UI/errorZnak.svg";
 import {
   addSoauthors,
   deleteCoauthor,
+  funSaveDataState,
   setValueCoauthors,
 } from "../../../store/reportCreateSlice/reportCreateSlice";
 import InputLabel from "../../../ui/InputLabel/InputLabel";
 import trash from "./../../../assets/img/UI/trash.svg";
 import InputListForma from "../../../components/InputListForma/InputListForma";
-import { formParticipationList } from "../../../utils/List";
+import { formParticipationList } from "../../../utils/Lists/List";
+import {
+  capitalizeFirstLetter,
+  formatPhoneNumber,
+} from "../../../utils/functions/Validations";
+import { inpustType } from "./data";
+import SameEmail from "../../../components/AddReportModal/SameEmail/SameEmail";
+import SuccessModal from "../../../components/AddReportModal/SuccessModal/SuccessModal";
+import NotFullyFilled from "../../../components/AddReportModal/NotFullyFilled/NotFullyFilled";
+import NotFullyFilledCoauthors from "../../../components/AddReportModal/NotFullyFilledCoauthors/NotFullyFilledCoauthors";
 
 function AddCoauthor() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
 
-  const inpustType = [
-    {
-      id: "1",
-      label: "Имя соавтора*",
-      placeholder: "Имя",
-      type: "text",
-      key: "name",
-    },
-    {
-      id: "2",
-      label: "Фамилия соавтора*",
-      placeholder: "Фамилия",
-      type: "text",
-      key: "surname",
-    },
-    {
-      id: "3",
-      label: "Отчество соавтора",
-      placeholder: "Отчество",
-      type: "text",
-      key: "patronymic",
-    },
-    {
-      id: "4",
-      label: "Организация*",
-      placeholder: "Не заполнено",
-      type: "text",
-      key: "organization",
-    },
-    {
-      id: "5",
-      label: "Email*",
-      placeholder: "Email (логин)",
-      type: "email",
-      key: "email",
-    },
-    {
-      id: "6",
-      label: "Номер*",
-      placeholder: "+7-900-000-00-00",
-      type: "tel",
-      key: "phone",
-    },
-  ];
-
   const funDeleteCoauthor = (index) => {
     dispatch(deleteCoauthor({ index }));
   };
 
   const funChangeInput = (index, key, value) => {
-    dispatch(setValueCoauthors({ index, key, value }));
+    let newValue = value;
+    const item = inpustType.find((el) => el.key === key);
+    if (item.key === "phone") {
+      newValue = formatPhoneNumber(value);
+    }
+    //! делаем букву заглавной
+    if (item?.capitalLetter) {
+      newValue = capitalizeFirstLetter(value);
+    }
+    //! применяем валидацию из списка
+    if (item?.valdate) {
+      if (!item.valdate(newValue)) {
+        return;
+      }
+    }
+
+    dispatch(setValueCoauthors({ index, key, value: newValue }));
   };
 
-  //! функция onClange на InputListForm
+  //! функция onChange на InputListForm
   const handleChangeForm = (key, value, index) => {
     dispatch(setValueCoauthors({ index, key, value }));
   };
 
+  //! сохранение данных
+  const funSaveData = () => {
+    dispatch(funSaveDataState());
+  };
+
   return (
     <div className={styles.AddCoauthor}>
+      {report?.openPopUpName && (
+        <div className={styles.popups}>
+          {report?.openPopUpName === "SameEmail" && <SameEmail />}
+          {report?.openPopUpName === "SuccessModal" && <SuccessModal />}
+          {report?.openPopUpName === "NotFullyFilled" && <NotFullyFilled />}
+          {report?.openPopUpName === "NotFullyFilledCoauthors" && (
+            <NotFullyFilledCoauthors />
+          )}
+        </div>
+      )}
+
       <h2 className={styles.title}>Соавторы</h2>
       <div className={styles.backImg}>
         <img
@@ -98,7 +94,7 @@ function AddCoauthor() {
           }}
         ></div>
       </div>
-      {report?.soauthors?.map((soauthtor, index) => (
+      {report?.data.soauthors?.map((soauthtor, index) => (
         <div key={index} className={styles.inputContainer}>
           <div className={styles.deletecoauthor}>
             <button onClick={() => funDeleteCoauthor(index)}>
@@ -116,6 +112,7 @@ function AddCoauthor() {
                 value={soauthtor[inp.key]}
                 funChange={funChangeInput}
                 placeholder={inp.placeholder}
+                error={inp.error}
               />
             </div>
           ))}
@@ -124,7 +121,7 @@ function AddCoauthor() {
               name={"Форма участия*"}
               list={formParticipationList}
               itemKey={"formParticipation"}
-              value={report.soauthors[index].formParticipation}
+              value={report.data.soauthors[index].formParticipation}
               handleChangeForm={handleChangeForm}
               index={index}
             />
@@ -147,9 +144,7 @@ function AddCoauthor() {
             до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
           </span>
         </div>
-        <button onClick={() => navigate("/account/addcoauthor")}>
-          Сохранить
-        </button>
+        <button onClick={funSaveData}>Сохранить</button>
       </div>
     </div>
   );

@@ -80,7 +80,6 @@ function App() {
             ></Route>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="*" element={<NoteFoundPage />} />{" "}
-            {/* Добавление 404 страницы */}
           </Routes>
         </main>
       </BrowserRouter>

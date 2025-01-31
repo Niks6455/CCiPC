@@ -4,7 +4,7 @@ import {
   directionConferenceList,
   formParticipationList,
   participationStatus,
-} from "../../../utils/List";
+} from "../../../utils/Lists/List";
 import { ReactComponent as FileImport } from "./../../../assets/img/fileImport.svg";
 import errorList from "./../../../assets/img/UI/errorZnak.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,7 +75,7 @@ function CreateReport() {
 
   return (
     <div className={styles.CreateReport}>
-      <h2 className={styles.title}>Доклад №{report.number}</h2>
+      <h2 className={styles.title}>Доклад №{report.data.number}</h2>
       <div className={styles.slider}>
         <div
           className={styles.sliderInner}
@@ -90,7 +90,7 @@ function CreateReport() {
       <textarea
         type="text"
         className={styles.nameReportInput}
-        value={report.name}
+        value={report.data.name}
         onChange={(event) =>
           dispatch(setValue({ key: "name", value: event.target.value }))
         }
@@ -100,21 +100,21 @@ function CreateReport() {
           name={"Направление конференции"}
           list={directionConferenceList}
           itemKey={"directionConference"}
-          value={report.directionConference}
+          value={report.data.directionConference}
           handleChangeForm={handleChangeForm}
         />
         <InputListForma
           name={"Форма участия"}
           list={formParticipationList}
           itemKey={"formParticipation"}
-          value={report.formParticipation}
+          value={report.data.formParticipation}
           handleChangeForm={handleChangeForm}
         />
         <InputListForma
           name={"Статус участия"}
           list={participationStatus}
           itemKey={"participationStatus"}
-          value={report.participationStatus}
+          value={report.data.participationStatus}
           handleChangeForm={handleChangeForm}
         />
       </div>
@@ -129,10 +129,10 @@ function CreateReport() {
               style={{ display: "none" }} // Скрываем input
             />
 
-            {report.fileArticle ? (
+            {report.data.fileArticle ? (
               <>
                 <div className={styles.fileName}>
-                  <span>{report.fileArticle?.name || "Документ.pdf"}</span>
+                  <span>{report.data.fileArticle?.name || "Документ.pdf"}</span>
                 </div>
                 <img
                   src={trashBeliy}
@@ -167,11 +167,11 @@ function CreateReport() {
               onChange={handleFileChangeZakl}
               style={{ display: "none" }} // Скрываем input
             />
-            {report.fileExpertOpinion ? (
+            {report.data.fileExpertOpinion ? (
               <>
                 <div className={styles.fileName}>
                   <span>
-                    {report.fileExpertOpinion?.name || "Документ.pdf"}
+                    {report.data.fileExpertOpinion?.name || "Документ.pdf"}
                   </span>
                 </div>
                 <img
