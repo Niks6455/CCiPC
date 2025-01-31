@@ -1,0 +1,36 @@
+@import "./../../../styles/mixin.scss";
+
+.NotFullyFilledCoauthors {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 70px;
+  border-radius: 10px;
+  .title {
+    font-family: Overpass, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 26px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-bottom: 40px;
+  }
+  .btnred {
+    @include ButtonGreen;
+    width: 310px;
+    height: 54px;
+  }
+  .btnLight {
+    @include ButtonLightBorder;
+    width: 268px;
+    height: 54px;
+    margin-left: 20px;
+  }
+  .btn {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+  }
+}

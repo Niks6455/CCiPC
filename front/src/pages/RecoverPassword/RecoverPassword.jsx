@@ -14,7 +14,7 @@ import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
-} from "../../utils/PasswordValidation";
+} from "../../utils/functions/PasswordValidation";
 import { useNavigate } from "react-router-dom";
 
 function RecoverPassword() {

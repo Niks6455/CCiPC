@@ -3,7 +3,7 @@ import profilePhoto from "./../../assets/img/noPhotoLk.svg";
 import Input from "../../ui/Input/Input";
 import InputList from "../../ui/InputList/InputList";
 import { useContext, useEffect, useRef, useState } from "react";
-import { stepenList, zwanieList } from "../../utils/List";
+import { stepenList, zwanieList } from "../../utils/Lists/List";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
 function ProfileEditing() {

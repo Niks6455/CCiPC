@@ -7,12 +7,12 @@ import InputList from "../../ui/InputList/InputList";
 import listErrorNoHover from "./../../assets/img/UI/listErrorNoActive.svg";
 import listErrorOnHover from "./../../assets/img/UI/listError.svg";
 import lock from "./../../assets/img/UI/lock.svg";
-import { doljnostList, stepenList, zwanieList } from "../../utils/List";
+import { doljnostList, stepenList, zwanieList } from "../../utils/Lists/List";
 import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
-} from "../../utils/PasswordValidation";
+} from "../../utils/functions/PasswordValidation";
 
 function Register() {
   const context = useContext(DataContext);
