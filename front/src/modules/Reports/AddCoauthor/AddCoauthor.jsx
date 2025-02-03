@@ -8,6 +8,7 @@ import {
   addSoauthors,
   deleteCoauthor,
   funSaveDataState,
+  setCoauthorAutocompletion,
   setValueCoauthors,
 } from "../../../store/reportCreateSlice/reportCreateSlice";
 import InputLabel from "../../../ui/InputLabel/InputLabel";
@@ -17,8 +18,9 @@ import { formParticipationList } from "../../../utils/Lists/List";
 import {
   capitalizeFirstLetter,
   formatPhoneNumber,
+  validateEmail,
 } from "../../../utils/functions/Validations";
-import { inpustType } from "./data";
+import { inpustType, inpustTypeEmail } from "./data";
 import SameEmail from "../../../components/AddReportModal/SameEmail/SameEmail";
 import SuccessModal from "../../../components/AddReportModal/SuccessModal/SuccessModal";
 import NotFullyFilled from "../../../components/AddReportModal/NotFullyFilled/NotFullyFilled";
@@ -33,10 +35,24 @@ function AddCoauthor() {
     dispatch(deleteCoauthor({ index }));
   };
 
+  const funNoEmail = (index) => {
+    dispatch(setCoauthorAutocompletion({ index, autocompletion: "true" }));
+  };
+
   const funChangeInput = (index, key, value) => {
+    if (key === "email") {
+      if (validateEmail(value) && value) {
+        dispatch(
+          setCoauthorAutocompletion({ index, autocompletion: "noemail" })
+        );
+      }
+      if (!validateEmail(value)) {
+        dispatch(setCoauthorAutocompletion({ index, autocompletion: "" }));
+      }
+    }
     let newValue = value;
     const item = inpustType.find((el) => el.key === key);
-    if (item.key === "phone") {
+    if (key === "phone") {
       newValue = formatPhoneNumber(value);
     }
     //! делаем букву заглавной
@@ -102,30 +118,67 @@ function AddCoauthor() {
               <img src={trash} alt="удалить" />
             </button>
           </div>
-          {inpustType.map((inp) => (
+          {inpustTypeEmail.map((inp) => (
             <div className={styles.inputbox} key={inp.id}>
               <InputLabel
                 label={inp.label}
                 type={inp.type}
                 index={index}
                 itemKey={inp.key}
-                value={soauthtor[inp.key]}
+                value={soauthtor.data[inp.key]}
                 funChange={funChangeInput}
                 placeholder={inp.placeholder}
                 error={inp.error}
               />
+              {soauthtor.autocompletion === "noemail" && (
+                <div className={styles.modalEmail}>
+                  <p>
+                    Пользователь с такой почтой не найден на платформе.
+                    Необходимо внести данные о соавторе вручную.
+                  </p>
+                  <button onClick={() => funNoEmail(index)}>Продолжить</button>
+                </div>
+              )}
+              {soauthtor.autocompletion === "emailhave" && (
+                <div className={styles.modalEmail}>
+                  <p>
+                    Пользователь с такой почтой найден на платформе. Данные о
+                    соавторе заполнятся автоматически, кроме его формы участия.
+                  </p>
+                  <button>Продолжить</button>
+                </div>
+              )}
             </div>
           ))}
-          <div className={styles.inputbox}>
-            <InputListForma
-              name={"Форма участия*"}
-              list={formParticipationList}
-              itemKey={"formParticipation"}
-              value={report.data.soauthors[index].formParticipation}
-              handleChangeForm={handleChangeForm}
-              index={index}
-            />
-          </div>
+
+          {soauthtor.autocompletion === "true" && (
+            <>
+              {inpustType.map((inp) => (
+                <div className={styles.inputbox} key={inp.id}>
+                  <InputLabel
+                    label={inp.label}
+                    type={inp.type}
+                    index={index}
+                    itemKey={inp.key}
+                    value={soauthtor.data[inp.key]}
+                    funChange={funChangeInput}
+                    placeholder={inp.placeholder}
+                    error={inp.error}
+                  />
+                </div>
+              ))}
+              <div className={styles.inputbox}>
+                <InputListForma
+                  name={"Форма участия*"}
+                  list={formParticipationList}
+                  itemKey={"formParticipation"}
+                  value={report.data.soauthors[index]?.data?.formParticipation}
+                  handleChangeForm={handleChangeForm}
+                  index={index}
+                />
+              </div>
+            </>
+          )}
         </div>
       ))}
       <button

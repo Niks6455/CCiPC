@@ -42,7 +42,7 @@ const calculateSliderState = (state) => {
           keys.length - 1 + state.data.soauthors.length * keysCoauthors.length;
         state.data.soauthors.map((author) => {
           keysCoauthors.map((key) => {
-            if (author[key] !== "" && author[key] !== null) {
+            if (author.data[key] !== "" && author.data[key] !== null) {
               slider += 1;
             }
           });
@@ -91,13 +91,16 @@ const reportCreateSlice = createSlice({
       state.data.soauthors = [
         ...state.data.soauthors,
         {
-          name: "",
-          surname: "",
-          patronymic: "",
-          organization: "",
-          email: "",
-          phone: "",
-          formParticipation: "",
+          data: {
+            name: "",
+            surname: "",
+            patronymic: "",
+            organization: "",
+            email: "",
+            phone: "",
+            formParticipation: "",
+          },
+          autocompletion: "",
         },
       ];
       //! считаем прогресс
@@ -113,7 +116,7 @@ const reportCreateSlice = createSlice({
     setValueCoauthors(state, action) {
       const { index, key, value } = action.payload;
       if (value !== undefined) {
-        state.data.soauthors[index][key] = value;
+        state.data.soauthors[index].data[key] = value;
         //! считаем прогресс
         state.sliderState = calculateSliderState(state);
       }
@@ -121,7 +124,9 @@ const reportCreateSlice = createSlice({
 
     funSaveDataState(state) {
       //! определяем есть ли соавторы с одинаковой почтой
-      const emails = state.data.soauthors.map((soauthor) => soauthor.email);
+      const emails = state.data.soauthors.map(
+        (soauthor) => soauthor.data.email
+      );
       const uniqueEmails = new Set(emails);
       if (emails.length !== uniqueEmails.size) {
         state.openPopUpName = "SameEmail";
@@ -133,7 +138,7 @@ const reportCreateSlice = createSlice({
         let modal = "";
         state.data.soauthors.map((soauthor) => {
           keysCoauthors.map((key) => {
-            if (soauthor[key] === "" || soauthor[key] === null) {
+            if (soauthor.data[key] === "" || soauthor.data[key] === null) {
               modal = "NotFullyFilledCoauthors";
               return;
             }
@@ -162,6 +167,11 @@ const reportCreateSlice = createSlice({
       const { name } = action.payload;
       state.openPopUpName = name;
     },
+
+    setCoauthorAutocompletion(state, action) {
+      const { index, autocompletion } = action.payload;
+      state.data.soauthors[index].autocompletion = autocompletion;
+    },
   },
 });
 
@@ -172,6 +182,7 @@ export const {
   setValueCoauthors,
   setOpenPopUpName,
   funSaveDataState,
+  setCoauthorAutocompletion,
 } = reportCreateSlice.actions;
 
 export default reportCreateSlice.reducer;

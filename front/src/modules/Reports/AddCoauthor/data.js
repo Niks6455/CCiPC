@@ -14,16 +14,16 @@ export const inpustTypeEmail = [
 ];
 
 export const inpustType = [
-  {
-    id: "1",
-    label: "Email*",
-    placeholder: "Email",
-    type: "email",
-    key: "email",
-    capitalLetter: false,
-    valdate: null,
-    error: "Некорректная почта",
-  },
+  // {
+  //   id: "1",
+  //   label: "Email*",
+  //   placeholder: "Email",
+  //   type: "email",
+  //   key: "email",
+  //   capitalLetter: false,
+  //   valdate: null,
+  //   error: "Некорректная почта",
+  // },
   {
     id: "2",
     label: "Имя соавтора*",

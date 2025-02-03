@@ -40,7 +40,10 @@ function CreateReport() {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      dispatch(setValue({ key: "fileArticle", value: file })); // Сохраняем файл в Redux
+      // Проверяем MIME-тип файла
+      if (file.type === "application/pdf") {
+        dispatch(setValue({ key: "fileArticle", value: file })); // Сохраняем файл в Redux
+      }
     }
   };
 
@@ -53,7 +56,10 @@ function CreateReport() {
   const handleFileChangeZakl = (event) => {
     const file = event.target.files[0];
     if (file) {
-      dispatch(setValue({ key: "fileExpertOpinion", value: file })); // Сохраняем файл в Redux
+      // Проверяем MIME-тип файла
+      if (file.type === "application/pdf") {
+        dispatch(setValue({ key: "fileExpertOpinion", value: file })); // Сохраняем файл в Redux
+      }
     }
   };
 
