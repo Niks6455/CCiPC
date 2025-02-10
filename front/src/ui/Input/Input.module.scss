@@ -1,53 +1,122 @@
 @import "./../../styles/colors.scss";
 
-.Input{
-    display: flex;
-    position: relative;
-    img{
-        position: absolute;
-        left: 25px;
-        top: 35px;
+.Input {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  .leftImg {
+    position: absolute;
+    left: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .errorListImg {
+    position: absolute;
+    right: 25px;
+    top: 4px;
+    background-color: var(--BodyBgColor);
+    border-radius: 50%;
+    padding: 0 7px;
+    cursor: pointer;
+  }
+  .errorsListContainer {
+    position: absolute;
+    background-color: #fff;
+    z-index: 100;
+    top: calc(-100%);
+    right: 0;
+    padding: 10px;
+    border-radius: 6px;
+    ul {
+      outline: none;
+      list-style: none;
+      padding: 0;
+      margin: 0;
     }
-    input{
-        width: 490px;
-        height: 64px;
-        border-radius: 10px;
-        border: none;
-        border: 1px solid var(--InputColors);
-        background-color: inherit;
-        margin: 15px 0px;
-        font-size: 20px;
-        color: #000;
-        box-sizing: border-box;
-        &::placeholder{
-            color: var(--InputTextColor);
-        }
-        &:focus{
-            outline: none;
-        }
+    li {
+      font-family: "Overpass", sans-serif;
+      font-size: 16px;
+      font-weight: 400;
+      text-align: left;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      height: 24px;
+      display: flex;
+      flex-direction: row;
+      align-items: end;
+      color: #5b605e;
+      img {
+        margin-right: 4px;
+      }
     }
-    .errorInput {
-        border: 1px solid var(--ErrorColor);
-    }
+  }
 
-    .errorText {
-        color: var(--ErrorColor);
-        font-size: 16px;
-        margin-top: 4px;
-        position: absolute;
-        right: 20px;
-        top: 0px;
-        padding: 0px 5px;
-        background-color: #F0F3F2;
+  .labelText {
+    font-family: Overpass, sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 21.6px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    transform: translateY(5px);
+  }
+
+  .rigthImg {
+    display: flex;
+    width: 24px;
+    padding-right: 10px;
+    height: 24px;
+    position: absolute;
+    right: 5px;
+    top: calc(50% + 10px);
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1000;
+    background-color: var(--BodyBgColor);
+  }
+
+  input {
+    padding-top: 4px;
+    width: 490px;
+    height: 64px;
+    border-radius: 10px;
+    border: none;
+    border: 1px solid var(--InputColors);
+    background-color: inherit;
+    margin: 15px 0px;
+    font-size: 20px;
+    color: #000;
+    box-sizing: border-box;
+    &::placeholder {
+      color: var(--InputTextColor);
     }
-    .placeholderClose{
-        color: #858B89;
-        font-size: 16px;
-        margin-top: 4px;
-        position: absolute;
-        left: 20px;
-        top: 0px;
-        padding: 0px 5px;
-        background-color: #F0F3F2;
+    &:focus {
+      outline: none;
     }
+  }
+  .errorInput {
+    border: 1px solid var(--ErrorColor);
+  }
+
+  .errorText {
+    color: var(--ErrorColor);
+    font-size: 16px;
+    margin-top: 4px;
+    position: absolute;
+    right: 20px;
+    top: 0px;
+    padding: 0px 5px;
+    background-color: #f0f3f2;
+  }
+  .placeholderClose {
+    color: #858b89;
+    font-size: 16px;
+    margin-top: 4px;
+    position: absolute;
+    left: 20px;
+    top: 0px;
+    padding: 0px 5px;
+    background-color: #f0f3f2;
+  }
 }

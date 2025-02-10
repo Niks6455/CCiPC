@@ -1,56 +1,65 @@
-import React, { useState } from 'react';
-import Layout from '../../ui/Layout/Layout';
-import Footer from '../../components/Footer/Footer';
-import styles from './Author.module.scss';
-import AuthorCollection from '../../components/AuthorCollection/AuthorCollection';
+import React, { useState } from "react";
+import Layout from "../../ui/Layout/Layout";
+import Footer from "../../components/Footer/Footer";
+import styles from "./Author.module.scss";
+import AuthorCollection from "../../components/AuthorCollection/AuthorCollection";
 import { dataLink } from "./data.js";
-import { Link } from 'react-router-dom';
-import HeaderSecond from '../../components/HeaderSecond/HeaderSecond';
+import { Link } from "react-router-dom";
+import HeaderSecond from "../../components/HeaderSecond/HeaderSecond";
+import NavBar from "../../components/NavBar/NavBar.jsx";
+import Book from "../../assets/img/Book.svg";
+import Cap from "../../assets/img/Cap.svg";
 function Author() {
-  const [selectedButton, setSelectedButton] = useState('Registration');
+  const [selectedButton, setSelectedButton] = useState("Registration");
 
   return (
     <main>
+      <NavBar />
       <Layout>
         <div className={styles.author}>
           <h1 className={styles.h1}>заявка на участие</h1>
           <div className={styles.buttons}>
             <div
               className={`${styles.button} ${
-                selectedButton === 'Registration'
+                selectedButton === "Registration"
                   ? styles.button_active
                   : styles.button_passive
               }`}
-              onClick={() => setSelectedButton('Registration')}
+              onClick={() => setSelectedButton("Registration")}
             >
               <span className={`${styles.button_text}`}>
                 Оформление участия в конференции
               </span>
-              <img src="/img/Cap.svg" alt="Cap"></img>
+              <img src={Cap} alt="Cap"></img>
             </div>
             <div
               className={`${styles.button} ${
-                selectedButton === 'Collection'
+                selectedButton === "Collection"
                   ? styles.button_active
                   : styles.button_passive
               }`}
-              onClick={() => setSelectedButton('Collection')}
+              onClick={() => setSelectedButton("Collection")}
             >
               <span>Сборники прошлых лет</span>
-              <img src="/img/Book.svg" alt="Book"></img>
+              <img src={Book} alt="Book"></img>
             </div>
           </div>
-          {selectedButton === 'Registration' && (
+          {selectedButton === "Registration" && (
             <div className={styles.registration}>
               <p className={styles.registration_text_1}>
-                Для участия в конференции необходимо{' '}
-                <Link className={styles.green_link} to="/AuthPage">зарегистрироваться</Link>
+                Для участия в конференции необходимо{" "}
+                <Link className={styles.green_link} to="/authorization">
+                  зарегистрироваться
+                </Link>
                 <span className={styles.bold}>
-                  {' '}
+                  {" "}
                   на платформе и подать заявку
                 </span>
-                , заполнив регистрационную форму в{' '}
-                <Link className={styles.green_link} to="/Lks"> личном кабинете</Link>
+                , заполнив регистрационную форму в{" "}
+                <Link className={styles.green_link} to="/account">
+                  {" "}
+                  личном кабинете
+                </Link>
                 . В срок до XX.XX.XX необходимо прислать заявку на доклад,
                 заполнив обязательные поля, а в срок до ХХ.ХХ.ХХХХ загрузить
                 статью и экспертное заключение.
@@ -61,10 +70,10 @@ function Author() {
                 </span>
               </p>
               <p className={styles.registration_text_3}>
-                1) доклад, оформленный по{' '}
+                1) доклад, оформленный по{" "}
                 <a href="#" target="_blank" className={styles.green_link}>
                   шаблону
-                </a>{' '}
+                </a>{" "}
                 в Word;
               </p>
               <p className={styles.registration_text_4}>
@@ -74,7 +83,7 @@ function Author() {
               </p>
             </div>
           )}
-          {selectedButton === 'Collection' && (
+          {selectedButton === "Collection" && (
             <div className={styles.collection}>
               {dataLink.map((param) => (
                 <AuthorCollection link={param.link}>

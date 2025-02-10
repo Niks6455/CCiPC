@@ -2,9 +2,12 @@ import Layout from '../../ui/Layout/Layout';
 import Footer from '../../components/Footer/Footer';
 import styles from './CommitteesPage.module.scss';
 import ChangeButtons from '../../ui/ChangeButtons/ChangeButtons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
 import { organizationComiteData, programmingComiteData } from './data';
+import NavBar from '../../components/NavBar/NavBar';
+import DataContext from '../../context';
+import Cap from "../../assets/img/Cap.svg";
 export default function CommitteesPage() {
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
@@ -12,6 +15,7 @@ export default function CommitteesPage() {
   const [datePeopleSecond, setDatePeopleSecond] = useState(
     programmingComiteData
   );
+  const context = useContext(DataContext);
 
   useEffect(() => {
     console.log(organizationComite);
@@ -24,30 +28,30 @@ export default function CommitteesPage() {
   const ButtonOneDats = [
     {
       text: 'Сопредседатели',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Члены комитета',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
   ]
 
   const ButtonSecondDats = [
     {
       text: 'Почетный председатель',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Cопредседатели',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Заместитель председателя',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
       text: 'Члены комитета',
-      Icon: () => <img src="/img/Cap.svg" alt="Cap" />,
+      Icon: () => <img src={Cap} alt="Cap" />,
     },
   ]
 
@@ -55,6 +59,7 @@ export default function CommitteesPage() {
   
   return (
     <>
+      <NavBar/>
       <div>
         <Layout>
           <main className={styles.organizationComiteMain}>
@@ -95,11 +100,14 @@ export default function CommitteesPage() {
           </main>
         </Layout>
       </div>{' '}
-      <div>
-        <a href="#top">
-          <div className={styles.greenArrow}></div>
-        </a>
-      </div>
+      {
+        !context.activeMenu &&
+        <div>
+          <a href="#top">
+            <div className={styles.greenArrow}></div>
+          </a>
+        </div>
+      }
       <Footer />
     </>
   );

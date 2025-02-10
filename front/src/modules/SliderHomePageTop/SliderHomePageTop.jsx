@@ -1,10 +1,10 @@
 import Layout from "../../ui/Layout/Layout";
 import styles from "./SliderHomePageTop.module.scss";
 import { dataSlider } from "./date";
-
+import LineSlider from "../../assets/img/LineSlider.svg"
 function SliderHomePageTop() {
     // Дублируем массив данных для бесконечного скролла
-    const repeatedData = [...dataSlider, ...dataSlider, ...dataSlider];
+    const repeatedData = [...dataSlider, ...dataSlider, ...dataSlider, ];
 
     return (
         <div className={styles.SliderHomePageTop}>
@@ -23,7 +23,7 @@ function SliderHomePageTop() {
                                         <div>{el.text}</div>
                                     </div>
                                     <div className={styles.sliderLine}>
-                                        <img src="/img/LineSlider.svg"/>
+                                        <img src={LineSlider}/>
                                     </div>
                                 </li>
                              

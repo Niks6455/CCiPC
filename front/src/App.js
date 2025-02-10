@@ -10,11 +10,26 @@ import Author from "./pages/Author/Author";
 import Lks from "./pages/Lks/Lks";
 import Participants from "./pages/Participants/Participants";
 import CommitteesPage from "./pages/CommitteesPage/CommitteesPage";
+import Profile from "./modules/Profile/Profile";
+import ProfileEditing from "./modules/ProfileEditing/ProfileEditing";
+import ChangePassword from "./modules/ChangePassword/ChangePassword";
+import RecoverPassword from "./pages/RecoverPassword/RecoverPassword";
+import DeleteAccount from "./modules/DeleteAccount/DeleteAccount";
+import ExitAccount from "./modules/ExitAccount/ExitAccount";
+import ArchivPhoto from "./modules/ArchivPhoto/ArchivPhoto";
+import CreateReport from "./modules/Reports/CreateReport/CreateReport";
+import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
+import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
+import ViewReports from "./modules/Reports/ViewReports/ViewReports";
+import EditReport from "./modules/Reports/EditReport/EditReport";
 function App() {
-  const [authPage, setAuthPage] = useState('Auth');
-  const [mailValue, setMailValue] = useState('test@sfedu.ru');
+  const [authPage, setAuthPage] = useState("Auth");
+  const [mailValue, setMailValue] = useState("test@sfedu.ru");
+  const [numberValue, setNumberValue] = useState("79805005050");
   const [activeModule, setActiveModule] = useState(false);
-  const [selectFrameLks, setSelectFrameLks] = useState("Lks");
+  const [selectFrameLks, setSelectFrameLks] = useState("profile");
+  const [activeMenu, setActiveMenu] = useState(false);
+
   const context = {
     setAuthPage,
     authPage,
@@ -24,27 +39,51 @@ function App() {
     setActiveModule,
     selectFrameLks,
     setSelectFrameLks,
+    activeMenu,
+    setActiveMenu,
+    numberValue,
+    setNumberValue,
   };
 
   return (
-    <DataContext.Provider
-  value={context}
-  >
-    <BrowserRouter>
-      <main style={{ fontFamily: "REX" }}>
-        <Routes>
-          <Route path="/AuthPage" element={<AuthPage />}></Route>
-          <Route path="/Participants" element={<Participants />}></Route>
-          <Route path="/Lks" element={<Lks />}></Route>
-          <Route path="/NewsPage" element={<NewsPage />}></Route>
-          <Route path="/Author" element={<Author />}></Route>
-          <Route path="/OrganizationComite" element={<CommitteesPage />}></Route>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="*" element={<NoteFoundPage />} /> {/* Добавление 404 страницы */}
-        </Routes>
-      </main>
-    </BrowserRouter>
-  </DataContext.Provider>
+    <DataContext.Provider value={context}>
+      <BrowserRouter>
+        <main style={{ fontFamily: "REX" }}>
+          <Routes>
+            <Route path="/authorization" element={<AuthPage />}></Route>
+            <Route path="/participants" element={<Participants />}></Route>
+            <Route path="/account" element={<Lks />}>
+              <Route path="documents" element={<DocumentsLk />}></Route>
+              <Route path="createreport" element={<CreateReport />} />
+              <Route path="addcoauthor" element={<AddCoauthor />} />
+              <Route path="profile" element={<Profile />}></Route>
+              <Route path="deleteaccount" element={<DeleteAccount />}></Route>
+              <Route path="exitaccount" element={<ExitAccount />}></Route>
+              <Route path="archivephoto" element={<ArchivPhoto />}></Route>
+              <Route path="settings/profile" element={<ProfileEditing />} />
+              <Route
+                path="settings/changepassword"
+                element={<ChangePassword />}
+              />
+              <Route path="viewreports" element={<ViewReports />} />
+              <Route path="editreport" element={<EditReport />} />
+            </Route>
+            <Route path="/news" element={<NewsPage />}></Route>
+            <Route path="/author" element={<Author />}></Route>
+            <Route
+              path="/recoverpassword"
+              element={<RecoverPassword />}
+            ></Route>
+            <Route
+              path="/organizationcomite"
+              element={<CommitteesPage />}
+            ></Route>
+            <Route path="/" element={<HomePage />}></Route>
+            <Route path="*" element={<NoteFoundPage />} />{" "}
+          </Routes>
+        </main>
+      </BrowserRouter>
+    </DataContext.Provider>
   );
 }
 

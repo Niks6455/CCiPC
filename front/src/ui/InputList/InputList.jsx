@@ -11,6 +11,11 @@ function InputList(props) {
       {!props?.value && props?.imgSrc && (
         <img src={props?.imgSrc} alt={props?.name} />
       )}
+      {props.labelText && (
+        <div className={styles.labelText}>
+          <span>{props.labelText}</span>
+        </div>
+      )}
       <input
         name={props?.name}
         onChange={props?.onChange}
@@ -28,8 +33,13 @@ function InputList(props) {
                 : ""
               : "25px",
         }}
+        autoComplete={!props.autoComplete && "new-password"}
       />
-      <div className={styles.arrow} onClick={() => props.funOpen(props.name)}>
+      <div
+        className={styles.arrow}
+        onClick={() => props.funOpen(props.name)}
+        style={props.styleArrow ? props.styleArrow : {}}
+      >
         <img
           src={arrowMini}
           alt="img"
@@ -40,7 +50,10 @@ function InputList(props) {
           }
         />
       </div>
-      <div className={`${styles.List} ${props?.open && styles.open}`}>
+      <div
+        className={`${styles.List} ${props?.open && styles.open}`}
+        style={props.listStyle ? props.listStyle : {}}
+      >
         <ul>
           {props.list?.map((item, index) => (
             <li
@@ -57,7 +70,14 @@ function InputList(props) {
       {props?.value && !props?.error && (
         <div className={styles.placeholderClose}>{props?.placeholder}</div>
       )}
-      {props?.error && <div className={styles.errorText}>{props?.error}</div>}
+      {props?.error && (
+        <div
+          className={styles.errorText}
+          style={props.inputerrorStyle ? props.inputerrorStyle : {}}
+        >
+          {props?.error}
+        </div>
+      )}
     </div>
   );
 }

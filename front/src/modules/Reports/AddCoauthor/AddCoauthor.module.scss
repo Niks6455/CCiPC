@@ -1,0 +1,155 @@
+@import "../../../styles/mixin.scss";
+
+.AddCoauthor {
+  width: calc(100vw - 700px);
+  position: relative;
+  margin: 0 auto;
+
+  .title {
+    display: flex;
+    justify-content: center;
+    font-family: Overpass, sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    text-align: center;
+    color: #333333;
+    margin: 0;
+  }
+  .slider {
+    position: relative;
+    background-color: #e7eae9;
+    width: 100%;
+    border-radius: 5px;
+    height: 5px;
+    // margin-top: 10px;
+
+    .sliderInner {
+      position: absolute;
+      left: 0;
+      height: 100%;
+      background-color: #00452980;
+      transition: all 0.15s linear;
+    }
+  }
+  .backImg {
+    display: flex;
+    transform: translateY(-10px);
+    img {
+      cursor: pointer;
+      border-radius: 5px;
+      @include HoverActive;
+    }
+  }
+  .addsoaftor {
+    display: flex;
+    justify-content: center;
+    @include ButtonLight;
+    padding: 16px 0;
+    width: 240px;
+    height: 54px;
+    margin: 0 auto;
+    margin-top: 25px;
+    box-sizing: border-box;
+    img {
+      margin-left: 10px;
+    }
+  }
+
+  .srokContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 100px;
+    .text {
+      display: flex;
+      align-items: start;
+      flex-direction: row;
+      width: 796px;
+      margin-top: 8px;
+      img {
+        margin-right: 6px;
+      }
+    }
+    button {
+      @include ButtonGreen;
+      padding: 20px;
+      width: 350px;
+      height: 64px;
+    }
+  }
+  .inputContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .inputbox {
+    display: flex;
+    width: 350px;
+    height: 86px;
+    margin-bottom: 25px;
+    position: relative;
+  }
+  .modalEmail {
+    width: 555px;
+    height: auto;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    padding: 32px 40px;
+    box-sizing: border-box;
+    top: calc(100% + 7px);
+    border-radius: 10px;
+    left: 0;
+    z-index: 100;
+
+    p {
+      font-family: Overpass, sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 21.6px;
+      text-align: center;
+      text-underline-position: from-font;
+      text-decoration-skip-ink: none;
+      margin-bottom: 22px;
+    }
+    button {
+      @include ButtonGreen;
+      width: 172px;
+      height: 46px;
+      margin: 0 auto;
+    }
+  }
+  .deletecoauthor {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      @include ButtonRed(18px);
+      padding: 16px;
+      img {
+        margin-left: 10px;
+      }
+    }
+  }
+  .popups {
+    position: fixed;
+    z-index: 10000;
+    backdrop-filter: blur(3px);
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    padding-top: 200px;
+  }
+}
