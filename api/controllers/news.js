@@ -15,21 +15,21 @@ export default {
     },
 
 
-    async findOne({params: { newsId }}, res){
-        if(!newsId) throw new AppErrorMissing('newsId')
-        const news= await newsService.findOne(newsId)
+    async findOne({params: { id }}, res){
+        if(!id) throw new AppErrorMissing('id')
+        const news= await newsService.findOne(id)
         res.json(news);
     },
 
-    async update({params: {newsId}, body:{ title, description }}, res){
-        if(!newsId) throw new AppErrorMissing('newsId')
-        await newsService.update(newsId, title, description)
+    async update({params: {id}, body:{ title, description }}, res){
+        if(!id) throw new AppErrorMissing('id')
+        await newsService.update(id, title, description)
         res.json({status: 'Ok'});
     },
 
-    async delete({params: {newsId }}, res){
-        if(!newsId) throw new AppErrorMissing('newsId')
-        await newsService.delete(newsId)
+    async delete({params: {id }}, res){
+        if(!id) throw new AppErrorMissing('id')
+        await newsService.delete(id)
         res.json({status: 'Ok'});
     },
 }

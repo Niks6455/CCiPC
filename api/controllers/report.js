@@ -65,21 +65,26 @@ export default {
         res.json({status: 'ok'})
     },
 
-    async update({body: {name, form, direction, comment, coAuthors }, params: { reportId }, user }, res) {
+    async update({body: {name, form, direction, comment, coAuthors }, params: { id }, user }, res) {
+        if(!id) throw new AppErrorMissing('id')
         if(coAuthors.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
-       const report = await reportService.update({name, form, direction, comment, coAuthors}, user)
+       const report = await reportService.update({name, form, direction, comment, coAuthors}, id , user)
         res.json({report: report})
     },
 
-    async delete({params : {  reportId }}, user, res) {
+    async delete({params : {  id }}, user, res) {
 
-        await reportService.delete(reportId, user)
+        if(!id) throw new AppErrorMissing('id')
+
+        await reportService.delete(id, user)
 
         res.json({status: 'ok'})
     },
 
-    async findOne({params: {reportId }, user }, res) {
-        const report = await reportService.findOne(reportId, user)
+    async findOne({params: {id }, user }, res) {
+        if(!id) throw new AppErrorMissing('id')
+
+        const report = await reportService.findOne(id, user)
         res.json({report : report } )
     },
 

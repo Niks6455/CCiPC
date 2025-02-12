@@ -9,6 +9,10 @@ export default class Conference extends Model {
                 number: { type: DataTypes.INTEGER, allowNull: false, unique: 'number' },
                 date: { type: DataTypes.DATEONLY, allowNull: false },
                 address: { type: DataTypes.STRING, allowNull: false },
+                stages: {
+                type: DataTypes.ARRAY(DataTypes.JSONB),
+                allowNull: true,
+                }
             },
             {
                 sequelize,

@@ -6,9 +6,9 @@ export default {
         res.json(conferences);
     },
 
-    async findOne({params: {conferenceId}}, res) {
-
-        const conference = await conferenceService.findOne(conferenceId);
+    async findOne({params: { id }}, res) {
+        if(!id) throw new AppErrorMissing('id')
+        const conference = await conferenceService.findOne(id);
 
         res.json(conference);
     },
@@ -24,10 +24,11 @@ export default {
 
     },
 
-    async  findParticipants({params: { conferenceId } }, res) {
+    async  findParticipants({params: { id } }, res) {
+        if(!id) throw new AppErrorMissing('id')
         if(!conference) throw new AppErrorMissing('conferenceId')
 
-        const conference =await conferenceService.findParticipants(conferenceId);
+        const conference =await conferenceService.findParticipants(id);
 
         res.json(conference);
     }

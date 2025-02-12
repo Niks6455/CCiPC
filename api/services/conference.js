@@ -11,42 +11,34 @@ export default {
     async find(){
         return await Conference.findAll({
             order: [['date', 'ASC']],
-            include :[{
-              model:News,
-              as: 'news',
-              required: false,
-            },
+            include :
                 {
                    model: Committee,
                    as: 'committees',
                    required: false,
                    include: {
                        model: CommitteeInConference,
-                       as: 'committee-in-conference',
+                       as: 'committeeInConference',
                        required: false,
                    }
-                }]
+                }
         })
     },
 
     async findOne(id){
         return await Conference.findByPk(id,
             {
-                include: [{
-                    model: News,
-                    as: 'news',
-                    required: false,
-                },
+                include:
                     {
                         model: Committee,
                         as: 'committees',
                         required: false,
                         include: {
                             model: CommitteeInConference,
-                            as: 'committee-in-conference',
+                            as: 'committeeInConference',
                             required: false,
                         }
-                    }]
+                    }
             });
     },
 

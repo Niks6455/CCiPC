@@ -84,6 +84,30 @@ const router = Router();
  *                   items:
  *                     type: object
  *                     description: Информация о участниках конференции
+ * /conferences/{id}/:
+ *   get:
+ *     summary: Получение конференции по id
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID конференции
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Успешный ответ
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 conference:
+ *                   type: object
+ *                   description: Информация о конференции
+ *
+ *
  */
 
 router.route('/')
@@ -93,6 +117,8 @@ router.route('/')
 
 
 router.route('/:id/participants').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.findParticipants))
+
+router.route('/:id').get(asyncRoute(conferenceCtrl.findOne))
 
 
 
