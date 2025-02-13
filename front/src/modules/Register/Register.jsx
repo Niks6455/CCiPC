@@ -172,7 +172,9 @@ function Register() {
   const handleSubmit = () => {
     if (validate()) {
       console.log("Форма отправлена", formData);
-      apiRegister(formData);
+      apiRegister(formData).then((res) => {
+        console.log(res);
+      });
     }
   };
 
