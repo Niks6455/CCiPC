@@ -1,11 +1,82 @@
 @import '../../styles/colors.scss';
 
-.Author{
+.author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 333px;
+  font-weight: 300;
+  margin-top: 100px;
+}
+
+.h1 {
+  text-transform: uppercase;
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.buttons {
+  display: flex;
+  gap: 25px;
+  margin-top: 20px;
+  margin-bottom: 40px;
+
+  .button {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    button{
-        background-color: var(--GreenColorDefault);
-    }
+    border-radius: 10px;
+    padding: 5px 10px;
+    gap: 5px;
+    background-color: var(--MenuHover);
+    border: 1px var(--MenuHoverActive) solid;
+    cursor: pointer;
+  }
+
+  .button_active {
+    opacity: 100%;
+  }
+
+  .button_passive {
+    opacity: 30%;
+  }
+
+  .button_text {
+    font-weight: 500;
+  }
+}
+
+.registration {
+  .bold {
+    font-weight: 700;
+  }
+  .green_link {
+    color: var(--GreenLinkSecond);
+    text-decoration: underline;
+    font-weight: 700;
+  }
+
+  .registration_text_1 {
+    font-size: 22px;
+  }
+
+  .registration_text_2 {
+    font-size: 22px;
+    margin-top: 20px;
+  }
+
+  .registration_text_3 {
+    font-size: 20px;
+    margin-top: 40px;
+  }
+
+  .registration_text_4 {
+    font-size: 20px;
+    margin-top: 40px;
+  }
+}
+
+.collection {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
 }

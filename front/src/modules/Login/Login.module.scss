@@ -1,9 +1,13 @@
 .Login{
     .LoginLogo{
         display: flex;
-        width: 100%;
         justify-content: center;
         margin-bottom: 40px;
+        width: 100%;
+        img{
+            width: 169px;
+            height: 169px;
+        }
     }
     .LoginTitle{
         p{

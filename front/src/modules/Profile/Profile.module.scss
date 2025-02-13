@@ -1,0 +1,118 @@
+@import "../../styles/colors.scss";
+
+.Profile {
+  width: calc(100vw - 700px);
+  .bacgraund {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #f4f4f466;
+    backdrop-filter: blur(3px);
+    z-index: 1000;
+  }
+  .ProfilePhotoShow {
+    z-index: 1001;
+
+    width: 550px;
+    height: 550px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: end;
+    flex-direction: row;
+    // backdrop-filter: blur(5px);
+    .ProfileImg {
+      display: flex;
+      width: 550px;
+      height: 550px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .close {
+      transform: translate(23px, -23px);
+      width: 81px;
+      height: 81px;
+      display: flex;
+      cursor: pointer;
+      &:hover {
+        * {
+          stroke: var(--GreenColorHover);
+          transition: all 0.15s linear;
+        }
+      }
+    }
+  }
+  .ProfileImg {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .noPhotoLk {
+    position: absolute;
+    left: 40px;
+    top: 40px;
+    cursor: pointer;
+  }
+  .editPhotoLk {
+    position: absolute;
+    left: 280px;
+    top: 80px;
+    cursor: pointer;
+    transition: 0.1s linear all;
+    &:hover {
+      opacity: 0.6;
+    }
+  }
+  .mainSection {
+    color: var(--GrayTextDefault);
+    margin-top: 95px;
+    .mainSectionInfoPeople {
+      margin-left: 360px;
+      p {
+        font-size: 20px;
+        &:first-child {
+          font-weight: 500;
+          font-size: 32px;
+        }
+        &:nth-child(2) {
+          margin: 10px 0px 20px 0px;
+        }
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  .containerMoreInfo {
+    margin-top: 136px;
+    display: flex;
+    .containerMoreInfoSecond {
+      margin-left: 182px;
+    }
+    .containerMoreInfoOne {
+      p {
+        font-size: 20px;
+        margin-bottom: 20px;
+        span {
+          font-weight: 600;
+        }
+      }
+    }
+    .containerMoreInfoSecond {
+      width: 419px;
+      .containerMoreInfoSecondText {
+        margin-bottom: 20px;
+        p {
+          font-size: 20px;
+          &:first-child {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}

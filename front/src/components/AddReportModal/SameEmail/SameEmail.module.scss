@@ -1,0 +1,26 @@
+@import "./../../../styles/mixin.scss";
+
+.SameEmail {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 70px;
+  border-radius: 10px;
+  .title {
+    font-family: Overpass, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 26px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-bottom: 40px;
+  }
+  .btnred {
+    @include ButtonGreen;
+    width: 310px;
+    height: 54px;
+    margin: 0 auto;
+  }
+}

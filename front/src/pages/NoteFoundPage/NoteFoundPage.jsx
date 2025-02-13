@@ -3,7 +3,7 @@ import styles from "./NoteFoundPage.module.scss";
 import Layout from "../../ui/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
 import HeaderSecond from "../../components/HeaderSecond/HeaderSecond";
-
+import NoteFound from "./../../assets/img/NoteFound.png";
 function NoteFoundPage() {
     const navigate = useNavigate();
     return ( 
@@ -23,10 +23,10 @@ function NoteFoundPage() {
                         <div className={styles.NoteFoundPageTextContainer}>
                             <p>404</p>
                             <p>Кажется, что-то пошло не так! Страница, которую вы запрашиваете, не существует. Возможно, она была удалена, или вы набрали неверный адрес. Перейдите на нашу <span onClick={() => navigate('/HomePage')}>главную страницу</span> и попробуйте найти необходимую вам информацию там.</p>
-                            <button onClick={() => navigate('/HomePage')}>Перейти на главную</button>
+                            <button onClick={() => navigate('/')}>Перейти на главную</button>
                         </div>
                         <div>
-                            <img src="/img/NoteFound.svg"/>
+                            <img src={NoteFound} alt="NoteFound"/>
                         </div>
                     </div>
                 </Layout>

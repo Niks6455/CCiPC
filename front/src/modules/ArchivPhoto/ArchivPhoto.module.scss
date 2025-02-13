@@ -1,0 +1,88 @@
+.photoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px; /* Убираем отступы между элементами */
+    max-width: 1300px;
+    margin: 0 auto;
+    .photoItem {
+        width: 100%; /* Растягиваем по ширине колонки */
+        height: 300px;
+        overflow: hidden; /* Обрезаем лишнее */
+        position: relative;
+        transition: 0.1s linear all;
+        border-radius: 10px;
+        cursor: pointer;
+        &:hover{
+            .photo{
+                scale: 1.1;
+            }
+            .linkArrow{
+                opacity: 1;
+            }
+        }
+        .photo{
+            width: 100%; /* Растягиваем изображение по контейнеру */
+            height: 100%; /* Заполняем контейнер полностью */
+            object-fit: cover; /* Обрезаем изображение, чтобы оно полностью заполняло контейнер */
+            border-radius: 10px;
+            object-position: top;
+            transition: 0.2s linear all;
+        }
+     
+        .linkArrow{
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            width: 38px;
+            height: 38px;
+            opacity: 0;
+            transition: 0.2s linear all;
+        }
+        .photoTitleWrapper {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background: rgba(0, 28, 20, 0.25);
+            backdrop-filter: blur(10px);
+            z-index: 5;
+            border-radius: 0px 0px 10px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px 10px;
+            box-sizing: border-box;
+            text-align: center;
+            .photoTitle {    
+                width: 100%;
+                color: #fff;
+                font-size: 18px;
+                font-weight: 700;
+                z-index: 10;
+            }
+            
+        }
+        
+       
+    }
+    .repName {
+        position: absolute;
+        max-width: 340px;
+        z-index: 100;
+        left: 0;
+        top: 0;
+        background-color: #fff;
+        padding: 10px;
+        font-family: Overpass, sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 19.2px;
+        text-align: left;
+        text-underline-position: from-font;
+        text-decoration-skip-ink: none;
+        color: #5b605e;
+        border-radius: 6px;
+        border: 1px solid #e7eae9;
+      }
+}

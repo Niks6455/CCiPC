@@ -1,7 +1,8 @@
 import { useContext, useRef, useState, useEffect } from "react";
 import styles from "./ConfirmLogin.module.scss";
 import DataContext from "../../context";
-
+import logo from "./../../assets/img/logo.png"
+import confirm from "./../../assets/img/confirm.svg"
 function ConfirmLogin() {
     const context = useContext(DataContext);
     const [code, setCode] = useState(["", "", "", "", "", ""]); // Для кода
@@ -64,7 +65,7 @@ function ConfirmLogin() {
     return (
         <section className={styles.ConfirmLogin}>
             <div className={styles.ConfirmLoginLogo}>
-                <img src="/img/logo.svg" alt="Logo" />
+                <img src={logo} alt="Logo" />
             </div>
             <div className={styles.ConfirmLoginTitle}>
                 <p>Подтвердите адрес электронной почты</p>
@@ -72,7 +73,7 @@ function ConfirmLogin() {
             <div className={styles.ConfirmLoginGalca}>
                 <div>
                     <div className={styles.ConfirmLoginGalcaImg}>
-                        <img src="/img/confirm.svg" alt="Confirm Icon" />
+                        <img src={confirm} alt="Confirm Icon" />
                     </div>
                     <p>
                         На адрес вашей электронной почты{" "}
