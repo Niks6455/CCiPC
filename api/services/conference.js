@@ -1,5 +1,4 @@
 import Conference from "../models/conference.js";
-import News from "../models/news.js";
 import Committee from "../models/committee.js";
 import CommitteeInConference from "../models/committee-in-conference.js";
 import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
@@ -79,5 +78,20 @@ export default {
         })
 
         return conference
+    },
+
+    async update(conferenceId, conferenceInfo){
+
+        if(conferenceInfo.number){
+            const checkConference = await Conference.findOne({
+                where: { number: conferenceInfo.number },
+            })
+            if(checkConference) throw new AppErrorAlreadyExists('number conference')
+        }
+
+        const conference =await Conference.findByPk(conferenceId)
+        if(!conference) throw new AppErrorNotExist('conference')
+
+        return await conference.update({ ...conferenceInfo });
     }
 }
