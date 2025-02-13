@@ -13,7 +13,7 @@ import newsRoute from './routes/news.js';
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 
-//import corsMiddleware from './middlewares/cors.js';
+import corsMiddleware from './middlewares/cors.js';
 import errorCodes from './config/error-codes.js';
 import 'dotenv/config'
 
