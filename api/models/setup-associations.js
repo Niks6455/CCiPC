@@ -38,6 +38,34 @@ export default function () {
         foreignKey: { name: 'conferenceId', allowNull: false }
     });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+    Committee.hasMany(CommitteeInConference, {
+        as: 'committeeInConference',
+        foreignKey: { name: 'committeeId', allowNull: false }
+    });
+
+
+    Conference.hasMany(CommitteeInConference, {
+        as: 'committeeInConference',
+        foreignKey: { name: 'conferenceId', allowNull: false }
+    });
+
+
+
+
+
     Conference.belongsToMany(Committee, {
         through: CommitteeInConference,
         foreignKey: { name: 'conferenceId', allowNull: false},
@@ -48,6 +76,19 @@ export default function () {
         through: CommitteeInConference,
         foreignKey: { name: 'committeeId', allowNull: false},
         as: 'conferences',
+    });
+
+
+
+    CommitteeInConference.belongsTo(Committee, {
+        as: 'committee',
+        foreignKey: { name: 'committeeId', allowNull: false }
+    });
+
+
+    CommitteeInConference.belongsTo(Conference, {
+        as: 'conference',
+        foreignKey: { name: 'conferenceId', allowNull: false }
     });
 
 
