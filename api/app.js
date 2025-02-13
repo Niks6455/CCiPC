@@ -108,7 +108,7 @@ if (app.get('env') === 'development' || app.get('env') === 'staging') {
 }
 // ============== //
 
-//app.use(corsMiddleware);
+app.use(corsMiddleware);
 
 //app.use('/system', systemRoute);
 app.use('/auth', authRoute);
