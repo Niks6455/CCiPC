@@ -85,8 +85,8 @@ export const apiRegister = async (data) => {
 export const LoginFunc = async (UserData) => {
   try {
     const response = await axios.post(`${server}/auth/login`, UserData);
-    const { accessToken, refreshToken, ...userData } = response.data;
-    localStorage.setItem("accessToken", accessToken);
+    const { token, refreshToken, ...userData } = response.data;
+    localStorage.setItem("accessToken", token);
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("userData", JSON.stringify(userData));
     refreshTokensTimer();
@@ -103,5 +103,19 @@ export const CheckEmail = async (Data) => {
     return response;
   } catch (error) {
     alert("Пользователь не найден!");
+  }
+};
+
+//! получение данных пользователя
+export const apiGetUserData = async () => {
+  try {
+    const response = await axios.get(`${server}/participants/self`, {
+      headers: {
+        Authorization: `${localStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("apiGetUserData ", error);
   }
 };

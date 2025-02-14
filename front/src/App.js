@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import DataContext from "./context";
 import "./styles/app.css";
@@ -22,13 +22,22 @@ import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
 import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
+import { useDispatch } from "react-redux";
+import { disGetDataUser } from "./store/userSlice/user.Slice";
 function App() {
+  const dispatch = useDispatch();
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("");
   const [numberValue, setNumberValue] = useState("79805005050");
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState("profile");
   const [activeMenu, setActiveMenu] = useState(false);
+
+  //! получение данных пользователя
+  useEffect(() => {
+    console.log("accessToken", localStorage.getItem("accessToken"));
+    dispatch(disGetDataUser());
+  }, []);
 
   const context = {
     setAuthPage,
