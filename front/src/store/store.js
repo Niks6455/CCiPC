@@ -14,17 +14,19 @@ import basicSlice from "./basicSlice/basic.Slice.js";
 
 import reportsSlice from "./reportsSlice/reportsSlice.js";
 import reportCreateSlice from "./reportCreateSlice/reportCreateSlice.js";
+import UserSlice from "./userSlice/user.Slice.js";
 
 const rootReducer = combineReducers({
   BasicSlice: basicSlice,
   reportsSlice: reportsSlice,
   reportCreateSlice: reportCreateSlice,
+  userSlice: UserSlice,
 });
 
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["BasicSlice"],
+  whitelist: ["BasicSlice", "UserSlice"],
   blacklist: ["reportsSlice", "reportCreateSlice"],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

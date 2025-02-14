@@ -14,8 +14,13 @@ import {
   funEightSymbols,
 } from "../../utils/functions/PasswordValidation";
 import { apiRegister } from "../../apirequests/apirequests";
+import { useDispatch } from "react-redux";
+import { setUserData } from "../../store/userSlice/user.Slice";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const dispach = useDispatch();
+  const navigator = useNavigate();
   const context = useContext(DataContext);
   const [openList, setOpenList] = useState("");
   const [formData, setFormData] = useState({
@@ -171,9 +176,24 @@ function Register() {
 
   const handleSubmit = () => {
     if (validate()) {
-      console.log("Форма отправлена", formData);
-      apiRegister(formData).then((res) => {
-        console.log(res);
+      const data = {
+        email: formData.login,
+        password: formData.password,
+        name: formData.name,
+        surname: formData.surname,
+        patronymic: formData.patronymic,
+        academicTitle: formData.doljnost,
+        degree: formData.stepen,
+        position: formData.zwanie,
+        organization: formData.oraganization,
+        phone: formData.number,
+      };
+      apiRegister(data).then((res) => {
+        // if (res?.status === 200) {
+        console.log("res", res);
+        dispach(setUserData({ data: res.data }));
+        navigator("/");
+        // }
       });
     }
   };
