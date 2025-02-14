@@ -12,7 +12,8 @@ export default class Conference extends Model {
                 stages: {
                 type: DataTypes.ARRAY(DataTypes.JSONB),
                 allowNull: true,
-                }
+                },
+                directions: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
             },
             {
                 sequelize,

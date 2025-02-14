@@ -27,6 +27,14 @@ const router = Router();
  *                 type: string
  *               address:
  *                 type: string
+ *               stages:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *               directions:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *             required:
  *               - date
  *               - number
@@ -106,8 +114,50 @@ const router = Router();
  *                 conference:
  *                   type: object
  *                   description: Информация о конференции
- *
- *
+ *   put:
+ *     summary: Обновление админом конференции по id
+ *     security:
+ *       - BearerAuth: [] # Требуется авторизация
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               number:
+ *                 type: number
+ *               date:
+ *                 type: string
+ *               address:
+ *                 type: string
+ *               stages:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *               directions:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID конференции
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Успешный ответ
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 conference:
+ *                   type: object
+ *                   description: Информация о конференции
  */
 
 router.route('/')
@@ -118,7 +168,10 @@ router.route('/')
 
 router.route('/:id/participants').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.findParticipants))
 
-router.route('/:id').get(asyncRoute(conferenceCtrl.findOne))
+router.route('/:id')
+    .get(asyncRoute(conferenceCtrl.findOne))
+    .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.update))
+
 
 
 

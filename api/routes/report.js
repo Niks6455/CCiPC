@@ -120,7 +120,7 @@ const router = Router();
  *               coAuthors:
  *                 type: array
  *                 items:
- *                   type: string
+ *                   type: object
  *     responses:
  *       200:
  *         description: Успешный ответ

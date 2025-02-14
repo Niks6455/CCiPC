@@ -16,7 +16,7 @@ import {
     MultipleError,
 } from '../utils/errors.js';
 import errorCodes from '../config/error-codes.js';
-import * as fs from "node:fs";
+import * as fs from "fs";
 import Report from "../models/report.js";
 import News from "../models/news.js";
 import Conference from "../models/conference.js";
