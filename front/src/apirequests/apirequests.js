@@ -111,11 +111,21 @@ export const apiGetUserData = async () => {
   try {
     const response = await axios.get(`${server}/participants/self`, {
       headers: {
-        Authorization: `${localStorage.getItem("accessToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     });
     return response;
   } catch (error) {
     console.log("apiGetUserData ", error);
+  }
+};
+
+//! создать доклад
+export const apiCreateReport = async (data) => {
+  try {
+    const response = await axios.post(`${server}/reports`, data);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
   }
 };

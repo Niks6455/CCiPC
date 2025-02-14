@@ -25,6 +25,7 @@ import SameEmail from "../../../components/AddReportModal/SameEmail/SameEmail";
 import SuccessModal from "../../../components/AddReportModal/SuccessModal/SuccessModal";
 import NotFullyFilled from "../../../components/AddReportModal/NotFullyFilled/NotFullyFilled";
 import NotFullyFilledCoauthors from "../../../components/AddReportModal/NotFullyFilledCoauthors/NotFullyFilledCoauthors";
+import { apiCreateReport } from "../../../apirequests/apirequests";
 
 function AddCoauthor() {
   const navigate = useNavigate();
@@ -77,6 +78,16 @@ function AddCoauthor() {
   //! сохранение данных
   const funSaveData = () => {
     dispatch(funSaveDataState());
+    const data = {
+      name: report.data.name,
+      form: report.data.formParticipation,
+      direction: report.data.directionConference,
+      comment: report.data.comments,
+      coAuthors: report.data.soauthors,
+    };
+    apiCreateReport(data).then((res) => {
+      console.log("res", res);
+    });
   };
 
   return (
