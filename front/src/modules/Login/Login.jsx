@@ -5,16 +5,17 @@ import DataContext from "../../context";
 import { useNavigate } from "react-router-dom";
 import logo from "./../../assets/img/logo.png";
 import sfeduLogo from "./../../assets/img/SfeduLogo.svg";
+import { LoginFunc } from "../../apirequests/apirequests";
 function Login() {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    login: "",
+    email: "",
     password: "",
   });
 
   const [errors, setErrors] = useState({
-    login: "",
+    email: "",
     password: "",
   });
 
@@ -29,11 +30,11 @@ function Login() {
   const validate = () => {
     let isValid = true;
     const newErrors = {};
-    if (!formData.login) {
-      newErrors.login = "Введите Email*";
+    if (!formData.email) {
+      newErrors.email = "Введите Email*";
       isValid = false;
-    } else if (!/\S+@\S+\.\S+/.test(formData.login)) {
-      newErrors.login = "Некорректный Email*";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Некорректный Email*";
       isValid = false;
     }
 
@@ -47,12 +48,13 @@ function Login() {
   };
 
   const handleSubmit = () => {
-    navigate("/HomePage");
-    // if (validate()) {
-    //     console.log("Форма отправлена", formData);
-    //     // navigate("/HomePage");
+    // navigate("/HomePage");
+    if (validate()) {
+      LoginFunc(formData).then((data) => {
+        console.log('data', data);
+      })
 
-    // }
+    }
   };
 
   return (
@@ -67,12 +69,12 @@ function Login() {
       <div className={styles.input}>
         <div className={styles.inputInner}>
           <Input
-            name="login"
+            name="email"
             onChange={handleChange}
-            value={formData.login}
+            value={formData.email}
             placeholder="Email"
             imgSrc="/img/login.svg"
-            error={errors.login}
+            error={errors.email}
             autoComplete={true}
           />
           <Input

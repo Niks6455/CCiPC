@@ -75,19 +75,14 @@ export const logout = async () => {
 export const apiRegister = async (data) => {
   try {
     const response = await axios.post(`${server}/auth/register`, data);
-    const { accessToken, refreshToken, ...userData } = response.data;
-    // localStorage.setItem("accessToken", accessToken);
-    // localStorage.setItem("refreshToken", refreshToken);
-    // localStorage.setItem("userData", JSON.stringify(userData));
-    // refreshTokensTimer();
-    return userData;
+    return response;
   } catch (error) {
     alert("Регистрация не прошла!");
   }
 };
 
 //! Запрос на авторизацию
-export const Login = async (UserData) => {
+export const LoginFunc = async (UserData) => {
   try {
     const response = await axios.post(`${server}/auth/login`, UserData);
     const { accessToken, refreshToken, ...userData } = response.data;
@@ -100,3 +95,14 @@ export const Login = async (UserData) => {
     alert("Пользователь не найден!");
   }
 };
+
+//! Запрос на подтверждение почты 
+export const CheckEmail = async (Data) => {
+  try {
+    const response = await axios.post(`${server}/auth/checkEmail`, Data);
+    return response;
+  } catch (error) {
+    alert("Пользователь не найден!");
+  }
+};
+

@@ -15,7 +15,7 @@ function AuthPage() {
             <main className={styles.AuthPage}>
             <NavBar/>
                 <Layout>
-                    {context.authPage === "Auth" ? <Login/> : context.authPage === "Register" ? <Register/> : <ConfirmLogin/>}
+                {context.authPage === "Auth" ? <Login/> : context.authPage === "Register" ? <Register/> : context.authPage === "ConfirmLogin" ? <ConfirmLogin/> : null}
                 </Layout>
             </main>
             <Footer/>

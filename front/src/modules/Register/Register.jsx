@@ -22,12 +22,12 @@ function Register() {
     name: "",
     surname: "",
     patronymic: "",
-    zwanie: "",
-    stepen: "",
-    doljnost: "",
-    oraganization: "",
-    login: "",
-    number: "",
+    academicTitle: "",
+    degree: "",
+    position: "",
+    organization: "",
+    email: "",
+    phone: "",
     password: "",
     confirmPassword: "",
     napravlenieKonferencii: "",
@@ -36,11 +36,11 @@ function Register() {
   const [errors, setErrors] = useState({
     name: "",
     surname: "",
-    doljnost: "",
-    login: "",
+    position: "",
+    email: "",
     password: "",
     confirmPassword: "",
-    number: "",
+    phone: "",
   });
 
   const [errorListPassword, setErrorListPassword] = useState([
@@ -64,39 +64,12 @@ function Register() {
     },
   ]);
 
-  // //! функция проверки не менее 8 символов
-  // function funEightSymbols(text) {
-  //   const isValid = [...text].length >= 8; // Проверяем, что длина текста не менее 8 символов
-  //   return { id: "0", done: isValid };
-  // }
-
-  //! проверка не меенее 1 заглавной буквы
-  // function funCapitalLetter(text) {
-  //   const hasCapitalLetter = /[A-ZА-ЯЁ]/.test(text);
-  //   return { id: "1", done: hasCapitalLetter };
-  // }
-
-  // function funDigit(text) {
-  //   // Проверяем, есть ли хотя бы одна цифра
-  //   const hasDigit = /\d/.test(text);
-  //   return { id: "2", done: hasDigit };
-  // }
-
-  // const napravlenieKonferenciiList = [
-  //   { id: "1", text: "Название 1" },
-  //   { id: "2", text: "Название 2" },
-  //   { id: "3", text: "Название 3" },
-  //   { id: "4", text: "Название 4" },
-  //   { id: "5", text: "Название 5" },
-  //   { id: "6", text: "Название 6" },
-  // ];
 
   const funSelectedElement = (key, value) => {
     //! проверка что такой ключь есть в formData
     if (!formData.hasOwnProperty(key)) {
       return;
     }
-    console.log("key", key);
     setErrors({ ...errors, [key]: "" });
     setFormData({ ...formData, [key]: value });
   };
@@ -105,7 +78,7 @@ function Register() {
     const { name, value } = e.target;
 
     // Если поле "number", форматируем номер телефона
-    const formattedValue = name === "number" ? formatPhoneNumber(value) : value;
+    const formattedValue = name === "phone" ? formatPhoneNumber(value) : value;
 
     setFormData({ ...formData, [name]: formattedValue });
 
@@ -131,10 +104,10 @@ function Register() {
     [
       "name",
       "surname",
-      "doljnost",
-      "oraganization",
-      "login",
-      "number",
+      "position",
+      "organization",
+      "email",
+      "phone",
       "password",
       "confirmPassword",
     ].forEach((field) => {
@@ -145,17 +118,17 @@ function Register() {
     });
 
     // Проверка корректности Email
-    if (formData.login && !/\S+@\S+\.\S+/.test(formData.login)) {
-      newErrors.login = "Некорректный Email";
+    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Некорректный Email";
       isValid = false;
     }
 
     // Проверка номера телефона
     if (
-      formData.number &&
-      !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.number)
+      formData.phone &&
+      !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)
     ) {
-      newErrors.number = "Номер должен быть в формате +7 (XXX) XXX-XX-XX";
+      newErrors.phone = "Номер должен быть в формате +7 (XXX) XXX-XX-XX";
       isValid = false;
     }
 
@@ -173,7 +146,13 @@ function Register() {
     if (validate()) {
       console.log("Форма отправлена", formData);
       apiRegister(formData).then((res) => {
-        console.log(res);
+        console.log("res", res)
+        if(res?.status === 200) {
+          context.setAuthPage("ConfirmLogin")
+          context.setMailValue(formData.email)
+          sessionStorage.setItem('confirmEmail', formData.email)
+          console.log(res);
+        }
       });
     }
   };
@@ -230,11 +209,11 @@ function Register() {
               autoComplete={"new-password"}
             />
             <Input
-              name="oraganization"
+              name="organization"
               onChange={handleChange}
-              value={formData.oraganization}
+              value={formData.organization}
               placeholder="Организация*"
-              error={errors.oraganization}
+              error={errors.organization}
               autoComplete={"new-password"}
             />
           </div>
@@ -248,11 +227,11 @@ function Register() {
               autoComplete={"new-password"}
             />
             <Input
-              name="login"
+              name="email"
               onChange={handleChange}
-              value={formData.login}
+              value={formData.email}
               placeholder="Email (логин)*"
-              error={errors.login}
+              error={errors.email}
               autoComplete={"new-password"}
             />
           </div>
@@ -265,21 +244,21 @@ function Register() {
               autoComplete={"new-password"}
             />
             <Input
-              name="number"
+              name="phone"
               onChange={handleChange}
-              value={formData.number}
+              value={formData.phone}
               placeholder="Номер телефона*"
-              error={errors.number}
+              error={errors.phone}
               autoComplete={"new-password"}
             />
           </div>
           <div className={styles.inputInnerBlock}>
             <InputList
-              name="zwanie"
+              name="academicTitle"
               onChange={handleChange}
-              value={formData.zwanie}
+              value={formData.academicTitle}
               placeholder="Ученое звание"
-              open={openList === "zwanie"}
+              open={openList === "academicTitle"}
               funOpen={funOpenList}
               divRef={refList[1]}
               list={zwanieList}
@@ -302,11 +281,11 @@ function Register() {
           </div>
           <div className={styles.inputInnerBlock}>
             <InputList
-              name="stepen"
+              name="degree"
               onChange={handleChange}
-              value={formData.stepen}
+              value={formData.degree}
               placeholder="Степень"
-              open={openList === "stepen"}
+              open={openList === "degree"}
               funOpen={funOpenList}
               divRef={refList[2]}
               list={stepenList}
@@ -325,16 +304,16 @@ function Register() {
           </div>
           <div className={styles.inputInnerBlock}>
             <InputList
-              name="doljnost"
+              name="position"
               onChange={handleChange}
-              value={formData.doljnost}
+              value={formData.position}
               placeholder="Должность*"
-              open={openList === "doljnost"}
+              open={openList === "position"}
               funOpen={funOpenList}
               divRef={refList[3]}
               list={doljnostList}
               funSelectElement={funSelectedElement}
-              error={errors.doljnost}
+              error={errors.position}
             />
           </div>
         </div>
