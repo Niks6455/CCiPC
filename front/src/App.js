@@ -22,6 +22,7 @@ import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
 import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
+import AdminPage from "./pages/AdminPage/AdminPage";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("");
@@ -80,6 +81,10 @@ function App() {
             ></Route>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="*" element={<NoteFoundPage />} />{" "}
+            <Route path="/AdminPage/*" element={<AdminPage />}>
+
+            </Route>
+            
           </Routes>
         </main>
       </BrowserRouter>
