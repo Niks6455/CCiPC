@@ -90,7 +90,7 @@ export const LoginFunc = async (UserData) => {
     localStorage.setItem("refreshToken", refreshToken);
     localStorage.setItem("userData", JSON.stringify(userData));
     refreshTokensTimer();
-    return userData;
+    return response;
   } catch (error) {
     alert("Пользователь не найден!");
   }

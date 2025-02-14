@@ -51,7 +51,9 @@ function Login() {
     // navigate("/HomePage");
     if (validate()) {
       LoginFunc(formData).then((data) => {
-        console.log('data', data);
+        if(data?.status === 200) {
+          navigate("/");
+        }
       })
 
     }
