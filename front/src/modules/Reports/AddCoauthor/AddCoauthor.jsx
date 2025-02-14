@@ -83,7 +83,15 @@ function AddCoauthor() {
       form: report.data.formParticipation,
       direction: report.data.directionConference,
       comment: report.data.comments,
-      coAuthors: report.data.soauthors,
+      coAuthors: report.data.soauthors.map((el) => ({
+        name: el.data.name,
+        surname: el.data.surname,
+        patronymic: el.data.patronymic,
+        email: el.data.email,
+        organization: el.data.organization,
+        phone: el.data.phone,
+        form: el.data.formParticipation,
+      })),
     };
     apiCreateReport(data).then((res) => {
       console.log("res", res);

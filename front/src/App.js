@@ -24,6 +24,8 @@ import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
 import { useDispatch } from "react-redux";
 import { disGetDataUser } from "./store/userSlice/user.Slice";
+import { apiCreateConferences, apiGetReports } from "./apirequests/apirequests";
+import { disGetReports } from "./store/reportsSlice/reportsSlice";
 function App() {
   const dispatch = useDispatch();
   const [authPage, setAuthPage] = useState("Auth");
@@ -33,10 +35,35 @@ function App() {
   const [selectFrameLks, setSelectFrameLks] = useState("profile");
   const [activeMenu, setActiveMenu] = useState(false);
 
-  //! получение данных пользователя
   useEffect(() => {
+    //! получение данных пользователя
     console.log("accessToken", localStorage.getItem("accessToken"));
     dispatch(disGetDataUser());
+
+    //! получение докладов пользователя
+
+    apiGetReports().then((res) => {
+      if (res?.status === 200) {
+        dispatch(disGetReports({ data: res.data.reports }));
+      } else {
+        console.error("apiGetReports ", res);
+      }
+    });
+
+    //! создание конференции
+    const dataConferences = {
+      number: 1,
+      date: "2025-06-06",
+      address: "Таганрог",
+      stages: [
+        {
+          name: "Представление докладов и регистрационных форм",
+          date: "01-09-2024",
+        },
+      ],
+      directions: ["фффф"],
+    };
+    // apiCreateConferences(dataConferences);
   }, []);
 
   const context = {

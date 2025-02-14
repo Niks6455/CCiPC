@@ -103,7 +103,7 @@ function LeftMenuLk() {
                     {rep.name}
                   </div>
                 )}
-                <span>Доклад №{rep.number}</span>
+                <span>Доклад №{index + 1}</span>
               </li>
             ))}
           </div>

@@ -52,21 +52,21 @@ function ViewReports() {
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Направление конференции:</p>
-            <p>{reportData?.directionConference}</p>
+            <p>{reportData?.direction}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Статус участия:</p>
-            <p>{reportData?.participationStatus}</p>
+            <p>{reportData?.form}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Комментарий:</p>
-            <p>{reportData?.comments}</p>
+            <p>{reportData?.comment}</p>
           </div>
         </div>
         <div className={styles.ViewReportsInnerSecond}>
           <div className={styles.ViewReportsSoauthors}>
             <p className={styles.ViewReportsTitle}>Соавторы:</p>
-            {reportData?.soauthors.map((item, index) => (
+            {reportData?.coAuthors?.map((item, index) => (
               <div key={index}>
                 <p className={styles.name}>{`${index + 1}. ${item?.name} ${
                   item?.surname
@@ -100,7 +100,7 @@ function ViewReports() {
           <p className={styles.fileLoudersTitle}>Доклад:</p>
           <>
             <div className={styles.fileName}>
-              <span>{report.fileArticle?.name || "Документ.pdf"}</span>
+              <span>{report.reportFile?.name || "Документ.pdf"}</span>
             </div>
             <BlockFile className={styles.blockFile} />
           </>
@@ -125,7 +125,7 @@ function ViewReports() {
           <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
           <>
             <div className={styles.fileName}>
-              <span>{report.fileExpertOpinion?.name || "Документ.pdf"}</span>
+              <span>{report.conclusion?.name || "Документ.pdf"}</span>
             </div>
             <BlockFile className={styles.blockFile} />
           </>

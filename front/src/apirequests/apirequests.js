@@ -123,7 +123,43 @@ export const apiGetUserData = async () => {
 //! создать доклад
 export const apiCreateReport = async (data) => {
   try {
-    const response = await axios.post(`${server}/reports`, data);
+    const response = await axios.post(`${server}/reports`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+};
+
+//! получение всех докладов пользователя
+export const apiGetReports = async () => {
+  try {
+    const response = await axios.get(`${server}/reports`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("apiGetUserData ", error);
+  }
+};
+
+//! создать конференции в бд роль свою поменять на 1 чтобы работало
+export const apiCreateConferences = async (dataConferences) => {
+  try {
+    const response = await axios.post(
+      `${server}/conferences`,
+      dataConferences,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    );
     return response;
   } catch (error) {
     console.log("apiCreateReport ", error);

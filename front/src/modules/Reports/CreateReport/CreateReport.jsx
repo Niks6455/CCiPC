@@ -20,7 +20,6 @@ function CreateReport() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
-  console.log("report", report);
   //! функция скачивания шаблока
   const funDownloadShablon = () => {
     const link = document.createElement("a");
