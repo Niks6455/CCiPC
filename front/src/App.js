@@ -24,7 +24,7 @@ import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
-  const [mailValue, setMailValue] = useState("test@sfedu.ru");
+  const [mailValue, setMailValue] = useState("");
   const [numberValue, setNumberValue] = useState("79805005050");
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState("profile");

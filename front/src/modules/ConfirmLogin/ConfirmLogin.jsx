@@ -3,11 +3,12 @@ import styles from "./ConfirmLogin.module.scss";
 import DataContext from "../../context";
 import logo from "./../../assets/img/logo.png"
 import confirm from "./../../assets/img/confirm.svg"
+import { CheckEmail } from "../../apirequests/apirequests";
 function ConfirmLogin() {
     const context = useContext(DataContext);
     const [code, setCode] = useState(["", "", "", "", "", ""]); // Для кода
     const [errors, setErrors] = useState([false, false, false, false, false, false]); // Для ошибок
-    const [timer, setTimer] = useState(5); // Таймер в секундах
+    const [timer, setTimer] = useState(59); // Таймер в секундах
     const [isButtonActive, setIsButtonActive] = useState(false); // Состояние кнопки
     const inputsRef = useRef([]);
 
@@ -59,6 +60,16 @@ function ConfirmLogin() {
             return;
         }
         const fullCode = code.join("");
+        const data = {
+            email: context?.mailValue || sessionStorage.getItem("confirmEmail"),
+            code: fullCode,
+        } 
+        CheckEmail(data).then((resp) =>{
+            if(resp.status === 200){
+                console.log("Код подтвержден");
+                context?.setAuthPage("Auth");
+            }
+        })
         console.log("Код отправлен на сервер:", fullCode);
     };
 
