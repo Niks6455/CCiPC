@@ -13,6 +13,7 @@ import {
   funDigit,
   funEightSymbols,
 } from "../../utils/functions/PasswordValidation";
+import { apiRegister } from "../../apirequests/apirequests";
 
 function Register() {
   const context = useContext(DataContext);
@@ -171,6 +172,9 @@ function Register() {
   const handleSubmit = () => {
     if (validate()) {
       console.log("Форма отправлена", formData);
+      apiRegister(formData).then((res) => {
+        console.log(res);
+      });
     }
   };
 
