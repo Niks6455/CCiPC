@@ -6,7 +6,7 @@ export default {
 
     async self({ user }, res){
 
-        user.reports = (await participantService.self(user)).reports;
+        user.reports = (await participantService.self(user))?.reports;
         res.json({participant: map(user) });
     },
 
