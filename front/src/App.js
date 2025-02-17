@@ -24,7 +24,11 @@ import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
 import { useDispatch } from "react-redux";
 import { disGetDataUser } from "./store/userSlice/user.Slice";
-import { apiCreateConferences, apiGetReports } from "./apirequests/apirequests";
+import {
+  apiCreateConferences,
+  apiGetReports,
+  apiGetUserData,
+} from "./apirequests/apirequests";
 import { disGetReports } from "./store/reportsSlice/reportsSlice";
 function App() {
   const dispatch = useDispatch();
@@ -38,7 +42,12 @@ function App() {
   useEffect(() => {
     //! получение данных пользователя
     console.log("accessToken", localStorage.getItem("accessToken"));
-    dispatch(disGetDataUser());
+    apiGetUserData().then((res) => {
+      console.log("res", res);
+      if (res?.status === 200) {
+        dispatch(disGetDataUser({ data: res.data }));
+      }
+    });
 
     //! получение докладов пользователя
 

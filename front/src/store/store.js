@@ -20,7 +20,7 @@ const rootReducer = combineReducers({
   BasicSlice: basicSlice,
   reportsSlice: reportsSlice,
   reportCreateSlice: reportCreateSlice,
-  userSlice: UserSlice,
+  user: UserSlice,
 });
 
 const persistConfig = {

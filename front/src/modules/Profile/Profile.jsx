@@ -4,17 +4,29 @@ import noPhotoLk from "./../../assets/img/noPhotoLk.svg";
 import editPhotoLk from "./../../assets/img/EditPhotoLk.png";
 import { ReactComponent as Close } from "./../../assets/img/UI/bigX.svg";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { fioToString } from "../../utils/functions/funcions";
 function Profile() {
-    const testData = [
-        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
-        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
-        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
-    ]  
-    const [showProfilePhoto, setShowProfilePhoto] = useState(false);
-    //! функция открытия фото профиля
-    const funOpenPhotoProfile = () => {
-        setShowProfilePhoto(!showProfilePhoto);
-        };
+  const user = useSelector((state) => state.user.user.data);
+  const testData = [
+    {
+      name: "Название доклада №1:",
+      text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»",
+    },
+    {
+      name: "Название доклада №1:",
+      text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»",
+    },
+    {
+      name: "Название доклада №1:",
+      text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»",
+    },
+  ];
+  const [showProfilePhoto, setShowProfilePhoto] = useState(false);
+  //! функция открытия фото профиля
+  const funOpenPhotoProfile = () => {
+    setShowProfilePhoto(!showProfilePhoto);
+  };
 
   return (
     <section className={styles.Profile}>
@@ -44,7 +56,7 @@ function Profile() {
       </div>
       <div className={styles.mainSection}>
         <div className={styles.mainSectionInfoPeople}>
-          <p>Веселов Геннадий Евгеньевич</p>
+          <p>{fioToString(user.name, user.surname, user.patronymic)}</p>
           <p>
             <span>Ученое звание:</span> Доцент
           </p>
