@@ -30,6 +30,13 @@ import {
   apiGetUserData,
 } from "./apirequests/apirequests";
 import { disGetReports } from "./store/reportsSlice/reportsSlice";
+import AdminPage from "./pages/AdminPage/AdminPage";
+import ArchiveModulePage from "./modules/AdminPageModule/ArchiveModulePage/ArchiveModulePage";
+import ColaboratorsModuleAdminPage from "./modules/AdminPageModule/ColaboratorsModuleAdminPage/ColaboratorsModuleAdminPage";
+import OrgazmCommetet from "./modules/AdminPageModule/OrgazmCommetet/OrgazmCommetet";
+import NewsModuleAdminPage from "./modules/AdminPageModule/NewsModuleAdminPage/NewsModuleAdminPage";
+import ConfirenceModuleAdminPage from "./modules/AdminPageModule/ConfirenceModuleAdminPage/ConfirenceModuleAdminPage";
+import OrgWznosModuleAdminPage from "./modules/AdminPageModule/OrgWznosModuleAdminPage/OrgWznosModuleAdminPage";
 function App() {
   const dispatch = useDispatch();
   const [authPage, setAuthPage] = useState("Auth");
@@ -125,6 +132,23 @@ function App() {
             ></Route>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="*" element={<NoteFoundPage />} />{" "}
+            <Route path="/adminPage/*" element={<AdminPage />}>
+              <Route path="archive" element={<ArchiveModulePage />} />
+              <Route
+                path="participants"
+                element={<ColaboratorsModuleAdminPage />}
+              />
+              <Route path="committee" element={<OrgazmCommetet />} />
+              <Route path="news" element={<NewsModuleAdminPage />} />
+              <Route
+                path="conferences"
+                element={<ConfirenceModuleAdminPage />}
+              />
+              <Route
+                path="registrationFee"
+                element={<OrgWznosModuleAdminPage />}
+              />
+            </Route>
           </Routes>
         </main>
       </BrowserRouter>
