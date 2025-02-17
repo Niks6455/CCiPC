@@ -5,7 +5,11 @@ import TextLogo from "./../../assets/img/text.svg";
 import arrow from "./../../assets/img/arrow.svg";
 import footerLogo from "./../../assets/img/Headernumber.png";
 import ArrowMenu from "./../../assets/img/ArrowMenu.png";
+import { useSelector } from "react-redux";
 function Header() {
+  const autorisation =
+    useSelector((state) => state.user.user.succeeded) === "succeeded";
+  console.log("autorisation", autorisation);
   const navigate = useNavigate();
   return (
     <header>
