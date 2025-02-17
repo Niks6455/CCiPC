@@ -3,8 +3,8 @@ import React from "react";
 
 function OrgazmCommetet() {
     return ( 
-        <section>
-
+        <section className={styles.OrgazmCommetet}>
+            <p>OrgazmCommetet</p>
         </section>
      );
 }

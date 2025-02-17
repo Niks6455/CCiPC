@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./LeftMenuAdminPage.module.scss";
 import logo from "./../../../assets/img/logo.png";
 import archive from "./../../../assets/img/AdminPanel/archive.svg"
@@ -19,13 +19,14 @@ function LeftMenuAdminPage() {
                 />
                 <p className={styles.Title}>Панель администратора</p>
                 <ul className={styles.LeftMenuLkList}>
-                    <li className={styles.active}><img src={news}/>Новости</li>
-                    <li><img src={conference}/>Конференция</li>
-                    <li><img src={org}/>Оргкомитет</li>
-                    <li><img src={colaborators}/>Участники</li>
-                    <li><img src={orgMoney}/>Оргвзнос</li>
-                    <li><img src={archive}/>Архив фото</li>
+                    <Link to="news"><li className={styles.active}><img src={news}/>Новости</li></Link>
+                    <Link to="conferences"><li><img src={conference}/>Конференция</li></Link>
+                    <Link to="committee"><li><img src={org}/>Оргкомитет</li></Link>
+                    <Link to="participants"><li><img src={colaborators}/>Участники</li></Link>
+                    <Link to="registrationFee"><li><img src={orgMoney}/>Оргвзнос</li></Link>
+                    <Link to="archive"><li><img src={archive}/>Архив фото</li></Link>
                 </ul>
+              
             </div>
         </section>
      );

@@ -23,6 +23,12 @@ import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import ArchiveModulePage from "./modules/AdminPageModule/ArchiveModulePage/ArchiveModulePage";
+import ColaboratorsModuleAdminPage from "./modules/AdminPageModule/ColaboratorsModuleAdminPage/ColaboratorsModuleAdminPage";
+import OrgazmCommetet from "./modules/AdminPageModule/OrgazmCommetet/OrgazmCommetet";
+import NewsModuleAdminPage from "./modules/AdminPageModule/NewsModuleAdminPage/NewsModuleAdminPage";
+import ConfirenceModuleAdminPage from "./modules/AdminPageModule/ConfirenceModuleAdminPage/ConfirenceModuleAdminPage";
+import OrgWznosModuleAdminPage from "./modules/AdminPageModule/OrgWznosModuleAdminPage/OrgWznosModuleAdminPage";
 function App() {
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("");
@@ -81,8 +87,13 @@ function App() {
             ></Route>
             <Route path="/" element={<HomePage />}></Route>
             <Route path="*" element={<NoteFoundPage />} />{" "}
-            <Route path="/AdminPage/*" element={<AdminPage />}>
-
+            <Route path="/adminPage/*" element={<AdminPage />}>
+              <Route path="archive" element={<ArchiveModulePage />} />
+              <Route path="participants" element={<ColaboratorsModuleAdminPage />} />
+              <Route path="committee" element={<OrgazmCommetet />} />
+              <Route path="news" element={<NewsModuleAdminPage />} />
+              <Route path="conferences" element={<ConfirenceModuleAdminPage />} />
+              <Route path="registrationFee" element={<OrgWznosModuleAdminPage />} />
             </Route>
             
           </Routes>
