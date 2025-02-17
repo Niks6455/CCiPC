@@ -25,6 +25,10 @@
       .LeftMenuLkList {
         list-style: none;
         padding-left: 30px;
+        a{
+          text-decoration: none;
+          color: inherit;
+        }
         .active {
           background-color: var(--MenuHover);
           box-sizing: border-box;

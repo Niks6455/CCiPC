@@ -9,6 +9,13 @@ import org from "./../../../assets/img/AdminPanel/org.svg"
 import orgMoney from "./../../../assets/img/AdminPanel/orgMoney.svg"
 function LeftMenuAdminPage() {
     const navigate = useNavigate();
+    const getActiveLi = (patch) => {
+        if(window.location.pathname === patch){
+            return styles.active
+        }else{
+            return
+        }
+    }
     return ( 
         <section className={styles.LeftMenuAdminPage}>
             <div className={styles.LeftMenuAdminPageInner}>
@@ -19,12 +26,12 @@ function LeftMenuAdminPage() {
                 />
                 <p className={styles.Title}>Панель администратора</p>
                 <ul className={styles.LeftMenuLkList}>
-                    <Link to="news"><li className={styles.active}><img src={news}/>Новости</li></Link>
-                    <Link to="conferences"><li><img src={conference}/>Конференция</li></Link>
-                    <Link to="committee"><li><img src={org}/>Оргкомитет</li></Link>
-                    <Link to="participants"><li><img src={colaborators}/>Участники</li></Link>
-                    <Link to="registrationFee"><li><img src={orgMoney}/>Оргвзнос</li></Link>
-                    <Link to="archive"><li><img src={archive}/>Архив фото</li></Link>
+                    <Link to="news"><li className={getActiveLi("/adminPage/news")}><img src={news}/>Новости</li></Link>
+                    <Link to="conferences"><li className={getActiveLi("/adminPage/conferences")}><img src={conference}/>Конференция</li></Link>
+                    <Link to="committee"><li className={getActiveLi("/adminPage/committee")}><img src={org}/>Оргкомитет</li></Link>
+                    <Link to="participants"><li className={getActiveLi("/adminPage/participants")}><img src={colaborators}/>Участники</li></Link>
+                    <Link to="registrationFee"><li className={getActiveLi("/adminPage/registrationFee")}><img src={orgMoney}/>Оргвзнос</li></Link>
+                    <Link to="archive"><li className={getActiveLi("/adminPage/archive")}><img src={archive}/>Архив фото</li></Link>
                 </ul>
               
             </div>
