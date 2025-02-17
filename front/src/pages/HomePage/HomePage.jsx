@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import DataContext from "../../context";
-import Header from "../../components/Header/Header";
+import Header from "@components/Header/Header";
 import Layout from "../../ui/Layout/Layout";
 import styles from "./HomePage.module.scss";
 import TopMainInfo from "../../modules/TopMainInfo/TopMainInfo";
@@ -8,10 +8,10 @@ import SliderHomePageTop from "../../modules/SliderHomePageTop/SliderHomePageTop
 import { textDataHomePage } from "./date";
 import SliderHomePage from "../../components/SliderHomePage/SliderHomePage";
 import Footer from "../../components/Footer/Footer";
-import Organization1 from "../../assets/img/UI/org1.png";
-import Organization2 from "../../assets/img/UI/org2.png";
-import Organization3 from "../../assets/img/UI/org3.png";
-import Organization4 from "../../assets/img/UI/org4.png";
+import Organization1 from "@assets/img/UI/org1.png";
+import Organization2 from "@assets/img/UI/org2.png";
+import Organization3 from "@assets/img/UI/org3.png";
+import Organization4 from "@assets/img/UI/org4.png";
 function HomePage() {
     const context = useContext(DataContext);
     const textData = textDataHomePage;

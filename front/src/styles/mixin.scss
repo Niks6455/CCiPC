@@ -143,3 +143,47 @@
   color: var(--GrayTextDefault);
 }
 
+@mixin ButtonOrgComActive($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--MenuHover);
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #333;
+  border: 1px solid #00452940;
+  margin-right: 25px;
+  padding: 4px 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--MenuHoverActive);
+    transition: all 0.15s linear;
+  }
+}
+@mixin ButtonOrgComDisable($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--MenuHover);
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #333;
+  border: 1px solid #00452940;
+  margin-right: 25px;
+  padding: 4px 5px;
+  cursor: pointer;
+  opacity: 0.5;
+  &:hover {
+    background-color: var(--MenuHoverActive);
+    transition: all 0.15s linear;
+  }
+}
+
