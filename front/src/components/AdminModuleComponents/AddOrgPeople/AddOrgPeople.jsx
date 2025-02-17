@@ -1,7 +1,7 @@
 import styles from "./AddOrgPeople.module.scss";
 import addPhoto from "@assets/img/AdminPanel/addPhoto.svg";
 import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
-function AddOrgPeople() {
+function AddOrgPeople(props) {
     return ( 
         <div className={styles.AddOrgPeople}>
             <div className={styles.AddOrgPeopleInner}>
@@ -19,7 +19,7 @@ function AddOrgPeople() {
                 </div>
                 <div className={styles.AddOrgPeopleButton}>
                     <button className={styles.save}>Сохранить</button>
-                    <button className={styles.delete}><img src={deletePhotoImg}/></button>
+                    <button className={styles.delete} onClick={() => props.closeCreateOne()}><img src={deletePhotoImg}/></button>
                 </div>
             </div>
         </div>

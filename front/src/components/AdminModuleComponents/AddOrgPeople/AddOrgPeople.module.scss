@@ -36,15 +36,19 @@
         }
         .AddOrgPeopleButton{
             display: flex;
-            button{
-                background: none;
-                border: none;
-            }
+            margin-top: 10px;
+            justify-content: space-between;
             .save{
                 @include ButtonGreen();
+                width: 243px;
+                height: 54px;
             }
             .delete{
-
+                @include ButtonRed();
+                border-radius: 8px;
+                height: 54px;
+                width: 54px;
+                border: 1px solid #b32020;
             }
         }
     }
