@@ -20,8 +20,14 @@ function RightMenuLk() {
         navigate(`/${text}`);
     };
 
+    const checkPathName = () => {
+        window.location.pathname.includes("/adminPage")
+    };
+
+    
+
     return (
-        <section className={styles.RightMenuLk}>
+        <section className={styles.RightMenuLk} style={{ width: checkPathName() ? "310px" : "0px", minWidth: checkPathName() ? "310px" : "0px" , borderLeft: checkPathName() ? "1px solid #C8D0CE" : "none" }}>
             <div className={styles.RightMenuLkContainer}>
                 <NavBar/>
             </div>
