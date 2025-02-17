@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "./axios";
 const server = "http://localhost:3000";
 
 const REFRESH_INTERVAL = 1500000; // 25 минут
@@ -6,7 +6,7 @@ let refreshTokensTimeout;
 
 export const refreshTokens = async (accessToken, refreshToken) => {
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${server}/auth/refresh`,
       { refreshToken },
       {
@@ -63,7 +63,7 @@ export const logout = async () => {
   const data = { refreshToken: localStorage.getItem("refreshToken") };
   console.log(data);
   try {
-    const response = await axios.post(`${server}/auth/logout`, data);
+    const response = await api.post(`${server}/auth/logout`, data);
 
     return response;
   } catch (error) {
@@ -74,7 +74,7 @@ export const logout = async () => {
 //! Запрос на регистрацию
 export const apiRegister = async (data) => {
   try {
-    const response = await axios.post(`${server}/auth/register`, data);
+    const response = await api.post(`${server}/auth/register`, data);
     return response;
   } catch (error) {
     alert("Регистрация не прошла!");
@@ -84,7 +84,7 @@ export const apiRegister = async (data) => {
 //! Запрос на авторизацию
 export const LoginFunc = async (UserData) => {
   try {
-    const response = await axios.post(`${server}/auth/login`, UserData);
+    const response = await api.post(`${server}/auth/login`, UserData);
     const { accessToken, refreshToken, ...userData } = response.data;
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
@@ -99,7 +99,7 @@ export const LoginFunc = async (UserData) => {
 //! Запрос на подтверждение почты 
 export const CheckEmail = async (Data) => {
   try {
-    const response = await axios.post(`${server}/auth/checkEmail`, Data);
+    const response = await api.post(`${server}/auth/checkEmail`, Data);
     return response;
   } catch (error) {
     alert("Пользователь не найден!");
