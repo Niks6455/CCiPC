@@ -11,6 +11,7 @@ export const fetchUserData = createAsyncThunk(
       if (response.status === 200) {
         return response.data; // Возвращаем данные пользователя
       } else {
+        window.location.href = "/authorization";
         return rejectWithValue("Ошибка получения данных");
       }
     } catch (error) {
@@ -53,6 +54,6 @@ const UserSlice = createSlice({
   },
 });
 
-export const { setUserData } = UserSlice.actions;
+export const { setUserData, getAutarization } = UserSlice.actions;
 
 export default UserSlice.reducer;

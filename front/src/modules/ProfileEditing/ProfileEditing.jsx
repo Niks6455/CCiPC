@@ -6,9 +6,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { stepenList, zwanieList } from "../../utils/Lists/List";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
+import { useSelector } from "react-redux";
 function ProfileEditing() {
   const [openList, setOpenList] = useState("");
   const context = useContext(DataContext);
+  const user = useSelector((state) => state.user.user.data);
+  console.log("user", user);
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -20,6 +23,22 @@ function ProfileEditing() {
     email: "",
     number: "",
   });
+
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        name: user.name,
+        surname: "",
+        patronymic: "",
+        academicTitle: "",
+        degree: "",
+        post: "",
+        organization: "",
+        email: "",
+        number: "",
+      });
+    }
+  }, [user]);
 
   const [errors, setErrors] = useState({
     name: "",

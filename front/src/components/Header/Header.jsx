@@ -8,7 +8,8 @@ import ArrowMenu from "./../../assets/img/ArrowMenu.png";
 import { useSelector } from "react-redux";
 function Header() {
   const autorisation =
-    useSelector((state) => state.user.user.succeeded) === "succeeded";
+    useSelector((state) => state.user.status) === "succeeded";
+
   console.log("autorisation", autorisation);
   const navigate = useNavigate();
   return (
@@ -46,8 +47,14 @@ function Header() {
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
-            <li onClick={() => navigate("/account/profile")}>
-              Личный кабинет{" "}
+            <li
+              onClick={() =>
+                autorisation
+                  ? navigate("/account/profile")
+                  : navigate("/authorization")
+              }
+            >
+              {autorisation ? "Личный кабинет" : "Вход/Регистрация"}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>

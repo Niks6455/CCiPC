@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import DataContext from "./context";

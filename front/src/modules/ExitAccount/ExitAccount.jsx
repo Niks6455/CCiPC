@@ -7,6 +7,11 @@ import ExitImg from "./../../assets/img/exit.png";
 function ExitAccount() {
   const navigate = useNavigate();
   const context = useContext(DataContext);
+
+  const funExcit = () => {
+    // navigate("/authorization")
+  };
+
   return (
     <section className={styles.ExitAccount}>
       <div>
@@ -23,7 +28,7 @@ function ExitAccount() {
           >
             В профиль
           </button>
-          <button onClick={() => navigate("/authorization")}>Да</button>
+          <button onClick={funExcit}>Да</button>
         </div>
       </div>
     </section>

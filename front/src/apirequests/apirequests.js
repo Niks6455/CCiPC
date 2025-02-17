@@ -84,7 +84,7 @@ export const apiRegister = async (data) => {
 //! Запрос на авторизацию
 export const LoginFunc = async (UserData) => {
   try {
-    const response = await axios.post(`${server}/auth/login`, UserData);
+    const response = await api.post(`${server}/auth/login`, UserData);
     const { token, refreshToken, ...userData } = response.data;
     localStorage.setItem("accessToken", token);
     localStorage.setItem("refreshToken", refreshToken);
@@ -109,11 +109,7 @@ export const CheckEmail = async (Data) => {
 //! получение данных пользователя
 export const apiGetUserData = async () => {
   try {
-    const response = await axios.get(`${server}/participants/self`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await api.get(`${server}/participants/self`);
     return response;
   } catch (error) {
     console.log("apiGetUserData ", error);
@@ -123,11 +119,7 @@ export const apiGetUserData = async () => {
 //! создать доклад
 export const apiCreateReport = async (data) => {
   try {
-    const response = await axios.post(`${server}/reports`, data, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await api.post(`${server}/reports`, data);
     return response;
   } catch (error) {
     console.log("apiCreateReport ", error);
@@ -137,11 +129,7 @@ export const apiCreateReport = async (data) => {
 //! получение всех докладов пользователя
 export const apiGetReports = async () => {
   try {
-    const response = await axios.get(`${server}/reports`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await api.get(`${server}/reports`);
     return response;
   } catch (error) {
     console.log("apiGetUserData ", error);
@@ -151,11 +139,7 @@ export const apiGetReports = async () => {
 //! удаление доклада пользователя
 export const apiDeleteReport = async (id) => {
   try {
-    const response = await axios.delete(`${server}/reports/${id}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    });
+    const response = await api.delete(`${server}/reports/${id}`);
     return response;
   } catch (error) {
     console.log("apiGetUserData ", error);
@@ -165,15 +149,7 @@ export const apiDeleteReport = async (id) => {
 //! создать конференции в бд роль свою поменять на 1 чтобы работало
 export const apiCreateConferences = async (dataConferences) => {
   try {
-    const response = await axios.post(
-      `${server}/conferences`,
-      dataConferences,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      }
-    );
+    const response = await api.post(`${server}/conferences`, dataConferences);
     return response;
   } catch (error) {
     console.log("apiCreateReport ", error);
