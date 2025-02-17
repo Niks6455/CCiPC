@@ -15,12 +15,14 @@ import basicSlice from "./basicSlice/basic.Slice.js";
 import reportsSlice from "./reportsSlice/reportsSlice.js";
 import reportCreateSlice from "./reportCreateSlice/reportCreateSlice.js";
 import UserSlice from "./userSlice/user.Slice.js";
+import conferencesSlice from "./conferencesSlice/conferences.Slice.js";
 
 const rootReducer = combineReducers({
   BasicSlice: basicSlice,
   reportsSlice: reportsSlice,
   reportCreateSlice: reportCreateSlice,
   user: UserSlice,
+  conferences: conferencesSlice,
 });
 
 const persistConfig = {

@@ -175,3 +175,13 @@ export const apiCreateConferences = async (dataConferences) => {
     console.log("apiCreateReport ", error);
   }
 };
+
+//! получение всех конференций
+export const apiGetConferences = async () => {
+  try {
+    const response = await api.get(`${server}/conferences`);
+    return response;
+  } catch (error) {
+    console.log("apiGetUserData ", error);
+  }
+};

@@ -37,6 +37,7 @@ import OrgazmCommetet from "./modules/AdminPageModule/OrgazmCommetet/OrgazmComme
 import NewsModuleAdminPage from "./modules/AdminPageModule/NewsModuleAdminPage/NewsModuleAdminPage";
 import ConfirenceModuleAdminPage from "./modules/AdminPageModule/ConfirenceModuleAdminPage/ConfirenceModuleAdminPage";
 import OrgWznosModuleAdminPage from "./modules/AdminPageModule/OrgWznosModuleAdminPage/OrgWznosModuleAdminPage";
+import { fetchConferences } from "./store/conferencesSlice/conferences.Slice";
 function App() {
   const dispatch = useDispatch();
   const [authPage, setAuthPage] = useState("Auth");
@@ -51,6 +52,8 @@ function App() {
     dispatch(fetchUserData()); // Вызов асинхронного действия
     //! получение докладов пользователя
     dispatch(fetchReports());
+    //! получение всех конференций
+    dispatch(fetchConferences());
   }, [dispatch]);
 
   useEffect(() => {

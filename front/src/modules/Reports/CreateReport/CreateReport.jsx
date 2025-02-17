@@ -20,6 +20,7 @@ function CreateReport({ edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
+  const conferences = useSelector((state) => state.conferences.data);
   console.log("report", report);
   //! функция скачивания шаблока
   const funDownloadShablon = () => {
@@ -221,8 +222,8 @@ function CreateReport({ edit }) {
           <div className={styles.text}>
             <img src={errorList} alt="img" />
             <span>
-              В срок до XX.XX.XХХX необходимо прислать заявку на доклад, а в
-              срок до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
+              В срок до необходимо прислать заявку на доклад, а в срок до
+              ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
             </span>
           </div>
           <button onClick={() => navigate("/account/addcoauthor")}>
