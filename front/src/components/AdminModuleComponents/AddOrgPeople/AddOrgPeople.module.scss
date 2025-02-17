@@ -1,0 +1,55 @@
+.AddOrgPeople{
+    .AddOrgPeopleInner{
+        background-color: #fff;
+        border-radius: 28px ;
+        padding: 20px;
+        width: 322px;
+        .AddOrgPeopleFile{
+            background-image: url("./../../../assets/img/AdminPanel/addPhoto.svg");
+            width: 322px;
+            height: 322px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .AddOrgPeopleInput{
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+            label{
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 10px;
+            }
+            input, textarea{
+                width: 100%;
+                min-height: 51px;
+                background: none;
+                border: none;
+                padding: 20px;
+                box-sizing: border-box;
+                border: 1px solid #C8D0CE;
+                border-radius: 10px;
+            }
+            textarea{
+                resize: none;
+            }
+        }
+        .AddOrgPeopleButton{
+            display: flex;
+            margin-top: 10px;
+            justify-content: space-between;
+            .save{
+                @include ButtonGreen();
+                width: 243px;
+                height: 54px;
+            }
+            .delete{
+                @include ButtonRed();
+                border-radius: 8px;
+                height: 54px;
+                width: 54px;
+                border: 1px solid #b32020;
+            }
+        }
+    }
+}

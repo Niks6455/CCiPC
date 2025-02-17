@@ -10,5 +10,14 @@ module.exports = {
       "@styles": path.resolve(__dirname, "src/styles"),
       "@assets": path.resolve(__dirname, "src/assets")
     }
-  }
+  },style: {
+    sass: {
+      loaderOptions: {
+        additionalData: `
+          @import "src/styles/mixin.scss";
+          @import "src/styles/colors.scss";
+        `,
+      },
+    },
+  },
 };

@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import DataContext from "./context";
-import "./styles/app.css";
+import "./styles/app.scss";
 import AuthPage from "./pages/AuthPage/AuthPage";
 import NoteFoundPage from "./pages/NoteFoundPage/NoteFoundPage";
 import NewsPage from "./pages/NewsPage/NewsPage";
