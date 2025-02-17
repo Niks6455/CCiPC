@@ -23,13 +23,13 @@ import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
 import { useDispatch } from "react-redux";
-import { disGetDataUser } from "./store/userSlice/user.Slice";
+import { disGetDataUser, fetchUserData } from "./store/userSlice/user.Slice";
 import {
   apiCreateConferences,
   apiGetReports,
   apiGetUserData,
 } from "./apirequests/apirequests";
-import { disGetReports } from "./store/reportsSlice/reportsSlice";
+import { disGetReports, fetchReports } from "./store/reportsSlice/reportsSlice";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ArchiveModulePage from "./modules/AdminPageModule/ArchiveModulePage/ArchiveModulePage";
 import ColaboratorsModuleAdminPage from "./modules/AdminPageModule/ColaboratorsModuleAdminPage/ColaboratorsModuleAdminPage";
@@ -48,24 +48,12 @@ function App() {
 
   useEffect(() => {
     //! получение данных пользователя
-    console.log("accessToken", localStorage.getItem("accessToken"));
-    apiGetUserData().then((res) => {
-      console.log("res", res);
-      if (res?.status === 200) {
-        dispatch(disGetDataUser({ data: res.data }));
-      }
-    });
-
+    dispatch(fetchUserData()); // Вызов асинхронного действия
     //! получение докладов пользователя
+    dispatch(fetchReports());
+  }, [dispatch]);
 
-    apiGetReports().then((res) => {
-      if (res?.status === 200) {
-        dispatch(disGetReports({ data: res.data.reports }));
-      } else {
-        console.error("apiGetReports ", res);
-      }
-    });
-
+  useEffect(() => {
     //! создание конференции
     const dataConferences = {
       number: 1,

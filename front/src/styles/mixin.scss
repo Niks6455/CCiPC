@@ -94,6 +94,33 @@
   }
 }
 
+@mixin ButtonRedBorder($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #b32020;
+  border: 1px solid #b32020;
+  cursor: pointer;
+  span {
+    margin-right: 10px;
+  }
+  &:hover {
+    background-color: #efe1e1;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: #eab7b7;
+    transition: all 0.15s linear;
+  }
+}
+
 @mixin ButtonRed($fs: 18px) {
   display: flex;
   justify-content: center;
@@ -129,17 +156,54 @@
   }
 }
 
-@mixin TextDefault(){
+@mixin TextDefault() {
   font-size: 20px;
   font-weight: 400;
   line-height: 26px;
   color: var(--GrayTextDefault);
 }
 
-@mixin TextStrong(){
+@mixin TextStrong() {
   font-size: 20px;
   font-weight: 600;
   line-height: 26px;
   color: var(--GrayTextDefault);
 }
 
+//! фон попапа
+@mixin PopupBlur() {
+  width: 100vw;
+  height: 100vw;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #f4f4f466;
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  padding-top: 180px;
+  z-index: 10000;
+}
+
+//! контейнер попапа белый фон
+@mixin PopupContainer() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 960px;
+  height: 286px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+//! тайтл PopupContainer
+@mixin PopupTitle() {
+  font-family: Overpass, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0%;
+  text-align: center;
+}

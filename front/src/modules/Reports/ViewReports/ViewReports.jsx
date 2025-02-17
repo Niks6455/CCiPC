@@ -1,18 +1,24 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useSearchParams } from "react-router-dom"; // Импортируем хук для работы с query params
 import styles from "./ViewReports.module.scss";
 import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
+import { ReactComponent as Trash } from "./../../../assets/img/UI/trash.svg";
+import { apiDeleteReport } from "../../../apirequests/apirequests";
+import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
 
 function ViewReports() {
-  const [searchParams] = useSearchParams(); // Получаем query параметры
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const report = useSelector((state) => state.reportsSlice.data);
+  const [searchParams] = useSearchParams(); // Получаем query параметры
   const [reportData, setReportData] = useState(null);
-  //! появление названия
+  const [number, setNumber] = useState("");
   const [showTooltip, setShowTooltip] = useState(null);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
-  const navigate = useNavigate();
+  const [isModalDelete, setIsModalDelete] = useState(false);
+
   const handleMouseEnter = (index) => {
     // Устанавливаем таймер для задержки
     const timeout = setTimeout(() => {
@@ -31,22 +37,65 @@ function ViewReports() {
   const handleMouseMove = (event) => {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
+
   useEffect(() => {
     const idReport = searchParams.get("idReport"); // Получаем idReport из query параметров
+    setNumber(searchParams.get("number")); // Получаем idReport из query параметров
     if (idReport && report.length > 0) {
       setReportData(report.find((item) => item.id === idReport));
     }
   }, [searchParams, report]); // Запускаем useEffect при изменении query параметров или списка докладов
+
   useEffect(() => {
     console.log("reportData", reportData);
   }, [reportData]);
+
+  //! функция удаления доклада
+  const deleteReportOpenModal = () => {
+    //! открываем попап удаления доклада
+    setIsModalDelete(true);
+  };
+
+  const funDeleteReport = () => {
+    //! удаляем доклад
+    apiDeleteReport(reportData.id).then((res) => {
+      if (res?.status === 200) {
+        dispatch(disDeleteReport(reportData.id));
+        setIsModalDelete(false);
+        navigate("/account/profile");
+      }
+    });
+  };
+
   return (
     <section className={styles.ViewReports}>
+      {isModalDelete && (
+        <div className={styles.modal_container}>
+          <div className={styles.modal_delete_report}>
+            <h2>
+              Вы действительно хотите удалить доклад “Название доклада”?
+              Отменить это действие будет невозможно.
+            </h2>
+            <div className={styles.button_container}>
+              <button
+                className={styles.cancle}
+                onClick={() => setIsModalDelete(false)}
+              >
+                Назад
+              </button>
+              <button className={styles.delete} onClick={funDeleteReport}>
+                Удалить
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className={styles.ViewReportsInner}>
         <div className={styles.ViewReportsInnerFirst}>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>
-              Название доклада № {reportData?.number}:
+              Название доклада № {number}:
             </p>
             <p>{reportData?.name}</p>
           </div>
@@ -144,11 +193,19 @@ function ViewReports() {
       </div>
       <div className={styles.EditDataReport}>
         <button
+          className={styles.button_edit}
           onClick={() =>
             navigate(`/account/editreport?idReport=${reportData?.id}`)
           }
         >
           Редактировать данные
+        </button>
+        <button
+          className={styles.button_delete}
+          onClick={deleteReportOpenModal}
+        >
+          <span>Удалить доклад</span>
+          <Trash />
         </button>
       </div>
     </section>

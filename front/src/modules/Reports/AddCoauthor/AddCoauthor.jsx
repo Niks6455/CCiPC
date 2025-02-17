@@ -26,6 +26,8 @@ import SuccessModal from "../../../components/AddReportModal/SuccessModal/Succes
 import NotFullyFilled from "../../../components/AddReportModal/NotFullyFilled/NotFullyFilled";
 import NotFullyFilledCoauthors from "../../../components/AddReportModal/NotFullyFilledCoauthors/NotFullyFilledCoauthors";
 import { apiCreateReport } from "../../../apirequests/apirequests";
+import { fetchUserData } from "../../../store/userSlice/user.Slice";
+import { fetchReports } from "../../../store/reportsSlice/reportsSlice";
 
 function AddCoauthor() {
   const navigate = useNavigate();
@@ -95,6 +97,10 @@ function AddCoauthor() {
     };
     apiCreateReport(data).then((res) => {
       console.log("res", res);
+      if (res?.status === 200) {
+        dispatch(fetchUserData());
+        dispatch(fetchReports());
+      }
     });
   };
 

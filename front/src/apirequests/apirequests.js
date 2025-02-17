@@ -148,6 +148,20 @@ export const apiGetReports = async () => {
   }
 };
 
+//! удаление доклада пользователя
+export const apiDeleteReport = async (id) => {
+  try {
+    const response = await axios.delete(`${server}/reports/${id}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    console.log("apiGetUserData ", error);
+  }
+};
+
 //! создать конференции в бд роль свою поменять на 1 чтобы работало
 export const apiCreateConferences = async (dataConferences) => {
   try {

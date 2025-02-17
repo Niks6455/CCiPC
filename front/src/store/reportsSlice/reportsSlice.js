@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiGetReports } from "../../apirequests/apirequests";
 
 /*
@@ -66,10 +66,29 @@ import { apiGetReports } from "../../apirequests/apirequests";
 //   },
 // ],
 
+// Асинхронный thunk для получения данных пользователя
+export const fetchReports = createAsyncThunk(
+  "user/fetchReports",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await apiGetReports();
+      if (response?.status === 200) {
+        return response.data; // Возвращаем данные пользователя
+      } else {
+        return rejectWithValue("Ошибка получения данных");
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
 const reportsSlice = createSlice({
   name: "reports",
   initialState: {
     data: [],
+    status: "idle", // idle | loading | succeeded | failed
+    error: null,
   },
 
   reducers: {
@@ -77,9 +96,30 @@ const reportsSlice = createSlice({
       const { data } = actions.payload;
       state.data = data || [];
     },
+
+    disDeleteReport(state, actions) {
+      const { id } = actions.payload;
+      state.data = state.data.filter((report) => report.id !== id);
+    },
+  },
+
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchReports.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(fetchReports.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.data = action.payload.reports; // Обновляем данные
+      })
+      .addCase(fetchReports.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload || "Неизвестная ошибка";
+      });
   },
 });
 
-export const { disGetReports } = reportsSlice.actions;
+export const { disGetReports, disDeleteReport } = reportsSlice.actions;
 
 export default reportsSlice.reducer;
