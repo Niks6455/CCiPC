@@ -1,5 +1,3 @@
-@import "../../styles/mixin.scss";
-
 .ProfileEditing {
   width: calc(100vw - 700px);
   display: flex;
@@ -97,7 +95,7 @@
           transition: all 0.1s linear;
         }
       }
-      .noSaveButton{
+      .noSaveButton {
         @include ButtonLightBorder;
         height: 60px;
         margin-top: 25px;

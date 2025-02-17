@@ -116,6 +116,16 @@ export const apiGetUserData = async () => {
   }
 };
 
+//! изменение данных пользователя
+export const apiUpdateUser = async (data) => {
+  try {
+    const response = await api.put(`${server}/participants`, data);
+    return response;
+  } catch (error) {
+    console.log("apiUpdateUserData ", error);
+  }
+};
+
 //! создать доклад
 export const apiCreateReport = async (data) => {
   try {
@@ -143,6 +153,16 @@ export const apiDeleteReport = async (id) => {
     return response;
   } catch (error) {
     console.log("apiGetUserData ", error);
+  }
+};
+
+//! редактирование доклада
+export const apiEditReport = async (id, data) => {
+  try {
+    const response = await api.put(`${server}/reports/${id}`, data);
+    return response;
+  } catch (error) {
+    console.log("apiEditReport ", error);
   }
 };
 

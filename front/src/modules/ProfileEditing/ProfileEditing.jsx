@@ -3,40 +3,29 @@ import profilePhoto from "./../../assets/img/noPhotoLk.svg";
 import Input from "../../ui/Input/Input";
 import InputList from "../../ui/InputList/InputList";
 import { useContext, useEffect, useRef, useState } from "react";
-import { stepenList, zwanieList } from "../../utils/Lists/List";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { apiUpdateUser } from "../../apirequests/apirequests";
+import { disEditUser, setEditUser } from "../../store/userSlice/user.Slice";
+import { inputsData } from "./data";
 function ProfileEditing() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const ref1 = useRef(null);
+  const ref2 = useRef(null);
+  const refList = [ref1, ref2];
+
   const [openList, setOpenList] = useState("");
   const context = useContext(DataContext);
+  const formData = useSelector((state) => state.user.editUser.data);
   const user = useSelector((state) => state.user.user.data);
-  console.log("user", user);
-  const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    patronymic: "",
-    academicTitle: "",
-    degree: "",
-    post: "",
-    organization: "",
-    email: "",
-    number: "",
-  });
+
+  console.log("formData", formData);
 
   useEffect(() => {
-    if (user) {
-      setFormData({
-        name: user.name,
-        surname: "",
-        patronymic: "",
-        academicTitle: "",
-        degree: "",
-        post: "",
-        organization: "",
-        email: "",
-        number: "",
-      });
+    if (!formData.name) {
+      dispatch(disEditUser());
     }
   }, [user]);
 
@@ -45,86 +34,11 @@ function ProfileEditing() {
     patronymic: "",
     academicTitle: "",
     degree: "",
-    post: "",
+    position: "",
     organization: "",
     email: "",
     number: "",
   });
-
-  const inputsData = [
-    {
-      id: "0",
-      name: "Ваше имя*",
-      title: "name",
-      required: true,
-      list: null,
-      type: "text",
-    },
-    {
-      id: "1",
-      name: "Ваша фамилия*",
-      title: "surname",
-      required: true,
-      list: null,
-      type: "text",
-    },
-    {
-      id: "2",
-      name: "Ваше отчество",
-      title: "patronymic",
-      required: false,
-      list: null,
-      type: "text",
-    },
-    {
-      id: "3",
-      name: "Ученое звание*",
-      title: "academicTitle",
-      required: true,
-      list: zwanieList,
-      type: "text",
-    },
-    {
-      id: "4",
-      name: "Степень*",
-      title: "degree",
-      required: true,
-      list: stepenList,
-      type: "text",
-    },
-    {
-      id: "5",
-      name: "Должность*",
-      title: "post",
-      required: true,
-      list: null,
-      type: "text",
-    },
-    {
-      id: "6",
-      name: "Организация*",
-      title: "organization",
-      required: true,
-      list: null,
-      type: "text",
-    },
-    {
-      id: "7",
-      name: "Email*",
-      title: "email",
-      required: true,
-      list: null,
-      type: "email",
-    },
-    {
-      id: "8",
-      name: "Номер*",
-      title: "number",
-      required: true,
-      list: null,
-      type: "text",
-    },
-  ];
 
   const funSelectedElement = (key, value) => {
     //! проверка что такой ключь есть в formData
@@ -133,7 +47,8 @@ function ProfileEditing() {
     }
     console.log("key", key);
     setErrors({ ...errors, [key]: "" });
-    setFormData({ ...formData, [key]: value });
+    // setFormData({ ...formData, [key]: value });
+    dispatch(setEditUser({ key, value }));
   };
 
   const formatPhoneNumber = (value) => {
@@ -156,11 +71,10 @@ function ProfileEditing() {
       "surname",
       "academicTitle",
       "degree",
-      "post",
+      "position",
       "organization",
       "email",
-      "forEach",
-      "number",
+      "phone",
     ].forEach((field) => {
       if (!formData[field]) {
         newErrors[field] = "Поле обязательно для заполнения";
@@ -176,19 +90,13 @@ function ProfileEditing() {
 
     // Проверка номера телефона
     if (
-      formData.number &&
-      !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.number)
+      formData.phone &&
+      !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)
     ) {
-      newErrors.number = "Номер должен быть в формате +7 (XXX) XXX-XX-XX";
+      newErrors.phone = "Номер должен быть в формате +7 (XXX) XXX-XX-XX";
       isValid = false;
     }
-
-    // Проверка совпадения паролей
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Пароли не совпадают";
-      isValid = false;
-    }
-
+    console.log("newErrors", newErrors);
     setErrors(newErrors);
     return isValid;
   };
@@ -196,10 +104,11 @@ function ProfileEditing() {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    // Если поле "number", форматируем номер телефона
-    const formattedValue = name === "number" ? formatPhoneNumber(value) : value;
+    // Если поле "phone", форматируем номер телефона
+    const formattedValue = name === "phone" ? formatPhoneNumber(value) : value;
 
-    setFormData({ ...formData, [name]: formattedValue });
+    // setFormData({ ...formData, [name]: formattedValue });
+    dispatch(setEditUser({ key: name, value: formattedValue }));
 
     // Очистка ошибки при изменении значения
     setErrors({ ...errors, [name]: "" });
@@ -215,13 +124,17 @@ function ProfileEditing() {
 
   const handleSubmit = () => {
     if (validate()) {
-      console.log("Форма отправлена", formData);
+      apiUpdateUser(formData).then((res) => {
+        console.log("res", res);
+        if (res?.status === 200) {
+          console.log("Форма отправлена", formData);
+        }
+      });
+    } else {
+      console.log("Валидация не прошла");
     }
   };
-  const navigate = useNavigate();
-  const ref1 = useRef(null);
-  const ref2 = useRef(null);
-  const refList = [ref1, ref2];
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -300,7 +213,11 @@ function ProfileEditing() {
                 </div>
               )
           )}
-          <button className={styles.SaveButton} onClick={() => handleSubmit()}>
+          <button
+            type="button"
+            className={styles.SaveButton}
+            onClick={handleSubmit}
+          >
             Сохранить изменения
           </button>
           <button

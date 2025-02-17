@@ -26,6 +26,9 @@ const UserSlice = createSlice({
     user: {
       data: {},
     },
+    editUser: {
+      data: {},
+    },
     status: "idle", // idle | loading | succeeded | failed
     error: null,
   },
@@ -34,6 +37,15 @@ const UserSlice = createSlice({
     setUserData(state, action) {
       const { data } = action.payload;
       state.user.data = data;
+    },
+
+    disEditUser(state) {
+      state.editUser.data = state.user.data;
+    },
+
+    setEditUser(state, action) {
+      const { key, value } = action.payload;
+      state.editUser.data[key] = value;
     },
   },
 
@@ -54,6 +66,6 @@ const UserSlice = createSlice({
   },
 });
 
-export const { setUserData, getAutarization } = UserSlice.actions;
+export const { setUserData, disEditUser, setEditUser } = UserSlice.actions;
 
 export default UserSlice.reducer;

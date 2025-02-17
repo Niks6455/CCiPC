@@ -172,6 +172,14 @@ const reportCreateSlice = createSlice({
       const { index, autocompletion } = action.payload;
       state.data.soauthors[index].autocompletion = autocompletion;
     },
+
+    //! редактирование
+    disEditReport(state, action) {
+      const { data } = action.payload;
+      state.data = data;
+      state.sliderState = 0;
+      state.openPopUpName = "";
+    },
   },
 });
 
@@ -183,6 +191,7 @@ export const {
   setOpenPopUpName,
   funSaveDataState,
   setCoauthorAutocompletion,
+  disEditReport,
 } = reportCreateSlice.actions;
 
 export default reportCreateSlice.reducer;

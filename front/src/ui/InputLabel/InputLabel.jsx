@@ -11,7 +11,7 @@ function InputLabel(props) {
       }
     }
     if (props.itemKey === "phone") {
-      if (props.value.length > 17) {
+      if (props.value?.length > 17) {
         setErrorShow(false);
       }
     }
@@ -26,7 +26,7 @@ function InputLabel(props) {
       }
     }
     if (props.itemKey === "phone") {
-      if (props.value.length > 17) {
+      if (props.value?.length > 17) {
         setErrorShow(false);
       } else {
         setErrorShow(true);

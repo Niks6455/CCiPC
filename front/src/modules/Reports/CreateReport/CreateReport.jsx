@@ -16,10 +16,11 @@ import { useNavigate } from "react-router-dom";
 import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
 import trashBeliy from "./../../../assets/img/UI/trashBeliy.svg";
 
-function CreateReport() {
+function CreateReport({ edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
+  console.log("report", report);
   //! функция скачивания шаблока
   const funDownloadShablon = () => {
     const link = document.createElement("a");
@@ -81,15 +82,18 @@ function CreateReport() {
   return (
     <div className={styles.CreateReport}>
       <h2 className={styles.title}>Доклад №{report.data.number}</h2>
-      <div className={styles.slider}>
-        <div
-          className={styles.sliderInner}
-          style={{
-            width: `${report.sliderState}%`,
-            transition: "all 0.15s linear",
-          }}
-        ></div>
-      </div>
+      {!edit && (
+        <div className={styles.slider}>
+          <div
+            className={styles.sliderInner}
+            style={{
+              width: `${report.sliderState}%`,
+              transition: "all 0.15s linear",
+            }}
+          ></div>
+        </div>
+      )}
+
       <p className={styles.nameReport}>Полное название доклада</p>
 
       <textarea
@@ -206,24 +210,26 @@ function CreateReport() {
           type="text"
           readOnly={false}
           placeholder="Ваш комментарий"
-          value={report.comments}
+          value={report.data.comments}
           onChange={(event) =>
             dispatch(setValue({ key: "comments", value: event.target.value }))
           }
         />
       </div>
-      <div className={styles.srokContainer}>
-        <div className={styles.text}>
-          <img src={errorList} alt="img" />
-          <span>
-            В срок до XX.XX.XХХX необходимо прислать заявку на доклад, а в срок
-            до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
-          </span>
+      {!edit && (
+        <div className={styles.srokContainer}>
+          <div className={styles.text}>
+            <img src={errorList} alt="img" />
+            <span>
+              В срок до XX.XX.XХХX необходимо прислать заявку на доклад, а в
+              срок до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
+            </span>
+          </div>
+          <button onClick={() => navigate("/account/addcoauthor")}>
+            Следующий шаг
+          </button>
         </div>
-        <button onClick={() => navigate("/account/addcoauthor")}>
-          Следующий шаг
-        </button>
-      </div>
+      )}
     </div>
   );
 }

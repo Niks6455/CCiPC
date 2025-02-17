@@ -25,11 +25,14 @@ import SameEmail from "../../../components/AddReportModal/SameEmail/SameEmail";
 import SuccessModal from "../../../components/AddReportModal/SuccessModal/SuccessModal";
 import NotFullyFilled from "../../../components/AddReportModal/NotFullyFilled/NotFullyFilled";
 import NotFullyFilledCoauthors from "../../../components/AddReportModal/NotFullyFilledCoauthors/NotFullyFilledCoauthors";
-import { apiCreateReport } from "../../../apirequests/apirequests";
+import {
+  apiCreateReport,
+  apiEditReport,
+} from "../../../apirequests/apirequests";
 import { fetchUserData } from "../../../store/userSlice/user.Slice";
 import { fetchReports } from "../../../store/reportsSlice/reportsSlice";
 
-function AddCoauthor() {
+function AddCoauthor({ edit, number }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
@@ -79,29 +82,61 @@ function AddCoauthor() {
 
   //! сохранение данных
   const funSaveData = () => {
-    dispatch(funSaveDataState());
-    const data = {
-      name: report.data.name,
-      form: report.data.formParticipation,
-      direction: report.data.directionConference,
-      comment: report.data.comments,
-      coAuthors: report.data.soauthors.map((el) => ({
-        name: el.data.name,
-        surname: el.data.surname,
-        patronymic: el.data.patronymic,
-        email: el.data.email,
-        organization: el.data.organization,
-        phone: el.data.phone,
-        form: el.data.formParticipation,
-      })),
-    };
-    apiCreateReport(data).then((res) => {
-      console.log("res", res);
-      if (res?.status === 200) {
-        dispatch(fetchUserData());
-        dispatch(fetchReports());
-      }
-    });
+    if (edit) {
+      //! редактирование доклада
+      const temp = {
+        coAuthors: report.data.soauthors.map((soauthor) => ({
+          name: soauthor?.data?.name || "",
+          surname: soauthor?.data?.surname || "",
+          patronymic: soauthor?.data?.patronymic || "",
+          organization: soauthor?.data?.organization || "",
+          email: soauthor?.data?.email || "",
+          phone: soauthor?.data?.phone || "",
+          form: soauthor?.data?.formParticipation || "",
+        })),
+        comment: report.data.comments || "",
+        conclusion: report.data.fileExpertOpinion || "",
+        direction: report.data.directionConference || "",
+        form: report.data.formParticipation || "",
+        name: report.data.name || "",
+        reportFile: report.data.fileArticle || "",
+      };
+      apiEditReport(report.data.id, temp).then((res) => {
+        console.log("res", res);
+        if (res?.status === 200) {
+          dispatch(fetchReports());
+          navigate(
+            `./../viewreports?idReport=${report.data.id}&number=${number}`
+          );
+        }
+      });
+      return;
+    } else {
+      //! создание доклада
+      dispatch(funSaveDataState());
+      const data = {
+        name: report.data.name,
+        form: report.data.formParticipation,
+        direction: report.data.directionConference,
+        comment: report.data.comments,
+        coAuthors: report.data.soauthors.map((el) => ({
+          name: el.data.name,
+          surname: el.data.surname,
+          patronymic: el.data.patronymic,
+          email: el.data.email,
+          organization: el.data.organization,
+          phone: el.data.phone,
+          form: el.data.formParticipation,
+        })),
+      };
+      apiCreateReport(data).then((res) => {
+        console.log("res", res);
+        if (res?.status === 200) {
+          dispatch(fetchUserData());
+          dispatch(fetchReports());
+        }
+      });
+    }
   };
 
   return (
@@ -118,23 +153,29 @@ function AddCoauthor() {
       )}
 
       <h2 className={styles.title}>Соавторы</h2>
-      <div className={styles.backImg}>
-        <img
-          src={leftArrow}
-          alt="назад"
-          draggable="false"
-          onClick={() => navigate(-1)}
-        />
-      </div>
-      <div className={styles.slider}>
-        <div
-          className={styles.sliderInner}
-          style={{
-            width: `${report.sliderState}%`,
-            transition: "all 0.15s linear",
-          }}
-        ></div>
-      </div>
+      {!edit && (
+        <div className={styles.backImg}>
+          <img
+            src={leftArrow}
+            alt="назад"
+            draggable="false"
+            onClick={() => navigate(-1)}
+          />
+        </div>
+      )}
+
+      {!edit && (
+        <div className={styles.slider}>
+          <div
+            className={styles.sliderInner}
+            style={{
+              width: `${report.sliderState}%`,
+              transition: "all 0.15s linear",
+            }}
+          ></div>
+        </div>
+      )}
+
       {report?.data.soauthors?.map((soauthtor, index) => (
         <div key={index} className={styles.inputContainer}>
           <div className={styles.deletecoauthor}>
@@ -150,7 +191,7 @@ function AddCoauthor() {
                 type={inp.type}
                 index={index}
                 itemKey={inp.key}
-                value={soauthtor.data[inp.key]}
+                value={soauthtor.data?.[inp.key]}
                 funChange={funChangeInput}
                 placeholder={inp.placeholder}
                 error={inp.error}
@@ -222,7 +263,9 @@ function AddCoauthor() {
             до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
           </span>
         </div>
-        <button onClick={funSaveData}>Сохранить</button>
+        <button onClick={funSaveData}>
+          {edit ? "Сохранить изменения" : "Сохранить"}
+        </button>
       </div>
     </div>
   );

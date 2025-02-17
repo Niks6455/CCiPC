@@ -195,7 +195,9 @@ function ViewReports() {
         <button
           className={styles.button_edit}
           onClick={() =>
-            navigate(`/account/editreport?idReport=${reportData?.id}`)
+            navigate(
+              `/account/editreport?idReport=${reportData?.id}&number=${number}`
+            )
           }
         >
           Редактировать данные
