@@ -185,3 +185,23 @@ export const apiGetConferences = async () => {
     console.log("apiGetUserData ", error);
   }
 };
+
+//!Создание новости 
+export const createNews = async (data) => {
+  try {
+    const response = await api.post(`${server}/news`, data);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
+
+//!Получение новостей
+export const getAllNews = async (data) => {
+  try {
+    const response = await api.get(`${server}/news?year=2025?limit=10`, data);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
