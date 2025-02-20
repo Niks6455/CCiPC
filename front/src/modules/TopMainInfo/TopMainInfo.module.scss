@@ -31,6 +31,11 @@
   position: relative;
   width: 100%;
   color: #fff;
+  a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff;
+  }
   .mainTopDate {
     p {
       font-size: 2rem; /* 32px в rem */
