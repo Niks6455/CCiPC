@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { apiGetConferences } from "../../apirequests/apirequests";
 
 export const fetchConferences = createAsyncThunk(
-  "user/fetchUserData",
+  "user/fetchConferences",
   async (_, { rejectWithValue }) => {
     try {
       const response = await apiGetConferences();

@@ -18,17 +18,17 @@ export const funCopyText = async (text) => {
 
 //! Форматирование даты
 export const formatDate = (date) => {
-  if(!date) date = new Date();
+  if (!date) date = new Date();
   const eventDate = new Date(date); // преобразование строки в объект Date
-  const options = { day: 'numeric', month: 'long'};
-  return eventDate.toLocaleDateString('ru-RU', options) ;
+  const options = { day: "numeric", month: "long" };
+  return eventDate.toLocaleDateString("ru-RU", options);
 };
 
 //! Разбиение цены по частям
 
 export const destructPrice = (price) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-}
+};
 
 export function convertDate(dateString) {
   const [year, month, day] = dateString?.split("-");
@@ -39,11 +39,21 @@ export function convertDateTire(dateString) {
   return `${year}-${month}-${day}`;
 }
 
-//!Функция преобразования даты с и до 
+//!Функция преобразования даты с и до
 export function formatDateRange(dateStart, dateFinish) {
   const months = [
-      "января", "февраля", "марта", "апреля", "мая", "июня",
-      "июля", "августа", "сентября", "октября", "ноября", "декабря"
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря",
   ];
 
   const start = new Date(dateStart);
@@ -56,9 +66,9 @@ export function formatDateRange(dateStart, dateFinish) {
   const year = start.getUTCFullYear();
 
   if (start.getUTCMonth() === end.getUTCMonth()) {
-      return `${startDay}-${endDay} ${startMonth} ${year}`;
+    return `${startDay}-${endDay} ${startMonth} ${year}`;
   } else {
-      return `${startDay} ${startMonth} - ${endDay} ${endMonth} ${year}`;
+    return `${startDay} ${startMonth} - ${endDay} ${endMonth} ${year}`;
   }
 }
 

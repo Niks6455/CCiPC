@@ -1,0 +1,19 @@
+@mixin inputLight {
+  font-family: Overpass, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  color: #333333;
+  border: none;
+  background: none;
+  caret-color: black;
+  outline: none;
+}
+
+@mixin EditSpan() {
+  font-family: Overpass, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 27px;
+  letter-spacing: 0%;
+  color: #c8d0ce;
+}

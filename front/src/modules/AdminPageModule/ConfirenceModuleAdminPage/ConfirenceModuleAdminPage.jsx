@@ -1,11 +1,28 @@
+import { useEffect, useState } from "react";
 import styles from "./ConfirenceModuleAdminPage.module.scss";
+import { testData } from "./data";
+import StagesConference from "./StagesConference/StagesConference";
+import Logotips from "./Logotips/Logotips";
 
 function ConfirenceModuleAdminPage() {
-    return ( 
-        <section className={styles.ConfirenceModuleAdminPage}>
-            <p>ConfirenceModuleAdminPage</p>
-        </section>
-     );
+  const [data, setData] = useState([]);
+
+  //! получение конференции
+  useEffect(() => {
+    setData(testData);
+  }, []);
+
+  useEffect(() => {
+    console.log("data", data);
+  }, [data]);
+
+  return (
+    <section className={styles.ConfirenceModuleAdminPage}>
+      <h2 className={styles.title}>Конференция</h2>
+      <StagesConference data={data} setData={setData} />
+      <Logotips />
+    </section>
+  );
 }
 
 export default ConfirenceModuleAdminPage;

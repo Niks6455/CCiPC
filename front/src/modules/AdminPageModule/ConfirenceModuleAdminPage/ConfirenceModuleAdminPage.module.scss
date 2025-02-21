@@ -1,0 +1,7 @@
+@import "./mixin.scss";
+.ConfirenceModuleAdminPage {
+  h2 {
+    @include titleH2;
+    margin-bottom: 40px;
+  }
+}

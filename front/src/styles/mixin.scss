@@ -145,6 +145,15 @@
   }
 }
 
+@mixin ButtonIcon() {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @mixin HoverActive() {
   &:hover {
     background-color: #0045290a;
@@ -152,6 +161,17 @@
   }
   &:active {
     background-color: #0045291a;
+    transition: all 0.15s linear;
+  }
+}
+
+@mixin HoverActiveOpasity() {
+  &:hover {
+    opacity: 0.6;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    opacity: 1;
     transition: all 0.15s linear;
   }
 }
@@ -248,5 +268,44 @@
   &:hover {
     background-color: var(--MenuHoverActive);
     transition: all 0.15s linear;
+  }
+}
+
+@mixin titleH2() {
+  padding: 0;
+  margin: 0;
+  font-family: Overpass;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 44.8px;
+  letter-spacing: 0%;
+  color: #333333;
+}
+
+@mixin titleBlock() {
+  padding: 0;
+  margin: 0;
+  font-family: Overpass;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21.6px;
+  letter-spacing: 0%;
+  color: #333333;
+}
+
+@mixin blockGreenBorder() {
+  display: flex;
+  border: 1px solid #c8d0ce;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+@mixin listNoStyle() {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  li {
+    padding: 0;
+    margin: 0;
   }
 }
