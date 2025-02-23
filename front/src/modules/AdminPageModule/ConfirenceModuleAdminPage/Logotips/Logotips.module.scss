@@ -1,5 +1,6 @@
 .Logotips {
   width: 100%;
+  height: auto;
   margin-top: 40px;
   display: flex;
   flex-direction: row;
@@ -11,18 +12,11 @@
 
   .left_block,
   .rigth_block {
-    width: 45%;
+    width: 48%;
     box-sizing: border-box;
-    height: 332px;
+    height: 300px;
   }
-  .left_block {
-    margin-left: 5%;
-  }
-  .container {
-    display: flex;
-    width: 100%;
-    height: 100%;
-    border: 1.5px dashed #858b89;
-    border-radius: 10px;
+  .rigth_block {
+    margin-left: 2%;
   }
 }
