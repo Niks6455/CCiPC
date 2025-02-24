@@ -1,11 +1,11 @@
 import styles from "./UnivarsalTableAdmin.module.scss";
 import trashAdmin from "@assets/img/AdminPanel/trashAdmin.svg";
 import editAdmin from "@assets/img/AdminPanel/editAdmin.svg";
-import { deleteNews } from "../../apirequests/apirequests";
+import { deleteNews, getNewsId } from "../../apirequests/apirequests";
 import {useDispatch} from "react-redux";
-import { setSelectNewsData } from "../../store/newsSlice/newsSlice";
+import { setDataNews, setSelectNewsData } from "../../store/newsSlice/newsSlice";
 function UnivarsalTableAdmin({ tableHeader, tableData, updateNewsData, editClicker }) {
-  const getValue = (value, key, rowIndex) => {
+  const getValue = (value, key, rowIndex, row) => {
     switch (key) {
       case "number":
         case "id":
@@ -17,10 +17,10 @@ function UnivarsalTableAdmin({ tableHeader, tableData, updateNewsData, editClick
       case "actions":
         return (
           <div className={styles.actions}>
-            <button className={styles.button} onClick={() => editNewsfuncData(rowIndex)}>
+            <button className={styles.button} onClick={() => editNewsfuncData(row.id)}>
               Редактировать <img src={editAdmin} alt="edit"/>
             </button>
-            <button className={styles.button} onClick={() => deleteNewsfunc(rowIndex)}>
+            <button className={styles.button} onClick={() => deleteNewsfunc(row.id)}>
               Удалить <img src={trashAdmin} alt="trash"/>
             </button>
           </div>
@@ -39,7 +39,6 @@ function UnivarsalTableAdmin({ tableHeader, tableData, updateNewsData, editClick
   }
 
   const editNewsfuncData = (id) => {
-    console.log(id);
     dispatch(setSelectNewsData({id: id}));
     editClicker();
   };
@@ -59,7 +58,7 @@ function UnivarsalTableAdmin({ tableHeader, tableData, updateNewsData, editClick
             <tr key={row.id}>
               {tableHeader.map((header) => (
                 <td key={header.key} className={header.key}>
-                  {getValue(row[header.key], header.key, rowIndex)}
+                  {getValue(row[header.key], header.key, rowIndex, row)}
                 </td>
               ))}
             </tr>

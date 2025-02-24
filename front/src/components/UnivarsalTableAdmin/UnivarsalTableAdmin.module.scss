@@ -1,7 +1,8 @@
 .UnivarsalTableAdmin {
     width: 100%;
     overflow-x: auto;
-  
+    max-height: calc(100vh - 525px);
+
     table {
       width: 100%;
       border-collapse: separate;
@@ -12,7 +13,9 @@
   
       thead {
         background-color: #E7EAE9;
-  
+        position: sticky;
+        top: 0;
+        z-index: 10;
         th {
           padding: 12px;
           text-align: center;
@@ -43,6 +46,10 @@
             border: 1px solid #e0e0e0;
             vertical-align: middle;
             color: #444;
+            &:nth-child(3){
+              width: 210px;
+              text-align: center;
+             }
             &:nth-child(4){
                width: 430px;
               }

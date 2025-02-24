@@ -5,7 +5,7 @@ const NewsSlice = createSlice({
   name: "newsSlice",
   initialState: {
     selectNewsData: null,
-    dataNews: [],
+    dataNews: {},
   },
 
   reducers: {
@@ -13,17 +13,16 @@ const NewsSlice = createSlice({
    setSelectNewsData(state, action) {
      const { id } = action.payload;
      state.selectNewsData = id;
-     getNewsId(id).then((response) => {
-         if(response?.status === 200){
-             state.dataNews = response.data
-         }
-     })
+   },
+   setDataNews(state, action) {
+     const { data } = action.payload;
+     state.dataNews = data;
    }
 
    
   },
 });
 
-export const { setSelectNewsData } = NewsSlice.actions;
+export const { setSelectNewsData, setDataNews } = NewsSlice.actions;
 
 export default NewsSlice.reducer;

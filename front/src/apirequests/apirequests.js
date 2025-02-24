@@ -227,9 +227,9 @@ export const deleteNews = async (id) => {
 }
 
 //!Получение новостей
-export const updateNews = async (id) => {
+export const updateNews = async (id, data) => {
   try {
-    const response = await api.put(`${server}/news/${id}`);
+    const response = await api.put(`${server}/news/${id}`, data);
     return response;
   } catch (error) {
     console.log("apiCreateReport ", error);

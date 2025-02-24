@@ -3,18 +3,25 @@ import goBackImg from "@assets/img/AdminPanel/goBack.svg";
 import { ReactComponent as FileImport } from "@assets/img/AdminPanel/addFile.svg";
 import trashBeliy from "@assets/img/UI/trashBeliy.svg";
 import { useEffect, useRef, useState } from "react";
-import { createNews } from "../../../../apirequests/apirequests";
-import FileComponent from "../../../../components/AdminModuleComponents/FileComponent/FileComponent";
+import { createNews, deleteNews, getNewsId, updateNews } from "../../../../apirequests/apirequests";
+import FileComponent from "@components/AdminModuleComponents/FileComponent/FileComponent";
 import { useSelector } from "react-redux";
+import trashRed from "@assets/img/AdminPanel/delete.svg";
+import borderIcon from "@assets/img/AdminPanel/border2.svg";
 
-function AddNews({ closeAddNews, updateNewsData }) {
+function AddNews(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
   const store = useSelector(state => state.news);
   useEffect(() => {
-    console.log("store", store)
+    getNewsId(store?.selectNewsData).then((response) => {
+      if(response?.status === 200){
+        setTitle(response?.data?.title)
+        setText(response?.data?.description)      
+      }
+    })
   },[])
 
   //! Обработчик выбора файла
@@ -38,15 +45,36 @@ function AddNews({ closeAddNews, updateNewsData }) {
     // console.log(formData);
     createNews(data).then((res) => {
       if(res?.status === 200 || res?.status === 201){
-        updateNewsData();
+        props?.updateNewsData();
       }
     });
-    closeAddNews();
+    props?.closeAddNews();
   };
+
+  const deleteData = (id) => {
+    deleteNews(id).then((res) => {
+      if(res?.status === 200){
+        props?.closeAddNews();
+        props?.updateNewsData();
+      }
+    })
+  }
+  const saveEditData = (id) =>{
+    const data = {
+      title: title,
+      description: text
+    }
+    updateNews(id, data).then((res) => {
+      if(res?.status === 200){
+        props?.updateNewsData();
+        props?.closeAddNews();
+      }
+    })
+  }
 
   return (
     <section className={styles.AddNews}>
-      <button className={styles.buttonBack} onClick={closeAddNews}>
+      <button className={styles.buttonBack} onClick={props?.closeAddNews}>
         <img src={goBackImg} alt="Назад" /> Добавление новости
       </button>
       
@@ -70,8 +98,10 @@ function AddNews({ closeAddNews, updateNewsData }) {
         </div>
         <div className={styles.addFile}>
           <label>Фотография для новости</label>
-          <div className={styles.addFileInner}>
-            <FileComponent
+          <div className={styles.file_cont}>
+          <img src={borderIcon} alt="img" className={styles.border} />
+          <div className={styles.border_inner}>
+          <FileComponent
               data={file}
               setData={handleFileChange}
               typeFile={["image/png", "image/jpg", "image/jpeg"]}
@@ -81,14 +111,23 @@ function AddNews({ closeAddNews, updateNewsData }) {
               text={"Необходимо загрузить<br/> фотографию в формате JPG, PNG"}
             />
           </div>
+        </div>
          
           
         </div>
       </div>
-      
-      <div className={styles.addNewsCont}>
+      {store?.selectNewsData === null ? 
+        <div className={styles.addNewsCont}>
         <button className={styles.addNews} onClick={() => saveData()}>Добавить</button>
+      </div>:
+      <div className={styles.editNewsCont}>
+        <div className={styles.editNewsContInner}>
+          <button className={styles.deleteNews} onClick={() => deleteData(store?.selectNewsData)} >Удалить <img src={trashRed}/></button>
+          <button className={styles.addNews} onClick={() => saveEditData(store?.selectNewsData)}>Сохранить</button>
+          </div>
       </div>
+      }
+      
     </section>
   );
 }
