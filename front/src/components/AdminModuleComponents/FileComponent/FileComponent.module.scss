@@ -2,16 +2,41 @@
   width: 100%;
   height: 100%;
   display: flex;
+  position: relative;
+
+  .is_dragging {
+    opacity: 0;
+    transition: opacity 0.15s linear;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: #0045290a;
+    z-index: 400;
+  }
+  .is_dragging_opasity {
+    opacity: 1;
+    transition: opacity 0.15s linear;
+  }
+  .is_dragging_opasity_no {
+    opacity: 0;
+    transition: opacity 0.15s linear;
+  }
   .container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    border: 1.5px dashed #858b89;
+    // border: 1px dashed #858b89;
     border-radius: 10px;
     @include HoverActiveOpasity;
     cursor: pointer;
+    position: relative;
 
     .container_inner {
       width: 100%;
@@ -68,7 +93,7 @@
       align-items: center;
       width: 50%;
       height: 50%;
-      overflow: hidden;
+      // overflow: hidden;
     }
 
     .container_file_inner_file {

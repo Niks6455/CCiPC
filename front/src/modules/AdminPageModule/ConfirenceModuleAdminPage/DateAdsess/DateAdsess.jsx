@@ -7,13 +7,17 @@ import arrowIcon from "@assets/img/UI/arrowMini.svg";
 
 function DateAdsess({ data, setData }) {
   const [calendarShow, setCalendarShow] = useState(false);
-  const calendarRef = useRef(null);
   const [listOpen, setListOpen] = useState(false);
+  const calendarRef = useRef(null);
+  const listRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendarShow(false);
+      }
+      if (listRef.current && !listRef.current.contains(event.target)) {
+        setListOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -92,6 +96,7 @@ function DateAdsess({ data, setData }) {
         <div
           className={`${styles.input_box} ${styles.list}`}
           onClick={() => setListOpen(!listOpen)}
+          ref={listRef}
         >
           <input
             type="text"

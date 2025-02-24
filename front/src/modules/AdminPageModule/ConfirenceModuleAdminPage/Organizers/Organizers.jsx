@@ -3,6 +3,7 @@ import FileComponent from "../../../../components/AdminModuleComponents/FileComp
 import styles from "./Organizers.module.scss";
 import plusIcon from "@assets/img/UI/plus.svg";
 import trashIcon from "@assets/img/UI/trashBeliy.svg";
+import borderFile from "@assets/img/AdminPanel/borderFile.svg";
 
 function Organizers({ data, setData, itemKey, name, buttonName }) {
   console.log("data", data[itemKey]);
@@ -44,25 +45,28 @@ function Organizers({ data, setData, itemKey, name, buttonName }) {
         {data[itemKey]?.length > 0 &&
           data[itemKey].map((item) => (
             <div className={styles.org_container} key={item.id}>
-              {!item.value && (
-                <button
-                  className={styles.delete}
-                  onClick={() => funChangeData(null, item.id)}
-                >
-                  <img src={trashIcon} alt="Удалить файл" />
-                </button>
-              )}
+              <img src={borderFile} className={styles.border} />
+              <div className={styles.border_inner}>
+                {!item.value && (
+                  <button
+                    className={styles.delete}
+                    onClick={() => funChangeData(null, item.id)}
+                  >
+                    <img src={trashIcon} alt="Удалить файл" />
+                  </button>
+                )}
 
-              <FileComponent
-                data={item.value}
-                setData={(value) => funChangeData(value, item.id)}
-                typeFile={["image/png"]}
-                accept={".png"}
-                name={`${itemKey}-${item.id}`}
-                icon={"png"}
-                itemKey={item.id}
-                text={"Загрузите или перетащите<br/>фотографию в формате PNG"}
-              />
+                <FileComponent
+                  data={item.value}
+                  setData={(value) => funChangeData(value, item.id)}
+                  typeFile={["image/png"]}
+                  accept={".png"}
+                  name={`${itemKey}-${item.id}`}
+                  icon={"png"}
+                  itemKey={item.id}
+                  text={"Загрузите или перетащите<br/>фотографию в формате PNG"}
+                />
+              </div>
             </div>
           ))}
         <div className={styles.org_container}>

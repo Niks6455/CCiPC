@@ -12,9 +12,19 @@
     gap: 32px;
     .org_container {
       display: flex;
-      width: 362px;
-      height: 303px;
+      width: 100%;
+      height: auto;
       position: relative;
+    }
+    .border {
+      width: 362px;
+    }
+    .border_inner {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
     }
     .add_file {
       width: 100%;

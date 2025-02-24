@@ -1,25 +1,24 @@
 import styles from "./FileComponent.module.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import trashIcon from "@assets/img/UI/trashBeliy.svg";
 import fileIcon from "@assets/img/AdminPanel/file.svg";
 import pdfIcon from "@assets/img/AdminPanel/pdf.svg";
 import pdfIconImport from "@assets/img/AdminPanel/pdfImport.svg";
 import docIcon from "@assets/img/AdminPanel/doc.svg";
+import dragingIcon from "@assets/img/AdminPanel/dragging.svg";
+import borderFile from "@assets/img/AdminPanel/borderFile.svg";
 
 function FileComponent(props) {
   const [logoHeader, setLogoHeader] = useState(null);
   const [imageStyleHeader, setImageStyleHeader] = useState({});
   const [isVisibleHeader, setIsVisibleHeader] = useState(null);
   const [isVisibleNoFileHeader, setIsVisibleNoFileHeader] = useState(true);
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(null);
 
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла
   const funFileHeaderClick = () => {
     document.getElementById(props.name).click();
   };
-  useEffect(() => {
-    console.log("logoHeader", logoHeader);
-  }, [logoHeader]);
 
   //! функция изменения хедер иконки
   const funChangeLogoHeader = (file) => {
@@ -73,6 +72,9 @@ function FileComponent(props) {
   const handleDrop = (event) => {
     event.preventDefault();
     setIsDragging(false);
+    setTimeout(() => {
+      setIsDragging(null);
+    }, 300);
     const file = event.dataTransfer.files[0];
     console.log("file", file);
     funChangeLogoHeader(file);
@@ -83,10 +85,15 @@ function FileComponent(props) {
     setIsDragging(true);
   };
 
-  const handleDragLeave = () => {
-    setIsDragging(false);
+  const handleDragLeave = (event) => {
+    // Check if the drag is leaving the entire container
+    if (!event.currentTarget.contains(event.relatedTarget)) {
+      setIsDragging(false);
+      setTimeout(() => {
+        setIsDragging(null);
+      }, 300);
+    }
   };
-
   return (
     <div
       className={styles.FileComponent}
@@ -94,6 +101,8 @@ function FileComponent(props) {
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
+      {/* <img src={borderFile} className={styles.border} /> */}
+
       {logoHeader ? (
         <div className={styles.container_file}>
           {props.icon === "png" && (
@@ -161,13 +170,58 @@ function FileComponent(props) {
                 : ""
             }`}
           >
+            <div
+              className={`${styles.is_dragging} ${
+                isDragging
+                  ? styles.is_dragging_opasity
+                  : isDragging === null
+                  ? styles.is_dragging_opasity_no
+                  : ""
+              }`}
+            >
+              <img src={dragingIcon} alt="Перетащите в эту область" />
+            </div>
             {props.icon === "png" && (
-              <img src={fileIcon} alt="Загрузить файл" />
+              <img
+                className={
+                  isDragging !== null
+                    ? styles.is_dragging_opasity_no
+                    : styles.is_dragging_opasity
+                }
+                src={fileIcon}
+                alt="Загрузить файл"
+              />
             )}
-            {props.icon === "pdf" && <img src={pdfIcon} alt="Загрузить файл" />}
-            {props.icon === "doc" && <img src={docIcon} alt="Загрузить файл" />}
-
-            <span dangerouslySetInnerHTML={{ __html: props.text }}></span>
+            {props.icon === "pdf" && (
+              <img
+                className={
+                  isDragging !== null
+                    ? styles.is_dragging_opasity_no
+                    : styles.is_dragging_opasity
+                }
+                src={pdfIcon}
+                alt="Загрузить файл"
+              />
+            )}
+            {props.icon === "doc" && (
+              <img
+                className={
+                  isDragging !== null
+                    ? styles.is_dragging_opasity_no
+                    : styles.is_dragging_opasity
+                }
+                src={docIcon}
+                alt="Загрузить файл"
+              />
+            )}
+            <span
+              className={
+                isDragging !== null
+                  ? styles.is_dragging_opasity_no
+                  : styles.is_dragging_opasity
+              }
+              dangerouslySetInnerHTML={{ __html: props.text }}
+            ></span>
           </div>
         </div>
       )}
