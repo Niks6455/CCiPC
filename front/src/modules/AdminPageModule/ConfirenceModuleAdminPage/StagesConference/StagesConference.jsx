@@ -21,8 +21,14 @@ function StagesConference({ data, setData }) {
   //! удалить этап по индексу
   const funDeleteStage = (index) => {
     const stage = [...data?.stages];
-    stage.splice(index, 1);
-    setData({ ...data, stages: stage });
+    console.log("stage", stage);
+    if (data.deadlineUploadingReports === stage[index]?.date) {
+      stage.splice(index, 1);
+      setData({ ...data, deadlineUploadingReports: "", stages: stage });
+    } else {
+      stage.splice(index, 1);
+      setData({ ...data, stages: stage });
+    }
   };
 
   //! открытие календаря
@@ -65,7 +71,7 @@ function StagesConference({ data, setData }) {
 
   return (
     <div className={styles.StagesConference}>
-      <h3 className={styles.stages_conference_title}>Этапы конференций</h3>
+      <h3 className={styles.stages_conference_title}>Этапы конференции</h3>
       <div className={styles.stages_conference_block}>
         <ul>
           {(isEditing
