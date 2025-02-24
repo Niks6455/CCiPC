@@ -76,9 +76,13 @@ export default {
     },
 
     async sandCodeChangePassword(email,code){
+        const participant = await Participant.findOne({
+            where: { email: email }
+        })
+        if(!participant) throw new AppErrorNotExist('email')
         resetCodes[email] = code
-        sendMail(email, 'registration', code);
-
+        sendMail(email, 'reset', code);
+        return true
 
     }
 

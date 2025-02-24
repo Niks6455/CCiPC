@@ -219,4 +219,6 @@ router.route('/changePassword').post(asyncRoute(verify.general), asyncRoute(auth
 
 router.route('/recovery').post(asyncRoute(authCtrl.reset))
 
+router.route('/sandReset').post(asyncRoute(authCtrl.sandCodeChangePassword));
+
 export default router;

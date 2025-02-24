@@ -69,8 +69,8 @@ export default {
     async sandCodeChangePassword({body: email}, res){
         if(!email) throw new AppErrorMissing('email')
         const code = randomCode(6, '0123456789');
-
         await authService.sandCodeChangePassword(email, code)
+        res.json({status: 'Ok'})
     },
 
     async reset({body: {currentPassword, newPassword, repeatPassword, code, email }, user}, res) {
