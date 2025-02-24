@@ -26,6 +26,7 @@ export default class Participant extends Model {
                 phone: { type: DataTypes.STRING, allowNull: false },
                 password: { type: DataTypes.STRING, allowNull: false },
                 avatar: { type: DataTypes.STRING, allowNull: true  },
+                isMicrosoft: {type: DataTypes.BOOLEAN, defaultValue: false },
             },
             {
                 sequelize,

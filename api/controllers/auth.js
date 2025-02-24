@@ -54,24 +54,37 @@ export default {
         res.json(participant)
     },
 
-    async checkEmail({body: { email, code }}, res) {
+    async checkEmail({body: { email, code, type }}, res) {
         if(!email) throw new AppErrorMissing('email')
         if(!code) throw new AppErrorMissing('code')
-        const participant= await authService.checkEmail(email, code)
-        res.json(participant)
+        if(!type) throw new AppErrorMissing('type')
+        await authService.checkEmail(email, code, type)
+        res.json({status: 'Ok'})
     },
 
     async loginSfedu(req, res) {
 
-    }
-    ,
+    },
 
-    async reset({body: {currentPassword, newPassword, repeatPassword }, user}, res) {
+    async sandCodeChangePassword({body: email}, res){
+        if(!email) throw new AppErrorMissing('email')
+        const code = randomCode(6, '0123456789');
+
+        await authService.sandCodeChangePassword(email, code)
+    },
+
+    async reset({body: {currentPassword, newPassword, repeatPassword, code, email }, user}, res) {
 
         if(!newPassword !== repeatPassword) throw AppErrorInvalid('newPassword')
-        await  authService.resetPassword({currentPassword, newPassword, repeatPassword },user )
-
+        if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
+        if(!user && !code && !email) throw new AppErrorMissing('code')
+        if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword },user )
+        else await authService.resetPassword({newPassword, repeatPassword, code, email })
         res.json({status: 'ok'})
-    }
+    },
+
+
+
+
 
 }

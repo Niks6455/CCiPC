@@ -39,58 +39,47 @@ export default function () {
     });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    Committee.hasMany(CommitteeInConference, {
-        as: 'committeeInConference',
-        foreignKey: { name: 'committeeId', allowNull: false }
-    });
-
-
-    Conference.hasMany(CommitteeInConference, {
-        as: 'committeeInConference',
-        foreignKey: { name: 'conferenceId', allowNull: false }
-    });
-
-
-
-
-
     Conference.belongsToMany(Committee, {
-        through: CommitteeInConference,
+        through: {
+            model: CommitteeInConference,
+            unique: false, // Убираем уникальность
+        },
         foreignKey: { name: 'conferenceId', allowNull: false},
         as: 'committees',
 
     });
     Committee.belongsToMany(Conference, {
-        through: CommitteeInConference,
+        through: {
+            model: CommitteeInConference,
+            unique: false, // Убираем уникальность
+        },
         foreignKey: { name: 'committeeId', allowNull: false},
         as: 'conferences',
     });
 
 
-
     CommitteeInConference.belongsTo(Committee, {
         as: 'committee',
-        foreignKey: { name: 'committeeId', allowNull: false }
+        foreignKey: { name: 'committeeId', allowNull: false },
     });
 
 
     CommitteeInConference.belongsTo(Conference, {
         as: 'conference',
-        foreignKey: { name: 'conferenceId', allowNull: false }
+        foreignKey: { name: 'conferenceId', allowNull: false  },
     });
 
+
+    Committee.hasMany(CommitteeInConference, {
+        as: 'committeeInConference', // Название ассоциации
+        foreignKey: 'committeeId', // Внешний ключ в таблице CommitteeInConference
+    });
+
+
+    Conference.hasMany(CommitteeInConference, {
+        as: 'committeeInConference', // Название ассоциации
+        foreignKey: 'conferenceId', // Внешний ключ в таблице CommitteeInConference
+    });
 
     File.hasOne(FileLink, {foreignKey: {name: 'fileId', allowNull: false}, as: 'file'});
     Conference.hasOne(FileLink, {foreignKey: {name: 'conferenceId', allowNull: true}, as: 'conference'});

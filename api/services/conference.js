@@ -5,6 +5,7 @@ import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
+import {Op} from "sequelize";
 export default {
 
     async find(){
@@ -56,28 +57,142 @@ export default {
     },
 
 
-    async findParticipants(conferenceId){
+    async findParticipants(conferenceId, fio){
         const conference = await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference');
 
-        conference.participants=await ParticipantInConference.findAll({
+        const parts = fio?.split(' ');
+
+        const [surname, name, patronymic] = parts ? parts?.length === 3 ? parts : [parts[1], parts[0], parts[2]] :
+            [undefined, undefined, undefined];
+
+
+         conference.participants = await Promise.all([
+        await ParticipantInConference.findAll({
             where: {
                 conferenceId:conferenceId,
             },
             include: {
                 model: Participant,
                 as: 'participant',
-                required: true,
+                required: false,
+                where: {
+                        ...(surname && { surname: {[Op.like]: `%${surname}%`}}),
+                        ...(name ? [{name: {[Op.like]: `%${name}%`}}] : []),
+                        ...(patronymic ? [{patronymic: {[Op.like]: `%${patronymic}%`}}] : []),
+                        ...(surname && name
+                            ? [
+                                {
+                                    [Op.and]: [
+                                        {surname: {[Op.like]: `%${name}%`}},
+                                        {name: {[Op.like]: `%${surname}%`}},
+                                    ],
+                                },
+                            ]
+                            : []),
+                        ...(surname && patronymic
+                            ? [
+                                {
+                                    [Op.and]: [
+                                        {surname: {[Op.like]: `%${patronymic}%`}},
+                                        {patronymic: {[Op.like]: `%${surname}%`}},
+                                    ],
+                                },
+                            ]
+                            : []),
+                        ...(name && patronymic
+                            ? [
+                                {
+                                    [Op.and]: [
+                                        {name: {[Op.like]: `%${patronymic}%`}},
+                                        {patronymic: {[Op.like]: `%${name}%`}},
+                                    ],
+                                },
+                            ]
+                            : []),
+                },
                 include: {
                     model: Report,
-                    as: 'report',
+                    as: 'reports',
                     required: false,
-                    attributes: ['name']
                 }
             }
-        })
+        }),
+            await ParticipantInConference.findAll({
+                where: {
+                    conferenceId:conferenceId,
+                },
+                include: {
+                    model: Participant,
+                    as: 'participant',
+                    required: false,
+                    include: {
+                        model: Report,
+                        as: 'reports',
+                        required: false,
+                        where: {
+                                ...(surname && {coAuthors: { [Op.contains]: [{ surname: { [Op.like]: `%${surname}%` } }] } }),
+                                ...(name && { coAuthors: { [Op.contains]: [{ name: { [Op.like]: `%${name}%` } }] } }),
+                                ...(patronymic && { coAuthors: { [Op.contains]: [{ patronymic: { [Op.like]: `%${patronymic}%` } }] } } ),
+                                ...(surname && name && {
+                                            [Op.and]: [
+                                                {
+                                                    coAuthors: {
+                                                        [Op.contains]: [{ surname: { [Op.like]: `%${name}%` } }],
+                                                    },
+                                                },
+                                                {
+                                                    coAuthors: {
+                                                        [Op.contains]: [{ name: { [Op.like]: `%${surname}%` } }],
+                                                    },
+                                                },
+                                            ],
+                                }),
+                                ...(surname && patronymic && {
+                                            [Op.and]: [
+                                                {
+                                                    coAuthors: {
+                                                        [Op.contains]: [{ surname: { [Op.like]: `%${patronymic}%` } }],
+                                                    },
+                                                },
+                                                {
+                                                    coAuthors: {
+                                                        [Op.contains]: [{ patronymic: { [Op.like]: `%${surname}%` } }],
+                                                    },
+                                                },
+                                            ],
+                                        } ),
+                                ...(name && patronymic &&
+                                        {
+                                            [Op.and]: [
+                                                {
+                                                    coAuthors: {
+                                                        [Op.contains]: [{ name: { [Op.like]: `%${patronymic}%` } }],
+                                                    },
+                                                },
+                                                {
+                                                    coAuthors: {
+                                                        [Op.contains]: [{ patronymic: { [Op.like]: `%${name}%` } }],
+                                                    },
+                                                },
+                                            ],
+                                        }),
+                        }
+                    }
+                }
+            }),
+        ])
 
-        return conference
+
+
+        const combinedResults = [...conference.participants[0], ...conference.participants[1]];
+
+        const uniqueResults = Array.from(
+            new Map(combinedResults.map((item) => [item.id, item])).values()
+        );
+
+
+        return uniqueResults
     },
 
     async update(conferenceId, conferenceInfo){

@@ -3,7 +3,7 @@
 import { Router } from 'express';
 import authCtrl from '../controllers/auth.js';
 import { asyncRoute } from '../utils/errors.js';
-
+import verify from "../middlewares/verify-token.js";
 const router = Router();
 
 
@@ -110,7 +110,7 @@ const router = Router();
  *
  * /auth/checkEmail:
  *   post:
- *     summary: Подтверждение почты
+ *     summary: отправка кода для подтверждения почты или для восстановления пароля
  *     requestBody:
  *       required: true
  *       content:
@@ -125,9 +125,12 @@ const router = Router();
  *               code:
  *                 type: string
  *                 example: 123456
+ *               type:
+ *                  type: string
  *             required:
  *               - email
  *               - code
+ *               - type
  *     responses:
  *       200:
  *         description: Успешный ответ
@@ -136,9 +139,74 @@ const router = Router();
  *             schema:
  *               type: object
  *               properties:
- *                 participant:
- *                   type: object
- *                   description: Информация о пользователе
+ *                 status:
+ *                   type: string
+ *                   description: статус
+ * /auth/changePassword:
+ *   post:
+ *     summary: для смены пароля
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               currentPassword:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *               repeatPassword:
+ *                  type: string
+ *             required:
+ *               - currentPassword
+ *               - newPassword
+ *               - repeatPassword
+ *     responses:
+ *       200:
+ *         description: Успешный ответ
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   description: статус
+ * /auth/recovery:
+ *   post:
+ *     summary: восстановление пароля
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               code:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               newPassword:
+ *                 type: string
+ *               repeatPassword:
+ *                  type: string
+ *             required:
+ *               - code
+ *               - email
+ *               - newPassword
+ *               - repeatPassword
+ *     responses:
+ *       200:
+ *         description: Успешный ответ
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   description: статус
  */
 
 router.route('/login').post(asyncRoute(authCtrl.login));
@@ -146,5 +214,9 @@ router.route('/login').post(asyncRoute(authCtrl.login));
 router.route('/register').post(asyncRoute(authCtrl.register))
 
 router.route('/checkEmail').post(asyncRoute(authCtrl.checkEmail))
+
+router.route('/changePassword').post(asyncRoute(verify.general), asyncRoute(authCtrl.reset));
+
+router.route('/recovery').post(asyncRoute(authCtrl.reset))
 
 export default router;

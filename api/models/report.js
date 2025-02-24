@@ -17,7 +17,6 @@ export default class Report extends Model {
             {
                 sequelize,
                 schema: process.env.NODE_ENV,
-                paranoid: true,
                 modelName: 'Report',
                 tableName: 'reports',
                 timestamps: true,

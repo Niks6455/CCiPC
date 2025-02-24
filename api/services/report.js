@@ -78,7 +78,7 @@ export default {
 
         if(!report) throw new AppErrorInvalid('report')
 
-        return await report.delete()
+        return await report.destroy()
     },
 
 
