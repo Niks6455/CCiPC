@@ -4,6 +4,7 @@ import { ReactComponent as FileImport } from "@assets/img/AdminPanel/addFile.svg
 import trashBeliy from "@assets/img/UI/trashBeliy.svg";
 import { useRef, useState } from "react";
 import { createNews } from "../../../../apirequests/apirequests";
+import FileComponent from "../../../../components/AdminModuleComponents/FileComponent/FileComponent";
 
 function AddNews({ closeAddNews }) {
   const [title, setTitle] = useState("");
@@ -17,41 +18,25 @@ function AddNews({ closeAddNews }) {
   };
 
   //! Обработчик выбора файла
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setFile(URL.createObjectURL(selectedFile)); // Создаем URL для отображения изображения
-    }
-  };
-
-  //! Удаление файла
-  const deleteFile = () => {
-    setFile(null);
-    fileInputRef.current.value = "";
-  };
-
-  //! Обработка перетаскивания файла
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event) => {
-    event.preventDefault();
-    const droppedFile = event.dataTransfer.files[0];
-    if (droppedFile) {
-      setFile(URL.createObjectURL(droppedFile));
+  const handleFileChange = (file) => {
+    if (file) {
+      setFile(file); // Создаем URL для отображения изображения
     }
   };
 
   const saveData = () => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("text", text);
-    if (file) {
-      formData.append("file", file);
+    const data = {
+      title: title,
+      description: text
     }
-    console.log(formData);
-    createNews(formData).then((res) => {
+    // const formData = new FormData();
+    // formData.append("title", title);
+    // formData.append("text", text);
+    // if (file) {
+    //   formData.append("file", file);
+    // }
+    // console.log(formData);
+    createNews(data).then((res) => {
       console.log(res);
     });
     closeAddNews();
@@ -83,37 +68,19 @@ function AddNews({ closeAddNews }) {
         </div>
         <div className={styles.addFile}>
           <label>Фотография для новости</label>
-          <div
-            className={styles.fileContur}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept="image/*"
-              style={{ display: "none" }}
+          <div className={styles.addFileInner}>
+            <FileComponent
+              data={file}
+              setData={handleFileChange}
+              typeFile={["image/png", "image/jpg", "image/jpeg"]}
+              accept={".png,.jpg"}
+              name={"pngNews"}
+              icon={"png"}
+              text={"Необходимо загрузить<br/> фотографию в формате JPG, PNG"}
             />
-            {file ? (
-              <>
-                <img src={file} alt="Превью" className={styles.previewImage} />
-                <button  className={styles.trash}  onClick={deleteFile}>
-                    <img
-                        src={trashBeliy}
-                        alt="Удалить"
-                    />
-                </button>
-                
-              </>
-            ) : (
-              <FileImport
-                className={styles.fileImport}
-                draggable="false"
-                onClick={uploadFile}
-              />
-            )}
           </div>
+         
+          
         </div>
       </div>
       

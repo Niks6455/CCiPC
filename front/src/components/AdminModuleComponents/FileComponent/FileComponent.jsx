@@ -19,7 +19,7 @@ function FileComponent(props) {
   };
   useEffect(() => {
     console.log("logoHeader", logoHeader);
-  }, [logoHeader]);
+  }, [logoHeader]); 
 
   //! функция изменения хедер иконки
   const funChangeLogoHeader = (file) => {

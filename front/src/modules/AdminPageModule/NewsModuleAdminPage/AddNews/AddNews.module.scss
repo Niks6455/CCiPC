@@ -45,46 +45,18 @@
     grid-template-columns: 2fr 2fr;
     gap: 32px;
     textarea{
-        height: 380px;
+        height: 500px;
     }
     .addFile{
         display: flex;
         flex-direction: column;
         position: relative;
-        .fileImport {
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border-radius: 10px; // делаем края мягче
-            &:hover {
-              background-color: #00452940; // Заливка фона SVG
-            }
-          }
-          .previewImage{
-            width: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            height: 380px;
-          }
-          .trash{
-            position: absolute;
-            right: 15px;
-            top: 50px;
-            background-color: #E7ECEB;
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            justify-content: center;
-            border: none;
-            border-radius: 5px;
-            align-items: center;
-            transition: all 0.1s linear;
-            &:hover {
-              opacity: 0.8;
-            }
-          }
-          
+        label{
+          margin: 0px;
+        }
+       .addFileInner{
+        height: 500px;
+       }
     }
    }
-   
 }

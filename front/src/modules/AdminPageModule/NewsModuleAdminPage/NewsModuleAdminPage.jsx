@@ -4,6 +4,8 @@ import search from "@assets/img/AdminPanel/search.svg";
 import { useEffect, useState } from "react";
 import AddNews from "./AddNews/AddNews";
 import { getAllNews } from "../../../apirequests/apirequests";
+import UnivarsalTableAdmin from "../../../components/UnivarsalTableAdmin/UnivarsalTableAdmin";
+import { headerTableNews, testData } from "./data";
 function NewsModuleAdminPage() {
     const [addNews, setAddNews] = useState(false);
     const [dataNews, setDataNews] = useState([]);
@@ -17,6 +19,7 @@ function NewsModuleAdminPage() {
             }
         })
     },[])
+    
     return ( 
         <section className={styles.NewsModuleAdminPage}>
         {  !addNews &&
@@ -33,9 +36,13 @@ function NewsModuleAdminPage() {
                     </div>
                 </div>
             </div>
-            {dataNews.length === 0 && <div className={styles.notNews}>
+            {testData.length === 0 ? <div className={styles.notNews}>
                 <p>Новости отсутствуют</p>
-            </div> }
+            </div> : 
+                <div className={styles.UnivarsalTableAdmin}>
+                    <UnivarsalTableAdmin tableData={testData} tableHeader={headerTableNews}/>
+                </div>
+             }
         
         </div>
             
