@@ -30,16 +30,13 @@ function checkValidate(objects) {
 
     for (const obj of objects) {
 
-        console.log(obj)
         const email = obj.email;
         const phone = obj.phone;
 
         const valid = validate(obj);
 
-        console.log(valid)
         if(!valid) throw new AppErrorInvalid('coAuthors')
 
-        console.log(888)
         if (seenEmails.has(email) ||  seenPhones.has(phone))
             return false;
 
@@ -58,7 +55,7 @@ export default {
         if(!direction) throw new AppErrorMissing('direction')
         if(!comment) throw new AppErrorMissing('comment')
 
-        if(coAuthors.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
+        if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
 
         await reportService.create({name, form, direction, comment, coAuthors}, user)
 
@@ -72,7 +69,7 @@ export default {
         res.json({report: report})
     },
 
-    async delete({params : {  id }}, user, res) {
+    async delete({params : {  id }, user}, res) {
 
         if(!id) throw new AppErrorMissing('id')
 
@@ -89,7 +86,7 @@ export default {
     },
 
     async find({user}, res) {
-        const reports = await reportService.find(user, res)
+        const reports = await reportService.find(user)
         res.json({reports: reports})
     }
 }

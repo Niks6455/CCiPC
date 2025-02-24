@@ -77,8 +77,6 @@ export default {
 
     async update(participantInfo, participantId){
 
-
-
         const participant = await Participant.findByPk(participantId);
         if(!participant) throw new AppErrorNotExist('participant')
 
@@ -98,12 +96,18 @@ export default {
             await  participant.update({ ...participantInfo, activate: false  })
         }
 
-        return await participant.update(...participantInfo);
+        return await participant.update({...participantInfo});
     },
 
     async findByEmail(email){
         return await Participant.findOne({
             where: { email }
+        })
+    },
+
+    async delete(participantId){
+        return await Participant.destroy({
+            where: {id : participantId}
         })
     }
 
