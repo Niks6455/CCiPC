@@ -30,6 +30,29 @@ const router = Router();
  *     summary: Обновление личного профиля
  *     security:
  *       - BearerAuth: [] # Требуется авторизация
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *               name:
+ *                 type: string
+ *               patronymic:
+ *                 type: string
+ *               academicTitle:
+ *                 type: string
+ *               degree:
+ *                  type: string
+ *               position:
+ *                  type: string
+ *               organization:
+ *                  type: string
+ *               phone:
+ *                  type: string
  *     responses:
  *       200:
  *         description: Успешный ответ
@@ -42,7 +65,7 @@ const router = Router();
  *                   type: array
  *                   items:
  *                     type: object
- *                     description: Информация о участниках конференции
+ *                     description: Информация о участнике
  *
  * /participants/checkEmail:
  *   get:
@@ -74,7 +97,9 @@ router.route('/')
     .put(asyncRoute(verify.general), asyncRoute(participantCtrl.update))
 
 router.route('/self')
-    .get(asyncRoute(verify.general), asyncRoute(participantCtrl.self));
+    .get(asyncRoute(verify.general), asyncRoute(participantCtrl.self))
+    .delete(asyncRoute(verify.general), asyncRoute(participantCtrl.delete));
+
 
 
 router.route('/checkEmail')

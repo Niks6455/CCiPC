@@ -9,7 +9,8 @@ import reportRoute from './routes/report.js';
 import conferenceRoute from './routes/conference.js'
 import participantRoute from './routes/participant.js'
 import newsRoute from './routes/news.js';
-
+import committeeRoute from './routes/committee.js'
+import archiveRoute from './routes/archive.js'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 
@@ -79,7 +80,7 @@ const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 
 
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
@@ -117,16 +118,16 @@ app.use('/reports', reportRoute)
 app.use('/conferences', conferenceRoute);
 app.use('/participants', participantRoute);
 app.use('/news', newsRoute)
-
+app.use('/committees', committeeRoute)
+app.use('/archive', archiveRoute)
 
 // Handle 404 AND 500
 app
     .use((req, res) => res.status(404).json({ type: 'NOT FOUND', code: 404 }))
     // eslint-disable-next-line no-unused-vars
     .use((error, req, res, next) => {
-        console.error(error);
-
         if (error instanceof AppError || error instanceof SystemError || error instanceof MultipleError) {
+            console.log("err", error)
             res.status(error.status).json(error.toJSON());
         } else if (error instanceof MulterError && error.code === 'LIMIT_FILE_SIZE') {
             const error = new AppError(errorCodes.FileTooLarge);

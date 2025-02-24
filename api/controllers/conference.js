@@ -1,6 +1,6 @@
 import conferenceService from '../services/conference.js';
 import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
-
+import { map } from '../utils/mappers/tableParticipants.js'
 import Ajv from 'ajv'
 
 const ajv = new Ajv()
@@ -68,13 +68,10 @@ export default {
 
     },
 
-    async  findParticipants({params: { id } }, res) {
+    async  findParticipants({params: { id }, query: {limit = 20 , offset = 0, sort, fio }, }, res) {
         if(!id) throw new AppErrorMissing('id')
-        if(!conference) throw new AppErrorMissing('conferenceId')
-
-        const conference =await conferenceService.findParticipants(id);
-
-        res.json(conference);
+        const conference =await conferenceService.findParticipants(id, fio);
+        res.json({participants: conference.map(p=>map(p.participant))});
     },
 
     async update({params: { id }, body: {number, date, address, stages, directions  }}, res) {

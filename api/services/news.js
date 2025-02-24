@@ -6,7 +6,8 @@ export default {
     async create(title, description) {
 
         const news=await News.findOne({
-            where: title
+            where: { title: title }
+
         })
 
         if(news) throw new AppErrorAlreadyExists('title')

@@ -13,6 +13,10 @@ export default class Conference extends Model {
                 type: DataTypes.ARRAY(DataTypes.JSONB),
                 allowNull: true,
                 },
+                organization: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
+                partner: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
+                logo: {type: DataTypes.JSON, allowNull: true },
+                documents: {type: DataTypes.JSON, allowNull: true },
                 directions: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
             },
             {
