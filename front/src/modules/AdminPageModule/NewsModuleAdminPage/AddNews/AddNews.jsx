@@ -2,20 +2,20 @@ import styles from "./AddNews.module.scss";
 import goBackImg from "@assets/img/AdminPanel/goBack.svg";
 import { ReactComponent as FileImport } from "@assets/img/AdminPanel/addFile.svg";
 import trashBeliy from "@assets/img/UI/trashBeliy.svg";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createNews } from "../../../../apirequests/apirequests";
 import FileComponent from "../../../../components/AdminModuleComponents/FileComponent/FileComponent";
+import { useSelector } from "react-redux";
 
-function AddNews({ closeAddNews }) {
+function AddNews({ closeAddNews, updateNewsData }) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
-
-  //! Загрузить файл через клик
-  const uploadFile = () => {
-    fileInputRef.current.click();
-  };
+  const store = useSelector(state => state.news);
+  useEffect(() => {
+    console.log("store", store)
+  },[])
 
   //! Обработчик выбора файла
   const handleFileChange = (file) => {
@@ -37,7 +37,9 @@ function AddNews({ closeAddNews }) {
     // }
     // console.log(formData);
     createNews(data).then((res) => {
-      console.log(res);
+      if(res?.status === 200 || res?.status === 201){
+        updateNewsData();
+      }
     });
     closeAddNews();
   };

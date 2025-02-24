@@ -1,9 +1,15 @@
 import styles from "./UnivarsalTableAdmin.module.scss";
 import trashAdmin from "@assets/img/AdminPanel/trashAdmin.svg";
 import editAdmin from "@assets/img/AdminPanel/editAdmin.svg";
-function UnivarsalTableAdmin({ tableHeader, tableData }) {
+import { deleteNews } from "../../apirequests/apirequests";
+import {useDispatch} from "react-redux";
+import { setSelectNewsData } from "../../store/newsSlice/newsSlice";
+function UnivarsalTableAdmin({ tableHeader, tableData, updateNewsData, editClicker }) {
   const getValue = (value, key, rowIndex) => {
     switch (key) {
+      case "number":
+        case "id":
+        return rowIndex + 1;
       case "title":
         return value || "Без названия";
       case "createdAt":
@@ -11,10 +17,10 @@ function UnivarsalTableAdmin({ tableHeader, tableData }) {
       case "actions":
         return (
           <div className={styles.actions}>
-            <button className={styles.button} onClick={() => alert(`Редактировать ID: ${rowIndex + 1}`)}>
+            <button className={styles.button} onClick={() => editNewsfuncData(rowIndex)}>
               Редактировать <img src={editAdmin} alt="edit"/>
             </button>
-            <button className={styles.button} onClick={() => alert(`Удалить ID: ${rowIndex + 1}`)}>
+            <button className={styles.button} onClick={() => deleteNewsfunc(rowIndex)}>
               Удалить <img src={trashAdmin} alt="trash"/>
             </button>
           </div>
@@ -22,6 +28,20 @@ function UnivarsalTableAdmin({ tableHeader, tableData }) {
       default:
         return value || "___";
     }
+  };
+
+  const dispatch = useDispatch();
+
+  const deleteNewsfunc = (id) =>{
+    deleteNews(id).then((resp)=>{
+      updateNewsData()
+    })
+  }
+
+  const editNewsfuncData = (id) => {
+    console.log(id);
+    dispatch(setSelectNewsData({id: id}));
+    editClicker();
   };
 
   return (

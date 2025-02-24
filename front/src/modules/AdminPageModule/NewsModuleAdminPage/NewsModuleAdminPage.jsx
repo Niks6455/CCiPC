@@ -9,16 +9,22 @@ import { headerTableNews, testData } from "./data";
 function NewsModuleAdminPage() {
     const [addNews, setAddNews] = useState(false);
     const [dataNews, setDataNews] = useState([]);
-    const closeAddNews = () => {
-        setAddNews(false);
+
+
+    const editClicker = () => {
+        addNews ? setAddNews(false) : setAddNews(true);
     }
+
     useEffect(()=>{
+        updateNewsData()
+    },[])
+    const updateNewsData = () =>{
         getAllNews().then((res)=>{
             if(res?.status === 200){
-                setDataNews(res.data)
+                setDataNews(res?.data?.news)
             }
         })
-    },[])
+    }
     
     return ( 
         <section className={styles.NewsModuleAdminPage}>
@@ -32,15 +38,15 @@ function NewsModuleAdminPage() {
                         <input placeholder="Поиск"/>
                     </div>
                     <div className={styles.NewsTopMenuButton}>
-                        <button onClick={()=> setAddNews(true)}><img src={plusLigthImg} />Добавить новость</button>
+                        <button onClick={()=> editClicker()}><img src={plusLigthImg} />Добавить новость</button>
                     </div>
                 </div>
             </div>
-            {testData.length === 0 ? <div className={styles.notNews}>
+            {dataNews.length === 0 ? <div className={styles.notNews}>
                 <p>Новости отсутствуют</p>
             </div> : 
                 <div className={styles.UnivarsalTableAdmin}>
-                    <UnivarsalTableAdmin tableData={testData} tableHeader={headerTableNews}/>
+                    <UnivarsalTableAdmin tableData={dataNews} tableHeader={headerTableNews} updateNewsData={updateNewsData} editClicker={editClicker}/>
                 </div>
              }
         
@@ -48,7 +54,8 @@ function NewsModuleAdminPage() {
             
         }
             {
-                addNews &&  <AddNews closeAddNews={closeAddNews}/>
+                addNews &&  <AddNews closeAddNews={editClicker} updateNewsData={updateNewsData} />
+
             }
            
         </section>

@@ -197,9 +197,39 @@ export const createNews = async (data) => {
 }
 
 //!Получение новостей
-export const getAllNews = async (data) => {
+export const getAllNews = async () => {
   try {
-    const response = await api.get(`${server}/news?year=2025?limit=10`, data);
+    const response = await api.get(`${server}/news`);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
+
+//!Получение новости по Id
+export const getNewsId = async (id) => {
+  try {
+    const response = await api.get(`${server}/news/${id}`);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
+
+//!Получение новостей
+export const deleteNews = async (id) => {
+  try {
+    const response = await api.delete(`${server}/news/${id}`);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
+
+//!Получение новостей
+export const updateNews = async (id) => {
+  try {
+    const response = await api.put(`${server}/news/${id}`);
     return response;
   } catch (error) {
     console.log("apiCreateReport ", error);
