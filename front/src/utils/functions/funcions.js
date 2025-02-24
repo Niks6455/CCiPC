@@ -120,3 +120,54 @@ export const generateTitleFromLink = (url) => {
     return url; // Если ссылка некорректна, возвращаем её как есть
   }
 };
+
+//! форматирование даты
+export const formatDateRangePrimereact = (startDate, endDate) => {
+  const months = [
+    "января",
+    "февраля",
+    "марта",
+    "апреля",
+    "мая",
+    "июня",
+    "июля",
+    "августа",
+    "сентября",
+    "октября",
+    "ноября",
+    "декабря",
+  ];
+
+  // Check if startDate and endDate are valid
+  if (!startDate || isNaN(new Date(startDate).getTime())) {
+    return ""; // Return an empty string if startDate is invalid
+  }
+
+  const start = new Date(startDate);
+  const startDay = start.getDate();
+  const startMonth = months[start.getMonth()];
+  const startYear = start.getFullYear();
+
+  if (!endDate || isNaN(new Date(endDate).getTime())) {
+    // If endDate is invalid, return only the start date
+    return `${startDay} ${startMonth} ${startYear}`;
+  }
+
+  const end = new Date(endDate);
+  const endDay = end.getDate();
+  const endMonth = months[end.getMonth()];
+  const endYear = end.getFullYear();
+
+  if (startYear === endYear) {
+    if (start.getMonth() === end.getMonth()) {
+      // Same month and year
+      return `${startDay}-${endDay} ${startMonth} ${startYear}`;
+    } else {
+      // Different months, same year
+      return `${startDay} ${startMonth} - ${endDay} ${endMonth} ${startYear}`;
+    }
+  } else {
+    // Different years
+    return `${startDay} ${startMonth} ${startYear} - ${endDay} ${endMonth} ${endYear}`;
+  }
+};

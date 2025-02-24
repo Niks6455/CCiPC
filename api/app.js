@@ -113,7 +113,7 @@ app.use(corsMiddleware);
 
 //app.use('/system', systemRoute);
 app.use('/auth', authRoute);
-app.use('/uploads', uploadsRoute);
+app.use("/uploads", express.static("./uploads"), uploadsRoute);
 app.use('/reports', reportRoute)
 app.use('/conferences', conferenceRoute);
 app.use('/participants', participantRoute);

@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { apiUpdateUser } from "../../apirequests/apirequests";
 import { disEditUser, setEditUser } from "../../store/userSlice/user.Slice";
 import { inputsData } from "./data";
+import cameraIcon from "@assets/img/UI/camera.svg";
+import veselov from "./veselov.png";
+
 function ProfileEditing() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -154,7 +157,13 @@ function ProfileEditing() {
   return (
     <div className={styles.ProfileEditing}>
       <div className={styles.head}>
-        <img className={styles.profilePhoto} src={profilePhoto} alt="img" />
+        <div className={styles.profilePhoto}>
+          <div className={styles.hover_bg}>
+            <img src={cameraIcon} alt="Открыть" />
+          </div>
+          <img className={styles.photo_heve} src={veselov} alt="img" />
+          {/* <img src={profilePhoto} alt="img" /> */}
+        </div>
         <button className={styles.btn1}>Загрузить новое фото</button>
         <button className={styles.btn2}>Удалить фото</button>
       </div>

@@ -110,7 +110,7 @@ const router = Router();
  *
  * /auth/checkEmail:
  *   post:
- *     summary: отправка кода для подтверждения почты или для восстановления пароля
+ *     summary: проверка кода для подтверждения почты или для восстановления пароля
  *     requestBody:
  *       required: true
  *       content:
@@ -207,6 +207,31 @@ const router = Router();
  *                 status:
  *                   type: string
  *                   description: статус
+ * /auth/sandReset:
+ *   post:
+ *     summary: отправка кода
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *             required:
+ *               - email
+ *     responses:
+ *       200:
+ *         description: Успешный ответ
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 status:
+ *                   type: string
+ *                   description: статус
  */
 
 router.route('/login').post(asyncRoute(authCtrl.login));
@@ -218,5 +243,7 @@ router.route('/checkEmail').post(asyncRoute(authCtrl.checkEmail))
 router.route('/changePassword').post(asyncRoute(verify.general), asyncRoute(authCtrl.reset));
 
 router.route('/recovery').post(asyncRoute(authCtrl.reset))
+
+router.route('/sandReset').post(asyncRoute(authCtrl.sandCodeChangePassword));
 
 export default router;

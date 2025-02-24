@@ -22,16 +22,14 @@ export default {
         const startOfYear = new Date(year, 0, 1); // 1 января текущего года
         const endOfYear = new Date(year, 11, 31, 23, 59, 59); // 31 декабря текущего года
 
-
         const news = await News.findAll({
             where:{
                 createdAt: {
                     [Op.between]: [startOfYear, endOfYear], // Фильтр по диапазону дат
                 },
-                limit: pageSize, // Количество записей на странице
-                offset: (page - 1) * pageSize, // Смещение для пагинации
-
-            }
+            },
+            limit: pageSize, // Количество записей на странице
+            offset: (page - 1) * pageSize, // Смещение для пагинации
         })
 
         return {

@@ -65,7 +65,7 @@ export default {
 
         let participant
         if(participantId) participant = await Participant.findByPk(participantId)
-        else participant= await Participant.findOne({ where : { email: passwordInfo.email } })
+        else participant = await Participant.findOne({ where : { email: passwordInfo.email } })
         if(passwordInfo.currentPassword) if (!participant || !participant.validatePassword(passwordInfo.currentPassword)) throw new AppErrorInvalid('password');
         if(resetCodes[participant?.email] !== passwordInfo.code || passwordInfo.code === undefined ) throw new AppErrorInvalid('code')
 
@@ -76,9 +76,13 @@ export default {
     },
 
     async sandCodeChangePassword(email,code){
+        const participant = await Participant.findOne({
+            where: { email: email }
+        })
+        if(!participant) throw new AppErrorNotExist('email')
         resetCodes[email] = code
-        sendMail(email, 'registration', code);
-
+        sendMail(email, 'reset', code);
+        return true
 
     }
 

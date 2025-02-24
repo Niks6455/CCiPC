@@ -1,5 +1,6 @@
 import FileComponent from "../../../../components/AdminModuleComponents/FileComponent/FileComponent";
 import styles from "./DocumentsModule.module.scss";
+import borderIcon from "@assets/img/AdminPanel/border3.svg";
 
 function DocumentsModule({ data, setData }) {
   const mapData = [
@@ -54,17 +55,21 @@ function DocumentsModule({ data, setData }) {
         {mapData.map((item, index) => (
           <div key={index} className={styles.block}>
             <h3>{item.title}</h3>
+
             <div className={styles.file_container}>
-              <FileComponent
-                data={data[item.key]}
-                itemKey={item.key}
-                setData={funChangeData}
-                typeFile={item.typeFile}
-                accept={item.accept}
-                name={item.name}
-                icon={item.icon}
-                text={item.text}
-              />
+              <img src={borderIcon} alt="img" className={styles.border} />
+              <div className={styles.border_inner}>
+                <FileComponent
+                  data={data[item.key]}
+                  itemKey={item.key}
+                  setData={funChangeData}
+                  typeFile={item.typeFile}
+                  accept={item.accept}
+                  name={item.name}
+                  icon={item.icon}
+                  text={item.text}
+                />
+              </div>
             </div>
           </div>
         ))}

@@ -121,6 +121,33 @@
   }
 }
 
+@mixin ButtonGreenBorder($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  border: 1px solid #004529;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #004529;
+  border: 1px solid #004529;
+  cursor: pointer;
+  span {
+    margin-right: 10px;
+  }
+  &:hover {
+    background-color: #0045290a;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: #00452940;
+    transition: all 0.15s linear;
+  }
+}
+
 @mixin ButtonRed($fs: 18px) {
   display: flex;
   justify-content: center;

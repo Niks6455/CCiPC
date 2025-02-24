@@ -110,7 +110,7 @@ export default {
         {
             const news =await News.findByPk(newsId)
             if(!news) throw new AppErrorNotExist('news')
-            await news.update({ img: file.filename })
+            await news.update({ img: file.path })
             return res.json({status: 'OK'});
 
         }
@@ -121,7 +121,7 @@ export default {
         {
             const committee=await Committee.findByPk(committeeId)
             if(!committee) throw new AppErrorNotExist('committeeId');
-            await committee.update({ img: files.filename })
+            await committee.update({ img: file.path })
             return res.json({status: 'OK'});
 
         }
@@ -142,7 +142,7 @@ export default {
             });
 
             if(!report) throw new AppErrorNotExist('report')
-            typesFile[type]===4 ? await report.update({ reportFile: file.filename }) : await report.update({ conclusion : file.filename })
+            typesFile[type]===4 ? await report.update({ reportFile: file.path }) : await report.update({ conclusion : file.path })
             return res.json({status: 'OK'});
         }
 
@@ -151,7 +151,7 @@ export default {
         if(archiveId) {
             const archive =await Archive.findByPk(archiveId);
             if(!archive) throw new AppErrorNotExist('archiveId')
-            await archive.update({ file: file.filename })
+            await archive.update({ file: file.path })
             return res.json({status: 'OK'});
         }
 
@@ -162,10 +162,10 @@ export default {
 
         if(!conference) throw new AppErrorNotExist('conference');
 
-        if(typesFile[type] === 0) await conference.update({ documents: { 'PROGRAM' : file.filename } })
-        if(typesFile[type] === 1) await conference.update({ documents: { 'LETTER' : file.filename } })
-        if(typesFile[type] === 2) await conference.update({ documents: { 'COLLECTION' : file.filename } })
-        if(typesFile[type] === 3) await conference.update({ documents: { 'SAMPLE' : file.filename } })
+        if(typesFile[type] === 0) await conference.update({ documents: { 'PROGRAM' : file.path } })
+        if(typesFile[type] === 1) await conference.update({ documents: { 'LETTER' : file.path } })
+        if(typesFile[type] === 2) await conference.update({ documents: { 'COLLECTION' : file.path } })
+        if(typesFile[type] === 3) await conference.update({ documents: { 'SAMPLE' : file.path } })
 
 
 

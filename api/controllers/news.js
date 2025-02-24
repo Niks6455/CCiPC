@@ -9,9 +9,9 @@ export default {
         res.json({status: 'Ok'});
     },
 
-    async find({query : { year, limit }}, res){
-        const { currentPage, newsLimit, news }= await newsService.find({year, limit }, res)
-        res.json({ currentPage: currentPage,  limit: limit, news: news });
+    async find({query : { year, limit, page }}, res){
+        const { currentPage, newsLimit, news }= await newsService.find(year, page, limit)
+        res.json({ currentPage: currentPage,  limit: newsLimit, news: news });
     },
 
 

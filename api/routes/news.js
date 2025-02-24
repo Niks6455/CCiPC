@@ -55,6 +55,12 @@ const router = Router();
  *         description: limit
  *         schema:
  *           type: number
+ *       - name: page
+ *         in: query
+ *         required: false
+ *         description: page
+ *         schema:
+ *           type: number
  *     responses:
  *       200:
  *         description: Успешный ответ
@@ -145,6 +151,7 @@ const router = Router();
  *                   type: string
  *                   description: статус
  */
+
 
 router.route('/')
     .post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(newsCtrl.create))

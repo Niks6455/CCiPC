@@ -35,13 +35,37 @@ function Input(props) {
     console.log("props.errorList", props.errorList);
   }, [props.errorList]);
 
+  const getListErrorContainer = () => {
+    return (
+      <div
+        className={`${styles.errorsListContainer} ${
+          props.labelText ? styles.erroListLabelContainer : ""
+        }`}
+      >
+        <ul>
+          {props.errorList?.map((el) => (
+            <li key={el.id}>
+              {el.done ? (
+                <img src={galka} alt="✔️" />
+              ) : (
+                <img src={krest} alt="❌" />
+              )}
+
+              {el.text}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div className={styles.Input}>
       {!props?.value && props?.imgSrc && (
         <img className={styles.leftImg} src={props?.imgSrc} alt={props?.name} />
       )}
       {/* //! при множественных ошибках выводим лист */}
-      {props.errorList && (
+      {props.errorList && !props.labelText && (
         <img
           onMouseEnter={funOpenListErrors}
           onMouseLeave={funClouseListErrors}
@@ -56,26 +80,24 @@ function Input(props) {
       )}
 
       {/* лсит множественных ошибок */}
-      {errorListShow && (
-        <div className={styles.errorsListContainer}>
-          <ul>
-            {props.errorList?.map((el) => (
-              <li key={el.id}>
-                {el.done ? (
-                  <img src={galka} alt="✔️" />
-                ) : (
-                  <img src={krest} alt="❌" />
-                )}
-
-                {el.text}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {errorListShow && !props.labelText && getListErrorContainer()}
       {props.labelText && (
         <div className={styles.labelText}>
           <span>{props.labelText}</span>
+          {props.errorList && props.labelText && (
+            <img
+              onMouseEnter={funOpenListErrors}
+              onMouseLeave={funClouseListErrors}
+              className={styles.errorListLabel}
+              src={
+                errorListShow
+                  ? props?.errorListImgHover
+                  : props?.errorListImgNoHover
+              }
+              alt="!"
+            />
+          )}
+          {errorListShow && props.labelText && getListErrorContainer()}
         </div>
       )}
       {props.rigthImg && (
