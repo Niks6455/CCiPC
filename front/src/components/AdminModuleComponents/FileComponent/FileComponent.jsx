@@ -70,6 +70,8 @@ function FileComponent(props) {
 
   //! обработка загрузки через drag-and-drop
   const handleDrop = (event) => {
+    // если файла нет то тогда можно загрузить
+    if (logoHeader) return;
     event.preventDefault();
     setIsDragging(false);
     setTimeout(() => {
