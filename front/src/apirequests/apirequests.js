@@ -197,9 +197,10 @@ export const createNews = async (data) => {
 }
 
 //!Получение новостей
-export const getAllNews = async () => {
+export const getAllNews = async (param) => {
   try {
-    const response = await api.get(`${server}/news`);
+    const endpoint = param ? `/news/${param}` : '/news';
+    const response = await api.get(`${server}${endpoint}`);
     return response;
   } catch (error) {
     console.log("apiCreateReport ", error);

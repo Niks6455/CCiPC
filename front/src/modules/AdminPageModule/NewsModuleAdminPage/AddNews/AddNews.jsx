@@ -7,7 +7,7 @@ import { createNews, deleteNews, getNewsId, updateNews } from "../../../../apire
 import FileComponent from "@components/AdminModuleComponents/FileComponent/FileComponent";
 import { useSelector } from "react-redux";
 import trashRed from "@assets/img/AdminPanel/delete.svg";
-import borderIcon from "@assets/img/AdminPanel/border2.svg";
+import borderIcon from "@assets/img/AdminPanel/borderFile.svg";
 
 function AddNews(props) {
   const [title, setTitle] = useState("");
@@ -98,21 +98,20 @@ function AddNews(props) {
         </div>
         <div className={styles.addFile}>
           <label>Фотография для новости</label>
-          <div className={styles.file_cont}>
-          <img src={borderIcon} alt="img" className={styles.border} />
-          <div className={styles.border_inner}>
-          <FileComponent
-              data={file}
-              setData={handleFileChange}
-              typeFile={["image/png", "image/jpg", "image/jpeg"]}
-              accept={".png,.jpg"}
-              name={"pngNews"}
-              icon={"png"}
-              text={"Необходимо загрузить<br/> фотографию в формате JPG, PNG"}
-            />
+            <div className={styles.file_cont}>
+              <div className={styles.border_inner}>
+              <FileComponent
+                  data={file}
+                  setData={handleFileChange}
+                  typeFile={["image/png", "image/jpg", "image/jpeg"]}
+                  accept={".png,.jpg"}
+                  name={"pngNews"}
+                  icon={"png"}
+                  text={"Необходимо загрузить<br/> фотографию в формате JPG, PNG"}
+                />
+              </div>
           </div>
-        </div>
-         
+          
           
         </div>
       </div>

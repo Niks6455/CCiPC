@@ -73,13 +73,14 @@
       .border {
         display: flex;
         width: 100%;
+        height: 500px;
       }
       .border_inner {
-        position: absolute;
-        left: 0;
-        top: 21px;
         width: 100%;
-        height: 100%;
+        height: 520px;
+        border: 2px dashed var(--InputTextColor);
+        border-radius: 10px;
+        box-sizing: border-box;
       }
       
   } 
@@ -87,7 +88,7 @@
    .editNewsCont{
     display: flex;
     justify-content: end;
-    margin-top: 35px;
+    margin-top: 65px;
     .editNewsContInner{
         display: grid;
         grid-template-columns: repeat(2, 280px);

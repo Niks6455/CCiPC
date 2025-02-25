@@ -1,24 +1,20 @@
-import React, { useEffect, useState } from "react";
 import styles from "./SliderHomePage.module.scss"; // Ваши стили
 import { useNavigate } from "react-router-dom";
+import { getAllNews } from "../../apirequests/apirequests";
+import { useState } from "react";
+import { useEffect } from "react";
+import noPhoto from "@assets/img/noPhotoNews.svg";
 
-// Данные для слайдов
-const slides = [
-  {
-    id: 1,
-    title: "Конференция открыта!",
-    text: `Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! <br/><br/> Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще!`,
-    image: "/img/img2.svg",
-  },
-  {
-    id: 2,
-    title: "Конференция продолжается!",
-    text: `Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще! <br/><br/> Дорогие друзья, конференция открыта! Ждём ваши заявки! Будет интересно, познавательно и впечатляюще!`,
-    image: "/img/img1.svg",
-  },
-];
 
 const SliderHomePage = () => {
+  const [slides, setSlides] = useState([]);
+  useEffect(()=>{
+    getAllNews().then((res)=>{
+      if(res?.status === 200){
+        setSlides(res?.data?.news)
+      }
+    })
+  },[])
   const [currentSlide, setCurrentSlide] = useState(0);
 
   const nextSlide = () => {
@@ -69,13 +65,13 @@ const SliderHomePage = () => {
                   <p
                     className={styles.SliderText}
                     dangerouslySetInnerHTML={{
-                      __html: slides[currentSlide].text,
+                      __html: slides[currentSlide].description,
                     }}
                   ></p>
                 </div>
               </div>
               <div className={styles.Sliderimage}>
-                <img src={slides[currentSlide].image} alt={slide.title} />
+                {slides[currentSlide].image ? <img src={slides[currentSlide].image} alt={slide.title} /> : <img src={noPhoto}/> }
                 <div
                   className={styles.allNews}
                   onClick={() => navigate("/news")}
