@@ -245,3 +245,13 @@ export const apiChangePassword = async (data) => {
     console.log("apiChangePassword ", error);
   }
 };
+
+//!Получение участников конференции по Id конференции
+export const getConfParticipants = async (id) => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/participants`);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};

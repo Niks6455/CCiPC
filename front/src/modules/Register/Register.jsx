@@ -149,6 +149,8 @@ function Register() {
   const handleSubmit = () => {
     if (validate()) {
       console.log("Форма отправлена", formData);
+      // type 0 это подтверждение
+      // сброс пароля type 1
       apiRegister(formData).then((res) => {
         console.log("res", res);
         if (res?.status === 200) {
