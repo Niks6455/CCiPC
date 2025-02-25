@@ -186,7 +186,7 @@ export const apiGetConferences = async () => {
   }
 };
 
-//!Создание новости 
+//!Создание новости
 export const createNews = async (data) => {
   try {
     const response = await api.post(`${server}/news`, data);
@@ -194,7 +194,7 @@ export const createNews = async (data) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Получение новостей
 export const getAllNews = async () => {
@@ -204,7 +204,7 @@ export const getAllNews = async () => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Получение новости по Id
 export const getNewsId = async (id) => {
@@ -214,7 +214,7 @@ export const getNewsId = async (id) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Получение новостей
 export const deleteNews = async (id) => {
@@ -224,7 +224,7 @@ export const deleteNews = async (id) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Получение новостей
 export const updateNews = async (id, data) => {
@@ -234,4 +234,14 @@ export const updateNews = async (id, data) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
+
+//! изменение пароля
+export const apiChangePassword = async (data) => {
+  try {
+    const response = await api.post(`${server}/auth/changePassword`, data);
+    return response;
+  } catch (error) {
+    console.log("apiChangePassword ", error);
+  }
+};

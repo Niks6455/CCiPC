@@ -10,6 +10,8 @@ import {
   funDigit,
   funEightSymbols,
 } from "../../utils/functions/PasswordValidation";
+import { useMutation } from "@tanstack/react-query";
+import { apiChangePassword } from "../../apirequests/apirequests";
 
 function ChangePassword() {
   const [inputTypes, setInputTypes] = useState({
@@ -96,7 +98,12 @@ function ChangePassword() {
   //! изменение пароля
   const funEditPassword = () => {
     if (validate()) {
-      alert("Пароль успешно изменен");
+      const data = {
+        currentPassword: formData.currentPassword,
+        newPassword: formData.newpassword,
+        repeatPassword: formData.rewnewpassword,
+      };
+      apiChangePassword(data).then((res) => console.log(res));
     }
   };
 
