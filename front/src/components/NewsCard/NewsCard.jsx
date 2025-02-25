@@ -1,5 +1,5 @@
 import styles from "./NewsCard.module.scss";
-import noPhoto from "@assets/img/noPhotoNews.svg";
+import noPhoto from "@assets/img/noPhoto.png";
 function NewsCard(props) {
     return (
       <div className={styles.newsCard} key={props.key}>

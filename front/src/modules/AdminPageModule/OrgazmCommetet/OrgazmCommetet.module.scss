@@ -52,9 +52,19 @@
           
         }
         .orgCargCont{
-            display: grid;
-            gap: 20px;
-            margin-bottom: 40px;
-           }
+            position: relative;
+            display: flex;
+            left: -16px;
+            .orgCargContCards{
+                margin: 11px 16px;
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                gap: 32px;
+            }
+        }
+        .orgContInner{
+            color: #000;
+        }
     }
 }

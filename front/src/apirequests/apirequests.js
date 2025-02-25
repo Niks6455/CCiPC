@@ -236,3 +236,43 @@ export const updateNews = async (id, data) => {
     console.log("apiCreateReport ", error);
   }
 }
+
+//!Создание Human Оргкомитет
+export const createOrgCommitet = async (data) => {
+  try {
+    const response = await api.post(`${server}/committees`, data);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
+
+//!Создание Human Оргкомитет
+export const updateOrgCommitet = async (data, id) => {
+  try {
+    const response = await api.put(`${server}/committees/${id}`, data);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
+
+//!Получение  Human Оргкомитета
+export const getOrgCommitet = async () => {
+  try {
+    const response = await api.get(`${server}/committees`);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}
+
+//!Удаление Human Оргкомитета
+export const deleteOrgCommitet = async (id) => {
+  try {
+    const response = await api.delete(`${server}/committees/${id}`);
+    return response;
+  } catch (error) {
+    console.log("apiCreateReport ", error);
+  }
+}

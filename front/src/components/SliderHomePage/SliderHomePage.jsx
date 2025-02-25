@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getAllNews } from "../../apirequests/apirequests";
 import { useState } from "react";
 import { useEffect } from "react";
-import noPhoto from "@assets/img/noPhotoNews.svg";
+import noPhoto from "@assets/img/noPhoto.png";
 
 
 const SliderHomePage = () => {
@@ -11,7 +11,7 @@ const SliderHomePage = () => {
   useEffect(()=>{
     getAllNews().then((res)=>{
       if(res?.status === 200){
-        setSlides(res?.data?.news)
+        setSlides(res?.data?.news.splice(0, 5))
       }
     })
   },[])
@@ -71,7 +71,7 @@ const SliderHomePage = () => {
                 </div>
               </div>
               <div className={styles.Sliderimage}>
-                {slides[currentSlide].image ? <img src={slides[currentSlide].image} alt={slide.title} /> : <img src={noPhoto}/> }
+                {slides[currentSlide].image ? <img src={slides[currentSlide].image} alt={slide.title} /> : <img style={{borderRadius: '10px'}} src={noPhoto}/> }
                 <div
                   className={styles.allNews}
                   onClick={() => navigate("/news")}
