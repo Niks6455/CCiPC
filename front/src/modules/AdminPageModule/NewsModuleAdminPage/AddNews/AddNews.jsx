@@ -2,64 +2,79 @@ import styles from "./AddNews.module.scss";
 import goBackImg from "@assets/img/AdminPanel/goBack.svg";
 import { ReactComponent as FileImport } from "@assets/img/AdminPanel/addFile.svg";
 import trashBeliy from "@assets/img/UI/trashBeliy.svg";
-import { useRef, useState } from "react";
-import { createNews } from "../../../../apirequests/apirequests";
+import { useEffect, useRef, useState } from "react";
+import { createNews, deleteNews, getNewsId, updateNews } from "../../../../apirequests/apirequests";
+import FileComponent from "@components/AdminModuleComponents/FileComponent/FileComponent";
+import { useSelector } from "react-redux";
+import trashRed from "@assets/img/AdminPanel/delete.svg";
+import borderIcon from "@assets/img/AdminPanel/border2.svg";
 
-function AddNews({ closeAddNews }) {
+function AddNews(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
-
-  //! Загрузить файл через клик
-  const uploadFile = () => {
-    fileInputRef.current.click();
-  };
+  const store = useSelector(state => state.news);
+  useEffect(() => {
+    getNewsId(store?.selectNewsData).then((response) => {
+      if(response?.status === 200){
+        setTitle(response?.data?.title)
+        setText(response?.data?.description)      
+      }
+    })
+  },[])
 
   //! Обработчик выбора файла
-  const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    if (selectedFile) {
-      setFile(URL.createObjectURL(selectedFile)); // Создаем URL для отображения изображения
-    }
-  };
-
-  //! Удаление файла
-  const deleteFile = () => {
-    setFile(null);
-    fileInputRef.current.value = "";
-  };
-
-  //! Обработка перетаскивания файла
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-
-  const handleDrop = (event) => {
-    event.preventDefault();
-    const droppedFile = event.dataTransfer.files[0];
-    if (droppedFile) {
-      setFile(URL.createObjectURL(droppedFile));
+  const handleFileChange = (file) => {
+    if (file) {
+      setFile(file); // Создаем URL для отображения изображения
     }
   };
 
   const saveData = () => {
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("text", text);
-    if (file) {
-      formData.append("file", file);
+    const data = {
+      title: title,
+      description: text
     }
-    console.log(formData);
-    createNews(formData).then((res) => {
-      console.log(res);
+    // const formData = new FormData();
+    // formData.append("title", title);
+    // formData.append("text", text);
+    // if (file) {
+    //   formData.append("file", file);
+    // }
+    // console.log(formData);
+    createNews(data).then((res) => {
+      if(res?.status === 200 || res?.status === 201){
+        props?.updateNewsData();
+      }
     });
-    closeAddNews();
+    props?.closeAddNews();
   };
+
+  const deleteData = (id) => {
+    deleteNews(id).then((res) => {
+      if(res?.status === 200){
+        props?.closeAddNews();
+        props?.updateNewsData();
+      }
+    })
+  }
+  const saveEditData = (id) =>{
+    const data = {
+      title: title,
+      description: text
+    }
+    updateNews(id, data).then((res) => {
+      if(res?.status === 200){
+        props?.updateNewsData();
+        props?.closeAddNews();
+      }
+    })
+  }
 
   return (
     <section className={styles.AddNews}>
-      <button className={styles.buttonBack} onClick={closeAddNews}>
+      <button className={styles.buttonBack} onClick={props?.closeAddNews}>
         <img src={goBackImg} alt="Назад" /> Добавление новости
       </button>
       
@@ -83,43 +98,36 @@ function AddNews({ closeAddNews }) {
         </div>
         <div className={styles.addFile}>
           <label>Фотография для новости</label>
-          <div
-            className={styles.fileContur}
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
-          >
-            <input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleFileChange}
-              accept="image/*"
-              style={{ display: "none" }}
+          <div className={styles.file_cont}>
+          <img src={borderIcon} alt="img" className={styles.border} />
+          <div className={styles.border_inner}>
+          <FileComponent
+              data={file}
+              setData={handleFileChange}
+              typeFile={["image/png", "image/jpg", "image/jpeg"]}
+              accept={".png,.jpg"}
+              name={"pngNews"}
+              icon={"png"}
+              text={"Необходимо загрузить<br/> фотографию в формате JPG, PNG"}
             />
-            {file ? (
-              <>
-                <img src={file} alt="Превью" className={styles.previewImage} />
-                <button  className={styles.trash}  onClick={deleteFile}>
-                    <img
-                        src={trashBeliy}
-                        alt="Удалить"
-                    />
-                </button>
-                
-              </>
-            ) : (
-              <FileImport
-                className={styles.fileImport}
-                draggable="false"
-                onClick={uploadFile}
-              />
-            )}
           </div>
         </div>
+         
+          
+        </div>
       </div>
-      
-      <div className={styles.addNewsCont}>
+      {store?.selectNewsData === null ? 
+        <div className={styles.addNewsCont}>
         <button className={styles.addNews} onClick={() => saveData()}>Добавить</button>
+      </div>:
+      <div className={styles.editNewsCont}>
+        <div className={styles.editNewsContInner}>
+          <button className={styles.deleteNews} onClick={() => deleteData(store?.selectNewsData)} >Удалить <img src={trashRed}/></button>
+          <button className={styles.addNews} onClick={() => saveEditData(store?.selectNewsData)}>Сохранить</button>
+          </div>
       </div>
+      }
+      
     </section>
   );
 }

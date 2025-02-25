@@ -101,6 +101,18 @@ function NavBar() {
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
+
+            <li
+              onClick={() => {
+                navigate("/adminPage/news");
+                context.setActiveMenu(false);
+              }}
+            >
+              Админка{" "}
+              <span className={styles.arowLi}>
+                <img src={ArrowMenu} alt="Arrow" />
+              </span>
+            </li>
           </ul>
           <div className={styles.RightMenuText}>
             <div className={styles.RightMenuTextCont}>

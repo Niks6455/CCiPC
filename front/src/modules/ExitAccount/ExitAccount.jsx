@@ -9,7 +9,7 @@ function ExitAccount() {
   const context = useContext(DataContext);
 
   const funExcit = () => {
-    // navigate("/authorization")
+    navigate("/authorization")
   };
 
   return (

@@ -41,50 +41,71 @@
    }
    .addNewsTextBlockTwo{
     display: grid;
-    margin-top: 25px;
+    margin-top: 35px;
     grid-template-columns: 2fr 2fr;
     gap: 32px;
+    height: 500px;
     textarea{
-        height: 380px;
+        height: 100%;
     }
     .addFile{
         display: flex;
         flex-direction: column;
         position: relative;
-        .fileImport {
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            border-radius: 10px; // делаем края мягче
-            &:hover {
-              background-color: #00452940; // Заливка фона SVG
+        height: 100%;
+        label{
+            margin: 0px;
+        }
+        .addFileInner{
+                height: 100%;
             }
-          }
-          .previewImage{
-            width: 100%;
-            object-fit: cover;
-            border-radius: 10px;
-            height: 380px;
-          }
-          .trash{
-            position: absolute;
-            right: 15px;
-            top: 50px;
-            background-color: #E7ECEB;
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            display: flex;
-            justify-content: center;
-            border: none;
-            border-radius: 5px;
-            align-items: center;
-            transition: all 0.1s linear;
-            &:hover {
-              opacity: 0.8;
-            }
-          }
-          
-    }
+        }
    }
-   
+  
+  .file_cont{
+    height: 500px;
+    .file_cont {
+        display: flex;
+        position: relative;
+        width: auto;
+        height: auto;
+      }
+      .border {
+        display: flex;
+        width: 100%;
+      }
+      .border_inner {
+        position: absolute;
+        left: 0;
+        top: 21px;
+        width: 100%;
+        height: 100%;
+      }
+      
+  } 
+
+   .editNewsCont{
+    display: flex;
+    justify-content: end;
+    margin-top: 35px;
+    .editNewsContInner{
+        display: grid;
+        grid-template-columns: repeat(2, 280px);
+        gap: 25px;
+        .addNews{
+            @include ButtonGreen;
+            width: 280px;
+            height: 52px;
+       }
+       .deleteNews{
+        @include ButtonRed;
+        width: 280px;
+        height: 52px;
+        border: 1px solid var(--ErrorColor);
+        img{
+            margin-left: 10px;
+        }
+       }
+    }
+ }
 }
