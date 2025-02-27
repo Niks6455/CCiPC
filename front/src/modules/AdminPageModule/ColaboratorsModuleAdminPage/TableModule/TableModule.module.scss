@@ -47,6 +47,8 @@
           border: 1px solid #e0e0e0;
           vertical-align: middle;
           color: #444;
+          background-color: inherit;
+          transition: all 0.2s linear;
         }
         td:nth-child(5) {
           max-width: 310px;
@@ -57,6 +59,10 @@
 
         &:last-child td {
           border-bottom: none;
+        }
+        .editData {
+          background-color: #1ce99633;
+          transition: all 0.2s linear;
         }
       }
     }

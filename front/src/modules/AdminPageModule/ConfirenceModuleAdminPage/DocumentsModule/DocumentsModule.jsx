@@ -43,6 +43,30 @@ function DocumentsModule({ data, setData }) {
       text: "Неободимо загрузить<br/>файл в формате DOC",
       title: "Шаблон статьи",
     },
+    {
+      key: "cashlessIndividual",
+      typeFile: [
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ],
+      accept: ".doc,.docx",
+      name: "cashlessIndividual",
+      icon: "doc",
+      text: "Неободимо загрузить<br/>файл в формате DOC",
+      title: "Договор оплаты безналичным расчётом для физического лица",
+    },
+    {
+      key: "cashlessEntities",
+      typeFile: [
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ],
+      accept: ".doc,.docx",
+      name: "cashlessEntities",
+      icon: "doc",
+      text: "Неободимо загрузить<br/>файл в формате DOC",
+      title: "Договор оплаты безналичным расчётом для юридического лица",
+    },
   ];
 
   const funChangeData = (value, key) => {

@@ -35,6 +35,7 @@ import ConfirenceModuleAdminPage from "./modules/AdminPageModule/ConfirenceModul
 import OrgWznosModuleAdminPage from "./modules/AdminPageModule/OrgWznosModuleAdminPage/OrgWznosModuleAdminPage";
 import { fetchConferences } from "./store/conferencesSlice/conferences.Slice";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { apiCreateConferences } from "./apirequests/apirequests";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,7 +69,14 @@ function App() {
           date: "01-09-2024",
         },
       ],
-      directions: ["фффф"],
+      directions: [
+        "7. Проблемы математического моделирования и управления в области медицины",
+        "8. Проблемы математического моделирования и управления в области медицины",
+        "9. Проблемы математического моделирования и управления в области медицины",
+        "10. Проблемы математического моделирования и управления в области медицины",
+        "11. Проблемы математического моделирования и управления в области медицины",
+        "12. Проблемы математического моделирования и управления в области медицины",
+      ],
     };
     // apiCreateConferences(dataConferences);
   }, []);

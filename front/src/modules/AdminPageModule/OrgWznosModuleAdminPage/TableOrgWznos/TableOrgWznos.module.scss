@@ -1,0 +1,209 @@
+.TableOrgWznos {
+  margin-top: 25px;
+  max-height: 58vh;
+  overflow: auto;
+  border-bottom: 1px solid #c8d0ce;
+  border-radius: 8px;
+  width: calc(100% + 8px);
+  @include ScrollBar;
+
+  table {
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-family: "Arial", sans-serif;
+
+    thead {
+      background-color: #e7eae9;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      th {
+        padding: 12px;
+        text-align: center;
+        font-weight: 700;
+        font-size: 18px;
+        color: #333;
+        border-bottom: 2px solid #d0d7de;
+
+        &:first-child {
+          border-top-left-radius: 8px;
+        }
+
+        &:last-child {
+          border-top-right-radius: 8px;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &:hover {
+          background-color: #f0f4f8;
+        }
+        height: 81px;
+        td {
+          padding: 20px;
+          border: 1px solid #e0e0e0;
+          vertical-align: middle;
+          color: #444;
+          background-color: inherit;
+          transition: all 0.2s linear;
+        }
+
+        &:last-child td {
+          border-bottom: none;
+        }
+        .editData {
+          background-color: #1ce99633;
+          transition: all 0.2s linear;
+        }
+      }
+    }
+
+    td[name="number"],
+    th[name="number"] {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      min-width: 60px;
+    }
+
+    td[name="participationForm"],
+    td[name="participationStatus"],
+    td[name="paymentForm"],
+    td[name="sumOrgWznos"],
+    td[name="confirmation"],
+    th[name="participationForm"],
+    th[name="participationStatus"],
+    th[name="paymentForm"],
+    th[name="sumOrgWznos"],
+    th[name="confirmation"] {
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+      min-width: 120px;
+    }
+
+    td[name="fio"],
+    th[name="fio"] {
+      min-width: 350px;
+    }
+    td[name="report"],
+    th[name="report"] {
+      min-width: 590px;
+    }
+    td[name="organization"],
+    th[name="organization"] {
+      min-width: 300px;
+    }
+    td[name="paymentForm"],
+    th[name="paymentForm"] {
+      text-wrap: nowrap;
+      min-width: 280px;
+      display: table-cell;
+      vertical-align: middle;
+      text-align: center;
+    }
+
+    .payment_container {
+      position: relative;
+      cursor: pointer;
+      transition: all 0.2s linear;
+      &:hover {
+        background-color: #00945833;
+      }
+      &:active {
+        background-color: #07d08033;
+      }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #e7eae9;
+      border-radius: 4px;
+      padding: 4px 8px;
+      width: fit-content;
+      margin: 0 auto;
+      img {
+        margin-right: 4px;
+      }
+      span {
+        margin: 0;
+        padding: 0;
+      }
+      .contract_list {
+        position: absolute;
+        z-index: 100;
+        top: calc(100% + 7px);
+        left: 0;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        border: 1px solid #c8d0ce;
+        background-color: #f0f3f2;
+        border-radius: 4px;
+        overflow: hidden;
+        .box {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          padding: 8px;
+          @include HoverActive;
+          img {
+            margin-right: 8px;
+            width: 14px;
+            height: 14px;
+          }
+          span {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 19.2px;
+            letter-spacing: 0%;
+            text-align: center;
+            text-decoration: underline;
+            text-underline-position: from-font;
+            text-decoration-skip-ink: none;
+            color: #333333;
+          }
+        }
+      }
+    }
+    .sum_container {
+      border: 1px solid #c8d0ce;
+      width: 92px;
+      height: 62px;
+      background-color: #ffffff;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      transition: all 0.2s linear;
+
+      input {
+        border-radius: 10px;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        border: none;
+        background-color: inherit;
+        font-family: Overpass;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21.6px;
+        letter-spacing: 0%;
+        text-align: center;
+        color: #333333;
+        transition: all 0.2s linear;
+        &:hover {
+          background-color: #0094591e;
+        }
+      }
+      .edit_data {
+        background-color: #00945833;
+      }
+    }
+  }
+}
