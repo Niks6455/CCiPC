@@ -81,6 +81,26 @@ export const apiRegister = async (data) => {
   }
 };
 
+//! Запрос востановление пароля
+export const recoveryPassword = async (data) => {
+  try {
+    const response = await api.post(`${server}/auth/recovery`, data);
+    return response;
+  } catch (error) {
+    alert("Регистрация не прошла!");
+  }
+};
+
+//! Запрос на выслать код
+export const sandResetPassword = async (data) => {
+  try {
+    const response = await api.post(`${server}/auth/sandReset`, data);
+    return response;
+  } catch (error) {
+    alert("Регистрация не прошла!");
+  }
+};
+
 //! Запрос на авторизацию
 export const LoginFunc = async (UserData) => {
   try {
@@ -276,7 +296,6 @@ export const deleteOrgCommitet = async (id) => {
     console.log("apiCreateReport ", error);
   }
 }
-};
 
 //! изменение пароля
 export const apiChangePassword = async (data) => {
@@ -292,6 +311,26 @@ export const apiChangePassword = async (data) => {
 export const getConfParticipants = async (id) => {
   try {
     const response = await api.get(`${server}/conferences/${id}/participants`);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};
+
+//!Получение участников конференции по Id конференции
+export const createArchive = async (data) => {
+  try {
+    const response = await api.post(`${server}/archive`, data);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};
+
+//!Получение участников конференции по Id конференции
+export const uploadPhoto = async (file, type) => {
+  try {
+    const response = await api.post(`${server}/uploads?type=${type}`, file);
     return response;
   } catch (error) {
     console.log("getConfParticipants ", error);

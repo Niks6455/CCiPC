@@ -1,9 +1,9 @@
 import styles from "./OrgazmCommetet.module.scss";
 import { useEffect, useState } from "react";
 import React from "react";
-import CapImg from "./../../../assets/img/Cap.svg";
-import plusLigthImg from "./../../../assets/img/UI/plusLigth.svg";
-import AddOrgPeople from "../../../components/AdminModuleComponents/AddOrgPeople/AddOrgPeople";
+import CapImg from "@assets/img/Cap.svg";
+import plusLigthImg from "@assets/img/UI/plusLigth.svg";
+import AddOrgPeople from "@components/AdminModuleComponents/AddOrgPeople/AddOrgPeople";
 import { getOrgCommitet } from "../../../apirequests/apirequests";
 import CardOrganization from "./CardOrganization/CardOrganization";
 function OrgazmCommetet() {
