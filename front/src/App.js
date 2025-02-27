@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import HomePage from "./pages/HomePage/HomePage";
 import DataContext from "./context";
@@ -23,13 +23,9 @@ import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
 import { useDispatch } from "react-redux";
-import { disGetDataUser, fetchUserData } from "./store/userSlice/user.Slice";
-import {
-  apiCreateConferences,
-  apiGetReports,
-  apiGetUserData,
-} from "./apirequests/apirequests";
-import { disGetReports, fetchReports } from "./store/reportsSlice/reportsSlice";
+import { fetchUserData } from "./store/userSlice/user.Slice";
+
+import { fetchReports } from "./store/reportsSlice/reportsSlice";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ArchiveModulePage from "./modules/AdminPageModule/ArchiveModulePage/ArchiveModulePage";
 import ColaboratorsModuleAdminPage from "./modules/AdminPageModule/ColaboratorsModuleAdminPage/ColaboratorsModuleAdminPage";
@@ -38,8 +34,12 @@ import NewsModuleAdminPage from "./modules/AdminPageModule/NewsModuleAdminPage/N
 import ConfirenceModuleAdminPage from "./modules/AdminPageModule/ConfirenceModuleAdminPage/ConfirenceModuleAdminPage";
 import OrgWznosModuleAdminPage from "./modules/AdminPageModule/OrgWznosModuleAdminPage/OrgWznosModuleAdminPage";
 import { fetchConferences } from "./store/conferencesSlice/conferences.Slice";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
 function App() {
   const dispatch = useDispatch();
+  const queryClient = new QueryClient();
+
   const [authPage, setAuthPage] = useState("Auth");
   const [mailValue, setMailValue] = useState("");
   const [numberValue, setNumberValue] = useState("79805005050");
@@ -90,59 +90,61 @@ function App() {
 
   return (
     <DataContext.Provider value={context}>
-      <BrowserRouter>
-        <main style={{ fontFamily: "REX" }}>
-          <Routes>
-            <Route path="/authorization" element={<AuthPage />}></Route>
-            <Route path="/participants" element={<Participants />}></Route>
-            <Route path="/account" element={<Lks />}>
-              <Route path="documents" element={<DocumentsLk />}></Route>
-              <Route path="createreport" element={<CreateReport />} />
-              <Route path="addcoauthor" element={<AddCoauthor />} />
-              <Route path="profile" element={<Profile />}></Route>
-              <Route path="deleteaccount" element={<DeleteAccount />}></Route>
-              <Route path="exitaccount" element={<ExitAccount />}></Route>
-              <Route path="archivephoto" element={<ArchivPhoto />}></Route>
-              <Route path="settings/profile" element={<ProfileEditing />} />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <main style={{ fontFamily: "REX" }}>
+            <Routes>
+              <Route path="/authorization" element={<AuthPage />}></Route>
+              <Route path="/participants" element={<Participants />}></Route>
+              <Route path="/account" element={<Lks />}>
+                <Route path="documents" element={<DocumentsLk />}></Route>
+                <Route path="createreport" element={<CreateReport />} />
+                <Route path="addcoauthor" element={<AddCoauthor />} />
+                <Route path="profile" element={<Profile />}></Route>
+                <Route path="deleteaccount" element={<DeleteAccount />}></Route>
+                <Route path="exitaccount" element={<ExitAccount />}></Route>
+                <Route path="archivephoto" element={<ArchivPhoto />}></Route>
+                <Route path="settings/profile" element={<ProfileEditing />} />
+                <Route
+                  path="settings/changepassword"
+                  element={<ChangePassword />}
+                />
+                <Route path="viewreports" element={<ViewReports />} />
+                <Route path="editreport" element={<EditReport />} />
+              </Route>
+              <Route path="/news" element={<NewsPage />}></Route>
+              <Route path="/author" element={<Author />}></Route>
               <Route
-                path="settings/changepassword"
-                element={<ChangePassword />}
-              />
-              <Route path="viewreports" element={<ViewReports />} />
-              <Route path="editreport" element={<EditReport />} />
-            </Route>
-            <Route path="/news" element={<NewsPage />}></Route>
-            <Route path="/author" element={<Author />}></Route>
-            <Route
-              path="/recoverpassword"
-              element={<RecoverPassword />}
-            ></Route>
-            <Route
-              path="/organizationcomite"
-              element={<CommitteesPage />}
-            ></Route>
-            <Route path="/" element={<HomePage />}></Route>
-            <Route path="*" element={<NoteFoundPage />} />{" "}
-            <Route path="/adminPage/*" element={<AdminPage />}>
-              <Route path="archive" element={<ArchiveModulePage />} />
+                path="/recoverpassword"
+                element={<RecoverPassword />}
+              ></Route>
               <Route
-                path="participants"
-                element={<ColaboratorsModuleAdminPage />}
-              />
-              <Route path="committee" element={<OrgazmCommetet />} />
-              <Route path="news" element={<NewsModuleAdminPage />} />
-              <Route
-                path="conferences"
-                element={<ConfirenceModuleAdminPage />}
-              />
-              <Route
-                path="registrationFee"
-                element={<OrgWznosModuleAdminPage />}
-              />
-            </Route>
-          </Routes>
-        </main>
-      </BrowserRouter>
+                path="/organizationcomite"
+                element={<CommitteesPage />}
+              ></Route>
+              <Route path="/" element={<HomePage />}></Route>
+              <Route path="*" element={<NoteFoundPage />} />{" "}
+              <Route path="/adminPage/*" element={<AdminPage />}>
+                <Route path="archive" element={<ArchiveModulePage />} />
+                <Route
+                  path="participants"
+                  element={<ColaboratorsModuleAdminPage />}
+                />
+                <Route path="committee" element={<OrgazmCommetet />} />
+                <Route path="news" element={<NewsModuleAdminPage />} />
+                <Route
+                  path="conferences"
+                  element={<ConfirenceModuleAdminPage />}
+                />
+                <Route
+                  path="registrationFee"
+                  element={<OrgWznosModuleAdminPage />}
+                />
+              </Route>
+            </Routes>
+          </main>
+        </BrowserRouter>
+      </QueryClientProvider>
     </DataContext.Provider>
   );
 }

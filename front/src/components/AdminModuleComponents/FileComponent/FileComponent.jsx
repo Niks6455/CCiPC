@@ -60,7 +60,9 @@ function FileComponent(props) {
       setLogoHeader(null);
       setIsVisibleHeader(null);
       props.setData(null, props.itemKey);
-      document.getElementById(props.name).value = "";
+      if (document.getElementById(props.name)) {
+        document.getElementById(props.name).value = "";
+      }
       setIsVisibleNoFileHeader(null);
       setTimeout(() => {
         setIsVisibleNoFileHeader(true);

@@ -1,13 +1,14 @@
 import { Calendar } from "primereact/calendar";
 import styles from "./DateAdsess.module.scss";
-import { ReactComponent as CalendarIcon } from "@assets/img/UI/calendar.svg";
+import calendarIcon from "@assets/img/UI/calendar.svg";
 import { useEffect, useRef, useState } from "react";
 import { formatDateRangePrimereact } from "../../../../utils/functions/funcions";
 import arrowIcon from "@assets/img/UI/arrowMini.svg";
+import { AnimatePresence, motion } from "framer-motion";
 
 function DateAdsess({ data, setData }) {
   const [calendarShow, setCalendarShow] = useState(false);
-  const [listOpen, setListOpen] = useState(false);
+  const [listOpen, setListOpen] = useState(null);
   const calendarRef = useRef(null);
   const listRef = useRef(null);
 
@@ -15,6 +16,7 @@ function DateAdsess({ data, setData }) {
     const handleClickOutside = (event) => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendarShow(false);
+        console.log("calendarShow", false);
       }
       if (listRef.current && !listRef.current.contains(event.target)) {
         setListOpen(false);
@@ -89,13 +91,31 @@ function DateAdsess({ data, setData }) {
     setData({ ...data, deadlineUploadingReports: date });
   };
 
+  const funOpenList = () => {
+    setListOpen(!listOpen);
+  };
+
+  const funOpenCalendar = (e) => {
+    console.log("e", e.target.id);
+    if (
+      e.target.nodeName === "INPUT" ||
+      e.target.id.includes("open_calendar")
+    ) {
+      setCalendarShow(!calendarShow);
+    } else {
+      setCalendarShow(true);
+    }
+  };
+
   return (
     <div className={styles.DateAdsess}>
       <div className={styles.container}>
         <h3>Крайний срок загрузки докладов</h3>
         <div
-          className={`${styles.input_box} ${styles.list}`}
-          onClick={() => setListOpen(!listOpen)}
+          className={`${styles.input_box} ${styles.list} ${
+            listOpen ? styles.list_open_input : ""
+          }`}
+          onClick={() => funOpenList()}
           ref={listRef}
         >
           <input
@@ -115,58 +135,78 @@ function DateAdsess({ data, setData }) {
               }
             />
           </button>
-          {listOpen && (
-            <div className={styles.list_box}>
-              {data?.stages.length === 0 ||
-              data?.stages.every((item) => !item.date) ? (
-                <div className={styles.list_box_empty}>
-                  Добавьте этапы конференции
-                </div>
-              ) : (
-                <ul>
-                  {data?.stages
-                    ?.filter((item) => item.date)
-                    .map((item, index) => (
-                      <li key={index} onClick={() => funLiClick(item.date)}>
-                        {item.date}
-                      </li>
-                    ))}
-                </ul>
-              )}
-            </div>
-          )}
+          <AnimatePresence>
+            {listOpen && (
+              <motion.div
+                key="box"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={`${styles.list_box}`}
+              >
+                {data?.stages.length === 0 ||
+                data?.stages.every((item) => !item.date) ? (
+                  <div className={styles.list_box_empty}>
+                    Добавьте этапы конференции
+                  </div>
+                ) : (
+                  <ul>
+                    {data?.stages
+                      ?.filter((item) => item.date)
+                      .map((item, index) => (
+                        <li key={index} onClick={() => funLiClick(item.date)}>
+                          {item.date}
+                        </li>
+                      ))}
+                  </ul>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
       <div className={styles.container}>
         <h3>Дата проведения</h3>
         <div
-          className={styles.input_box}
+          className={`${styles.input_box}`}
+          id="open_calendar1"
           ref={calendarRef}
-          onClick={() => setCalendarShow(!calendarShow)}
+          onClick={(e) => funOpenCalendar(e)}
+          style={{ cursor: "pointer" }}
         >
-          <button className={styles.icon}>
-            <CalendarIcon />
+          <button className={`${styles.icon}`} id="open_calendar2">
+            <img src={calendarIcon} alt="img" id="open_calendar4" />
           </button>
           <input
+            id="open_calendar3"
             type="text"
             value={formatDateRangePrimereact(date[0], date[1])}
             readOnly
+            style={{ cursor: "pointer" }}
           />
-          {calendarShow && (
-            <div className={styles.calendar_show}>
-              <div className="stage_calendar">
-                <Calendar
-                  value={date}
-                  locale="ru"
-                  inline
-                  showWeek
-                  selectionMode="range" // Enables range selection
-                  hideOnRangeSelection={false} // Keeps the calendar open after selecting a range
-                  onChange={funSetData} // Handles date changes
-                />
-              </div>
-            </div>
-          )}
+          <AnimatePresence>
+            {calendarShow && (
+              <motion.div
+                key="calendar"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={styles.calendar_show}
+              >
+                <div className="stage_calendar">
+                  <Calendar
+                    value={date}
+                    locale="ru"
+                    inline
+                    showWeek
+                    selectionMode="range" // Enables range selection
+                    hideOnRangeSelection={false} // Keeps the calendar open after selecting a range
+                    onChange={funSetData} // Handles date changes
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
       <div className={styles.container}>
