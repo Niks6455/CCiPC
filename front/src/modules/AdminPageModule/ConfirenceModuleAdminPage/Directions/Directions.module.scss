@@ -39,6 +39,7 @@
       }
       textarea {
         @include TextArea;
+        padding-right: 40px;
         width: 100%;
         box-sizing: border-box;
         overflow: hidden;

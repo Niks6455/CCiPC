@@ -7,6 +7,8 @@
     informationLetter - информационное письмо файл pdf
     worksCollection - Cборник научных трудов файл pdf
     аrticleTemplate - шаблоны статьи файл doc
+    cashlessIndividual- безналичная оплата Doc физ лица
+    cashlessEntities- безналичная оплата Doc юр лица
     aboutConference - о конференции
     directions - Направления работы конференции
     dateFirst - дата начала проведения
@@ -76,6 +78,8 @@ export const testData = {
   informationLetter: null,
   worksCollection: null,
   аrticleTemplate: null,
+  cashlessIndividual: null,
+  cashlessEntities: null,
   aboutConference: about,
   directions: [
     "Информационная безопасность",

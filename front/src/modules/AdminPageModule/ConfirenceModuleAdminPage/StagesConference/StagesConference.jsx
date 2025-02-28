@@ -87,11 +87,11 @@ function StagesConference({ data, setData }) {
               })
           )?.map((item, index) => (
             <li key={index}>
-              <div className={styles.left_block}>
-                <div
-                  className={styles.calendar}
-                  ref={index === editItemIndex ? calendarRef : null}
-                >
+              <div
+                className={styles.left_block}
+                ref={index === editItemIndex ? calendarRef : null}
+              >
+                <div className={styles.calendar}>
                   <button
                     className={styles.button_calendar}
                     onClick={() => funClickCalendar(index)}
@@ -112,7 +112,10 @@ function StagesConference({ data, setData }) {
                   )}
                 </div>
 
-                <div className={styles.date}>
+                <div
+                  className={styles.date}
+                  onClick={() => funClickCalendar(index)}
+                >
                   <span className={`${item.date ? "" : styles.edit}`}>
                     {item.date || "дд.мм.гггг"}
                   </span>
@@ -120,8 +123,14 @@ function StagesConference({ data, setData }) {
                 <div className={styles.point}></div>
                 <div className={styles.info}>
                   <input
-                    onFocus={() => setIsEditing(true)} // Устанавливаем режим редактирования
-                    onBlur={() => setIsEditing(false)} // Выключаем режим редактирования
+                    onFocus={(e) => {
+                      setIsEditing(true);
+                      e.target.placeholder = "";
+                    }} // Устанавливаем режим редактирования
+                    onBlur={(e) => {
+                      setIsEditing(false);
+                      e.target.placeholder = "Название этапа";
+                    }} // Выключаем режим редактирования
                     type="text"
                     placeholder="Название этапа"
                     className={`${item.name ? "" : styles.edit}`}

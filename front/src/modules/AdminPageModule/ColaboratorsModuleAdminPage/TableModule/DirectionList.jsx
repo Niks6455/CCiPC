@@ -1,6 +1,8 @@
 import styles from "./TableModule.module.scss";
+import { motion } from "framer-motion";
 
 function DirectionList({
+  listModalRef,
   posDirList,
   data,
   selected,
@@ -8,7 +10,11 @@ function DirectionList({
   indexRow,
 }) {
   return (
-    <div
+    <motion.div
+      ref={listModalRef}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
       className={styles.DirectionList}
       style={{
         top: posDirList.y,
@@ -26,7 +32,7 @@ function DirectionList({
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 }
 
