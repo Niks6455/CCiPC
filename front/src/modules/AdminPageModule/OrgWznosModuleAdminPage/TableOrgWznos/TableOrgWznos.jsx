@@ -5,6 +5,8 @@ import paymentForm1ICon from "@assets/img/AdminPanel/paymentForm1.svg";
 import paymentForm2ICon from "@assets/img/AdminPanel/paymentForm2.svg";
 import galkaCircle from "@assets/img/AdminPanel/galkaCircle.svg";
 import xGreen from "@assets/img/AdminPanel/xGreen.svg";
+import galkaBelay from "@assets/img/UI/galkaBelay.svg";
+
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
@@ -41,10 +43,19 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
   const funChangeSumm = (e, index) => {
     let newData = [...tableData];
     let val = e.target.value.replace(/[^0-9]/g, "");
-    newData[index].sumOrgWznos = Number(val);
+    if (val <= 99999) {
+      newData[index].sumOrgWznos = Number(val);
+      setTableData(newData);
+    }
+  };
+
+  const funChangeConfirmation = (indexRow) => {
+    let newData = [...tableData];
+    newData[indexRow].confirmation = !newData[indexRow].confirmation;
     setTableData(newData);
   };
 
+  //! функция форматирования строк в таблице
   const funGetTdValue = (row, indexRow, columnKey, indexCol) => {
     if (columnKey.key === "fio") {
       return (
@@ -143,6 +154,32 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
         </td>
       );
     }
+
+    if (columnKey.key === "confirmation") {
+      return (
+        <td
+          name={columnKey.key}
+          key={indexCol}
+          className={styles.confirmation_container}
+        >
+          <div className={styles.check_box}>
+            <input
+              className={styles.confirmation}
+              type="checkbox"
+              checked={row[columnKey.key]}
+              onChange={() => funChangeConfirmation(indexRow)}
+            />
+            <img
+              onClick={() => funChangeConfirmation(indexRow)}
+              className={styles.check_icon}
+              src={galkaBelay}
+              alt="✔️"
+            />
+          </div>
+        </td>
+      );
+    }
+
     return (
       <td name={columnKey.key} key={indexCol}>
         {row[columnKey.key]}

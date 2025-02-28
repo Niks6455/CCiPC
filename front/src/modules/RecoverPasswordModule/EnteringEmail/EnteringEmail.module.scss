@@ -1,0 +1,113 @@
+.EnteringEmail {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container {
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      height: 170px;
+      width: 170px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+      img {
+        height: 170px;
+        width: 170px;
+      }
+    }
+
+    h2 {
+      font-family: Overpass, sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+      line-height: 38.4px;
+      letter-spacing: 0%;
+      text-align: center;
+      color: #333333;
+      padding: 0;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+    p {
+      font-family: Overpass, sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 21.6px;
+      letter-spacing: 0%;
+      text-align: center;
+      color: #333333;
+      padding: 0;
+      margin: 0 auto;
+      margin-bottom: 40px;
+      max-width: 460px;
+    }
+    .email_input_container {
+      position: relative;
+      margin-bottom: 40px;
+      width: 490px;
+      height: 64px;
+      border-radius: 10px;
+      border: 1px solid #c8d0ce;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      padding: 20px;
+      box-sizing: border-box;
+      transition: all 0.2s linear;
+
+      .error {
+        position: absolute;
+        top: -10px;
+        right: 25px;
+        background-color: var(--BodyBgColor);
+        height: 20px;
+        z-index: 100;
+        padding: 0 5px;
+
+        span {
+          color: #b32020;
+          font-family: Overpass, sans-serif;
+          font-weight: 500;
+          font-size: 16px;
+        }
+      }
+      svg {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+        transition: all 0.2s linear;
+      }
+      .error_icon {
+        * {
+          fill: #b32020;
+          transition: all 0.2s linear;
+        }
+      }
+      input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        background: none;
+        font-family: Overpass, sans-serif;
+        font-weight: 400;
+        color: #333;
+        font-size: 20px;
+      }
+    }
+    .error_box {
+      border: 1px solid #b32020;
+      transition: all 0.2s linear;
+    }
+    .next_button {
+      @include ButtonGreen;
+      width: 490px;
+      height: 64px;
+    }
+  }
+}

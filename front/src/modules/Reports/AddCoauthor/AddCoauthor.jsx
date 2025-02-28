@@ -100,6 +100,7 @@ function AddCoauthor({ edit, number }) {
         form: report.data.formParticipation || "",
         name: report.data.name || "",
         reportFile: report.data.fileArticle || "",
+        organization: report.data.organization || "",
       };
       apiEditReport(report.data.id, temp).then((res) => {
         console.log("res", res);
@@ -119,6 +120,7 @@ function AddCoauthor({ edit, number }) {
         form: report.data.formParticipation,
         direction: report.data.directionConference,
         comment: report.data.comments,
+        organization: report.data.organization,
         coAuthors: report.data.soauthors.map((el) => ({
           name: el.data.name,
           surname: el.data.surname,

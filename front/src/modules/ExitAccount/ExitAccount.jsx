@@ -4,12 +4,16 @@ import styles from "./ExitAccount.module.scss";
 import DataContext from "../../context";
 import ExitImg from "./../../assets/img/exit.png";
 
-function ExitAccount() {
+function ExitAccount(props) {
   const navigate = useNavigate();
   const context = useContext(DataContext);
 
   const funExcit = () => {
-    navigate("/authorization")
+    navigate("/authorization");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userData");
+    props.funResetAllApi();
   };
 
   return (

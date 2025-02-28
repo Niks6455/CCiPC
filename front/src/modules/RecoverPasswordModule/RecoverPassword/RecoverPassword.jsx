@@ -1,25 +1,30 @@
 import { useContext, useRef, useState, useEffect } from "react";
 import styles from "./RecoverPassword.module.scss";
-import DataContext from "../../context";
-import logo from "./../../assets/img/logo.png";
-import confirm from "./../../assets/img/confirm.svg";
-import Footer from "../../components/Footer/Footer";
-import errorLogo from "./../../assets/img/UI/error.svg";
-import glaz from "./../../assets/img/UI/glaz.svg";
-import noglaz from "./../../assets/img/UI/noglaz.svg";
-import InputPassword from "../../ui/InputPassword/InputPassword";
-import listErrorNoHover from "./../../assets/img/UI/listErrorNoActive.svg";
-import listErrorOnHover from "./../../assets/img/UI/listError.svg";
+import DataContext from "../../../context";
+import logo from "@assets/img/logo.png";
+import confirm from "@assets/img/confirm.svg";
+import Footer from "../../../components/Footer/Footer";
+import errorLogo from "@assets/img/UI/error.svg";
+import glaz from "@assets/img/UI/glaz.svg";
+import noglaz from "@assets/img/UI/noglaz.svg";
+import InputPassword from "../../../ui/InputPassword/InputPassword";
+import listErrorNoHover from "@assets/img/UI/listErrorNoActive.svg";
+import listErrorOnHover from "@assets/img/UI/listError.svg";
 import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
-} from "../../utils/functions/PasswordValidation";
-import { useNavigate } from "react-router-dom";
+} from "@utils/functions/PasswordValidation";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import {
+  apiPasswordRecovery,
+  CheckEmail,
+} from "../../../apirequests/apirequests";
 
 function RecoverPassword() {
   //! востановление по почте true по телефону false
   const [isRecoverType, setIsRecoverType] = useState(true);
+  const { email, setEmail } = useOutletContext();
 
   const context = useContext(DataContext);
   const [code, setCode] = useState(["", "", "", "", "", ""]); // Для кода
@@ -124,18 +129,25 @@ function RecoverPassword() {
     const fullCode = code.join("");
     console.log("Код отправлен на сервер:", fullCode);
     //! если код не совпал на сервере
-    if (fullCode === "111111") {
-      setCodStatus(true);
-      setCodeConfirmed(true);
-    } else {
-      setCodStatus(false);
-    }
+    const data = {
+      email: email,
+      code: fullCode,
+      type: 1,
+    };
+    CheckEmail(data).then((res) => {
+      if (res?.status === 200) {
+        setCodStatus(true);
+        setCodeConfirmed(true);
+      } else {
+        setCodStatus(false);
+      }
+    });
   };
 
-  const funRetype = () => {
-    setIsRecoverType(!isRecoverType);
-    handleResendCode();
-  };
+  // const funRetype = () => {
+  //   setIsRecoverType(!isRecoverType);
+  //   handleResendCode();
+  // };
 
   const validate = () => {
     let isValid = true;
@@ -165,8 +177,21 @@ function RecoverPassword() {
 
   const handleSubmitPassword = () => {
     if (validate()) {
-      console.log("Форма отправлена", formData);
-      navigate("/");
+      const fullCode = code.join("");
+      const data = {
+        code: fullCode,
+        email: email,
+        newPassword: formData.newpassword,
+        repeatPassword: formData.rewnewpassword,
+      };
+      apiPasswordRecovery(data).then((res) => {
+        if (res?.status === 200) {
+          console.log("Форма отправлена", formData);
+          navigate("/authorization");
+        }
+      });
+    } else {
+      console.log("Валидация не прошла");
     }
   };
 
@@ -203,7 +228,9 @@ function RecoverPassword() {
               {isRecoverType ? (
                 <p className={styles.ConfirmLoginGalcaText}>
                   На адрес вашей электронной почты{" "}
-                  <span className={styles.mail}>{context?.mailValue}</span>{" "}
+                  <span className={styles.mail}>
+                    {context?.mailValue || email}
+                  </span>{" "}
                   отправлено письмо с проверочным кодом. Введите полученный код
                   в поле ниже и нажмите “Продолжить”.
                 </p>
@@ -217,13 +244,13 @@ function RecoverPassword() {
               )}
             </div>
           </div>
-          <div className={styles.netDostupa}>
+          {/* <div className={styles.netDostupa}>
             <p onClick={funRetype}>
               {isRecoverType
                 ? "У меня нет доступа к электронной почте"
                 : "Вернуться к восстановлению пароля через электронную почту"}
             </p>
-          </div>
+          </div> */}
           <div className={styles.code}>
             <p>Проверочный код:</p>
           </div>
@@ -289,7 +316,7 @@ function RecoverPassword() {
                 onChange={handleChangePassword}
                 value={formData.newpassword}
                 placeholder="Придумайте пароль"
-                // error={errorsPassword.newpassword}
+                error={errorsPassword.newpassword}
                 setErrorList={setErrorListPassword}
                 errorListImgHover={listErrorOnHover}
                 errorListImgNoHover={listErrorNoHover}
@@ -312,7 +339,7 @@ function RecoverPassword() {
                 setErrorList={setErrorListPassword}
                 errorListImgHover={listErrorOnHover}
                 errorListImgNoHover={listErrorNoHover}
-                // error={errorsPassword.rewnewpassword}
+                error={errorsPassword.rewnewpassword}
                 type={inputTypes.rewnewpassword}
                 rigthImg={glaz}
                 rigthImgActive={noglaz}
