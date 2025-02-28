@@ -6,19 +6,21 @@ import ParticipantInConference from "../models/participant-in-conference.js";
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
 import {Op} from "sequelize";
+import ParticipantOfReport from "../models/participant-of-report.js";
 export default {
 
     async find(){
         return await Conference.findAll({
-            order: [['date', 'ASC']],
+            order: [['createdAt', 'ASC']],
             include :
                 {
-                   model: Committee,
-                   as: 'committees',
-                   required: false,
-                   include: {
-                       model: CommitteeInConference,
-                       as: 'committeeInConference',
+                    model: CommitteeInConference,
+                    as: 'committeeInConference',
+                    required: false,
+                    group: 'type',
+                    include: {
+                       model: Committee,
+                       as: 'committee',
                        required: false,
                    }
                 }
@@ -26,20 +28,20 @@ export default {
     },
 
     async findOne(id){
-        return await Conference.findByPk(id,
-            {
-                include:
-                    {
+        return await Conference.findByPk(id, {
+            include: [
+                {
+                    model: CommitteeInConference,
+                    as: 'committeeInConference',
+                    required: false,
+                    include: {
                         model: Committee,
-                        as: 'committees',
+                        as: 'committee',
                         required: false,
-                        include: {
-                            model: CommitteeInConference,
-                            as: 'committeeInConference',
-                            required: false,
-                        }
-                    }
-            });
+                    },
+                },
+            ],
+        });
     },
 
 
@@ -57,7 +59,7 @@ export default {
     },
 
 
-    async findParticipants(conferenceId, fio){
+    async findParticipants(conferenceId, fio, admin){
         const conference = await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference');
 
@@ -67,8 +69,7 @@ export default {
             [undefined, undefined, undefined];
 
 
-         conference.participants = await Promise.all([
-        await ParticipantInConference.findAll({
+         conference.participants = await ParticipantInConference.findAll({
             where: {
                 conferenceId:conferenceId,
             },
@@ -112,87 +113,29 @@ export default {
                             : []),
                 },
                 include: {
-                    model: Report,
-                    as: 'reports',
-                    required: false,
-                }
-            }
-        }),
-            await ParticipantInConference.findAll({
-                where: {
-                    conferenceId:conferenceId,
-                },
-                include: {
-                    model: Participant,
-                    as: 'participant',
+                    model: ParticipantOfReport,
+                    as: 'participantOfReport',
                     required: false,
                     include: {
                         model: Report,
-                        as: 'reports',
-                        required: false,
-                        where: {
-                                ...(surname && {coAuthors: { [Op.contains]: [{ surname: { [Op.like]: `%${surname}%` } }] } }),
-                                ...(name && { coAuthors: { [Op.contains]: [{ name: { [Op.like]: `%${name}%` } }] } }),
-                                ...(patronymic && { coAuthors: { [Op.contains]: [{ patronymic: { [Op.like]: `%${patronymic}%` } }] } } ),
-                                ...(surname && name && {
-                                            [Op.and]: [
-                                                {
-                                                    coAuthors: {
-                                                        [Op.contains]: [{ surname: { [Op.like]: `%${name}%` } }],
-                                                    },
-                                                },
-                                                {
-                                                    coAuthors: {
-                                                        [Op.contains]: [{ name: { [Op.like]: `%${surname}%` } }],
-                                                    },
-                                                },
-                                            ],
-                                }),
-                                ...(surname && patronymic && {
-                                            [Op.and]: [
-                                                {
-                                                    coAuthors: {
-                                                        [Op.contains]: [{ surname: { [Op.like]: `%${patronymic}%` } }],
-                                                    },
-                                                },
-                                                {
-                                                    coAuthors: {
-                                                        [Op.contains]: [{ patronymic: { [Op.like]: `%${surname}%` } }],
-                                                    },
-                                                },
-                                            ],
-                                        } ),
-                                ...(name && patronymic &&
-                                        {
-                                            [Op.and]: [
-                                                {
-                                                    coAuthors: {
-                                                        [Op.contains]: [{ name: { [Op.like]: `%${patronymic}%` } }],
-                                                    },
-                                                },
-                                                {
-                                                    coAuthors: {
-                                                        [Op.contains]: [{ patronymic: { [Op.like]: `%${name}%` } }],
-                                                    },
-                                                },
-                                            ],
-                                        }),
-                        }
+                        as: 'report',
+                        required: false
                     }
-                }
-            }),
-        ])
+                },
+                group: ['Report.id'],
+            },
+         })
 
 
 
-        const combinedResults = [...conference.participants[0], ...conference.participants[1]];
+        /*const combinedResults = [...conference.participants[0], ...conference.participants[1]];
 
         const uniqueResults = Array.from(
             new Map(combinedResults.map((item) => [item.id, item])).values()
-        );
+        );*/
 
 
-        return uniqueResults
+        return conference.participants
     },
 
     async update(conferenceId, conferenceInfo){

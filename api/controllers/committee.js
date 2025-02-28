@@ -1,18 +1,18 @@
 import committeeService from "../services/committee.js";
 import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import committee from "../config/committee.js";
-
+import { map } from '../utils/mappers/committee.js'
 export default {
 
     async find(req,res){
         const committee=await committeeService.find()
-        res.json({"committee":committee})
+        res.json({"committee": committee.map(c=> map(c))})
     },
 
     async create({ body: {fio, organization, type } },res){
         if(!fio) throw new AppErrorMissing('fio')
         if(!organization) throw new AppErrorMissing('organization')
-        if(!type) throw new AppErrorMissing('type')
+        if(type === undefined) throw new AppErrorMissing('type')
         if(!Object.values(committee).includes(type)) throw new AppErrorInvalid('type')
         await committeeService.create({fio, organization, type})
         res.json({status: 'Ok'});

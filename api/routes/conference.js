@@ -166,7 +166,9 @@ router.route('/')
 
 
 
-router.route('/:id/participants').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.findParticipants))
+router.route('/:id/participants').get(verify.combine(asyncRoute(verify.admin([roles.ADMIN]), verify.admin([roles.PUBLIC]))), asyncRoute(conferenceCtrl.findParticipants))
+
+router.route('/:id/fee').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.findFee))
 
 router.route('/:id')
     .get(asyncRoute(conferenceCtrl.findOne))

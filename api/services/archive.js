@@ -7,5 +7,9 @@ export default {
                 type: type
             }
         })
+    },
+
+    async create(archive){
+        return await Archive.create(...archive)
     }
 }

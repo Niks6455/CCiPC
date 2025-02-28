@@ -18,7 +18,9 @@ export default class Conference extends Model {
                 logo: {type: DataTypes.JSON, allowNull: true },
                 documents: {type: DataTypes.JSON, allowNull: true },
                 directions: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
-            },
+                deadline: { type: DataTypes.DATEONLY, allowNull: true },
+
+    },
             {
                 sequelize,
                 schema: process.env.NODE_ENV,

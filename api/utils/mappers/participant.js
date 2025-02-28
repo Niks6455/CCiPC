@@ -1,4 +1,3 @@
-import {DataTypes} from "sequelize";
 
 
 export function mapShort(participant){

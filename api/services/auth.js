@@ -4,19 +4,21 @@ import jwt from "../utils/jwt.js";
 import sendMail from '../services/email.js';
 import bcrypt from "bcrypt";
 import typeCheckEmail from "../config/typeCheckEmail.js";
+import cache from "../utils/cache.js";
+import ParticipantOfReport from "../models/participant-of-report.js";
 const verificationCodes= {};
 const resetCodes= {};
 
 export default {
     async register(participant, code){
 
-        console.log(participant);
         const checkParticipant = await Participant.findOne({
             where: { email: participant.email }
         });
 
-        console.log(111)
         if(checkParticipant) throw new AppErrorAlreadyExists('email')
+
+        verificationCodes[participant.email] = code
 
         sendMail(participant.email, 'registration', code);
 
@@ -47,8 +49,19 @@ export default {
 
         if(!participant) throw new AppErrorInvalid('email')
 
+        console.log(verificationCodes)
         if(type === typeCheckEmail.CONFIRM)  {
             if(verificationCodes[email] !== code || code === undefined ) throw new AppErrorInvalid('code')
+            if(cache[email] !== undefined) {
+                await ParticipantOfReport.create({
+                    reportId: cache[email],
+                    participantId: participant.id,
+                    who: 'Соавтор'
+                })
+
+                delete cache[email]
+            }
+
             await participant.update({activate: true})
             return true
         }

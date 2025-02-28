@@ -1,7 +1,43 @@
 import { models } from './index.js';
-const { Participant, Report, Conference, ParticipantInConference, File, FileLink, Committee, CommitteeInConference } = models;
+const { Participant, Report, Conference, ParticipantInConference, File, FileLink, Committee, CommitteeInConference, ParticipantOfReport } = models;
 
 export default function () {
+
+
+    Participant.belongsToMany(Report, {
+        through: ParticipantOfReport,
+        foreignKey: { name: 'participantId', allowNull: false},
+        as: 'reports',
+    })
+
+    Report.belongsToMany(Participant, {
+        through: ParticipantOfReport,
+        foreignKey: { name: 'reportId', allowNull: false},
+        as: 'participants',
+    })
+
+    Participant.hasMany(ParticipantOfReport, {
+        as: 'participantOfReport',
+        foreignKey: { name: 'participantId', allowNull: false},
+    })
+
+    Report.hasMany(ParticipantOfReport, {
+        as: 'participantOfReport',
+        foreignKey: { name: 'reportId', allowNull: false }
+    });
+
+
+    ParticipantOfReport.belongsTo(Participant, {
+        as: 'participant',
+        foreignKey: { name: 'participantId', allowNull: false }
+    });
+
+
+    ParticipantOfReport.belongsTo(Report, {
+        as: 'report',
+        foreignKey: { name: 'reportId', allowNull: false }
+    });
+
     Conference.belongsToMany(Participant, {
         through: ParticipantInConference,
         foreignKey: { name: 'conferenceId', allowNull: false},
@@ -86,8 +122,8 @@ export default function () {
     Report.hasOne(FileLink, {foreignKey: {name: 'reportId', allowNull: true}, as: 'report'});
     Participant.hasOne(FileLink, {foreignKey: {name: 'participantId', allowNull: true}, as: 'participant'});
 
-    Participant.hasMany(Report, { foreignKey: { name: 'participantId', allowNull: true }, as: 'reports' });
-    Report.belongsTo(Participant, { foreignKey: { name: 'participantId', allowNull: true }, as: 'participant' });
+    /*Participant.hasMany(Report, { foreignKey: { name: 'participantId', allowNull: true }, as: 'reports' });
+    Report.belongsTo(Participant, { foreignKey: { name: 'participantId', allowNull: true }, as: 'participant' });*/
 
     Conference.hasMany(Report, { foreignKey: { name: 'conferenceId', allowNull: true }, as: 'reports' });
     Report.belongsTo(Conference, { foreignKey: { name: 'conferenceId', allowNull: true }, as: 'conference' });

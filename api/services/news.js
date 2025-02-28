@@ -30,6 +30,8 @@ export default {
             },
             ...(pageSize && { limit: pageSize }), // Количество записей на страниц
             ...(page && { offset: (page - 1) * pageSize }), // Смещение для пагинации
+            order: [['createdAt', 'ASC']],
+
         })
 
         return {

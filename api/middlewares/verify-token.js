@@ -1,10 +1,12 @@
 import jwt from '../utils/jwt.js';
 import {AppErrorForbiddenAction, AppErrorInvalid, asyncRoute, SystemError} from '../utils/errors.js';
 import Participant from "../models/participant.js";
-
+import rolesCheck from "../config/roles.js";
 function admin(roles) {
     if (!roles) throw new SystemError();
     return async (req, res, next) => {
+
+        if(roles === rolesCheck.PUBLIC ) next ()
         const authorization = req.headers.authorization;
         if (authorization?.split(' ')[0] !== 'Bearer') {
             return next(new AppErrorInvalid('token', 401));

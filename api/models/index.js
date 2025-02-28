@@ -10,6 +10,7 @@ import FileLink from "./file-link.js";
 import Committee from "./committee.js";
 import CommitteeInConference from "./committee-in-conference.js";
 import Archive from "./archive.js";
+import ParticipantOfReport from "./participant-of-report.js";
 import 'dotenv/config'
 
 
@@ -25,7 +26,8 @@ export const models = {
    FileLink,
    Committee,
    CommitteeInConference,
-   Archive
+   Archive,
+   ParticipantOfReport
 };
 
 // Подключение к БД с парамтрами из .env
