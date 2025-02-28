@@ -355,3 +355,22 @@
     background-color: #c8d0ce;
   }
 }
+
+@mixin InputCheckBox() {
+  appearance: none; /* Убираем стандартный вид */
+  -webkit-appearance: none; /* Для Safari */
+  width: 20px;
+  height: 20px;
+  background-color: #ffffff; /* Белый фон для неактивного состояния */
+  border: 1px solid #333333; /* Граница */
+  border-radius: 4px; /* Опционально, если хотите скругленные углы */
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  &:checked {
+    background-color: #004529; /* Зеленый/90 */
+    border-color: #004529; /* Опционально, можно усилить цвет границы */
+  }
+}
