@@ -14,8 +14,8 @@ export default {
         if(!organization) throw new AppErrorMissing('organization')
         if(type === undefined) throw new AppErrorMissing('type')
         if(!Object.values(committee).includes(type)) throw new AppErrorInvalid('type')
-        await committeeService.create({fio, organization, type})
-        res.json({status: 'Ok'});
+        const committee = await committeeService.create({fio, organization, type})
+        res.json({committee: committee});
     },
 
     async update({params: { id }, body: { fio, organization } },res){

@@ -58,8 +58,8 @@ export default {
         if(!email) throw new AppErrorMissing('email')
         if(!code) throw new AppErrorMissing('code')
         if(type === undefined) throw new AppErrorMissing('type')
-        await authService.checkEmail(email, code, type)
-        res.json({status: 'Ok'})
+        const { participant, token } = authService.checkEmail(email, code, type)
+        res.json({ participant: participant, jwt: token })
     },
 
     async loginSfedu(req, res) {
@@ -77,7 +77,7 @@ export default {
 
         if(newPassword !== repeatPassword || newPassword === undefined) throw new AppErrorInvalid('newPassword')
         if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
-        if(!user && !code || !email) throw new AppErrorMissing('code')
+        if(!user && (!code || !email)) throw new AppErrorMissing('code')
         if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword }, user )
         else await authService.resetPassword({newPassword, repeatPassword, code, email })
         res.json({status: 'ok'})

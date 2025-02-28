@@ -83,7 +83,7 @@ export default {
 
         const conference = await conferenceService.create({number, date, address, stages, directions})
 
-        res.json(conference);
+        res.json( { conference: conference } );
 
     },
 

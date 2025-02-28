@@ -5,7 +5,6 @@ import { mapShort, map } from "../utils/mappers/participant.js";
 export default {
 
     async self({ user }, res){
-
         user.reports = (await participantService.self(user))?.reports;
         res.json({ participant: map(user) });
     },
