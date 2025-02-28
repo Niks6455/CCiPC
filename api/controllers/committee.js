@@ -1,6 +1,6 @@
 import committeeService from "../services/committee.js";
 import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
-import committee from "../config/committee.js";
+import committeeType from "../config/committee.js";
 import { map } from '../utils/mappers/committee.js'
 export default {
 
@@ -13,7 +13,7 @@ export default {
         if(!fio) throw new AppErrorMissing('fio')
         if(!organization) throw new AppErrorMissing('organization')
         if(type === undefined) throw new AppErrorMissing('type')
-        if(!Object.values(committee).includes(type)) throw new AppErrorInvalid('type')
+        if(!Object.values(committeeType).includes(type)) throw new AppErrorInvalid('type')
         const committee = await committeeService.create({fio, organization, type})
         res.json({committee: committee});
     },
