@@ -83,7 +83,7 @@ export default {
             })
         ]);
 
-        if(nextConference.reports ) return nextConference
+        if(nextConference?.reports ) return nextConference
         return lastConference
 
     },

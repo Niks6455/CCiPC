@@ -52,10 +52,9 @@ export default {
 
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
 
-        const  cache =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, user)
+        const  report =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, user)
 
-        console.log(cache)
-        res.json({status: 'ok'})
+        res.json({ report: report })
     },
 
     async update({body: { name, form, direction, status,  comment, coAuthorsIds }, params: { id }, user }, res) {

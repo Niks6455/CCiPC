@@ -20,8 +20,8 @@ export function map(participant){
         position: participant.position,
         organization: participant.organization,
         phone: participant.phone,
-        reports: participant?.reports.map(report=>({
+        reports: participant?.reports?.map(report=>({
           name: report.name,
-        }))
+        })) ?? null
     }
 }

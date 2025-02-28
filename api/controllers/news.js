@@ -5,8 +5,8 @@ export default {
     async create({body: {title, description}}, res){
         if(!title) throw new AppErrorMissing('title')
         if(!description) throw new AppErrorMissing('description')
-        await newsService.create(title, description)
-        res.json({status: 'Ok'});
+        const news= await newsService.create(title, description)
+        res.json({ news: news });
     },
 
     async find({query : { year, limit, page }}, res){
@@ -18,7 +18,7 @@ export default {
     async findOne({params: { id }}, res){
         if(!id) throw new AppErrorMissing('id')
         const news= await newsService.findOne(id)
-        res.json(news);
+        res.json({ news: news } );
     },
 
     async update({params: {id}, body:{ title, description }}, res){

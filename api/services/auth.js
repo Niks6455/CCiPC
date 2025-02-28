@@ -63,7 +63,8 @@ export default {
             }
 
             await participant.update({activate: true})
-            return true
+            const { jwt: token } = jwt.generate({ id: participant.id });
+            return { participant, token }
         }
 
         if(type === typeCheckEmail.RESET){
