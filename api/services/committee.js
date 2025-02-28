@@ -3,29 +3,46 @@ import Conference from "../models/conference.js";
 import {Op} from "sequelize";
 import {AppErrorNotExist} from "../utils/errors.js";
 import CommitteeInConference from "../models/committee-in-conference.js";
+import {sequelize} from "../models/index.js";
 
 export default {
-    async find(){
-        return await CommitteeInConference.findAll({
-            include: [
-                {
-                  model: Committee,
-                  as: "committee",
-                  required: true,
-                },
-                {
-                model: Conference,
-                as: "conference",
-                required: true,
-                where: {
-                    date: {
-                        [Op.gte]: new Date(), // Ищем события, которые происходят сегодня или позже
-                    },
+    async find() {
+        const subquery = await CommitteeInConference.findAll({
+            attributes: [
+                'type',
+                [sequelize.fn('COUNT', sequelize.col('CommitteeInConference.id')), 'committee_count']
+            ],
+            group: ['type'], // Группируем только по 'type'
+            raw: true, // Возвращаем "сырые" данные
+        });
 
-                },
-                order: [['date', 'ASC']], // Сортируем по дате в порядке возрастания
-            }]
-        })
+        const result = await Promise.all(
+            subquery.map(async (row) => {
+                const relatedData = await CommitteeInConference.findAll({
+                    where: { type: row.type },
+                    include: [
+                        {
+                            model: Committee,
+                            as: "committee",
+                            required: true,
+                        },
+                        {
+                            model: Conference,
+                            as: "conference",
+                            required: true,
+                            where: {
+                                date: {
+                                    [Op.gte]: new Date(),
+                                },
+                            },
+                        },
+                    ],
+                });
+                return { ...row, relatedData };
+            })
+        );
+
+        return result
     },
 
     async create(infoCommittee){

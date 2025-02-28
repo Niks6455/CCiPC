@@ -3,8 +3,11 @@ import Conference from "../models/conference.js";
 import Report from "../models/report.js";
 import {Op} from "sequelize";
 import ParticipantInConference from "../models/participant-in-conference.js";
+import ParticipantOfReport from "../models/participant-of-report.js";
+import cache from "../utils/cache.js";
+import Participant from "../models/participant.js";
 export default {
-    async create( report, participant) {
+    async create( reportInfo, participant) {
 
         const conference = await Conference.findOne({
             where: {
@@ -19,9 +22,14 @@ export default {
 
         const checkReport= await Report.findOne({
             where: {
-                name: report.name,
-                participantId: participant.id,
+                name: reportInfo.name,
                 conferenceId:conference.id
+            },
+            include: {
+                model: ParticipantOfReport,
+                as: 'participantOfReport',
+                required: true,
+                participantId: participant.id,
             }
         });
 
@@ -32,27 +40,109 @@ export default {
             defaults: { participantId: participant.id, conferenceId: conference.id },
         })
 
-        return  await Report.create({
-            ...report,
-            participantId: participant.id,
+        const report=await Report.create({
+            name: reportInfo.name,
+            direction: reportInfo.direction,
+            comment: reportInfo.comment,
             conferenceId: conference.id
         })
 
 
+
+        await ParticipantOfReport.create({
+            reportId: report.id,
+            participantId: participant.id,
+            status: reportInfo.status,
+            comment: reportInfo.comment,
+            organization: reportInfo.organization,
+        })
+
+        if(reportInfo.coAuthors.length > 0){
+
+            const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
+
+            const participantsExist = await Participant.findAll({
+            where: {
+                email: {
+                    [Op.in] : emails
+                    }
+                }
+            })
+
+
+            const participantsExistIds = participantsExist.map(participantExist=> participantExist.id)
+
+            if (participantsExistIds.length > 0) {
+                // Create new ParticipantOfReport records for the existing participants
+                await ParticipantOfReport.bulkCreate(
+                    participantsExistIds.map(participantId => ({
+                        reportId: report.id,
+                        participantId: participantId,
+                        who: 'Соавтор'
+                    }))
+                );
+
+                const participantInConferencePromises = participantsExistIds.map(participantId => {
+                    return ParticipantInConference.findOrCreate({
+                        where: {
+                            conferenceId: conference.id,
+                            participantId: participantId
+                        },
+                        defaults: {
+                            conferenceId: conference.id,
+                            participantId: participantId
+                        }
+                    });
+                });
+
+                await Promise.all(participantInConferencePromises);
+            }
+
+            let emailsNotInDatabase = []
+            if(participantsExist.length> 0){
+                const existingEmails = new Set(participantsExist.map(participant => participant.email));
+                emailsNotInDatabase = emails.filter(email => !existingEmails.has(email));
+            }else{
+                emailsNotInDatabase = emails
+            }
+
+            emailsNotInDatabase.forEach(email => {
+                cache[email]=report.id
+            })
+
+        }
+        return cache
     },
 
 
     async find(participant) {
         return await Report.findAll({
-            where: {
-                participantId: participant.id
-            }
+           include: {
+               model: ParticipantOfReport,
+               as: 'participantOfReport',
+               required: true,
+               where: {
+                   participantId: participant.id,
+               }
+           },
+            order: [['createdAt', 'ASC']],
         })
     },
 
     async findOne(reportId, participant) {
         const report= await Report.findByPk(reportId, {
-            where: {participantId: participant.id},
+            include: {
+                model: ParticipantOfReport,
+                as: 'participantOfReport',
+                required: true,
+                attributes: ['id', 'form', 'organization', 'who', 'status'],
+                include: {
+                    model: Participant,
+                    as: 'participant',
+                    required: true,
+                    attributes: ['email', 'name', 'surname', 'patronymic', 'phone'],
+                }
+            }
 
         })
 
@@ -63,17 +153,52 @@ export default {
 
     async update(reportInfo, reportId, participant) {
         const report=await Report.findByPk(reportId, {
-            where : { participantId: participant.id }
+            include: {
+                model: ParticipantOfReport,
+                as: 'participantOfReport',
+                required: true,
+                where : { participantId: participant.id }
+            }
         })
 
         if(!report) throw new AppErrorInvalid('report')
 
-        return await report.update({ ...reportInfo })
+        if(report.participantOfReport.who === 'Автор'){
+            await report.update({
+                name: reportInfo.name,
+                direction: reportInfo.direction,
+                comment: reportInfo.comment,
+            })
+
+            if(reportInfo.coAuthorsIds.length > 0){
+                await ParticipantOfReport.destroy({
+                    where:{
+                        participantId: reportInfo.coAuthorsIds,
+                    }
+                })
+            }
+        }
+
+        return await ParticipantOfReport.update({
+            organization: reportInfo.organization,
+            status: reportInfo.status,
+            form: reportInfo.form,
+        }, {
+            where: {
+                participantId: participant.id,
+                reportId: report.id,
+            }
+        })
     },
 
     async delete(reportId, participant) {
         const report=await Report.findByPk(reportId, {
-            where : { participantId: participant.id }
+            include: {
+                model: ParticipantOfReport,
+                as: 'participantOfReport',
+                required: true,
+                where : { participantId: participant.id, who: 'Автор' },
+            }
         })
 
         if(!report) throw new AppErrorInvalid('report')
