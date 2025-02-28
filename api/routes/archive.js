@@ -17,7 +17,7 @@ router.route('/report')
 router.route('/').post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(archiveCtrl.create))
 
 router.route('/:id')
-    .put(asyncRoute(verify.admin(roles.ADMIN)), asyncRoute(archiveCtrl.update))
-    .delete(asyncRoute(verify.admin(roles.ADMIN)), asyncRoute(archiveCtrl.delete))
+    .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(archiveCtrl.update))
+    .delete(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(archiveCtrl.delete))
 
 export default router;

@@ -25,6 +25,7 @@ export default {
 
     async update(archiveInfo, id){
 
+        console.log(id)
         const archive=await Archive.findByPk(id)
         if(!archive) throw new AppErrorNotExist('archive');
         return await archive.update({...archiveInfo})

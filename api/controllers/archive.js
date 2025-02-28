@@ -5,7 +5,7 @@ export default {
 
     async findPhoto(req, res){
         const archives = await archiveService.find(typeArchive.PHOTO)
-        res.json({archives: archives })
+        res.json({ archives: archives })
     },
 
 
