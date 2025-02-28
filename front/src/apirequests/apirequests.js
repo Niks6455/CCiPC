@@ -1,5 +1,5 @@
 import api from "./axios";
-const server = "http://localhost:3000";
+export const server = "http://localhost:3000";
 
 const REFRESH_INTERVAL = 1500000; // 25 минут
 let refreshTokensTimeout;
@@ -330,7 +330,11 @@ export const createArchive = async (data) => {
 //!Получение участников конференции по Id конференции
 export const uploadPhoto = async (file, type) => {
   try {
-    const response = await api.post(`${server}/uploads?type=${type}`, file);
+    const response = await api.post(`${server}/uploads?type=${type}`, file, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
     return response;
   } catch (error) {
     console.log("getConfParticipants ", error);

@@ -1,6 +1,6 @@
 import styles from "./SliderHomePage.module.scss"; // Ваши стили
 import { useNavigate } from "react-router-dom";
-import { getAllNews } from "../../apirequests/apirequests";
+import { getAllNews, server } from "../../apirequests/apirequests";
 import { useState } from "react";
 import { useEffect } from "react";
 import noPhoto from "@assets/img/noPhoto.png";
@@ -71,7 +71,7 @@ const SliderHomePage = () => {
                 </div>
               </div>
               <div className={styles.Sliderimage}>
-                {slides[currentSlide].image ? <img src={slides[currentSlide].image} alt={slide.title} /> : <img style={{borderRadius: '10px'}} src={noPhoto}/> }
+               <img src={ slides[currentSlide].img ? ` ${server}/${slides[currentSlide].img}` : noPhoto } alt={slide.title} /> 
                 <div
                   className={styles.allNews}
                   onClick={() => navigate("/news")}

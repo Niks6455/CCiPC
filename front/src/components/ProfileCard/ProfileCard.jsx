@@ -1,14 +1,35 @@
 import styles from './ProfileCard.module.scss';
-import imgHuman from './../../assets/img/UI/notPhoto.svg';
-export default function ProfileCard(props) {
-  return (
-    <div className={styles.profileCard} key={props?.key}>
-      {/* {Image && <Image />} */}
-      <img src={imgHuman} alt="photo" />
-      {/* <img src={props?.data?.photo || '/img/NotPhoto.svg'} alt="photo" /> */}
+import imgHuman from '@assets/img/UI/notPhoto.svg';
+import { server } from '../../apirequests/apirequests';
+import gsap from 'gsap';
+import { useEffect, useRef } from 'react';
 
-      <p className={styles.name}>{props?.data?.name}</p>
-      <p className={styles.university}>{props?.data?.university}</p>
+export default function ProfileCard({ data }) {
+  const cardRef = useRef(null);
+  const imgRef = useRef(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    const img = imgRef.current;
+
+    // Анимация появления карточки
+    gsap.fromTo(card, 
+      { opacity: 0, y: 20 }, 
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+    );
+
+    // Анимация появления изображения
+    gsap.fromTo(img, 
+      { opacity: 0, scale: 0.8 }, 
+      { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out", delay: 0.2 }
+    );
+  }, [data]); // Запускаем анимацию при изменении данных
+
+  return (
+    <div ref={cardRef} className={styles.profileCard} key={data?.id}>
+      <img ref={imgRef} src={data?.img ? `${server}/${data.img}` : imgHuman} alt="photo" />
+      <p className={styles.name}>{data?.fio}</p>
+      <p className={styles.university}>{data?.organization}</p>
     </div>
   );
 }

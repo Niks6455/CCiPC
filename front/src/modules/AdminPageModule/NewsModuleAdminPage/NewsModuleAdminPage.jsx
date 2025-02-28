@@ -9,8 +9,8 @@ import { headerTableNews, testData } from "./data";
 function NewsModuleAdminPage() {
     const [addNews, setAddNews] = useState(false);
     const [dataNews, setDataNews] = useState([]);
-
-
+    const [searchText, setSearchText] = useState("");
+    const [filtredData, setFiltredData] = useState([]);
     const editClicker = () => {
         addNews ? setAddNews(false) : setAddNews(true);
     }
@@ -25,6 +25,20 @@ function NewsModuleAdminPage() {
             }
         })
     }
+  
+    //! поиск по всем полям
+  useEffect(() => {
+    if (searchText.trim() !== "") {
+      const filteredData = dataNews.filter((item) =>
+        Object.values(item).some((value) =>
+          value?.toString().toLowerCase().includes(searchText.toLowerCase())
+        )
+      );
+      setFiltredData(filteredData);
+    } else {
+        setFiltredData([...dataNews]); // Сбрасываем фильтр
+    }
+  }, [searchText, dataNews]);
     
     return ( 
         <section className={styles.NewsModuleAdminPage}>
@@ -35,18 +49,18 @@ function NewsModuleAdminPage() {
                 <div className={styles.NewsTopMenu}>
                     <div className={styles.NewsTopMenuinput}>
                         <img src={search}/>
-                        <input placeholder="Поиск"/>
+                        <input placeholder="Поиск" value={searchText} onChange={(e) => setSearchText(e.target.value)}/>
                     </div>
                     <div className={styles.NewsTopMenuButton}>
                         <button onClick={()=> editClicker()}><img src={plusLigthImg} />Добавить новость</button>
                     </div>
                 </div>
             </div>
-            {dataNews.length === 0 ? <div className={styles.notNews}>
+            {filtredData.length === 0 ? <div className={styles.notNews}>
                 <p>Новости отсутствуют</p>
             </div> : 
                 <div className={styles.UnivarsalTableAdmin}>
-                    <UnivarsalTableAdmin tableData={dataNews} tableHeader={headerTableNews} updateNewsData={updateNewsData} editClicker={editClicker}/>
+                    <UnivarsalTableAdmin tableData={filtredData} tableHeader={headerTableNews} updateNewsData={updateNewsData} editClicker={editClicker}/>
                 </div>
              }
         

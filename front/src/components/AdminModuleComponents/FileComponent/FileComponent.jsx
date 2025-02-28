@@ -1,5 +1,5 @@
 import styles from "./FileComponent.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import trashIcon from "@assets/img/UI/trashBeliy.svg";
 import fileIcon from "@assets/img/AdminPanel/file.svg";
 import pdfIcon from "@assets/img/AdminPanel/pdf.svg";
@@ -15,6 +15,12 @@ function FileComponent(props) {
   const [isVisibleNoFileHeader, setIsVisibleNoFileHeader] = useState(true);
   const [isDragging, setIsDragging] = useState(null);
 
+  useEffect(()=>{
+    if(props.logoHeader){
+      setLogoHeader(props.logoHeader);
+      setIsVisibleHeader(true);
+    }
+  },[props.logoHeader])
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла
   const funFileHeaderClick = () => {
     document.getElementById(props.name).click();
@@ -121,6 +127,10 @@ function FileComponent(props) {
                     ? styles.novisible
                     : ""
                 }`}
+                onError={(e) => {
+                  setLogoHeader(null);
+                  setIsVisibleHeader(null);
+                }}
                 onLoad={(e) => handleImageLoad(e)}
                 style={imageStyleHeader}
               />

@@ -3,7 +3,7 @@ import goBackImg from "@assets/img/AdminPanel/goBack.svg";
 import { ReactComponent as FileImport } from "@assets/img/AdminPanel/addFile.svg";
 import trashBeliy from "@assets/img/UI/trashBeliy.svg";
 import { useEffect, useRef, useState } from "react";
-import { createNews, deleteNews, getNewsId, updateNews, uploadPhoto } from "../../../../apirequests/apirequests";
+import { createNews, deleteNews, getNewsId, server, updateNews, uploadPhoto } from "../../../../apirequests/apirequests";
 import FileComponent from "@components/AdminModuleComponents/FileComponent/FileComponent";
 import { useDispatch, useSelector } from "react-redux";
 import trashRed from "@assets/img/AdminPanel/delete.svg";
@@ -14,14 +14,16 @@ function AddNews(props) {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
+  const [logoHeader, setLogoHeader] = useState(null);
   const fileInputRef = useRef(null);
   const store = useSelector(state => state.news);
   const dispatch = useDispatch();
   useEffect(() => {
     getNewsId(store?.selectNewsData).then((response) => {
       if(response?.status === 200){
-        setTitle(response?.data?.title)
-        setText(response?.data?.description)      
+        setTitle(response?.data?.news?.title)
+        setText(response?.data?.news?.description)     
+        setLogoHeader(`${server}/${response?.data?.news?.img}`) 
       }
     })
   },[])
@@ -30,6 +32,9 @@ function AddNews(props) {
   const handleFileChange = (file) => {
     if (file) {
       setFile(file); // Создаем URL для отображения изображения
+    }else{
+      setFile(null);
+      setLogoHeader(null);
     }
   };
 
@@ -40,9 +45,10 @@ function AddNews(props) {
     }
     createNews(data).then((res) => {
       if(res?.status === 200 || res?.status === 201 && file){
+        
         const formData = new FormData();
         formData.append("file", file);
-        formData.append("newsld", res?.data?.id);
+        formData.append("newsId", res?.data?.news.id);
         uploadPhoto(formData, "NEWS").then((res) => {
           if(res?.status === 200 ){
             props?.updateNewsData();
@@ -77,6 +83,17 @@ function AddNews(props) {
         props?.closeAddNews();
       }
     })
+    if(file){
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("newsId", id);
+      uploadPhoto(formData, "NEWS").then((res) => {
+        if(res?.status === 200 ){
+          props?.updateNewsData();
+          props?.closeAddNews();
+        }
+      })
+    }
   }
 
   return (
@@ -106,8 +123,9 @@ function AddNews(props) {
         <div className={styles.addFile}>
           <label>Фотография для новости</label>
             <div className={styles.file_cont}>
-              <div className={styles.border_inner}>
+              <div className={styles.border_inner} style={{border: logoHeader ? "none" : "2px dashed #858B89"}}>
               <FileComponent
+                  logoHeader={logoHeader}
                   data={file}
                   setData={handleFileChange}
                   typeFile={["image/png", "image/jpg", "image/jpeg"]}

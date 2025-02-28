@@ -1,66 +1,68 @@
+import { useEffect, useRef, useState } from "react";
+import { gsap } from "gsap";
 import styles from "./AddOrgPeople.module.scss";
 import addPhoto from "@assets/img/AdminPanel/addPhoto.svg";
 import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
 import FileComponent from "../FileComponent/FileComponent";
-import borderIcon from "@assets/img/AdminPanel/borderFile.svg";
-import { useEffect, useRef, useState } from "react";
-import { createOrgCommitet } from "../../../apirequests/apirequests";
+import { createOrgCommitet, uploadPhoto } from "../../../apirequests/apirequests";
 
 function AddOrgPeople(props) {
   const [file, setFile] = useState(null);
   const [fio, setFio] = useState("");
   const [organization, setOrganization] = useState("");
   const textareaRef = useRef(null);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    gsap.fromTo(
+      containerRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+    );
+  }, []);
 
   const createOrg = () => {
-    const data = {
-      fio,
-      organization,
-      type: props?.type,
-    };
+    const data = { fio, organization, type: props?.type };
 
     createOrgCommitet(data).then((res) => {
       if (res?.status === 200) {
-        console.log("res", res);
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("committeeId", res?.data?.committee[0]?.committeeId);
+          uploadPhoto(formData, "COMMITTEE").then((res) => {
+            if (res?.status === 200) {
+              props?.getDataOrg();
+            }
+          });
+        }
       }
     });
   };
 
-  //! Обработчик выбора файла
-  const handleFileChange = (file) => {
-    console.log("file", file);
-    setFile(file);
-  };
+  const handleFileChange = (file) => setFile(file);
 
-  //! Автоматическое изменение высоты textarea
   const handleTextareaChange = (e) => {
     setOrganization(e.target.value);
-  
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Сброс текущей высоты
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 145); // Ограничение 150px
-      textareaRef.current.style.height = `${newHeight}px`;
-      textareaRef.current.style.overflowY = newHeight >= 145 ? "auto" : "hidden"; // Скролл только при необходимости
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 145)}px`;
+      textareaRef.current.style.overflowY = textareaRef.current.scrollHeight > 145 ? "auto" : "hidden";
     }
   };
-  
+
   useEffect(() => {
     if (textareaRef.current) {
-      textareaRef.current.style.height = "auto"; // Устанавливает высоту под контент
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 145);
-      textareaRef.current.style.height = `${newHeight}px`;
+      textareaRef.current.style.height = "auto";
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 145)}px`;
     }
   }, []);
-  
 
   return (
-    <div className={styles.AddOrgPeople}>
+    <div ref={containerRef} className={styles.AddOrgPeople}>
       <div className={styles.AddOrgPeopleInner}>
         <div className={styles.addFile}>
-          <div
-            className={styles.file_cont}
-            style={{ border: !file ? "2px dashed #C4C4C4" : "none" }}
-          >
+          <div className={styles.file_cont} style={{ border: !file ? "2px dashed #C4C4C4" : "none" }}>
             <div className={styles.border_inner}>
               <FileComponent
                 data={file}
@@ -86,21 +88,12 @@ function AddOrgPeople(props) {
             ref={textareaRef}
             value={organization}
             onChange={handleTextareaChange}
-            style={{
-              minHeight: "62px",
-              maxHeight: "145px",
-              overflowY: "hidden",
-              resize: "none", // Опционально: убирает пользовательское растягивание
-            }}
+            style={{ minHeight: "62px", maxHeight: "145px", overflowY: "hidden", resize: "none" }}
           />
-
-
         </div>
 
         <div className={styles.AddOrgPeopleButton}>
-          <button className={styles.save} onClick={createOrg}>
-            Сохранить
-          </button>
+          <button className={styles.save} onClick={createOrg}>Сохранить</button>
           <button className={styles.delete} onClick={props.closeCreateOne}>
             <img src={deletePhotoImg} alt="Удалить" />
           </button>

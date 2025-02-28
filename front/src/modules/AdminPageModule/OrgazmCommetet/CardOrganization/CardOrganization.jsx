@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import styles from "./CardOrganization.module.scss";
 import notPhoto from "@assets/img/notPhoto.svg";
 import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
-import { deleteOrgCommitet, updateOrgCommitet } from "../../../../apirequests/apirequests";
+import { deleteOrgCommitet, server, updateOrgCommitet, uploadPhoto } from "../../../../apirequests/apirequests";
 import deletePhoto2Img from "@assets/img/AdminPanel/deletePhoto.svg";
 import editPhoto2Img from "@assets/img/AdminPanel/editPhoto.svg";
 
@@ -11,12 +11,16 @@ function CardOrganization(props) {
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
+  const cardRef = useRef(null);
+  const imgRef = useRef(null);
+
   const defaultValue = {
     img: props?.item?.img || "",
     fio: props?.item?.fio || "",
     organization: props?.item?.organization || "",
   };
-
+  const [file, setFile] = useState(null);
+  const refFile = useRef(null);
   const [dataItem, setDataItem] = useState(defaultValue);
   const [isChanged, setIsChanged] = useState(false);
 
@@ -29,6 +33,19 @@ function CardOrganization(props) {
     setIsChanged(hasChanged);
   }, [dataItem, defaultValue]);
 
+  // Анимация появления карточки
+  useEffect(() => {
+    gsap.fromTo(cardRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" }
+    );
+
+    gsap.fromTo(imgRef.current,
+      { opacity: 0, scale: 0.8 },
+      { opacity: 1, scale: 1, duration: 0.5, ease: "power2.out", delay: 0.2 }
+    );
+  }, []);
+
   // Анимация появления кнопок "Отменить" и "Сохранить"
   useEffect(() => {
     if (buttonContainerRef.current) {
@@ -39,16 +56,10 @@ function CardOrganization(props) {
         ease: "power2.out",
         display: isChanged ? "flex" : "none",
       });
-    }else{
-      gsap.fromTo(buttonDeleteRef.current, {
-        height: 0,
-        duration: 0.3,
-        ease: "power2.out",
-      }, {
-        height: "52px",
-        duration: 0.3,
-        ease: "power2.out",
-      }
+    } else {
+      gsap.fromTo(buttonDeleteRef.current,
+        { height: 0 },
+        { height: "52px", duration: 0.3, ease: "power2.out" }
       );
     }
   }, [isChanged]);
@@ -65,45 +76,52 @@ function CardOrganization(props) {
   const handleCancel = () => setDataItem(defaultValue);
   const handleSave = () => {
     updateOrgCommitet(dataItem, props.item.id).then((res) => {
-        if(res?.status === 200){
-            props?.getDataOrg();
-        }
-    })
+      if (res?.status === 200) {
+        props?.getDataOrg();
+      }
+    });
   };
   const handleDelete = () => {
     deleteOrgCommitet(props.item.id).then((res) => {
-      if(res?.status === 200){
+      if (res?.status === 200) {
         props?.getDataOrg();
       }
-    })
+    });
+  };
+
+  const changeFileData = (e) => {
+    const file = e.target.files[0];
+    setFile(file);
+    const formFile = new FormData();
+    formFile.append("file", file);
+    formFile.append("committeeId", props?.item?.committeeId);
+    uploadPhoto(formFile, "COMMITTEE").then((res) => {
+      if (res?.status === 200) {
+        props?.getDataOrg();
+      }
+    });
   };
 
   return (
-    <div className={styles.CardOrganization}>
+    <div ref={cardRef} className={styles.CardOrganization}>
       <div className={styles.CardOrganizationInner}>
-      <div className={styles.CardOrganizationInnerImg}>
-        <img className={styles.Img} src={dataItem.img || notPhoto} alt={dataItem.fio} />
-        <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} alt="Удалить"/>
-            <img src={editPhoto2Img} alt="Редактирование"/>
+        <div className={styles.CardOrganizationInnerImg}>
+          <img ref={imgRef} className={styles.Img} src={dataItem.img ? `${server}/${dataItem.img}` : notPhoto} alt={dataItem.fio} />
+          <div className={styles.CardOrganizationInnerImgInput}>
+            <img src={deletePhoto2Img} alt="Удалить" />
+            <img src={editPhoto2Img} alt="Редактирование" onClick={() => refFile.current.click()} />
+          </div>
+          <input ref={refFile} type="file" onChange={(e) => changeFileData(e)} style={{ display: "none" }} />
         </div>
-      </div>
 
         <div className={styles.CardOrganizationInnerInfo}>
           <label>ФИО</label>
-          <input
-            value={dataItem.fio}
-            onChange={(e) => handleEditData(e.target.value, "fio")}
-          />
+          <input value={dataItem.fio} onChange={(e) => handleEditData(e.target.value, "fio")} />
         </div>
 
         <div className={styles.CardOrganizationInnerInfo}>
           <label>Организация</label>
-          <textarea
-            ref={textareasRef}
-            value={dataItem.organization}
-            onChange={(e) => handleEditData(e.target.value, "organization")}
-          />
+          <textarea ref={textareasRef} value={dataItem.organization} onChange={(e) => handleEditData(e.target.value, "organization")} />
         </div>
 
         {/* Если есть изменения → Отменить и Сохранить, иначе → Удалить */}

@@ -8,22 +8,14 @@ import { organizationComiteData, programmingComiteData } from './data';
 import NavBar from '../../components/NavBar/NavBar';
 import DataContext from '../../context';
 import Cap from "../../assets/img/Cap.svg";
+import { getOrgCommitet } from '../../apirequests/apirequests';
 export default function CommitteesPage() {
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
-  const [datePeopleOne, setDatePeopleOne] = useState(organizationComiteData);
-  const [datePeopleSecond, setDatePeopleSecond] = useState(
-    programmingComiteData
-  );
+  const [dataOrgAll, setDataOrgAll] = useState([]);
+  const [datePeopleOne, setDatePeopleOne] = useState(null);
+  const [datePeopleSecond, setDatePeopleSecond] = useState(null);
   const context = useContext(DataContext);
-
-  useEffect(() => {
-    console.log(organizationComite);
-  }, [organizationComite]);
-
-  useEffect(() => {
-    console.log(programmingComite);
-  }, [programmingComite]);
 
   const ButtonOneDats = [
     {
@@ -55,9 +47,33 @@ export default function CommitteesPage() {
     },
   ]
 
-  
-  
+   
+  useEffect(() => {
+    getDataOrg();
+  }, []);
+
+  const getDataOrg = async () => {
+      const res = await getOrgCommitet();
+      if (res?.status === 200) {
+          setDataOrgAll(res.data.committee);
+      }
+  };
+
+  useEffect(() => {
+      filterCommittees();
+  }, [dataOrgAll, organizationComite, programmingComite]);
+
+  const filterCommittees = () => {
+      const committeeOne = dataOrgAll.find(item => item.type === organizationComite)?.committees || [];
+      const committeeTwo = dataOrgAll.find(item => item.type === programmingComite + 2)?.committees || [];
+      
+      setDatePeopleOne(committeeOne);
+      setDatePeopleSecond(committeeTwo);
+  };
   return (
+
+
+
     <>
       <NavBar/>
       <div>
@@ -75,7 +91,7 @@ export default function CommitteesPage() {
               </div>
               {/* images */}
               <div className={styles.organizationComiteImages}>
-                {datePeopleOne.map((el, index) => (
+                {datePeopleOne?.map((el, index) => (
                   <ProfileCard data={el} key={index} />
                 ))}
               </div>
@@ -92,7 +108,7 @@ export default function CommitteesPage() {
               </div>
               {/* images */}
               <div className={styles.programmingComiteImages}>
-                {datePeopleSecond.map((el, index) => (
+                {datePeopleSecond?.map((el, index) => (
                   <ProfileCard data={el} key={index} />
                 ))}
               </div>
