@@ -10,7 +10,7 @@ export default class CommitteeInConference extends Model {
                 type: {
                     type: DataTypes.SMALLINT,
                     allowNull: false,
-                    defaultValue: committee.coChairs,
+                    defaultValue: committee.ORG_CHAIR,
                     validate: { isIn: [Object.values(committee)] },
                 },
             },

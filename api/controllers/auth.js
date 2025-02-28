@@ -57,7 +57,7 @@ export default {
     async checkEmail({body: { email, code, type }}, res) {
         if(!email) throw new AppErrorMissing('email')
         if(!code) throw new AppErrorMissing('code')
-        if(!type) throw new AppErrorMissing('type')
+        if(type === undefined) throw new AppErrorMissing('type')
         await authService.checkEmail(email, code, type)
         res.json({status: 'Ok'})
     },
@@ -77,8 +77,8 @@ export default {
 
         if(newPassword !== repeatPassword || newPassword === undefined) throw new AppErrorInvalid('newPassword')
         if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
-        if(!code || !email) throw new AppErrorMissing('code')
-        if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword },user )
+        if(!user && !code || !email) throw new AppErrorMissing('code')
+        if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword }, user )
         else await authService.resetPassword({newPassword, repeatPassword, code, email })
         res.json({status: 'ok'})
     },

@@ -6,10 +6,11 @@ import randomCode from "../utils/random-code.js";
 import Conference from "../models/conference.js";
 import {Op} from "sequelize";
 import ParticipantInConference from "../models/participant-in-conference.js";
+import ParticipantOfReport from "../models/participant-of-report.js";
 
 export default {
 
-    async self(participant){
+    async   self(participant){
 
 
         /*const participantCheck1 = await Conference.findOne({
@@ -48,8 +49,14 @@ export default {
                     model: Report,
                     as: 'reports',
                     required: false,
-                    where: {
-                        participantId: participant.id
+                    include: {
+
+                        model: ParticipantOfReport,
+                        as: 'participantOfReport',
+                        required: true,
+                        where: {
+                            participantId: participant.id
+                        }
                     }
                 },
                 order: [['date', 'DESC']]
@@ -62,8 +69,14 @@ export default {
                     model: Report,
                     as: 'reports',
                     required: false,
-                    where: {
-                        participantId: participant.id
+                    include: {
+
+                        model: ParticipantOfReport,
+                        as: 'participantOfReport',
+                        required: true,
+                        where: {
+                            participantId: participant.id
+                        }
                     }
                 },
                 order: [['date', 'ASC']]

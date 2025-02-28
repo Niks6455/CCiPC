@@ -7,7 +7,7 @@ export default {
     async self({ user }, res){
 
         user.reports = (await participantService.self(user))?.reports;
-        res.json({participant: map(user) });
+        res.json({ participant: map(user) });
     },
 
     async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone}, user}, res){

@@ -8,6 +8,4 @@ export default {
     ORGANIZATION: 6,
     PARTNER: 7,
     PHOTO_ARCHIVE: 8,
-
-
 }

@@ -115,6 +115,8 @@ const router = Router();
  *                 type: string
  *               direction:
  *                 type: string
+ *               status:
+ *                  type: string
  *               comment:
  *                 type: string
  *               coAuthors:

@@ -1,6 +1,8 @@
 export default {
-    coChairs: 0,
-    honoraryChairman: 1,
-    members: 2,
-    deputy: 3
+    ORG_CHAIR: 0,
+    ORG_CO_MEMBER: 1,
+    PRO_CHAIR: 2,
+    PRO_CO_MEMBER: 3,
+    PRO_HON_CHAIR: 4,
+    PRO_VIDE_CHAIR: 5,
 }

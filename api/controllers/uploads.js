@@ -28,8 +28,7 @@ const dir= './uploads'
 // Проверка расширения файла
 const fileFilter = (req, file, cb) => {
     const { type } = req.query; // Получаем тип из тела запроса
-    console.log(file)
-    const extension = path.extname(file.originalname).toLowerCase();
+        const extension = path.extname(file.originalname).toLowerCase();
 
     if (!type) {
         return cb(new AppError(errorCodes.Missing)); // Если type отсутствует

@@ -1,7 +1,7 @@
 import {AppErrorDuplicate, AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import Ajv from 'ajv'
 import reportService from "../services/report.js";
-
+import { map } from '../utils/mappers/report.js'
 const ajv = new Ajv()
 
 
@@ -12,12 +12,9 @@ const ajv = new Ajv()
          surname: {type: "string"},
          patronymic: {type: "string"},
          email: {type: "string"},
-         organization: {type: "string"},
-         phone: {type: "string"},
-         form: {type: "string"},
      },
 
-     required: ["name", "surname", "email", "organization", "phone", "form"],
+     required: ["name", "surname", "email"],
      additionalProperties: false
 }
 
@@ -26,46 +23,44 @@ const validate = ajv.compile(schemaCoAuthors)
 
 function checkValidate(objects) {
     const seenEmails = new Set();
-    const seenPhones = new Set();
 
     for (const obj of objects) {
 
         const email = obj.email;
-        const phone = obj.phone;
 
         const valid = validate(obj);
 
         if(!valid) throw new AppErrorInvalid('coAuthors')
 
-        if (seenEmails.has(email) ||  seenPhones.has(phone))
+        if (seenEmails.has(email))
             return false;
 
         seenEmails.add(email);
-        seenPhones.add(phone);
 
     }
     return true; // Дубликатов нет
 }
 export default {
 
-    async create({body: {name, form, direction, comment, coAuthors }, user}, res) {
+    async create({body: {name, form, direction, organization, comment, status, coAuthors }, user}, res) {
 
         if (!name) throw new AppErrorMissing('name')
         if (!form) throw new AppErrorMissing('form')
         if(!direction) throw new AppErrorMissing('direction')
+        if(!organization) throw new AppErrorMissing('organization')
         if(!comment) throw new AppErrorMissing('comment')
 
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
 
-        await reportService.create({name, form, direction, comment, coAuthors}, user)
+        const  cache =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, user)
 
+        console.log(cache)
         res.json({status: 'ok'})
     },
 
-    async update({body: {name, form, direction, comment, coAuthors }, params: { id }, user }, res) {
+    async update({body: { name, form, direction, status,  comment, coAuthorsIds }, params: { id }, user }, res) {
         if(!id) throw new AppErrorMissing('id')
-        if(coAuthors.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
-       const report = await reportService.update({name, form, direction, comment, coAuthors}, id , user)
+       const report = await reportService.update({ name, form, direction, comment, coAuthorsIds }, id , user)
         res.json({report: report})
     },
 
@@ -82,10 +77,10 @@ export default {
         if(!id) throw new AppErrorMissing('id')
 
         const report = await reportService.findOne(id, user)
-        res.json({report : report } )
+        res.json({report : map(report) } )
     },
 
-    async find({user}, res) {
+    async find({ user }, res) {
         const reports = await reportService.find(user)
         res.json({reports: reports})
     }
