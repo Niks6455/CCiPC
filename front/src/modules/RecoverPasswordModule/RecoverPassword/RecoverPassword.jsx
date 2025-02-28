@@ -1,20 +1,20 @@
 import { useContext, useRef, useState, useEffect } from "react";
 import styles from "./RecoverPassword.module.scss";
-import DataContext from "../../context";
-import logo from "./../../assets/img/logo.png";
-import confirm from "./../../assets/img/confirm.svg";
-import Footer from "../../components/Footer/Footer";
-import errorLogo from "./../../assets/img/UI/error.svg";
-import glaz from "./../../assets/img/UI/glaz.svg";
-import noglaz from "./../../assets/img/UI/noglaz.svg";
-import InputPassword from "../../ui/InputPassword/InputPassword";
-import listErrorNoHover from "./../../assets/img/UI/listErrorNoActive.svg";
-import listErrorOnHover from "./../../assets/img/UI/listError.svg";
+import DataContext from "../../../context";
+import logo from "@assets/img/logo.png";
+import confirm from "@assets/img/confirm.svg";
+import Footer from "../../../components/Footer/Footer";
+import errorLogo from "@assets/img/UI/error.svg";
+import glaz from "@assets/img/UI/glaz.svg";
+import noglaz from "@assets/img/UI/noglaz.svg";
+import InputPassword from "../../../ui/InputPassword/InputPassword";
+import listErrorNoHover from "@assets/img/UI/listErrorNoActive.svg";
+import listErrorOnHover from "@assets/img/UI/listError.svg";
 import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
-} from "../../utils/functions/PasswordValidation";
+} from "@utils/functions/PasswordValidation";
 import { useNavigate } from "react-router-dom";
 
 function RecoverPassword() {

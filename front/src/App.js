@@ -13,7 +13,6 @@ import CommitteesPage from "./pages/CommitteesPage/CommitteesPage";
 import Profile from "./modules/Profile/Profile";
 import ProfileEditing from "./modules/ProfileEditing/ProfileEditing";
 import ChangePassword from "./modules/ChangePassword/ChangePassword";
-import RecoverPassword from "./pages/RecoverPassword/RecoverPassword";
 import DeleteAccount from "./modules/DeleteAccount/DeleteAccount";
 import ExitAccount from "./modules/ExitAccount/ExitAccount";
 import ArchivPhoto from "./modules/ArchivPhoto/ArchivPhoto";
@@ -36,6 +35,8 @@ import OrgWznosModuleAdminPage from "./modules/AdminPageModule/OrgWznosModuleAdm
 import { fetchConferences } from "./store/conferencesSlice/conferences.Slice";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { apiCreateConferences } from "./apirequests/apirequests";
+import EnteringEmail from "./modules/RecoverPasswordModule/EnteringEmail/EnteringEmail";
+import RecoverPasswordPage from "./pages/RecoverPasswordPage/RecoverPasswordPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -124,7 +125,7 @@ function App() {
               <Route path="/author" element={<Author />}></Route>
               <Route
                 path="/recoverpassword"
-                element={<RecoverPassword />}
+                element={<RecoverPasswordPage />}
               ></Route>
               <Route
                 path="/organizationcomite"

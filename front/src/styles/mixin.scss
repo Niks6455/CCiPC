@@ -359,8 +359,7 @@
 @mixin InputCheckBox() {
   appearance: none; /* Убираем стандартный вид */
   -webkit-appearance: none; /* Для Safari */
-  width: 20px;
-  height: 20px;
+
   background-color: #ffffff; /* Белый фон для неактивного состояния */
   border: 1px solid #333333; /* Граница */
   border-radius: 4px; /* Опционально, если хотите скругленные углы */

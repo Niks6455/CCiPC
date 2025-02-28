@@ -1,0 +1,51 @@
+.EnteringEmail {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .container {
+    display: flex;
+    flex-direction: column;
+
+    .logo {
+      display: flex;
+      justify-content: center;
+      height: 170px;
+      width: 170px;
+      margin-bottom: 40px;
+      img {
+        height: 170px;
+        width: 170px;
+      }
+    }
+
+    h2 {
+      font-family: Overpass, sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+      line-height: 38.4px;
+      letter-spacing: 0%;
+      text-align: center;
+      color: #333333;
+      padding: 0;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+    p {
+      font-family: Overpass, sans-serif;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 21.6px;
+      letter-spacing: 0%;
+      text-align: center;
+      color: #333333;
+      padding: 0;
+      margin: 0 auto;
+      margin-bottom: 40px;
+    }
+    .next_button {
+      @include ButtonRed;
+    }
+  }
+}
