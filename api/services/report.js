@@ -111,7 +111,7 @@ export default {
             })
 
         }
-        return cache
+        return report
     },
 
 

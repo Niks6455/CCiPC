@@ -58,8 +58,8 @@ export default {
         if(!email) throw new AppErrorMissing('email')
         if(!code) throw new AppErrorMissing('code')
         if(type === undefined) throw new AppErrorMissing('type')
-        await authService.checkEmail(email, code, type)
-        res.json({status: 'Ok'})
+        const { participant, token } = authService.checkEmail(email, code, type)
+        res.json({ participant: participant, jwt: token })
     },
 
     async loginSfedu(req, res) {
