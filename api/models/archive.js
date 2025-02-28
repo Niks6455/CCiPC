@@ -1,5 +1,3 @@
-
-
 import {DataTypes, Model } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
 import type from '../config/typeArcive.js'
@@ -14,8 +12,8 @@ export default class Archive extends Model {
                     allowNull: false,
                     validate: { isIn: [Object.values(type)] },
                 },
-                file: {type: DataTypes.STRING, allowNull: false },
-                url: {type: DataTypes.STRING, allowNull: false},
+                file: {type: DataTypes.STRING, allowNull: true },
+                url: {type: DataTypes.STRING, allowNull: true   },
             },
             {
                 sequelize,

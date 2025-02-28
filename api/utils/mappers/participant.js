@@ -16,6 +16,7 @@ export function map(participant){
         surname: participant.surname,
         patronymic: participant?.patronymic,
         academicTitle: participant.academicTitle,
+        email: participant.email,
         degree: participant.degree,
         position: participant.position,
         organization: participant.organization,

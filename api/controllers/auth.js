@@ -77,7 +77,7 @@ export default {
 
         if(newPassword !== repeatPassword || newPassword === undefined) throw new AppErrorInvalid('newPassword')
         if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
-        if(!user && !code || !email) throw new AppErrorMissing('code')
+        if(!user && (!code || !email)) throw new AppErrorMissing('code')
         if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword }, user )
         else await authService.resetPassword({newPassword, repeatPassword, code, email })
         res.json({status: 'ok'})

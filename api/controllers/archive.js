@@ -5,13 +5,13 @@ export default {
 
     async findPhoto(req, res){
         const archives = await archiveService.find(typeArchive.PHOTO)
-        res.json(archives)
+        res.json({ archives: archives })
     },
 
 
     async findReport(req,res){
         const archives = await archiveService.find(typeArchive.REPORT)
-        res.json(archives)
+        res.json({archives: archives})
     },
 
     async create({body: {name, type, url }}, res){
@@ -19,16 +19,20 @@ export default {
         if(!name) throw new AppErrorMissing('name')
         if(type === undefined) throw new AppErrorMissing('type')
         if(typeArchive.PHOTO === type && !url) throw new AppErrorMissing('url')
-        await archiveService.create({name, url, type })
-        res.json({status: 'Ok'})
+        const archive=await archiveService.create({name, url, type })
+        res.json({archive: archive})
 
     },
 
-    async update(req, res){
-
+    async update({params: { id }, body: { name, type, url } }, res){
+        if(!id) throw new AppErrorMissing('id')
+        const archive = await archiveService.update({name, url, type }, id)
+        res.json({archive: archive})
     },
 
-    async delete(req, res){
-
+    async delete({ params: {id } }, res){
+        if(!id) throw new AppErrorMissing('id')
+        await archiveService.delete(id)
+        res.json({ status: 'Ok' })
     }
 }

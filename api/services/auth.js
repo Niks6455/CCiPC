@@ -75,13 +75,13 @@ export default {
         throw new AppErrorInvalid('type')
     },
 
-    async resetPassword(passwordInfo, participantId){
+    async resetPassword(passwordInfo, user){
 
         let participant
-        if(participantId) participant = await Participant.findByPk(participantId)
+        if(user) participant = await Participant.findByPk(user.id)
         else participant = await Participant.findOne({ where : { email: passwordInfo.email } })
         if(passwordInfo.currentPassword) if (!participant || !participant.validatePassword(passwordInfo.currentPassword)) throw new AppErrorInvalid('password');
-        if(resetCodes[participant?.email] !== passwordInfo.code || passwordInfo.code === undefined ) throw new AppErrorInvalid('code')
+        if(!user && (resetCodes[participant?.email] !== passwordInfo.code || passwordInfo.code === undefined )) throw new AppErrorInvalid('code')
 
         const hashPassword = bcrypt.hashSync(passwordInfo.newPassword, 10)
 
