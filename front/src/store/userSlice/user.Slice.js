@@ -47,6 +47,13 @@ const UserSlice = createSlice({
       const { key, value } = action.payload;
       state.editUser.data[key] = value;
     },
+
+    disResetUser(state) {
+      state.editUser.data = {};
+      state.user.data = {};
+      state.status = "idle";
+      state.error = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -66,6 +73,7 @@ const UserSlice = createSlice({
   },
 });
 
-export const { setUserData, disEditUser, setEditUser } = UserSlice.actions;
+export const { disResetUser, setUserData, disEditUser, setEditUser } =
+  UserSlice.actions;
 
 export default UserSlice.reducer;

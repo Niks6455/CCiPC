@@ -25,9 +25,14 @@ const conferencesSlice = createSlice({
     error: null,
   },
 
-  reducer: {
+  reducers: {
     setData(state) {
       state.data = {};
+    },
+    disResetConferences(state) {
+      state.data = {};
+      state.status = "idle";
+      state.error = null;
     },
   },
 
@@ -48,5 +53,5 @@ const conferencesSlice = createSlice({
   },
 });
 
-export const { setData } = conferencesSlice.actions;
+export const { disResetConferences, setData } = conferencesSlice.actions;
 export default conferencesSlice.reducer;

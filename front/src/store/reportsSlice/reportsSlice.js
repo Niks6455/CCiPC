@@ -101,6 +101,11 @@ const reportsSlice = createSlice({
       const { id } = actions.payload;
       state.data = state.data.filter((report) => report.id !== id);
     },
+    disResetReports(state) {
+      state.data = [];
+      state.status = "idle";
+      state.error = null;
+    },
   },
 
   extraReducers: (builder) => {
@@ -120,6 +125,7 @@ const reportsSlice = createSlice({
   },
 });
 
-export const { disGetReports, disDeleteReport } = reportsSlice.actions;
+export const { disResetReports, disGetReports, disDeleteReport } =
+  reportsSlice.actions;
 
 export default reportsSlice.reducer;

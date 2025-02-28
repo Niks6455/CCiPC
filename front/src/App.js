@@ -22,9 +22,12 @@ import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
 import { useDispatch } from "react-redux";
-import { fetchUserData } from "./store/userSlice/user.Slice";
+import { disResetUser, fetchUserData } from "./store/userSlice/user.Slice";
 
-import { fetchReports } from "./store/reportsSlice/reportsSlice";
+import {
+  disResetReports,
+  fetchReports,
+} from "./store/reportsSlice/reportsSlice";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ArchiveModulePage from "./modules/AdminPageModule/ArchiveModulePage/ArchiveModulePage";
 import ColaboratorsModuleAdminPage from "./modules/AdminPageModule/ColaboratorsModuleAdminPage/ColaboratorsModuleAdminPage";
@@ -32,14 +35,19 @@ import OrgazmCommetet from "./modules/AdminPageModule/OrgazmCommetet/OrgazmComme
 import NewsModuleAdminPage from "./modules/AdminPageModule/NewsModuleAdminPage/NewsModuleAdminPage";
 import ConfirenceModuleAdminPage from "./modules/AdminPageModule/ConfirenceModuleAdminPage/ConfirenceModuleAdminPage";
 import OrgWznosModuleAdminPage from "./modules/AdminPageModule/OrgWznosModuleAdminPage/OrgWznosModuleAdminPage";
-import { fetchConferences } from "./store/conferencesSlice/conferences.Slice";
+import {
+  disResetConferences,
+  fetchConferences,
+} from "./store/conferencesSlice/conferences.Slice";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { apiCreateConferences } from "./apirequests/apirequests";
 import EnteringEmail from "./modules/RecoverPasswordModule/EnteringEmail/EnteringEmail";
+import RecoverPassword from "./modules/RecoverPasswordModule/RecoverPassword/RecoverPassword";
 import RecoverPasswordPage from "./pages/RecoverPasswordPage/RecoverPasswordPage";
 
 function App() {
   const dispatch = useDispatch();
+
   const queryClient = new QueryClient();
 
   const [authPage, setAuthPage] = useState("Auth");
@@ -49,13 +57,30 @@ function App() {
   const [selectFrameLks, setSelectFrameLks] = useState("profile");
   const [activeMenu, setActiveMenu] = useState(false);
 
-  useEffect(() => {
+  const funGetAllApi = () => {
     //! получение данных пользователя
     dispatch(fetchUserData()); // Вызов асинхронного действия
     //! получение докладов пользователя
     dispatch(fetchReports());
     //! получение всех конференций
     dispatch(fetchConferences());
+  };
+
+  const funResetAllApi = () => {
+    //! чистим данные user
+    dispatch(disResetUser());
+    //! чистим данные докладов
+    dispatch(disResetReports());
+    //! чистим данные конференций
+    dispatch(disResetConferences());
+  };
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    console.log("accessToken", accessToken);
+    if (accessToken !== null) {
+      funGetAllApi();
+    }
   }, [dispatch]);
 
   useEffect(() => {
@@ -103,7 +128,12 @@ function App() {
         <BrowserRouter>
           <main style={{ fontFamily: "REX" }}>
             <Routes>
-              <Route path="/authorization" element={<AuthPage />}></Route>
+              <Route path="/" element={<HomePage />}></Route>
+              <Route path="*" element={<NoteFoundPage />} />{" "}
+              <Route
+                path="/authorization"
+                element={<AuthPage funGetAllApi={funGetAllApi} />}
+              ></Route>
               <Route path="/participants" element={<Participants />}></Route>
               <Route path="/account" element={<Lks />}>
                 <Route path="documents" element={<DocumentsLk />}></Route>
@@ -111,7 +141,10 @@ function App() {
                 <Route path="addcoauthor" element={<AddCoauthor />} />
                 <Route path="profile" element={<Profile />}></Route>
                 <Route path="deleteaccount" element={<DeleteAccount />}></Route>
-                <Route path="exitaccount" element={<ExitAccount />}></Route>
+                <Route
+                  path="exitaccount"
+                  element={<ExitAccount funResetAllApi={funResetAllApi} />}
+                ></Route>
                 <Route path="archivephoto" element={<ArchivPhoto />}></Route>
                 <Route path="settings/profile" element={<ProfileEditing />} />
                 <Route
@@ -123,16 +156,14 @@ function App() {
               </Route>
               <Route path="/news" element={<NewsPage />}></Route>
               <Route path="/author" element={<Author />}></Route>
-              <Route
-                path="/recoverpassword"
-                element={<RecoverPasswordPage />}
-              ></Route>
+              <Route path="/recoverpassword" element={<RecoverPasswordPage />}>
+                <Route path="" element={<EnteringEmail />}></Route>
+                <Route path="checkemail" element={<RecoverPassword />}></Route>
+              </Route>
               <Route
                 path="/organizationcomite"
                 element={<CommitteesPage />}
               ></Route>
-              <Route path="/" element={<HomePage />}></Route>
-              <Route path="*" element={<NoteFoundPage />} />{" "}
               <Route path="/adminPage/*" element={<AdminPage />}>
                 <Route path="archive" element={<ArchiveModulePage />} />
                 <Route

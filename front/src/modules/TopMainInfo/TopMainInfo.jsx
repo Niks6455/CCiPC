@@ -5,11 +5,23 @@ import Bg from "../../assets/img/Bg.jpeg";
 import rect from "../../assets/img/rect.svg";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import DataContext from "../../context";
+import { useNavigate } from "react-router-dom";
 
 function TopMainInfo() {
   const arrowRef = useRef(null); // Реф для стрелки
+  const navigate = useNavigate();
   const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
   const context = useContext(DataContext);
+
+  const funClickRequest = () => {
+    const assetsToken = localStorage.getItem("accessToken");
+    if (assetsToken === null) {
+      navigate("/authorization");
+    } else {
+      navigate("/account/documents");
+    }
+  };
+
   return (
     <div className={styles.topContainer}>
       <div className={styles.TopHeader}>
@@ -64,7 +76,7 @@ function TopMainInfo() {
         <div className={styles.buttonClicker}>
           <div className={styles.buttonClickerInner}>
             <img className={styles.leftBot} src={rect} alt="Background" />
-            <Button text={"Подать заявку"} />
+            <Button text={"Подать заявку"} funClick={funClickRequest} />
             <img className={styles.leftTop} src={rect} alt="Background" />
           </div>
         </div>

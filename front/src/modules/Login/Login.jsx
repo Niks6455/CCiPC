@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import logo from "./../../assets/img/logo.png";
 import sfeduLogo from "./../../assets/img/SfeduLogo.svg";
 import { LoginFunc } from "../../apirequests/apirequests";
-function Login() {
+function Login(props) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -51,11 +51,11 @@ function Login() {
     // navigate("/HomePage");
     if (validate()) {
       LoginFunc(formData).then((data) => {
-        if(data?.status === 200) {
+        if (data?.status === 200) {
           navigate("/");
+          props.funGetAllApi();
         }
-      })
-
+      });
     }
   };
 

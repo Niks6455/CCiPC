@@ -13,6 +13,12 @@ function Lks() {
   const autorisation =
     useSelector((state) => state.user.status) === "succeeded";
 
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken === null) {
+      navigate("/");
+    }
+  }, []);
   return (
     <>
       <main className={styles.Lks}>
