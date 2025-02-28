@@ -1,6 +1,7 @@
 import { setValue } from "../../store/reportCreateSlice/reportCreateSlice";
 import styles from "./ListInput.module.scss";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 
 function ListInput(props) {
   console.log("props", props);
@@ -13,7 +14,12 @@ function ListInput(props) {
   };
 
   return (
-    <div className={styles.ListInput}>
+    <motion.div
+      className={styles.ListInput}
+      initial={{ height: 0, overflow: "hidden" }}
+      animate={{ height: "auto" }}
+      exit={{ height: 0 }}
+    >
       <ul>
         {props.list.map((el, index) => (
           <li
@@ -25,7 +31,7 @@ function ListInput(props) {
           </li>
         ))}
       </ul>
-    </div>
+    </motion.div>
   );
 }
 

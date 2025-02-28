@@ -8,6 +8,8 @@ import { createSlice } from "@reduxjs/toolkit";
     fileExpertOpinion - файл с экспертным заключением
     comments - комментарии
     soauthors - сооавторы
+    organization - Организация
+
 */
 
 const keys = [
@@ -19,6 +21,7 @@ const keys = [
   "fileExpertOpinion",
   "comments",
   "soauthors",
+  "organization",
 ];
 
 const keysCoauthors = [
@@ -74,6 +77,7 @@ const reportCreateSlice = createSlice({
       fileExpertOpinion: null,
       comments: "",
       soauthors: [],
+      organization: "",
     },
     sliderState: 0,
     openPopUpName: "",

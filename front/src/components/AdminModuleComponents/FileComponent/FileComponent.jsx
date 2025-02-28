@@ -14,6 +14,7 @@ function FileComponent(props) {
   const [isVisibleHeader, setIsVisibleHeader] = useState(null);
   const [isVisibleNoFileHeader, setIsVisibleNoFileHeader] = useState(true);
   const [isDragging, setIsDragging] = useState(null);
+  const [errorSize, setErrorSize] = useState(false);
 
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла
   const funFileHeaderClick = () => {
@@ -22,6 +23,15 @@ function FileComponent(props) {
 
   //! функция изменения хедер иконки
   const funChangeLogoHeader = (file) => {
+    //! проверка на размер файла
+    if (props.fileSize) {
+      const maxSizeInBytes = props.fileSize * 1024 * 1024; // 20 MB in bytes
+      if (file && file.size > maxSizeInBytes) {
+        setErrorSize(true);
+        return;
+      }
+    }
+
     // const file = event.target.files[0];
     if (file && !props.typeFile?.find((el) => el === file.type)) {
       alert(`Пожалуйста, выберите только ${props.typeFile}-файл.`);
@@ -36,6 +46,7 @@ function FileComponent(props) {
         setTimeout(() => {
           setIsVisibleHeader(true);
         }, 300);
+        setErrorSize(false);
       }, 500);
       props.setData(file, props.itemKey);
     }
@@ -218,14 +229,22 @@ function FileComponent(props) {
                 alt="Загрузить файл"
               />
             )}
-            <span
-              className={
-                isDragging !== null
-                  ? styles.is_dragging_opasity_no
-                  : styles.is_dragging_opasity
-              }
-              dangerouslySetInnerHTML={{ __html: props.text }}
-            ></span>
+            {!errorSize ? (
+              <span
+                className={
+                  isDragging !== null
+                    ? styles.is_dragging_opasity_no
+                    : styles.is_dragging_opasity
+                }
+                dangerouslySetInnerHTML={{ __html: props.text }}
+              ></span>
+            ) : (
+              <span className={styles.error_size}>
+                Размер файла превышает
+                <br />
+                допустимый предел в {props.fileSize} Мб*
+              </span>
+            )}
           </div>
         </div>
       )}

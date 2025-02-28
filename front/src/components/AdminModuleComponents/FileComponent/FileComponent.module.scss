@@ -26,6 +26,7 @@
     opacity: 0;
     transition: opacity 0.15s linear;
   }
+
   .container {
     display: flex;
     justify-content: center;
@@ -66,6 +67,9 @@
         text-align: center;
         color: #858b89;
         text-wrap: nowrap;
+      }
+      .error_size {
+        color: #b32020;
       }
     }
     .visible {
