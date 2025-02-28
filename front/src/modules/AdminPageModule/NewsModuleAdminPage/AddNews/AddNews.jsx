@@ -3,11 +3,12 @@ import goBackImg from "@assets/img/AdminPanel/goBack.svg";
 import { ReactComponent as FileImport } from "@assets/img/AdminPanel/addFile.svg";
 import trashBeliy from "@assets/img/UI/trashBeliy.svg";
 import { useEffect, useRef, useState } from "react";
-import { createNews, deleteNews, getNewsId, updateNews } from "../../../../apirequests/apirequests";
+import { createNews, deleteNews, getNewsId, updateNews, uploadPhoto } from "../../../../apirequests/apirequests";
 import FileComponent from "@components/AdminModuleComponents/FileComponent/FileComponent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import trashRed from "@assets/img/AdminPanel/delete.svg";
 import borderIcon from "@assets/img/AdminPanel/borderFile.svg";
+import { setSelectNewsData } from "../../../../store/newsSlice/newsSlice";
 
 function AddNews(props) {
   const [title, setTitle] = useState("");
@@ -15,6 +16,7 @@ function AddNews(props) {
   const [file, setFile] = useState(null);
   const fileInputRef = useRef(null);
   const store = useSelector(state => state.news);
+  const dispatch = useDispatch();
   useEffect(() => {
     getNewsId(store?.selectNewsData).then((response) => {
       if(response?.status === 200){
@@ -36,15 +38,18 @@ function AddNews(props) {
       title: title,
       description: text
     }
-    // const formData = new FormData();
-    // formData.append("title", title);
-    // formData.append("text", text);
-    // if (file) {
-    //   formData.append("file", file);
-    // }
-    // console.log(formData);
     createNews(data).then((res) => {
-      if(res?.status === 200 || res?.status === 201){
+      if(res?.status === 200 || res?.status === 201 && file){
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("newsld", res?.data?.id);
+        uploadPhoto(formData, "NEWS").then((res) => {
+          if(res?.status === 200 ){
+            props?.updateNewsData();
+            dispatch(setSelectNewsData({id: null}))
+          }
+        })
+      }else{
         props?.updateNewsData();
       }
     });
@@ -56,6 +61,7 @@ function AddNews(props) {
       if(res?.status === 200){
         props?.closeAddNews();
         props?.updateNewsData();
+        dispatch(setSelectNewsData({id: null}))
       }
     })
   }
@@ -66,6 +72,7 @@ function AddNews(props) {
     }
     updateNews(id, data).then((res) => {
       if(res?.status === 200){
+        dispatch(setSelectNewsData({id: null}));
         props?.updateNewsData();
         props?.closeAddNews();
       }
@@ -74,7 +81,7 @@ function AddNews(props) {
 
   return (
     <section className={styles.AddNews}>
-      <button className={styles.buttonBack} onClick={props?.closeAddNews}>
+      <button className={styles.buttonBack} onClick={() => {props?.closeAddNews();  dispatch(setSelectNewsData({id: null}))}}>
         <img src={goBackImg} alt="Назад" /> Добавление новости
       </button>
       
