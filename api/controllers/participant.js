@@ -9,12 +9,12 @@ export default {
         res.json({ participant: map(user) });
     },
 
-    async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone}, user}, res){
+    async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar}, user}, res){
 
         if(user.isMicrosoft) {
             if(name || surname || patronymic || organization || email) throw  new AppErrorInvalid('isMicrosoft')
         }
-        const participant = await participantService.update({email, name, surname, patronymic, academicTitle, degree, position, organization, phone}, user.id)
+        const participant = await participantService.update({email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar}, user.id)
 
         res.json({participant});
 
