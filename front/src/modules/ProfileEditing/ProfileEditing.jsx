@@ -53,7 +53,9 @@ function ProfileEditing() {
 
   const handleFileUpload = (file) => {
     setUserPhoto(file);
-    setUrlPhoto(URL.createObjectURL(file));
+    if (file) {
+      setUrlPhoto(URL.createObjectURL(file));
+    }
   };
 
   const funSelectedElement = (key, value) => {
@@ -175,8 +177,8 @@ function ProfileEditing() {
     <div className={styles.ProfileEditing}>
       <div className={styles.head}>
         <div className={styles.profilePhoto}>
-          <div className={styles.hover_bg}>
-            <img src={cameraIcon} alt="Открыть" onClick={funUploadPhoto} />
+          <div className={styles.hover_bg} onClick={funUploadPhoto}>
+            <img src={cameraIcon} alt="Открыть" />
           </div>
           <img
             className={styles.photo_heve}

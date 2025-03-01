@@ -71,9 +71,9 @@ function Profile() {
           <p>
             <span>Телефон:</span> {user?.phone || "Отсутствует"}
           </p>
-          <p>
+          {/* <p>
             <span>Направление конференции:</span> Отсутствует
-          </p>
+          </p> */}
         </div>
         <div className={styles.containerMoreInfoSecond}>
           {user?.reports?.length > 0 ? (

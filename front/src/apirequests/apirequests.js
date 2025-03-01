@@ -108,6 +108,16 @@ export const apiGetReports = async () => {
   }
 };
 
+//! получение доклада по Id
+export const apiGetReportId = async (id) => {
+  try {
+    const response = await api.get(`${server}/reports${id}`);
+    return response;
+  } catch (error) {
+    console.log("apiGetUserData ", error);
+  }
+};
+
 //! удаление доклада пользователя
 export const apiDeleteReport = async (id) => {
   try {

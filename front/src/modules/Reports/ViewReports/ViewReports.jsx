@@ -7,6 +7,7 @@ import { ReactComponent as Trash } from "./../../../assets/img/UI/trash.svg";
 import { apiDeleteReport } from "../../../apirequests/apirequests";
 import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
 import { AnimatePresence, motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
 
 function ViewReports() {
   const navigate = useNavigate();
@@ -19,6 +20,12 @@ function ViewReports() {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
+
+  // const reportQery = useQuery({
+  //   queryKey: ["report", reportData?.id],
+  //   queryFn: () => apiDeleteReport(reportData?.id),
+  //   enabled: false,
+  // });
 
   const handleMouseEnter = (index) => {
     // Устанавливаем таймер для задержки
@@ -41,7 +48,7 @@ function ViewReports() {
 
   useEffect(() => {
     const idReport = searchParams.get("idReport"); // Получаем idReport из query параметров
-    setNumber(searchParams.get("number")); // Получаем idReport из query параметров
+    setNumber(searchParams.get("number")); // Получаем number из query параметров
     if (idReport && report.length > 0) {
       setReportData(report.find((item) => item.id === idReport));
     }
