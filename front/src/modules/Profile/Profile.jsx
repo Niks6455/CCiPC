@@ -3,17 +3,22 @@ import ProfilePictureBackground from "./../../assets/img/ProfilePictureBackgroun
 import noPhotoLk from "./../../assets/img/noPhotoLk.svg";
 import editPhotoLk from "./../../assets/img/EditPhotoLk.png";
 import { ReactComponent as Close } from "./../../assets/img/UI/bigX.svg";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { fioToString } from "../../utils/functions/funcions";
+import { fetchUserData } from "../../store/userSlice/user.Slice";
 function Profile() {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user.data);
-
   const [showProfilePhoto, setShowProfilePhoto] = useState(false);
   //! функция открытия фото профиля
   const funOpenPhotoProfile = () => {
     setShowProfilePhoto(!showProfilePhoto);
   };
+
+  useEffect(() => {
+    dispatch(fetchUserData());
+  }, []);
 
   return (
     <section className={styles.Profile}>
@@ -71,12 +76,20 @@ function Profile() {
           </p>
         </div>
         <div className={styles.containerMoreInfoSecond}>
-          {user?.reports?.map((el, index) => (
-            <div key={index} className={styles.containerMoreInfoSecondText}>
-              <p>Название доклада №{index + 1}:</p>
-              <p>{el.name || "Отсутствует"}</p>
+          {user?.reports?.length > 0 ? (
+            user?.reports?.map((el, index) => (
+              <div key={index} className={styles.containerMoreInfoSecondText}>
+                <p>Название доклада №{index + 1}:</p>
+                <p>{el.name || "Отсутствует"}</p>
+              </div>
+            ))
+          ) : (
+            <div className={styles.containerMoreInfoSecondText}>
+              <p>
+                Доклад №1: <span> отсутствует</span>
+              </p>
             </div>
-          ))}
+          )}
         </div>
       </div>
     </section>

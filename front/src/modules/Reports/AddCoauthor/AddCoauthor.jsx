@@ -28,6 +28,7 @@ import NotFullyFilledCoauthors from "../../../components/AddReportModal/NotFully
 import {
   apiCreateReport,
   apiEditReport,
+  uploadPhoto,
 } from "../../../apirequests/apirequests";
 import { fetchUserData } from "../../../store/userSlice/user.Slice";
 import { fetchReports } from "../../../store/reportsSlice/reportsSlice";
@@ -126,14 +127,27 @@ function AddCoauthor({ edit, number }) {
           surname: el.data.surname,
           patronymic: el.data.patronymic,
           email: el.data.email,
-          organization: el.data.organization,
-          phone: el.data.phone,
-          form: el.data.formParticipation,
+          // organization: el.data.organization,
+          // phone: el.data.phone,
+          // form: el.data.formParticipation,
         })),
       };
       apiCreateReport(data).then((res) => {
         console.log("res", res);
         if (res?.status === 200) {
+          // создаем формдату для файла
+          const formDataReport = new FormData();
+          console.log("report.data.fileArticle", report.data.fileArticle);
+          formDataReport.append("file", report.data.fileArticle);
+          formDataReport.append("reportId", res?.data?.report?.id);
+
+          const formDataConcl = new FormData();
+          formDataConcl.append("file", report.data.fileExpertOpinion);
+          formDataConcl.append("reportId", res?.data?.report?.id);
+          console.log("formDataReport", formDataReport);
+          console.log("formDataConcl", formDataConcl);
+          uploadPhoto(formDataReport, "REPORT"); // файл с докладом
+          uploadPhoto(formDataConcl, "CONCLUSION"); // файл с заключением
           dispatch(fetchUserData());
           dispatch(fetchReports());
         }
@@ -235,7 +249,7 @@ function AddCoauthor({ edit, number }) {
                   />
                 </div>
               ))}
-              <div className={styles.inputbox}>
+              {/* <div className={styles.inputbox}>
                 <InputListForma
                   name={"Форма участия*"}
                   list={formParticipationList}
@@ -244,7 +258,7 @@ function AddCoauthor({ edit, number }) {
                   handleChangeForm={handleChangeForm}
                   index={index}
                 />
-              </div>
+              </div> */}
             </>
           )}
         </div>

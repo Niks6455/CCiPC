@@ -161,7 +161,7 @@ export const createNews = async (data) => {
 //!Получение новостей
 export const getAllNews = async (param) => {
   try {
-    const endpoint = param ? `/news/${param}` : '/news';
+    const endpoint = param ? `/news/${param}` : "/news";
     const response = await api.get(`${server}${endpoint}`);
     return response;
   } catch (error) {
@@ -197,7 +197,7 @@ export const updateNews = async (id, data) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Создание Human Оргкомитет
 export const createOrgCommitet = async (data) => {
@@ -207,7 +207,7 @@ export const createOrgCommitet = async (data) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Создание Human Оргкомитет
 export const updateOrgCommitet = async (data, id) => {
@@ -217,7 +217,7 @@ export const updateOrgCommitet = async (data, id) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Получение  Human Оргкомитета
 export const getOrgCommitet = async () => {
@@ -227,7 +227,7 @@ export const getOrgCommitet = async () => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //!Удаление Human Оргкомитета
 export const deleteOrgCommitet = async (id) => {
@@ -237,7 +237,7 @@ export const deleteOrgCommitet = async (id) => {
   } catch (error) {
     console.log("apiCreateReport ", error);
   }
-}
+};
 
 //! изменение пароля
 export const apiChangePassword = async (data) => {
@@ -289,16 +289,16 @@ export const createArchive = async (data) => {
   }
 };
 
-//!Получение участников конференции по Id конференции
+//! загрузка файлов
 export const uploadPhoto = async (file, type) => {
   try {
     const response = await api.post(`${server}/uploads?type=${type}`, file, {
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+        "Content-Type": "multipart/form-data",
+      },
     });
     return response;
   } catch (error) {
-    console.log("getConfParticipants ", error);
+    console.error("uploadPhoto ", error);
   }
 };

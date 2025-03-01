@@ -64,6 +64,7 @@ export const inputsData = [
     required: true,
     list: null,
     type: "email",
+    disabled: true,
   },
   {
     id: "8",

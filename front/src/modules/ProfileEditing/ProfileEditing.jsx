@@ -6,7 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
 import { useDispatch, useSelector } from "react-redux";
-import { apiUpdateUser } from "../../apirequests/apirequests";
+import { apiUpdateUser, uploadPhoto } from "../../apirequests/apirequests";
 import { disEditUser, setEditUser } from "../../store/userSlice/user.Slice";
 import { inputsData } from "./data";
 import cameraIcon from "@assets/img/UI/camera.svg";
@@ -18,11 +18,14 @@ function ProfileEditing() {
   const ref1 = useRef(null);
   const ref2 = useRef(null);
   const refList = [ref1, ref2];
+  const fileInputRef = useRef(null);
 
   const [openList, setOpenList] = useState("");
   const context = useContext(DataContext);
   const formData = useSelector((state) => state.user.editUser.data);
   const user = useSelector((state) => state.user.user.data);
+  const [userPhoto, setUserPhoto] = useState(null);
+  const [urlPhoto, setUrlPhoto] = useState(null);
 
   console.log("formData", formData);
 
@@ -42,6 +45,16 @@ function ProfileEditing() {
     email: "",
     number: "",
   });
+
+  //! загрузка фото
+  const funUploadPhoto = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileUpload = (file) => {
+    setUserPhoto(file);
+    setUrlPhoto(URL.createObjectURL(file));
+  };
 
   const funSelectedElement = (key, value) => {
     //! проверка что такой ключь есть в formData
@@ -132,6 +145,9 @@ function ProfileEditing() {
         if (res?.status === 200) {
           console.log("Форма отправлена", formData);
         }
+        const file = new FormData();
+        file.append("file", userPhoto);
+        uploadPhoto(file, "AVATAR");
       });
     } else {
       console.log("Валидация не прошла");
@@ -159,12 +175,25 @@ function ProfileEditing() {
       <div className={styles.head}>
         <div className={styles.profilePhoto}>
           <div className={styles.hover_bg}>
-            <img src={cameraIcon} alt="Открыть" />
+            <img src={cameraIcon} alt="Открыть" onClick={funUploadPhoto} />
           </div>
-          <img className={styles.photo_heve} src={veselov} alt="img" />
+          <img
+            className={styles.photo_heve}
+            src={urlPhoto || profilePhoto}
+            alt="img"
+          />
           {/* <img src={profilePhoto} alt="img" /> */}
         </div>
-        <button className={styles.btn1}>Загрузить новое фото</button>
+        <input
+          accept="image/*"
+          ref={fileInputRef}
+          type="file"
+          style={{ display: "none" }}
+          onChange={(e) => handleFileUpload(e.target.files[0])}
+        />
+        <button className={styles.btn1} onClick={funUploadPhoto}>
+          Загрузить новое фото
+        </button>
         <button className={styles.btn2}>Удалить фото</button>
       </div>
       <div className={styles.container}>
@@ -211,6 +240,7 @@ function ProfileEditing() {
               index > 5 && (
                 <div className={styles.item}>
                   <Input
+                    disabled={item.disabled}
                     name={item.title}
                     onChange={handleChange}
                     value={formData[item.title]}
