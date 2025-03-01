@@ -78,8 +78,6 @@ const storage = multer.diskStorage({
             return cb(new AppErrorForbiddenAction('file'));
         }
 
-        console.log(0)
-
         const uploadPath = path.join(dir, type.toLowerCase());
 
         try {
@@ -92,8 +90,7 @@ const storage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        const uniqueName = `${Date.now()}-${file.originalname}`;
-        cb(null, uniqueName);
+        cb(null, file.originalname);
     },
 });
 

@@ -94,14 +94,14 @@ export default {
         const participant = await Participant.findByPk(participantId);
         if(!participant) throw new AppErrorNotExist('participant')
 
-        if(participant?.avatar && !participantInfo.avatar){
+        if(participant?.avatar && participantInfo.avatar===null){
 
             if (participant?.avatar) {
                 fs.unlink(participant.avatar, (err=> {
                     if (err) console.log(err);
                 }))
             } else {
-                console.log('У новости нет изображения, файл не удалён');
+                console.log('У пользователя нет изображения, файл не удалён');
             }
         }
         if(participantInfo.email && participantInfo.email !== participant.email) {

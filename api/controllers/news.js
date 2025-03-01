@@ -21,9 +21,9 @@ export default {
         res.json({ news: news } );
     },
 
-    async update({params: {id}, body:{ title, description }}, res){
+    async update({params: {id}, body:{ title, description, img }}, res){
         if(!id) throw new AppErrorMissing('id')
-        await newsService.update(id, title, description)
+        await newsService.update(id, title, description, img)
         res.json({status: 'Ok'});
     },
 
