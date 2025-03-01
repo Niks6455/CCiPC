@@ -54,6 +54,7 @@ const storage = multer.diskStorage({
             return cb(new AppError(errorCodes.Invalid));
         }
 
+
         if ((typesPhoto[type] === 4
             || typesPhoto[type] === 5
             || typesPhoto[type] === 1
@@ -76,6 +77,8 @@ const storage = multer.diskStorage({
         ) {
             return cb(new AppErrorForbiddenAction('file'));
         }
+
+        console.log(0)
 
         const uploadPath = path.join(dir, type.toLowerCase());
 
@@ -125,14 +128,14 @@ export default {
 
         }
 
-        if(typesFile[type] === 4 || typesFile[type] === 5 && !reportId) throw new AppErrorMissing('reportId');
+        if((typesFile[type] === 4 || typesFile[type] === 5) && !reportId) throw new AppErrorMissing('reportId');
 
         if(reportId)
         {
             const report =await Report.findByPk(reportId, {
                 include: {
                     model : Participant,
-                    as: 'participant',
+                    as: 'participants',
                     required: true,
                     where: {
                         id: user.id
@@ -151,7 +154,8 @@ export default {
             const archive =await Archive.findByPk(archiveId);
             if(!archive) throw new AppErrorNotExist('archiveId')
             await archive.update({ file: file.path })
-            return res.json({status: 'OK'});
+            return res.json({url: file.path});
+
         }
 
 
