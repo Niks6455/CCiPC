@@ -147,6 +147,7 @@ function ProfileEditing() {
         }
         const file = new FormData();
         file.append("file", userPhoto);
+        console.log("userPhoto", userPhoto);
         uploadPhoto(file, "AVATAR");
       });
     } else {
