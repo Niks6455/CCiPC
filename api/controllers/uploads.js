@@ -97,8 +97,8 @@ const storage = multer.diskStorage({
     },
 });
 
-const uploader = multer({ storage, fileFilter, limits: { fileSize: 3145728 } }).single('file');
-const multiUploader = multer({ storage, fileFilter, limits: { fileSize: 31457280 } }).array('files', 10);
+const uploader = multer({ storage, fileFilter, limits: { fileSize: 51145728 } }).single('file');
+const multiUploader = multer({ storage, fileFilter, limits: { fileSize: 51457280 } }).array('files', 10);
 
 export default {
     uploader,
