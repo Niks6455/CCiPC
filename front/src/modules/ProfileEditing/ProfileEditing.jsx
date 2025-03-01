@@ -66,6 +66,12 @@ function ProfileEditing() {
     }
   };
 
+  const funDeletePhoto = () => {
+    setUrlPhoto(null);
+    setUserPhoto(null);
+    dispatch(setEditUser({ key: "avatar", value: null }));
+  };
+
   const funSelectedElement = (key, value) => {
     //! проверка что такой ключь есть в formData
     if (!formData.hasOwnProperty(key)) {
@@ -207,7 +213,9 @@ function ProfileEditing() {
         <button className={styles.btn1} onClick={funUploadPhoto}>
           Загрузить новое фото
         </button>
-        <button className={styles.btn2}>Удалить фото</button>
+        <button className={styles.btn2} onClick={funDeletePhoto}>
+          Удалить фото
+        </button>
       </div>
       <div className={styles.container}>
         <div className={styles.boxLeft}>

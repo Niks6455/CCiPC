@@ -4,10 +4,15 @@ import { useNavigate, useSearchParams } from "react-router-dom"; // Импорт
 import styles from "./ViewReports.module.scss";
 import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
 import { ReactComponent as Trash } from "./../../../assets/img/UI/trash.svg";
-import { apiDeleteReport } from "../../../apirequests/apirequests";
+import {
+  apiDeleteReport,
+  apiGetReportId,
+} from "../../../apirequests/apirequests";
 import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
+import { ReactComponent as BorderIcon } from "@assets/img/AdminPanel/border2.svg";
+import FileComponent from "../../../components/AdminModuleComponents/FileComponent/FileComponent";
 
 function ViewReports() {
   const navigate = useNavigate();
@@ -20,16 +25,18 @@ function ViewReports() {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
-
   const [idReport, setIdReport] = useState(null);
 
   const reportQery = useQuery({
     queryKey: [`${idReport}`, idReport],
-    queryFn: () => apiDeleteReport(idReport),
+    queryFn: () => apiGetReportId(idReport),
     enabled: !!idReport,
   });
+  console.log("reportQery", reportQery?.data);
 
-  console.log("reportQery", reportQery);
+  useEffect(() => {
+    setReportData(reportQery?.data?.data?.report);
+  }, [reportQery]);
 
   const handleMouseEnter = (index) => {
     // Устанавливаем таймер для задержки
@@ -56,9 +63,9 @@ function ViewReports() {
       setIdReport(idReport);
     }
     setNumber(searchParams.get("number")); // Получаем number из query параметров
-    if (idReport && report.length > 0) {
-      setReportData(report.find((item) => item.id === idReport));
-    }
+    // if (idReport && report.length > 0) {
+    //   setReportData(report.find((item) => item.id === idReport));
+    // }
   }, [searchParams, report]); // Запускаем useEffect при изменении query параметров или списка докладов
 
   useEffect(() => {
@@ -84,6 +91,11 @@ function ViewReports() {
     });
   };
 
+  //! загрузка файла
+  const funChangeFile = (value, key) => {
+    console.log("value", value);
+  };
+
   return (
     <section className={styles.ViewReports}>
       <AnimatePresence>
@@ -96,8 +108,8 @@ function ViewReports() {
               exit={{ opacity: 0, scale: 0.6 }}
             >
               <h2>
-                Вы действительно хотите удалить доклад “Название доклада”?
-                Отменить это действие будет невозможно.
+                {`Вы действительно хотите удалить доклад “${reportData?.name}”?
+                Отменить это действие будет невозможно.`}
               </h2>
               <div className={styles.button_container}>
                 <button
@@ -118,6 +130,10 @@ function ViewReports() {
       <div className={styles.ViewReportsInner}>
         <div className={styles.ViewReportsInnerFirst}>
           <div className={styles.ViewReportsBlock}>
+            <p className={styles.ViewReportsTitle}>Автор:</p>
+            <p>{reportData?.author?.fio}</p>
+          </div>
+          <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>
               Название доклада № {number}:
             </p>
@@ -128,8 +144,12 @@ function ViewReports() {
             <p>{reportData?.direction}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
+            <p className={styles.ViewReportsTitle}>Форма участия:</p>
+            <p>{reportData?.author?.form}</p>
+          </div>
+          <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Статус участия:</p>
-            <p>{reportData?.form}</p>
+            <p>{reportData?.author?.status}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Комментарий:</p>
@@ -141,21 +161,19 @@ function ViewReports() {
             <p className={styles.ViewReportsTitle}>Соавторы:</p>
             {reportData?.coAuthors?.map((item, index) => (
               <div key={index}>
-                <p className={styles.name}>{`${index + 1}. ${item?.name} ${
-                  item?.surname
-                } ${item?.patronymic}`}</p>
+                <p className={styles.name}>{`${index + 1}. ${item.fio}`}</p>
                 <ul>
                   <li>
                     {" "}
-                    <p>{item?.organization}</p>
+                    <p>{item?.organization || "Отсутствует"}</p>
                   </li>
                   <li>
                     {" "}
-                    <p>{item?.email}</p>
+                    <p>{item?.email || "Отсутствует"}</p>
                   </li>
                   <li>
                     {" "}
-                    <p>{item?.phone}</p>
+                    <p>{item?.phone || "Отсутствует"}</p>
                   </li>
                 </ul>
               </div>
@@ -171,12 +189,30 @@ function ViewReports() {
           onMouseMove={handleMouseMove}
         >
           <p className={styles.fileLoudersTitle}>Доклад:</p>
-          <>
+          {/* <>
             <div className={styles.fileName}>
               <span>{report.reportFile?.name || "Документ.pdf"}</span>
             </div>
             <BlockFile className={styles.blockFile} />
-          </>
+          </> */}
+          <div className={styles.file_container}>
+            {!reportData?.reportFile && (
+              <BorderIcon className={styles.border} />
+            )}
+            <div className={styles.file_box}>
+              <FileComponent
+                data={reportData?.reportFile}
+                setData={(value) => funChangeFile(value, "reportFile")}
+                typeFile={["application/pdf"]}
+                accept={".pdf"}
+                name={"reportFile"}
+                icon={"pdf"}
+                itemKey={"reportFile"}
+                fileSize={20} // размер файла
+                text={"Необходимо загрузить<br/>файл в формате PDF"}
+              />
+            </div>
+          </div>
           {showTooltip === 1 && (
             <div
               style={{
@@ -196,12 +232,24 @@ function ViewReports() {
           onMouseMove={handleMouseMove}
         >
           <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
-          <>
-            <div className={styles.fileName}>
-              <span>{report.conclusion?.name || "Документ.pdf"}</span>
+          <div className={styles.file_container}>
+            {!reportData?.conclusion && (
+              <BorderIcon className={styles.border} />
+            )}
+            <div className={styles.file_box}>
+              <FileComponent
+                data={reportData?.conclusion}
+                setData={(value) => funChangeFile(value, "conclusion")}
+                typeFile={["application/pdf"]}
+                accept={".pdf"}
+                name={"conclusion"}
+                icon={"pdf"}
+                itemKey={"conclusion"}
+                fileSize={20} // размер файла
+                text={"Необходимо загрузить<br/>файл в формате PDF"}
+              />
             </div>
-            <BlockFile className={styles.blockFile} />
-          </>
+          </div>
           {showTooltip === 2 && (
             <div
               style={{
