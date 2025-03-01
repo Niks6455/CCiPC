@@ -197,7 +197,7 @@ export default {
             ...(type === typesFiles.REPORT ? {reportFile: path.join(dir, type.toLowerCase(), file.originalname)} :
                 {conclusionFile: path.join(dir, type.toLowerCase(), file.originalname)}),
         })*/
-        res.json({status: 'OK'});
+        res.json({url: file.path});
     },
 
     async delete({student}, res) {

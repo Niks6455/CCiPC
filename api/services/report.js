@@ -151,17 +151,25 @@ export default {
         return report
     },
 
-    async update(reportInfo, reportId, participant) {
-        const report=await Report.findByPk(reportId, {
-            include: {
-                model: ParticipantOfReport,
-                as: 'participantOfReport',
-                required: true,
-                where : { participantId: participant.id }
-            }
-        })
+    async update(reportInfo, reportId, participant, admin) {
+        const report = await Report.findByPk(reportId, {
+            ...(admin ? {} : {
+                include: {
+                    model: ParticipantOfReport,
+                    as: 'participantOfReport',
+                    required: true,
+                    where: { participantId: participant.id }
+                }
+            })
+        });
+
+
 
         if(!report) throw new AppErrorInvalid('report')
+
+        if(admin) return await report.update({
+            direction: reportInfo?.direction,
+        })
 
         if(report.participantOfReport.who === 'Автор'){
             await report.update({
