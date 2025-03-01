@@ -7,12 +7,12 @@ import { ReactComponent as Trash } from "./../../../assets/img/UI/trash.svg";
 import {
   apiDeleteReport,
   apiGetReportId,
+  server,
 } from "../../../apirequests/apirequests";
 import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import { ReactComponent as BorderIcon } from "@assets/img/AdminPanel/border2.svg";
-import FileComponent from "../../../components/AdminModuleComponents/FileComponent/FileComponent";
+import { decodeFileName } from "../../../utils/functions/funcions";
 
 function ViewReports() {
   const navigate = useNavigate();
@@ -32,7 +32,6 @@ function ViewReports() {
     queryFn: () => apiGetReportId(idReport),
     enabled: !!idReport,
   });
-  console.log("reportQery", reportQery?.data);
 
   useEffect(() => {
     setReportData(reportQery?.data?.data?.report);
@@ -63,14 +62,7 @@ function ViewReports() {
       setIdReport(idReport);
     }
     setNumber(searchParams.get("number")); // Получаем number из query параметров
-    // if (idReport && report.length > 0) {
-    //   setReportData(report.find((item) => item.id === idReport));
-    // }
   }, [searchParams, report]); // Запускаем useEffect при изменении query параметров или списка докладов
-
-  useEffect(() => {
-    console.log("reportData", reportData);
-  }, [reportData]);
 
   //! функция удаления доклада
   const deleteReportOpenModal = () => {
@@ -91,9 +83,15 @@ function ViewReports() {
     });
   };
 
-  //! загрузка файла
-  const funChangeFile = (value, key) => {
-    console.log("value", value);
+  const funOpenFile = (file) => {
+    //открытие файла по ссылке
+    window.open(`${server}/${file}`, "_blank");
+  };
+
+  const getFileName = (file) => {
+    const fileName = file?.split("\\").pop();
+    if (!fileName) return "Документ.pdf";
+    return decodeFileName(fileName);
   };
 
   return (
@@ -189,30 +187,17 @@ function ViewReports() {
           onMouseMove={handleMouseMove}
         >
           <p className={styles.fileLoudersTitle}>Доклад:</p>
-          {/* <>
+          <>
             <div className={styles.fileName}>
-              <span>{report.reportFile?.name || "Документ.pdf"}</span>
+              <span>
+                {getFileName(reportData?.reportFile) || "Документ.pdf"}
+              </span>
             </div>
-            <BlockFile className={styles.blockFile} />
-          </> */}
-          <div className={styles.file_container}>
-            {!reportData?.reportFile && (
-              <BorderIcon className={styles.border} />
-            )}
-            <div className={styles.file_box}>
-              <FileComponent
-                data={reportData?.reportFile}
-                setData={(value) => funChangeFile(value, "reportFile")}
-                typeFile={["application/pdf"]}
-                accept={".pdf"}
-                name={"reportFile"}
-                icon={"pdf"}
-                itemKey={"reportFile"}
-                fileSize={20} // размер файла
-                text={"Необходимо загрузить<br/>файл в формате PDF"}
-              />
-            </div>
-          </div>
+            <BlockFile
+              className={styles.blockFile}
+              onClick={() => funOpenFile(reportData?.reportFile)}
+            />
+          </>
           {showTooltip === 1 && (
             <div
               style={{
@@ -232,24 +217,17 @@ function ViewReports() {
           onMouseMove={handleMouseMove}
         >
           <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
-          <div className={styles.file_container}>
-            {!reportData?.conclusion && (
-              <BorderIcon className={styles.border} />
-            )}
-            <div className={styles.file_box}>
-              <FileComponent
-                data={reportData?.conclusion}
-                setData={(value) => funChangeFile(value, "conclusion")}
-                typeFile={["application/pdf"]}
-                accept={".pdf"}
-                name={"conclusion"}
-                icon={"pdf"}
-                itemKey={"conclusion"}
-                fileSize={20} // размер файла
-                text={"Необходимо загрузить<br/>файл в формате PDF"}
-              />
+          <>
+            <div className={styles.fileName}>
+              <span>
+                {getFileName(reportData?.conclusion) || "Документ.pdf"}
+              </span>
             </div>
-          </div>
+            <BlockFile
+              className={styles.blockFile}
+              onClick={() => funOpenFile(reportData?.conclusion)}
+            />
+          </>
           {showTooltip === 2 && (
             <div
               style={{
