@@ -59,7 +59,7 @@ export default {
     },
 
 
-    async findParticipants(conferenceId, fio, admin){
+    async findParticipants(conferenceId, fio){
         const conference = await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference');
 
@@ -69,7 +69,59 @@ export default {
             [undefined, undefined, undefined];
 
 
-         conference.participants = await ParticipantInConference.findAll({
+         return await Report.findAll({
+             where:{
+                 conferenceId:conferenceId,
+             },
+             order: [['createdAt', 'DESC']],
+             include: {
+                 model: ParticipantOfReport,
+                 as: 'participantOfReport',
+                 required: true,
+                 include: {
+                     model: Participant,
+                     as: 'participant',
+                     required: true,
+                     where: {
+                         ...(surname && { surname: {[Op.like]: `%${surname}%`}}),
+                         ...(name ? [{name: {[Op.like]: `%${name}%`}}] : []),
+                         ...(patronymic ? [{patronymic: {[Op.like]: `%${patronymic}%`}}] : []),
+                         ...(surname && name
+                             ? [
+                                 {
+                                     [Op.and]: [
+                                         {surname: {[Op.like]: `%${name}%`}},
+                                         {name: {[Op.like]: `%${surname}%`}},
+                                     ],
+                                 },
+                             ]
+                             : []),
+                         ...(surname && patronymic
+                             ? [
+                                 {
+                                     [Op.and]: [
+                                         {surname: {[Op.like]: `%${patronymic}%`}},
+                                         {patronymic: {[Op.like]: `%${surname}%`}},
+                                     ],
+                                 },
+                             ]
+                             : []),
+                         ...(name && patronymic
+                             ? [
+                                 {
+                                     [Op.and]: [
+                                         {name: {[Op.like]: `%${patronymic}%`}},
+                                         {patronymic: {[Op.like]: `%${name}%`}},
+                                     ],
+                                 },
+                             ]
+                             : []),
+                     },
+                 }
+             }
+         })
+
+         /*conference.participants = await ParticipantInConference.findAll({
             where: {
                 conferenceId:conferenceId,
             },
@@ -122,9 +174,9 @@ export default {
                         required: false
                     }
                 },
-                group: ['Report.id'],
+                group: ['Participant.id', 'ParticipantOfReport.id', 'report.id'], // Указываем группировку
             },
-         })
+         })*/
 
 
 
@@ -135,7 +187,6 @@ export default {
         );*/
 
 
-        return conference.participants
     },
 
     async update(conferenceId, conferenceInfo){

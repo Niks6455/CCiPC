@@ -1,4 +1,4 @@
 export default {
-    REPORT: 0,
-    PHOTO: 1,
+    PHOTO : 0,
+    REPORT: 1,
 }

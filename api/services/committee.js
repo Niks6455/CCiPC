@@ -25,6 +25,7 @@ export default {
                             model: Committee,
                             as: "committee",
                             required: true,
+                            order: [['createdAt', 'ASC']],
                         },
                         {
                             model: Conference,

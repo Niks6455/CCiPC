@@ -4,6 +4,7 @@ import { Router } from 'express';
 import reportCtrl from '../controllers/report.js';
 import { asyncRoute } from '../utils/errors.js';
 import verify from '../middlewares/verify-token.js'
+import roles from "../config/roles.js";
 const router = Router();
 
 /**
@@ -164,7 +165,7 @@ router.route('/')
     .get(asyncRoute(verify.general), asyncRoute(reportCtrl.find))
 
 router.route('/:id')
-    .put(asyncRoute(verify.general), asyncRoute(reportCtrl.update))
+    .put(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(reportCtrl.update))
     .delete(asyncRoute(verify.general), asyncRoute(reportCtrl.delete))
     .get(asyncRoute(verify.general), asyncRoute(reportCtrl.findOne));
 

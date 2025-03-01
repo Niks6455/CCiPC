@@ -117,7 +117,8 @@ export default {
 
     async find(participant) {
         return await Report.findAll({
-           include: {
+            order: [['createdAt', 'ASC']],
+            include: {
                model: ParticipantOfReport,
                as: 'participantOfReport',
                required: true,
@@ -125,7 +126,6 @@ export default {
                    participantId: participant.id,
                }
            },
-            order: [['createdAt', 'ASC']],
         })
     },
 
@@ -151,26 +151,34 @@ export default {
         return report
     },
 
-    async update(reportInfo, reportId, participant) {
-        const report=await Report.findByPk(reportId, {
-            include: {
-                model: ParticipantOfReport,
-                as: 'participantOfReport',
-                required: true,
-                where : { participantId: participant.id }
-            }
-        })
+    async update(reportInfo, reportId, participant, admin) {
+
+        const report = await Report.findByPk(reportId, {
+            ...(admin ? {} : {
+                include: {
+                    model: ParticipantOfReport,
+                    as: 'participantOfReport',
+                    required: true,
+                    where: { participantId: participant.id }
+                }
+            })
+        });
+
 
         if(!report) throw new AppErrorInvalid('report')
 
-        if(report.participantOfReport.who === 'Автор'){
+        if(admin) return await report.update({
+            direction: reportInfo?.direction,
+        })
+
+        if(report.participantOfReport[0].who === 'Автор'){
             await report.update({
                 name: reportInfo.name,
                 direction: reportInfo.direction,
                 comment: reportInfo.comment,
             })
 
-            if(reportInfo.coAuthorsIds.length > 0){
+            if(reportInfo?.coAuthorsIds?.length > 0){
                 await ParticipantOfReport.destroy({
                     where:{
                         participantId: reportInfo.coAuthorsIds,
@@ -179,7 +187,7 @@ export default {
             }
         }
 
-        return await ParticipantOfReport.update({
+        await ParticipantOfReport.update({
             organization: reportInfo.organization,
             status: reportInfo.status,
             form: reportInfo.form,
@@ -189,6 +197,8 @@ export default {
                 reportId: report.id,
             }
         })
+
+        return  report
     },
 
     async delete(reportId, participant) {
