@@ -5,7 +5,7 @@ import DataContext from "../../context";
 import { useNavigate } from "react-router-dom";
 import logo from "./../../assets/img/logo.png";
 import sfeduLogo from "./../../assets/img/SfeduLogo.svg";
-import { LoginFunc } from "../../apirequests/apirequests";
+import { LoginFunc, sandResetPassword } from "../../apirequests/apirequests";
 function Login(props) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
