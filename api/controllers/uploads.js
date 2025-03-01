@@ -54,6 +54,7 @@ const storage = multer.diskStorage({
             return cb(new AppError(errorCodes.Invalid));
         }
 
+
         if ((typesPhoto[type] === 4
             || typesPhoto[type] === 5
             || typesPhoto[type] === 1
@@ -89,13 +90,12 @@ const storage = multer.diskStorage({
         }
     },
     filename: (req, file, cb) => {
-        const uniqueName = `${Date.now()}-${file.originalname}`;
-        cb(null, uniqueName);
+        cb(null, file.originalname);
     },
 });
 
-const uploader = multer({ storage, fileFilter, limits: { fileSize: 3145728 } }).single('file');
-const multiUploader = multer({ storage, fileFilter, limits: { fileSize: 31457280 } }).array('files', 10);
+const uploader = multer({ storage, fileFilter, limits: { fileSize: 51145728 } }).single('file');
+const multiUploader = multer({ storage, fileFilter, limits: { fileSize: 51457280 } }).array('files', 10);
 
 export default {
     uploader,
@@ -103,6 +103,13 @@ export default {
     async afterUpload({body : { reportId, newsId, committeeId, conferenceId, archiveId }, query: { type }, file, user, admin }, res) {
 
         if (!file) throw new AppErrorMissing('files');
+        if(typesPhoto[type] === 0) {
+            const participant= await Participant.findByPk(user.id);
+            if(!participant) throw new AppErrorNotExist('participant');
+            await participant.update({avatar: file.path })
+            return res.json({url: file.path});
+
+        }
         if(typesPhoto[type]=== 1 && !newsId) throw new AppErrorMissing('newsId')
 
         if(newsId)
@@ -110,7 +117,7 @@ export default {
             const news =await News.findByPk(newsId)
             if(!news) throw new AppErrorNotExist('news')
             await news.update({ img: file.path })
-            return res.json({status: 'OK'});
+            return res.json({url: file.path});
 
         }
 
@@ -121,18 +128,18 @@ export default {
             const committee=await Committee.findByPk(committeeId)
             if(!committee) throw new AppErrorNotExist('committeeId');
             await committee.update({ img: file.path })
-            return res.json({status: 'OK'});
+            return res.json({url: file.path});
 
         }
 
-        if(typesFile[type] === 4 || typesFile[type] === 5 && !reportId) throw new AppErrorMissing('reportId');
+        if((typesFile[type] === 4 || typesFile[type] === 5) && !reportId) throw new AppErrorMissing('reportId');
 
         if(reportId)
         {
             const report =await Report.findByPk(reportId, {
                 include: {
                     model : Participant,
-                    as: 'participant',
+                    as: 'participants',
                     required: true,
                     where: {
                         id: user.id
@@ -142,7 +149,7 @@ export default {
 
             if(!report) throw new AppErrorNotExist('report')
             typesFile[type]===4 ? await report.update({ reportFile: file.path }) : await report.update({ conclusion : file.path })
-            return res.json({status: 'OK'});
+            return res.json({url: file.path});
         }
 
 
@@ -151,7 +158,8 @@ export default {
             const archive =await Archive.findByPk(archiveId);
             if(!archive) throw new AppErrorNotExist('archiveId')
             await archive.update({ file: file.path })
-            return res.json({status: 'OK'});
+            return res.json({url: file.path});
+
         }
 
 
@@ -197,7 +205,7 @@ export default {
             ...(type === typesFiles.REPORT ? {reportFile: path.join(dir, type.toLowerCase(), file.originalname)} :
                 {conclusionFile: path.join(dir, type.toLowerCase(), file.originalname)}),
         })*/
-        res.json({status: 'OK'});
+        res.json({url: file.path});
     },
 
     async delete({student}, res) {

@@ -92,7 +92,89 @@ export default {
 
         const participants =await conferenceService.findParticipants(id, fio, admin);
 
-        res.json({participants: admin ? participants.map(p=>map(p.participant)) : participants.map(p=>mapShort(p.participant))});
+        /*const data = participants.map(p=>p.participant.participantOfReport.map(reports=>({
+            reports: reports.report,
+            participant: p.participant,
+        })))
+        console.log(data[1][0].participant)*/
+
+    /*    const data= participants.map(participant => ({
+            name: participant.name,
+            direction: participant.direction,
+            comment: participant.comment,
+           participants: participant.participantOfReport.map(p=>p)
+        }))
+
+        const name=[]
+        const info={}
+        const information= data.map(d=> {
+            const  person= d.participants.map(d1=>{
+                name.push({
+                    name: d1.participant.name,
+                    surname: d1.participant.surname,
+                })
+                if(d1.who==='Автор') {
+                    info.organization=d1.organization
+                    info.status=d1.status
+                    info.report = {
+                        name: d.name,
+                        direction: d.direction,
+                        comment: d.comment
+                    }
+                }
+
+                return info
+            })
+
+            return person
+        })
+
+        console.log(information)*/
+
+
+
+        const data = participants.map(participant => ({
+            name: participant.name,
+            id:participant.id,
+            direction: participant.direction,
+            comment: participant.comment,
+            participants: participant.participantOfReport.map(p => ({
+                name: p.participant.name,
+                surname: p.participant.surname,
+                who: p.who,
+                organization: p.organization,
+                status: p.status,
+            })),
+        }));
+
+        const information = data.map(d => {
+            const reportInfo = {
+                report: {
+                    name: d.name,
+                    direction: d.direction,
+                    comment: d.comment,
+                    id:d.id,
+                },
+                organization: null,
+                status: null,
+                participants: [],
+            };
+
+            d.participants.forEach(p => {
+                reportInfo.participants.push(
+                     `${p.surname} ${p.name} ${p.patronymic ? p.patronymic : ''}`.trim()
+                );
+
+                if (p.who === 'Автор') {
+                    reportInfo.organization = p.organization;
+                    reportInfo.status = p.status;
+                }
+            });
+
+            return reportInfo;
+        });
+
+        res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
     async update({params: { id }, body: {number, date, address, stages, directions  }}, res) {
@@ -107,7 +189,7 @@ export default {
 
     },
 
-    findFee({params: { id }}, res){
+    findFee({ params: { id }}, res ){
 
     }
 

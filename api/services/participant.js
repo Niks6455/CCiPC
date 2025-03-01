@@ -7,6 +7,7 @@ import Conference from "../models/conference.js";
 import {Op} from "sequelize";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import ParticipantOfReport from "../models/participant-of-report.js";
+import fs from "fs";
 
 export default {
 
@@ -93,7 +94,16 @@ export default {
         const participant = await Participant.findByPk(participantId);
         if(!participant) throw new AppErrorNotExist('participant')
 
+        if(participant?.avatar && participantInfo.avatar===null){
 
+            if (participant?.avatar) {
+                fs.unlink(participant.avatar, (err=> {
+                    if (err) console.log(err);
+                }))
+            } else {
+                console.log('У пользователя нет изображения, файл не удалён');
+            }
+        }
         if(participantInfo.email && participantInfo.email !== participant.email) {
 
             const checkParticipant = await Participant.findOne({
