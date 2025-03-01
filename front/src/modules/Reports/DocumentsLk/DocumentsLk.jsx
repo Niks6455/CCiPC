@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import document from "./../../../assets/img/document.svg";
 import plus from "./../../../assets/img/UI/plusLigth.svg";
 import { useSelector } from "react-redux";
+import { apiCreateReport } from "../../../apirequests/apirequests";
 
 function DocumentsLk() {
   const navigate = useNavigate();
@@ -12,6 +13,11 @@ function DocumentsLk() {
   useEffect(() => {
     setLength(reports.length);
   }, [reports]);
+
+  //! при клике на создать доклад
+  const creatReaport = () => {
+    navigate("/account/createreport");
+  };
 
   return (
     <section className={styles.DocumentsLk}>
@@ -28,7 +34,7 @@ function DocumentsLk() {
           </div>
 
           <div className={styles.notDocumentButton}>
-            <button onClick={() => navigate("/account/createreport")}>
+            <button onClick={creatReaport}>
               <img src={plus} alt="+" /> <span>Создать</span>
             </button>
           </div>

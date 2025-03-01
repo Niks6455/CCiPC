@@ -1,0 +1,127 @@
+@import "./../mixin.scss";
+
+.StagesConference {
+  .stages_conference_title {
+    @include titleBlock;
+    margin-bottom: 10px;
+  }
+  .stages_conference_block {
+    width: 100%;
+    @include blockGreenBorder;
+    flex-direction: column;
+
+    ul {
+      @include listNoStyle;
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 18px;
+
+        .left_block {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          .calendar {
+            display: flex;
+            position: relative;
+          }
+          .calendar_show {
+            display: flex;
+            position: absolute;
+            top: 100%;
+            background-color: #fff;
+            z-index: 101;
+            border-radius: 10px;
+          }
+          .button_calendar {
+            padding: 4px;
+            margin: 0;
+            * {
+              width: 18px;
+              height: 18px;
+            }
+            margin-right: 10px;
+
+            @include ButtonIcon;
+            @include HoverActiveOpasity;
+
+            //   transform: translateY(-2px);
+          }
+          .date {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            margin-right: 16px;
+            width: 94px;
+            padding-top: 2px;
+            min-width: 94px;
+            span {
+              @include inputLight;
+            }
+            .edit {
+              @include EditSpan;
+            }
+          }
+          .point {
+            position: relative;
+            display: flex;
+            width: 8px;
+            margin-right: 12px;
+            &::after {
+              display: flex;
+              position: absolute;
+              z-index: 100;
+              content: "";
+              width: 8px;
+              height: 8px;
+              border-radius: 50%;
+              background-color: #c8d0ce;
+              top: 50%;
+              transform: translateY(-50%);
+            }
+          }
+          .info {
+            padding-top: 2px;
+            width: 100%;
+
+            input {
+              @include inputLight;
+              width: 100%;
+            }
+            .edit {
+              @include EditSpan;
+            }
+          }
+        }
+        .right_block {
+          display: flex;
+          align-items: center;
+          button {
+            padding: 4px;
+            margin: 0;
+            * {
+              width: 14px;
+              height: 14px;
+            }
+            @include ButtonIcon;
+            @include HoverActiveOpasity;
+          }
+        }
+      }
+    }
+
+    .add_stage {
+      button {
+        padding: 10px 10px;
+        @include ButtonLight;
+        span {
+          margin-left: 10px;
+        }
+      }
+    }
+  }
+}

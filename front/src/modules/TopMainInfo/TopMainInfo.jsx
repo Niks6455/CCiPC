@@ -5,11 +5,23 @@ import Bg from "../../assets/img/Bg.jpeg";
 import rect from "../../assets/img/rect.svg";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import DataContext from "../../context";
+import { useNavigate } from "react-router-dom";
 
 function TopMainInfo() {
   const arrowRef = useRef(null); // Реф для стрелки
+  const navigate = useNavigate();
   const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
   const context = useContext(DataContext);
+
+  const funClickRequest = () => {
+    const assetsToken = localStorage.getItem("accessToken");
+    if (assetsToken === null) {
+      navigate("/authorization");
+    } else {
+      navigate("/account/documents");
+    }
+  };
+
   return (
     <div className={styles.topContainer}>
       <div className={styles.TopHeader}>
@@ -27,16 +39,34 @@ function TopMainInfo() {
               <div className={styles.mainTopList}>
                 <ul>
                   <li>
-                    Программа <br /> конференции{" "}
+                    <a
+                      target="_blank"
+                      href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
+                    >
+                      Программа <br /> конференции
+                    </a>
+                    <a
+                      target="_blank"
+                      href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
+                      className={styles.clicker}
+                    ></a>
+                  </li>
+                  <li>
+                    Информационное <br /> письмо
                     <span className={styles.clicker}></span>
                   </li>
                   <li>
-                    Информационное <br /> письмо{" "}
-                    <span className={styles.clicker}></span>
-                  </li>
-                  <li>
-                    Последний сборник <br /> научных трудов{" "}
-                    <span className={styles.clicker}></span>
+                    <a
+                      target="_blank"
+                      href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
+                    >
+                      Последний сборник <br /> научных трудов
+                    </a>
+                    <a
+                      target="_blank"
+                      href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
+                      className={styles.clicker}
+                    ></a>
                   </li>
                 </ul>
               </div>
@@ -45,23 +75,14 @@ function TopMainInfo() {
         </div>
         <div className={styles.buttonClicker}>
           <div className={styles.buttonClickerInner}>
-            <img
-              className={styles.leftBot}
-              src={rect}
-              alt="Background"
-            />
-            <Button text={"Подать заявку"} />
-            <img
-              className={styles.leftTop}
-              src={rect}
-              alt="Background"
-            />
+            <img className={styles.leftBot} src={rect} alt="Background" />
+            <Button text={"Подать заявку"} funClick={funClickRequest} />
+            <img className={styles.leftTop} src={rect} alt="Background" />
           </div>
         </div>
       </main>
-      {
-        !context.activeMenu &&
-          <div className={styles.arrowTop}>
+      {!context.activeMenu && (
+        <div className={styles.arrowTop}>
           <a href="#top">
             <div
               ref={arrowRef}
@@ -69,8 +90,7 @@ function TopMainInfo() {
             ></div>
           </a>
         </div>
-      }
-    
+      )}
     </div>
   );
 }

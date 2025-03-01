@@ -90,7 +90,9 @@ function LeftMenuLk() {
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={() => handleMouseLeave()}
                 onMouseMove={handleMouseMove}
-                onClick={() => navigate(`viewreports?idReport=${rep.id}`)}
+                onClick={() =>
+                  navigate(`viewreports?idReport=${rep.id}&number=${index + 1}`)
+                }
               >
                 {index === showTooltip && (
                   <div
@@ -103,7 +105,7 @@ function LeftMenuLk() {
                     {rep.name}
                   </div>
                 )}
-                <span>Доклад №{rep.number}</span>
+                <span>Доклад №{index + 1}</span>
               </li>
             ))}
           </div>

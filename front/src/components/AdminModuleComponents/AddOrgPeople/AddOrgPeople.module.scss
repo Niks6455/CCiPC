@@ -1,0 +1,84 @@
+.AddOrgPeople{
+    .AddOrgPeopleInner{
+        background-color: #fff;
+        border-radius: 28px ;
+        padding: 20px;
+        width: 362px;
+        height: 737px;
+        box-sizing: border-box;
+        position: relative;
+        .AddOrgPeopleFile{
+            background-image: url("./../../../assets/img/AdminPanel/addPhoto.svg");
+            width: 322px;
+            height: 322px;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .AddOrgPeopleInput{
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+            
+            label{
+                font-size: 18px;
+                font-weight: 500;
+                margin-bottom: 10px;
+            }
+            input, textarea{
+                width: 100%;
+                min-height: 51px;
+                background: none;
+                border: none;
+                padding: 20px;
+                box-sizing: border-box;
+                border: 1px solid #C8D0CE;
+                border-radius: 10px;
+                font-size: 18px;
+            }
+            textarea{
+                resize: none;
+                font-size: 18px;
+                overflow-y: auto;
+               
+            }
+        }
+       
+        .file_cont{
+                display: flex;
+                position: relative;
+                width: auto;
+                height: auto;
+                border: 2px dashed #C8D0CE;
+                height: 322px;
+                width: 100%;
+                border-radius: 10px;
+                box-sizing: border-box;
+              .border_inner {
+                width: 100%;
+                height: 322px;
+                border-radius: 10px;
+                box-sizing: border-box;
+              }
+          } 
+        .AddOrgPeopleButton{
+            display: flex;
+            margin-top: 10px;
+            justify-content: space-between;
+            position: absolute;
+            bottom: 20px;
+            .save{
+                @include ButtonGreen();
+                width: 243px;
+                height: 54px;
+            }
+            .delete{
+                @include ButtonRed();
+                border-radius: 8px;
+                height: 54px;
+                width: 54px;
+                margin-left: 15px;
+                border: 1px solid #b32020;
+            }
+        }
+    }
+}

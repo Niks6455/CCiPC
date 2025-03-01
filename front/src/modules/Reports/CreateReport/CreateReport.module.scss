@@ -4,7 +4,7 @@
   width: 100%;
   position: relative;
   margin: 0 auto;
-box-sizing: border-box;
+  box-sizing: border-box;
   .title {
     display: flex;
     justify-content: center;
@@ -35,15 +35,64 @@ box-sizing: border-box;
     @include InputTitle();
     margin-top: 25px;
   }
-  .nameReportInput {
+
+  .name_report_container {
+    position: relative;
+    display: flex;
     margin-top: 10px;
-    @include TextArea;
+    .error_name {
+      position: absolute;
+      top: -10px;
+      right: 15px;
+      height: 20px;
+      background-color: var(--BodyBgColor);
+      padding: 0 5px;
+      transition: all 0.2s linear;
+      span {
+        color: #b32020;
+        font-family: Overpass, sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+      }
+    }
+    .nameReportInput {
+      @include TextArea;
+      transition: all 0.2s linear;
+    }
+    .error_input_name {
+      border: 1px solid #b32020;
+      transition: all 0.2s linear;
+    }
   }
   .inputsContainer {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 25px;
+
+    .input_organization {
+      display: flex;
+      flex-direction: column;
+      span {
+        margin-bottom: 10px;
+        font-family: Overpass, sans-serif;
+        font-weight: 500;
+        font-size: 18px;
+        color: #333333;
+      }
+      input {
+        border: 1px solid #c8d0ce;
+        width: 350px;
+        height: 54px;
+        border-radius: 10px;
+        background: none;
+        outline: none;
+        padding: 16px 20px;
+        font-family: Overpass, sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+      }
+    }
   }
   .fileContainer {
     display: flex;

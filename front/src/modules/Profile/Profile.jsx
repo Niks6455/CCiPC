@@ -4,17 +4,16 @@ import noPhotoLk from "./../../assets/img/noPhotoLk.svg";
 import editPhotoLk from "./../../assets/img/EditPhotoLk.png";
 import { ReactComponent as Close } from "./../../assets/img/UI/bigX.svg";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import { fioToString } from "../../utils/functions/funcions";
 function Profile() {
-    const testData = [
-        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
-        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
-        {name: "Название доклада №1:", text: "Исследование управления процессами биологической очистки на предприятии «ИДАВАНГ Агро»"},
-    ]  
-    const [showProfilePhoto, setShowProfilePhoto] = useState(false);
-    //! функция открытия фото профиля
-    const funOpenPhotoProfile = () => {
-        setShowProfilePhoto(!showProfilePhoto);
-        };
+  const user = useSelector((state) => state.user.user.data);
+
+  const [showProfilePhoto, setShowProfilePhoto] = useState(false);
+  //! функция открытия фото профиля
+  const funOpenPhotoProfile = () => {
+    setShowProfilePhoto(!showProfilePhoto);
+  };
 
   return (
     <section className={styles.Profile}>
@@ -44,38 +43,38 @@ function Profile() {
       </div>
       <div className={styles.mainSection}>
         <div className={styles.mainSectionInfoPeople}>
-          <p>Веселов Геннадий Евгеньевич</p>
+          <p>{fioToString(user?.name, user?.surname, user?.patronymic)}</p>
           <p>
-            <span>Ученое звание:</span> Доцент
+            <span>Ученое звание:</span> {user?.academicTitle || "Отсутствует"}
           </p>
           <p>
-            <span>Степень:</span> Доктор технических наук
+            <span>Степень:</span> {user?.degree || "Отсутствует"}
           </p>
         </div>
       </div>
       <div className={styles.containerMoreInfo}>
         <div className={styles.containerMoreInfoOne}>
           <p>
-            <span>Организация:</span> Южный федеральный университет
+            <span>Организация:</span> {user?.organization || "Отсутствует"}
           </p>
           <p>
-            <span>Должность:</span> Лаборант{" "}
+            <span>Должность:</span> {user?.position || "Отсутствует"}
           </p>
           <p>
-            <span>Email:</span> gev@sfedu.ru
+            <span>Email:</span> {user?.email || "Отсутствует"}
           </p>
           <p>
-            <span>Телефон:</span> +7-919-888-22-45
+            <span>Телефон:</span> {user?.phone || "Отсутствует"}
           </p>
           <p>
             <span>Направление конференции:</span> Отсутствует
           </p>
         </div>
         <div className={styles.containerMoreInfoSecond}>
-          {testData.map((el) => (
-            <div className={styles.containerMoreInfoSecondText}>
-              <p>{el.name}</p>
-              <p>{el.text}</p>
+          {user?.reports?.map((el, index) => (
+            <div key={index} className={styles.containerMoreInfoSecondText}>
+              <p>Название доклада №{index + 1}:</p>
+              <p>{el.name || "Отсутствует"}</p>
             </div>
           ))}
         </div>

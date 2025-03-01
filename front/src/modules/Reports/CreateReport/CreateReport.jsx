@@ -15,11 +15,16 @@ import exampleFile from "./../../../utils/files/template.docx";
 import { useNavigate } from "react-router-dom";
 import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
 import trashBeliy from "./../../../assets/img/UI/trashBeliy.svg";
+import FileComponent from "../../../components/AdminModuleComponents/FileComponent/FileComponent";
+import { ReactComponent as BorderIcon } from "@assets/img/AdminPanel/border2.svg";
 
-function CreateReport() {
+function CreateReport({ edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector((state) => state.reportCreateSlice);
+  // const conferences = useSelector((state) => state.conferences.data);
+  const [errorName, setErrorName] = useState(false);
+
   console.log("report", report);
   //! функция скачивания шаблока
   const funDownloadShablon = () => {
@@ -37,8 +42,16 @@ function CreateReport() {
     fileInputStatyaRef.current.click(); // Программно кликаем по input
   };
 
+  const funChangeFile = (value, key) => {
+    console.log("value", value);
+    if (value) {
+      dispatch(setValue({ key: key, value: value }));
+    }
+  };
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
       // Проверяем MIME-тип файла
       if (file.type === "application/pdf") {
@@ -55,6 +68,7 @@ function CreateReport() {
 
   const handleFileChangeZakl = (event) => {
     const file = event.target.files[0];
+
     if (file) {
       // Проверяем MIME-тип файла
       if (file.type === "application/pdf") {
@@ -79,28 +93,49 @@ function CreateReport() {
     console.log("name", name);
   };
 
+  //! изменение названия доклада с валидацией
+  const funChangeNameReport = (value) => {
+    if (value.length > 300) {
+      setErrorName(true);
+    } else {
+      setErrorName(false);
+    }
+    dispatch(setValue({ key: "name", value: value }));
+  };
+
   return (
     <div className={styles.CreateReport}>
       <h2 className={styles.title}>Доклад №{report.data.number}</h2>
-      <div className={styles.slider}>
-        <div
-          className={styles.sliderInner}
-          style={{
-            width: `${report.sliderState}%`,
-            transition: "all 0.15s linear",
-          }}
-        ></div>
-      </div>
+      {!edit && (
+        <div className={styles.slider}>
+          <div
+            className={styles.sliderInner}
+            style={{
+              width: `${report.sliderState}%`,
+              transition: "all 0.15s linear",
+            }}
+          ></div>
+        </div>
+      )}
+
       <p className={styles.nameReport}>Полное название доклада</p>
 
-      <textarea
-        type="text"
-        className={styles.nameReportInput}
-        value={report.data.name}
-        onChange={(event) =>
-          dispatch(setValue({ key: "name", value: event.target.value }))
-        }
-      />
+      <div className={styles.name_report_container}>
+        {errorName && (
+          <div className={styles.error_name}>
+            <span>Не более 300 символов*</span>
+          </div>
+        )}
+        <textarea
+          type="text"
+          className={`${errorName ? styles.error_input_name : ""} ${
+            styles.nameReportInput
+          }`}
+          value={report.data.name}
+          onChange={(event) => funChangeNameReport(event.target.value)}
+        />
+      </div>
+
       <div className={styles.inputsContainer}>
         <InputListForma
           name={"Направление конференции"}
@@ -124,37 +159,38 @@ function CreateReport() {
           handleChangeForm={handleChangeForm}
         />
       </div>
+      <div className={styles.inputsContainer}>
+        <div className={styles.input_organization}>
+          <span>Организация</span>
+          <input
+            type="text"
+            value={report.data.organization}
+            onChange={(e) => handleChangeForm("organization", e.target.value)}
+            placeholder="Ваша организация"
+            onFocus={(e) => (e.target.placeholder = "")}
+            onBlur={(e) => (e.target.placeholder = "Ваша организация")}
+          />
+        </div>
+      </div>
+
       <div className={styles.fileContainer}>
         <div className={styles.box}>
           <p>Добавить файл со статьёй</p>
           <div className={styles.fileContur}>
-            <input
-              type="file"
-              ref={fileInputStatyaRef}
-              onChange={handleFileChange}
-              style={{ display: "none" }} // Скрываем input
-            />
-
-            {report.data.fileArticle ? (
-              <>
-                <div className={styles.fileName}>
-                  <span>{report.data.fileArticle?.name || "Документ.pdf"}</span>
-                </div>
-                <img
-                  src={trashBeliy}
-                  className={styles.trash}
-                  alt="удалить"
-                  onClick={() => deleteFile("fileArticle")}
-                />
-                <BlockFile className={styles.blockFile} />
-              </>
-            ) : (
-              <FileImport
-                className={styles.fileImport}
-                onClick={funUploadFileStatya}
-                draggable="false"
+            <div className={styles.file_block}>
+              <BorderIcon className={styles.border} />
+              <FileComponent
+                data={report.data.fileArticle}
+                setData={(value) => funChangeFile(value, "fileArticle")}
+                typeFile={["application/pdf"]}
+                accept={".pdf"}
+                name={"fileArticle"}
+                icon={"pdf"}
+                itemKey={"fileArticle"}
+                fileSize={20} // размер файла
+                text={"Необходимо загрузить<br/>файл в формате PDF"}
               />
-            )}
+            </div>
 
             <div className={styles.downloadShablon}>
               <div className={styles.shablon} onClick={funDownloadShablon}>
@@ -167,34 +203,17 @@ function CreateReport() {
         <div className={styles.box}>
           <p>Добавить файл с экспертным заключением</p>
           <div className={styles.fileContur}>
-            <input
-              type="file"
-              ref={fileInputZaklRef}
-              onChange={handleFileChangeZakl}
-              style={{ display: "none" }} // Скрываем input
+            <FileComponent
+              data={report.data.fileArticle}
+              setData={(value) => funChangeFile(value, "fileExpertOpinion")}
+              typeFile={["application/pdf"]}
+              accept={".pdf"}
+              name={"fileExpertOpinion"}
+              icon={"pdf"}
+              itemKey={"fileExpertOpinion"}
+              fileSize={20} // размер файла
+              text={"Необходимо загрузить<br/>файл в формате PDF"}
             />
-            {report.data.fileExpertOpinion ? (
-              <>
-                <div className={styles.fileName}>
-                  <span>
-                    {report.data.fileExpertOpinion?.name || "Документ.pdf"}
-                  </span>
-                </div>
-                <img
-                  src={trashBeliy}
-                  className={styles.trash}
-                  alt="удалить"
-                  onClick={() => deleteFile("fileExpertOpinion")}
-                />
-                <BlockFile className={styles.blockFile} />
-              </>
-            ) : (
-              <FileImport
-                className={styles.fileImport}
-                draggable="false"
-                onClick={funUploadFileZakl}
-              />
-            )}
           </div>
         </div>
       </div>
@@ -207,24 +226,33 @@ function CreateReport() {
           type="text"
           readOnly={false}
           placeholder="Ваш комментарий"
-          value={report.comments}
+          onFocus={(e) => (e.target.placeholder = "")}
+          onBlur={(e) => (e.target.placeholder = "Ваш комментарий")}
+          value={report.data.comments}
           onChange={(event) =>
             dispatch(setValue({ key: "comments", value: event.target.value }))
           }
         />
       </div>
-      <div className={styles.srokContainer}>
-        <div className={styles.text}>
-          <img src={errorList} alt="img" />
-          <span>
-            В срок до XX.XX.XХХX необходимо прислать заявку на доклад, а в срок
-            до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
-          </span>
+      {!edit && (
+        <div className={styles.srokContainer}>
+          <div className={styles.text}>
+            <img src={errorList} alt="img" />
+            <span>
+              В срок до необходимо прислать заявку на доклад, а в срок до
+              ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
+            </span>
+          </div>
+          <button
+            style={
+              errorName ? { cursor: "not-allowed" } : { cursor: "pointer" }
+            }
+            onClick={() => !errorName && navigate("/account/addcoauthor")}
+          >
+            Следующий шаг
+          </button>
         </div>
-        <button onClick={() => navigate("/account/addcoauthor")}>
-          Следующий шаг
-        </button>
-      </div>
+      )}
     </div>
   );
 }

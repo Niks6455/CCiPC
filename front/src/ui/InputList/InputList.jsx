@@ -37,7 +37,7 @@ function InputList(props) {
       />
       <div
         className={styles.arrow}
-        onClick={() => props.funOpen(props.name)}
+        onClick={() => props.funOpen(props?.name)}
         style={props.styleArrow ? props.styleArrow : {}}
       >
         <img

@@ -1,0 +1,60 @@
+.NewsModuleAdminPage{
+    .NewsModuleAdminPageInner{
+        .title{
+            font-size: 32px;
+            font-weight: 500;
+            margin-bottom: 40px;
+            color: #333;
+        }
+        .NewsTopMenu{
+            display: flex;
+            justify-content: space-between;
+            .NewsTopMenuinput{
+                display: flex;
+                position: relative;
+                img{
+                    position: absolute;
+                    top: 14px;
+                    left: 15px;
+                }
+                input{
+                    width: 412px;   
+                    height: 52px;
+                    border: 1px solid #C8D0CE;
+                    background-color: inherit;
+                    box-sizing: border-box;
+                    border-radius: 10px;
+                    padding: 0px 20px 0px 50px;
+                    font-size: 18px;
+                    font-weight: 400;
+                    color: #333;
+                    &::placeholder{
+                        font-size: 18px;
+                        color: #858B89;
+                    }
+                }
+            }
+            
+            button{
+                @include ButtonGreen;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 52px;
+                width: 280px;
+            }
+        }  
+    }
+    .notNews{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 22px;
+        color: #333;
+        margin-top: 100px;
+    }
+    .UnivarsalTableAdmin{
+        margin-top: 25px;
+        width: 100%;
+    }
+}

@@ -4,9 +4,18 @@ import styles from "./ExitAccount.module.scss";
 import DataContext from "../../context";
 import ExitImg from "./../../assets/img/exit.png";
 
-function ExitAccount() {
+function ExitAccount(props) {
   const navigate = useNavigate();
   const context = useContext(DataContext);
+
+  const funExcit = () => {
+    navigate("/authorization");
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userData");
+    props.funResetAllApi();
+  };
+
   return (
     <section className={styles.ExitAccount}>
       <div>
@@ -23,7 +32,7 @@ function ExitAccount() {
           >
             В профиль
           </button>
-          <button onClick={() => navigate("/authorization")}>Да</button>
+          <button onClick={funExcit}>Да</button>
         </div>
       </div>
     </section>

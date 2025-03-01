@@ -4,9 +4,12 @@ import closeImg from "./../../assets/img/closeImg.png";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
 import ArrowMenu from "./../../assets/img/ArrowMenu.png";
+import { useSelector } from "react-redux";
 function NavBar() {
   const context = useContext(DataContext);
   const navigate = useNavigate();
+  const autorisation =
+    useSelector((state) => state.user.status) === "succeeded";
 
   return (
     <section className={styles.NavBar}>
@@ -34,11 +37,11 @@ function NavBar() {
           <ul>
             <li
               onClick={() => {
-                navigate("/account/profile");
+                navigate(autorisation ? "/account/profile" : "/authorization");
                 context.setActiveMenu(false);
               }}
             >
-              Личный кабинет{" "}
+              {autorisation ? "Личный кабинет" : "Вход/Регистрация"}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
@@ -49,7 +52,7 @@ function NavBar() {
                 context.setActiveMenu(false);
               }}
             >
-              Главная{" "}
+              Главная
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
@@ -94,6 +97,18 @@ function NavBar() {
               }}
             >
               Оргкомитет{" "}
+              <span className={styles.arowLi}>
+                <img src={ArrowMenu} alt="Arrow" />
+              </span>
+            </li>
+
+            <li
+              onClick={() => {
+                navigate("/adminPage/news");
+                context.setActiveMenu(false);
+              }}
+            >
+              Админка{" "}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>

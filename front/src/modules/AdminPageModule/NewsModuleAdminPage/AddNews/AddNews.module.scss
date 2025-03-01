@@ -1,0 +1,112 @@
+.AddNews{
+   .buttonBack{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 54px;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 40px;
+    color: #333;
+    border: none;
+    background: none;
+    cursor: pointer;
+   }
+   .addNewsCont{
+    display: flex;
+    justify-content: end;
+    width: 100%;
+    margin-top: 25px;
+        .addNews{
+            @include ButtonGreen;
+            width: 280px;
+            height: 52px;
+       }
+   }
+   textarea{
+    background: none;
+    border: 1px solid var(--InputTextColor);
+    width: 100%;
+    resize: none;
+    border-radius: 10px;
+    min-height: 110px;
+    font-size: 18px;
+    padding: 20px;
+    box-sizing: border-box;
+   }
+   label{
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+   }
+   .addNewsTextBlockTwo{
+    display: grid;
+    margin-top: 35px;
+    grid-template-columns: 2fr 2fr;
+    gap: 32px;
+    height: 500px;
+    textarea{
+        height: 100%;
+    }
+    .addFile{
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        height: 100%;
+        label{
+            margin: 0px;
+        }
+        .addFileInner{
+                height: 100%;
+            }
+        }
+   }
+  
+  .file_cont{
+    height: 500px;
+    .file_cont {
+        display: flex;
+        position: relative;
+        width: auto;
+        height: auto;
+      }
+      .border {
+        display: flex;
+        width: 100%;
+        height: 500px;
+      }
+      .border_inner {
+        width: 100%;
+        height: 520px;
+        border: 2px dashed var(--InputTextColor);
+        border-radius: 10px;
+        box-sizing: border-box;
+      }
+      
+  } 
+
+   .editNewsCont{
+    display: flex;
+    justify-content: end;
+    margin-top: 65px;
+    .editNewsContInner{
+        display: grid;
+        grid-template-columns: repeat(2, 280px);
+        gap: 25px;
+        .addNews{
+            @include ButtonGreen;
+            width: 280px;
+            height: 52px;
+       }
+       .deleteNews{
+        @include ButtonRed;
+        width: 280px;
+        height: 52px;
+        border: 1px solid var(--ErrorColor);
+        img{
+            margin-left: 10px;
+        }
+       }
+    }
+ }
+}

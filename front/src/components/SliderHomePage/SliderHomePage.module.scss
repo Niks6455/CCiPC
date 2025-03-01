@@ -68,10 +68,12 @@
     z-index: 10;
     height: 600px;
     box-sizing: border-box;
+    border-radius: 20px;
     img {
       height: 600px;
-      object-fit: contain; /* Изображение не будет обрезаться */
-      box-sizing: border-box;
+      width: 900px!important;
+      border-radius: 20px!important;
+      
     }
   }
 }

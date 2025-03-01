@@ -8,6 +8,8 @@ import { createSlice } from "@reduxjs/toolkit";
     fileExpertOpinion - файл с экспертным заключением
     comments - комментарии
     soauthors - сооавторы
+    organization - Организация
+
 */
 
 const keys = [
@@ -19,6 +21,7 @@ const keys = [
   "fileExpertOpinion",
   "comments",
   "soauthors",
+  "organization",
 ];
 
 const keysCoauthors = [
@@ -74,6 +77,7 @@ const reportCreateSlice = createSlice({
       fileExpertOpinion: null,
       comments: "",
       soauthors: [],
+      organization: "",
     },
     sliderState: 0,
     openPopUpName: "",
@@ -172,6 +176,14 @@ const reportCreateSlice = createSlice({
       const { index, autocompletion } = action.payload;
       state.data.soauthors[index].autocompletion = autocompletion;
     },
+
+    //! редактирование
+    disEditReport(state, action) {
+      const { data } = action.payload;
+      state.data = data;
+      state.sliderState = 0;
+      state.openPopUpName = "";
+    },
   },
 });
 
@@ -183,6 +195,7 @@ export const {
   setOpenPopUpName,
   funSaveDataState,
   setCoauthorAutocompletion,
+  disEditReport,
 } = reportCreateSlice.actions;
 
 export default reportCreateSlice.reducer;

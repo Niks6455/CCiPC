@@ -94,6 +94,60 @@
   }
 }
 
+@mixin ButtonRedBorder($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #b32020;
+  border: 1px solid #b32020;
+  cursor: pointer;
+  span {
+    margin-right: 10px;
+  }
+  &:hover {
+    background-color: #efe1e1;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: #eab7b7;
+    transition: all 0.15s linear;
+  }
+}
+
+@mixin ButtonGreenBorder($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: inherit;
+  border: 1px solid #004529;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #004529;
+  border: 1px solid #004529;
+  cursor: pointer;
+  span {
+    margin-right: 10px;
+  }
+  &:hover {
+    background-color: #0045290a;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    background-color: #00452940;
+    transition: all 0.15s linear;
+  }
+}
+
 @mixin ButtonRed($fs: 18px) {
   display: flex;
   justify-content: center;
@@ -118,6 +172,15 @@
   }
 }
 
+@mixin ButtonIcon() {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 @mixin HoverActive() {
   &:hover {
     background-color: #0045290a;
@@ -129,17 +192,184 @@
   }
 }
 
-@mixin TextDefault(){
+@mixin HoverActiveOpasity() {
+  &:hover {
+    opacity: 0.6;
+    transition: all 0.15s linear;
+  }
+  &:active {
+    opacity: 1;
+    transition: all 0.15s linear;
+  }
+}
+
+@mixin TextDefault() {
   font-size: 20px;
   font-weight: 400;
   line-height: 26px;
   color: var(--GrayTextDefault);
 }
 
-@mixin TextStrong(){
+@mixin TextStrong() {
   font-size: 20px;
   font-weight: 600;
   line-height: 26px;
   color: var(--GrayTextDefault);
 }
 
+//! фон попапа
+@mixin PopupBlur() {
+  width: 100vw;
+  height: 100vw;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #f4f4f466;
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  padding-top: 180px;
+  z-index: 10000;
+}
+
+//! контейнер попапа белый фон
+@mixin PopupContainer() {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 960px;
+  height: 286px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+//! тайтл PopupContainer
+@mixin PopupTitle() {
+  font-family: Overpass, sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0%;
+  text-align: center;
+}
+@mixin ButtonOrgComActive($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--MenuHover);
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #333;
+  border: 1px solid #00452940;
+  margin-right: 25px;
+  padding: 4px 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--MenuHoverActive);
+    transition: all 0.15s linear;
+  }
+}
+@mixin ButtonOrgComDisable($fs: 18px) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--MenuHover);
+  border: none;
+  border-radius: 10px;
+  font-family: Overpass, sans-serif;
+  font-size: $fs;
+  font-weight: 400;
+  text-align: center;
+  color: #333;
+  border: 1px solid #00452940;
+  margin-right: 25px;
+  padding: 4px 5px;
+  cursor: pointer;
+  opacity: 0.5;
+  &:hover {
+    background-color: var(--MenuHoverActive);
+    transition: all 0.15s linear;
+  }
+}
+
+@mixin titleH2() {
+  padding: 0;
+  margin: 0;
+  font-family: Overpass;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 44.8px;
+  letter-spacing: 0%;
+  color: #333333;
+}
+
+@mixin titleBlock() {
+  padding: 0;
+  margin: 0;
+  font-family: Overpass;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 21.6px;
+  letter-spacing: 0%;
+  color: #333333;
+}
+
+@mixin blockGreenBorder() {
+  display: flex;
+  border: 1px solid #c8d0ce;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+@mixin listNoStyle() {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  li {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@mixin ScrollBar() {
+  /* Вертикальный скролл */
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #c8d0ce;
+    border-radius: 8px;
+    border: 2px solid #c8d0ce;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: #c8d0ce;
+  }
+}
+
+@mixin InputCheckBox() {
+  appearance: none; /* Убираем стандартный вид */
+  -webkit-appearance: none; /* Для Safari */
+
+  background-color: #ffffff; /* Белый фон для неактивного состояния */
+  border: 1px solid #333333; /* Граница */
+  border-radius: 4px; /* Опционально, если хотите скругленные углы */
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  &:checked {
+    background-color: #004529; /* Зеленый/90 */
+    border-color: #004529; /* Опционально, можно усилить цвет границы */
+  }
+}

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import styles from "./InputListForma.module.scss";
 import { ReactComponent as ArrowBottom } from "./../../assets/img/UI/blackArrowBottom.svg";
 import ListInput from "../ListInput/ListInput";
+import { AnimatePresence } from "framer-motion";
 
 function InputListForma(props) {
   const refCalendar = useRef(null);
@@ -37,16 +38,18 @@ function InputListForma(props) {
           }`}
           onClick={() => setListOpen(!listOpen)}
         />
-        {listOpen && (
-          <ListInput
-            index={props.index}
-            list={props.list}
-            value={props.value}
-            name={props.itemKey}
-            setListOpen={setListOpen}
-            handleChangeForm={props.handleChangeForm}
-          />
-        )}
+        <AnimatePresence>
+          {listOpen && (
+            <ListInput
+              index={props.index}
+              list={props.list}
+              value={props.value}
+              name={props.itemKey}
+              setListOpen={setListOpen}
+              handleChangeForm={props.handleChangeForm}
+            />
+          )}
+        </AnimatePresence>
       </div>
     </div>
   );
