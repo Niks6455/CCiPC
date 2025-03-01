@@ -1,6 +1,7 @@
 import News from "../models/news.js";
 import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
 import {Op} from "sequelize";
+import fs from "fs";
 
 export default {
     async create(title, description) {
@@ -47,22 +48,32 @@ export default {
         return news
     },
 
-    async update(id, title, description){
+    async update(id, title, description, img){
 
-        const [news, checkTitle]=await Promise.all([
-            News.findByPk(id),
-            News.findOne({
+        const news= await News.findByPk(id)
+        if(title)
+        {
+            const checkTitle = await News.findOne({
                 where: {
                     title: title
                 }
             })
-        ])
+
+            if(checkTitle) throw new AppErrorAlreadyExists('title')
+
+        }
+
+        if(news?.img && img===null){
+                fs.unlink(news.img, (err=> {
+                    if (err) console.log(err);
+                }))
+        }
+
 
         if(!news) throw new AppErrorNotExist('news')
-        if(checkTitle) throw new AppErrorAlreadyExists('title')
 
         return await news.update({
-            title , description
+            title , description, img
         })
     },
 
