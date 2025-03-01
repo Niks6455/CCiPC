@@ -7,8 +7,11 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fioToString } from "../../utils/functions/funcions";
 import { fetchUserData } from "../../store/userSlice/user.Slice";
+import { server } from "../../apirequests/apirequests";
+import { useNavigate } from "react-router-dom";
 function Profile() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user.user.data);
   const [showProfilePhoto, setShowProfilePhoto] = useState(false);
   //! функция открытия фото профиля
@@ -26,7 +29,12 @@ function Profile() {
         <>
           <div className={styles.bacgraund}></div>
           <div className={styles.ProfilePhotoShow}>
-            <img className={styles.ProfileImg} src={noPhotoLk} />
+            <img
+              className={styles.ProfileImg}
+              src={`${server}/${user?.avatar}`}
+              alt="img"
+              onError={(e) => (e.target.src = noPhotoLk)}
+            />
             {/* <img
               onClick={funOpenPhotoProfile}
               className={styles.close}
@@ -37,14 +45,23 @@ function Profile() {
           </div>
         </>
       )}
-      <div>
+      <div className={styles.profile_img_container}>
         <img src={ProfilePictureBackground} className={styles.ProfileImg} />
+        <div className={styles.photo_lk}>
+          <img
+            src={`${server}/${user?.avatar}`}
+            className={styles.noPhotoLk}
+            onClick={funOpenPhotoProfile}
+            alt="img"
+            onError={(e) => (e.target.src = noPhotoLk)}
+          />
+        </div>
+
         <img
-          src={noPhotoLk}
-          className={styles.noPhotoLk}
-          onClick={funOpenPhotoProfile}
+          src={editPhotoLk}
+          onClick={() => navigate("/account/settings/profile")}
+          className={styles.editPhotoLk}
         />
-        <img src={editPhotoLk} className={styles.editPhotoLk} />
       </div>
       <div className={styles.mainSection}>
         <div className={styles.mainSectionInfoPeople}>

@@ -28,10 +28,10 @@ const keysCoauthors = [
   "name",
   "surname",
   "patronymic",
-  "organization",
+  // "organization",
   "email",
-  "phone",
-  "formParticipation",
+  // "phone",
+  // "formParticipation",
 ];
 
 //! функция расчета sliderState

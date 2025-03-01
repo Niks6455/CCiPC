@@ -6,7 +6,11 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
 import { useDispatch, useSelector } from "react-redux";
-import { apiUpdateUser, uploadPhoto } from "../../apirequests/apirequests";
+import {
+  apiUpdateUser,
+  server,
+  uploadPhoto,
+} from "../../apirequests/apirequests";
 import { disEditUser, setEditUser } from "../../store/userSlice/user.Slice";
 import { inputsData } from "./data";
 import cameraIcon from "@assets/img/UI/camera.svg";
@@ -28,6 +32,10 @@ function ProfileEditing() {
   const [urlPhoto, setUrlPhoto] = useState(null);
 
   console.log("formData", formData);
+
+  useEffect(() => {
+    setUrlPhoto(`${server}/${user?.avatar}`);
+  }, [user?.avatar]);
 
   useEffect(() => {
     if (!formData.name) {
@@ -149,8 +157,9 @@ function ProfileEditing() {
         }
         const file = new FormData();
         file.append("file", userPhoto);
-        console.log("userPhoto", userPhoto);
-        uploadPhoto(file, "AVATAR");
+        if (userPhoto) {
+          uploadPhoto(file, "AVATAR");
+        }
       });
     } else {
       console.log("Валидация не прошла");
@@ -183,6 +192,7 @@ function ProfileEditing() {
           <img
             className={styles.photo_heve}
             src={urlPhoto || profilePhoto}
+            onError={(e) => (e.target.src = profilePhoto)}
             alt="img"
           />
           {/* <img src={profilePhoto} alt="img" /> */}

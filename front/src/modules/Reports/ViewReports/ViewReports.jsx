@@ -21,11 +21,15 @@ function ViewReports() {
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
 
-  // const reportQery = useQuery({
-  //   queryKey: ["report", reportData?.id],
-  //   queryFn: () => apiDeleteReport(reportData?.id),
-  //   enabled: false,
-  // });
+  const [idReport, setIdReport] = useState(null);
+
+  const reportQery = useQuery({
+    queryKey: [`${idReport}`, idReport],
+    queryFn: () => apiDeleteReport(idReport),
+    enabled: !!idReport,
+  });
+
+  console.log("reportQery", reportQery);
 
   const handleMouseEnter = (index) => {
     // Устанавливаем таймер для задержки
@@ -48,6 +52,9 @@ function ViewReports() {
 
   useEffect(() => {
     const idReport = searchParams.get("idReport"); // Получаем idReport из query параметров
+    if (idReport) {
+      setIdReport(idReport);
+    }
     setNumber(searchParams.get("number")); // Получаем number из query параметров
     if (idReport && report.length > 0) {
       setReportData(report.find((item) => item.id === idReport));
