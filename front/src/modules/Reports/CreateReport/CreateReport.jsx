@@ -1,20 +1,20 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./CreateReport.module.scss";
 import {
   directionConferenceList,
   formParticipationList,
   participationStatus,
 } from "../../../utils/Lists/List";
-import { ReactComponent as FileImport } from "./../../../assets/img/fileImport.svg";
 import errorList from "./../../../assets/img/UI/errorZnak.svg";
 import { useDispatch, useSelector } from "react-redux";
-import { setValue } from "../../../store/reportCreateSlice/reportCreateSlice";
+import {
+  disSetResetReport,
+  setValue,
+} from "../../../store/reportCreateSlice/reportCreateSlice";
 import InputListForma from "../../../components/InputListForma/InputListForma";
 import download from "./../../../assets/img/UI/download.svg";
 import exampleFile from "./../../../utils/files/template.docx";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
-import trashBeliy from "./../../../assets/img/UI/trashBeliy.svg";
 import FileComponent from "../../../components/AdminModuleComponents/FileComponent/FileComponent";
 import { ReactComponent as BorderIcon } from "@assets/img/AdminPanel/border2.svg";
 
@@ -25,7 +25,12 @@ function CreateReport({ edit }) {
   // const conferences = useSelector((state) => state.conferences.data);
   const [errorName, setErrorName] = useState(false);
 
-  console.log("report", report);
+  useEffect(() => {
+    if (!edit) {
+      dispatch(disSetResetReport());
+    }
+  }, []);
+
   //! функция скачивания шаблока
   const funDownloadShablon = () => {
     const link = document.createElement("a");
@@ -36,55 +41,9 @@ function CreateReport({ edit }) {
     document.body.removeChild(link);
   };
 
-  const fileInputStatyaRef = useRef(null);
-  //! загрузить файл со статьей
-  const funUploadFileStatya = () => {
-    fileInputStatyaRef.current.click(); // Программно кликаем по input
-  };
-
   const funChangeFile = (value, key) => {
     console.log("value", value);
-    if (value) {
-      dispatch(setValue({ key: key, value: value }));
-    }
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      // Проверяем MIME-тип файла
-      if (file.type === "application/pdf") {
-        dispatch(setValue({ key: "fileArticle", value: file })); // Сохраняем файл в Redux
-      }
-    }
-  };
-
-  //! загрузить файл с заключением
-  const fileInputZaklRef = useRef(null);
-  const funUploadFileZakl = () => {
-    fileInputZaklRef.current.click(); // Программно кликаем по input
-  };
-
-  const handleFileChangeZakl = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      // Проверяем MIME-тип файла
-      if (file.type === "application/pdf") {
-        dispatch(setValue({ key: "fileExpertOpinion", value: file })); // Сохраняем файл в Redux
-      }
-    }
-  };
-
-  const deleteFile = (key) => {
-    dispatch(setValue({ key: key, value: null })); // Сохраняем файл в Redux
-    if (key === "fileArticle") {
-      fileInputStatyaRef.current.value = "";
-    }
-    if (key === "fileExpertOpinion") {
-      fileInputZaklRef.current.value = "";
-    }
+    dispatch(setValue({ key: key, value: value }));
   };
 
   //! функция onClange на InputListForm
@@ -178,18 +137,22 @@ function CreateReport({ edit }) {
           <p>Добавить файл со статьёй</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
-              <BorderIcon className={styles.border} />
-              <FileComponent
-                data={report.data.fileArticle}
-                setData={(value) => funChangeFile(value, "fileArticle")}
-                typeFile={["application/pdf"]}
-                accept={".pdf"}
-                name={"fileArticle"}
-                icon={"pdf"}
-                itemKey={"fileArticle"}
-                fileSize={20} // размер файла
-                text={"Необходимо загрузить<br/>файл в формате PDF"}
-              />
+              {!report.data.fileArticle && (
+                <BorderIcon className={styles.border} />
+              )}
+              <div className={styles.file_inner}>
+                <FileComponent
+                  data={report.data.fileArticle}
+                  setData={(value) => funChangeFile(value, "fileArticle")}
+                  typeFile={["application/pdf"]}
+                  accept={".pdf"}
+                  name={"fileArticle"}
+                  icon={"pdf"}
+                  itemKey={"fileArticle"}
+                  fileSize={20} // размер файла
+                  text={"Необходимо загрузить<br/>файл в формате PDF"}
+                />
+              </div>
             </div>
 
             <div className={styles.downloadShablon}>
@@ -203,17 +166,24 @@ function CreateReport({ edit }) {
         <div className={styles.box}>
           <p>Добавить файл с экспертным заключением</p>
           <div className={styles.fileContur}>
-            <FileComponent
-              data={report.data.fileArticle}
-              setData={(value) => funChangeFile(value, "fileExpertOpinion")}
-              typeFile={["application/pdf"]}
-              accept={".pdf"}
-              name={"fileExpertOpinion"}
-              icon={"pdf"}
-              itemKey={"fileExpertOpinion"}
-              fileSize={20} // размер файла
-              text={"Необходимо загрузить<br/>файл в формате PDF"}
-            />
+            <div className={styles.file_block}>
+              {!report.data.fileExpertOpinion && (
+                <BorderIcon className={styles.border} />
+              )}
+              <div className={styles.file_inner}>
+                <FileComponent
+                  data={report.data.fileExpertOpinion}
+                  setData={(value) => funChangeFile(value, "fileExpertOpinion")}
+                  typeFile={["application/pdf"]}
+                  accept={".pdf"}
+                  name={"fileExpertOpinion"}
+                  icon={"pdf"}
+                  itemKey={"fileExpertOpinion"}
+                  fileSize={20} // размер файла
+                  text={"Необходимо загрузить<br/>файл в формате PDF"}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

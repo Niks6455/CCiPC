@@ -6,6 +6,7 @@ import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg
 import { ReactComponent as Trash } from "./../../../assets/img/UI/trash.svg";
 import { apiDeleteReport } from "../../../apirequests/apirequests";
 import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
+import { AnimatePresence, motion } from "framer-motion";
 
 function ViewReports() {
   const navigate = useNavigate();
@@ -58,9 +59,11 @@ function ViewReports() {
 
   const funDeleteReport = () => {
     //! удаляем доклад
-    apiDeleteReport(reportData.id).then((res) => {
+    const id = reportData.id;
+    apiDeleteReport(id).then((res) => {
       if (res?.status === 200) {
-        dispatch(disDeleteReport(reportData.id));
+        console.log("reportData", id);
+        dispatch(disDeleteReport({ id }));
         setIsModalDelete(false);
         navigate("/account/profile");
       }
@@ -69,27 +72,34 @@ function ViewReports() {
 
   return (
     <section className={styles.ViewReports}>
-      {isModalDelete && (
-        <div className={styles.modal_container}>
-          <div className={styles.modal_delete_report}>
-            <h2>
-              Вы действительно хотите удалить доклад “Название доклада”?
-              Отменить это действие будет невозможно.
-            </h2>
-            <div className={styles.button_container}>
-              <button
-                className={styles.cancle}
-                onClick={() => setIsModalDelete(false)}
-              >
-                Назад
-              </button>
-              <button className={styles.delete} onClick={funDeleteReport}>
-                Удалить
-              </button>
-            </div>
+      <AnimatePresence>
+        {isModalDelete && (
+          <div className={styles.modal_container}>
+            <motion.div
+              className={styles.modal_delete_report}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+            >
+              <h2>
+                Вы действительно хотите удалить доклад “Название доклада”?
+                Отменить это действие будет невозможно.
+              </h2>
+              <div className={styles.button_container}>
+                <button
+                  className={styles.cancle}
+                  onClick={() => setIsModalDelete(false)}
+                >
+                  Назад
+                </button>
+                <button className={styles.delete} onClick={funDeleteReport}>
+                  Удалить
+                </button>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       <div className={styles.ViewReportsInner}>
         <div className={styles.ViewReportsInnerFirst}>

@@ -6,7 +6,7 @@ import pdfIcon from "@assets/img/AdminPanel/pdf.svg";
 import pdfIconImport from "@assets/img/AdminPanel/pdfImport.svg";
 import docIcon from "@assets/img/AdminPanel/doc.svg";
 import dragingIcon from "@assets/img/AdminPanel/dragging.svg";
-import borderFile from "@assets/img/AdminPanel/borderFile.svg";
+import { AnimatePresence } from "framer-motion";
 
 function FileComponent(props) {
   const [logoHeader, setLogoHeader] = useState(null);
@@ -16,12 +16,12 @@ function FileComponent(props) {
   const [isDragging, setIsDragging] = useState(null);
   const [errorSize, setErrorSize] = useState(false);
 
-  useEffect(()=>{
-    if(props.logoHeader){
+  useEffect(() => {
+    if (props.logoHeader) {
       setLogoHeader(props.logoHeader);
       setIsVisibleHeader(true);
     }
-  },[props.logoHeader])
+  }, [props.logoHeader]);
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла
   const funFileHeaderClick = () => {
     document.getElementById(props.name).click();
@@ -122,8 +122,6 @@ function FileComponent(props) {
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
     >
-      {/* <img src={borderFile} className={styles.border} /> */}
-
       {logoHeader ? (
         <div className={styles.container_file}>
           {props.icon === "png" && (

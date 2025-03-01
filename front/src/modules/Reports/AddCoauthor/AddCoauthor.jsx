@@ -85,7 +85,7 @@ function AddCoauthor({ edit, number }) {
     if (edit) {
       //! редактирование доклада
       const temp = {
-        coAuthors: report.data.soauthors.map((soauthor) => ({
+        coAuthors: report.data?.soauthors?.map((soauthor) => ({
           name: soauthor?.data?.name || "",
           surname: soauthor?.data?.surname || "",
           patronymic: soauthor?.data?.patronymic || "",

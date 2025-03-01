@@ -12,8 +12,14 @@ import {
 } from "../../utils/functions/PasswordValidation";
 import { useMutation } from "@tanstack/react-query";
 import { apiChangePassword } from "../../apirequests/apirequests";
+import confitmIcon from "@assets/img/confirm.svg";
+import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 
 function ChangePassword() {
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [inputTypes, setInputTypes] = useState({
     currentPassword: "password",
     newpassword: "password",
@@ -103,12 +109,37 @@ function ChangePassword() {
         newPassword: formData.newpassword,
         repeatPassword: formData.rewnewpassword,
       };
-      apiChangePassword(data).then((res) => console.log(res));
+      apiChangePassword(data).then((res) => {
+        if (res?.status === 200) {
+          setIsModalOpen(true);
+        }
+      });
     }
+  };
+
+  const funClickCloseModal = () => {
+    setIsModalOpen(false);
+    navigate("/account/profile");
   };
 
   return (
     <div className={styles.ChangePassword}>
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className={styles.modal}>
+            <motion.div
+              className={styles.container}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+            >
+              <h2 className={styles.modalText}>Пароль успешно изменен</h2>
+              <img src={confitmIcon} alt="✅" />
+              <button onClick={funClickCloseModal}>Перейти в профиль</button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
       <div className={styles.container}>
         <Input
           name={"currentPassword"}
