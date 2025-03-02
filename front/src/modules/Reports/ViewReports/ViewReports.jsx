@@ -4,8 +4,15 @@ import { useNavigate, useSearchParams } from "react-router-dom"; // Импорт
 import styles from "./ViewReports.module.scss";
 import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
 import { ReactComponent as Trash } from "./../../../assets/img/UI/trash.svg";
-import { apiDeleteReport } from "../../../apirequests/apirequests";
+import {
+  apiDeleteReport,
+  apiGetReportId,
+  server,
+} from "../../../apirequests/apirequests";
 import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
+import { AnimatePresence, motion } from "framer-motion";
+import { useQuery } from "@tanstack/react-query";
+import { decodeFileName } from "../../../utils/functions/funcions";
 
 function ViewReports() {
   const navigate = useNavigate();
@@ -18,6 +25,17 @@ function ViewReports() {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
+  const [idReport, setIdReport] = useState(null);
+
+  const reportQery = useQuery({
+    queryKey: [`${idReport}`, idReport],
+    queryFn: () => apiGetReportId(idReport),
+    enabled: !!idReport,
+  });
+
+  useEffect(() => {
+    setReportData(reportQery?.data?.data?.report);
+  }, [reportQery]);
 
   const handleMouseEnter = (index) => {
     // Устанавливаем таймер для задержки
@@ -40,15 +58,11 @@ function ViewReports() {
 
   useEffect(() => {
     const idReport = searchParams.get("idReport"); // Получаем idReport из query параметров
-    setNumber(searchParams.get("number")); // Получаем idReport из query параметров
-    if (idReport && report.length > 0) {
-      setReportData(report.find((item) => item.id === idReport));
+    if (idReport) {
+      setIdReport(idReport);
     }
+    setNumber(searchParams.get("number")); // Получаем number из query параметров
   }, [searchParams, report]); // Запускаем useEffect при изменении query параметров или списка докладов
-
-  useEffect(() => {
-    console.log("reportData", reportData);
-  }, [reportData]);
 
   //! функция удаления доклада
   const deleteReportOpenModal = () => {
@@ -58,41 +72,65 @@ function ViewReports() {
 
   const funDeleteReport = () => {
     //! удаляем доклад
-    apiDeleteReport(reportData.id).then((res) => {
+    const id = reportData.id;
+    apiDeleteReport(id).then((res) => {
       if (res?.status === 200) {
-        dispatch(disDeleteReport(reportData.id));
+        console.log("reportData", id);
+        dispatch(disDeleteReport({ id }));
         setIsModalDelete(false);
         navigate("/account/profile");
       }
     });
   };
 
+  const funOpenFile = (file) => {
+    //открытие файла по ссылке
+    window.open(`${server}/${file}`, "_blank");
+  };
+
+  const getFileName = (file) => {
+    const fileName = file?.split("\\").pop();
+    if (!fileName) return "Документ.pdf";
+    return decodeFileName(fileName);
+  };
+
   return (
     <section className={styles.ViewReports}>
-      {isModalDelete && (
-        <div className={styles.modal_container}>
-          <div className={styles.modal_delete_report}>
-            <h2>
-              Вы действительно хотите удалить доклад “Название доклада”?
-              Отменить это действие будет невозможно.
-            </h2>
-            <div className={styles.button_container}>
-              <button
-                className={styles.cancle}
-                onClick={() => setIsModalDelete(false)}
-              >
-                Назад
-              </button>
-              <button className={styles.delete} onClick={funDeleteReport}>
-                Удалить
-              </button>
-            </div>
+      <AnimatePresence>
+        {isModalDelete && (
+          <div className={styles.modal_container}>
+            <motion.div
+              className={styles.modal_delete_report}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+            >
+              <h2>
+                {`Вы действительно хотите удалить доклад “${reportData?.name}”?
+                Отменить это действие будет невозможно.`}
+              </h2>
+              <div className={styles.button_container}>
+                <button
+                  className={styles.cancle}
+                  onClick={() => setIsModalDelete(false)}
+                >
+                  Назад
+                </button>
+                <button className={styles.delete} onClick={funDeleteReport}>
+                  Удалить
+                </button>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       <div className={styles.ViewReportsInner}>
         <div className={styles.ViewReportsInnerFirst}>
+          <div className={styles.ViewReportsBlock}>
+            <p className={styles.ViewReportsTitle}>Автор:</p>
+            <p>{reportData?.author?.fio}</p>
+          </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>
               Название доклада № {number}:
@@ -104,8 +142,12 @@ function ViewReports() {
             <p>{reportData?.direction}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
+            <p className={styles.ViewReportsTitle}>Форма участия:</p>
+            <p>{reportData?.author?.form}</p>
+          </div>
+          <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Статус участия:</p>
-            <p>{reportData?.form}</p>
+            <p>{reportData?.author?.status}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Комментарий:</p>
@@ -117,21 +159,19 @@ function ViewReports() {
             <p className={styles.ViewReportsTitle}>Соавторы:</p>
             {reportData?.coAuthors?.map((item, index) => (
               <div key={index}>
-                <p className={styles.name}>{`${index + 1}. ${item?.name} ${
-                  item?.surname
-                } ${item?.patronymic}`}</p>
+                <p className={styles.name}>{`${index + 1}. ${item.fio}`}</p>
                 <ul>
                   <li>
                     {" "}
-                    <p>{item?.organization}</p>
+                    <p>{item?.organization || "Отсутствует"}</p>
                   </li>
                   <li>
                     {" "}
-                    <p>{item?.email}</p>
+                    <p>{item?.email || "Отсутствует"}</p>
                   </li>
                   <li>
                     {" "}
-                    <p>{item?.phone}</p>
+                    <p>{item?.phone || "Отсутствует"}</p>
                   </li>
                 </ul>
               </div>
@@ -149,9 +189,14 @@ function ViewReports() {
           <p className={styles.fileLoudersTitle}>Доклад:</p>
           <>
             <div className={styles.fileName}>
-              <span>{report.reportFile?.name || "Документ.pdf"}</span>
+              <span>
+                {getFileName(reportData?.reportFile) || "Документ.pdf"}
+              </span>
             </div>
-            <BlockFile className={styles.blockFile} />
+            <BlockFile
+              className={styles.blockFile}
+              onClick={() => funOpenFile(reportData?.reportFile)}
+            />
           </>
           {showTooltip === 1 && (
             <div
@@ -174,9 +219,14 @@ function ViewReports() {
           <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
           <>
             <div className={styles.fileName}>
-              <span>{report.conclusion?.name || "Документ.pdf"}</span>
+              <span>
+                {getFileName(reportData?.conclusion) || "Документ.pdf"}
+              </span>
             </div>
-            <BlockFile className={styles.blockFile} />
+            <BlockFile
+              className={styles.blockFile}
+              onClick={() => funOpenFile(reportData?.conclusion)}
+            />
           </>
           {showTooltip === 2 && (
             <div

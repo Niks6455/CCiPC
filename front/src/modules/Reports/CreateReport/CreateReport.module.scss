@@ -108,7 +108,23 @@
       }
       .fileContur {
         margin-top: 10px;
-        position: relative;
+        .file_block {
+          position: relative;
+          width: 100%;
+          height: 217px;
+          margin-bottom: 5px;
+          .border {
+            width: 100%;
+            height: max-content;
+          }
+          .file_inner {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+          }
+        }
         .fileImport {
           border-radius: 10px;
 

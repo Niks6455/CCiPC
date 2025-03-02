@@ -28,10 +28,10 @@ const keysCoauthors = [
   "name",
   "surname",
   "patronymic",
-  "organization",
+  // "organization",
   "email",
-  "phone",
-  "formParticipation",
+  // "phone",
+  // "formParticipation",
 ];
 
 //! функция расчета sliderState
@@ -40,7 +40,7 @@ const calculateSliderState = (state) => {
   let length = keys.length;
   keys.map((key) => {
     if (key === "soauthors") {
-      if (state.data.soauthors.length > 0) {
+      if (state.data?.soauthors?.length > 0) {
         length =
           keys.length - 1 + state.data.soauthors.length * keysCoauthors.length;
         state.data.soauthors.map((author) => {
@@ -89,6 +89,25 @@ const reportCreateSlice = createSlice({
       state.data[key] = value;
       //! считаем прогресс
       state.sliderState = calculateSliderState(state);
+    },
+
+    disSetResetReport(state) {
+      state.data = {
+        id: "id1",
+        status: "save",
+        number: 1,
+        name: "",
+        directionConference: "",
+        formParticipation: "",
+        participationStatus: "",
+        fileArticle: null,
+        fileExpertOpinion: null,
+        comments: "",
+        soauthors: [],
+        organization: "",
+      };
+      state.sliderState = 0;
+      state.openPopUpName = "";
     },
 
     addSoauthors(state) {
@@ -196,6 +215,7 @@ export const {
   funSaveDataState,
   setCoauthorAutocompletion,
   disEditReport,
+  disSetResetReport,
 } = reportCreateSlice.actions;
 
 export default reportCreateSlice.reducer;

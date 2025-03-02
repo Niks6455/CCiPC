@@ -90,7 +90,14 @@ function Login(props) {
             autoComplete={true}
           />
           <div className={styles.forgetPassword}>
-            <p onClick={() => {navigate("/recoverpassword"); sandResetPassword()}}>Забыли пароль?</p>
+            <p
+              onClick={() => {
+                navigate("/recoverpassword");
+                sandResetPassword();
+              }}
+            >
+              Забыли пароль?
+            </p>
           </div>
         </div>
       </div>

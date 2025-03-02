@@ -7,7 +7,11 @@ function InputList(props) {
     props.funOpen("");
   };
   return (
-    <div className={`${styles.InputList}`} ref={props?.divRef}>
+    <div
+      className={`${styles.InputList}`}
+      ref={props?.divRef}
+      onClick={() => props.funOpen(props?.name)}
+    >
       {!props?.value && props?.imgSrc && (
         <img src={props?.imgSrc} alt={props?.name} />
       )}
@@ -37,7 +41,7 @@ function InputList(props) {
       />
       <div
         className={styles.arrow}
-        onClick={() => props.funOpen(props?.name)}
+        // onClick={() => props.funOpen(props?.name)}
         style={props.styleArrow ? props.styleArrow : {}}
       >
         <img

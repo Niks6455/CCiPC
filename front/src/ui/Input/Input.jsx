@@ -116,6 +116,7 @@ function Input(props) {
           props?.onChange(e);
           selectErrors(e);
         }}
+        disabled={props?.disabled}
         value={props?.value}
         placeholder={props?.placeholder}
         className={props?.error ? styles.errorInput : ""}

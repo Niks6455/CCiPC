@@ -171,3 +171,14 @@ export const formatDateRangePrimereact = (startDate, endDate) => {
     return `${startDay} ${startMonth} ${startYear} - ${endDay} ${endMonth} ${endYear}`;
   }
 };
+
+//! декодирование base64
+export const decodeFileName = (fileName) => {
+  try {
+    const bytes = new Uint8Array([...fileName].map((c) => c.charCodeAt(0)));
+    return new TextDecoder("windows-1251").decode(bytes);
+  } catch (error) {
+    console.error("Ошибка декодирования:", error);
+    return fileName;
+  }
+};
