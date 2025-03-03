@@ -275,6 +275,8 @@ export default {
         if(!checkValidateFee(feeInfo)) throw new AppErrorInvalid('fee')
         const participantInConference = await conferenceService.assignFee(feeInfo);
         res.json({participantInConference: participantInConference})
-    }
+    },
+
+    async
 
 }

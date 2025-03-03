@@ -179,7 +179,7 @@ export default {
             })
 
 
-            if(reportInfo.coAuthors.length > 0){
+            if(reportInfo?.coAuthors?.length > 0){
 
                 const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
 
@@ -194,7 +194,7 @@ export default {
 
                 const participantsExistIds = participantsExist.map(participantExist=> participantExist.id)
 
-                if (participantsExistIds.length > 0) {
+                if (participantsExistIds?.length > 0) {
                     // Create new ParticipantOfReport records for the existing participants
                     await ParticipantOfReport.bulkCreate(
                         participantsExistIds.map(participantId => ({
@@ -221,7 +221,7 @@ export default {
                 }
 
                 let emailsNotInDatabase = []
-                if(participantsExist.length> 0){
+                if(participantsExist?.length> 0){
                     const existingEmails = new Set(participantsExist.map(participant => participant.email));
                     emailsNotInDatabase = emails.filter(email => !existingEmails.has(email));
                 }else{
