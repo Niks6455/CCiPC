@@ -1,7 +1,7 @@
 import Conference from "../models/conference.js";
 import Committee from "../models/committee.js";
 import CommitteeInConference from "../models/committee-in-conference.js";
-import {AppErrorAlreadyExists, AppErrorInvalid, AppErrorNotExist} from "../utils/errors.js";
+import {AppErrorAlreadyExists, AppErrorInvalid, AppErrorMissing, AppErrorNotExist} from "../utils/errors.js";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
@@ -312,5 +312,23 @@ export default {
             {
                 updateOnDuplicate: ["sum", "status"],
             })
+    },
+
+    async save(conferenceId){
+        const conference =await Conference.findByPk(conferenceId);
+        if(!conference) throw new AppErrorNotExist('conference')
+
+        const reports= await Report.findAll({
+            where: {
+                conferenceId:conference.id,
+                reportFile: {
+                    [Op.not]: null
+                }
+            }
+        })
+
+
+       return  reports.map(report=>({path:  report.reportFile, name : report.name,}))
+
     }
 }

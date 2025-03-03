@@ -3,7 +3,9 @@ import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import { mapShort, map } from '../utils/mappers/tableParticipants.js'
 import { map as mapConf }  from '../utils/mappers/conference.js'
 import Ajv from 'ajv'
+import archiver from 'archiver'
 import addFormats from 'ajv-formats';
+import path from "path";
 
 const ajv = new Ajv();
 
@@ -277,6 +279,32 @@ export default {
         res.json({participantInConference: participantInConference})
     },
 
-    async
+    async saveArchive({params: { id }}, res) {
+        if(!id) throw new AppErrorMissing('conferenceId')
+
+        const files=await conferenceService.save(id)
+
+        res.attachment('archive.zip');
+
+        // Создаем архив
+        const archive = archiver('zip', {
+            zlib: { level: 9 } // Уровень сжатия
+        });
+        // Обрабатываем события
+        archive.on('error', (err) => {
+            throw err;
+        });
+
+        // Указываем поток для записи архива в ответ
+        archive.pipe(res);
+
+        // Добавляем файлы в архив
+        files.forEach(file => {
+            archive.file(file.path, { name: path.basename(file.name) +`.pdf` }); // Добавляем файл с его именем
+        });
+
+        // Завершаем архивирование
+        await archive.finalize();
+    }
 
 }
