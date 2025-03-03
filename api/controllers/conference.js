@@ -102,9 +102,10 @@ export default {
         res.json({ conference: mapConf(conference)});
     },
 
-    async create({body: { number, date, address, stages, directions, deadline }, admin }, res) {
+    async create({body: { number, date, address, stages, description, directions, deadline }, admin }, res) {
         if(!number) throw new AppErrorMissing('number')
         if(!date) throw new AppErrorMissing('date')
+        if(!description) throw new AppErrorMissing('description')
         if(!address) throw new AppErrorMissing('address')
 
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
@@ -115,7 +116,7 @@ export default {
             if(doesNotExist) throw new AppErrorInvalid('deadline')
         }
 
-        const conference = await conferenceService.create({number, date, address, stages, directions, deadline})
+        const conference = await conferenceService.create({number, date, address, description, stages, directions, deadline})
 
         res.json( { conference: conference } );
 
@@ -212,13 +213,13 @@ export default {
         res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
-    async update({params: { id }, body: {number, date, address, stages, directions, deadline  }}, res) {
+    async update({params: { id }, body: {number, date, address, description,  stages, directions, deadline  }}, res) {
 
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
         if(!id) throw new AppErrorMissing('id')
 
-        const conference= await conferenceService.update({number, date, address, stages, directions, deadline}, id)
+        const conference= await conferenceService.update({number, date, address, description, stages, directions, deadline}, id)
 
         res.json({ conference: conference })
 

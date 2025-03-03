@@ -5,6 +5,7 @@ export function map(report){
         reportFile : report.reportFile ?? null,
         conclusion: report.conclusion ?? null,
         direction: report.direction,
+        cacheCoAuthors: report.cacheCoAuthors ?? 0,
         author: report?.participantOfReport.filter(p=> p.who === 'Автор').map(p=>({
             id: p.id,
             form: p.form,

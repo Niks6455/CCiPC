@@ -12,7 +12,7 @@ export function map(data){
         documents: data.documents,
         directions: data.directions,
         deadline: data.deadline,
-        committee: data?.committee ?? null
-
+        committee: data?.committee ?? null,
+        description: data?.description ?? null,
     }
 }
