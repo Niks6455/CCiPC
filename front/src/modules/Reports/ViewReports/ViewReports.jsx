@@ -90,9 +90,8 @@ function ViewReports() {
   };
 
   const getFileName = (file) => {
-    const fileName = file?.split("\\").pop();
-    if (!fileName) return "Документ.pdf";
-    return decodeFileName(fileName);
+    if (!file) return "Документ.pdf";
+    return decodeFileName(file);
   };
 
   return (
@@ -163,16 +162,19 @@ function ViewReports() {
                 <p className={styles.name}>{`${index + 1}. ${item.fio}`}</p>
                 <ul>
                   <li>
-                    {" "}
                     <p>{item?.organization || "Отсутствует"}</p>
                   </li>
                   <li>
-                    {" "}
                     <p>{item?.email || "Отсутствует"}</p>
                   </li>
                   <li>
-                    {" "}
                     <p>{item?.phone || "Отсутствует"}</p>
+                  </li>
+                  <li>
+                    <p>{item?.status || "Отсутствует"}</p>
+                  </li>
+                  <li>
+                    <p>{item?.form || "Отсутствует"}</p>
                   </li>
                 </ul>
               </div>

@@ -87,15 +87,12 @@ function AddCoauthor({ edit, number }) {
     if (edit) {
       //! редактирование доклада
       const temp = {
-        // coAuthors: report.data?.soauthors?.map((soauthor) => ({
-        //   name: soauthor?.data?.name || "",
-        //   surname: soauthor?.data?.surname || "",
-        //   patronymic: soauthor?.data?.patronymic || "",
-        //   organization: soauthor?.data?.organization || "",
-        //   email: soauthor?.data?.email || "",
-        //   phone: soauthor?.data?.phone || "",
-        //   form: soauthor?.data?.formParticipation || "",
-        // })),
+        coAuthors: report.data?.soauthors?.map((soauthor) => ({
+          name: soauthor?.data?.name || "",
+          surname: soauthor?.data?.surname || "",
+          patronymic: soauthor?.data?.patronymic || "",
+          email: soauthor?.data?.email || "",
+        })),
         comment: report.data.comments || "",
         conclusion: report.data.fileExpertOpinion || "",
         direction: report.data.directionConference || "",
@@ -109,11 +106,42 @@ function AddCoauthor({ edit, number }) {
         console.log("res", res);
         if (res?.status === 200) {
           dispatch(fetchReports());
-          navigate(
-            `./../viewreports?idReport=${report.data.id}&number=${number}`
-          );
+
+          const uploadPromises = [];
+
+          // Если fileArticle — файл, добавляем загрузку в массив промисов
+          if (typeof report.data.fileArticle !== "string") {
+            const formDataReport = new FormData();
+            formDataReport.append("file", report.data.fileArticle);
+            formDataReport.append("reportId", res?.data?.report?.id);
+            uploadPromises.push(uploadPhoto(formDataReport, "REPORT"));
+          }
+
+          // Если fileExpertOpinion — файл, добавляем загрузку в массив промисов
+          if (typeof report.data.fileExpertOpinion !== "string") {
+            const formDataConcl = new FormData();
+            formDataConcl.append("file", report.data.fileExpertOpinion);
+            formDataConcl.append("reportId", res?.data?.report?.id);
+            uploadPromises.push(uploadPhoto(formDataConcl, "CONCLUSION"));
+          }
+
+          // Ждем выполнения всех загрузок
+          Promise.all(uploadPromises)
+            .then((results) => {
+              // Проверяем, что все запросы успешны
+              if (results.every((res) => res?.status === 200)) {
+                dispatch(fetchReports());
+              }
+            })
+            .finally(() => {
+              // Навигация после всех запросов (даже если что-то не загрузилось)
+              navigate(
+                `./../viewreports?idReport=${report.data.id}&number=${number}`
+              );
+            });
         }
       });
+
       return;
     } else {
       //! создание доклада
@@ -139,15 +167,12 @@ function AddCoauthor({ edit, number }) {
         if (res?.status === 200) {
           // создаем формдату для файла
           const formDataReport = new FormData();
-          console.log("report.data.fileArticle", report.data.fileArticle);
           formDataReport.append("file", report.data.fileArticle);
           formDataReport.append("reportId", res?.data?.report?.id);
 
           const formDataConcl = new FormData();
           formDataConcl.append("file", report.data.fileExpertOpinion);
           formDataConcl.append("reportId", res?.data?.report?.id);
-          console.log("formDataReport", formDataReport);
-          console.log("formDataConcl", formDataConcl);
           uploadPhoto(formDataReport, "REPORT"); // файл с докладом
           uploadPhoto(formDataConcl, "CONCLUSION"); // файл с заключением
           dispatch(fetchUserData());

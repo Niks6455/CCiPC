@@ -1,9 +1,9 @@
-import conferenceService from '../services/conference.js';
-import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
-import { mapShort, map } from '../utils/mappers/tableParticipants.js'
-import { map as mapConf }  from '../utils/mappers/conference.js'
-import Ajv from 'ajv'
-import addFormats from 'ajv-formats';
+import conferenceService from "../services/conference.js";
+import { AppErrorInvalid, AppErrorMissing } from "../utils/errors.js";
+import { mapShort, map } from "../utils/mappers/tableParticipants.js";
+import { map as mapConf } from "../utils/mappers/conference.js";
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
 
 const ajv = new Ajv();
 
@@ -11,120 +11,129 @@ addFormats(ajv);
 
 // Схема для проверки
 const schemaStage = {
-    type: "object",
-    properties: {
-        name: { type: "string" },
-        date: {
-            type: "string",
-            format: "date"  // Проверка формата даты (YYYY-MM-DD)
-        },
-        type: { type: "number" }
+  type: "object",
+  properties: {
+    name: { type: "string" },
+    date: {
+      type: "string",
+      format: "date", // Проверка формата даты (YYYY-MM-DD)
     },
-    required: ["name", "date"],
-    additionalProperties: false
+    type: { type: "number" },
+  },
+  required: ["name", "date"],
+  additionalProperties: false,
 };
 
 const schemaFee = {
-    type: "object",
-    properties: {
-        sum: { type: "number" },
-        status: { type: "boolean" },
-        id: { type: "string" },
-    },
-    required: ["id"],
-    additionalProperties: false
+  type: "object",
+  properties: {
+    sum: { type: "number" },
+    status: { type: "boolean" },
+    id: { type: "string" },
+  },
+  required: ["id"],
+  additionalProperties: false,
+};
 
-}
+const validate = ajv.compile(schemaStage);
 
-
-const validate = ajv.compile(schemaStage)
-
-const validateFee = ajv.compile(schemaFee)
+const validateFee = ajv.compile(schemaFee);
 
 function checkValidate(objects) {
-    const seenName = new Set();
+  const seenName = new Set();
 
-    for (const obj of objects) {
+  for (const obj of objects) {
+    const name = obj.name;
 
-        const name = obj.name;
+    const valid = validate(obj);
 
-        const valid = validate(obj);
+    if (!valid) throw new AppErrorInvalid("stages");
 
-        if(!valid) throw new AppErrorInvalid('stages')
+    if (seenName.has(name)) return false;
 
-        if (seenName.has(name))
-            return false;
-
-        seenName.add(name);
-    }
-    return true; // Дубликатов нет
+    seenName.add(name);
+  }
+  return true; // Дубликатов нет
 }
 
-function checkValidateFee(objects){
-    for (const obj of objects) {
+function checkValidateFee(objects) {
+  for (const obj of objects) {
+    const valid = validateFee(obj);
 
-        const valid = validateFee(obj);
-
-        if(!valid) throw new AppErrorInvalid('fee')
-    }
-    return true; // Дубликатов нет
+    if (!valid) throw new AppErrorInvalid("fee");
+  }
+  return true; // Дубликатов нет
 }
 
 export default {
-    async find(req, res) {
-        const conferences = await conferenceService.find();
-        res.json(conferences);
-    },
+  async find(req, res) {
+    const conferences = await conferenceService.find();
+    res.json(conferences);
+  },
 
-    async findOne({params: { id }}, res) {
-        if(!id) throw new AppErrorMissing('id')
-        const conference = await conferenceService.findOne(id);
+  async findOne({ params: { id } }, res) {
+    if (!id) throw new AppErrorMissing("id");
+    const conference = await conferenceService.findOne(id);
 
-         conference.committee = Object.fromEntries(
-            Object.entries(
-                conference.committeeInConference.reduce(
-                    (acc, a) => {
-                        if (!acc[a.type]) {
-                            // If not, initialize it as an empty array
-                            acc[a.type] = [];
-                        }
-                        // Push the committee into the array for that type
-                        acc[a.type].push({id: a.id, committee: a.committee});
-                        return acc;
-                    },
-                    {}
-                )
-            )
-        );
+    conference.committee = Object.fromEntries(
+      Object.entries(
+        conference.committeeInConference.reduce((acc, a) => {
+          if (!acc[a.type]) {
+            // If not, initialize it as an empty array
+            acc[a.type] = [];
+          }
+          // Push the committee into the array for that type
+          acc[a.type].push({ id: a.id, committee: a.committee });
+          return acc;
+        }, {})
+      )
+    );
 
-        res.json({ conference: mapConf(conference)});
-    },
+    res.json({ conference: mapConf(conference) });
+  },
 
-    async create({body: { number, date, address, stages, directions, deadline }, admin }, res) {
-        if(!number) throw new AppErrorMissing('number')
-        if(!date) throw new AppErrorMissing('date')
-        if(!address) throw new AppErrorMissing('address')
+  async create(
+    { body: { number, date, address, stages, directions, deadline }, admin },
+    res
+  ) {
+    if (!number) throw new AppErrorMissing("number");
+    if (!date) throw new AppErrorMissing("date");
+    if (!address) throw new AppErrorMissing("address");
 
-        if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
-        if(directions?.length > 0 && [...new Set(directions)].length !== directions.length) throw new AppErrorInvalid('directions')
+    if (stages?.length > 0 && !checkValidate(stages))
+      throw new AppErrorInvalid("stages");
+    if (
+      directions?.length > 0 &&
+      [...new Set(directions)].length !== directions.length
+    )
+      throw new AppErrorInvalid("directions");
 
-        if(deadline  && stages?.length > 0){
-            const doesNotExist = !stages?.some(item => item.date === deadline);
-            if(doesNotExist) throw new AppErrorInvalid('deadline')
-        }
+    if (deadline && stages?.length > 0) {
+      const doesNotExist = !stages?.some((item) => item.date === deadline);
+      if (doesNotExist) throw new AppErrorInvalid("deadline");
+    }
 
-        const conference = await conferenceService.create({number, date, address, stages, directions, deadline})
+    const conference = await conferenceService.create({
+      number,
+      date,
+      address,
+      stages,
+      directions,
+      deadline,
+    });
 
-        res.json( { conference: conference } );
+    res.json({ conference: conference });
+  },
 
-    },
+  async findParticipants(
+    { params: { id }, query: { limit = 20, offset = 0, sort, fio }, admin },
+    res
+  ) {
+    if (!id) throw new AppErrorMissing("id");
 
-    async  findParticipants({params: { id }, query: {limit = 20 , offset = 0, sort, fio }, admin }, res) {
-        if(!id) throw new AppErrorMissing('id')
+    const participants = await conferenceService.findParticipants(id, fio);
 
-        const participants =await conferenceService.findParticipants(id, fio);
-
-        /*const data = participants.map(p=>p.participant.participantOfReport.map(reports=>({
+    /*const data = participants.map(p=>p.participant.participantOfReport.map(reports=>({
             reports: reports.report,
             participant: p.participant,
         })))
@@ -163,120 +172,135 @@ export default {
 
         console.log(information)*/
 
+    const data = participants.map((participant) => ({
+      name: participant.name,
+      id: participant.id,
+      direction: participant.direction,
+      comment: participant.comment,
+      participants: participant.participantOfReport.map((p) => ({
+        name: p.participant.name,
+        surname: p.participant.surname,
+        patronymic: p.participant.patronymic,
+        who: p.who,
+        organization: p.organization,
+        status: p.status,
+      })),
+    }));
 
+    const information = data.map((d) => {
+      const reportInfo = {
+        report: {
+          name: d.name,
+          direction: d.direction,
+          comment: d.comment,
+          id: d.id,
+        },
+        organization: null,
+        status: null,
+        participants: [],
+      };
 
-        const data = participants.map(participant => ({
-            name: participant.name,
-            id:participant.id,
-            direction: participant.direction,
-            comment: participant.comment,
-            participants: participant.participantOfReport.map(p => ({
-                name: p.participant.name,
-                surname: p.participant.surname,
-                patronymic: p.participant.patronymic,
-                who: p.who,
-                organization: p.organization,
-                status: p.status,
-            })),
-        }));
-
-        const information = data.map(d => {
-            const reportInfo = {
-                report: {
-                    name: d.name,
-                    direction: d.direction,
-                    comment: d.comment,
-                    id:d.id,
-                },
-                organization: null,
-                status: null,
-                participants: [],
-            };
-
-            d.participants.forEach(p => {
-                reportInfo.participants.push(
-                     `${p.surname} ${p.name} ${p.patronymic ? p.patronymic : ''}`.trim()
-                );
-
-                if (p.who === 'Автор') {
-                    reportInfo.organization = p.organization;
-                    reportInfo.status = p.status;
-                }
-            });
-
-            return reportInfo;
-        });
-
-        res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
-    },
-
-    async update({params: { id }, body: {number, date, address, stages, directions, deadline  }}, res) {
-
-        if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
-        if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
-        if(!id) throw new AppErrorMissing('id')
-
-        const conference= await conferenceService.update({number, date, address, stages, directions, deadline}, id)
-
-        res.json({ conference: conference })
-
-    },
-
-    async findFee({ params: { id }, query: {limit = 20 , offset = 0, sort, fio }, admin }, res ){
-
-        const participants =await conferenceService.findFee(id, fio);
-
-/*
-        console.log(participants[0].participantOfReport[0].participant.participantInConference)
-*/
-        const data = participants.map(participant => ({
-            name: participant.name,
-            id:participant.id,
-            direction: participant.direction,
-            comment: participant.comment,
-            participants: participant.participantOfReport.map(p => ({
-                name: p.participant.name,
-                surname: p.participant.surname,
-                patronymic: p.participant.patronymic,
-                who: p.who,
-                organization: p.organization,
-                status: p.status,
-                participantInConf: p.participant.participantInConference.map(p1=>({
-                   status: p1.status,
-                   sum: p1.sum,
-                   comment: p1.comment,
-                    agreement: p1.agreeme,
-                   receipt: p1.receipt,
-                   formPay: p1.formPay,
-                   id: p1.id
-                }))
-            })),
-        }));
-
-        const flatArray = data.flatMap(item =>
-            item.participants.map(participant => ({
-                name: item.name,
-                direction: item.direction,
-                comment: item.comment,
-                fio:`${participant.surname} ${participant.name} ${participant.patronymic ? participant.patronymic : ''}`.trim(),
-                sum: participant.participantInConf[0].sum,
-                formPay: participant.participantInConf[0].formPay,
-                status: participant.participantInConf[0].status,
-                agreement: participant.participantInConf[0].agreement,
-                receipt: participant.participantInConf[0].receipt,
-                id: participant.participantInConf[0].id,
-            }))
+      d.participants.forEach((p) => {
+        reportInfo.participants.push(
+          `${p.surname} ${p.name} ${p.patronymic ? p.patronymic : ""}`.trim()
         );
 
-        res.json({participants: flatArray})
+        if (p.who === "Автор") {
+          reportInfo.organization = p.organization;
+          reportInfo.status = p.status;
+        }
+      });
+
+      return reportInfo;
+    });
+
+    res.json({
+      participants: admin
+        ? information.map((p) => map(p))
+        : information.map((p) => mapShort(p)),
+    });
+  },
+
+  async update(
+    {
+      params: { id },
+      body: { number, date, address, stages, directions, deadline },
     },
+    res
+  ) {
+    if (stages?.length > 0 && !checkValidate(stages))
+      throw new AppErrorInvalid("stages");
+    if (
+      directions?.length > 0 &&
+      new Set(directions).size !== directions.length
+    )
+      throw new AppErrorInvalid("directions");
+    if (!id) throw new AppErrorMissing("id");
 
-    async assignFee({ body: { feeInfo } }, res){
-        if(!checkValidateFee(feeInfo)) throw new AppErrorInvalid('fee')
-        const participantInConference = await conferenceService.assignFee(feeInfo);
-        res.json({participantInConference: participantInConference})
-    },
+    const conference = await conferenceService.update(
+      { number, date, address, stages, directions, deadline },
+      id
+    );
 
-    async
+    res.json({ conference: conference });
+  },
 
-}
+  async findFee(
+    { params: { id }, query: { limit = 20, offset = 0, sort, fio }, admin },
+    res
+  ) {
+    const participants = await conferenceService.findFee(id, fio);
+
+    /*
+        console.log(participants[0].participantOfReport[0].participant.participantInConference)
+*/
+    const data = participants.map((participant) => ({
+      name: participant.name,
+      id: participant.id,
+      direction: participant.direction,
+      comment: participant.comment,
+      participants: participant.participantOfReport.map((p) => ({
+        name: p.participant.name,
+        surname: p.participant.surname,
+        patronymic: p.participant.patronymic,
+        who: p.who,
+        organization: p.organization,
+        status: p.status,
+        participantInConf: p.participant.participantInConference.map((p1) => ({
+          status: p1.status,
+          sum: p1.sum,
+          comment: p1.comment,
+          agreement: p1.agreeme,
+          receipt: p1.receipt,
+          formPay: p1.formPay,
+          id: p1.id,
+        })),
+      })),
+    }));
+
+    const flatArray = data.flatMap((item) =>
+      item.participants.map((participant) => ({
+        name: item.name,
+        direction: item.direction,
+        comment: item.comment,
+        fio: `${participant.surname} ${participant.name} ${
+          participant.patronymic ? participant.patronymic : ""
+        }`.trim(),
+        sum: participant.participantInConf[0].sum,
+        formPay: participant.participantInConf[0].formPay,
+        status: participant.participantInConf[0].status,
+        agreement: participant.participantInConf[0].agreement,
+        receipt: participant.participantInConf[0].receipt,
+        id: participant.participantInConf[0].id,
+      }))
+    );
+
+    res.json({ participants: flatArray });
+  },
+
+  async assignFee({ body: { feeInfo } }, res) {
+    if (!checkValidateFee(feeInfo)) throw new AppErrorInvalid("fee");
+    const participantInConference = await conferenceService.assignFee(feeInfo);
+    res.json({ participantInConference: participantInConference });
+  },
+};

@@ -8,6 +8,7 @@ import docIcon from "@assets/img/AdminPanel/doc.svg";
 import dragingIcon from "@assets/img/AdminPanel/dragging.svg";
 import { AnimatePresence } from "framer-motion";
 import { server } from "../../../apirequests/apirequests";
+import { decodeFileName } from "../../../utils/functions/funcions";
 
 function FileComponent(props) {
   const [logoHeader, setLogoHeader] = useState(null);
@@ -172,7 +173,7 @@ function FileComponent(props) {
                     ? styles.novisible
                     : ""
                 }`}
-                onError={(e) => {
+                onError={() => {
                   setLogoHeader(null);
                   setIsVisibleHeader(null);
                 }}
@@ -198,7 +199,7 @@ function FileComponent(props) {
                   alt="Файл загружен"
                 />
                 <span onClick={funOpenFile}>
-                  {props.data?.name || fileName}
+                  {props.data?.name || decodeFileName(fileName)}
                 </span>
               </div>
             </div>
