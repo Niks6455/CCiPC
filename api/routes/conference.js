@@ -172,6 +172,8 @@ router.route('/:id/fee')
     .get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.findFee))
     .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.assignFee))
 
+router.route('/:id/saveArchive').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.saveArchive))
+
 router.route('/:id')
     .get(asyncRoute(conferenceCtrl.findOne))
     .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.update))
