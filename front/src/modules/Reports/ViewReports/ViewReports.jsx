@@ -13,6 +13,7 @@ import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { decodeFileName } from "../../../utils/functions/funcions";
+import { disSetResetReport } from "../../../store/reportCreateSlice/reportCreateSlice";
 
 function ViewReports() {
   const navigate = useNavigate();
@@ -244,11 +245,12 @@ function ViewReports() {
       <div className={styles.EditDataReport}>
         <button
           className={styles.button_edit}
-          onClick={() =>
+          onClick={() => {
+            dispatch(disSetResetReport());
             navigate(
-              `/account/editreport?idReport=${reportData?.id}&number=${number}`
-            )
-          }
+              `/account/editreport?idReport=${idReport}&number=${number}`
+            );
+          }}
         >
           Редактировать данные
         </button>

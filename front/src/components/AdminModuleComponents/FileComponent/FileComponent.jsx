@@ -7,6 +7,7 @@ import pdfIconImport from "@assets/img/AdminPanel/pdfImport.svg";
 import docIcon from "@assets/img/AdminPanel/doc.svg";
 import dragingIcon from "@assets/img/AdminPanel/dragging.svg";
 import { AnimatePresence } from "framer-motion";
+import { server } from "../../../apirequests/apirequests";
 
 function FileComponent(props) {
   const [logoHeader, setLogoHeader] = useState(null);
@@ -15,11 +16,38 @@ function FileComponent(props) {
   const [isVisibleNoFileHeader, setIsVisibleNoFileHeader] = useState(true);
   const [isDragging, setIsDragging] = useState(null);
   const [errorSize, setErrorSize] = useState(false);
+  const [fileName, setFileName] = useState(null);
+
+  async function setFileFromPath(filePath, inputElement) {
+    try {
+      // Загружаем файл
+      const response = await fetch(filePath);
+      const blob = await response.blob();
+
+      // Создаем объект File
+      const file = new File([blob], filePath.split("/").pop(), {
+        type: blob.type,
+      });
+
+      // Используем DataTransfer API для вставки в input
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+      inputElement.files = dataTransfer.files;
+
+      console.log("Файл успешно установлен в input", file);
+    } catch (error) {
+      console.error("Ошибка при загрузке файла:", error);
+    }
+  }
 
   useEffect(() => {
+    console.log("props.logoHeader", props.logoHeader);
     if (props.logoHeader) {
       setLogoHeader(props.logoHeader);
       setIsVisibleHeader(true);
+      const inputElement = document.querySelector("#" + props.name);
+      setFileFromPath(props.logoHeader, inputElement);
+      setFileName(props.logoHeader.split("\\").pop());
     }
   }, [props.logoHeader]);
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла
@@ -115,6 +143,13 @@ function FileComponent(props) {
       }, 300);
     }
   };
+
+  const funOpenFile = () => {
+    if (props.logoHeader) {
+      window.open(`${server}/${props.logoHeader}`, "_blank");
+    }
+  };
+
   return (
     <div
       className={styles.FileComponent}
@@ -128,6 +163,7 @@ function FileComponent(props) {
             <div className={styles.container_file_inner}>
               <img
                 src={logoHeader}
+                onClick={funOpenFile}
                 alt="Фото загруженно"
                 className={`${styles.logo} ${
                   isVisibleHeader
@@ -157,10 +193,13 @@ function FileComponent(props) {
                 }`}
               >
                 <img
+                  onClick={funOpenFile}
                   src={props.icon === "doc" ? docIcon : pdfIconImport}
                   alt="Файл загружен"
                 />
-                <span>{props.data?.name}</span>
+                <span onClick={funOpenFile}>
+                  {props.data?.name || fileName}
+                </span>
               </div>
             </div>
           )}
