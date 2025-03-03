@@ -173,6 +173,7 @@ export default {
             participants: participant.participantOfReport.map(p => ({
                 name: p.participant.name,
                 surname: p.participant.surname,
+                patronymic: p.participant.patronymic,
                 who: p.who,
                 organization: p.organization,
                 status: p.status,
@@ -236,6 +237,7 @@ export default {
             participants: participant.participantOfReport.map(p => ({
                 name: p.participant.name,
                 surname: p.participant.surname,
+                patronymic: p.participant.patronymic,
                 who: p.who,
                 organization: p.organization,
                 status: p.status,
@@ -256,7 +258,7 @@ export default {
                 name: item.name,
                 direction: item.direction,
                 comment: item.comment,
-                participantName: participant.name,
+                fio:`${participant.surname} ${participant.name} ${participant.patronymic ? participant.patronymic : ''}`.trim(),
                 sum: participant.participantInConf[0].sum,
                 formPay: participant.participantInConf[0].formPay,
                 status: participant.participantInConf[0].status,

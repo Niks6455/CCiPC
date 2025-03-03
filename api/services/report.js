@@ -178,6 +178,62 @@ export default {
                 comment: reportInfo.comment,
             })
 
+
+            if(reportInfo.coAuthors.length > 0){
+
+                const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
+
+                const participantsExist = await Participant.findAll({
+                    where: {
+                        email: {
+                            [Op.in] : emails
+                        }
+                    }
+                })
+
+
+                const participantsExistIds = participantsExist.map(participantExist=> participantExist.id)
+
+                if (participantsExistIds.length > 0) {
+                    // Create new ParticipantOfReport records for the existing participants
+                    await ParticipantOfReport.bulkCreate(
+                        participantsExistIds.map(participantId => ({
+                            reportId: report.id,
+                            participantId: participantId,
+                            who: 'Соавтор'
+                        }))
+                    );
+
+                    const participantInConferencePromises = participantsExistIds.map(participantId => {
+                        return ParticipantInConference.findOrCreate({
+                            where: {
+                                conferenceId: conference.id,
+                                participantId: participantId
+                            },
+                            defaults: {
+                                conferenceId: conference.id,
+                                participantId: participantId
+                            }
+                        });
+                    });
+
+                    await Promise.all(participantInConferencePromises);
+                }
+
+                let emailsNotInDatabase = []
+                if(participantsExist.length> 0){
+                    const existingEmails = new Set(participantsExist.map(participant => participant.email));
+                    emailsNotInDatabase = emails.filter(email => !existingEmails.has(email));
+                }else{
+                    emailsNotInDatabase = emails
+                }
+
+                emailsNotInDatabase.forEach(email => {
+                    cache[email]=report.id
+                })
+
+            }
+
             if(reportInfo?.coAuthorsIds?.length > 0){
                 await ParticipantOfReport.destroy({
                     where:{
