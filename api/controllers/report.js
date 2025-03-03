@@ -57,9 +57,9 @@ export default {
         res.json({ report: report })
     },
 
-    async update({body: { name, form, direction, status,  comment, coAuthorsIds }, params: { id }, user, admin }, res) {
+    async update({body: { name, organization, form, direction, status,  comment, coAuthorsIds }, params: { id }, user, admin }, res) {
         if(!id) throw new AppErrorMissing('id')
-       const report = await reportService.update({ name, form, direction, comment, coAuthorsIds }, id , user, admin)
+       const report = await reportService.update({ name, form, status, organization, direction, comment, coAuthorsIds }, id , user, admin)
         res.json({report: report})
     },
 

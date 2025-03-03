@@ -164,12 +164,12 @@ export default {
             })
         });
 
-
         if(!report) throw new AppErrorInvalid('report')
 
         if(admin) return await report.update({
             direction: reportInfo?.direction,
         })
+
 
         if(report.participantOfReport[0].who === 'Автор'){
             await report.update({
@@ -198,7 +198,9 @@ export default {
             }
         })
 
-        return  report
+
+        return report
+
     },
 
     async delete(reportId, participant) {
