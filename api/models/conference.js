@@ -1,4 +1,4 @@
-import {DataTypes, Model, STRING} from 'sequelize';
+import {DataTypes, Model } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Conference extends Model {
@@ -15,8 +15,9 @@ export default class Conference extends Model {
                 },
                 organization: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
                 partner: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
-                logo: {type: DataTypes.JSON, allowNull: true },
-                documents: {type: DataTypes.JSON, allowNull: true },
+                logo: {type: DataTypes.JSONB, allowNull: true },
+                description: {type: DataTypes.TEXT, allowNull: true},
+                documents: {type: DataTypes.JSONB, allowNull: true },
                 directions: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
                 deadline: { type: DataTypes.DATEONLY, allowNull: true },
 

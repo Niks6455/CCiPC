@@ -1,7 +1,7 @@
 import Conference from "../models/conference.js";
 import Committee from "../models/committee.js";
 import CommitteeInConference from "../models/committee-in-conference.js";
-import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
+import {AppErrorAlreadyExists, AppErrorInvalid, AppErrorNotExist} from "../utils/errors.js";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
@@ -189,7 +189,7 @@ export default {
 
     },
 
-    async update(conferenceId, conferenceInfo){
+    async update(conferenceInfo, conferenceId){
 
         if(conferenceInfo.number){
             const checkConference = await Conference.findOne({
@@ -201,6 +201,116 @@ export default {
         const conference =await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference')
 
+        if (conferenceInfo.deadline ) {
+          if (conference?.stages?.length > 0 || conferenceInfo?.stages?.length > 0) {
+              const isDeadlineInStages = conference.stages?.some(item => item.date === conferenceInfo.deadline);
+              const isDeadlineInConferenceInfoStages = conferenceInfo.stages?.some(item => item.date === conferenceInfo.deadline);
+              if (!isDeadlineInStages && !isDeadlineInConferenceInfoStages) {
+                  throw new AppErrorInvalid('deadline');
+              }
+          } else throw new AppErrorInvalid('deadline');
+        }
+
         return await conference.update({ ...conferenceInfo });
+    },
+
+    async findFee(conferenceId, fio){
+        const conference = await Conference.findByPk(conferenceId)
+        if(!conference) throw new AppErrorNotExist('conference');
+
+        const parts = fio?.split(' ');
+
+        const [surname, name, patronymic] = parts ? parts?.length === 3 ? parts : [parts[1], parts[0], parts[2]] :
+            [undefined, undefined, undefined];
+
+        return await Report.findAll({
+            where:{
+                conferenceId:conferenceId,
+            },
+            order: [['createdAt', 'DESC']],
+            include: {
+                model: ParticipantOfReport,
+                as: 'participantOfReport',
+                required: true,
+                include: {
+                    model: Participant,
+                    as: 'participant',
+                    required: true,
+                    where: {
+                        ...(surname && { surname: {[Op.like]: `%${surname}%`}}),
+                        ...(name ? [{name: {[Op.like]: `%${name}%`}}] : []),
+                        ...(patronymic ? [{patronymic: {[Op.like]: `%${patronymic}%`}}] : []),
+                        ...(surname && name
+                            ? [
+                                {
+                                    [Op.and]: [
+                                        {surname: {[Op.like]: `%${name}%`}},
+                                        {name: {[Op.like]: `%${surname}%`}},
+                                    ],
+                                },
+                            ]
+                            : []),
+                        ...(surname && patronymic
+                            ? [
+                                {
+                                    [Op.and]: [
+                                        {surname: {[Op.like]: `%${patronymic}%`}},
+                                        {patronymic: {[Op.like]: `%${surname}%`}},
+                                    ],
+                                },
+                            ]
+                            : []),
+                        ...(name && patronymic
+                            ? [
+                                {
+                                    [Op.and]: [
+                                        {name: {[Op.like]: `%${patronymic}%`}},
+                                        {patronymic: {[Op.like]: `%${name}%`}},
+                                    ],
+                                },
+                            ]
+                            : []),
+                    },
+                    include: {
+                        model: ParticipantInConference,
+                        as: 'participantInConference',
+                        required: true,
+                    }
+                }
+            }
+        })
+
+    },
+
+    async assignFee(feeInfo){
+
+        const ids=feeInfo.map(fee=>fee.id)
+        const participantInConference = await ParticipantInConference.findAll({
+            where: {
+                id: {
+                    [Op.in]: ids
+                }
+            }
+        })
+
+        if(ids.length !== participantInConference.length) AppErrorNotExist('participantInConference')
+
+        participantInConference.forEach(p=>{
+            const foundObject = feeInfo.find(obj => obj.id === p.id);
+            foundObject.conferenceId=p.conferenceId
+            foundObject.participantId=p.participantId
+            foundObject.formPay=p.formPay
+            foundObject.comment=p.comment
+            foundObject.agreement=p.agreement
+            foundObject.receipt=p.receipt
+            if (foundObject.sum == null) foundObject.sum = p.sum;
+            if (foundObject.status == null) foundObject.status = p.status;
+
+        })
+        return await ParticipantInConference.bulkCreate(
+            feeInfo,
+            {
+                updateOnDuplicate: ["sum", "status"],
+            })
     }
 }

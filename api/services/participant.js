@@ -95,15 +95,11 @@ export default {
         if(!participant) throw new AppErrorNotExist('participant')
 
         if(participant?.avatar && participantInfo.avatar===null){
-
-            if (participant?.avatar) {
-                fs.unlink(participant.avatar, (err=> {
+             fs.unlink(participant.avatar, (err=> {
                     if (err) console.log(err);
                 }))
-            } else {
-                console.log('У пользователя нет изображения, файл не удалён');
-            }
         }
+
         if(participantInfo.email && participantInfo.email !== participant.email) {
 
             const checkParticipant = await Participant.findOne({

@@ -4,6 +4,7 @@ import {Op} from "sequelize";
 import {AppErrorNotExist} from "../utils/errors.js";
 import CommitteeInConference from "../models/committee-in-conference.js";
 import {sequelize} from "../models/index.js";
+import fs from "fs";
 
 export default {
     async find() {
@@ -82,6 +83,13 @@ export default {
         });
 
         if(!committee) throw  new AppErrorNotExist('conference')
+
+        if(committee?.img && infoCommittee.img===null){
+            fs.unlink(committee.img, (err=> {
+                if (err) console.log(err);
+            }))
+        }
+
         return await committee.update({ ...infoCommittee })
     },
 
