@@ -14,6 +14,10 @@ import {
 } from "../../../apirequests/apirequests";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
+import {
+  convertDate,
+  convertDateTire,
+} from "../../../utils/functions/funcions";
 
 function ConfirenceModuleAdminPage() {
   const [data, setData] = useState([]);
@@ -39,7 +43,10 @@ function ConfirenceModuleAdminPage() {
 
     if (qery) {
       let data = {
-        stages: qery.stages,
+        stages: qery.stages.map((item) => ({
+          date: convertDate(item.date),
+          name: item.name,
+        })),
         logoHeader: qery.logo?.HEADER,
         logoFooter: qery.logo?.FOOTER,
         programConference: qery.documents?.PROGRAM,
@@ -51,10 +58,11 @@ function ConfirenceModuleAdminPage() {
         aboutConference: qery.description,
         directions: qery.directions,
         dateFirst: qery.date,
-        dateSecond: qery.deadline,
+        dateSecond: qery.date,
         address: qery.address,
         organizers: qery.organizers,
         partners: qery.partners,
+        deadlineUploadingReports: convertDate(qery.deadline),
       };
       setData(data);
     }
@@ -64,13 +72,17 @@ function ConfirenceModuleAdminPage() {
     console.log("data", data);
   }, [data]);
 
+  //! отправляем измененные данные на бэк
   const funEditDataApi = () => {
     const dat = {
-      stages: data.stages,
+      stages: data.stages.map((item) => ({
+        date: convertDateTire(item.date),
+        name: item.name,
+      })),
       description: data.aboutConference,
       directions: data.directions,
       date: data.dateFirst,
-      deadline: data.dateSecond,
+      deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
     };
     apiPutConferencesById(dat, conferenseId);
