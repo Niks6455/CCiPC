@@ -48,6 +48,7 @@ export default {
         if (!form) throw new AppErrorMissing('form')
         if(!direction) throw new AppErrorMissing('direction')
         if(!organization) throw new AppErrorMissing('organization')
+        if(!status) throw new AppErrorMissing('status')
         if(!comment) throw new AppErrorMissing('comment')
 
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')

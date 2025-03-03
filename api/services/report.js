@@ -44,7 +44,7 @@ export default {
             name: reportInfo.name,
             direction: reportInfo.direction,
             comment: reportInfo.comment,
-            conferenceId: conference.id
+            conferenceId: conference.id,
         })
 
 
@@ -55,6 +55,7 @@ export default {
             status: reportInfo.status,
             comment: reportInfo.comment,
             organization: reportInfo.organization,
+            form: reportInfo.form
         })
 
         if(reportInfo.coAuthors.length > 0){
