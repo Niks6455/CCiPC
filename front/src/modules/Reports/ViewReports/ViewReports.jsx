@@ -157,9 +157,21 @@ function ViewReports() {
         <div className={styles.ViewReportsInnerSecond}>
           <div className={styles.ViewReportsSoauthors}>
             <p className={styles.ViewReportsTitle}>Соавторы:</p>
-            {reportData?.coAuthors?.map((item, index) => (
+            {Array.from(
+              { length: reportData?.cacheCoAuthors },
+              (_, index) => index + reportData?.cacheCoAuthors
+            ).map((_, index) => (
               <div key={index}>
-                <p className={styles.name}>{`${index + 1}. ${item.fio}`}</p>
+                <p className={styles.name}>{`${
+                  index + 1
+                }. Данный соавтор еще не зарегистрировался на платформе`}</p>
+              </div>
+            ))}
+            {reportData?.coAuthors?.map((item, index) => (
+              <div key={index + "coAuthors"}>
+                <p className={styles.name}>{`${
+                  index + 1 + reportData?.cacheCoAuthors
+                }. ${item.fio}`}</p>
                 <ul>
                   <li>
                     <p>{item?.organization || "Отсутствует"}</p>
@@ -204,12 +216,12 @@ function ViewReports() {
           {showTooltip === 1 && (
             <div
               style={{
-                left: coordinates.x - 445,
-                top: coordinates.y - 460,
+                left: coordinates.x - 380,
+                top: coordinates.y - 530,
               }}
               className={styles.repName}
             >
-              Открыть
+              Просмотреть
             </div>
           )}
         </div>
