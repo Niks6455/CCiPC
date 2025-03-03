@@ -83,6 +83,7 @@ function AddCoauthor({ edit, number }) {
 
   //! сохранение данных
   const funSaveData = () => {
+    console.log("report", report);
     if (edit) {
       //! редактирование доклада
       const temp = {
@@ -99,6 +100,7 @@ function AddCoauthor({ edit, number }) {
         conclusion: report.data.fileExpertOpinion || "",
         direction: report.data.directionConference || "",
         form: report.data.formParticipation || "",
+        status: report.data.participationStatus || "",
         name: report.data.name || "",
         reportFile: report.data.fileArticle || "",
         organization: report.data.organization || "",

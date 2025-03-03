@@ -73,7 +73,7 @@ function ViewReports() {
 
   const funDeleteReport = () => {
     //! удаляем доклад
-    const id = reportData.id;
+    const id = idReport;
     apiDeleteReport(id).then((res) => {
       if (res?.status === 200) {
         console.log("reportData", id);
