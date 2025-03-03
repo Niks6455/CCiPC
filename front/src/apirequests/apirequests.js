@@ -157,7 +157,25 @@ export const apiGetConferences = async () => {
     console.log("apiGetUserData ", error);
   }
 };
+//! получение конференции по id
+export const apiGetConferencesById = async (id) => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}`);
+    return response;
+  } catch (error) {
+    console.log("apiGetConferencesById ", error);
+  }
+};
 
+//! обновление конференции через админу
+export const apiPutConferencesById = async (data, id) => {
+  try {
+    const response = await api.put(`${server}/conferences/${id}`, data);
+    return response;
+  } catch (error) {
+    console.log("apiPutConferencesById ", error);
+  }
+};
 //!Создание новости
 export const createNews = async (data) => {
   try {
