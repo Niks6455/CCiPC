@@ -42,7 +42,7 @@ function FileComponent(props) {
 
   useEffect(() => {
     console.log("props.logoHeader", props.logoHeader);
-    if (props.logoHeader && props.edit) {
+    if (typeof props.logoHeader === "string") {
       setLogoHeader(props.logoHeader);
       setIsVisibleHeader(true);
       const inputElement = document.querySelector("#" + props.name);
@@ -145,7 +145,7 @@ function FileComponent(props) {
   };
 
   const funOpenFile = () => {
-    if (props.logoHeader) {
+    if (typeof props.logoHeader === "string") {
       window.open(`${server}/${props.logoHeader}`, "_blank");
     }
   };

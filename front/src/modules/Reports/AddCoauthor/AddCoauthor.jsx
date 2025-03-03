@@ -87,15 +87,15 @@ function AddCoauthor({ edit, number }) {
     if (edit) {
       //! редактирование доклада
       const temp = {
-        coAuthors: report.data?.soauthors?.map((soauthor) => ({
-          name: soauthor?.data?.name || "",
-          surname: soauthor?.data?.surname || "",
-          patronymic: soauthor?.data?.patronymic || "",
-          organization: soauthor?.data?.organization || "",
-          email: soauthor?.data?.email || "",
-          phone: soauthor?.data?.phone || "",
-          form: soauthor?.data?.formParticipation || "",
-        })),
+        // coAuthors: report.data?.soauthors?.map((soauthor) => ({
+        //   name: soauthor?.data?.name || "",
+        //   surname: soauthor?.data?.surname || "",
+        //   patronymic: soauthor?.data?.patronymic || "",
+        //   organization: soauthor?.data?.organization || "",
+        //   email: soauthor?.data?.email || "",
+        //   phone: soauthor?.data?.phone || "",
+        //   form: soauthor?.data?.formParticipation || "",
+        // })),
         comment: report.data.comments || "",
         conclusion: report.data.fileExpertOpinion || "",
         direction: report.data.directionConference || "",
