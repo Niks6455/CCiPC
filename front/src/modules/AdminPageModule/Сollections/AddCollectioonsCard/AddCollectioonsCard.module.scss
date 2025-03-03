@@ -1,0 +1,68 @@
+.AddCollectioonsCard{
+    background-color: #fff;
+    width: 494px;
+    height: 320px;
+    padding: 20px ;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 20px;
+    .boxContainer{
+        display: flex;
+        flex-direction: column;
+        label{
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        textarea{
+            width: 100%;
+            height: 102px;
+            border: 0px;
+            border-radius: 10px;
+            resize: none;
+            border: 1px solid #C8D0CE;
+            margin-bottom: 15px;
+            font-size: 18px;
+            padding: 20px;
+            box-sizing: border-box;
+            outline: none;
+        }
+        button{
+            color: #58B191;
+            font-size: 20px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            text-align: start;
+            padding: 0;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: 0.1s linear all;
+            width: fit-content;
+            &:hover{
+               opacity: 0.7;
+            }
+        }
+    }
+    .AddCollectioonsCardButton{
+        
+        margin-top: 10px;
+        justify-content: space-between;
+        position: absolute;
+        bottom: 20px;
+        display: grid;
+    
+        grid-template-columns: 375px 80px;
+        .save{
+            @include ButtonGreen();
+            height: 54px;
+        }
+        .delete{
+            @include ButtonRed();
+            border-radius: 8px;
+            height: 54px;
+            margin-left: 15px;
+            border: 1px solid #b32020;
+        }
+    }
+}

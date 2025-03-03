@@ -4,21 +4,34 @@ import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
 import FileComponent from "../FileComponent/FileComponent";
 import borderIcon from "@assets/img/AdminPanel/borderFile.svg";
 import { useEffect, useRef, useState } from "react";
-import { createOrgCommitet } from "../../../apirequests/apirequests";
+import { createArchive, createOrgCommitet, uploadPhoto } from "../../../apirequests/apirequests";
 
 function AddArchive(props) {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
-  const [link, setLink] = useState("");
+  const [url, setUrl] = useState("");
   const textareaRef = useRef(null);
 
   const createOrg = () => {
     const data = {
         name: name,
-        link: link,
+        url: url,
+        type: 0
     };
-
-    console.log("data", data);
+    createArchive(data).then((resp)=>{
+      if(resp?.status === 200){
+        if(file){
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("archiveId", resp?.data?.archive?.id);
+          uploadPhoto(formData, "COLLECTION_ARCHIVE");
+        }
+        props.close();
+        props.updateData()
+        setName("")
+        setUrl("")
+      }
+    })
   };
 
   //! Обработчик выбора файла
@@ -28,20 +41,19 @@ function AddArchive(props) {
 
   //! Автоматическое изменение высоты textarea
   const handleTextareaChange = (e) => {
-    setLink(e.target.value);
-  
+    setUrl(e.target.value);
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto"; // Сброс текущей высоты
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 145); // Ограничение 150px
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 135); // Ограничение 150px
       textareaRef.current.style.height = `${newHeight}px`;
-      textareaRef.current.style.overflowY = newHeight >= 145 ? "auto" : "hidden"; // Скролл только при необходимости
+      textareaRef.current.style.overflowY = newHeight >= 135 ? "auto" : "hidden"; // Скролл только при необходимости
     }
   };
   
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto"; // Устанавливает высоту под контент
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 145);
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 135);
       textareaRef.current.style.height = `${newHeight}px`;
     }
   }, []);
@@ -78,11 +90,11 @@ function AddArchive(props) {
           <label>Ссылка</label>
           <textarea
             ref={textareaRef}
-            value={link}
+            value={url}
             onChange={handleTextareaChange}
             style={{
               minHeight: "62px",
-              maxHeight: "145px",
+              maxHeight: "135px",
               overflowY: "hidden",
               resize: "none", // Опционально: убирает пользовательское растягивание
             }}

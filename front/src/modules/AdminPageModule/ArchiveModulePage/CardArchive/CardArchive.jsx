@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import styles from "./CardArchive.module.scss";
-import notPhoto from "@assets/img/notPhoto.svg";
+import notPhoto from "@assets/img/noPhotoNews.svg";
 import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
-import { deleteOrgCommitet, updateOrgCommitet } from "../../../../apirequests/apirequests";
+import { deleteArchive, deleteOrgCommitet, updateArchive, updateOrgCommitet } from "../../../../apirequests/apirequests";
 import deletePhoto2Img from "@assets/img/AdminPanel/deletePhoto.svg";
 import editPhoto2Img from "@assets/img/AdminPanel/editPhoto.svg";
 
@@ -13,8 +13,8 @@ function CardArchive(props) {
   const buttonDeleteRef = useRef(null);
   const defaultValue = {
     img: props?.item?.img || "",
-    fio: props?.item?.fio || "",
-    organization: props?.item?.organization || "",
+    name: props?.item?.name || "",
+    url: props?.item?.url || "",
   };
 
   const [dataItem, setDataItem] = useState(defaultValue);
@@ -22,9 +22,10 @@ function CardArchive(props) {
 
   // Проверка изменений
   useEffect(() => {
+    console.log("props?.item", props?.item)
     const hasChanged =
-      dataItem.fio !== defaultValue.fio ||
-      dataItem.organization !== defaultValue.organization ||
+      dataItem.name !== defaultValue.name ||
+      dataItem.url !== defaultValue.url ||
       dataItem.img !== defaultValue.img;
     setIsChanged(hasChanged);
   }, [dataItem, defaultValue]);
@@ -56,24 +57,26 @@ function CardArchive(props) {
   const handleEditData = (value, key) => {
     setDataItem((prev) => ({ ...prev, [key]: value }));
 
-    if (key === "organization" && textareasRef.current) {
+    if (key === "url" && textareasRef.current) {
       textareasRef.current.style.height = "auto";
-      textareasRef.current.style.height = `${Math.min(textareasRef.current.scrollHeight, 145)}px`;
+      textareasRef.current.style.height = `${Math.min(textareasRef.current.scrollHeight, 135)}px`;
     }
   };
 
   const handleCancel = () => setDataItem(defaultValue);
   const handleSave = () => {
-    updateOrgCommitet(dataItem, props.item.id).then((res) => {
+    console.log("dataItem", dataItem)
+    dataItem.type = 0
+    updateArchive(dataItem, props.item.id).then((res) => {
         if(res?.status === 200){
-            props?.getDataOrg();
+            props?.updateData();
         }
     })
   };
   const handleDelete = () => {
-    deleteOrgCommitet(props.item.id).then((res) => {
+    deleteArchive(props.item.id).then((res) => {
       if(res?.status === 200){
-        props?.getDataOrg();
+        props?.updateData();
       }
     })
   };
@@ -90,19 +93,19 @@ function CardArchive(props) {
       </div>
 
         <div className={styles.CardOrganizationInnerInfo}>
-          <label>ФИО</label>
+          <label>Название альбома</label>
           <input
-            value={dataItem.fio}
-            onChange={(e) => handleEditData(e.target.value, "fio")}
+            value={dataItem.name}
+            onChange={(e) => handleEditData(e.target.value, "name")}
           />
         </div>
 
         <div className={styles.CardOrganizationInnerInfo}>
-          <label>Организация</label>
+          <label>Ссылка</label>
           <textarea
             ref={textareasRef}
-            value={dataItem.organization}
-            onChange={(e) => handleEditData(e.target.value, "organization")}
+            value={dataItem.url}
+            onChange={(e) => handleEditData(e.target.value, "url")}
           />
         </div>
 
