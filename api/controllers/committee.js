@@ -18,9 +18,9 @@ export default {
         res.json({committee: committee});
     },
 
-    async update({params: { id }, body: { fio, organization } },res){
+    async update({params: { id }, body: { fio, organization, img } },res){
         if(!id) throw new AppErrorMissing('id')
-        const committee=await committeeService.update({fio, organization}, id)
+        const committee=await committeeService.update({fio, organization, img}, id)
         res.json({committee: committee});
     },
 

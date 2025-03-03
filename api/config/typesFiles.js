@@ -6,5 +6,7 @@ export default {
     REPORT: 4,
     CONCLUSION: 5,
     COLLECTION_ARCHIVE: 6,
+    INDIVIDUAL: 7,
+    LEGAL: 8
 };
 

@@ -1,7 +1,7 @@
 import typesFiles from "../config/typesFiles.js";
 
 
-const acceptedTypesFiles = /doc|dock|pdf/;
+const acceptedTypesFiles = /doc|docx|pdf/;
 const acceptedTypesPhoto = /png|jpg|jpeg/;
 import path from 'path';
 import typesFile from '../config/typesFiles.js'
@@ -28,8 +28,8 @@ const dir= './uploads'
 // Проверка расширения файла
 const fileFilter = (req, file, cb) => {
     const { type } = req.query; // Получаем тип из тела запроса
-        const extension = path.extname(file.originalname).toLowerCase();
 
+    const extension = path.extname(file.originalname).toLowerCase();
     if (!type) {
         return cb(new AppError(errorCodes.Missing)); // Если type отсутствует
     }
@@ -66,6 +66,9 @@ const storage = multer.diskStorage({
             || typesFile[type] === 2
             || typesFile[type] === 3
             || typesFile[type] === 6
+            || typesFile[type] === 7
+            || typesFile[type] === 8
+
             )
             && !req.admin
 
@@ -169,10 +172,28 @@ export default {
 
         if(!conference) throw new AppErrorNotExist('conference');
 
-        if(typesFile[type] === 0) await conference.update({ documents: { 'PROGRAM' : file.path } })
-        if(typesFile[type] === 1) await conference.update({ documents: { 'LETTER' : file.path } })
-        if(typesFile[type] === 2) await conference.update({ documents: { 'COLLECTION' : file.path } })
-        if(typesFile[type] === 3) await conference.update({ documents: { 'SAMPLE' : file.path } })
+        if(typesPhoto[type] === 4 || typesPhoto[type] === 5) {
+            const logo = conference.logo ?? {}
+            logo[type] = file.path
+            await conference.update({logo: logo })
+            conference.changed('logo', true)
+            await conference.save();
+        }
+
+        if (typesFile[type] === 0 || typesFile[type] === 1
+            || typesFile[type] === 2 || typesFile[type] === 3
+            || typesFile[type] === 7 || typesFile[type] === 8
+        ) {
+            const doc = conference.documents ?? {};
+
+            doc[type] = file.path;
+            await conference.update({ documents : doc});
+            conference.changed('documents', true);
+            await conference.save();
+
+        }
+
+
 
 
 
