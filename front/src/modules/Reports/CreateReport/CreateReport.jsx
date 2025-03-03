@@ -173,6 +173,7 @@ function CreateReport({ edit }) {
               )}
               <div className={styles.file_inner}>
                 <FileComponent
+                  edit={edit}
                   logoHeader={report.data.fileExpertOpinion}
                   data={report.data.fileExpertOpinion}
                   setData={(value) => funChangeFile(value, "fileExpertOpinion")}

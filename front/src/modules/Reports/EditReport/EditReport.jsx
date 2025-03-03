@@ -43,7 +43,7 @@ function EditReport() {
         name: reportData.name,
         directionConference: reportData.direction,
         formParticipation: reportData?.author?.form,
-        participationStatus: reportData?.author?.participationStatus,
+        participationStatus: reportData?.author?.status,
         fileArticle: reportData.reportFile,
         fileExpertOpinion: reportData.conclusion,
         comments: reportData.comment,
