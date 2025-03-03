@@ -3,42 +3,71 @@ import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import { mapShort, map } from '../utils/mappers/tableParticipants.js'
 import { map as mapConf }  from '../utils/mappers/conference.js'
 import Ajv from 'ajv'
+import archiver from 'archiver'
+import addFormats from 'ajv-formats';
+import path from "path";
 
-const ajv = new Ajv()
+const ajv = new Ajv();
 
+addFormats(ajv);
 
+// Схема для проверки
 const schemaStage = {
     type: "object",
     properties: {
-        name: {type: "string"},
-        date: {type: "string"},
-        type: {type: "number"}
+        name: { type: "string" },
+        date: {
+            type: "string",
+            format: "date"  // Проверка формата даты (YYYY-MM-DD)
+        },
+        type: { type: "number" }
     },
-
     required: ["name", "date"],
     additionalProperties: false
+};
+
+const schemaFee = {
+    type: "object",
+    properties: {
+        sum: { type: "number" },
+        status: { type: "boolean" },
+        id: { type: "string" },
+    },
+    required: ["id"],
+    additionalProperties: false
+
 }
 
 
 const validate = ajv.compile(schemaStage)
+
+const validateFee = ajv.compile(schemaFee)
 
 function checkValidate(objects) {
     const seenName = new Set();
 
     for (const obj of objects) {
 
-        console.log(obj)
         const name = obj.name;
 
         const valid = validate(obj);
 
-        console.log(valid)
         if(!valid) throw new AppErrorInvalid('stages')
 
         if (seenName.has(name))
             return false;
 
         seenName.add(name);
+    }
+    return true; // Дубликатов нет
+}
+
+function checkValidateFee(objects){
+    for (const obj of objects) {
+
+        const valid = validateFee(obj);
+
+        if(!valid) throw new AppErrorInvalid('fee')
     }
     return true; // Дубликатов нет
 }
@@ -73,15 +102,21 @@ export default {
         res.json({ conference: mapConf(conference)});
     },
 
-    async create({body: { number, date, address, stages, directions, deadline }, admin }, res) {
+    async create({body: { number, date, address, stages, description, directions, deadline }, admin }, res) {
         if(!number) throw new AppErrorMissing('number')
         if(!date) throw new AppErrorMissing('date')
+        if(!description) throw new AppErrorMissing('description')
         if(!address) throw new AppErrorMissing('address')
 
-        if(stages.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
-        if(directions.length > 0 && [...new Set(directions)].length !== directions.length) throw new AppErrorInvalid('directions')
+        if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
+        if(directions?.length > 0 && [...new Set(directions)].length !== directions.length) throw new AppErrorInvalid('directions')
 
-        const conference = await conferenceService.create({number, date, address, stages, directions})
+        if(deadline  && stages?.length > 0){
+            const doesNotExist = !stages?.some(item => item.date === deadline);
+            if(doesNotExist) throw new AppErrorInvalid('deadline')
+        }
+
+        const conference = await conferenceService.create({number, date, address, description, stages, directions, deadline})
 
         res.json( { conference: conference } );
 
@@ -90,7 +125,7 @@ export default {
     async  findParticipants({params: { id }, query: {limit = 20 , offset = 0, sort, fio }, admin }, res) {
         if(!id) throw new AppErrorMissing('id')
 
-        const participants =await conferenceService.findParticipants(id, fio, admin);
+        const participants =await conferenceService.findParticipants(id, fio);
 
         /*const data = participants.map(p=>p.participant.participantOfReport.map(reports=>({
             reports: reports.report,
@@ -141,6 +176,7 @@ export default {
             participants: participant.participantOfReport.map(p => ({
                 name: p.participant.name,
                 surname: p.participant.surname,
+                patronymic: p.participant.patronymic,
                 who: p.who,
                 organization: p.organization,
                 status: p.status,
@@ -177,20 +213,99 @@ export default {
         res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
-    async update({params: { id }, body: {number, date, address, stages, directions  }}, res) {
+    async update({params: { id }, body: {number, date, address, description,  stages, directions, deadline  }}, res) {
 
-        if(stages.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
-        if(directions.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
+        if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
+        if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
         if(!id) throw new AppErrorMissing('id')
 
-        await conferenceService.update({number, date, address, stages, directions}, id)
+        const conference= await conferenceService.update({number, date, address, description, stages, directions, deadline}, id)
 
-        res.json({status: 'ok'})
+        res.json({ conference: conference })
 
     },
 
-    findFee({ params: { id }}, res ){
+    async findFee({ params: { id }, query: {limit = 20 , offset = 0, sort, fio }, admin }, res ){
 
+        const participants =await conferenceService.findFee(id, fio);
+
+/*
+        console.log(participants[0].participantOfReport[0].participant.participantInConference)
+*/
+        const data = participants.map(participant => ({
+            name: participant.name,
+            id:participant.id,
+            direction: participant.direction,
+            comment: participant.comment,
+            participants: participant.participantOfReport.map(p => ({
+                name: p.participant.name,
+                surname: p.participant.surname,
+                patronymic: p.participant.patronymic,
+                who: p.who,
+                organization: p.organization,
+                status: p.status,
+                participantInConf: p.participant.participantInConference.map(p1=>({
+                   status: p1.status,
+                   sum: p1.sum,
+                   comment: p1.comment,
+                    agreement: p1.agreeme,
+                   receipt: p1.receipt,
+                   formPay: p1.formPay,
+                   id: p1.id
+                }))
+            })),
+        }));
+
+        const flatArray = data.flatMap(item =>
+            item.participants.map(participant => ({
+                name: item.name,
+                direction: item.direction,
+                comment: item.comment,
+                fio:`${participant.surname} ${participant.name} ${participant.patronymic ? participant.patronymic : ''}`.trim(),
+                sum: participant.participantInConf[0].sum,
+                formPay: participant.participantInConf[0].formPay,
+                status: participant.participantInConf[0].status,
+                agreement: participant.participantInConf[0].agreement,
+                receipt: participant.participantInConf[0].receipt,
+                id: participant.participantInConf[0].id,
+            }))
+        );
+
+        res.json({participants: flatArray})
+    },
+
+    async assignFee({ body: { feeInfo } }, res){
+        if(!checkValidateFee(feeInfo)) throw new AppErrorInvalid('fee')
+        const participantInConference = await conferenceService.assignFee(feeInfo);
+        res.json({participantInConference: participantInConference})
+    },
+
+    async saveArchive({params: { id }}, res) {
+        if(!id) throw new AppErrorMissing('conferenceId')
+
+        const files=await conferenceService.save(id)
+
+        res.attachment('archive.zip');
+
+        // Создаем архив
+        const archive = archiver('zip', {
+            zlib: { level: 9 } // Уровень сжатия
+        });
+        // Обрабатываем события
+        archive.on('error', (err) => {
+            throw err;
+        });
+
+        // Указываем поток для записи архива в ответ
+        archive.pipe(res);
+
+        // Добавляем файлы в архив
+        files.forEach(file => {
+            archive.file(file.path, { name: path.basename(file.name) +`.pdf` }); // Добавляем файл с его именем
+        });
+
+        // Завершаем архивирование
+        await archive.finalize();
     }
 
 }

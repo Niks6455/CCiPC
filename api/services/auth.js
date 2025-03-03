@@ -53,11 +53,13 @@ export default {
         if(type === typeCheckEmail.CONFIRM)  {
             if(verificationCodes[email] !== code || code === undefined ) throw new AppErrorInvalid('code')
             if(cache[email] !== undefined) {
-                await ParticipantOfReport.create({
-                    reportId: cache[email],
-                    participantId: participant.id,
-                    who: 'Соавтор'
-                })
+                await ParticipantOfReport.bulkCreate(
+                    cache[email].map(reportId => ({
+                        reportId: reportId,
+                        participantId: participant.id``,
+                        who: 'Соавтор'
+                    }))
+                )
 
                 delete cache[email]
             }

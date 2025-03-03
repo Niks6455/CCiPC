@@ -83,6 +83,7 @@ function AddCoauthor({ edit, number }) {
 
   //! сохранение данных
   const funSaveData = () => {
+    console.log("report", report);
     if (edit) {
       //! редактирование доклада
       const temp = {
@@ -90,15 +91,13 @@ function AddCoauthor({ edit, number }) {
           name: soauthor?.data?.name || "",
           surname: soauthor?.data?.surname || "",
           patronymic: soauthor?.data?.patronymic || "",
-          organization: soauthor?.data?.organization || "",
           email: soauthor?.data?.email || "",
-          phone: soauthor?.data?.phone || "",
-          form: soauthor?.data?.formParticipation || "",
         })),
         comment: report.data.comments || "",
         conclusion: report.data.fileExpertOpinion || "",
         direction: report.data.directionConference || "",
         form: report.data.formParticipation || "",
+        status: report.data.participationStatus || "",
         name: report.data.name || "",
         reportFile: report.data.fileArticle || "",
         organization: report.data.organization || "",
@@ -107,11 +106,42 @@ function AddCoauthor({ edit, number }) {
         console.log("res", res);
         if (res?.status === 200) {
           dispatch(fetchReports());
-          navigate(
-            `./../viewreports?idReport=${report.data.id}&number=${number}`
-          );
+
+          const uploadPromises = [];
+
+          // Если fileArticle — файл, добавляем загрузку в массив промисов
+          if (typeof report.data.fileArticle !== "string") {
+            const formDataReport = new FormData();
+            formDataReport.append("file", report.data.fileArticle);
+            formDataReport.append("reportId", res?.data?.report?.id);
+            uploadPromises.push(uploadPhoto(formDataReport, "REPORT"));
+          }
+
+          // Если fileExpertOpinion — файл, добавляем загрузку в массив промисов
+          if (typeof report.data.fileExpertOpinion !== "string") {
+            const formDataConcl = new FormData();
+            formDataConcl.append("file", report.data.fileExpertOpinion);
+            formDataConcl.append("reportId", res?.data?.report?.id);
+            uploadPromises.push(uploadPhoto(formDataConcl, "CONCLUSION"));
+          }
+
+          // Ждем выполнения всех загрузок
+          Promise.all(uploadPromises)
+            .then((results) => {
+              // Проверяем, что все запросы успешны
+              if (results.every((res) => res?.status === 200)) {
+                dispatch(fetchReports());
+              }
+            })
+            .finally(() => {
+              // Навигация после всех запросов (даже если что-то не загрузилось)
+              navigate(
+                `./../viewreports?idReport=${report.data.id}&number=${number}`
+              );
+            });
         }
       });
+
       return;
     } else {
       //! создание доклада
@@ -122,14 +152,12 @@ function AddCoauthor({ edit, number }) {
         direction: report.data.directionConference,
         comment: report.data.comments,
         organization: report.data.organization,
+        status: report.data.participationStatus || "",
         coAuthors: report.data.soauthors.map((el) => ({
           name: el.data.name,
           surname: el.data.surname,
           patronymic: el.data.patronymic,
           email: el.data.email,
-          // organization: el.data.organization,
-          // phone: el.data.phone,
-          // form: el.data.formParticipation,
         })),
       };
       apiCreateReport(data).then((res) => {
@@ -137,15 +165,12 @@ function AddCoauthor({ edit, number }) {
         if (res?.status === 200) {
           // создаем формдату для файла
           const formDataReport = new FormData();
-          console.log("report.data.fileArticle", report.data.fileArticle);
           formDataReport.append("file", report.data.fileArticle);
           formDataReport.append("reportId", res?.data?.report?.id);
 
           const formDataConcl = new FormData();
           formDataConcl.append("file", report.data.fileExpertOpinion);
           formDataConcl.append("reportId", res?.data?.report?.id);
-          console.log("formDataReport", formDataReport);
-          console.log("formDataConcl", formDataConcl);
           uploadPhoto(formDataReport, "REPORT"); // файл с докладом
           uploadPhoto(formDataConcl, "CONCLUSION"); // файл с заключением
           dispatch(fetchUserData());
@@ -160,7 +185,9 @@ function AddCoauthor({ edit, number }) {
       {report?.openPopUpName && (
         <div className={styles.popups}>
           {report?.openPopUpName === "SameEmail" && <SameEmail />}
-          {report?.openPopUpName === "SuccessModal" && <SuccessModal />}
+          {report?.openPopUpName === "SuccessModal" && (
+            <SuccessModal name={report?.data?.name} />
+          )}
           {report?.openPopUpName === "NotFullyFilled" && <NotFullyFilled />}
           {report?.openPopUpName === "NotFullyFilledCoauthors" && (
             <NotFullyFilledCoauthors />

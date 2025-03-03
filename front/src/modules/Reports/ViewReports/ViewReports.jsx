@@ -13,6 +13,7 @@ import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { decodeFileName } from "../../../utils/functions/funcions";
+import { disSetResetReport } from "../../../store/reportCreateSlice/reportCreateSlice";
 
 function ViewReports() {
   const navigate = useNavigate();
@@ -72,7 +73,7 @@ function ViewReports() {
 
   const funDeleteReport = () => {
     //! удаляем доклад
-    const id = reportData.id;
+    const id = idReport;
     apiDeleteReport(id).then((res) => {
       if (res?.status === 200) {
         console.log("reportData", id);
@@ -89,9 +90,8 @@ function ViewReports() {
   };
 
   const getFileName = (file) => {
-    const fileName = file?.split("\\").pop();
-    if (!fileName) return "Документ.pdf";
-    return decodeFileName(fileName);
+    if (!file) return "Документ.pdf";
+    return decodeFileName(file);
   };
 
   return (
@@ -162,16 +162,19 @@ function ViewReports() {
                 <p className={styles.name}>{`${index + 1}. ${item.fio}`}</p>
                 <ul>
                   <li>
-                    {" "}
                     <p>{item?.organization || "Отсутствует"}</p>
                   </li>
                   <li>
-                    {" "}
                     <p>{item?.email || "Отсутствует"}</p>
                   </li>
                   <li>
-                    {" "}
                     <p>{item?.phone || "Отсутствует"}</p>
+                  </li>
+                  <li>
+                    <p>{item?.status || "Отсутствует"}</p>
+                  </li>
+                  <li>
+                    <p>{item?.form || "Отсутствует"}</p>
                   </li>
                 </ul>
               </div>
@@ -244,11 +247,12 @@ function ViewReports() {
       <div className={styles.EditDataReport}>
         <button
           className={styles.button_edit}
-          onClick={() =>
+          onClick={() => {
+            dispatch(disSetResetReport());
             navigate(
-              `/account/editreport?idReport=${reportData?.id}&number=${number}`
-            )
-          }
+              `/account/editreport?idReport=${idReport}&number=${number}`
+            );
+          }}
         >
           Редактировать данные
         </button>

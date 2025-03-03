@@ -173,12 +173,10 @@ export const formatDateRangePrimereact = (startDate, endDate) => {
 };
 
 //! декодирование base64
-export const decodeFileName = (fileName) => {
-  try {
-    const bytes = new Uint8Array([...fileName].map((c) => c.charCodeAt(0)));
-    return new TextDecoder("windows-1251").decode(bytes);
-  } catch (error) {
-    console.error("Ошибка декодирования:", error);
-    return fileName;
-  }
+export const decodeFileName = (file) => {
+  if (!file) return "Документ.pdf";
+  const fileName = file?.split("\\").pop();
+  const decoder = new TextDecoder("utf-8"); // Если файл в CP1251
+  const bytes = new Uint8Array(fileName.split("").map((c) => c.charCodeAt(0)));
+  return decoder.decode(bytes);
 };

@@ -142,6 +142,7 @@ function CreateReport({ edit }) {
               )}
               <div className={styles.file_inner}>
                 <FileComponent
+                  logoHeader={report.data.fileArticle}
                   data={report.data.fileArticle}
                   setData={(value) => funChangeFile(value, "fileArticle")}
                   typeFile={["application/pdf"]}
@@ -172,6 +173,7 @@ function CreateReport({ edit }) {
               )}
               <div className={styles.file_inner}>
                 <FileComponent
+                  logoHeader={report.data.fileExpertOpinion}
                   data={report.data.fileExpertOpinion}
                   setData={(value) => funChangeFile(value, "fileExpertOpinion")}
                   typeFile={["application/pdf"]}
