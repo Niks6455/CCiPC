@@ -100,7 +100,7 @@ export default {
             }
 
             let emailsNotInDatabase = []
-            if(participantsExist.length> 0){
+            if(participantsExist?.length> 0){
                 const existingEmails = new Set(participantsExist.map(participant => participant.email));
                 emailsNotInDatabase = emails.filter(email => !existingEmails.has(email));
             }else{
@@ -108,10 +108,14 @@ export default {
             }
 
             emailsNotInDatabase.forEach(email => {
-                cache[email]=report.id
+                const reportsIds= cache[email] ?? []
+                reportsIds.push(report.id)
+                cache[email]=[...new Set(reportsIds)];
             })
 
         }
+
+        console.log(cache)
         return report
     },
 
@@ -147,7 +151,11 @@ export default {
 
         })
 
+
         if(!report) throw new AppErrorInvalid('report')
+
+        report.cacheCoAuthors = Object.values(cache)?.flat()?.filter(a=>a === report.id)?.length;
+
 
         return report
     },
@@ -230,9 +238,10 @@ export default {
                 }
 
                 emailsNotInDatabase.forEach(email => {
-                    cache[email]=report.id
+                    const reportsIds= cache[email] ?? []
+                    reportsIds.push(report.id)
+                    cache[email]=[...new Set(reportsIds)];
                 })
-
             }
 
             if(reportInfo?.coAuthorsIds?.length > 0){
@@ -255,6 +264,8 @@ export default {
             }
         })
 
+
+        console.log(cache)
 
         return report
 
