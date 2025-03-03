@@ -9,6 +9,7 @@ import { fioToString } from "../../utils/functions/funcions";
 import { fetchUserData } from "../../store/userSlice/user.Slice";
 import { server } from "../../apirequests/apirequests";
 import { useNavigate } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -25,26 +26,41 @@ function Profile() {
 
   return (
     <section className={styles.Profile}>
-      {showProfilePhoto && (
-        <>
-          <div className={styles.bacgraund}></div>
-          <div className={styles.ProfilePhotoShow}>
-            <img
-              className={styles.ProfileImg}
-              src={`${server}/${user?.avatar}`}
-              alt="img"
-              onError={(e) => (e.target.src = noPhotoLk)}
-            />
-            {/* <img
-              onClick={funOpenPhotoProfile}
-              className={styles.close}
-              src={close}
-              alt="img"
-            /> */}
-            <Close onClick={funOpenPhotoProfile} className={styles.close} />
-          </div>
-        </>
-      )}
+      <AnimatePresence>
+        {showProfilePhoto && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={styles.bacgraund}
+            ></motion.div>
+            <motion.div
+              className={styles.ProfilePhotoShow}
+              initial={{
+                opacity: 0,
+                transform: "translate(-50%, -50%) scale(0)",
+              }}
+              animate={{
+                opacity: 1,
+                transform: "translate(-50%, -50%) scale(1)",
+              }}
+              exit={{
+                opacity: 0,
+                transform: "translate(-50%, -50%) scale(0)",
+              }}
+            >
+              <img
+                className={styles.ProfileImg}
+                src={`${server}/${user?.avatar}`}
+                alt="img"
+                onError={(e) => (e.target.src = noPhotoLk)}
+              />
+              <Close onClick={funOpenPhotoProfile} className={styles.close} />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
       <div className={styles.profile_img_container}>
         <img src={ProfilePictureBackground} className={styles.ProfileImg} />
         <div className={styles.photo_lk}>

@@ -187,7 +187,9 @@ function AddCoauthor({ edit, number }) {
       {report?.openPopUpName && (
         <div className={styles.popups}>
           {report?.openPopUpName === "SameEmail" && <SameEmail />}
-          {report?.openPopUpName === "SuccessModal" && <SuccessModal />}
+          {report?.openPopUpName === "SuccessModal" && (
+            <SuccessModal name={report?.data?.name} />
+          )}
           {report?.openPopUpName === "NotFullyFilled" && <NotFullyFilled />}
           {report?.openPopUpName === "NotFullyFilledCoauthors" && (
             <NotFullyFilledCoauthors />

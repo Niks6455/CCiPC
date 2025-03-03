@@ -6,6 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DataContext from "../../context";
 import { useDispatch, useSelector } from "react-redux";
+import { ReactComponent as Close } from "./../../assets/img/UI/bigX.svg";
 import {
   apiUpdateUser,
   server,
@@ -14,7 +15,8 @@ import {
 import { disEditUser, setEditUser } from "../../store/userSlice/user.Slice";
 import { inputsData } from "./data";
 import cameraIcon from "@assets/img/UI/camera.svg";
-import veselov from "./veselov.png";
+import { AnimatePresence, motion } from "framer-motion";
+import redxIcon from "@assets/img/UI/redX.svg";
 
 function ProfileEditing() {
   const navigate = useNavigate();
@@ -23,13 +25,14 @@ function ProfileEditing() {
   const ref2 = useRef(null);
   const refList = [ref1, ref2];
   const fileInputRef = useRef(null);
-
+  const [openPhoto, setOpenPhoto] = useState(false);
   const [openList, setOpenList] = useState("");
   const context = useContext(DataContext);
   const formData = useSelector((state) => state.user.editUser.data);
   const user = useSelector((state) => state.user.user.data);
   const [userPhoto, setUserPhoto] = useState(null);
   const [urlPhoto, setUrlPhoto] = useState(null);
+  const [popUpSize, setPopUpSize] = useState(false);
 
   console.log("formData", formData);
 
@@ -60,9 +63,13 @@ function ProfileEditing() {
   };
 
   const handleFileUpload = (file) => {
-    setUserPhoto(file);
-    if (file) {
-      setUrlPhoto(URL.createObjectURL(file));
+    if (file.size > 10 * 1024 * 1024) {
+      setPopUpSize(true);
+    } else {
+      setUserPhoto(file);
+      if (file) {
+        setUrlPhoto(URL.createObjectURL(file));
+      }
     }
   };
 
@@ -188,11 +195,83 @@ function ProfileEditing() {
     };
   }, []);
 
+  const funOpenPhoto = () => {
+    setOpenPhoto(!openPhoto);
+  };
+
   return (
     <div className={styles.ProfileEditing}>
+      <AnimatePresence>
+        {popUpSize && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={styles.bacgraund}
+            ></motion.div>
+            <motion.div
+              className={styles.popUp}
+              initial={{
+                opacity: 0,
+                transform: "translate(-50%, -50%) scale(0)",
+              }}
+              animate={{
+                opacity: 1,
+                transform: "translate(-50%, -50%) scale(1)",
+              }}
+              exit={{
+                opacity: 0,
+                transform: "translate(-50%, -50%) scale(0)",
+              }}
+            >
+              <h2>Размер фотографии превышает допустимый предел в 10 Мб</h2>
+              <img src={redxIcon} alt="x" />
+              <button onClick={() => setPopUpSize(false)}>Назад</button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {openPhoto && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={styles.bacgraund}
+            ></motion.div>
+            <motion.div
+              initial={{
+                opacity: 0,
+                transform: "translate(-50%, -50%) scale(0)",
+              }}
+              animate={{
+                opacity: 1,
+                transform: "translate(-50%, -50%) scale(1)",
+              }}
+              exit={{
+                opacity: 0,
+                transform: "translate(-50%, -50%) scale(0)",
+              }}
+              className={styles.ProfilePhotoShow}
+            >
+              <img
+                className={styles.ProfileImg}
+                src={urlPhoto || profilePhoto}
+                alt="img"
+                onError={(e) => (e.target.src = profilePhoto)}
+              />
+
+              <Close onClick={funOpenPhoto} className={styles.close} />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       <div className={styles.head}>
         <div className={styles.profilePhoto}>
-          <div className={styles.hover_bg} onClick={funUploadPhoto}>
+          <div className={styles.hover_bg} onClick={funOpenPhoto}>
             <img src={cameraIcon} alt="Открыть" />
           </div>
           <img
@@ -201,7 +280,6 @@ function ProfileEditing() {
             onError={(e) => (e.target.src = profilePhoto)}
             alt="img"
           />
-          {/* <img src={profilePhoto} alt="img" /> */}
         </div>
         <input
           accept="image/*"
