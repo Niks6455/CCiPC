@@ -53,7 +53,6 @@ function CardCollections(props) {
             name: dataItem.name,
             type: 1
         }
-      
         updateArchive(data, props.item.id).then((res) => {
             if (res?.status === 200) {
                 if (dataItem?.file) {
