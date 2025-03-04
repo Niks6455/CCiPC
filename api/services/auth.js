@@ -56,7 +56,7 @@ export default {
                 await ParticipantOfReport.bulkCreate(
                     cache[email].map(reportId => ({
                         reportId: reportId,
-                        participantId: participant.id``,
+                        participantId: participant.id,
                         who: 'Соавтор'
                     }))
                 )

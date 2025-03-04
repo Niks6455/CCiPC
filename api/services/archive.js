@@ -6,7 +6,9 @@ export default {
         return await Archive.findAll({
             where: {
                 type: type
-            }
+            },
+            order: [['createdAt', 'DESC']]
+
         })
     },
 
