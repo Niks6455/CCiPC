@@ -308,6 +308,6 @@ export default {
         await archive.finalize();
     },
 
-    async
+    
 
 }
