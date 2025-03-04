@@ -136,6 +136,7 @@ function Input(props) {
       )}
       {props?.error && (
         <div
+          name="error"
           className={styles.errorText}
           style={props.inputerrorStyle ? props.inputerrorStyle : {}}
         >
