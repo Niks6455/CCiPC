@@ -85,7 +85,7 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
                     onClick={(e) => funOpenDirList(e, indexRow)}
                     style={{ cursor: "pointer" }}
                     className={
-                      prewData[indexRow].direction !== row.direction
+                      prewData[indexRow]?.direction !== row.direction
                         ? styles.editData
                         : ""
                     }

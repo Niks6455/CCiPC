@@ -11,9 +11,14 @@ import Organizers from "./Organizers/Organizers";
 import {
   apiGetConferencesById,
   apiPutConferencesById,
+  uploadPhoto,
 } from "../../../apirequests/apirequests";
 import { useSelector } from "react-redux";
 import { useQuery } from "@tanstack/react-query";
+import {
+  convertDate,
+  convertDateTire,
+} from "../../../utils/functions/funcions";
 
 function ConfirenceModuleAdminPage() {
   const [data, setData] = useState([]);
@@ -39,7 +44,10 @@ function ConfirenceModuleAdminPage() {
 
     if (qery) {
       let data = {
-        stages: qery.stages,
+        stages: qery.stages.map((item) => ({
+          date: convertDate(item.date),
+          name: item.name,
+        })),
         logoHeader: qery.logo?.HEADER,
         logoFooter: qery.logo?.FOOTER,
         programConference: qery.documents?.PROGRAM,
@@ -51,10 +59,11 @@ function ConfirenceModuleAdminPage() {
         aboutConference: qery.description,
         directions: qery.directions,
         dateFirst: qery.date,
-        dateSecond: qery.deadline,
+        dateSecond: qery.date,
         address: qery.address,
         organizers: qery.organizers,
         partners: qery.partners,
+        deadlineUploadingReports: convertDate(qery.deadline),
       };
       setData(data);
     }
@@ -64,15 +73,61 @@ function ConfirenceModuleAdminPage() {
     console.log("data", data);
   }, [data]);
 
+  //! для отправки файла
+  const funApiEditFile = (file, key) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("conferenceId", conferenseId);
+    uploadPhoto(formData, key);
+  };
+
+  //! отправляем измененные данные на бэк
   const funEditDataApi = () => {
     const dat = {
-      stages: data.stages,
+      stages: data.stages.map((item) => ({
+        date: convertDateTire(item.date),
+        name: item.name,
+      })),
       description: data.aboutConference,
       directions: data.directions,
       date: data.dateFirst,
-      deadline: data.dateSecond,
+      deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
     };
+    //! сохранение логотпа хедера
+    if (typeof data.logoHeader === "object") {
+      funApiEditFile(data.logoHeader, "HEADER");
+    }
+    //! сохранение логотпа футера
+    if (typeof data.logoFooter === "object") {
+      funApiEditFile(data.logoFooter, "FOOTER");
+    }
+    //! файла программы конференции
+    if (typeof data.programConference === "object") {
+      funApiEditFile(data.programConference, "PROGRAM");
+    }
+    //! файла буклета
+    if (typeof data.informationLetter === "object") {
+      funApiEditFile(data.informationLetter, "LETTER");
+    }
+    //! файл коллекции работ
+    if (typeof data.worksCollection === "object") {
+      funApiEditFile(data.worksCollection, "COLLECTION");
+    }
+    //! файл шаблона статьи
+    console.log("data.аrticleTemplate", data.аrticleTemplate);
+    if (typeof data.аrticleTemplate === "object") {
+      funApiEditFile(data.аrticleTemplate, "SAMPLE");
+    }
+    //! файл документа о платёже индивидуальных
+    if (typeof data.cashlessIndividual === "object") {
+      funApiEditFile(data.cashlessIndividual, "INDIVIDUAL");
+    }
+    //! файл документа о платёже юрлиц
+    if (typeof data.cashlessEntities === "object") {
+      funApiEditFile(data.cashlessEntities, "LEGAL");
+    }
+
     apiPutConferencesById(dat, conferenseId);
   };
 

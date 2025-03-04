@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
   .left_block {
     display: flex;
     width: 412px;
@@ -32,19 +33,28 @@
   .right_block {
     display: flex;
     flex-direction: row;
+    .loading {
+      width: 24px;
+      height: 24px;
+      border: 5px solid var(--BodyBgColor);
+      border-top: 5px solid #004529;
+      border-radius: 50%;
+      margin: auto;
+    }
     .save {
       @include ButtonGreen();
       width: 280px;
       height: 100%;
       margin-right: 25px;
     }
+    span {
+      margin-left: 10px;
+      text-wrap: nowrap;
+    }
     .export_staty,
     .export_doklad {
       @include ButtonGreenBorder;
       padding: 0 24px;
-      img {
-        margin-right: 10px;
-      }
     }
     .export_staty {
       margin-right: 25px;

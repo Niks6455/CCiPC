@@ -5,7 +5,6 @@ import HeadBlock from "./HeadBlock/HeadBlock";
 import TableModule from "./TableModule/TableModule";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { testData } from "./data";
 
 function ColaboratorsModuleAdminPage() {
   const conferenceid = useSelector((state) => state.conferences?.data[0]?.id);
@@ -20,15 +19,16 @@ function ColaboratorsModuleAdminPage() {
     queryKey: ["conference/participants", conferenceid], // Уникальный ключ, зависящий от conferenceid
     queryFn: () => getConfParticipants(conferenceid), // Функция для получения данных
     enabled: !!conferenceid, // Запрос выполняется только если conferenceid существует
+    staleTime: Infinity, // Запрос не будет обновляться автоматически
   });
 
   useEffect(() => {
-    // if (qery.data && qery.data.data) setTableData(qery.data.data.participants);
-    const deepCopy = JSON.parse(JSON.stringify(testData));
-    console.log("deepCopy", deepCopy);
-    setTableData([...deepCopy]);
-    setOriginalData([...deepCopy]);
-  }, []);
+    if (qery.data?.data) {
+      const deepCopy = JSON.parse(JSON.stringify(qery.data.data.participants));
+      setTableData([...deepCopy]);
+      setOriginalData([...deepCopy]);
+    }
+  }, [qery.data]);
 
   //! поиск по всем полям
   useEffect(() => {
@@ -48,11 +48,14 @@ function ColaboratorsModuleAdminPage() {
     <section className={styles.ColaboratorsModuleAdminPage}>
       <h1>Участники</h1>
       <HeadBlock
+        conferenceid={conferenceid}
         shearchParam={shearchParam}
         setShearchParam={setShearchParam}
       />
       <TableModule
-        prewData={[...testData]}
+        prewData={
+          tableData.length > 0 ? [...qery.data?.data?.participants] : []
+        }
         tableData={tableData}
         setTableData={setTableData}
         direction={direction}

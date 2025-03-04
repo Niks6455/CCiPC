@@ -31,10 +31,16 @@ export const destructPrice = (price) => {
 };
 
 export function convertDate(dateString) {
+  if (!dateString) {
+    return dateString;
+  }
   const [year, month, day] = dateString?.split("-");
   return `${day}.${month}.${year}`;
 }
 export function convertDateTire(dateString) {
+  if (!dateString) {
+    return dateString;
+  }
   const [day, month, year] = dateString?.split(".");
   return `${year}-${month}-${day}`;
 }

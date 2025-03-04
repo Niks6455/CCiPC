@@ -1,6 +1,7 @@
 import styles from "./Logotips.module.scss";
 import FileComponent from "../../../../components/AdminModuleComponents/FileComponent/FileComponent";
 import borderIcon from "@assets/img/AdminPanel/border2.svg";
+import { server } from "../../../../apirequests/apirequests";
 
 function Logotips({ data, setData }) {
   //! функция изменения данных по файлу header
@@ -22,6 +23,11 @@ function Logotips({ data, setData }) {
           <img src={borderIcon} alt="img" className={styles.border} />
           <div className={styles.border_inner}>
             <FileComponent
+              logoHeader={
+                typeof data.logoHeader === "string" &&
+                `${server}/${data.logoHeader}`
+              }
+              fileSize={50}
               data={data.logoHeader}
               setData={funChangeDataHeader}
               typeFile={["image/png"]}
@@ -41,6 +47,11 @@ function Logotips({ data, setData }) {
           <img src={borderIcon} alt="img" className={styles.border} />
           <div className={styles.border_inner}>
             <FileComponent
+              logoHeader={
+                typeof data.logoFooter === "string" &&
+                `${server}/${data.logoFooter}`
+              }
+              fileSize={50}
               data={data.logoFooter}
               setData={funChangeDataFooter}
               typeFile={["image/png"]}

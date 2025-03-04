@@ -79,50 +79,57 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
             onClick={(e) => funChangeContractListShow(e, indexRow)}
             ref={contractListShow === indexRow ? refContractList : null}
           >
-            {docLoad === 0 && <img src={paymentFormICon} alt="📃" />}
-            {docLoad === 1 && <img src={paymentForm1ICon} alt="📃" />}
-            {docLoad === 2 && <img src={paymentForm2ICon} alt="📃" />}
+            {row[columnKey.key] === "Безналичный расчёт" && (
+              <>
+                {docLoad === 0 && <img src={paymentFormICon} alt="📃" />}
+                {docLoad === 1 && <img src={paymentForm1ICon} alt="📃" />}
+                {docLoad === 2 && <img src={paymentForm2ICon} alt="📃" />}
+              </>
+            )}
+
             <span>{row[columnKey.key]}</span>
-            <AnimatePresence>
-              {contractListShow === indexRow && (
-                <motion.div
-                  className={styles.contract_list}
-                  initial={{ height: 0 }}
-                  animate={{ height: "auto" }}
-                  exit={{ height: 0 }}
-                  id="contractList"
-                >
-                  <a
-                    href={row.contract}
-                    target="_blank"
-                    className={styles.box}
+            {row[columnKey.key] === "Безналичный расчёт" && (
+              <AnimatePresence>
+                {contractListShow === indexRow && (
+                  <motion.div
+                    className={styles.contract_list}
+                    initial={{ height: 0 }}
+                    animate={{ height: "auto" }}
+                    exit={{ height: 0 }}
                     id="contractList"
                   >
-                    {row.contract ? (
-                      <img src={galkaCircle} alt="✅" id="contractList" />
-                    ) : (
-                      <img src={xGreen} alt="❌" id="contractList" />
-                    )}
-                    <span target="_blank" id="contractList">
-                      Договор
-                    </span>
-                  </a>
-                  <a
-                    href={row.receipt}
-                    target="_blank"
-                    className={styles.box}
-                    id="contractList"
-                  >
-                    {row.receipt ? (
-                      <img src={galkaCircle} alt="✅" id="contractList" />
-                    ) : (
-                      <img src={xGreen} alt="❌" id="contractList" />
-                    )}
-                    <span id="contractList">Квитанция</span>
-                  </a>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                    <a
+                      href={row.contract}
+                      target="_blank"
+                      className={styles.box}
+                      id="contractList"
+                    >
+                      {row.contract ? (
+                        <img src={galkaCircle} alt="✅" id="contractList" />
+                      ) : (
+                        <img src={xGreen} alt="❌" id="contractList" />
+                      )}
+                      <span target="_blank" id="contractList">
+                        Договор
+                      </span>
+                    </a>
+                    <a
+                      href={row.receipt}
+                      target="_blank"
+                      className={styles.box}
+                      id="contractList"
+                    >
+                      {row.receipt ? (
+                        <img src={galkaCircle} alt="✅" id="contractList" />
+                      ) : (
+                        <img src={xGreen} alt="❌" id="contractList" />
+                      )}
+                      <span id="contractList">Квитанция</span>
+                    </a>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
           </div>
         </td>
       );

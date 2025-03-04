@@ -1,3 +1,4 @@
+import { server } from "../../../../apirequests/apirequests";
 import FileComponent from "../../../../components/AdminModuleComponents/FileComponent/FileComponent";
 import styles from "./DocumentsModule.module.scss";
 import borderIcon from "@assets/img/AdminPanel/border3.svg";
@@ -32,13 +33,13 @@ function DocumentsModule({ data, setData }) {
       title: "Cборник научных трудов",
     },
     {
-      key: "articleTemplate",
+      key: "аrticleTemplate",
       typeFile: [
         "application/msword",
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       ],
       accept: ".doc,.docx",
-      name: "articleTemplate",
+      name: "аrticleTemplate",
       icon: "doc",
       text: "Неободимо загрузить<br/>файл в формате DOC",
       title: "Шаблон статьи",
@@ -84,6 +85,11 @@ function DocumentsModule({ data, setData }) {
               <img src={borderIcon} alt="img" className={styles.border} />
               <div className={styles.border_inner}>
                 <FileComponent
+                  logoHeader={
+                    typeof data[item.key] === "string" &&
+                    `${server}/${data[item.key]}`
+                  }
+                  fileSize={50}
                   data={data[item.key]}
                   itemKey={item.key}
                   setData={funChangeData}
