@@ -306,6 +306,8 @@ export default {
 
         // Завершаем архивирование
         await archive.finalize();
-    }
+    },
+
+    async
 
 }
