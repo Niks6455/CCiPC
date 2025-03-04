@@ -317,6 +317,18 @@ export const createArchive = async (data) => {
   }
 };
 
+//! экспорт архива статей
+export const apiExportArchiveState = async (id) => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/saveArchive`, {
+      responseType: "blob", // Ожидаем бинарные данные (архив)
+    });
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};
+
 //! загрузка файлов
 export const uploadPhoto = async (file, type) => {
   try {
