@@ -3,7 +3,7 @@ import { gsap } from "gsap";
 import styles from "./CardArchive.module.scss";
 import notPhoto from "@assets/img/noPhotoNews.svg";
 import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
-import { deleteArchive, deleteOrgCommitet, updateArchive, updateOrgCommitet } from "../../../../apirequests/apirequests";
+import { deleteArchive, deleteOrgCommitet, updateArchive, updateOrgCommitet, uploadPhoto } from "../../../../apirequests/apirequests";
 import deletePhoto2Img from "@assets/img/AdminPanel/deletePhoto.svg";
 import editPhoto2Img from "@assets/img/AdminPanel/editPhoto.svg";
 
@@ -80,16 +80,25 @@ function CardArchive(props) {
       }
     })
   };
-
+  const refFile = useRef(null);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("archiveId", props?.item?.id);
+    uploadPhoto(formData, "COLLECTION_ARCHIVE");
+    refFile.current.value = null
+  }
   return (
-    <div className={styles.CardOrganization}>
+    <div className={styles.CardOrganization} key={props.item.id}>
       <div className={styles.CardOrganizationInner}>
       <div className={styles.CardOrganizationInnerImg}>
         <img className={styles.Img} src={dataItem.img || notPhoto} alt={dataItem.fio} />
         <div className={styles.CardOrganizationInnerImgInput}>
             <img src={deletePhoto2Img} alt="Удалить"/>
-            <img src={editPhoto2Img} alt="Редактирование"/>
+            <img src={editPhoto2Img} alt="Редактирование" onClick={(e) => refFile.current.click()}/>
         </div>
+        <input type="file" style={{ display: "none" }} ref={refFile} onChange={handleFileChange}/>
       </div>
 
         <div className={styles.CardOrganizationInnerInfo}>
