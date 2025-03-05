@@ -214,7 +214,7 @@ export default {
         res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
-    async update({params: { id }, body: {number, date, address, description,  stages, directions, deadline  }}, res) {
+    async update({params: { id }, body: {number, date, address, description, stages, directions, deadline  }}, res) {
 
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')

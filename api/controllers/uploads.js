@@ -233,9 +233,9 @@ export default {
         }
 
 
-        if(typesPhoto[type]=== 8 || typesFile[type] === 6 && !archiveId) throw new AppErrorMissing('archiveId');
+        if((typesPhoto[type]=== 8 || typesFile[type] === 6) && !archiveId) throw new AppErrorMissing('archiveId');
         if(archiveId) {
-            const archive =await Archive.findByPk(archiveId);
+            const archive = await Archive.findByPk(archiveId);
             if(!archive) throw new AppErrorNotExist('archiveId')
             await archive.update({ file: file.path })
             return res.json({url: file.path});
