@@ -58,7 +58,7 @@ export default {
             form: reportInfo.form
         })
 
-        if(reportInfo.coAuthors.length > 0){
+        if(reportInfo?.coAuthors?.length > 0){
 
             const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
 

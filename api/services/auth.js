@@ -6,6 +6,9 @@ import bcrypt from "bcrypt";
 import typeCheckEmail from "../config/typeCheckEmail.js";
 import cache from "../utils/cache.js";
 import ParticipantOfReport from "../models/participant-of-report.js";
+import ParticipantInConference from "../models/participant-in-conference.js";
+import Conference from "../models/conference.js";
+import Report from "../models/report.js";
 const verificationCodes= {};
 const resetCodes= {};
 
@@ -49,23 +52,39 @@ export default {
 
         if(!participant) throw new AppErrorInvalid('email')
 
-        console.log(verificationCodes)
         if(type === typeCheckEmail.CONFIRM)  {
             if(verificationCodes[email] !== code || code === undefined ) throw new AppErrorInvalid('code')
             if(cache[email] !== undefined) {
-                await ParticipantOfReport.bulkCreate(
-                    cache[email].map(reportId => ({
+                const participantOfReports = await ParticipantOfReport.bulkCreate(
+                    cache[email]?.map(reportId => ({
                         reportId: reportId,
                         participantId: participant.id,
                         who: 'Соавтор'
-                    }))
+                    })),
+                    { returning: true }
                 )
 
+               const conferences=await Conference.findAll({
+                 include: {
+                     model: Report,
+                     as: 'reports',
+                     required: true,
+                     where: {
+                         id: participantOfReports.map(p=>p.reportId)
+                     }
+                 }
+                })
+
+                await ParticipantInConference.bulkCreate(conferences.map(conference => ({
+                    conferenceId: conference.id,
+                    participantId: participant.id
+                })))
                 delete cache[email]
             }
 
             await participant.update({activate: true})
             const { jwt: token } = jwt.generate({ id: participant.id });
+
             return { participant, token }
         }
 
@@ -100,6 +119,6 @@ export default {
         sendMail(email, 'reset', code);
         return true
 
-    }
+    },
 
 }

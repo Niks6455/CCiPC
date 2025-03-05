@@ -5,7 +5,6 @@ import sendMail from "./email.js";
 import randomCode from "../utils/random-code.js";
 import Conference from "../models/conference.js";
 import {Op} from "sequelize";
-import ParticipantInConference from "../models/participant-in-conference.js";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import fs from "fs";
 

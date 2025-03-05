@@ -7,6 +7,8 @@ import Participant from "../models/participant.js";
 import Report from "../models/report.js";
 import {Op} from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
+import ExcelJS from 'exceljs';
+import {sequelize} from "../models/index.js";
 export default {
 
     async find(){
@@ -327,8 +329,70 @@ export default {
             }
         })
 
-
        return  reports.map(report=>({path:  report.reportFile, name : report.name,}))
 
+    },
+
+    async exportReports(conferenceId){
+
+
+        const reports = await Report.findAll({
+            attributes: [
+                'direction',
+                'name', // Missing comma added here
+                [sequelize.fn('COUNT', sequelize.col('Report.id')), 'reportCount']
+            ],
+            where: {
+                conferenceId: conferenceId,
+            },
+            include: [
+                {
+                    model: ParticipantOfReport,
+                    as: 'participantOfReport',
+                    required: true,
+                    include: [
+                        {
+                            model: Participant,
+                            as: 'participant',
+                            required: true
+                        }
+                    ]
+                }
+            ],
+            group: ['direction', 'Report.name', 'Report.id', 'participantOfReport.id', 'participantOfReport.participant.id'], // Grouping corrected
+        });
+
+
+        const workbook = new ExcelJS.Workbook();
+
+        reports.forEach(report => {
+            const worksheet = workbook.addWorksheet(`${report.direction}`);
+            worksheet.columns = [
+                { header: 'Кто' },
+                { header: 'ФИО' },
+                { header: 'Организация' },
+                { header: 'Почта' },
+                { header: 'Участие' },
+                { header: 'Форма' },
+                { header: 'Доклад' }
+            ];
+
+            // Add rows for participants
+            const rows = report.participantOfReport.map(data => [
+                data.who,
+                `${data.participant.surname} ${data.participant.name} ${data.participant?.patronymic ?? ''}`.trim(),
+                data.organization,
+                data.participant.email,
+                data.status,
+                data.form,
+                report.name
+            ]);
+            worksheet.addRows(rows);
+
+            // Merge cells for the "Доклад" column
+            worksheet.mergeCells(`G2:G${report.participantOfReport.length + 1}`);
+        });
+
+        return workbook
     }
 }
