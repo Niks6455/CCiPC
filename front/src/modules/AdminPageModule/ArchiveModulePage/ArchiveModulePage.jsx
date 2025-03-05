@@ -35,7 +35,7 @@ function ArchiveModulePage() {
       <div className={styles.orgCargCont}>
             <div className={styles.orgCargContCards}>
                 {addAlbom && <AddArchive updateData={updateData} close={() => setAddAlbom(false)} />}
-                {dataAlbom.map((item) => (
+                {dataAlbom?.map((item) => (
                 <CardArchive key={item.id} item={item} updateData={updateData} />
                 ))}
         </div>

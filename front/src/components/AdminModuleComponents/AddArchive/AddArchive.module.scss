@@ -18,6 +18,7 @@
             display: flex;
             flex-direction: column;
             margin-top: 15px;
+            position: relative;
             
             label{
                 font-size: 18px;
@@ -80,5 +81,13 @@
                 border: 1px solid #b32020;
             }
         }
+        .error{
+            position: absolute;
+            color: var(--ErrorColor);
+            background-color: #fff;
+            padding: 5px;
+            top: 16px;
+            right: 15px;
+          }
     }
 }

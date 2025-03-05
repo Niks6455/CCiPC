@@ -4,35 +4,15 @@ import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
 import FileComponent from "../FileComponent/FileComponent";
 import borderIcon from "@assets/img/AdminPanel/borderFile.svg";
 import { useEffect, useRef, useState } from "react";
-import { createArchive, createOrgCommitet, uploadPhoto } from "../../../apirequests/apirequests";
+import { createArchive, uploadPhoto } from "../../../apirequests/apirequests";
 
 function AddArchive(props) {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
+  const [errorName, setErrorName] = useState("");
+  const [errorUrl, setErrorUrl] = useState("");
   const textareaRef = useRef(null);
-
-  const createOrg = () => {
-    const data = {
-        name: name,
-        url: url,
-        type: 0
-    };
-    createArchive(data).then((resp)=>{
-      if(resp?.status === 200){
-        if(file){
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("archiveId", resp?.data?.archive?.id);
-          uploadPhoto(formData, "PHOTO_ARCHIVE");
-        }
-        props.close();
-        props.updateData()
-        setName("")
-        setUrl("")
-      }
-    })
-  };
 
   //! Обработчик выбора файла
   const handleFileChange = (file) => {
@@ -57,7 +37,59 @@ function AddArchive(props) {
       textareaRef.current.style.height = `${newHeight}px`;
     }
   }, []);
-  
+
+  const createOrg = async () => {
+    let valid = true;
+    
+    // Валидация для поля "Название"
+    if (name === "") {
+      setErrorName("Это обязательное поле");
+      valid = false;
+    } else {
+      setErrorName("");
+    }
+
+    // Валидация для поля "Ссылка"
+    if (url === "") {
+      setErrorUrl("Это обязательное поле");
+      valid = false;
+    } else {
+      setErrorUrl("");
+    }
+
+    if (!valid) return; // Прерывание, если есть ошибки
+
+    const data = {
+      name: name,
+      url: url,
+      type: 0
+    };
+
+    try {
+      const resp = await createArchive(data);
+      if (resp?.status === 200) {
+        if (file) {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("archiveId", resp?.data?.archive?.id);
+          const uploadResp = await uploadPhoto(formData, "PHOTO_ARCHIVE");
+          if (uploadResp?.status === 200) {
+            props.updateData();
+            props.close();
+            setName("");
+            setUrl("");
+          }
+        } else {
+          props.updateData();
+          props.close();
+          setName("");
+          setUrl("");
+        }
+      }
+    } catch (error) {
+      console.error("Ошибка при создании архива:", error);
+    }
+  };
 
   return (
     <div className={styles.AddOrgPeople}>
@@ -83,7 +115,13 @@ function AddArchive(props) {
 
         <div className={styles.AddOrgPeopleInput}>
           <label>Название альбома</label>
-          <input type="text" onChange={(e) => setName(e.target.value)} />
+          <input 
+            type="text" 
+            value={name}
+            onChange={(e) => { setName(e.target.value); setErrorName("") }} 
+            style={{ borderColor: errorName ? "#B32020" : "" }}
+          />
+          {errorName && <span className={styles.error}>{errorName}</span>}
         </div>
 
         <div className={styles.AddOrgPeopleInput}>
@@ -96,11 +134,11 @@ function AddArchive(props) {
               minHeight: "62px",
               maxHeight: "135px",
               overflowY: "hidden",
-              resize: "none", // Опционально: убирает пользовательское растягивание
+              resize: "none", 
+              borderColor: errorUrl ? "#B32020" : ""
             }}
           />
-
-
+          {errorUrl && <span className={styles.error}>{errorUrl}</span>}
         </div>
 
         <div className={styles.AddOrgPeopleButton}>

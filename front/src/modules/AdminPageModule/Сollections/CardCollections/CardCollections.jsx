@@ -3,25 +3,39 @@ import { gsap } from "gsap";
 import styles from "./CardCollections.module.scss";
 import { updateArchive, deleteArchive, uploadPhoto } from "../../../../apirequests/apirequests";
 import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
+import closeIcon from "@assets/img/closeBack.svg";
+import { decodeFileName } from "../../../../utils/functions/funcions";
 
 function CardCollections(props) {
     const fileInputRef = useRef(null);
     const buttonContainerRef = useRef(null);
     const buttonDeleteRef = useRef(null);
-
-    const defaultValue = {
-        name: props?.item?.name || "",
-        file: props?.item?.file || null,
-    };
-
-    const [dataItem, setDataItem] = useState(defaultValue);
+    const [defaultValue, setDefaultValue] = useState(null);
+    const [dataItem, setDataItem] = useState(null);
     const [isChanged, setIsChanged] = useState(false);
-
+    const [errorText, setErrorText] = useState("");
+    // Убедитесь, что данные обновляются при изменении props.item
     useEffect(() => {
-        const hasChanged = dataItem.name !== defaultValue.name || dataItem.file !== defaultValue.file;
+        setDefaultValue({
+            name: props?.item?.name || "",
+            file: props?.item?.file,
+            fileName: props?.item?.file ? decodeFileName(props?.item?.file.split('/').pop()) : "",
+        });
+        setDataItem({
+            name: props?.item?.name || "",
+            file: props?.item?.file,
+            fileName: props?.item?.file ? decodeFileName(props?.item?.file.split('/').pop()) : "",
+        });
+        setErrorText("");
+    }, [props.item]);
+
+    // Отслеживаем изменения данных
+    useEffect(() => {
+        const hasChanged = dataItem?.name !== defaultValue?.name || dataItem?.file !== defaultValue?.file;
         setIsChanged(hasChanged);
     }, [dataItem, defaultValue]);
 
+    // Анимация кнопок в зависимости от изменений
     useEffect(() => {
         if (buttonContainerRef.current) {
             gsap.to(buttonContainerRef.current, {
@@ -38,31 +52,45 @@ function CardCollections(props) {
 
     const handleEditData = (value, key) => {
         setDataItem((prev) => ({ ...prev, [key]: value }));
+        if (key === "name" && value !== "") {
+            setErrorText("");
+        }
     };
 
     const handleFileUpload = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setDataItem((prev) => ({ ...prev, file }));
+            setDataItem((prev) => ({ ...prev, file: file, fileName: file.name }));
         }
     };
 
-    const handleCancel = () => setDataItem(defaultValue);
+    const handleDeleteFile = () => {
+        setDataItem((prev) => ({ ...prev, file: null, fileName: "" }));
+    };
+
+    const handleCancel = () => {setDataItem(defaultValue);setErrorText("");};
+
     const handleSave = () => {
+        if(dataItem.name === ""){
+            setErrorText("Это обязательное поле");
+            return
+        }
         const data = {
             name: dataItem.name,
             type: 1
-        }
+        };
         updateArchive(data, props.item.id).then((res) => {
             if (res?.status === 200) {
                 if (dataItem?.file) {
                     const formData = new FormData();
                     formData.append("file", dataItem.file);
-                    formData.append("reportId", props?.item?.id);
-                    uploadPhoto(formData, "REPORT")
+                    formData.append("archiveId", props?.item?.id);
+                    uploadPhoto(formData, "COLLECTION_ARCHIVE");
+                    props?.updateData();
+                } else {
+                    props?.updateData();
                 }
             }
-            props?.updateData();
         });
     };
 
@@ -75,14 +103,26 @@ function CardCollections(props) {
     };
 
     return (
-        <div className={styles.CardCollections} key={props?.item?.id}>
+        <div className={styles.CardCollections}>
             <div className={styles.boxContainer}>
                 <label>Название</label>
-                <textarea value={dataItem.name} onChange={(e) => handleEditData(e.target.value, "name")} />
+                <textarea value={dataItem?.name} onChange={(e) => handleEditData(e.target.value, "name")}  style={{borderColor: errorText ? "#B32020" : ""}}/>
+                {errorText && <div className={styles.error}>{errorText}</div>}
             </div>
             <div className={styles.boxContainer}>
                 <label>Файл сборника</label>
-                <button onClick={() => fileInputRef.current.click()} style={{ color: !dataItem.file ? "#b32020" : "#58B191" }}>{dataItem.file ? dataItem.file.name : "Загрузите PDF-файл"}</button>
+                {dataItem?.file || dataItem?.fileName ? (
+                    <div className={styles.fileDisplay}>
+                        <div className={styles.fileDisplayInner}>
+                            <span>{dataItem?.fileName}</span>
+                            <img src={closeIcon} alt="Удалить файл" className={styles.closeIcon} onClick={handleDeleteFile} />
+                        </div>
+                    </div>
+                ) : (
+                    <button onClick={() => fileInputRef.current.click()} style={{ color: "#b32020" }}>
+                        Загрузите PDF-файл
+                    </button>
+                )}
                 <input type="file" ref={fileInputRef} style={{ display: "none" }} onChange={handleFileUpload} accept=".pdf" />
             </div>
             {isChanged ? (

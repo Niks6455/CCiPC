@@ -26,6 +26,15 @@
             padding: 20px;
             box-sizing: border-box;
             outline: none;
+            position: relative;
+        }
+        .error{
+          position: absolute;
+          color: var(--ErrorColor);
+          background-color: #fff;
+          padding: 5px;
+          top: 33px;
+          right: 35px;
         }
         button{
             color: #58B191;
@@ -112,6 +121,33 @@
           width: 24px!important;
           height: 24px!important;
           margin-left: 10px;
+        }
+      }
+      .fileDisplay{
+        .fileDisplayInner{
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          text-decoration: none;
+          span{
+            text-decoration: underline;
+            color: #58B191;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.1s linear all;
+            &:hover{
+              opacity: 0.6;
+            }
+
+          }
+          img{
+            margin-left: 10px;
+            cursor: pointer;
+            transition: 0.1s linear all;
+            &:hover{
+              opacity: 0.7;
+            }
+          }
         }
       }
 }

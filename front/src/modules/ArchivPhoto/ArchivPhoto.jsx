@@ -3,6 +3,7 @@ import styles from "./ArchivPhoto.module.scss";
 import linkArrow from "../../assets/img/linkArrow.png";
 import { getAllArchivePhoto } from "../../apirequests/apirequests";
 import noPhoto from "@assets/img/noPhoto.png";
+import { server } from "../../apirequests/apirequests";
 const ArchivPhoto = () => {
   const [showTooltip, setShowTooltip] = useState(null);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
@@ -44,7 +45,7 @@ const ArchivPhoto = () => {
           onMouseMove={handleMouseMove}
         >
           <div className={styles.photoItem}>
-            <img src={photo.file || noPhoto} alt={photo.name} className={styles.photo} />
+            <img src={photo.file && server ? `${server}/${photo.file}`  : noPhoto} alt={photo.name} className={styles.photo} />
             <div className={styles.photoTitleWrapper}>
               <p className={styles.photoTitle}>{photo.name}</p>
             </div>

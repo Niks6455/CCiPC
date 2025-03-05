@@ -55,7 +55,15 @@
         flex-direction: column;
         width: 100%;
         margin-top: 10px;
-        
+        position: relative;
+        .error{
+          position: absolute;
+          color: var(--ErrorColor);
+          background-color: #fff;
+          padding: 5px;
+          top: 16px;
+          right: 15px;
+        }
         label {
           font-size: 18px;
           margin-bottom: 10px;

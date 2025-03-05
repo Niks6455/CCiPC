@@ -44,6 +44,17 @@
             }
         }
     }
+     .removeFile{
+        margin-left: 10px;
+     }
+     .error{
+        position: absolute;
+        color: var(--ErrorColor);
+        background-color: #fff;
+        padding: 5px;
+        top: 33px;
+        right: 35px;
+      }
     .AddCollectioonsCardButton{
         
         margin-top: 10px;
