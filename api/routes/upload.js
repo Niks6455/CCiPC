@@ -44,7 +44,7 @@ const router = Router();
  */
 
 router.route('/').post(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(uploadCtrl.uploader), asyncRoute(uploadCtrl.afterUpload));
-router.route('/multi').post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(uploadCtrl.multiUploader), asyncRoute(uploadCtrl.afterUpload));
+router.route('/multi').post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(uploadCtrl.multiUploader), asyncRoute(uploadCtrl.afterMultipleUpload));
 
 
 export default router;

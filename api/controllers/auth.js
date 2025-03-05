@@ -58,7 +58,7 @@ export default {
         if(!email) throw new AppErrorMissing('email')
         if(!code) throw new AppErrorMissing('code')
         if(type === undefined) throw new AppErrorMissing('type')
-        const { participant, token } = authService.checkEmail(email, code, type)
+        const { participant, token } = await authService.checkEmail(email, code, type)
         res.json({ participant: participant, jwt: token })
     },
 

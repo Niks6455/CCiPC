@@ -6,6 +6,7 @@ import Ajv from 'ajv'
 import archiver from 'archiver'
 import addFormats from 'ajv-formats';
 import path from "path";
+import file from "express/lib/view.js";
 
 const ajv = new Ajv();
 
@@ -213,7 +214,7 @@ export default {
         res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
-    async update({params: { id }, body: {number, date, address, description,  stages, directions, deadline  }}, res) {
+    async update({params: { id }, body: {number, date, address, description, stages, directions, deadline  }}, res) {
 
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
@@ -304,10 +305,24 @@ export default {
             archive.file(file.path, { name: path.basename(file.name) +`.pdf` }); // Добавляем файл с его именем
         });
 
+        res.setHeader('Content-Type', 'application/zip');
+        res.setHeader('Content-Disposition', 'attachment; filename=archive.zip');
         // Завершаем архивирование
         await archive.finalize();
+
+        res.end();
+
     },
 
-    
+
+    async exportReports({params: { id }}, res){
+
+        const workbook =await conferenceService.exportReports(id)
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', `attachment; filename=reports.xlsx`);
+        await workbook.xlsx.write(res);
+        res.end();
+    }
+
 
 }
