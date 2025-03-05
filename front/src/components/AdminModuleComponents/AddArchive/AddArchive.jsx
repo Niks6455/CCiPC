@@ -24,7 +24,7 @@ function AddArchive(props) {
           const formData = new FormData();
           formData.append("file", file);
           formData.append("archiveId", resp?.data?.archive?.id);
-          uploadPhoto(formData, "COLLECTION_ARCHIVE");
+          uploadPhoto(formData, "PHOTO_ARCHIVE");
         }
         props.close();
         props.updateData()

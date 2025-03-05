@@ -86,7 +86,7 @@ function CardArchive(props) {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("archiveId", props?.item?.id);
-    uploadPhoto(formData, "COLLECTION_ARCHIVE");
+    uploadPhoto(formData, "PHOTO_ARCHIVE");
     refFile.current.value = null
   }
   return (
