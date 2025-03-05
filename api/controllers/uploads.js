@@ -181,7 +181,6 @@ export default {
     async afterUpload({body : { reportId, newsId, committeeId, conferenceId, archiveId }, query: { type }, file, user, admin }, res) {
 
 
-        console.log(3333)
         if (!file) throw new AppErrorMissing('file');
         if(typesPhoto[type] === 0) {
             const participant= await Participant.findByPk(user.id);

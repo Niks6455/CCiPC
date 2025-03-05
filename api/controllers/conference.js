@@ -6,7 +6,6 @@ import Ajv from 'ajv'
 import archiver from 'archiver'
 import addFormats from 'ajv-formats';
 import path from "path";
-import file from "express/lib/view.js";
 
 const ajv = new Ajv();
 
@@ -214,13 +213,12 @@ export default {
         res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
-    async update({params: { id }, body: {number, date, address, description, stages, directions, deadline  }}, res) {
+    async update({params: { id }, body: {number, date, address, description, stages, directions, deadline, logo, organization, documents, partner }}, res) {
 
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
         if(!id) throw new AppErrorMissing('id')
-
-        const conference= await conferenceService.update({number, date, address, description, stages, directions, deadline}, id)
+        const conference= await conferenceService.update({number, date, address, description, stages, directions, deadline, logo, organization, documents, partner}, id)
 
         res.json({ conference: conference })
 
