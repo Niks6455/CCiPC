@@ -1,6 +1,6 @@
 .CardOrganization {
     width: 362px;
-    height: 737px;
+    height: 579px;
     background-color: #fff;
     border-radius: 30px;
     position: relative;
@@ -22,7 +22,7 @@
                 align-items: center;
                 justify-content: center;
                 width: 322px !important;
-                height: 322px !important;
+                height: 230px !important;
                 cursor: pointer;
                 transition: 0.1s linear all;
                 &:hover{
@@ -45,7 +45,7 @@
         }
       .Img {
         width: 322px !important;
-        height: 322px !important;
+        height: 230px !important;
         object-fit: contain;
         border-radius: 10px;
       }
@@ -55,7 +55,15 @@
         flex-direction: column;
         width: 100%;
         margin-top: 10px;
-        
+        position: relative;
+        .error{
+          position: absolute;
+          color: var(--ErrorColor);
+          background-color: #fff;
+          padding: 5px;
+          top: 16px;
+          right: 15px;
+        }
         label {
           font-size: 18px;
           margin-bottom: 10px;
@@ -64,7 +72,7 @@
   
         input, textarea {
           font-size: 18px;
-          padding: 20px;
+          padding: 15px;
           border: 1px solid var(--InputColors);
           color: #333;
           border-radius: 10px;
@@ -72,10 +80,10 @@
             color: var(--InputTextColor);
           }
         }
-  
+        
         textarea {
           height: auto;
-          max-height: 145px;
+          max-height: 135px;
           resize: none;
         }
       }

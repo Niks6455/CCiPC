@@ -21,9 +21,9 @@ import DocumentsLk from "./modules/Reports/DocumentsLk/DocumentsLk";
 import AddCoauthor from "./modules/Reports/AddCoauthor/AddCoauthor";
 import ViewReports from "./modules/Reports/ViewReports/ViewReports";
 import EditReport from "./modules/Reports/EditReport/EditReport";
+import Сollections from "./modules/AdminPageModule/Сollections/Сollections";
 import { useDispatch } from "react-redux";
 import { disResetUser, fetchUserData } from "./store/userSlice/user.Slice";
-
 import {
   disResetReports,
   fetchReports,
@@ -166,6 +166,7 @@ function App() {
               ></Route>
               <Route path="/adminPage/*" element={<AdminPage />}>
                 <Route path="archive" element={<ArchiveModulePage />} />
+                <Route path="collections" element={<Сollections />} />
                 <Route
                   path="participants"
                   element={<ColaboratorsModuleAdminPage />}

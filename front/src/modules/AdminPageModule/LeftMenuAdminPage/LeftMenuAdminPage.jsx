@@ -32,6 +32,7 @@ function LeftMenuAdminPage() {
                     <Link to="participants"><li className={getActiveLi("/adminPage/participants")}><img src={colaborators}/>Участники</li></Link>
                     <Link to="registrationFee"><li className={getActiveLi("/adminPage/registrationFee")}><img src={orgMoney}/>Оргвзнос</li></Link>
                     <Link to="archive"><li className={getActiveLi("/adminPage/archive")}><img src={archive}/>Архив фото</li></Link>
+                    <Link to="collections"><li className={getActiveLi("/adminPage/collections")}><img src={archive}/>Архив сборников</li></Link>
                 </ul>
               
             </div>

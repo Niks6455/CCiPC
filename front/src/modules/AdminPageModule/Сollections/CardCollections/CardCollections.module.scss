@@ -1,0 +1,153 @@
+.CardCollections{
+    background-color: #fff;
+    width: 494px;
+    height: 320px;
+    padding: 20px ;
+    box-sizing: border-box;
+    position: relative;
+    border-radius: 20px;
+    .boxContainer{
+        display: flex;
+        flex-direction: column;
+        label{
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        textarea{
+            width: 100%;
+            height: 102px;
+            border: 0px;
+            border-radius: 10px;
+            resize: none;
+            border: 1px solid #C8D0CE;
+            margin-bottom: 15px;
+            font-size: 18px;
+            padding: 20px;
+            box-sizing: border-box;
+            outline: none;
+            position: relative;
+        }
+        .error{
+          position: absolute;
+          color: var(--ErrorColor);
+          background-color: #fff;
+          padding: 5px;
+          top: 33px;
+          right: 35px;
+        }
+        button{
+            color: #58B191;
+            font-size: 20px;
+            font-weight: 500;
+            background: none;
+            border: none;
+            text-align: start;
+            padding: 0;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: 0.1s linear all;
+            width: fit-content;
+            &:hover{
+               opacity: 0.7;
+            }
+        }
+    }
+    .AddCollectioonsCardButton{
+        display: flex;
+        margin-top: 10px;
+        justify-content: space-between;
+        position: absolute;
+        bottom: 20px;
+        .save{
+            @include ButtonGreen();
+            width: 375px;
+            height: 54px;
+        }
+        .delete{
+            @include ButtonRed();
+            border-radius: 8px;
+            height: 54px;
+            width: 54px;
+            margin-left: 15px;
+            border: 1px solid #b32020;
+        }
+    }
+    .buttonContainer {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-top: 20px;
+        opacity: 0; // Начальное состояние для анимации
+        height: 0;
+        overflow: hidden;
+        position: absolute;
+        bottom: 17px;
+        width: calc(100% - 40px);
+        button {
+          width: 100%;
+          padding: 15px;
+          font-size: 20px;
+          border-radius: 10px;
+          border: none;
+          cursor: pointer;
+          font-weight: 500;
+        }
+  
+        .cancel {
+          background-color: #00452914;
+          color: #333;
+        
+          &:hover {
+            background-color: #cfcfcf;
+          }
+        }
+  
+        .save {
+          @include ButtonGreen();
+        }
+      }
+      .delete {
+        position: absolute;
+        bottom: 20px;
+        width: calc(100% - 40px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 52px;
+         @include ButtonRedBorder();
+        img {
+          width: 24px!important;
+          height: 24px!important;
+          margin-left: 10px;
+        }
+      }
+      .fileDisplay{
+        .fileDisplayInner{
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          text-decoration: none;
+          span{
+            text-decoration: underline;
+            color: #58B191;
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.1s linear all;
+            &:hover{
+              opacity: 0.6;
+            }
+
+          }
+          img{
+            margin-left: 10px;
+            cursor: pointer;
+            transition: 0.1s linear all;
+            &:hover{
+              opacity: 0.7;
+            }
+          }
+        }
+      }
+}

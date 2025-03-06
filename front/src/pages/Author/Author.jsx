@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../ui/Layout/Layout";
 import Footer from "../../components/Footer/Footer";
 import styles from "./Author.module.scss";
@@ -9,8 +9,17 @@ import HeaderSecond from "../../components/HeaderSecond/HeaderSecond";
 import NavBar from "../../components/NavBar/NavBar.jsx";
 import Book from "../../assets/img/Book.svg";
 import Cap from "../../assets/img/Cap.svg";
+import { getAllArchiveReport } from "../../apirequests/apirequests.js";
 function Author() {
   const [selectedButton, setSelectedButton] = useState("Registration");
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    getAllArchiveReport().then((res) => setData(res?.data?.archives || []));
+    console.log("data", data)
+  },[selectedButton]);
+
+
 
   return (
     <main>
@@ -85,11 +94,9 @@ function Author() {
           )}
           {selectedButton === "Collection" && (
             <div className={styles.collection}>
-              {dataLink.map((param) => (
-                <AuthorCollection link={param.link}>
-                  Сборник научных трудов {param.num} Международной научной
-                  конференции "Системный синтез и прикладная синергетика" (ССПС-
-                  {param.year})
+              {data.map((param) => (
+                <AuthorCollection link={param.file}>
+                  {param.name}
                 </AuthorCollection>
               ))}
             </div>

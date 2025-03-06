@@ -307,15 +307,7 @@ export const getConfParticipants = async (id) => {
   }
 };
 
-//!Получение участников конференции по Id конференции
-export const createArchive = async (data) => {
-  try {
-    const response = await api.post(`${server}/archive`, data);
-    return response;
-  } catch (error) {
-    console.log("getConfParticipants ", error);
-  }
-};
+
 
 //! экспорт архива статей
 export const apiExportArchiveState = async (id) => {
@@ -340,5 +332,58 @@ export const uploadPhoto = async (file, type) => {
     return response;
   } catch (error) {
     console.error("uploadPhoto ", error);
+  }
+};
+
+//! Архивы создание
+
+export const createArchive = async (data) => {
+  try {
+    const response = await api.post(`${server}/archive`, data);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};
+
+//! Получение Архивов сборников
+
+export const getAllArchiveReport = async () => {
+  try {
+    const response = await api.get(`${server}/archive/report`);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};
+
+//! Получение Архивов фотографий
+
+export const getAllArchivePhoto = async () => {
+  try {
+    const response = await api.get(`${server}/archive/photo`);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};
+
+//! Получение Архивов фотографий
+export const updateArchive = async (data, id) => {
+  try {
+    const response = await api.put(`${server}/archive/${id}`, data);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
+  }
+};
+
+//! Получение Архивов фотографий
+export const deleteArchive = async (id) => {
+  try {
+    const response = await api.delete(`${server}/archive/${id}`);
+    return response;
+  } catch (error) {
+    console.log("getConfParticipants ", error);
   }
 };

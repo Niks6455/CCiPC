@@ -1,35 +1,46 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import styles from "./CardArchive.module.scss";
-import notPhoto from "@assets/img/notPhoto.svg";
+import notPhoto from "@assets/img/noPhotoNews.svg";
 import deletePhotoImg from "@assets/img/AdminPanel/delete.svg";
-import { deleteOrgCommitet, updateOrgCommitet } from "../../../../apirequests/apirequests";
 import deletePhoto2Img from "@assets/img/AdminPanel/deletePhoto.svg";
 import editPhoto2Img from "@assets/img/AdminPanel/editPhoto.svg";
+import { deleteArchive, updateArchive, uploadPhoto } from "../../../../apirequests/apirequests";
+import { server } from "../../../../apirequests/apirequests";
 
-function CardArchive(props) {
+function CardArchive({ item, updateData }) {
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
-  const defaultValue = {
-    img: props?.item?.img || "",
-    fio: props?.item?.fio || "",
-    organization: props?.item?.organization || "",
-  };
+  const refFile = useRef(null);
 
-  const [dataItem, setDataItem] = useState(defaultValue);
+  const [dataItem, setDataItem] = useState({
+    file: item?.file || null,
+    name: item?.name || "",
+    url: item?.url || ""
+  });
   const [isChanged, setIsChanged] = useState(false);
+  const [errorName, setErrorName] = useState("");
+  const [errorUrl, setErrorUrl] = useState("");
 
-  // Проверка изменений
   useEffect(() => {
-    const hasChanged =
-      dataItem.fio !== defaultValue.fio ||
-      dataItem.organization !== defaultValue.organization ||
-      dataItem.img !== defaultValue.img;
-    setIsChanged(hasChanged);
-  }, [dataItem, defaultValue]);
+    setDataItem({
+      file: item?.file || null,
+      name: item?.name || "",
+      url: item?.url || ""
+    });
+    setErrorName("");
+    setErrorUrl("");
+  }, [item]);
 
-  // Анимация появления кнопок "Отменить" и "Сохранить"
+  useEffect(() => {
+    setIsChanged(
+      dataItem.name !== item?.name ||
+      dataItem.url !== item?.url ||
+      dataItem.file !== item?.file || ""
+    );
+  }, [dataItem, item]);
+
   useEffect(() => {
     if (buttonContainerRef.current) {
       gsap.to(buttonContainerRef.current, {
@@ -39,74 +50,107 @@ function CardArchive(props) {
         ease: "power2.out",
         display: isChanged ? "flex" : "none",
       });
-    }else{
-      gsap.fromTo(buttonDeleteRef.current, {
-        height: 0,
-        duration: 0.3,
-        ease: "power2.out",
-      }, {
-        height: "52px",
-        duration: 0.3,
-        ease: "power2.out",
-      }
-      );
+    } else {
+      gsap.fromTo(buttonDeleteRef.current, { height: 0 }, { height: "52px", duration: 0.3, ease: "power2.out" });
     }
   }, [isChanged]);
 
   const handleEditData = (value, key) => {
     setDataItem((prev) => ({ ...prev, [key]: value }));
 
-    if (key === "organization" && textareasRef.current) {
-      textareasRef.current.style.height = "auto";
-      textareasRef.current.style.height = `${Math.min(textareasRef.current.scrollHeight, 145)}px`;
+    // Сбрасываем ошибку при изменении значения в поле
+    if (key === "name" && errorName) {
+      setErrorName("");
+    }
+    if (key === "url" && errorUrl) {
+      setErrorUrl("");
     }
   };
 
-  const handleCancel = () => setDataItem(defaultValue);
-  const handleSave = () => {
-    updateOrgCommitet(dataItem, props.item.id).then((res) => {
-        if(res?.status === 200){
-            props?.getDataOrg();
-        }
-    })
+  const handleCancel = () => setDataItem({
+    file: item?.file || "",
+    name: item?.name || "",
+    url: item?.url || ""
+  });
+
+  const validateFields = () => {
+    let valid = true;
+    if (!dataItem.name) {
+      setErrorName("Это обязательное поле");
+      valid = false;
+    } else {
+      setErrorName("");
+    }
+
+    if (!dataItem.url) {
+      setErrorUrl("Это обязательное поле");
+      valid = false;
+    } else {
+      setErrorUrl("");
+    }
+
+    return valid;
   };
+
+  const handleSave = () => {
+    if (validateFields()) {
+      updateArchive({ ...dataItem, type: 0 }, item.id).then((res) => {
+        if (res?.status === 200) updateData();
+      });
+    }
+  };
+
   const handleDelete = () => {
-    deleteOrgCommitet(props.item.id).then((res) => {
-      if(res?.status === 200){
-        props?.getDataOrg();
+    deleteArchive(item.id).then((res) => {
+      if (res?.status === 200) updateData();
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("archiveId", item?.id);
+
+    uploadPhoto(formData, "PHOTO_ARCHIVE").then((res) => {
+      if (res?.status === 200) {
+        setDataItem((prev) => ({ ...prev, file: res.data.file }));
+        refFile.current.value = null;
+        updateData();
       }
-    })
+    });
   };
 
   return (
-    <div className={styles.CardOrganization}>
+    <div className={styles.CardOrganization} key={item.id}>
       <div className={styles.CardOrganizationInner}>
-      <div className={styles.CardOrganizationInnerImg}>
-        <img className={styles.Img} src={dataItem.img || notPhoto} alt={dataItem.fio} />
-        <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} alt="Удалить"/>
-            <img src={editPhoto2Img} alt="Редактирование"/>
+        <div className={styles.CardOrganizationInnerImg}>
+          <img className={styles.Img} src={dataItem.file ? `${server}/${dataItem.file}` : notPhoto} alt="Фото" />
+          <div className={styles.CardOrganizationInnerImgInput}>
+            <img src={deletePhoto2Img} alt="Удалить" />
+            <img src={editPhoto2Img} alt="Редактировать" onClick={() => refFile.current.click()} />
+          </div>
+          <input type="file" style={{ display: "none" }} ref={refFile} onChange={handleFileChange} />
         </div>
-      </div>
-
         <div className={styles.CardOrganizationInnerInfo}>
-          <label>ФИО</label>
-          <input
-            value={dataItem.fio}
-            onChange={(e) => handleEditData(e.target.value, "fio")}
+          <label>Название альбома</label>
+          <input 
+            value={dataItem.name} 
+            onChange={(e) => handleEditData(e.target.value, "name")} 
+            style={{ borderColor: errorName ? "#B32020" : "" }} 
           />
+          {errorName && <span className={styles.error}>{errorName}</span>}
         </div>
-
         <div className={styles.CardOrganizationInnerInfo}>
-          <label>Организация</label>
-          <textarea
-            ref={textareasRef}
-            value={dataItem.organization}
-            onChange={(e) => handleEditData(e.target.value, "organization")}
+          <label>Ссылка</label>
+          <textarea 
+            ref={textareasRef} 
+            value={dataItem.url} 
+            onChange={(e) => handleEditData(e.target.value, "url")} 
+            style={{ borderColor: errorUrl ? "#B32020" : "" }} 
           />
+          {errorUrl && <span className={styles.error}>{errorUrl}</span>}
         </div>
-
-        {/* Если есть изменения → Отменить и Сохранить, иначе → Удалить */}
         {isChanged ? (
           <div className={styles.buttonContainer} ref={buttonContainerRef}>
             <button className={styles.cancel} onClick={handleCancel}>Отмена</button>
