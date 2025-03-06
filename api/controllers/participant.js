@@ -9,12 +9,15 @@ export default {
         res.json({ participant: map(participantSelf) });
     },
 
-    async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar}, user}, res){
+    async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar, accord, receipt, formPay}, user}, res){
 
         if(user.isMicrosoft) {
             if(name || surname || patronymic || organization || email) throw  new AppErrorInvalid('isMicrosoft')
         }
-        const participant = await participantService.update({email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar}, user.id)
+
+        if(formPay &&  !['Безналичный', 'Наличный'].includes(formPay)) throw  new AppErrorInvalid('formPay')
+
+        const participant = await participantService.update({email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar, accord, receipt, formPay}, user.id)
 
         res.json({participant});
 

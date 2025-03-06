@@ -111,14 +111,36 @@ export default {
 
     async update(participantInfo, participantId){
 
-        const participant = await Participant.findByPk(participantId);
+        const participant = await Participant.findByPk(participantId,{
+            include: {
+                model: ParticipantInConference,
+                as: 'participantInConference',
+                required: false
+            }
+        });
         if(!participant) throw new AppErrorNotExist('participant')
 
-        if(participant?.avatar && participantInfo.avatar===null){
+        if(participant?.avatar && participantInfo.avatar === null){
              fs.unlink(participant.avatar, (err=> {
                     if (err) console.log(err);
                 }))
         }
+
+        if(participant?.participantInConference?.receipt && participantInfo.receipt === null){
+            fs.unlink(participant.participantInConference.receipt, (err=> {
+                if (err) console.log(err);
+            }))
+        }
+
+
+        if(participant?.participantInConference?.accord && participantInfo.accord === null){
+            fs.unlink(participant.participantInConference.accord, (err=> {
+                if (err) console.log(err);
+            }))
+        }
+
+
+        if(participantInfo?.formPay && participant?.participantInConference) await participant?.participantInConference.update({formPay : participantInfo.formPay })
 
         if(participantInfo.email && participantInfo.email !== participant.email) {
 
