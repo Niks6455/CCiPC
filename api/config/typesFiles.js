@@ -7,6 +7,9 @@ export default {
     CONCLUSION: 5,
     COLLECTION_ARCHIVE: 6,
     INDIVIDUAL: 7,
-    LEGAL: 8
+    LEGAL: 8,
+    AGREEMENT: 9,
+    RECEIPT: 10
+
 };
 
