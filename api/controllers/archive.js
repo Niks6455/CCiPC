@@ -26,7 +26,7 @@ export default {
 
     async update({params: { id }, body: { name, type, url, file } }, res){
         if(!id) throw new AppErrorMissing('id')
-        const archive = await archiveService.update({name, url, type }, id)
+        const archive = await archiveService.update({name, url, type, file }, id)
         res.json({archive: archive})
     },
 

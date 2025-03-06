@@ -160,10 +160,9 @@ export default {
         return report
     },
 
-    async update(reportInfo, reportId, participant, admin) {
+    async update(reportInfo, reportId, participant) {
 
         const report = await Report.findByPk(reportId, {
-            ...(admin ? {} : {
                 include: {
                     model: ParticipantOfReport,
                     as: 'participantOfReport',
@@ -171,13 +170,9 @@ export default {
                     where: { participantId: participant.id }
                 }
             })
-        });
 
         if(!report) throw new AppErrorInvalid('report')
 
-        if(admin) return await report.update({
-            direction: reportInfo?.direction,
-        })
 
 
         if(report.participantOfReport[0].who === 'Автор'){

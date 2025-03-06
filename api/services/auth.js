@@ -9,6 +9,8 @@ import ParticipantOfReport from "../models/participant-of-report.js";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import Conference from "../models/conference.js";
 import Report from "../models/report.js";
+import qs from "querystring";
+import sync from '../utils/sync.js'
 const verificationCodes= {};
 const resetCodes= {};
 
@@ -29,6 +31,53 @@ export default {
             ...participant,
             password: participant.hashPassword
         })
+    },
+
+    async loginSfedu(code, code_verifier){
+/*
+        let accessToken;
+        try {
+            // Обмен кода на токен доступа у Microsoft Azure
+            const { data } = await axios.post(
+                'https://login.microsoftonline.com/19ba435d-e46c-436a-84f2-1b01e693e480/oauth2/v2.0/token',
+                qs.stringify({
+                    client_id: process.env.SFEDU_ID,
+                    client_secret: process.env.SFEDU_SECRET,
+                    scope: 'openid',
+                    code,
+                    code_verifier,
+                    redirect_uri: `${process.env.WEB_URL}/login`,
+                    grant_type: 'authorization_code',
+                })
+            );
+
+            accessToken = data.access_token;
+        } catch (e) {
+            throw new AppErrorInvalid('code');
+        }
+        // Получение почты и имени пользователя из токена
+        const { unique_name: email, name } = jwt.decode(accessToken);
+
+
+        const participant=await Participant.findOne({
+            where: { email: email }
+        })
+
+        if(participant) {
+            const { jwt: token } = jwt.generate({ id: participant.id });
+            return { token, participant };
+
+        }
+*/
+
+        try {
+
+            const {data: {student: studentInfo}} = await sync.get(`/students/tro@sfedu.ru`);
+            return studentInfo
+
+        } catch (e){
+            console.log(e.message)
+        }
     },
 
     async login(email, password){

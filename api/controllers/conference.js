@@ -183,6 +183,8 @@ export default {
             })),
         }));
 
+
+
         const information = data.map(d => {
             const reportInfo = {
                 report: {
@@ -228,9 +230,6 @@ export default {
 
         const participants =await conferenceService.findFee(id, fio);
 
-/*
-        console.log(participants[0].participantOfReport[0].participant.participantInConference)
-*/
         const data = participants.map(participant => ({
             name: participant.name,
             id:participant.id,
@@ -243,11 +242,12 @@ export default {
                 who: p.who,
                 organization: p.organization,
                 status: p.status,
+                form: p.form,
                 participantInConf: p.participant.participantInConference.map(p1=>({
                    status: p1.status,
                    sum: p1.sum,
                    comment: p1.comment,
-                    agreement: p1.agreeme,
+                   accord: p1.accord,
                    receipt: p1.receipt,
                    formPay: p1.formPay,
                    id: p1.id
@@ -255,18 +255,25 @@ export default {
             })),
         }));
 
+
         const flatArray = data.flatMap(item =>
             item.participants.map(participant => ({
                 name: item.name,
                 direction: item.direction,
                 comment: item.comment,
+                organization: participant.organization,
+                who: participant.who,
+                participationStatus: participant.status,
+                form: participant.form,
                 fio:`${participant.surname} ${participant.name} ${participant.patronymic ? participant.patronymic : ''}`.trim(),
                 sum: participant.participantInConf[0].sum,
                 formPay: participant.participantInConf[0].formPay,
                 status: participant.participantInConf[0].status,
-                agreement: participant.participantInConf[0].agreement,
+                accord: participant.participantInConf[0].accord,
                 receipt: participant.participantInConf[0].receipt,
                 id: participant.participantInConf[0].id,
+
+
             }))
         );
 
