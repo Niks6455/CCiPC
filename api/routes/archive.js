@@ -23,6 +23,7 @@ const router = Router();
  *                 type: string
  *               type:
  *                 type: number
+ *                 description: 0 - архив фото, 1 - архив докладов
  *               url:
  *                 type: string
  *             required:
@@ -77,25 +78,6 @@ const router = Router();
  *                     description: Все сборники
  *
  * /archive/{id}/:
- *   get:
- *     summary: Получение архива фото или сборника по ID
- *     parameters:
- *       - name: id
- *         in: path
- *         required: true
- *         description: ID архива или сборника
- *         schema:
- *           type: string
- *           format: uuid
- *     responses:
- *       200:
- *         description: Успешный ответ
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               description: Сборник или архив фото
- *
  *   put:
  *     summary: Обновление сборника или архива
  *     security:
@@ -121,6 +103,9 @@ const router = Router();
  *                 type: number
  *               url:
  *                 type: string
+ *               file:
+ *                 type: null
+ *                 description: для удаления файла
  *     responses:
  *       200:
  *         description: Успешный ответ

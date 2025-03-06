@@ -349,12 +349,12 @@ export default {
         const [surname, name, patronymic] = parts ? parts?.length === 3 ? parts : [parts[1], parts[0], parts[2]] :
             [undefined, undefined, undefined];
 
-        return await Report.findAll({
-            where:{
-                conferenceId:conferenceId,
+       return  await Report.findAll({
+            where: {
+                conferenceId: conferenceId,
             },
             order: [['createdAt', 'DESC']],
-            include: {
+            include: [{
                 model: ParticipantOfReport,
                 as: 'participantOfReport',
                 required: true,
@@ -362,49 +362,17 @@ export default {
                     model: Participant,
                     as: 'participant',
                     required: true,
-                    where: {
-                        ...(surname && { surname: {[Op.like]: `%${surname}%`}}),
-                        ...(name ? [{name: {[Op.like]: `%${name}%`}}] : []),
-                        ...(patronymic ? [{patronymic: {[Op.like]: `%${patronymic}%`}}] : []),
-                        ...(surname && name
-                            ? [
-                                {
-                                    [Op.and]: [
-                                        {surname: {[Op.like]: `%${name}%`}},
-                                        {name: {[Op.like]: `%${surname}%`}},
-                                    ],
-                                },
-                            ]
-                            : []),
-                        ...(surname && patronymic
-                            ? [
-                                {
-                                    [Op.and]: [
-                                        {surname: {[Op.like]: `%${patronymic}%`}},
-                                        {patronymic: {[Op.like]: `%${surname}%`}},
-                                    ],
-                                },
-                            ]
-                            : []),
-                        ...(name && patronymic
-                            ? [
-                                {
-                                    [Op.and]: [
-                                        {name: {[Op.like]: `%${patronymic}%`}},
-                                        {patronymic: {[Op.like]: `%${name}%`}},
-                                    ],
-                                },
-                            ]
-                            : []),
-                    },
                     include: {
                         model: ParticipantInConference,
                         as: 'participantInConference',
-                        required: true,
+                        required: false,
                     }
                 }
-            }
-        })
+            }]
+        });
+
+// Проверка результата выборки
+
 
     },
 

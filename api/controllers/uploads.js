@@ -23,6 +23,7 @@ import Conference from "../models/conference.js";
 import Participant from "../models/participant.js";
 import Committee from "../models/committee.js";
 import Archive from "../models/archive.js";
+import ParticipantInConference from "../models/participant-in-conference.js";
 const dir= './uploads'
 
 
@@ -127,7 +128,9 @@ const storage = multer.diskStorage({
             ||
             ((typesPhoto[type] === 0
             || typesFile[type] === 4
-            || typesFile[type] === 5)
+            || typesFile[type] === 5
+            || typesFile[type] === 9
+            || typesFile[type] === 10)
                 && !req.user)
         ) {
             return cb(new AppErrorForbiddenAction('file'));
@@ -180,7 +183,6 @@ export default {
     },
     async afterUpload({body : { reportId, newsId, committeeId, conferenceId, archiveId }, query: { type }, file, user, admin }, res) {
 
-
         if (!file) throw new AppErrorMissing('file');
         if(typesPhoto[type] === 0) {
             const participant= await Participant.findByPk(user.id);
@@ -189,6 +191,11 @@ export default {
             return res.json({url: file.path});
 
         }
+
+        if((typesFile[type] === 9 || typesFile[type] === 10) && !conferenceId) throw new AppErrorMissing('conferenceId');
+
+
+
         if(typesPhoto[type]=== 1 && !newsId) throw new AppErrorMissing('newsId')
 
         if(newsId)
@@ -269,6 +276,19 @@ export default {
 
         }
 
+        if(typesFile[type] === 9 || typesFile[type] === 10) {
+             const participantInConference = await ParticipantInConference.findOne({
+                 where: {
+                     participantId: user.id,
+                     conferenceId: conference.id
+                 }
+             })
+
+            if(!participantInConference) throw new AppErrorNotExist('participantInConference')
+
+            if(typesFile[type] === 9) await participantInConference.update({accord: file.path})
+            else await participantInConference.update({receipt: file.path})
+        }
 
 
 

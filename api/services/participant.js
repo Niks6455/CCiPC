@@ -7,6 +7,7 @@ import Conference from "../models/conference.js";
 import {Op} from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import fs from "fs";
+import ParticipantInConference from "../models/participant-in-conference.js";
 
 export default {
 
@@ -45,7 +46,14 @@ export default {
                 where: {
                     date: { [Op.lt]: new Date() },
                 },
-                include: {
+                include: [{
+                    model: ParticipantInConference,
+                    as: 'participantInConference',
+                    required: false,
+                    where: {
+                        participantId: participant.id
+                    }
+                },{
                     model: Report,
                     as: 'reports',
                     required: false,
@@ -58,14 +66,22 @@ export default {
                             participantId: participant.id
                         }
                     }
-                },
+                }],
                 order: [['date', 'DESC']]
             }),
             Conference.findOne({
                 where: {
                     date: { [Op.gte]: new Date() }
                 },
-                include: {
+                include: [{
+                    model: ParticipantInConference,
+                    as: 'participantInConference',
+                    required: false,
+                    where: {
+                        participantId: participant.id
+                    },
+                },
+                    {
                     model: Report,
                     as: 'reports',
                     required: false,
@@ -78,26 +94,53 @@ export default {
                             participantId: participant.id
                         }
                     }
-                },
+                }],
                 order: [['date', 'ASC']]
             })
         ]);
 
-        if(nextConference?.reports ) return nextConference
-        return lastConference
+
+
+        if(nextConference?.reports ) participant.conference= nextConference
+
+        else participant.conference = lastConference
+
+        return participant
 
     },
 
     async update(participantInfo, participantId){
 
-        const participant = await Participant.findByPk(participantId);
+        const participant = await Participant.findByPk(participantId,{
+            include: {
+                model: ParticipantInConference,
+                as: 'participantInConference',
+                required: false
+            }
+        });
         if(!participant) throw new AppErrorNotExist('participant')
 
-        if(participant?.avatar && participantInfo.avatar===null){
+        if(participant?.avatar && participantInfo.avatar === null){
              fs.unlink(participant.avatar, (err=> {
                     if (err) console.log(err);
                 }))
         }
+
+        if(participant?.participantInConference?.receipt && participantInfo.receipt === null){
+            fs.unlink(participant.participantInConference.receipt, (err=> {
+                if (err) console.log(err);
+            }))
+        }
+
+
+        if(participant?.participantInConference?.accord && participantInfo.accord === null){
+            fs.unlink(participant.participantInConference.accord, (err=> {
+                if (err) console.log(err);
+            }))
+        }
+
+
+        if(participantInfo?.formPay && participant?.participantInConference) await participant?.participantInConference.update({formPay : participantInfo.formPay })
 
         if(participantInfo.email && participantInfo.email !== participant.email) {
 

@@ -58,11 +58,16 @@ export default {
         res.json({ report: report })
     },
 
-    async update({body: { name, organization, form, direction, status,  comment, coAuthors, coAuthorsIds }, params: { id }, user, admin }, res) {
+    async update({body: { name, organization, form, direction, status,  comment, coAuthors, coAuthorsIds }, params: { id }, user }, res) {
         if(!id) throw new AppErrorMissing('id')
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
-        const report = await reportService.update({ name, form, status, organization, direction, comment, coAuthors, coAuthorsIds }, id , user, admin)
+        const report = await reportService.update({ name, form, status, organization, direction, comment, coAuthors, coAuthorsIds }, id , user)
         res.json({report: report})
+    },
+
+    async updateDirections({body: { reportsInfo }, admin }, res){
+        const reports = await reportService.updateDirections(reportsInfo)
+        res.json({reports: reports})
     },
 
     async delete({params : {  id }, user}, res) {

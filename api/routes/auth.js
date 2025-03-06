@@ -236,6 +236,9 @@ const router = Router();
 
 router.route('/login').post(asyncRoute(authCtrl.login));
 
+router.route('/login/sfedu').post(asyncRoute(authCtrl.loginSfedu));
+
+
 router.route('/register').post(asyncRoute(authCtrl.register))
 
 router.route('/checkEmail').post(asyncRoute(authCtrl.checkEmail))

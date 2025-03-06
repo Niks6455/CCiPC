@@ -5,16 +5,19 @@ import { mapShort, map } from "../utils/mappers/participant.js";
 export default {
 
     async self({ user }, res){
-        user.reports = (await participantService.self(user))?.reports;
-        res.json({ participant: map(user) });
+        const participantSelf = await participantService.self(user);
+        res.json({ participant: map(participantSelf) });
     },
 
-    async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar}, user}, res){
+    async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar, accord, receipt, formPay}, user}, res){
 
         if(user.isMicrosoft) {
             if(name || surname || patronymic || organization || email) throw  new AppErrorInvalid('isMicrosoft')
         }
-        const participant = await participantService.update({email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar}, user.id)
+
+        if(formPay &&  !['Безналичный', 'Наличный'].includes(formPay)) throw  new AppErrorInvalid('formPay')
+
+        const participant = await participantService.update({email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar, accord, receipt, formPay}, user.id)
 
         res.json({participant});
 

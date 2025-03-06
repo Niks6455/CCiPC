@@ -6,7 +6,7 @@ export default {
 
     async find(req,res){
         const committee=await committeeService.find()
-        res.json({"committee": committee.map(c=> map(c))})
+        res.json({committee: committee.map(c=> map(c))})
     },
 
     async create({ body: {fio, organization, type } },res){
