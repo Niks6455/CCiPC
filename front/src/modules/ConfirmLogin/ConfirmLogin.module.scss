@@ -1,4 +1,5 @@
 $w1: 780px;
+$w2: 540px;
 
 .ConfirmLoginLogo {
   display: flex;
@@ -8,8 +9,18 @@ $w1: 780px;
   img {
     width: 150px;
   }
+  @media (max-width: $w1) {
+    display: none;
+  }
 }
 .ConfirmLoginTitle {
+  @media (max-width: $w1) {
+    margin-top: 74px;
+  }
+  @media (max-width: $w2) {
+    margin-top: 14px;
+  }
+
   p {
     text-align: center;
     color: var(--GrayTextDefault);
@@ -17,6 +28,18 @@ $w1: 780px;
       font-size: 32px;
       line-height: 38px;
       font-weight: 900;
+      @media (max-width: $w1) {
+        font-size: 20px;
+      }
+      @media (max-width: $w2) {
+        max-width: 310px;
+        margin: 0 auto;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 120%;
+        letter-spacing: 0%;
+        text-align: center;
+      }
     }
   }
 }
@@ -24,16 +47,34 @@ $w1: 780px;
   display: flex;
   justify-content: center;
   margin-bottom: 70px;
+  @media (max-width: $w1) {
+    margin-bottom: 40px;
+  }
   .ConfirmLoginGalcaImg {
     display: flex;
     justify-content: center;
     margin: 40px 0px;
+    @media (max-width: $w1) {
+      margin: 30px 0px;
+    }
+    @media (max-width: $w2) {
+      img {
+        width: 64px;
+        height: 64px;
+      }
+    }
   }
   p {
     text-align: center;
     max-width: 856px;
     font-size: 20px;
     color: var(--GrayTextDefault);
+    @media (max-width: $w1) {
+      max-width: 495px;
+    }
+    @media (max-width: $w2) {
+      width: calc(100vw - 40px);
+    }
   }
   .mail {
     color: var(--GreenLinkSecond);
@@ -45,6 +86,9 @@ $w1: 780px;
   margin-bottom: 70px;
   font-size: 20px;
   color: var(--GrayTextDefault);
+  @media (max-width: $w1) {
+    margin-bottom: 40px;
+  }
 }
 .codeInput {
   display: flex;
@@ -54,6 +98,12 @@ $w1: 780px;
     display: flex;
     justify-content: space-between;
     width: 634px;
+    @media (max-width: $w1) {
+      max-width: 512px;
+    }
+    @media (max-width: $w2) {
+      width: calc(100vw - 40px);
+    }
   }
   input {
     width: 79px;
@@ -66,6 +116,18 @@ $w1: 780px;
     background-color: inherit;
     &:focus {
       outline: none;
+    }
+    @media (max-width: $w1) {
+      width: 64px;
+      font-family: Overpass, sans-serif;
+      font-weight: 200;
+      font-size: 67.84px;
+    }
+    @media (max-width: $w2) {
+      width: calc((80vw - 40px) / 6);
+      height: 50px;
+      font-weight: 200;
+      font-size: 46.37px;
     }
   }
   .error {
@@ -97,6 +159,16 @@ $w1: 780px;
   align-items: center;
   justify-content: center;
   margin: 30px 0px 130px 0px;
+  @media (max-width: $w1) {
+    margin: 0;
+    margin-bottom: 100px;
+  }
+  @media (max-width: $w2) {
+    width: calc(100vw - 40px);
+    margin: 0 auto;
+    margin-bottom: 100px;
+  }
+
   .error_auth {
     margin-top: 5px;
     color: #b32020;
@@ -128,6 +200,13 @@ $w1: 780px;
     }
     &:active {
       background-color: var(--GreenColorActive);
+    }
+    @media (max-width: $w1) {
+      margin: 0 auto;
+      margin-top: 40px;
+      max-width: 400px;
+      width: 100%;
+      height: 54px;
     }
   }
 }
