@@ -1,5 +1,8 @@
 import { useSelector } from "react-redux";
-import { getConfParticipants } from "../../../apirequests/apirequests";
+import {
+  apiEditReport,
+  getConfParticipants,
+} from "../../../apirequests/apirequests";
 import styles from "./ColaboratorsModuleAdminPage.module.scss";
 import HeadBlock from "./HeadBlock/HeadBlock";
 import TableModule from "./TableModule/TableModule";
@@ -43,6 +46,14 @@ function ColaboratorsModuleAdminPage() {
       setTableData([...originalData]); // Сбрасываем фильтр
     }
   }, [shearchParam, originalData]);
+
+  //! сохранение данных таблицы
+  const funSaveTableData = (id, value) => {
+    const reqData = {
+      direction: value,
+    };
+    apiEditReport(id, reqData);
+  };
 
   return (
     <section className={styles.ColaboratorsModuleAdminPage}>

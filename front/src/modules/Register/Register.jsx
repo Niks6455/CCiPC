@@ -14,13 +14,8 @@ import {
   funEightSymbols,
 } from "../../utils/functions/PasswordValidation";
 import { apiRegister } from "../../apirequests/apirequests";
-import { useDispatch } from "react-redux";
-import { setUserData } from "../../store/userSlice/user.Slice";
-import { useNavigate } from "react-router-dom";
 
 function Register() {
-  const dispach = useDispatch();
-  const navigator = useNavigate();
   const context = useContext(DataContext);
   const [openList, setOpenList] = useState("");
   const [formData, setFormData] = useState({

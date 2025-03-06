@@ -18,7 +18,8 @@ function AuthPage(props) {
           {context.authPage === "Auth" ? (
             <Login funGetAllApi={props.funGetAllApi} />
           ) : context.authPage === "Register" ? (
-            <Register />
+            // <Register />
+            <ConfirmLogin />
           ) : context.authPage === "ConfirmLogin" ? (
             <ConfirmLogin />
           ) : null}

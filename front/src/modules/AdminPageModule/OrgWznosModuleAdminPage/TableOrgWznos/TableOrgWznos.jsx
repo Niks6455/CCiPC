@@ -60,7 +60,7 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
     if (columnKey.key === "fio") {
       return (
         <td name={columnKey.key} key={indexCol}>
-          {row[columnKey.key]} <br /> {row.author ? "(автор)" : "(соавтор)"}
+          {row[columnKey.key]} <br /> {row.author}
         </td>
       );
     }

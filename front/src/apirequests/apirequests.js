@@ -64,7 +64,7 @@ export const CheckEmail = async (Data) => {
     const response = await api.post(`${server}/auth/checkEmail`, Data);
     return response;
   } catch (error) {
-    alert("Пользователь не найден!");
+    console.error("CheckEmail", error);
   }
 };
 
@@ -307,7 +307,15 @@ export const getConfParticipants = async (id) => {
   }
 };
 
-
+//! получение оргвзнос таблицы в админ панели
+export const getOrgWznos = async (id) => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/fee`);
+    return response;
+  } catch (error) {
+    console.log("getOrgWznos ", error);
+  }
+};
 
 //! экспорт архива статей
 export const apiExportArchiveState = async (id) => {

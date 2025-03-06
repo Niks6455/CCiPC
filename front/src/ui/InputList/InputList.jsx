@@ -78,6 +78,7 @@ function InputList(props) {
         <div
           className={styles.errorText}
           style={props.inputerrorStyle ? props.inputerrorStyle : {}}
+          name="error"
         >
           {props?.error}
         </div>

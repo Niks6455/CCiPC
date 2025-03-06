@@ -3,10 +3,13 @@ import styles from "./ConfirmLogin.module.scss";
 import DataContext from "../../context";
 import logo from "./../../assets/img/logo.png";
 import confirm from "./../../assets/img/confirm.svg";
+import errorItem from "@assets/img/UI/error.svg";
 import { CheckEmail } from "../../apirequests/apirequests";
+import { AnimatePresence, motion } from "framer-motion";
 function ConfirmLogin() {
   const context = useContext(DataContext);
   const [code, setCode] = useState(["", "", "", "", "", ""]); // Для кода
+  const [errorAuth, setErrorAuth] = useState(false);
   const [errors, setErrors] = useState([
     false,
     false,
@@ -41,6 +44,8 @@ function ConfirmLogin() {
   };
 
   const handleChange = (index, value) => {
+    setErrorAuth(false);
+
     if (!/^\d?$/.test(value)) return;
     const newCode = [...code];
     newCode[index] = value;
@@ -73,9 +78,11 @@ function ConfirmLogin() {
       type: 0,
     };
     CheckEmail(data).then((resp) => {
-      if (resp.status === 200) {
-        console.log("Код подтвержден");
+      if (resp?.status === 200) {
         context?.setAuthPage("Auth");
+        setErrorAuth(false);
+      } else {
+        setErrorAuth(true);
       }
     });
     console.log("Код отправлен на сервер:", fullCode);
@@ -138,6 +145,19 @@ function ConfirmLogin() {
       </div>
       <div className={styles.submitButton}>
         <button onClick={handleSubmit}>Войти</button>
+        <AnimatePresence>
+          {errorAuth && (
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className={styles.error_auth}
+            >
+              <img src={errorItem} alt="❗" />
+              <span>Ошибка подтверждения</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

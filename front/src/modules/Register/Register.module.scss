@@ -1,129 +1,273 @@
-.Login{
-    .LoginLogo{
-        display: flex;
+$w1: 780px;
+$w2: 440px;
+$w3: 360px;
+$w4: 1360px;
+$w5: 920px;
+$w6: 820px;
+$w7: 770px;
+$w8: 470px;
+$w9: 390px;
+
+.Login {
+  .LoginLogo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    width: 100%;
+    @media (max-width: $w1) {
+      display: none;
+    }
+    img {
+      width: 169px;
+      height: 169px;
+      @media (max-width: $w1) {
         width: 100%;
-        justify-content: center;
-        margin-bottom: 40px;
-        img{
-            width: 169px;
-            height: 169px;
+        height: 100%;
+      }
+    }
+  }
+  .LoginTitle {
+    margin-top: 74px;
+    margin-bottom: 25px;
+    @media (max-width: $w2) {
+      margin-top: 24px;
+    }
+    @media (max-width: $w8) {
+      margin-top: 15px;
+    }
+    p {
+      text-align: center;
+      &:first-child {
+        font-size: 32px;
+        line-height: 38px;
+        font-weight: 900;
+        margin: 40px 0px 20px 0px;
+        @media (max-width: $w1) {
+          font-size: 20px;
+          line-height: 24px;
+          margin: 0;
+          margin-bottom: 10px;
+          padding: 0;
         }
-    }
-    .LoginTitle{
-        p{
-            text-align: center;
-            &:first-child{
-                font-size: 32px;
-                line-height: 38px;
-                font-weight: 900;
-                margin: 40px 0px 20px 0px;
-            }
-            &:last-child{
-                font-size: 18px;
-                font-weight: 300;
-                line-height: 21px;
-                margin-bottom: 25px;
-            }
+        @media (max-width: $w2) {
+          font-weight: 700;
+          font-size: 18px;
         }
-    }
-    .input{
-        display: flex;
-        justify-content: center;
-    }
-    .inputInnerBlock{
-        display: flex;
-        width: 1080px;
-        justify-content: space-between;
-    }
-    .Maybe{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 30px 0px;
-        .MaybeInner{
-            width: 490px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            p{
-                width: max-content;
-                text-align: center;
-            }
-            .lineOne{
-                position: relative;
-                content: "";
-                height: 1px;
-                background-color: var(--InputColors);
-                width: 214px;
-            }
-            .lineTwo{
-                position: relative;
-                content: "";
-                height: 1px;
-                background-color: var(--InputColors);
-                width: 214px;
-            }
+      }
+      &:last-child {
+        font-size: 18px;
+        font-weight: 300;
+        line-height: 21px;
+        margin-bottom: calc(25px - 15px);
+        @media (max-width: $w1) {
+          font-weight: 400;
+          font-size: 16px;
         }
-    }
-    .loginButtonSfedu{
-        display: flex;
-        justify-content: center;
-        button{
-            width: 490px;
-            text-align: start;
-            border: none;
-            border: 1px solid var(--InputColors);
-            border-radius: 10px;
-            color: var(--GrayTextDefault);
-            font-size: 20px;
-            height: 66px;
-            align-items: center;
-            display: flex;
-            background-color: inherit;
-            padding-left: 20px;
-            cursor: pointer;
-            img{
-                margin-right: 15px;
-            }
+        @media (max-width: $w2) {
+          font-weight: 500;
+          font-size: 16px;
+          max-width: 309px;
+          margin: 0 auto;
+          margin-bottom: 25px;
         }
+      }
     }
-    .submitButton{
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 30px 0px 15px 0px;
-        button{
-            border: none;
-            border-radius: 10px;
-            background-color: var(--GreenColorDefault);
-            cursor: pointer;
-            color: #fff;
-            width: 490px;
-            height: 66px;
-            font-size: 22px;
-            &:hover{
-                background-color: var(--GreenColorHover);
-            }
-            &:active{
-                background-color: var(--GreenColorActive);
-            }
+  }
+  .input {
+    display: flex;
+    justify-content: center;
+  }
+  .inputInnerBlock {
+    display: flex;
+    width: 1080px;
+    justify-content: space-between;
+    @media (max-width: $w4) {
+      width: 840px;
+      input {
+        width: 400px;
+        height: 54px;
+        font-size: 18px;
+      }
+      div[name="error"] {
+        font-size: 14px;
+      }
+    }
+    @media (max-width: $w5) {
+      width: 88vw;
+      input {
+        width: 350px;
+        font-size: 16px;
+      }
+    }
+    @media (max-width: $w6) {
+      input {
+        width: 42vw;
+        font-size: 14px;
+      }
+      div[name="error"] {
+        font-size: 12px;
+      }
+    }
+    @media (max-width: $w7) {
+      flex-direction: column;
+      width: 400px;
+      input {
+        width: 100%;
+        height: 54px;
+        font-size: 16px;
+      }
+      div[name="error"] {
+        font-size: 14px;
+      }
+    }
+    @media (max-width: $w8) {
+      width: calc(100vw - 40px);
+    }
+    @media (max-width: $w9) {
+      input {
+        font-size: 14px;
+      }
+      div[name="error"] {
+        font-size: 12px;
+      }
+    }
+  }
+  .Maybe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0px;
+    .MaybeInner {
+      width: 490px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @media (max-width: $w1) {
+        width: 400px;
+      }
+      @media (max-width: $w2) {
+        width: calc(100vw - 40px);
+      }
+      p {
+        width: max-content;
+        text-align: center;
+        @media (max-width: $w1) {
+          font-size: 16px;
+          padding: 0 15px;
         }
-    }
-    .noAccount{
-        display: flex;
-        color: var(--GrayTextDefault);
-        justify-content: center;
-        margin-bottom: 150px;
-        p{
-            &:last-child{
-                color: var(--GreenColorText);
-                margin-left: 10px;
-                cursor: pointer;
-                transition: 0.05s linear all;
-                &:hover{
-                    text-decoration: underline;
-                }
-            }
+        @media (max-width: $w2) {
+          font-weight: 400;
+          font-size: 16px;
         }
+        @media (max-width: $w3) {
+          font-size: 14px;
+        }
+      }
+      .lineOne {
+        position: relative;
+        content: "";
+        height: 1px;
+        background-color: var(--InputColors);
+        width: 214px;
+      }
+      .lineTwo {
+        position: relative;
+        content: "";
+        height: 1px;
+        background-color: var(--InputColors);
+        width: 214px;
+      }
     }
+  }
+  .loginButtonSfedu {
+    display: flex;
+    justify-content: center;
+    button {
+      width: 490px;
+      text-align: start;
+      border: none;
+      border: 1px solid var(--InputColors);
+      border-radius: 10px;
+      color: var(--GrayTextDefault);
+      font-size: 20px;
+      height: 66px;
+      align-items: center;
+      display: flex;
+      background-color: inherit;
+      padding-left: 20px;
+      cursor: pointer;
+      @media (max-width: $w1) {
+        width: 400px;
+      }
+      @media (max-width: $w2) {
+        width: calc(100vw - 40px);
+        font-weight: 400;
+        font-size: 16px;
+      }
+      @media (max-width: $w3) {
+        font-size: 14px;
+        height: 54px;
+      }
+      img {
+        margin-right: 15px;
+      }
+    }
+  }
+  .submitButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0px 15px 0px;
+    @media (max-width: $w3) {
+      margin-top: 20px;
+    }
+    button {
+      border: none;
+      border-radius: 10px;
+      background-color: var(--GreenColorDefault);
+      cursor: pointer;
+      color: #fff;
+      width: 490px;
+      height: 66px;
+      font-size: 22px;
+      &:hover {
+        background-color: var(--GreenColorHover);
+      }
+      &:active {
+        background-color: var(--GreenColorActive);
+      }
+      @media (max-width: $w1) {
+        width: 400px;
+      }
+      @media (max-width: $w2) {
+        width: calc(100vw - 40px);
+        font-weight: 400;
+        font-size: 16px;
+      }
+      @media (max-width: $w3) {
+        font-size: 14px;
+        height: 54px;
+      }
+    }
+  }
+  .noAccount {
+    display: flex;
+    color: var(--GrayTextDefault);
+    justify-content: center;
+    margin-bottom: 150px;
+    p {
+      &:last-child {
+        color: var(--GreenColorText);
+        margin-left: 10px;
+        cursor: pointer;
+        transition: 0.05s linear all;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      @media (max-width: $w3) {
+        font-size: 14px;
+      }
+    }
+  }
 }

@@ -3,11 +3,24 @@ import styles from "./OrgWznosModuleAdminPage.module.scss";
 import lupa from "@assets/img/UI/lupa.svg";
 import TableOrgWznos from "./TableOrgWznos/TableOrgWznos";
 import { testData } from "./data";
+import { getOrgWznos } from "../../../apirequests/apirequests";
+import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 
 function OrgWznosModuleAdminPage() {
+  const conferenceid = useSelector((state) => state.conferences?.data[0]?.id);
   const [shearchParam, setShearchParam] = useState("");
   const [originalData, setOriginalData] = useState([]);
   const [tableData, setTableData] = useState([]);
+
+  const qery = useQuery({
+    queryKey: ["conference/fee", conferenceid], // Уникальный ключ, зависящий от conferenceid
+    queryFn: () => getOrgWznos(conferenceid), // Функция для получения данных
+    enabled: !!conferenceid, // Запрос выполняется только если conferenceid существует
+    staleTime: Infinity, // Запрос не будет обновляться автоматически
+  });
+
+  console.log("qery", qery?.data?.data?.participants);
 
   useEffect(() => {
     console.log("tableData", tableData);
@@ -15,10 +28,25 @@ function OrgWznosModuleAdminPage() {
   }, [tableData]);
 
   useEffect(() => {
-    const deepCopy = JSON.parse(JSON.stringify(testData));
-    setTableData([...deepCopy]);
-    setOriginalData([...deepCopy]);
-  }, []);
+    const data = qery?.data?.data?.participants?.map((item) => ({
+      fio: item.fio || "",
+      report: item.name || "",
+      organization: item.organization || "",
+      participationForm: item.form || "",
+      participationStatus: item.participationStatus || "",
+      paymentForm: item.formPay || "",
+      sumOrgWznos: item.sum || 0,
+      confirmation: item.status || false,
+      author: item.who || "",
+      contract: null,
+      receipt: item.receipt || null,
+    }));
+    if (data && data.length > 0) {
+      const deepCopy = JSON.parse(JSON.stringify(data));
+      setTableData([...deepCopy]);
+      setOriginalData([...deepCopy]);
+    }
+  }, [qery?.data?.data?.participants]);
 
   //! поиск по всем полям
   useEffect(() => {

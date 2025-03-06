@@ -1,5 +1,6 @@
 $w1: 780px;
 $w2: 440px;
+$w3: 360px;
 
 .Login {
   .LoginLogo {
@@ -8,13 +9,6 @@ $w2: 440px;
     margin-bottom: 40px;
     width: 100%;
     @media (max-width: $w1) {
-      position: absolute;
-      left: 25px;
-      top: 10px;
-      width: 60px;
-      height: 60px;
-    }
-    @media (max-width: $w2) {
       display: none;
     }
     img {
@@ -28,6 +22,12 @@ $w2: 440px;
   }
   .LoginTitle {
     margin-top: 74px;
+    @media (max-width: $w2) {
+      margin-top: 24px;
+    }
+    @media (max-width: $w3) {
+      margin-top: 10px;
+    }
     p {
       text-align: center;
       &:first-child {
@@ -90,6 +90,17 @@ $w2: 440px;
         font-size: 14px;
       }
     }
+    @media (max-width: $w3) {
+      input {
+        width: calc(100vw - 40px);
+        height: 44px;
+        font-size: 14px;
+        margin: 10px 0;
+      }
+      div[name="error"] {
+        font-size: 14px;
+      }
+    }
   }
   .forgetPassword {
     color: var(--GreenColorDefault);
@@ -143,6 +154,9 @@ $w2: 440px;
           font-weight: 400;
           font-size: 16px;
         }
+        @media (max-width: $w3) {
+          font-size: 14px;
+        }
       }
       .lineOne {
         position: relative;
@@ -185,6 +199,10 @@ $w2: 440px;
         font-weight: 400;
         font-size: 16px;
       }
+      @media (max-width: $w3) {
+        font-size: 14px;
+        height: 54px;
+      }
       img {
         margin-right: 15px;
       }
@@ -195,6 +213,9 @@ $w2: 440px;
     align-items: center;
     justify-content: center;
     margin: 30px 0px 15px 0px;
+    @media (max-width: $w3) {
+      margin-top: 20px;
+    }
     button {
       border: none;
       border-radius: 10px;
@@ -218,6 +239,10 @@ $w2: 440px;
         font-weight: 400;
         font-size: 16px;
       }
+      @media (max-width: $w3) {
+        font-size: 14px;
+        height: 54px;
+      }
     }
   }
   .noAccount {
@@ -234,6 +259,9 @@ $w2: 440px;
         &:hover {
           text-decoration: underline;
         }
+      }
+      @media (max-width: $w3) {
+        font-size: 14px;
       }
     }
   }
