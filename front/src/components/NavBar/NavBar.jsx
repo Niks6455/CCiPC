@@ -1,22 +1,18 @@
-import { useContext, useState } from "react";
-import styles from "./NavBar.module.scss";
-import closeImg from "./../../assets/img/closeImg.png";
-import { useNavigate } from "react-router-dom";
-import DataContext from "../../context";
-import ArrowMenu from "./../../assets/img/ArrowMenu.png";
-import { useSelector } from "react-redux";
+import { useContext, useState } from 'react';
+import styles from './NavBar.module.scss';
+import closeImg from './../../assets/img/closeImg.png';
+import { useNavigate } from 'react-router-dom';
+import DataContext from '../../context';
+import ArrowMenu from './../../assets/img/ArrowMenu.png';
+import { useSelector } from 'react-redux';
 function NavBar() {
   const context = useContext(DataContext);
   const navigate = useNavigate();
-  const autorisation =
-    useSelector((state) => state.user.status) === "succeeded";
+  const autorisation = useSelector(state => state.user.status) === 'succeeded';
 
   return (
     <section className={styles.NavBar}>
-      <button
-        className={styles.NavBarButton}
-        onClick={() => context.setActiveMenu(true)}
-      >
+      <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
         <p>Меню</p>
         <div className={styles.NavBarMenu}>
           <span></span>
@@ -26,9 +22,7 @@ function NavBar() {
       </button>
       <div
         onClick={() => context.setActiveMenu(false)}
-        className={`${styles.menu} ${
-          context.activeMenu ? styles.active : styles.disable
-        }`}
+        className={`${styles.menu} ${context.activeMenu ? styles.active : styles.disable}`}
       >
         <div className={styles.menuInner}>
           <button>
@@ -37,18 +31,18 @@ function NavBar() {
           <ul>
             <li
               onClick={() => {
-                navigate(autorisation ? "/account/profile" : "/authorization");
+                navigate(autorisation ? '/account/profile' : '/authorization');
                 context.setActiveMenu(false);
               }}
             >
-              {autorisation ? "Личный кабинет" : "Вход/Регистрация"}
+              {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
             <li
               onClick={() => {
-                navigate("/");
+                navigate('/');
                 context.setActiveMenu(false);
               }}
             >
@@ -59,44 +53,44 @@ function NavBar() {
             </li>
             <li
               onClick={() => {
-                navigate("/author");
+                navigate('/author');
                 context.setActiveMenu(false);
               }}
             >
-              Автору{" "}
+              Автору{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
             <li
               onClick={() => {
-                navigate("/news");
+                navigate('/news');
                 context.setActiveMenu(false);
               }}
             >
-              Новости{" "}
+              Новости{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
             <li
               onClick={() => {
-                navigate("/participants");
+                navigate('/participants');
                 context.setActiveMenu(false);
               }}
             >
-              Участники{" "}
+              Участники{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
             <li
               onClick={() => {
-                navigate("/organizationcomite");
+                navigate('/organizationcomite');
                 context.setActiveMenu(false);
               }}
             >
-              Оргкомитет{" "}
+              Оргкомитет{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
@@ -104,11 +98,11 @@ function NavBar() {
 
             <li
               onClick={() => {
-                navigate("/adminPage/news");
+                navigate('/adminPage/news');
                 context.setActiveMenu(false);
               }}
             >
-              Админка{" "}
+              Админка{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>

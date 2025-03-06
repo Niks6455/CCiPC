@@ -17,9 +17,7 @@ export default function AuthorCollection({ children, link }) {
         href={`${server}/${decodeFileName(link)}`}
         target="_blank"
         rel="noreferrer"
-        className={`${styles.collection_element_text} ${
-          isActive && styles.active_text
-        }`}
+        className={`${styles.collection_element_text} ${isActive && styles.active_text}`}
       >
         {children}
       </a>

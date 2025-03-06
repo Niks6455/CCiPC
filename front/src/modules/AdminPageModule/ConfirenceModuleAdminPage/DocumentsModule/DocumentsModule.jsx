@@ -1,72 +1,72 @@
-import { server } from "../../../../apirequests/apirequests";
-import FileComponent from "../../../../components/AdminModuleComponents/FileComponent/FileComponent";
-import styles from "./DocumentsModule.module.scss";
-import borderIcon from "@assets/img/AdminPanel/border3.svg";
+import { server } from '../../../../apirequests/apirequests';
+import FileComponent from '../../../../components/AdminModuleComponents/FileComponent/FileComponent';
+import styles from './DocumentsModule.module.scss';
+import borderIcon from '@assets/img/AdminPanel/border3.svg';
 
 function DocumentsModule({ data, setData }) {
   const mapData = [
     {
-      key: "programConference",
-      typeFile: ["application/pdf"],
-      accept: ".pdf",
-      name: "programConference",
-      icon: "pdf",
-      text: "Неободимо загрузить<br/>файл в формате PDF",
-      title: "Программа конференции",
+      key: 'programConference',
+      typeFile: ['application/pdf'],
+      accept: '.pdf',
+      name: 'programConference',
+      icon: 'pdf',
+      text: 'Неободимо загрузить<br/>файл в формате PDF',
+      title: 'Программа конференции',
     },
     {
-      key: "informationLetter",
-      typeFile: ["application/pdf"],
-      accept: ".pdf",
-      name: "informationLetter",
-      icon: "pdf",
-      text: "Неободимо загрузить<br/>файл в формате PDF",
-      title: "Информационное письмо",
+      key: 'informationLetter',
+      typeFile: ['application/pdf'],
+      accept: '.pdf',
+      name: 'informationLetter',
+      icon: 'pdf',
+      text: 'Неободимо загрузить<br/>файл в формате PDF',
+      title: 'Информационное письмо',
     },
     {
-      key: "worksCollection",
-      typeFile: ["application/pdf"],
-      accept: ".pdf",
-      name: "worksCollection",
-      icon: "pdf",
-      text: "Неободимо загрузить<br/>файл в формате PDF",
-      title: "Cборник научных трудов",
+      key: 'worksCollection',
+      typeFile: ['application/pdf'],
+      accept: '.pdf',
+      name: 'worksCollection',
+      icon: 'pdf',
+      text: 'Неободимо загрузить<br/>файл в формате PDF',
+      title: 'Cборник научных трудов',
     },
     {
-      key: "аrticleTemplate",
+      key: 'аrticleTemplate',
       typeFile: [
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       ],
-      accept: ".doc,.docx",
-      name: "аrticleTemplate",
-      icon: "doc",
-      text: "Неободимо загрузить<br/>файл в формате DOC",
-      title: "Шаблон статьи",
+      accept: '.doc,.docx',
+      name: 'аrticleTemplate',
+      icon: 'doc',
+      text: 'Неободимо загрузить<br/>файл в формате DOC',
+      title: 'Шаблон статьи',
     },
     {
-      key: "cashlessIndividual",
+      key: 'cashlessIndividual',
       typeFile: [
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       ],
-      accept: ".doc,.docx",
-      name: "cashlessIndividual",
-      icon: "doc",
-      text: "Неободимо загрузить<br/>файл в формате DOC",
-      title: "Договор оплаты безналичным расчётом для физического лица",
+      accept: '.doc,.docx',
+      name: 'cashlessIndividual',
+      icon: 'doc',
+      text: 'Неободимо загрузить<br/>файл в формате DOC',
+      title: 'Договор оплаты безналичным расчётом для физического лица',
     },
     {
-      key: "cashlessEntities",
+      key: 'cashlessEntities',
       typeFile: [
-        "application/msword",
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       ],
-      accept: ".doc,.docx",
-      name: "cashlessEntities",
-      icon: "doc",
-      text: "Неободимо загрузить<br/>файл в формате DOC",
-      title: "Договор оплаты безналичным расчётом для юридического лица",
+      accept: '.doc,.docx',
+      name: 'cashlessEntities',
+      icon: 'doc',
+      text: 'Неободимо загрузить<br/>файл в формате DOC',
+      title: 'Договор оплаты безналичным расчётом для юридического лица',
     },
   ];
 
@@ -85,10 +85,7 @@ function DocumentsModule({ data, setData }) {
               <img src={borderIcon} alt="img" className={styles.border} />
               <div className={styles.border_inner}>
                 <FileComponent
-                  logoHeader={
-                    typeof data[item.key] === "string" &&
-                    `${server}/${data[item.key]}`
-                  }
+                  logoHeader={typeof data[item.key] === 'string' && `${server}/${data[item.key]}`}
                   fileSize={50}
                   data={data[item.key]}
                   itemKey={item.key}

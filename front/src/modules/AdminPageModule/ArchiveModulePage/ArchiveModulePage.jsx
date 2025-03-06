@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import styles from "./ArchiveModulePage.module.scss";
-import plusLigthImg from "@assets/img/UI/plusLigth.svg";
+import styles from './ArchiveModulePage.module.scss';
+import plusLigthImg from '@assets/img/UI/plusLigth.svg';
 import AddArchive from '../../../components/AdminModuleComponents/AddArchive/AddArchive';
 import { getAllArchivePhoto } from '../../../apirequests/apirequests';
 import CardArchive from './CardArchive/CardArchive';
@@ -14,7 +14,7 @@ function ArchiveModulePage() {
   }, []);
 
   const updateData = () => {
-    getAllArchivePhoto().then((resp) => {
+    getAllArchivePhoto().then(resp => {
       setDataAlbom(resp?.data?.archives || []);
     });
   };
@@ -28,16 +28,17 @@ function ArchiveModulePage() {
         </div>
         <div>
           <button onClick={() => setAddAlbom(true)} className={styles.ButtonAdd}>
-            <img src={plusLigthImg} alt="Добавить" />Добавить Альбом
+            <img src={plusLigthImg} alt="Добавить" />
+            Добавить Альбом
           </button>
         </div>
       </div>
       <div className={styles.orgCargCont}>
-            <div className={styles.orgCargContCards}>
-                {addAlbom && <AddArchive updateData={updateData} close={() => setAddAlbom(false)} />}
-                {dataAlbom?.map((item) => (
-                <CardArchive key={item.id} item={item} updateData={updateData} />
-                ))}
+        <div className={styles.orgCargContCards}>
+          {addAlbom && <AddArchive updateData={updateData} close={() => setAddAlbom(false)} />}
+          {dataAlbom?.map(item => (
+            <CardArchive key={item.id} item={item} updateData={updateData} />
+          ))}
         </div>
       </div>
     </section>

@@ -11,12 +11,11 @@ function Participants() {
   const [filteredTable, setFilteredTable] = useState(tableData);
 
   const searchInData = (data, searchText) => {
-    return data.filter((item) =>
+    return data.filter(item =>
       Object.values(item).some(
-        (value) =>
-          typeof value === 'string' &&
-          value.toLowerCase().includes(searchText.toLowerCase())
-      )
+        value =>
+          typeof value === 'string' && value.toLowerCase().includes(searchText.toLowerCase()),
+      ),
     );
   };
 
@@ -26,7 +25,7 @@ function Participants() {
 
   return (
     <>
-    <NavBar/>
+      <NavBar />
       <main className={styles.Participants}>
         <Layout>
           <div className={styles.ParticipantsInner}>
@@ -39,15 +38,11 @@ function Participants() {
                 <input
                   className={styles.inputComponent}
                   placeholder="Поиск"
-                  onChange={(e) => setFilter(e.target.value)}
+                  onChange={e => setFilter(e.target.value)}
                   value={filter}
                 />
               </div>
-
-              <UniversalTable
-                tableHeader={tableHead}
-                tableBody={filteredTable}
-              />
+              <UniversalTable tableHeader={tableHead} tableBody={filteredTable} />
             </div>
           </div>
         </Layout>

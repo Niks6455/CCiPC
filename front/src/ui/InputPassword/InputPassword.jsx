@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import styles from "./InputPassword.module.scss";
-import galka from "./../../assets/img/UI/galka.svg";
-import krest from "./../../assets/img/UI/krest.svg";
-import lock from "./../../assets/img/UI/lock.svg";
+import { useEffect, useState } from 'react';
+import styles from './InputPassword.module.scss';
+import galka from './../../assets/img/UI/galka.svg';
+import krest from './../../assets/img/UI/krest.svg';
+import lock from './../../assets/img/UI/lock.svg';
 
 function InputPassword(props) {
   const [errorListShow, setErrorListShow] = useState(false);
@@ -15,17 +15,15 @@ function InputPassword(props) {
   };
 
   //! функция проверки по множеству ошибок
-  const selectErrors = (e) => {
+  const selectErrors = e => {
     if (props.errorList) {
       const value = e.target.value;
-      const updatedLists = props.errorList?.map((fun) =>
-        fun.functionCheck(value)
-      ); // Получаем массив обновленных списков
-      console.log("updatedLists", updatedLists);
-      const combinedList = [...props.errorList].map((el) => {
+      const updatedLists = props.errorList?.map(fun => fun.functionCheck(value)); // Получаем массив обновленных списков
+      console.log('updatedLists', updatedLists);
+      const combinedList = [...props.errorList].map(el => {
         return {
           ...el,
-          done: updatedLists.find((item) => item.id === el.id)?.done,
+          done: updatedLists.find(item => item.id === el.id)?.done,
         };
       });
       props.setErrorList(combinedList); // Обновляем состояние с новым объединенным списком
@@ -33,7 +31,7 @@ function InputPassword(props) {
   };
 
   useEffect(() => {
-    console.log("props.errorList", props.errorList);
+    console.log('props.errorList', props.errorList);
   }, [props.errorList]);
 
   return (
@@ -45,11 +43,7 @@ function InputPassword(props) {
           onMouseEnter={funOpenListErrors}
           onMouseLeave={funClouseListErrors}
           className={styles.errorListImg}
-          src={
-            errorListShow
-              ? props?.errorListImgHover
-              : props?.errorListImgNoHover
-          }
+          src={errorListShow ? props?.errorListImgHover : props?.errorListImgNoHover}
           alt="!"
         />
       )}
@@ -58,13 +52,9 @@ function InputPassword(props) {
       {errorListShow && (
         <div className={styles.errorsListContainer}>
           <ul>
-            {props.errorList?.map((el) => (
+            {props.errorList?.map(el => (
               <li key={el.id}>
-                {el.done ? (
-                  <img src={galka} alt="✔️" />
-                ) : (
-                  <img src={krest} alt="❌" />
-                )}
+                {el.done ? <img src={galka} alt="✔️" /> : <img src={krest} alt="❌" />}
 
                 {el.text}
               </li>
@@ -81,23 +71,21 @@ function InputPassword(props) {
         <img
           onClick={props.rigthImgClick ? props.rigthImgClick : () => {}}
           className={styles.rigthImg}
-          src={
-            props.rigthImgActiveAction ? props.rigthImg : props.rigthImgActive
-          }
+          src={props.rigthImgActiveAction ? props.rigthImg : props.rigthImgActive}
           alt="показать пароль"
         />
       )}
       <input
         name={props?.name}
-        onChange={(e) => {
+        onChange={e => {
           props?.onChange(e);
           selectErrors(e);
         }}
         value={props?.value}
         placeholder={props?.placeholder}
-        className={props?.error ? styles.errorInput : ""}
-        type={props.type || "text"}
-        autoComplete={props.autoComplete ? props.autoComplete : "on"}
+        className={props?.error ? styles.errorInput : ''}
+        type={props.type || 'text'}
+        autoComplete={props.autoComplete ? props.autoComplete : 'on'}
       />
       {props?.value && !props?.error && (
         <div className={styles.placeholderClose}>{props?.placeholder}</div>

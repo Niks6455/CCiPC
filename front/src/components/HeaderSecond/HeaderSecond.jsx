@@ -1,36 +1,36 @@
-import styles from "./HeaderSecond.module.scss";
-import logo from "./../../assets/img/logo.png";
-import { useNavigate } from "react-router-dom";
+import styles from './HeaderSecond.module.scss';
+import logo from './../../assets/img/logo.png';
+import { useNavigate } from 'react-router-dom';
 function HeaderSecond() {
   const navigate = useNavigate();
   return (
     <header className={styles.HeaderSecond}>
       <div className={styles.HeaderSecondInner}>
         <div>
-          <img src={logo} onClick={() => navigate("/")} />
+          <img src={logo} onClick={() => navigate('/')} />
         </div>
         <div className={styles.HeaderMenu}>
           <ul>
             <li>
-              Автору{" "}
+              Автору{' '}
               <span className={styles.arowLi}>
                 <img src="/img/ArrowBotGreen.svg" alt="Arrow" />
               </span>
             </li>
             <li>
-              Участнику{" "}
+              Участнику{' '}
               <span className={styles.arowLi}>
                 <img src="/img/ArrowBotGreen.svg" alt="Arrow" />
               </span>
             </li>
             <li>
-              Оргкомитет{" "}
+              Оргкомитет{' '}
               <span className={styles.arowLi}>
                 <img src="/img/ArrowBotGreen.svg" alt="Arrow" />
               </span>
             </li>
             <li>
-              Вход/Регистрация{" "}
+              Вход/Регистрация{' '}
               <span className={styles.arowLi}>
                 <img src="/img/ArrowBotGreen.svg" alt="Arrow" />
               </span>

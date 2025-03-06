@@ -1,10 +1,10 @@
-import styles from "./InputList.module.scss";
-import arrowMini from "./../../assets/img/UI/arrowMini.svg";
+import styles from './InputList.module.scss';
+import arrowMini from './../../assets/img/UI/arrowMini.svg';
 
 function InputList(props) {
-  const liClick = (item) => {
+  const liClick = item => {
     props.funSelectElement(props?.name, item.text);
-    props.funOpen("");
+    props.funOpen('');
   };
   return (
     <div
@@ -12,9 +12,7 @@ function InputList(props) {
       ref={props?.divRef}
       onClick={() => props.funOpen(props?.name)}
     >
-      {!props?.value && props?.imgSrc && (
-        <img src={props?.imgSrc} alt={props?.name} />
-      )}
+      {!props?.value && props?.imgSrc && <img src={props?.imgSrc} alt={props?.name} />}
       {props.labelText && (
         <div className={styles.labelText}>
           <span>{props.labelText}</span>
@@ -25,19 +23,15 @@ function InputList(props) {
         onChange={props?.onChange}
         value={props?.value}
         placeholder={props?.placeholder}
-        className={`${props?.error ? styles.errorInputList : ""} ${
+        className={`${props?.error ? styles.errorInputList : ''} ${
           props?.open && styles.openInput
         }`}
-        type={props.type || "text"}
+        type={props.type || 'text'}
         style={{
           paddingLeft:
-            props?.imgSrc && !props?.value && "55px"
-              ? !props?.value
-                ? "55px"
-                : ""
-              : "25px",
+            props?.imgSrc && !props?.value && '55px' ? (!props?.value ? '55px' : '') : '25px',
         }}
-        autoComplete={!props.autoComplete && "new-password"}
+        autoComplete={!props.autoComplete && 'new-password'}
       />
       <div
         className={styles.arrow}
@@ -49,8 +43,8 @@ function InputList(props) {
           alt="img"
           style={
             props.open
-              ? { transform: "scaleY(1)", transition: "all 0.15s" }
-              : { transform: "scaleY(-1)", transition: "all 0.15s" }
+              ? { transform: 'scaleY(1)', transition: 'all 0.15s' }
+              : { transform: 'scaleY(-1)', transition: 'all 0.15s' }
           }
         />
       </div>

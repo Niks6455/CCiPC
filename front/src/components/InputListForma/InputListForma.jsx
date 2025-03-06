@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from "react";
-import styles from "./InputListForma.module.scss";
-import { ReactComponent as ArrowBottom } from "./../../assets/img/UI/blackArrowBottom.svg";
-import ListInput from "../ListInput/ListInput";
-import { AnimatePresence } from "framer-motion";
+import { useEffect, useRef, useState } from 'react';
+import styles from './InputListForma.module.scss';
+import { ReactComponent as ArrowBottom } from './../../assets/img/UI/blackArrowBottom.svg';
+import ListInput from '../ListInput/ListInput';
+import { AnimatePresence } from 'framer-motion';
 
 function InputListForma(props) {
   const refCalendar = useRef(null);
   const [listOpen, setListOpen] = useState(false);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (refCalendar.current && !refCalendar.current.contains(event.target)) {
         setListOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -28,14 +28,12 @@ function InputListForma(props) {
           type="text"
           placeholder="Не выбрано"
           value={props.value}
-          className={listOpen ? styles.active : ""}
+          className={listOpen ? styles.active : ''}
           onClick={() => setListOpen(!listOpen)}
           readOnly={true}
         />
         <ArrowBottom
-          className={`${styles.ArrowBottom} ${
-            listOpen ? styles.openArrow : ""
-          }`}
+          className={`${styles.ArrowBottom} ${listOpen ? styles.openArrow : ''}`}
           onClick={() => setListOpen(!listOpen)}
         />
         <AnimatePresence>

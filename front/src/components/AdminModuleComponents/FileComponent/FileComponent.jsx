@@ -1,14 +1,14 @@
-import styles from "./FileComponent.module.scss";
-import { useEffect, useState } from "react";
-import trashIcon from "@assets/img/UI/trashBeliy.svg";
-import fileIcon from "@assets/img/AdminPanel/file.svg";
-import pdfIcon from "@assets/img/AdminPanel/pdf.svg";
-import pdfIconImport from "@assets/img/AdminPanel/pdfImport.svg";
-import docIcon from "@assets/img/AdminPanel/doc.svg";
-import dragingIcon from "@assets/img/AdminPanel/dragging.svg";
-import { AnimatePresence } from "framer-motion";
-import { server } from "../../../apirequests/apirequests";
-import { decodeFileName } from "../../../utils/functions/funcions";
+import styles from './FileComponent.module.scss';
+import { useEffect, useState } from 'react';
+import trashIcon from '@assets/img/UI/trashBeliy.svg';
+import fileIcon from '@assets/img/AdminPanel/file.svg';
+import pdfIcon from '@assets/img/AdminPanel/pdf.svg';
+import pdfIconImport from '@assets/img/AdminPanel/pdfImport.svg';
+import docIcon from '@assets/img/AdminPanel/doc.svg';
+import dragingIcon from '@assets/img/AdminPanel/dragging.svg';
+import { AnimatePresence } from 'framer-motion';
+import { server } from '../../../apirequests/apirequests';
+import { decodeFileName } from '../../../utils/functions/funcions';
 
 function FileComponent(props) {
   const [logoHeader, setLogoHeader] = useState(null);
@@ -26,7 +26,7 @@ function FileComponent(props) {
       const blob = await response.blob();
 
       // Создаем объект File
-      const file = new File([blob], filePath.split("/").pop(), {
+      const file = new File([blob], filePath.split('/').pop(), {
         type: blob.type,
       });
 
@@ -35,20 +35,20 @@ function FileComponent(props) {
       dataTransfer.items.add(file);
       inputElement.files = dataTransfer.files;
 
-      console.log("Файл успешно установлен в input", file);
+      console.log('Файл успешно установлен в input', file);
     } catch (error) {
-      console.error("Ошибка при загрузке файла:", error);
+      console.error('Ошибка при загрузке файла:', error);
     }
   }
 
   useEffect(() => {
-    console.log("props.logoHeader", props.logoHeader);
-    if (typeof props.logoHeader === "string") {
+    console.log('props.logoHeader', props.logoHeader);
+    if (typeof props.logoHeader === 'string') {
       setLogoHeader(props.logoHeader);
       setIsVisibleHeader(true);
-      const inputElement = document.querySelector("#" + props.name);
+      const inputElement = document.querySelector('#' + props.name);
       setFileFromPath(props.logoHeader, inputElement);
-      setFileName(props.logoHeader.split("\\").pop());
+      setFileName(props.logoHeader.split('\\').pop());
     }
   }, [props.logoHeader]);
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла
@@ -57,7 +57,7 @@ function FileComponent(props) {
   };
 
   //! функция изменения хедер иконки
-  const funChangeLogoHeader = (file) => {
+  const funChangeLogoHeader = file => {
     //! проверка на размер файла
     if (props.fileSize) {
       const maxSizeInBytes = props.fileSize * 1024 * 1024; // 20 MB in bytes
@@ -68,7 +68,7 @@ function FileComponent(props) {
     }
 
     // const file = event.target.files[0];
-    if (file && !props.typeFile?.find((el) => el === file.type)) {
+    if (file && !props.typeFile?.find(el => el === file.type)) {
       alert(`Пожалуйста, выберите только ${props.typeFile}-файл.`);
       //   event.target.value = ""; // Сбрасываем выбранный файл
       setLogoHeader(null);
@@ -88,14 +88,14 @@ function FileComponent(props) {
   };
 
   //! определяем соотношение фото
-  const handleImageLoad = (event) => {
+  const handleImageLoad = event => {
     const img = event.target;
     if (img.naturalHeight > img.naturalWidth) {
       // Вертикальное изображение
-      setImageStyleHeader({ height: "100%", width: "auto" });
+      setImageStyleHeader({ height: '100%', width: 'auto' });
     } else {
       // Горизонтальное изображение
-      setImageStyleHeader({ width: "100%", height: "auto" });
+      setImageStyleHeader({ width: '100%', height: 'auto' });
     }
   };
 
@@ -107,7 +107,7 @@ function FileComponent(props) {
       setIsVisibleHeader(null);
       props.setData(null, props.itemKey);
       if (document.getElementById(props.name)) {
-        document.getElementById(props.name).value = "";
+        document.getElementById(props.name).value = '';
       }
       setIsVisibleNoFileHeader(null);
       setTimeout(() => {
@@ -117,7 +117,7 @@ function FileComponent(props) {
   };
 
   //! обработка загрузки через drag-and-drop
-  const handleDrop = (event) => {
+  const handleDrop = event => {
     // если файла нет то тогда можно загрузить
     if (logoHeader) return;
     event.preventDefault();
@@ -126,16 +126,16 @@ function FileComponent(props) {
       setIsDragging(null);
     }, 300);
     const file = event.dataTransfer.files[0];
-    console.log("file", file);
+    console.log('file', file);
     funChangeLogoHeader(file);
   };
 
-  const handleDragOver = (event) => {
+  const handleDragOver = event => {
     event.preventDefault();
     setIsDragging(true);
   };
 
-  const handleDragLeave = (event) => {
+  const handleDragLeave = event => {
     // Check if the drag is leaving the entire container
     if (!event.currentTarget.contains(event.relatedTarget)) {
       setIsDragging(false);
@@ -146,8 +146,8 @@ function FileComponent(props) {
   };
 
   const funOpenFile = () => {
-    if (typeof props.logoHeader === "string") {
-      window.open(`${server}/${props.logoHeader}`, "_blank");
+    if (typeof props.logoHeader === 'string') {
+      window.open(`${server}/${props.logoHeader}`, '_blank');
     }
   };
 
@@ -160,7 +160,7 @@ function FileComponent(props) {
     >
       {logoHeader ? (
         <div className={styles.container_file}>
-          {props.icon === "png" && (
+          {props.icon === 'png' && (
             <div className={styles.container_file_inner}>
               <img
                 src={logoHeader}
@@ -170,37 +170,35 @@ function FileComponent(props) {
                   isVisibleHeader
                     ? styles.visible
                     : isVisibleHeader === null
-                    ? styles.novisible
-                    : ""
+                      ? styles.novisible
+                      : ''
                 }`}
                 onError={() => {
                   setLogoHeader(null);
                   setIsVisibleHeader(null);
                 }}
-                onLoad={(e) => handleImageLoad(e)}
+                onLoad={e => handleImageLoad(e)}
                 style={imageStyleHeader}
               />
             </div>
           )}
-          {(props.icon === "pdf" || props.icon === "doc") && (
+          {(props.icon === 'pdf' || props.icon === 'doc') && (
             <div className={styles.container_file_inner_file}>
               <div
                 className={`${styles.box_logo} ${
                   isVisibleHeader
                     ? styles.visible
                     : isVisibleHeader === null
-                    ? styles.novisible
-                    : ""
+                      ? styles.novisible
+                      : ''
                 }`}
               >
                 <img
                   onClick={funOpenFile}
-                  src={props.icon === "doc" ? docIcon : pdfIconImport}
+                  src={props.icon === 'doc' ? docIcon : pdfIconImport}
                   alt="Файл загружен"
                 />
-                <span onClick={funOpenFile}>
-                  {props.data?.name || decodeFileName(fileName)}
-                </span>
+                <span onClick={funOpenFile}>{props.data?.name || decodeFileName(fileName)}</span>
               </div>
             </div>
           )}
@@ -209,28 +207,20 @@ function FileComponent(props) {
               src={trashIcon}
               alt="Удалить файл"
               className={`${styles.logo} ${
-                isVisibleHeader
-                  ? styles.visible
-                  : isVisibleHeader === null
-                  ? styles.novisible
-                  : ""
+                isVisibleHeader ? styles.visible : isVisibleHeader === null ? styles.novisible : ''
               }`}
             />
           </button>
         </div>
       ) : (
-        <div
-          className={styles.container}
-          tabIndex="0"
-          onClick={() => funFileHeaderClick()}
-        >
+        <div className={styles.container} tabIndex="0" onClick={() => funFileHeaderClick()}>
           <div
             className={`${styles.container_inner} ${
               isVisibleNoFileHeader
                 ? styles.visible
                 : isVisibleNoFileHeader === null
-                ? styles.novisible
-                : ""
+                  ? styles.novisible
+                  : ''
             }`}
           >
             <div
@@ -238,40 +228,34 @@ function FileComponent(props) {
                 isDragging
                   ? styles.is_dragging_opasity
                   : isDragging === null
-                  ? styles.is_dragging_opasity_no
-                  : ""
+                    ? styles.is_dragging_opasity_no
+                    : ''
               }`}
             >
               <img src={dragingIcon} alt="Перетащите в эту область" />
             </div>
-            {props.icon === "png" && (
+            {props.icon === 'png' && (
               <img
                 className={
-                  isDragging !== null
-                    ? styles.is_dragging_opasity_no
-                    : styles.is_dragging_opasity
+                  isDragging !== null ? styles.is_dragging_opasity_no : styles.is_dragging_opasity
                 }
                 src={fileIcon}
                 alt="Загрузить файл"
               />
             )}
-            {props.icon === "pdf" && (
+            {props.icon === 'pdf' && (
               <img
                 className={
-                  isDragging !== null
-                    ? styles.is_dragging_opasity_no
-                    : styles.is_dragging_opasity
+                  isDragging !== null ? styles.is_dragging_opasity_no : styles.is_dragging_opasity
                 }
                 src={pdfIcon}
                 alt="Загрузить файл"
               />
             )}
-            {props.icon === "doc" && (
+            {props.icon === 'doc' && (
               <img
                 className={
-                  isDragging !== null
-                    ? styles.is_dragging_opasity_no
-                    : styles.is_dragging_opasity
+                  isDragging !== null ? styles.is_dragging_opasity_no : styles.is_dragging_opasity
                 }
                 src={docIcon}
                 alt="Загрузить файл"
@@ -280,9 +264,7 @@ function FileComponent(props) {
             {!errorSize ? (
               <span
                 className={
-                  isDragging !== null
-                    ? styles.is_dragging_opasity_no
-                    : styles.is_dragging_opasity
+                  isDragging !== null ? styles.is_dragging_opasity_no : styles.is_dragging_opasity
                 }
                 dangerouslySetInnerHTML={{ __html: props.text }}
               ></span>
@@ -301,8 +283,8 @@ function FileComponent(props) {
         type="file"
         accept={props.accept}
         id={props.name}
-        style={{ display: "none" }}
-        onChange={(event) => funChangeLogoHeader(event.target.files[0])}
+        style={{ display: 'none' }}
+        onChange={event => funChangeLogoHeader(event.target.files[0])}
       />
     </div>
   );

@@ -1,11 +1,11 @@
-import Button from "../../ui/Button/Button";
-import Layout from "../../ui/Layout/Layout";
-import styles from "./TopMainInfo.module.scss";
-import Bg from "../../assets/img/Bg.jpeg";
-import rect from "../../assets/img/rect.svg";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import DataContext from "../../context";
-import { useNavigate } from "react-router-dom";
+import Button from '../../ui/Button/Button';
+import Layout from '../../ui/Layout/Layout';
+import styles from './TopMainInfo.module.scss';
+import Bg from '../../assets/img/Bg.jpeg';
+import rect from '../../assets/img/rect.svg';
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import DataContext from '../../context';
+import { useNavigate } from 'react-router-dom';
 
 function TopMainInfo() {
   const arrowRef = useRef(null); // Реф для стрелки
@@ -14,11 +14,11 @@ function TopMainInfo() {
   const context = useContext(DataContext);
 
   const funClickRequest = () => {
-    const assetsToken = localStorage.getItem("accessToken");
+    const assetsToken = localStorage.getItem('accessToken');
     if (assetsToken === null) {
-      navigate("/authorization");
+      navigate('/authorization');
     } else {
-      navigate("/account/documents");
+      navigate('/account/documents');
     }
   };
 
@@ -42,6 +42,7 @@ function TopMainInfo() {
                     <a
                       target="_blank"
                       href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
+                      rel="noreferrer"
                     >
                       Программа <br /> конференции
                     </a>
@@ -49,6 +50,7 @@ function TopMainInfo() {
                       target="_blank"
                       href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
                       className={styles.clicker}
+                      rel="noreferrer"
                     ></a>
                   </li>
                   <li>
@@ -59,6 +61,7 @@ function TopMainInfo() {
                     <a
                       target="_blank"
                       href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
+                      rel="noreferrer"
                     >
                       Последний сборник <br /> научных трудов
                     </a>
@@ -66,6 +69,7 @@ function TopMainInfo() {
                       target="_blank"
                       href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
                       className={styles.clicker}
+                      rel="noreferrer"
                     ></a>
                   </li>
                 </ul>
@@ -76,7 +80,7 @@ function TopMainInfo() {
         <div className={styles.buttonClicker}>
           <div className={styles.buttonClickerInner}>
             <img className={styles.leftBot} src={rect} alt="Background" />
-            <Button text={"Подать заявку"} funClick={funClickRequest} />
+            <Button text={'Подать заявку'} funClick={funClickRequest} />
             <img className={styles.leftTop} src={rect} alt="Background" />
           </div>
         </div>
@@ -84,10 +88,7 @@ function TopMainInfo() {
       {!context.activeMenu && (
         <div className={styles.arrowTop}>
           <a href="#top">
-            <div
-              ref={arrowRef}
-              className={`${styles.imgArrowTop} ${arrowColor}`}
-            ></div>
+            <div ref={arrowRef} className={`${styles.imgArrowTop} ${arrowColor}`}></div>
           </a>
         </div>
       )}

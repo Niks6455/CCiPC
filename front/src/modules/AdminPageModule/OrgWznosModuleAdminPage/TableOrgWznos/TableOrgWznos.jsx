@@ -1,14 +1,14 @@
-import { tableHeader } from "../data";
-import styles from "./TableOrgWznos.module.scss";
-import paymentFormICon from "@assets/img/AdminPanel/paymentForm.svg";
-import paymentForm1ICon from "@assets/img/AdminPanel/paymentForm1.svg";
-import paymentForm2ICon from "@assets/img/AdminPanel/paymentForm2.svg";
-import galkaCircle from "@assets/img/AdminPanel/galkaCircle.svg";
-import xGreen from "@assets/img/AdminPanel/xGreen.svg";
-import galkaBelay from "@assets/img/UI/galkaBelay.svg";
+import { tableHeader } from '../data';
+import styles from './TableOrgWznos.module.scss';
+import paymentFormICon from '@assets/img/AdminPanel/paymentForm.svg';
+import paymentForm1ICon from '@assets/img/AdminPanel/paymentForm1.svg';
+import paymentForm2ICon from '@assets/img/AdminPanel/paymentForm2.svg';
+import galkaCircle from '@assets/img/AdminPanel/galkaCircle.svg';
+import xGreen from '@assets/img/AdminPanel/xGreen.svg';
+import galkaBelay from '@assets/img/UI/galkaBelay.svg';
 
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function TableOrgWznos({ prewData, tableData, setTableData }) {
   const [contractListShow, setContractListShow] = useState(null);
@@ -16,23 +16,20 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
   const refContractList = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        refContractList.current &&
-        !refContractList.current.contains(event.target)
-      ) {
-        console.log("ref");
+    const handleClickOutside = event => {
+      if (refContractList.current && !refContractList.current.contains(event.target)) {
+        console.log('ref');
         setContractListShow(null);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   const funChangeContractListShow = (e, index) => {
-    if (e.target.id === "contractList") return;
+    if (e.target.id === 'contractList') return;
     if (contractListShow === index) {
       setContractListShow(null);
     } else {
@@ -42,14 +39,14 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
 
   const funChangeSumm = (e, index) => {
     let newData = [...tableData];
-    let val = e.target.value.replace(/[^0-9]/g, "");
+    let val = e.target.value.replace(/[^0-9]/g, '');
     if (val <= 99999) {
       newData[index].sumOrgWznos = Number(val);
       setTableData(newData);
     }
   };
 
-  const funChangeConfirmation = (indexRow) => {
+  const funChangeConfirmation = indexRow => {
     let newData = [...tableData];
     newData[indexRow].confirmation = !newData[indexRow].confirmation;
     setTableData(newData);
@@ -57,14 +54,14 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
 
   //! функция форматирования строк в таблице
   const funGetTdValue = (row, indexRow, columnKey, indexCol) => {
-    if (columnKey.key === "fio") {
+    if (columnKey.key === 'fio') {
       return (
         <td name={columnKey.key} key={indexCol}>
           {row[columnKey.key]} <br /> {row.author}
         </td>
       );
     }
-    if (columnKey.key === "paymentForm") {
+    if (columnKey.key === 'paymentForm') {
       let docLoad = 0; // колличество загруженных документов
       if (row.contract) {
         docLoad += 1;
@@ -76,10 +73,10 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
         <td name={columnKey.key} key={indexCol}>
           <div
             className={styles.payment_container}
-            onClick={(e) => funChangeContractListShow(e, indexRow)}
+            onClick={e => funChangeContractListShow(e, indexRow)}
             ref={contractListShow === indexRow ? refContractList : null}
           >
-            {row[columnKey.key] === "Безналичный расчёт" && (
+            {row[columnKey.key] === 'Безналичный расчёт' && (
               <>
                 {docLoad === 0 && <img src={paymentFormICon} alt="📃" />}
                 {docLoad === 1 && <img src={paymentForm1ICon} alt="📃" />}
@@ -88,13 +85,13 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
             )}
 
             <span>{row[columnKey.key]}</span>
-            {row[columnKey.key] === "Безналичный расчёт" && (
+            {row[columnKey.key] === 'Безналичный расчёт' && (
               <AnimatePresence>
                 {contractListShow === indexRow && (
                   <motion.div
                     className={styles.contract_list}
                     initial={{ height: 0 }}
-                    animate={{ height: "auto" }}
+                    animate={{ height: 'auto' }}
                     exit={{ height: 0 }}
                     id="contractList"
                   >
@@ -103,6 +100,7 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
                       target="_blank"
                       className={styles.box}
                       id="contractList"
+                      rel="noreferrer"
                     >
                       {row.contract ? (
                         <img src={galkaCircle} alt="✅" id="contractList" />
@@ -118,6 +116,7 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
                       target="_blank"
                       className={styles.box}
                       id="contractList"
+                      rel="noreferrer"
                     >
                       {row.receipt ? (
                         <img src={galkaCircle} alt="✅" id="contractList" />
@@ -134,41 +133,36 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
         </td>
       );
     }
-    if (columnKey.key === "sumOrgWznos") {
+    if (columnKey.key === 'sumOrgWznos') {
       let inpValue = row[columnKey.key];
       if (inputSumEdit === indexRow) {
-        inpValue = inpValue.toString().replace(/[^0-9]/g, "");
+        inpValue = inpValue.toString().replace(/[^0-9]/g, '');
       } else {
-        inpValue = inpValue + " ₽";
+        inpValue = inpValue + ' ₽';
       }
       return (
         <td name={columnKey.key} key={indexCol}>
           <div className={styles.sum_container}>
             <input
               className={
-                prewData[indexRow].sumOrgWznos ===
-                tableData[indexRow].sumOrgWznos
-                  ? ""
+                prewData[indexRow].sumOrgWznos === tableData[indexRow].sumOrgWznos
+                  ? ''
                   : styles.edit_data
               }
               type="text"
               value={inpValue}
               onFocus={() => setInputSumEdit(indexRow)}
               onBlur={() => setInputSumEdit(null)}
-              onChange={(event) => funChangeSumm(event, indexRow)}
+              onChange={event => funChangeSumm(event, indexRow)}
             />
           </div>
         </td>
       );
     }
 
-    if (columnKey.key === "confirmation") {
+    if (columnKey.key === 'confirmation') {
       return (
-        <td
-          name={columnKey.key}
-          key={indexCol}
-          className={styles.confirmation_container}
-        >
+        <td name={columnKey.key} key={indexCol} className={styles.confirmation_container}>
           <div className={styles.check_box}>
             <input
               className={styles.confirmation}
@@ -212,9 +206,7 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
               <td name="number">{indexRow + 1}</td>
               {tableHeader
                 .slice(1)
-                .map((columnKey, indexCol) =>
-                  funGetTdValue(row, indexRow, columnKey, indexCol)
-                )}
+                .map((columnKey, indexCol) => funGetTdValue(row, indexRow, columnKey, indexCol))}
             </tr>
           ))}
         </tbody>

@@ -1,64 +1,64 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
-import Input from "../../ui/Input/Input";
-import styles from "./Register.module.scss";
-import DataContext from "../../context";
-import logo from "./../../assets/img/logo.png";
-import InputList from "../../ui/InputList/InputList";
-import listErrorNoHover from "./../../assets/img/UI/listErrorNoActive.svg";
-import listErrorOnHover from "./../../assets/img/UI/listError.svg";
-import lock from "./../../assets/img/UI/lock.svg";
-import { doljnostList, stepenList, zwanieList } from "../../utils/Lists/List";
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import Input from '../../ui/Input/Input';
+import styles from './Register.module.scss';
+import DataContext from '../../context';
+import logo from './../../assets/img/logo.png';
+import InputList from '../../ui/InputList/InputList';
+import listErrorNoHover from './../../assets/img/UI/listErrorNoActive.svg';
+import listErrorOnHover from './../../assets/img/UI/listError.svg';
+import lock from './../../assets/img/UI/lock.svg';
+import { doljnostList, stepenList, zwanieList } from '../../utils/Lists/List';
 import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
-} from "../../utils/functions/PasswordValidation";
-import { apiRegister } from "../../apirequests/apirequests";
+} from '../../utils/functions/PasswordValidation';
+import { apiRegister } from '../../apirequests/apirequests';
 
 function Register() {
   const context = useContext(DataContext);
-  const [openList, setOpenList] = useState("");
+  const [openList, setOpenList] = useState('');
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
-    patronymic: "",
-    academicTitle: "",
-    degree: "",
-    position: "",
-    organization: "",
-    email: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-    napravlenieKonferencii: "",
+    name: '',
+    surname: '',
+    patronymic: '',
+    academicTitle: '',
+    degree: '',
+    position: '',
+    organization: '',
+    email: '',
+    phone: '',
+    password: '',
+    confirmPassword: '',
+    napravlenieKonferencii: '',
   });
 
   const [errors, setErrors] = useState({
-    name: "",
-    surname: "",
-    position: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    phone: "",
+    name: '',
+    surname: '',
+    position: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    phone: '',
   });
 
   const [errorListPassword, setErrorListPassword] = useState([
     {
-      id: "0",
-      text: "Не менее 8 символов",
+      id: '0',
+      text: 'Не менее 8 символов',
       done: false,
       functionCheck: funEightSymbols,
     },
     {
-      id: "1",
-      text: "Не менее 1 заглавной буквы",
+      id: '1',
+      text: 'Не менее 1 заглавной буквы',
       done: false,
       functionCheck: funCapitalLetter,
     },
     {
-      id: "2",
-      text: "Не менее 1 цифры",
+      id: '2',
+      text: 'Не менее 1 цифры',
       done: false,
       functionCheck: funDigit,
     },
@@ -69,25 +69,25 @@ function Register() {
     if (!formData.hasOwnProperty(key)) {
       return;
     }
-    setErrors({ ...errors, [key]: "" });
+    setErrors({ ...errors, [key]: '' });
     setFormData({ ...formData, [key]: value });
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
 
     // Если поле "number", форматируем номер телефона
-    const formattedValue = name === "phone" ? formatPhoneNumber(value) : value;
+    const formattedValue = name === 'phone' ? formatPhoneNumber(value) : value;
 
     setFormData({ ...formData, [name]: formattedValue });
 
     // Очистка ошибки при изменении значения
-    setErrors({ ...errors, [name]: "" });
+    setErrors({ ...errors, [name]: '' });
   };
 
-  const formatPhoneNumber = (value) => {
+  const formatPhoneNumber = value => {
     // Форматируем номер в виде +7 (XXX) XXX-XX-XX
-    const cleaned = value.replace(/\D/g, "");
+    const cleaned = value.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
     if (match) {
       return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
@@ -101,39 +101,36 @@ function Register() {
 
     // Проверка обязательных полей
     [
-      "name",
-      "surname",
-      "position",
-      "organization",
-      "email",
-      "phone",
-      "password",
-      "confirmPassword",
-    ].forEach((field) => {
+      'name',
+      'surname',
+      'position',
+      'organization',
+      'email',
+      'phone',
+      'password',
+      'confirmPassword',
+    ].forEach(field => {
       if (!formData[field]) {
-        newErrors[field] = "Поле обязательно для заполнения";
+        newErrors[field] = 'Поле обязательно для заполнения';
         isValid = false;
       }
     });
 
     // Проверка корректности Email
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Некорректный Email";
+      newErrors.email = 'Некорректный Email';
       isValid = false;
     }
 
     // Проверка номера телефона
-    if (
-      formData.phone &&
-      !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)
-    ) {
-      newErrors.phone = "Номер должен быть в формате +7 (XXX) XXX-XX-XX";
+    if (formData.phone && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)) {
+      newErrors.phone = 'Номер должен быть в формате +7 (XXX) XXX-XX-XX';
       isValid = false;
     }
 
     // Проверка совпадения паролей
     if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Пароли не совпадают";
+      newErrors.confirmPassword = 'Пароли не совпадают';
       isValid = false;
     }
 
@@ -143,24 +140,24 @@ function Register() {
 
   const handleSubmit = () => {
     if (validate()) {
-      console.log("Форма отправлена", formData);
+      console.log('Форма отправлена', formData);
       // type 0 это подтверждение
       // сброс пароля type 1
-      apiRegister(formData).then((res) => {
-        console.log("res", res);
+      apiRegister(formData).then(res => {
+        console.log('res', res);
         if (res?.status === 200) {
-          context.setAuthPage("ConfirmLogin");
+          context.setAuthPage('ConfirmLogin');
           context.setMailValue(formData.email);
-          sessionStorage.setItem("confirmEmail", formData.email);
+          sessionStorage.setItem('confirmEmail', formData.email);
           console.log(res);
         }
       });
     }
   };
 
-  const funOpenList = (param) => {
+  const funOpenList = param => {
     if (param === openList) {
-      setOpenList("");
+      setOpenList('');
     } else {
       setOpenList(param);
     }
@@ -174,18 +171,14 @@ function Register() {
   const ref4 = useRef(null);
   const refList = [ref1, ref2, ref3, ref4];
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        refList.every(
-          (item) => item.current && !item.current.contains(event.target)
-        )
-      ) {
-        funOpenList("");
+    const handleClickOutside = event => {
+      if (refList.every(item => item.current && !item.current.contains(event.target))) {
+        funOpenList('');
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -207,7 +200,7 @@ function Register() {
               value={formData.name}
               placeholder="Имя*"
               error={errors.name}
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
             <Input
               name="organization"
@@ -215,7 +208,7 @@ function Register() {
               value={formData.organization}
               placeholder="Организация*"
               error={errors.organization}
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -225,7 +218,7 @@ function Register() {
               value={formData.surname}
               placeholder="Фамилия*"
               error={errors.surname}
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
             <Input
               name="email"
@@ -233,7 +226,7 @@ function Register() {
               value={formData.email}
               placeholder="Email (логин)*"
               error={errors.email}
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -242,7 +235,7 @@ function Register() {
               onChange={handleChange}
               value={formData.patronymic}
               placeholder="Отчество"
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
             <Input
               name="phone"
@@ -250,7 +243,7 @@ function Register() {
               value={formData.phone}
               placeholder="Номер телефона*"
               error={errors.phone}
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -259,7 +252,7 @@ function Register() {
               onChange={handleChange}
               value={formData.academicTitle}
               placeholder="Ученое звание"
-              open={openList === "academicTitle"}
+              open={openList === 'academicTitle'}
               funOpen={funOpenList}
               divRef={refList[1]}
               list={zwanieList}
@@ -277,7 +270,7 @@ function Register() {
               errorListImgHover={listErrorOnHover}
               errorListImgNoHover={listErrorNoHover}
               imgSrc={lock}
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -286,7 +279,7 @@ function Register() {
               onChange={handleChange}
               value={formData.degree}
               placeholder="Степень"
-              open={openList === "degree"}
+              open={openList === 'degree'}
               funOpen={funOpenList}
               divRef={refList[2]}
               list={stepenList}
@@ -300,7 +293,7 @@ function Register() {
               error={errors.confirmPassword}
               type="password"
               imgSrc={lock}
-              autoComplete={"new-password"}
+              autoComplete={'new-password'}
             />
           </div>
           <div className={styles.inputInnerBlock}>
@@ -309,7 +302,7 @@ function Register() {
               onChange={handleChange}
               value={formData.position}
               placeholder="Должность*"
-              open={openList === "position"}
+              open={openList === 'position'}
               funOpen={funOpenList}
               divRef={refList[3]}
               list={doljnostList}
@@ -339,7 +332,7 @@ function Register() {
       </div>
       <div className={styles.noAccount}>
         <p>Еще нет аккаунта?</p>
-        <p onClick={() => context.setAuthPage("Auth")}>Авторизируйтесь</p>
+        <p onClick={() => context.setAuthPage('Auth')}>Авторизируйтесь</p>
       </div>
     </section>
   );

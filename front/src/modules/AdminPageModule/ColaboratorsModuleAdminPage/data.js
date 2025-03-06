@@ -1,27 +1,27 @@
 export const tableHeader = [
   {
-    name: "№",
-    key: "number",
+    name: '№',
+    key: 'number',
   },
   {
-    name: "ФИО",
-    key: "fio",
+    name: 'ФИО',
+    key: 'fio',
   },
   {
-    name: "Организация",
-    key: "organization",
+    name: 'Организация',
+    key: 'organization',
   },
   {
-    name: "Участие",
-    key: "status",
+    name: 'Участие',
+    key: 'status',
   },
   {
-    name: "Направление",
-    key: "direction",
+    name: 'Направление',
+    key: 'direction',
   },
   {
-    name: "Доклад",
-    key: "name",
+    name: 'Доклад',
+    key: 'name',
   },
 ];
 

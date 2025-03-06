@@ -1,11 +1,11 @@
-import Layout from "../../ui/Layout/Layout";
-import styles from "./Footer.module.scss";
-import footerLogo from "../../assets/img/FooterText.svg";
-import { useSelector } from "react-redux";
-import { server } from "../../apirequests/apirequests";
+import Layout from '../../ui/Layout/Layout';
+import styles from './Footer.module.scss';
+import footerLogo from '../../assets/img/FooterText.svg';
+import { useSelector } from 'react-redux';
+import { server } from '../../apirequests/apirequests';
 function Footer() {
-  const conferense = useSelector((state) => state.conferences?.data[0]);
-  console.log("conferense", conferense);
+  const conferense = useSelector(state => state.conferences?.data[0]);
+  console.log('conferense', conferense);
   return (
     <footer className={styles.footer}>
       <Layout>
@@ -15,14 +15,11 @@ function Footer() {
               <img
                 src={`${server}/${conferense?.logo?.FOOTER}` || footerLogo}
                 alt="logo"
-                onError={(e) => (e.target.src = footerLogo)}
+                onError={e => (e.target.src = footerLogo)}
               />
             </div>
             <div className={styles.footerText}>
-              <p>
-                Всероссийская научная конференция "Системный синтез и прикладная
-                синергетика"
-              </p>
+              <p>Всероссийская научная конференция "Системный синтез и прикладная синергетика"</p>
               <p>23 - 29 сентября 2025 года пос. Нижний Архыз</p>
             </div>
           </div>
@@ -30,8 +27,7 @@ function Footer() {
             <div>
               <p>Напишите нам:</p>
               <p className={styles.link}>
-                e-mail:{" "}
-                <a href="mailto:ssas@ictis.sfedu.ru">ssas@ictis.sfedu.ru</a>
+                e-mail: <a href="mailto:ssas@ictis.sfedu.ru">ssas@ictis.sfedu.ru</a>
               </p>
             </div>
           </div>

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import styles from "./InputLabel.module.scss";
-import { validateEmail } from "../../utils/functions/Validations";
+import { useEffect, useState } from 'react';
+import styles from './InputLabel.module.scss';
+import { validateEmail } from '../../utils/functions/Validations';
 
 function InputLabel(props) {
   const [errorShow, setErrorShow] = useState(false);
   useEffect(() => {
-    if (props.itemKey === "email") {
+    if (props.itemKey === 'email') {
       if (validateEmail(props.value)) {
         setErrorShow(false);
       }
     }
-    if (props.itemKey === "phone") {
+    if (props.itemKey === 'phone') {
       if (props.value?.length > 17) {
         setErrorShow(false);
       }
@@ -18,14 +18,14 @@ function InputLabel(props) {
   }, [props.value]);
 
   const handleBlur = () => {
-    if (props.itemKey === "email") {
+    if (props.itemKey === 'email') {
       if (validateEmail(props.value)) {
         setErrorShow(false);
       } else {
         setErrorShow(true);
       }
     }
-    if (props.itemKey === "phone") {
+    if (props.itemKey === 'phone') {
       if (props.value?.length > 17) {
         setErrorShow(false);
       } else {
@@ -43,9 +43,7 @@ function InputLabel(props) {
         type={props.type}
         placeholder={props.placeholder}
         value={props.value}
-        onChange={(e) =>
-          props.funChange(props.index, props.itemKey, e.target.value)
-        }
+        onChange={e => props.funChange(props.index, props.itemKey, e.target.value)}
         onBlur={handleBlur}
       />
     </div>

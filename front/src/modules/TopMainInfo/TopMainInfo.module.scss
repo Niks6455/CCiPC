@@ -59,7 +59,7 @@
           margin-left: 1.5rem; /* Отступ для иконки */
         }
         .clicker {
-          background-image: url("./../../assets/img/UI/ArrDefault.svg");
+          background-image: url('./../../assets/img/UI/ArrDefault.svg');
           width: 3rem; /* 48px в rem */
           height: 3rem;
           background-size: contain;
@@ -68,10 +68,10 @@
           transition: 0.08s linear all;
           cursor: pointer;
           &:hover {
-            background-image: url("./../../assets/img/UI/ArrHover.svg");
+            background-image: url('./../../assets/img/UI/ArrHover.svg');
           }
           &:active {
-            background-image: url("./../../assets/img/UI/ArrClick.svg");
+            background-image: url('./../../assets/img/UI/ArrClick.svg');
           }
         }
       }
@@ -108,7 +108,7 @@
 }
 
 .greenArrow {
-  background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
+  background-image: url('./../../assets/img/UI/ArrTopDefault.svg');
   width: 80px;
   height: 80px;
   background-size: contain;
@@ -120,9 +120,9 @@
   z-index: 500;
   transition: 0.08s linear all;
   &:hover {
-    background-image: url("./../../assets/img/UI/ArrTopHover.svg");
+    background-image: url('./../../assets/img/UI/ArrTopHover.svg');
   }
   &:active {
-    background-image: url("./../../assets/img/UI/ArrTopActive.svg");
+    background-image: url('./../../assets/img/UI/ArrTopActive.svg');
   }
 }

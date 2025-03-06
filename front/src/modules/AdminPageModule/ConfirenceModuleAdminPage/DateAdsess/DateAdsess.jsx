@@ -1,10 +1,10 @@
-import { Calendar } from "primereact/calendar";
-import styles from "./DateAdsess.module.scss";
-import calendarIcon from "@assets/img/UI/calendar.svg";
-import { useEffect, useRef, useState } from "react";
-import { formatDateRangePrimereact } from "../../../../utils/functions/funcions";
-import arrowIcon from "@assets/img/UI/arrowMini.svg";
-import { AnimatePresence, motion } from "framer-motion";
+import { Calendar } from 'primereact/calendar';
+import styles from './DateAdsess.module.scss';
+import calendarIcon from '@assets/img/UI/calendar.svg';
+import { useEffect, useRef, useState } from 'react';
+import { formatDateRangePrimereact } from '../../../../utils/functions/funcions';
+import arrowIcon from '@assets/img/UI/arrowMini.svg';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function DateAdsess({ data, setData }) {
   const [calendarShow, setCalendarShow] = useState(false);
@@ -13,62 +13,54 @@ function DateAdsess({ data, setData }) {
   const listRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendarShow(false);
-        console.log("calendarShow", false);
+        console.log('calendarShow', false);
       }
       if (listRef.current && !listRef.current.contains(event.target)) {
         setListOpen(false);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
   // Ensure the initial state is an array of Date objects for the calendar
   const [date, setDate] = useState([
-    data.dateFirst
-      ? new Date(data.dateFirst.split(".").reverse().join("-"))
-      : null,
-    data.dateSecond
-      ? new Date(data.dateSecond.split(".").reverse().join("-"))
-      : null,
+    data.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
+    data.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
   ]);
 
   useEffect(() => {
     // Update the calendar state when `data` changes
     setDate([
-      data.dateFirst
-        ? new Date(data.dateFirst.split(".").reverse().join("-"))
-        : null,
-      data.dateSecond
-        ? new Date(data.dateSecond.split(".").reverse().join("-"))
-        : null,
+      data.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
+      data.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
     ]);
   }, [data.dateFirst, data.dateSecond]);
 
-  const funChangeAdress = (e) => {
+  const funChangeAdress = e => {
     setData({ ...data, address: e.target.value });
   };
 
   //! Function to handle date range selection
-  const funSetData = (e) => {
+  const funSetData = e => {
     let selectedDates = e.value; // Array of selected dates
 
     if (selectedDates && selectedDates.length > 0) {
       // Format the first date if it exists
       const formattedDateFirst = selectedDates[0]
-        ? selectedDates[0].toLocaleDateString("ru-RU")
-        : "";
+        ? selectedDates[0].toLocaleDateString('ru-RU')
+        : '';
 
       // Format the second date only if it exists
       const formattedDateSecond =
         selectedDates.length === 2 && selectedDates[1]
-          ? selectedDates[1].toLocaleDateString("ru-RU")
-          : "";
+          ? selectedDates[1].toLocaleDateString('ru-RU')
+          : '';
 
       // Update `data` with formatted dates
       setData({
@@ -82,11 +74,11 @@ function DateAdsess({ data, setData }) {
     }
   };
 
-  const funChangedeUploading = (e) => {
+  const funChangedeUploading = e => {
     setData({ ...data, deadlineUploadingReports: e.target.value });
   };
 
-  const funLiClick = (date) => {
+  const funLiClick = date => {
     setListOpen(false);
     setData({ ...data, deadlineUploadingReports: date });
   };
@@ -95,12 +87,9 @@ function DateAdsess({ data, setData }) {
     setListOpen(!listOpen);
   };
 
-  const funOpenCalendar = (e) => {
-    console.log("e", e.target.id);
-    if (
-      e.target.nodeName === "INPUT" ||
-      e.target.id.includes("open_calendar")
-    ) {
+  const funOpenCalendar = e => {
+    console.log('e', e.target.id);
+    if (e.target.nodeName === 'INPUT' || e.target.id.includes('open_calendar')) {
       setCalendarShow(!calendarShow);
     } else {
       setCalendarShow(true);
@@ -112,9 +101,7 @@ function DateAdsess({ data, setData }) {
       <div className={styles.container}>
         <h3>Крайний срок загрузки докладов</h3>
         <div
-          className={`${styles.input_box} ${styles.list} ${
-            listOpen ? styles.list_open_input : ""
-          }`}
+          className={`${styles.input_box} ${styles.list} ${listOpen ? styles.list_open_input : ''}`}
           onClick={() => funOpenList()}
           ref={listRef}
         >
@@ -130,8 +117,8 @@ function DateAdsess({ data, setData }) {
               alt="Arrow"
               style={
                 listOpen
-                  ? { transform: "scaleY(1)", transition: "all 0.2s ease" }
-                  : { transform: "scaleY(-1)", transition: "all 0.2s ease" }
+                  ? { transform: 'scaleY(1)', transition: 'all 0.2s ease' }
+                  : { transform: 'scaleY(-1)', transition: 'all 0.2s ease' }
               }
             />
           </button>
@@ -144,15 +131,12 @@ function DateAdsess({ data, setData }) {
                 exit={{ opacity: 0 }}
                 className={`${styles.list_box}`}
               >
-                {data?.stages.length === 0 ||
-                data?.stages.every((item) => !item.date) ? (
-                  <div className={styles.list_box_empty}>
-                    Добавьте этапы конференции
-                  </div>
+                {data?.stages.length === 0 || data?.stages.every(item => !item.date) ? (
+                  <div className={styles.list_box_empty}>Добавьте этапы конференции</div>
                 ) : (
                   <ul>
                     {data?.stages
-                      ?.filter((item) => item.date)
+                      ?.filter(item => item.date)
                       .map((item, index) => (
                         <li key={index} onClick={() => funLiClick(item.date)}>
                           {item.date}
@@ -171,8 +155,8 @@ function DateAdsess({ data, setData }) {
           className={`${styles.input_box}`}
           id="open_calendar1"
           ref={calendarRef}
-          onClick={(e) => funOpenCalendar(e)}
-          style={{ cursor: "pointer" }}
+          onClick={e => funOpenCalendar(e)}
+          style={{ cursor: 'pointer' }}
         >
           <button className={`${styles.icon}`} id="open_calendar2">
             <img src={calendarIcon} alt="img" id="open_calendar4" />
@@ -182,7 +166,7 @@ function DateAdsess({ data, setData }) {
             type="text"
             value={formatDateRangePrimereact(date[0], date[1])}
             readOnly
-            style={{ cursor: "pointer" }}
+            style={{ cursor: 'pointer' }}
           />
           <AnimatePresence>
             {calendarShow && (
