@@ -7,6 +7,7 @@ import Conference from "../models/conference.js";
 import {Op} from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import fs from "fs";
+import ParticipantInConference from "../models/participant-in-conference.js";
 
 export default {
 
@@ -45,7 +46,14 @@ export default {
                 where: {
                     date: { [Op.lt]: new Date() },
                 },
-                include: {
+                include: [{
+                    model: ParticipantInConference,
+                    as: 'participantInConference',
+                    required: false,
+                    where: {
+                        participantId: participant.id
+                    }
+                },{
                     model: Report,
                     as: 'reports',
                     required: false,
@@ -58,14 +66,22 @@ export default {
                             participantId: participant.id
                         }
                     }
-                },
+                }],
                 order: [['date', 'DESC']]
             }),
             Conference.findOne({
                 where: {
                     date: { [Op.gte]: new Date() }
                 },
-                include: {
+                include: [{
+                    model: ParticipantInConference,
+                    as: 'participantInConference',
+                    required: false,
+                    where: {
+                        participantId: participant.id
+                    },
+                },
+                    {
                     model: Report,
                     as: 'reports',
                     required: false,
@@ -78,13 +94,18 @@ export default {
                             participantId: participant.id
                         }
                     }
-                },
+                }],
                 order: [['date', 'ASC']]
             })
         ]);
 
-        if(nextConference?.reports ) return nextConference
-        return lastConference
+
+
+        if(nextConference?.reports ) participant.conference= nextConference
+
+        else participant.conference = lastConference
+
+        return participant
 
     },
 

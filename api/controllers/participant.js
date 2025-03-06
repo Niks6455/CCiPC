@@ -5,8 +5,8 @@ import { mapShort, map } from "../utils/mappers/participant.js";
 export default {
 
     async self({ user }, res){
-        user.reports = (await participantService.self(user))?.reports;
-        res.json({ participant: map(user) });
+        const participantSelf = await participantService.self(user);
+        res.json({ participant: map(participantSelf) });
     },
 
     async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar}, user}, res){
