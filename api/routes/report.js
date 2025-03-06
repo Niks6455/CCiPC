@@ -164,6 +164,10 @@ router.route('/')
     .post(asyncRoute(verify.general), asyncRoute(reportCtrl.create))
     .get(asyncRoute(verify.general), asyncRoute(reportCtrl.find))
 
+router.route('/directions')
+    .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(reportCtrl.updateDirections))
+
+
 router.route('/:id')
     .put(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(reportCtrl.update))
     .delete(asyncRoute(verify.general), asyncRoute(reportCtrl.delete))

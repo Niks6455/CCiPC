@@ -119,6 +119,31 @@ export default {
         return report
     },
 
+    async updateDirections(reportsInfo){
+        const reportsIds= reportsInfo.map(report=> report.id)
+
+        const reports= await Report.findAll({
+            where: {
+                id: reportsIds
+            }
+        })
+
+        if(reports.length !== reportsIds.length) throw new AppErrorInvalid('reportsIds')
+
+        reports.forEach(r=>{
+            const foundObject = reportsInfo.find(obj => obj.id === r.id);
+            foundObject.name=r.name
+            foundObject.conferenceId = r.conferenceId
+            foundObject.comment=r.comment
+            foundObject.reportFile=r.reportFile
+            foundObject.conclusion=r.conclusion
+        })
+        return await Report.bulkCreate(
+            reportsInfo,
+            {
+                updateOnDuplicate: ["direction"],
+            })
+    },
 
     async find(participant) {
         return await Report.findAll({

@@ -65,6 +65,11 @@ export default {
         res.json({report: report})
     },
 
+    async updateDirections({body: { reportsInfo }, admin }, res){
+        const reports = await reportService.updateDirections(reportsInfo)
+        res.json({reports: reports})
+    },
+
     async delete({params : {  id }, user}, res) {
 
         if(!id) throw new AppErrorMissing('id')
