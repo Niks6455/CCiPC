@@ -25,6 +25,7 @@ import Committee from "../models/committee.js";
 import Archive from "../models/archive.js";
 const dir= './uploads'
 
+
 // Проверка расширения файла
 const fileFilter = (req, file, cb) => {
     const { type } = req.query; // Получаем тип из тела запроса
@@ -44,6 +45,57 @@ const fileFilter = (req, file, cb) => {
 
     return cb(new AppError(errorCodes.FileExtensionNotAllowed)); // Если тип файла не разрешен
 };
+
+const multiFileFilter = (req, file, cb) => {
+    const { type } = req.query; // Get the type from the query parameters
+
+    if (!type) {
+        return cb(new AppError(errorCodes.Missing)); // If type is missing
+    }
+
+    const extension = path.extname(file.originalname).toLowerCase();
+    if (type in typesPhoto && acceptedTypesPhoto.test(extension)) {
+        return cb(null, true); // Accept the file
+    }
+
+    return cb(new AppError(errorCodes.FileExtensionNotAllowed)); // Reject the file
+};
+
+// Storage configuration for handling file uploads
+const multiStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const { type } = req.query;
+
+
+        // Validate the type
+        if (!type || !(type in typesPhoto)) {
+            return cb(new AppError(errorCodes.Invalid));
+        }
+
+        // Check admin permissions for specific types
+        if ((typesPhoto[type] === 6 || typesPhoto[type] === 7) && !req.admin) {
+            return cb(new AppErrorForbiddenAction('file'));
+        }
+
+        // Define the upload path
+        const uploadPath = path.join(dir, type.toLowerCase());
+
+        try {
+            // Ensure the directory exists
+            if (!fs.existsSync(uploadPath)) {
+                fs.mkdirSync(uploadPath, { recursive: true });
+            }
+            cb(null, uploadPath); // Set the upload path
+        } catch (err) {
+            cb(new AppError(errorCodes.NotExist));
+        }
+    },
+    filename: (req, file, cb) => {
+        // Use the original file name
+        cb(null, file.originalname);
+    },
+});
+
 
 
 const storage = multer.diskStorage({
@@ -98,14 +150,38 @@ const storage = multer.diskStorage({
 });
 
 const uploader = multer({ storage, fileFilter, limits: { fileSize: 51145728 } }).single('file');
-const multiUploader = multer({ storage, fileFilter, limits: { fileSize: 51457280 } }).array('files', 10);
+const multiUploader = multer({ storage: multiStorage, fileFilter: multiFileFilter, limits: { fileSize: 51457280 } }).array('files', 10);
 
 export default {
     uploader,
     multiUploader,
+    async afterMultipleUpload({body: { conferenceId }, query: { type }, files }, res){
+
+        if(files?.length < 1) throw new AppErrorMissing('files');
+        if(!conferenceId) throw new AppErrorMissing('conferenceId');
+        const conference =await Conference.findByPk(conferenceId)
+        if(!conference) throw new AppErrorNotExist('conference');
+
+
+        const urls= files.map(file=>file.path)
+        if (typesPhoto[type] === 6) {
+                const org = [conference?.organization, ...urls].filter(Boolean); // Убираем возможные undefined значения
+                console.log(org);
+                await conference.update({ organization: org });
+            }
+        if (typesPhoto[type] === 7) {
+                const partner = [conference?.partner, ...urls].filter(Boolean); // Убираем возможные undefined значения
+                await conference.update({ partner: partner });
+            }
+
+
+        res.json({url: urls });
+
+    },
     async afterUpload({body : { reportId, newsId, committeeId, conferenceId, archiveId }, query: { type }, file, user, admin }, res) {
 
-        if (!file) throw new AppErrorMissing('files');
+
+        if (!file) throw new AppErrorMissing('file');
         if(typesPhoto[type] === 0) {
             const participant= await Participant.findByPk(user.id);
             if(!participant) throw new AppErrorNotExist('participant');
@@ -156,9 +232,9 @@ export default {
         }
 
 
-        if(typesPhoto[type]=== 8 || typesFile[type] === 6 && !archiveId) throw new AppErrorMissing('archiveId');
+        if((typesPhoto[type]=== 8 || typesFile[type] === 6) && !archiveId) throw new AppErrorMissing('archiveId');
         if(archiveId) {
-            const archive =await Archive.findByPk(archiveId);
+            const archive = await Archive.findByPk(archiveId);
             if(!archive) throw new AppErrorNotExist('archiveId')
             await archive.update({ file: file.path })
             return res.json({url: file.path});

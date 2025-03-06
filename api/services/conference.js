@@ -7,6 +7,50 @@ import Participant from "../models/participant.js";
 import Report from "../models/report.js";
 import {Op} from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
+import ExcelJS from 'exceljs';
+import {sequelize} from "../models/index.js";
+import typesPhoto from "../config/typesPhoto.js";
+import fs from "fs";
+import typesFiles from "../config/typesFiles.js";
+
+
+async function deleteFile(filePath) {
+    try {
+        await fs.unlink(filePath);
+        console.log(`Файл удален: ${filePath}`);
+    } catch (err) {
+        console.error(`Ошибка при удалении файла: ${filePath}`, err);
+    }
+}
+
+// Функция для обработки JSON полей (logo, documents)
+async function processJsonField(conference, conferenceInfo, fieldName, types, validTypes) {
+    if (conference?.[fieldName] && conferenceInfo?.[fieldName]) {
+        for (const [key, value] of Object.entries(conferenceInfo[fieldName])) {
+            if (validTypes.includes(types[key]) && value === null) {
+                await deleteFile(conference[fieldName][key]);
+                delete conference[fieldName][key];
+                conference.changed(fieldName, true);
+            }
+        }
+        await conference.save();
+    }
+}
+
+// Функция для обработки массивов (organization, partner)
+async function processArrayField(conference, conferenceInfo, fieldName) {
+    if (conference?.[fieldName] && conferenceInfo?.[fieldName]) {
+        const files = new Set([...conference[fieldName], ...conferenceInfo[fieldName]]);
+        for (const file of files) {
+            await deleteFile(file);
+        }
+        await conference.update({ [fieldName]: conferenceInfo[fieldName] });
+        conference.changed(fieldName, true);
+        await conference.save();
+    }
+}
+
+
 export default {
 
     async find(){
@@ -201,6 +245,86 @@ export default {
         const conference =await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference')
 
+
+        /*if(conference?.logo && conferenceInfo?.logo) {
+            for (const [key, value] of Object.entries(conferenceInfo.logo)) {
+                if(typesFiles[key] === 4 || typesPhoto[key] === 5) {
+                    if(value === null){
+                        fs.unlink(conference.logo[conferenceInfo.logo], (err=> {
+                            if (err) console.log(err);
+                        }))
+                        delete conference.logo[key]; // Замените jsonField на имя вашего поля
+                        conference.changed('logo', true);
+                        // Сохраняем изменения
+                        await conference.save();
+                    }
+                }
+            }
+        }
+
+        if(conference?.documents && conferenceInfo?.documents ) {
+            for (const [key, value] of Object.entries(conferenceInfo.documents)) {
+                if(typesFiles[key] === 5 || typesFiles[key] === 6 || typesFiles[key] === 7 || typesFiles[key] === 8) {
+                    if(value === null){
+                        fs.unlink(conference.documents[conferenceInfo.documents], (err=> {
+                            if (err) console.log(err);
+                        }))
+                        delete conference.documents[key]; // Замените jsonField на имя вашего поля
+                        conference.changed('documents', true);
+                        // Сохраняем изменения
+                        await conference.save();
+                    }
+                }
+            }
+        }
+
+        if(conference?.organization && conferenceInfo?.organization ) {
+
+            const files= new Set([...conference.organization, ...conferenceInfo?.organization]);
+
+            for (const file of files) {
+                fs.unlink(file, (err=> {
+                    if (err) console.log(err);
+                }))
+            }
+
+            await conference.update({organization: conferenceInfo.organization })
+            conference.changed('organization', true);
+
+            await conference.save();
+
+
+        }
+
+        if(conference?.partner && conferenceInfo?.partner ) {
+
+            const files= new Set([...conference.partner, ...conferenceInfo?.partner]);
+
+            for (const file of files) {
+                fs.unlink(file, (err=> {
+                    if (err) console.log(err);
+                }))
+            }
+
+            await conference.update({partner: conferenceInfo.partner })
+            conference.changed('partner', true);
+
+            await conference.save();
+
+
+        }*/
+
+        await processJsonField(conference, conferenceInfo, 'logo', typesPhoto, [4, 5]);
+
+        // Обработка поля documents
+        await processJsonField(conference, conferenceInfo, 'documents', typesFiles, [5, 6, 7, 8]);
+
+        // Обработка поля organization
+        await processArrayField(conference, conferenceInfo, 'organization');
+
+        // Обработка поля partner
+        await processArrayField(conference, conferenceInfo, 'partner');
+
         if (conferenceInfo.deadline ) {
           if (conference?.stages?.length > 0 || conferenceInfo?.stages?.length > 0) {
               const isDeadlineInStages = conference.stages?.some(item => item.date === conferenceInfo.deadline);
@@ -213,6 +337,8 @@ export default {
 
         return await conference.update({ ...conferenceInfo });
     },
+
+
 
     async findFee(conferenceId, fio){
         const conference = await Conference.findByPk(conferenceId)
@@ -327,8 +453,70 @@ export default {
             }
         })
 
-
        return  reports.map(report=>({path:  report.reportFile, name : report.name,}))
 
+    },
+
+    async exportReports(conferenceId){
+
+
+        const reports = await Report.findAll({
+            attributes: [
+                'direction',
+                'name', // Missing comma added here
+                [sequelize.fn('COUNT', sequelize.col('Report.id')), 'reportCount']
+            ],
+            where: {
+                conferenceId: conferenceId,
+            },
+            include: [
+                {
+                    model: ParticipantOfReport,
+                    as: 'participantOfReport',
+                    required: true,
+                    include: [
+                        {
+                            model: Participant,
+                            as: 'participant',
+                            required: true
+                        }
+                    ]
+                }
+            ],
+            group: ['direction', 'Report.name', 'Report.id', 'participantOfReport.id', 'participantOfReport.participant.id'], // Grouping corrected
+        });
+
+
+        const workbook = new ExcelJS.Workbook();
+
+        reports.forEach(report => {
+            const worksheet = workbook.addWorksheet(`${report.direction}`);
+            worksheet.columns = [
+                { header: 'Кто' },
+                { header: 'ФИО' },
+                { header: 'Организация' },
+                { header: 'Почта' },
+                { header: 'Участие' },
+                { header: 'Форма' },
+                { header: 'Доклад' }
+            ];
+
+            // Add rows for participants
+            const rows = report.participantOfReport.map(data => [
+                data.who,
+                `${data.participant.surname} ${data.participant.name} ${data.participant?.patronymic ?? ''}`.trim(),
+                data.organization,
+                data.participant.email,
+                data.status,
+                data.form,
+                report.name
+            ]);
+            worksheet.addRows(rows);
+
+            // Merge cells for the "Доклад" column
+            worksheet.mergeCells(`G2:G${report.participantOfReport.length + 1}`);
+        });
+
+        return workbook
     }
 }
