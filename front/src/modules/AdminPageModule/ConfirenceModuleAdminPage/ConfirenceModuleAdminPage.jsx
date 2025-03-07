@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import styles from "./ConfirenceModuleAdminPage.module.scss";
-import { testData } from "./data";
 import StagesConference from "./StagesConference/StagesConference";
 import Logotips from "./Logotips/Logotips";
 import DocumentsModule from "./DocumentsModule/DocumentsModule";
@@ -90,7 +89,8 @@ function ConfirenceModuleAdminPage() {
       })),
       description: data.aboutConference,
       directions: data.directions,
-      date: data.dateFirst,
+      date: ["01-05-2025", "05-08-2025"],
+      // date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
     };
