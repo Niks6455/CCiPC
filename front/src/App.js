@@ -87,7 +87,7 @@ function App() {
     //! создание конференции
     const dataConferences = {
       number: 1,
-      date: "2025-06-06",
+      date: ["2025-03-10", "2025-05-12"],
       address: "Таганрог",
       stages: [
         {
@@ -105,7 +105,7 @@ function App() {
         "12. Проблемы математического моделирования и управления в области медицины",
       ],
     };
-    // apiCreateConferences(dataConferences);
+    apiCreateConferences(dataConferences);
   }, []);
 
   const context = {

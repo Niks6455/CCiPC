@@ -89,7 +89,7 @@ function ConfirenceModuleAdminPage() {
       })),
       description: data.aboutConference,
       directions: data.directions,
-      date: ["01-05-2025", "05-08-2025"],
+      date: ["2025-05-05", "2025-08-01"],
       // date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
