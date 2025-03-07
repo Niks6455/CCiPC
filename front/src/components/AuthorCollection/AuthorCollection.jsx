@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './AuthorCollection.module.scss';
-import { ReactComponent as FolderIcon } from '../../assets/img/UI/Folder.svg';
+import FolderIcon from '../../assets/img/UI/Folder.svg';
 import { server } from '../../apirequests/apirequests';
 import { decodeFileName } from '../../utils/functions/funcions';
 export default function AuthorCollection({ children, link }) {
@@ -12,7 +12,7 @@ export default function AuthorCollection({ children, link }) {
       onMouseEnter={() => setActive(true)}
       onMouseLeave={() => setActive(false)}
     >
-      <FolderIcon stroke={isActive ? '#005935' : '#333333'}></FolderIcon>
+      <img src={FolderIcon} alt="FolderIcon" />
       <a
         href={`${server}/${decodeFileName(link)}`}
         target="_blank"

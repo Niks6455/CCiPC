@@ -30,15 +30,15 @@ function DateAdsess({ data, setData }) {
 
   // Ensure the initial state is an array of Date objects for the calendar
   const [date, setDate] = useState([
-    data.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
-    data.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
+    data?.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
+    data?.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
   ]);
 
   useEffect(() => {
     // Update the calendar state when `data` changes
     setDate([
-      data.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
-      data.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
+      data?.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
+      data?.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
     ]);
   }, [data.dateFirst, data.dateSecond]);
 

@@ -5,12 +5,7 @@ import { apiExportArchiveState } from '../../../../apirequests/apirequests';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-function HeadBlock({
-  conferenceid,
-  shearchParam,
-  setShearchParam,
-  funSaveTableData,
-}) {
+function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableData }) {
   const [loadingArhive, setLoadingArchive] = useState(false);
   const [loadingDoc, setLoadingDoc] = useState(false);
   const funExportArchive = async () => {

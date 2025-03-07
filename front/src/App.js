@@ -37,6 +37,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import EnteringEmail from './modules/RecoverPasswordModule/EnteringEmail/EnteringEmail';
 import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/RecoverPassword';
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
+import { apiCreateConferences } from './apirequests/apirequests';
 
 function App() {
   const dispatch = useDispatch();
@@ -80,22 +81,22 @@ function App() {
     //! создание конференции
     const dataConferences = {
       number: 1,
-      date: ["2025-03-10", "2025-05-12"],
-      address: "Таганрог",
+      date: ['2025-03-10', '2025-05-12'],
+      address: 'Таганрог',
       stages: [
         {
-          name: "Представление докладов и регистрационных форм",
-          date: "2024-09-01",
+          name: 'Представление докладов и регистрационных форм',
+          date: '2024-09-01',
         },
       ],
-      description: "Описание",
+      description: 'Описание',
       directions: [
-        "7. Проблемы математического моделирования и управления в области медицины",
-        "8. Проблемы математического моделирования и управления в области медицины",
-        "9. Проблемы математического моделирования и управления в области медицины",
-        "10. Проблемы математического моделирования и управления в области медицины",
-        "11. Проблемы математического моделирования и управления в области медицины",
-        "12. Проблемы математического моделирования и управления в области медицины",
+        '7. Проблемы математического моделирования и управления в области медицины',
+        '8. Проблемы математического моделирования и управления в области медицины',
+        '9. Проблемы математического моделирования и управления в области медицины',
+        '10. Проблемы математического моделирования и управления в области медицины',
+        '11. Проблемы математического моделирования и управления в области медицины',
+        '12. Проблемы математического моделирования и управления в области медицины',
       ],
     };
     apiCreateConferences(dataConferences);

@@ -3,9 +3,11 @@
   overflow-y: scroll; /* Скроллинг останется функциональным */
   border-radius: 8px;
   margin: 0 auto;
-  min-width: 100%;
+  max-width: 1635px;
+  box-sizing: border-box;
   table {
-    width: 100%;
+
+    margin: 0 auto;
     border-collapse: collapse; /* Убирает отступы между ячейками */
     min-height: auto;
     border-radius: 8px;

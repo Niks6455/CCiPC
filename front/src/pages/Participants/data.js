@@ -7,7 +7,7 @@ export const tableHead = [
   { key: 'report', value: 'Доклад', isActive: true },
 ];
 
-export const tableData = Array(5)
+export const tableData = Array(20)
   .fill(0)
   .map((_, i) => ({
     number: i + 1,

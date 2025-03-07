@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import DataContext from '../../context';
+import Register from '../../modules/Register/Register';
 import Layout from '../../ui/Layout/Layout';
 import styles from './AuthPage.module.scss';
 import Login from '../../modules/Login/Login';
@@ -16,9 +17,9 @@ function AuthPage(props) {
         <Layout>
           {context.authPage === 'Auth' ? (
             <Login funGetAllApi={props.funGetAllApi} />
-          ) : context.authPage === "Register" ? (
+          ) : context.authPage === 'Register' ? (
             <Register />
-          ) : context.authPage === "ConfirmLogin" ? (
+          ) : context.authPage === 'ConfirmLogin' ? (
             <ConfirmLogin />
           ) : null}
         </Layout>

@@ -58,6 +58,7 @@ const UserSlice = createSlice({
 
   extraReducers: builder => {
     builder
+
       .addCase(fetchUserData.pending, state => {
         state.status = 'loading';
         state.error = null;

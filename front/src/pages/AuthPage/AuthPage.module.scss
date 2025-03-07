@@ -1,6 +1,4 @@
 .AuthPage {
   padding-top: 90px;
-  @media (max-width: 1400px) {
-    min-height: calc(100vh - 209px);
-  }
+  @include maxMinContent();
 }

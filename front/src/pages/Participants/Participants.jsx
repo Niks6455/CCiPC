@@ -27,25 +27,23 @@ function Participants() {
     <>
       <NavBar />
       <main className={styles.Participants}>
-        <Layout>
-          <div className={styles.ParticipantsInner}>
-            <div className={styles.Title}>
-              <p>Участники конференции</p>
-            </div>
-            <div className={styles.inputComponentInner}>
-              <div className={styles.inputComponentInnerContainer}>
-                <img src={Search} />
-                <input
-                  className={styles.inputComponent}
-                  placeholder="Поиск"
-                  onChange={e => setFilter(e.target.value)}
-                  value={filter}
-                />
-              </div>
-              <UniversalTable tableHeader={tableHead} tableBody={filteredTable} />
-            </div>
+        <div className={styles.ParticipantsInner}>
+          <div className={styles.Title}>
+            <p>Участники конференции</p>
           </div>
-        </Layout>
+          <div className={styles.inputComponentInner}>
+            <div className={styles.inputComponentInnerContainer}>
+              <img src={Search} />
+              <input
+                className={styles.inputComponent}
+                placeholder="Поиск"
+                onChange={e => setFilter(e.target.value)}
+                value={filter}
+              />
+            </div>
+            <UniversalTable tableHeader={tableHead} tableBody={filteredTable} />
+          </div>
+        </div>
       </main>
       <Footer />
     </>

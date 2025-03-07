@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import styles from "./ConfirenceModuleAdminPage.module.scss";
-import StagesConference from "./StagesConference/StagesConference";
-import Logotips from "./Logotips/Logotips";
-import DocumentsModule from "./DocumentsModule/DocumentsModule";
-import AboutConference from "./AboutConference/AboutConference";
-import Directions from "./Directions/Directions";
-import DateAdsess from "./DateAdsess/DateAdsess";
-import Organizers from "./Organizers/Organizers";
+import { useEffect, useState } from 'react';
+import styles from './ConfirenceModuleAdminPage.module.scss';
+import StagesConference from './StagesConference/StagesConference';
+import Logotips from './Logotips/Logotips';
+import DocumentsModule from './DocumentsModule/DocumentsModule';
+import AboutConference from './AboutConference/AboutConference';
+import Directions from './Directions/Directions';
+import DateAdsess from './DateAdsess/DateAdsess';
+import Organizers from './Organizers/Organizers';
 import {
   apiGetConferencesById,
   apiPutConferencesById,
@@ -86,7 +86,7 @@ function ConfirenceModuleAdminPage() {
       })),
       description: data.aboutConference,
       directions: data.directions,
-      date: ["2025-05-05", "2025-08-01"],
+      date: ['2025-05-05', '2025-08-01'],
       // date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,

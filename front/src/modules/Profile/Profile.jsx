@@ -1,17 +1,17 @@
-import styles from "./Profile.module.scss";
-import ProfilePictureBackground from "./../../assets/img/ProfilePictureBackground.svg";
-import noPhotoLk from "./../../assets/img/noPhotoLk.svg";
-import editPhotoLk from "./../../assets/img/EditPhotoLk.png";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fioToString } from "../../utils/functions/funcions";
-import { fetchUserData } from "../../store/userSlice/user.Slice";
-import { server } from "../../apirequests/apirequests";
-import { useNavigate } from "react-router-dom";
-import ModalNal from "./components/ModalNal/ModalNal";
-import ModalPhoto from "./components/ModalPhoto/ModalPhoto";
-import Orgwznos from "./components/Orgwznos/Orgwznos";
-import ModalBeznal from "./components/ModalBeznal/ModalBeznal";
+import styles from './Profile.module.scss';
+import ProfilePictureBackground from './../../assets/img/ProfilePictureBackground.svg';
+import noPhotoLk from './../../assets/img/noPhotoLk.svg';
+import editPhotoLk from './../../assets/img/EditPhotoLk.png';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fioToString } from '../../utils/functions/funcions';
+import { fetchUserData } from '../../store/userSlice/user.Slice';
+import { server } from '../../apirequests/apirequests';
+import { useNavigate } from 'react-router-dom';
+import ModalNal from './components/ModalNal/ModalNal';
+import ModalPhoto from './components/ModalPhoto/ModalPhoto';
+import Orgwznos from './components/Orgwznos/Orgwznos';
+import ModalBeznal from './components/ModalBeznal/ModalBeznal';
 
 function Profile() {
   const dispatch = useDispatch();
@@ -40,10 +40,7 @@ function Profile() {
     <section className={styles.Profile}>
       <ModalNal openModal={openModal} setOpenModal={setOpenModal} />
 
-      <ModalBeznal
-        openModalBeznal={openModalBeznal}
-        setOpenModalBeznal={setOpenModalBeznal}
-      />
+      <ModalBeznal openModalBeznal={openModalBeznal} setOpenModalBeznal={setOpenModalBeznal} />
       <ModalPhoto
         funOpenPhotoProfile={funOpenPhotoProfile}
         showProfilePhoto={showProfilePhoto}
@@ -83,16 +80,16 @@ function Profile() {
         <div className={styles.containerMoreInfoOne}>
           <div className={styles.info_block}>
             <p>
-              <span>Организация:</span> {user?.organization || "Отсутствует"}
+              <span>Организация:</span> {user?.organization || 'Отсутствует'}
             </p>
             <p>
-              <span>Должность:</span> {user?.position || "Отсутствует"}
+              <span>Должность:</span> {user?.position || 'Отсутствует'}
             </p>
             <p>
-              <span>Email:</span> {user?.email || "Отсутствует"}
+              <span>Email:</span> {user?.email || 'Отсутствует'}
             </p>
             <p>
-              <span>Телефон:</span> {user?.phone || "Отсутствует"}
+              <span>Телефон:</span> {user?.phone || 'Отсутствует'}
             </p>
           </div>
           <Orgwznos user={user} funNal={funNal} funBeznal={funBeznal} />

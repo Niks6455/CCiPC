@@ -1,13 +1,10 @@
-import { useSelector } from "react-redux";
-import {
-  apiEditMassReports,
-  getConfParticipants,
-} from "../../../apirequests/apirequests";
-import styles from "./ColaboratorsModuleAdminPage.module.scss";
-import HeadBlock from "./HeadBlock/HeadBlock";
-import TableModule from "./TableModule/TableModule";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useSelector } from 'react-redux';
+import { apiEditMassReports, getConfParticipants } from '../../../apirequests/apirequests';
+import styles from './ColaboratorsModuleAdminPage.module.scss';
+import HeadBlock from './HeadBlock/HeadBlock';
+import TableModule from './TableModule/TableModule';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
 
 function ColaboratorsModuleAdminPage() {
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
@@ -48,17 +45,17 @@ function ColaboratorsModuleAdminPage() {
   //! сохранение данных таблицы
   const funSaveTableData = () => {
     if (originalData?.length > 0) {
-      const reqData = originalData.map((item) => ({
+      const reqData = originalData.map(item => ({
         id: item.id,
         direction: item.direction,
       }));
-      console.log("reqData", reqData);
+      console.log('reqData', reqData);
       if (reqData && reqData.length > 0) {
-        apiEditMassReports({ reportsInfo: reqData }).then((res) => {
+        apiEditMassReports({ reportsInfo: reqData }).then(res => {
           if (res?.status === 200) {
             qery.refetch();
           } else {
-            alert("Ошибка при сохранении данных");
+            alert('Ошибка при сохранении данных');
           }
         });
       }
