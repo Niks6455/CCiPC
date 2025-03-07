@@ -41,11 +41,7 @@ export default {
 
 
 
-        const [lastConference, nextConference] = await Promise.all([
-            Conference.findOne({
-                where: {
-                    date: { [Op.lt]: new Date() },
-                },
+        participant.conference = await Conference.findOne({
                 include: [{
                     model: ParticipantInConference,
                     as: 'participantInConference',
@@ -68,42 +64,7 @@ export default {
                     }
                 }],
                 order: [['date', 'DESC']]
-            }),
-            Conference.findOne({
-                where: {
-                    date: { [Op.gte]: new Date() }
-                },
-                include: [{
-                    model: ParticipantInConference,
-                    as: 'participantInConference',
-                    required: false,
-                    where: {
-                        participantId: participant.id
-                    },
-                },
-                    {
-                    model: Report,
-                    as: 'reports',
-                    required: false,
-                    include: {
-
-                        model: ParticipantOfReport,
-                        as: 'participantOfReport',
-                        required: true,
-                        where: {
-                            participantId: participant.id
-                        }
-                    }
-                }],
-                order: [['date', 'ASC']]
-            })
-        ]);
-
-
-
-        if(nextConference?.reports ) participant.conference= nextConference
-
-        else participant.conference = lastConference
+            });
 
         return participant
 
