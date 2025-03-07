@@ -37,9 +37,9 @@ const router = Router();
  *             schema:
  *               type: object
  *               properties:
- *                 conference:
+ *                 news:
  *                   type: object
- *                   description: Информация о конференции
+ *                   description: Информация о новости
  *   get:
  *     summary: Получение всех новостей
  *     parameters:
@@ -116,6 +116,9 @@ const router = Router();
  *                 type: string
  *               description:
  *                 type: string
+ *               img:
+ *                  type: Null
+ *                  description: для удаления прислать null иначе ничего не будет
  *     responses:
  *       200:
  *         description: Успешный ответ

@@ -24,6 +24,17 @@ const router = Router();
  *                 participant:
  *                   type: object
  *                   description: Информация о участнике
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: Уникальный идентификатор участника
+ *                     name:
+ *                       type: string
+ *                       description: Имя участника
+ *                     email:
+ *                       type: string
+ *                       format: email
+ *                       description: Электронная почта участника
  *
  * /participants/:
  *   put:
@@ -31,7 +42,7 @@ const router = Router();
  *     security:
  *       - BearerAuth: [] # Требуется авторизация
  *     requestBody:
- *       required: false
+ *       required: true
  *       content:
  *         application/json:
  *           schema:
@@ -39,20 +50,41 @@ const router = Router();
  *             properties:
  *               email:
  *                 type: string
+ *                 format: email
+ *                 example: "example@example.com"
  *               name:
  *                 type: string
+ *                 example: "Иван"
  *               patronymic:
  *                 type: string
+ *                 example: "Иванович"
  *               academicTitle:
  *                 type: string
+ *                 example: "Доктор наук"
  *               degree:
- *                  type: string
+ *                 type: string
+ *                 example: "Кандидат наук"
  *               position:
- *                  type: string
+ *                 type: string
+ *                 example: "Преподаватель"
  *               organization:
- *                  type: string
+ *                 type: string
+ *                 example: "Университет"
  *               phone:
- *                  type: string
+ *                 type: string
+ *                 example: "+7 (999) 123-45-67"
+ *               avatar:
+ *                 type: string
+ *                 description: null для удаления фотки
+ *               accord:
+ *                 type: string
+ *                 description: null для удаления соглашения
+ *               receipt:
+ *                 type:  string
+ *                 description: null для удаления квитанции
+ *               formPay:
+ *                 type: string
+ *                 description: Наличный или Безналичный
  *     responses:
  *       200:
  *         description: Успешный ответ
@@ -92,7 +124,6 @@ const router = Router();
  *                   type: object
  *                   description: Информация о участнике
  */
-
 router.route('/')
     .put(asyncRoute(verify.general), asyncRoute(participantCtrl.update))
 

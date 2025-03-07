@@ -6,8 +6,7 @@ export default class Conference extends Model {
         Conference.init(
             {
                 id: { type: DataTypes.UUID, primaryKey: true },
-                number: { type: DataTypes.INTEGER, allowNull: false, unique: 'number' },
-                date: { type: DataTypes.DATEONLY, allowNull: false },
+                date: { type: DataTypes.RANGE(DataTypes.DATEONLY), allowNull: false },
                 address: { type: DataTypes.STRING, allowNull: false },
                 stages: {
                 type: DataTypes.ARRAY(DataTypes.JSONB),
