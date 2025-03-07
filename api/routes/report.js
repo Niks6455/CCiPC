@@ -67,6 +67,37 @@ const router = Router();
  *                   type: string
  *                   description: Статус
  *
+ * /reports/directions:
+ *   put:
+ *     summary: Обновление направлений у докладов админом
+ *     security:
+ *       - BearerAuth: [] # Требуется авторизация
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               reportsInfo:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *             required:
+ *               - reportsInfo
+ *     responses:
+ *       200:
+ *         description: Успешный ответ
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 reports:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     description: Информация о докладах
  * /reports/{id}/:
  *   get:
  *     summary: Получение данных о докладе
