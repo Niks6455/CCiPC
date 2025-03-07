@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import {
-  apiEditReport,
+  apiEditMassReports,
   getConfParticipants,
 } from "../../../apirequests/apirequests";
 import styles from "./ColaboratorsModuleAdminPage.module.scss";
@@ -48,11 +48,23 @@ function ColaboratorsModuleAdminPage() {
   }, [shearchParam, originalData]);
 
   //! сохранение данных таблицы
-  const funSaveTableData = (id, value) => {
-    const reqData = {
-      direction: value,
-    };
-    apiEditReport(id, reqData);
+  const funSaveTableData = () => {
+    if (originalData?.length > 0) {
+      const reqData = originalData.map((item) => ({
+        id: item.id,
+        direction: item.direction,
+      }));
+      console.log("reqData", reqData);
+      if (reqData && reqData.length > 0) {
+        apiEditMassReports({ reportsInfo: reqData }).then((res) => {
+          if (res?.status === 200) {
+            qery.refetch();
+          } else {
+            alert("Ошибка при сохранении данных");
+          }
+        });
+      }
+    }
   };
 
   return (
@@ -62,6 +74,7 @@ function ColaboratorsModuleAdminPage() {
         conferenceid={conferenceid}
         shearchParam={shearchParam}
         setShearchParam={setShearchParam}
+        funSaveTableData={funSaveTableData}
       />
       <TableModule
         prewData={

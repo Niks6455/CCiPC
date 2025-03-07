@@ -2,19 +2,24 @@ import styles from "./Profile.module.scss";
 import ProfilePictureBackground from "./../../assets/img/ProfilePictureBackground.svg";
 import noPhotoLk from "./../../assets/img/noPhotoLk.svg";
 import editPhotoLk from "./../../assets/img/EditPhotoLk.png";
-import { ReactComponent as Close } from "./../../assets/img/UI/bigX.svg";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fioToString } from "../../utils/functions/funcions";
 import { fetchUserData } from "../../store/userSlice/user.Slice";
 import { server } from "../../apirequests/apirequests";
 import { useNavigate } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import ModalNal from "./components/ModalNal/ModalNal";
+import ModalPhoto from "./components/ModalPhoto/ModalPhoto";
+import Orgwznos from "./components/Orgwznos/Orgwznos";
+import ModalBeznal from "./components/ModalBeznal/ModalBeznal";
+
 function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user.data);
   const [showProfilePhoto, setShowProfilePhoto] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [openModalBeznal, setOpenModalBeznal] = useState(false);
   //! функция открытия фото профиля
   const funOpenPhotoProfile = () => {
     setShowProfilePhoto(!showProfilePhoto);
@@ -24,43 +29,27 @@ function Profile() {
     dispatch(fetchUserData());
   }, []);
 
+  const funNal = () => {
+    setOpenModal(true);
+  };
+  const funBeznal = () => {
+    setOpenModalBeznal(true);
+  };
+
   return (
     <section className={styles.Profile}>
-      <AnimatePresence>
-        {showProfilePhoto && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={styles.bacgraund}
-            ></motion.div>
-            <motion.div
-              className={styles.ProfilePhotoShow}
-              initial={{
-                opacity: 0,
-                transform: "translate(-50%, -50%) scale(0)",
-              }}
-              animate={{
-                opacity: 1,
-                transform: "translate(-50%, -50%) scale(1)",
-              }}
-              exit={{
-                opacity: 0,
-                transform: "translate(-50%, -50%) scale(0)",
-              }}
-            >
-              <img
-                className={styles.ProfileImg}
-                src={`${server}/${user?.avatar}`}
-                alt="img"
-                onError={(e) => (e.target.src = noPhotoLk)}
-              />
-              <Close onClick={funOpenPhotoProfile} className={styles.close} />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <ModalNal openModal={openModal} setOpenModal={setOpenModal} />
+
+      <ModalBeznal
+        openModalBeznal={openModalBeznal}
+        setOpenModalBeznal={setOpenModalBeznal}
+      />
+      <ModalPhoto
+        funOpenPhotoProfile={funOpenPhotoProfile}
+        showProfilePhoto={showProfilePhoto}
+        user={user}
+      />
+
       <div className={styles.profile_img_container}>
         <img src={ProfilePictureBackground} className={styles.ProfileImg} />
         <div className={styles.photo_lk}>
@@ -92,21 +81,21 @@ function Profile() {
       </div>
       <div className={styles.containerMoreInfo}>
         <div className={styles.containerMoreInfoOne}>
-          <p>
-            <span>Организация:</span> {user?.organization || "Отсутствует"}
-          </p>
-          <p>
-            <span>Должность:</span> {user?.position || "Отсутствует"}
-          </p>
-          <p>
-            <span>Email:</span> {user?.email || "Отсутствует"}
-          </p>
-          <p>
-            <span>Телефон:</span> {user?.phone || "Отсутствует"}
-          </p>
-          {/* <p>
-            <span>Направление конференции:</span> Отсутствует
-          </p> */}
+          <div className={styles.info_block}>
+            <p>
+              <span>Организация:</span> {user?.organization || "Отсутствует"}
+            </p>
+            <p>
+              <span>Должность:</span> {user?.position || "Отсутствует"}
+            </p>
+            <p>
+              <span>Email:</span> {user?.email || "Отсутствует"}
+            </p>
+            <p>
+              <span>Телефон:</span> {user?.phone || "Отсутствует"}
+            </p>
+          </div>
+          <Orgwznos user={user} funNal={funNal} funBeznal={funBeznal} />
         </div>
         <div className={styles.containerMoreInfoSecond}>
           {user?.reports?.length > 0 ? (

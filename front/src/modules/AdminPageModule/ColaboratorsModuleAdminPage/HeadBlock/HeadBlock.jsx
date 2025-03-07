@@ -5,7 +5,12 @@ import { apiExportArchiveState } from "../../../../apirequests/apirequests";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-function HeadBlock({ conferenceid, shearchParam, setShearchParam }) {
+function HeadBlock({
+  conferenceid,
+  shearchParam,
+  setShearchParam,
+  funSaveTableData,
+}) {
   const [loadingArhive, setLoadingArchive] = useState(false);
   const [loadingDoc, setLoadingDoc] = useState(false);
   const funExportArchive = async () => {
@@ -40,7 +45,9 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam }) {
         />
       </div>
       <div className={styles.right_block}>
-        <button className={styles.save}>Сохранить</button>
+        <button className={styles.save} onClick={funSaveTableData}>
+          Сохранить
+        </button>
         <button className={styles.export_staty} onClick={funExportArchive}>
           <AnimatePresence>
             {loadingArhive ? (
