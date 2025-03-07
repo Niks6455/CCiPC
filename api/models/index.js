@@ -5,8 +5,6 @@ import Conference from "./conference.js"
 import Report from "./report.js";
 import ParticipantInConference from "./participant-in-conference.js";
 import News from "./news.js";
-import File from "./file.js";
-import FileLink from "./file-link.js";
 import Committee from "./committee.js";
 import CommitteeInConference from "./committee-in-conference.js";
 import Archive from "./archive.js";
@@ -22,8 +20,6 @@ export const models = {
    Conference,
    ParticipantInConference,
    News,
-   File,
-   FileLink,
    Committee,
    CommitteeInConference,
    Archive,

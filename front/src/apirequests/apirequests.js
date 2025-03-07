@@ -138,6 +138,16 @@ export const apiEditReport = async (id, data) => {
   }
 };
 
+//! редактирование докладов через админу
+export const apiEditMassReports = async (data) => {
+  try {
+    const response = await api.put(`${server}/reports/directions`, data);
+    return response;
+  } catch (error) {
+    console.log("apiEditMassReports ", error);
+  }
+};
+
 //! создать конференции в бд роль свою поменять на 1 чтобы работало
 export const apiCreateConferences = async dataConferences => {
   try {

@@ -117,10 +117,6 @@ export default function () {
         foreignKey: 'conferenceId', // Внешний ключ в таблице CommitteeInConference
     });
 
-    File.hasOne(FileLink, {foreignKey: {name: 'fileId', allowNull: false}, as: 'file'});
-    Conference.hasOne(FileLink, {foreignKey: {name: 'conferenceId', allowNull: true}, as: 'conference'});
-    Report.hasOne(FileLink, {foreignKey: {name: 'reportId', allowNull: true}, as: 'report'});
-    Participant.hasOne(FileLink, {foreignKey: {name: 'participantId', allowNull: true}, as: 'participant'});
 
     /*Participant.hasMany(Report, { foreignKey: { name: 'participantId', allowNull: true }, as: 'reports' });
     Report.belongsTo(Participant, { foreignKey: { name: 'participantId', allowNull: true }, as: 'participant' });*/

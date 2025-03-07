@@ -49,8 +49,6 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
     setTableData(dat);
   };
 
-  console.log('prevData', prewData);
-
   return (
     <div className={styles.TableModule} onScroll={() => setOpenDirList(null)}>
       <AnimatePresence>

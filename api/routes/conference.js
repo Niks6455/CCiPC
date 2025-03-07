@@ -21,10 +21,10 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               number:
- *                 type: number
  *               date:
- *                 type: string
+ *                 type: array
+ *                 items:
+ *                   type: string
  *               address:
  *                 type: string
  *               stages:
@@ -35,10 +35,14 @@ const router = Router();
  *                 type: array
  *                 items:
  *                   type: string
+ *               description:
+ *                 type: string
+ *               deadline:
+ *                 type: string
  *             required:
  *               - date
- *               - number
  *               - address
+ *               - description
  *     responses:
  *       200:
  *         description: Успешный ответ
@@ -125,10 +129,10 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
- *               number:
- *                 type: number
  *               date:
- *                 type: string
+ *                 type: array
+ *                 items:
+ *                   type: string
  *               address:
  *                 type: string
  *               stages:
@@ -139,6 +143,12 @@ const router = Router();
  *                 type: array
  *                 items:
  *                   type: string
+ *               description:
+ *                 type: string
+ *               deadline:
+ *                 type: string
+ *               logo:
+ *                 type: string
  *     parameters:
  *       - name: id
  *         in: path

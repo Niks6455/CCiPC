@@ -102,9 +102,8 @@ export default {
         res.json({ conference: mapConf(conference)});
     },
 
-    async create({body: { number, date, address, stages, description, directions, deadline }, admin }, res) {
-        if(!number) throw new AppErrorMissing('number')
-        if(!date) throw new AppErrorMissing('date')
+    async create({body: { date, address, stages, description, directions, deadline }, admin }, res) {
+        if(date?.length < 1) throw new AppErrorInvalid('date')
         if(!description) throw new AppErrorMissing('description')
         if(!address) throw new AppErrorMissing('address')
 
@@ -116,7 +115,8 @@ export default {
             if(doesNotExist) throw new AppErrorInvalid('deadline')
         }
 
-        const conference = await conferenceService.create({number, date, address, description, stages, directions, deadline})
+        const rangeDate = [ new Date(date[0]), new Date(date[1]) ];
+        const conference = await conferenceService.create({ date: rangeDate, address, description, stages, directions, deadline})
 
         res.json( { conference: conference } );
 
@@ -126,47 +126,6 @@ export default {
         if(!id) throw new AppErrorMissing('id')
 
         const participants =await conferenceService.findParticipants(id, fio);
-
-        /*const data = participants.map(p=>p.participant.participantOfReport.map(reports=>({
-            reports: reports.report,
-            participant: p.participant,
-        })))
-        console.log(data[1][0].participant)*/
-
-    /*    const data= participants.map(participant => ({
-            name: participant.name,
-            direction: participant.direction,
-            comment: participant.comment,
-           participants: participant.participantOfReport.map(p=>p)
-        }))
-
-        const name=[]
-        const info={}
-        const information= data.map(d=> {
-            const  person= d.participants.map(d1=>{
-                name.push({
-                    name: d1.participant.name,
-                    surname: d1.participant.surname,
-                })
-                if(d1.who==='Автор') {
-                    info.organization=d1.organization
-                    info.status=d1.status
-                    info.report = {
-                        name: d.name,
-                        direction: d.direction,
-                        comment: d.comment
-                    }
-                }
-
-                return info
-            })
-
-            return person
-        })
-
-        console.log(information)*/
-
-
 
         const data = participants.map(participant => ({
             name: participant.name,
@@ -220,7 +179,12 @@ export default {
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
         if(!id) throw new AppErrorMissing('id')
-        const conference= await conferenceService.update({number, date, address, description, stages, directions, deadline, logo, organization, documents, partner}, id)
+        if(date && date?.length < 1) throw new AppErrorInvalid('date')
+
+
+        const rangeDate = date ? [ new Date(date[0]), new Date(date[1]) ] : [];
+
+        const conference= await conferenceService.update({number, date: rangeDate, address, description, stages, directions, deadline, logo, organization, documents, partner}, id)
 
         res.json({ conference: conference })
 
