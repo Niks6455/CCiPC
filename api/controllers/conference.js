@@ -102,8 +102,7 @@ export default {
         res.json({ conference: mapConf(conference)});
     },
 
-    async create({body: { number, date, address, stages, description, directions, deadline }, admin }, res) {
-        if(!number) throw new AppErrorMissing('number')
+    async create({body: { date, address, stages, description, directions, deadline }, admin }, res) {
         if(date?.length < 1) throw new AppErrorInvalid('date')
         if(!description) throw new AppErrorMissing('description')
         if(!address) throw new AppErrorMissing('address')
@@ -117,7 +116,7 @@ export default {
         }
 
         const rangeDate = [ new Date(date[0]), new Date(date[1]) ];
-        const conference = await conferenceService.create({number, date: rangeDate, address, description, stages, directions, deadline})
+        const conference = await conferenceService.create({ date: rangeDate, address, description, stages, directions, deadline})
 
         res.json( { conference: conference } );
 

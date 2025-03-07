@@ -90,15 +90,6 @@ export default {
 
 
     async create(conferenceInfo){
-
-        const conference = await Conference.findOne({
-            where : {
-                number: conferenceInfo.number,
-            }
-        })
-
-        if(conference) throw new AppErrorAlreadyExists(conferenceInfo.number);
-
         return await Conference.create({...conferenceInfo});
     },
 
