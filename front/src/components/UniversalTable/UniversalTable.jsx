@@ -20,9 +20,9 @@ function UniversalTable(props) {
 
   const values = [
     { key: 'organization', value: 'Организация', isActive: true },
-    { key: 'participation', value: 'Участие', isActive: true },
+    { key: 'status', value: 'Участие', isActive: true },
     { key: 'direction', value: 'Направление', isActive: true },
-    { key: 'report', value: 'Доклад', isActive: true },
+    { key: 'name', value: 'Доклад', isActive: true },
   ];
 
   useEffect(() => {
@@ -77,11 +77,11 @@ function UniversalTable(props) {
       updatedHeaderData.splice(3);
 
       if (index === -1) {
-        updatedHeaderData.push({ key: 'vizion', value: 'Vizion', isActive: true });
+        updatedHeaderData.push({ key: 'vizion', value: '', isActive: true });
       }
     } else {
       if (updatedHeaderData.length <= 3 && index === -1) {
-        updatedHeaderData.push({ key: 'vizion', value: 'Vizion', isActive: true });
+        updatedHeaderData.push({ key: 'vizion', value: '', isActive: true });
       }
     }
 

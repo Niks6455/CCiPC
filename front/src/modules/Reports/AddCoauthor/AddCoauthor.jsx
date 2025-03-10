@@ -33,7 +33,7 @@ function AddCoauthor({ edit, number }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
-
+  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
   const funDeleteCoauthor = index => {
     dispatch(deleteCoauthor({ index }));
   };
@@ -151,6 +151,7 @@ function AddCoauthor({ edit, number }) {
           patronymic: el.data.patronymic,
           email: el.data.email,
         })),
+        conferenceId: conferenceid
       };
       apiCreateReport(data).then(res => {
         console.log('res', res);

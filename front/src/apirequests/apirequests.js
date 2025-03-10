@@ -1,7 +1,7 @@
 import api from './axios';
-// export const server = 'http://localhost:3000';
+export const server = 'http://localhost:3000';
 // export const server = `${window.location.href}`;
-export const server = `${window.location.href}/api`;
+// export const server = `${window.location.href}/api`;
 
 
 
@@ -409,3 +409,14 @@ export const deleteArchive = async id => {
     console.log('getConfParticipants ', error);
   }
 };
+
+//! Получение Архивов фотографий
+export const getConferencesParticipants = async id => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/participants`);
+    return response;
+  } catch (error) {
+    console.log('getConfParticipants ', error);
+  }
+};
+
