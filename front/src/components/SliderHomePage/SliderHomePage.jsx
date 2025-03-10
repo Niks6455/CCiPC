@@ -32,7 +32,7 @@ const SliderHomePage = () => {
     // Вызываем checkPosition при изменении currentSlide, чтобы иметь возможность отслеживать текущий флаг
     console.log('Current slide:', currentSlide, 'Flag:', checkPosition(currentSlide));
   }, [currentSlide]);
-
+ 
   const navigate = useNavigate();
   return (
     <div className={styles.SliderHomePage}>

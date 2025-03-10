@@ -6,7 +6,8 @@ import trashIcon from '@assets/img/UI/trashBeliy.svg';
 import borderFile from '@assets/img/AdminPanel/borderFile.svg';
 
 function Organizers({ data, setData, itemKey, name, buttonName }) {
-  console.log('data', data[itemKey]);
+  console.log('data', data);
+  console.log('itemKey', itemKey);
 
   //! Add a new file
   const funChangeDataAdd = () => {

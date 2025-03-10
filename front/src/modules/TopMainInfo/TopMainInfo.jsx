@@ -63,7 +63,7 @@ function TopMainInfo() {
                       href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
                       rel="noreferrer"
                     >
-                      Последний сборник <br /> научных трудов
+                      Сборник <br /> научных трудов
                     </a>
                     <a
                       target="_blank"

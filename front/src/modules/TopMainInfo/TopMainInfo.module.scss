@@ -1,10 +1,13 @@
+
+$w1: 1366px;
+$w2: 769px;
+
 .TopHeader {
   position: absolute;
   left: 0;
   top: 0;
-  width: calc(100% - 50px); /* Задний фон занимает 98% ширины */
+  width: calc(100% - torem(50px)); /* Задний фон занимает 98% ширины */
   height: 100%;
-
   img {
     width: 100%;
     height: 100%;
@@ -15,8 +18,11 @@
 
 .topContainer {
   position: relative;
-  height: 56.375rem; /* 870px в rem */
+  height: torem(870px); /* 870px в rem */
   margin: 0 auto;
+  @media (max-width: $w2) {
+    height: torem(390px); /* 870px в rem */
+  }
 }
 
 .mainTopTextContainer {
@@ -38,9 +44,14 @@
   }
   .mainTopDate {
     p {
-      font-size: 2rem; /* 32px в rem */
+      font-size: torem(32px); /* 32px в rem */
       font-weight: 900;
       margin: 0;
+
+      @media (max-width: $w2) {
+        font-size: torem(20px); /* 32px в rem */
+        margin-left: torem(30px);
+      }
     }
   }
   .mainTopList {
@@ -50,14 +61,31 @@
       justify-content: space-between;
       margin: 3rem 0; /* Отступы сверху и снизу */
       padding: 0;
-      width: 900px;
+      width: torem(900px);
+      @media (max-width: $w2) {
+        width: torem(447px);
+        margin-left: torem(30px);
+        margin: 0;
+        margin-top: torem(30px);
+        margin-bottom: torem(20px);
+        margin-left: torem(30px);
+      }
       li {
         display: flex;
         align-items: center;
         font-size: 1.5rem; /* Размер текста */
+        @media (max-width: $w2) {
+          font-size: torem(14px); /* Размер текста */
+        }
         img {
           margin-left: 1.5rem; /* Отступ для иконки */
+          @media (max-width: $w2) {
+            margin-left: torem(10px);
+            width: torem(24px);
+            height: torem(24px);
+          }
         }
+   
         .clicker {
           background-image: url('./../../assets/img/UI/ArrDefault.svg');
           width: 3rem; /* 48px в rem */
@@ -73,6 +101,12 @@
           &:active {
             background-image: url('./../../assets/img/UI/ArrClick.svg');
           }
+          @media (max-width: $w2) {
+            margin-left: torem(10px);
+            width: torem(24px);
+            height: torem(24px);
+          }
+      
         }
       }
     }
@@ -81,27 +115,41 @@
 
 .buttonClicker {
   position: absolute;
-  bottom: -1px;
-  right: -1px;
+  bottom: torem(-2px);
+  right: torem(-2px);
   margin: 0 auto;
   text-align: center;
   background-color: var(--BodyBgColor);
   // width: calc(100vw / 3);
-  width: 475px;
-  padding: 15px 0px 15px 15px;
-  border-radius: 50px 0px 0px 0px;
-  margin-right: 50px;
+  width: torem(475px);
+  height: torem(150px);
+  padding: torem(15px) 0px torem(15px) torem(15px);
+  border-radius: torem(50px) 0px 0px 0px;
+  margin-right: torem(50px);
+  @media (max-width: $w2) {
+    width: torem(227px);
+    height: torem(83px);
+    border-radius: torem(30px) 0px 0px 0px;
+  }
   .buttonClickerInner {
     position: relative;
+    img{
+      width: torem(82px);
+      height: torem(82px);
+    }
     .leftBot {
       position: absolute;
-      left: -96px;
-      bottom: -16px;
+      left: torem(-94px);
+      bottom: torem(-20px);
+      @media (max-width: $w2) {
+        left: torem(-94px);
+        bottom: torem(-2px);
+      }
     }
     .leftTop {
       position: absolute;
       right: 0px;
-      top: -96px;
+      top: torem(-95px);
       z-index: 2;
     }
   }
@@ -109,14 +157,14 @@
 
 .greenArrow {
   background-image: url('./../../assets/img/UI/ArrTopDefault.svg');
-  width: 80px;
-  height: 80px;
+  width: torem(80px);
+  height: torem(80px);
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
   position: fixed;
-  right: 50px;
-  bottom: 50px;
+  right: torem(50px);
+  bottom: torem(50px);
   z-index: 500;
   transition: 0.08s linear all;
   &:hover {

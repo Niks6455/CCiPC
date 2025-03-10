@@ -32,6 +32,10 @@ body {
 }
 html {
   scroll-behavior: smooth;
+  font-size: 0.8333333333333vw;
+  @media (max-width: 769px) {
+    font-size: 2.0833333333333vw;
+  }
 }
 * {
   font-family: "Overpass", sans-serif;

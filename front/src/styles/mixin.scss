@@ -389,3 +389,7 @@ $w4: 480px;
     min-height: calc(100vh - var(--heightFooterPhone) - $mt);
   }
 }
+
+@function torem($px, $base: 16px) {
+  @return $px / $base * 1rem;
+}

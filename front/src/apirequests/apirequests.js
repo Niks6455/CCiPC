@@ -353,6 +353,20 @@ export const uploadPhoto = async (file, type) => {
   }
 };
 
+//! загрузка файлов массивом 
+export const uploadMulti = async (file, type) => {
+  try {
+    const response = await api.post(`${server}/uploads/multi?type=${type}`, file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('uploadPhoto ', error);
+  }
+};
+
 //! Архивы создание
 
 export const createArchive = async data => {

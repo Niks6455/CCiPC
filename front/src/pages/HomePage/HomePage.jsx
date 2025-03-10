@@ -12,6 +12,7 @@ import Organization1 from '@assets/img/UI/org1.png';
 import Organization2 from '@assets/img/UI/org2.png';
 import Organization3 from '@assets/img/UI/org3.png';
 import Organization4 from '@assets/img/UI/org4.png';
+import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHomePageMobile';
 function HomePage() {
   const context = useContext(DataContext);
   const textData = textDataHomePage;
@@ -22,6 +23,7 @@ function HomePage() {
       <SliderHomePageTop />
       <Layout>
         <section className={styles.textSection}>
+          {/* <img style={{position: "absolute", top: "30rem", left: "50%", transform: "translate(-50%, -50%)", width: "30rem"}} src="./tuzik.png" alt="tuzik"/> */}
           <div className={styles.textSectionIner}>
             <div className={styles.Title}>
               <p>
@@ -78,6 +80,7 @@ function HomePage() {
         </section>
       </Layout>
       <SliderHomePage />
+      <SliderHomePageMobile/>
       <Layout>
         <section className={styles.imgSection}>
           <div className={styles.Title}>

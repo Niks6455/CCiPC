@@ -10,6 +10,7 @@ import Organizers from './Organizers/Organizers';
 import {
   apiGetConferencesById,
   apiPutConferencesById,
+  uploadMulti,
   uploadPhoto,
 } from '../../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
@@ -57,8 +58,8 @@ function ConfirenceModuleAdminPage() {
         dateFirst: qery.date?.[0]?.value,
         dateSecond: qery.date?.[1]?.value,
         address: qery.address,
-        organizers: qery.organizers,
-        partners: qery.partners,
+        organizers: qery.organization || [],
+        partners: qery.partner || [],
         deadlineUploadingReports: convertDate(qery.deadline),
       };
       setData(data);
@@ -74,7 +75,28 @@ function ConfirenceModuleAdminPage() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('conferenceId', conferenseId);
-    uploadPhoto(formData, key);
+    uploadPhoto(formData, key).then((res)=>{
+      if(res?.status !== 200){
+        alert("Файл не загружен", key)
+      }
+    });
+  };
+
+  //! отправка файлов массивом организаторы и партнеры
+  const funApiEditFileMulti = (files, key) => {
+    const data = files.map((item) => item.value).filter(item => item && typeof item !== "string");
+    const formData = new FormData();
+    console.log("files", data);
+    if(data.length > 0) {
+      formData.append('files', data);
+      formData.append('conferenceId', conferenseId);
+      uploadMulti(formData, key).then((res)=>{
+        if(res?.status !== 200){
+          alert("Файл не загружен", key)
+        }
+      });
+    }
+
   };
 
   //! отправляем измененные данные на бэк
@@ -123,6 +145,11 @@ function ConfirenceModuleAdminPage() {
     if (typeof data.cashlessEntities === 'object') {
       funApiEditFile(data.cashlessEntities, 'LEGAL');
     }
+    //! картинки организаторы
+    if (data.organizers) {
+      funApiEditFileMulti(data.organizers, 'ORGANIZATION');
+    }
+    
 
     apiPutConferencesById(dat, conferenseId);
   };

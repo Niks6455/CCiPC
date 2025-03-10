@@ -1,25 +1,45 @@
+$w1: 1366px;
+$w2: 769px;
+
 .SliderHomePageTop {
-  margin-top: 70px;
+  margin-top: torem(70px);
+  @media (max-width: $w2) {
+    margin-top: torem(50px);
+  }
   p {
     color: var(--GreenColorText);
+    font-size: torem(18px);
+    @media (max-width: $w1) {
+      font-size: torem(22px);
+    }
+    @media (max-width: $w2) {
+      font-size: torem(14px);
+      padding-left: torem(32px);
+    }
   }
   .SliderHomePageTopInner {
     overflow: hidden; /* Чтобы скрыть лишние элементы */
     position: relative;
     width: 100%;
-    margin-top: 20px;
+    margin-top: torem(20px);
+    @media (max-width: $w2) {
+      margin-top: torem(10px);
+    }
   }
   .line {
     content: '';
     position: relative;
     width: 100%;
-    border: 1px solid var(--GreenColorText);
-    margin: 13px 0px;
+    border: torem(1px) solid var(--GreenColorText);
+    margin: torem(13px) 0px;
+    @media (max-width: $w2) {
+      margin: torem(10px) 0;
+    }
   }
   .Slider {
     display: flex;
     animation: scroll 40s linear infinite; /* Анимация для бесконечного скролла */
-    font-size: 18px;
+    font-size: torem(18px);
     ul {
       list-style: none;
       display: flex;
@@ -28,15 +48,35 @@
     }
     li {
       color: var(--GreenColorText);
-      margin: 0 20px; /* Отступы между элементами */
-      width: 365px;
+      margin: 0 torem(20px); /* Отступы между элементами */
+      width: torem(365px);
       display: flex;
       align-items: center;
+      font-size: torem(18px);
+      @media (max-width: $w1) {
+        font-size: torem(20px);
+      }
+      @media (max-width: $w2) {
+        font-size: torem(14px);
+         width: torem(274px);
+      }
       .sliderLine {
-        margin: 0 20px;
+        margin: 0 torem(20px);
+        @media (max-width: $w2) {
+          margin: 0 torem(18px);
+        }
+        img{
+          width: torem(3px);
+          height: torem(42px);
+         
+        }
       }
       .date {
         font-weight: 900;
+        @media (max-width: $w2) {
+          font-weight: 500;
+          font-size: torem(16px);
+        }
       }
     }
   }
