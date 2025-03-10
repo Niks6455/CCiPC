@@ -249,7 +249,7 @@ router.route('/register').post(asyncRoute(authCtrl.register))
 
 router.route('/checkEmail').post(asyncRoute(authCtrl.checkEmail))
 
-router.route('/changePassword').post(asyncRoute(verify.general), asyncRoute(authCtrl.reset));
+router.route('/changePassword').post(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(authCtrl.reset));
 
 router.route('/recovery').post(asyncRoute(authCtrl.reset))
 
