@@ -3,6 +3,18 @@ import authService from "../services/auth.js";
 import bcrypt from "bcrypt";
 import randomCode from "../utils/random-code.js";
 
+function validatePassword(password) {
+    // Проверяем, что пароли не пустые и совпадают
+    if (!password) {
+        return false;
+    }
+
+    // Регулярное выражение для проверки условий
+    const passwordRegex = /^(?=.*[A-Z])(?=.*[0-9])[A-Za-z0-9]{6,16}$/;
+
+    return passwordRegex.test(password);
+}
+
 function validateEmail(email) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
@@ -14,8 +26,8 @@ function validateName(name) {
 }
 
 function validatePhoneNumber(phone) {
-    // Удаляем пробелы
-    const cleanedPhone = phone.replace(/\s+/g, '');
+    // Удаляем пробелы и дефисы
+    const cleanedPhone = phone.replace(/[\s-]+/g, '');
 
     // Проверяем, соответствует ли номер формату +7 и 10 цифрам
     const phoneRegex = /^\+7\d{10}$/;
@@ -23,9 +35,15 @@ function validatePhoneNumber(phone) {
     return phoneRegex.test(cleanedPhone);
 }
 
+
 function validateOrganization(name) {
+    // Удаляем пробелы по краям и проверяем, что строка не пустая
+    const trimmedName = name.trim();
+
+    // Проверяем, соответствует ли название требованиям
     const nameRegex = /^[a-zA-Zа-яА-ЯёЁ0-9.,'"() -]{3,200}$/;
-    return nameRegex.test(name);
+
+    return trimmedName.length > 0 && nameRegex.test(trimmedName);
 }
 export default {
 
@@ -43,12 +61,8 @@ export default {
         if(!email) throw new AppErrorMissing('email')
         if(!password) throw new AppErrorMissing('password')
 
-        const isValid =
-            password.length >= 6 &&
-            password.length <= 16;
 
-
-        if (!isValid) throw new AppErrorInvalid('password');
+        if (!validatePassword(password)) throw new AppErrorInvalid('password');
         if(!validateEmail(email)) throw new AppErrorInvalid('email')
 
         if(!name) throw new AppErrorMissing('name')
@@ -104,7 +118,7 @@ export default {
     },
 
     async reset({ body: {currentPassword, newPassword, repeatPassword, code, email }, user}, res) {
-        if(newPassword !== repeatPassword || newPassword?.length <=6 || newPassword?.length>=16) throw new AppErrorInvalid('newPassword')
+        if(newPassword !== repeatPassword || !validatePassword(newPassword)) throw new AppErrorInvalid('newPassword')
         if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
         if(!user && (!code || !email)) throw new AppErrorMissing('code')
         if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword }, user )

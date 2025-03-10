@@ -12,6 +12,7 @@ import Report from "../models/report.js";
 import qs from "querystring";
 import sync from '../utils/sync.js'
 import axios from "axios";
+import {Op} from "sequelize";
 const verificationCodes= {};
 const resetCodes= {};
 
@@ -19,10 +20,15 @@ export default {
     async register(participant, code){
 
         const checkParticipant = await Participant.findOne({
-            where: { email: participant.email }
+            where: {
+                [Op.or]: [
+                    { email: participant.email },
+                    { phone: participant.phone }
+                ]
+            }
         });
 
-        if(checkParticipant) throw new AppErrorAlreadyExists('email')
+        if(checkParticipant) throw new AppErrorAlreadyExists('email or phone')
 
         verificationCodes[participant.email] = code
 
