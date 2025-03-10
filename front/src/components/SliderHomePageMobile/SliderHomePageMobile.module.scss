@@ -50,10 +50,92 @@
     .image {
       width: 100%;
       position: relative;
+      .allNews {
+        cursor: pointer;
+        border: none;
+        position: absolute;
+        bottom: torem(15px);
+        right: torem(15px);
+        background-color: #ffffff80;
+        backdrop-filter: blur(6px);
+        padding: torem(10px) torem(20px);
+        border-radius: torem(20px);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        @include HoverActiveOpasity;
+        span {
+          font-family: Overpass, sans-serif;
+          font-weight: 400;
+          font-size: torem(20px);
+          line-height: 130%;
+          letter-spacing: 0%;
+          text-align: center;
+          color: #ffffff;
+          margin-right: torem(10px);
+        }
+        img {
+          width: torem(24px);
+          height: torem(24px);
+        }
+      }
       .navigate {
         position: absolute;
         right: torem(30px);
         top: torem(10px);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        button {
+          @include ButtonIcon;
+          border-radius: 50%;
+          padding: 0;
+          width: torem(68px);
+          height: torem(68px);
+          transition: all 0.2s linear;
+          &:first-child {
+            transform: scaleX(-1);
+            &[name='0button'] {
+              cursor: not-allowed;
+              svg * {
+                fill: #c7c7c7c5;
+              }
+            }
+          }
+          &:last-child {
+            &[name='truebutton'] {
+              cursor: not-allowed;
+              svg * {
+                fill: #c7c7c7c5;
+              }
+            }
+          }
+
+          svg {
+            height: 100%;
+            width: 100%;
+          }
+          &:hover {
+            svg {
+              fill: #ffffff40;
+            }
+          }
+          &:active {
+            svg {
+              fill: #ffffffb2;
+            }
+          }
+        }
+        span {
+          font-family: Overpass, sans-serif;
+          font-weight: 500;
+          font-size: torem(40px);
+          line-height: 120%;
+          letter-spacing: 0%;
+          color: #ffffff;
+          margin: auto torem(20px);
+        }
       }
       .main_img {
         width: 100%;

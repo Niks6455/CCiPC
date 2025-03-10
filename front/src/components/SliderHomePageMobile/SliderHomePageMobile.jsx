@@ -1,8 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './SliderHomePageMobile.module.scss';
 import { getAllNews, server } from '../../apirequests/apirequests';
+import { ReactComponent as ArrowIcon } from '@assets/img/UI/SliderDefault.svg';
+import { useNavigate } from 'react-router-dom';
+import newsArrIcon from '@assets/img/UI/newsArr.svg';
 
 function SliderHomePageMobile() {
+  const navigate = useNavigate();
   const [slides, setSlides] = useState([]);
   const containerRef = useRef(null); // Reference to the scrollable container
   const itemsRef = useRef([]); // References to all team_item elements
@@ -49,11 +53,22 @@ function SliderHomePageMobile() {
             ></div>
             <div className={styles.image}>
               <div className={styles.navigate}>
-                <button onClick={() => scrollToPrevious(index)}>prev</button>
-                <span>{index + 1}</span>
-                <button onClick={() => scrollToNext(index)}>next</button>
+                <button onClick={() => scrollToPrevious(index)} name={`${index}button`}>
+                  <ArrowIcon />
+                </button>
+                <span>{index + 1 < 10 ? `0${index + 1}` : index + 1}</span>
+                <button
+                  onClick={() => scrollToNext(index)}
+                  name={`${index === slides.length - 1}button`}
+                >
+                  <ArrowIcon />
+                </button>
               </div>
               <img className={styles.main_img} src={`${server}/${item?.img}`} alt="img" />
+              <button className={styles.allNews} onClick={() => navigate('/news')}>
+                <span>Все новости</span>
+                <img src={newsArrIcon} alt="img" />
+              </button>
             </div>
           </div>
         ))}
