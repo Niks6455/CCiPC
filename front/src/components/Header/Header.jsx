@@ -1,22 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import styles from "./Header.module.scss";
-import LogoHomePage from "./../../assets/img/logo.png";
-import TextLogo from "./../../assets/img/text.svg";
-import arrow from "./../../assets/img/arrow.svg";
-import footerLogo from "./../../assets/img/Headernumber.png";
-import ArrowMenu from "./../../assets/img/ArrowMenu.png";
-import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
+import styles from './Header.module.scss';
+import LogoHomePage from './../../assets/img/logo.png';
+import arrow from './../../assets/img/arrow.svg';
+import footerLogo from './../../assets/img/Headernumber.png';
+import ArrowMenu from './../../assets/img/ArrowMenu.png';
+import { useSelector } from 'react-redux';
 function Header() {
-  const autorisation =
-    useSelector((state) => state.user.status) === "succeeded";
+  const autorisation = useSelector(state => state.user.status) === 'succeeded';
 
-  console.log("autorisation", autorisation);
+  console.log('autorisation', autorisation);
   const navigate = useNavigate();
   return (
     <header>
       <div className={styles.HeaderContainer} id="top">
         <div className={styles.logo}>
-          <img src={LogoHomePage} alt="logo" onClick={() => navigate("/")} />
+          <img src={LogoHomePage} alt="logo" onClick={() => navigate('/')} />
         </div>
         <div className={styles.logoInner}>
           <img src={footerLogo} alt="logo" />
@@ -29,32 +27,30 @@ function Header() {
       <div className={styles.HeaderMenuContainer}>
         <div className={styles.HeaderMenu}>
           <ul>
-            <li onClick={() => navigate("/author")}>
-              Автору{" "}
+            <li onClick={() => navigate('/author')}>
+              Автору{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
-            <li onClick={() => navigate("/participants")}>
-              Участники{" "}
+            <li onClick={() => navigate('/participants')}>
+              Участники{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
-            <li onClick={() => navigate("/organizationcomite")}>
-              Оргкомитет{" "}
+            <li onClick={() => navigate('/organizationcomite')}>
+              Оргкомитет{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
             <li
               onClick={() =>
-                autorisation
-                  ? navigate("/account/profile")
-                  : navigate("/authorization")
+                autorisation ? navigate('/account/profile') : navigate('/authorization')
               }
             >
-              {autorisation ? "Личный кабинет" : "Вход/Регистрация"}
+              {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>

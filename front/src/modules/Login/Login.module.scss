@@ -75,7 +75,7 @@ $w3: 360px;
         height: 54px;
         font-size: 18px;
       }
-      div[name="error"] {
+      div[name='error'] {
         font-size: 14px;
       }
     }
@@ -86,7 +86,7 @@ $w3: 360px;
         font-size: 16px;
         margin: 10px 0;
       }
-      div[name="error"] {
+      div[name='error'] {
         font-size: 14px;
       }
     }
@@ -97,7 +97,7 @@ $w3: 360px;
         font-size: 14px;
         margin: 10px 0;
       }
-      div[name="error"] {
+      div[name='error'] {
         font-size: 14px;
       }
     }
@@ -160,14 +160,14 @@ $w3: 360px;
       }
       .lineOne {
         position: relative;
-        content: "";
+        content: '';
         height: 1px;
         background-color: var(--InputColors);
         width: 214px;
       }
       .lineTwo {
         position: relative;
-        content: "";
+        content: '';
         height: 1px;
         background-color: var(--InputColors);
         width: 214px;

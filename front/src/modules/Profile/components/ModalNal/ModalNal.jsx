@@ -1,6 +1,6 @@
-import styles from "./ModalNal.module.scss";
-import greenGalkaIcon from "@assets/img/UI/circleGalka.svg";
-import { AnimatePresence, motion } from "framer-motion";
+import styles from './ModalNal.module.scss';
+import greenGalkaIcon from '@assets/img/UI/circleGalka.svg';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function ModalNal(props) {
   return (
@@ -17,25 +17,23 @@ function ModalNal(props) {
               className={styles.container}
               initial={{
                 opacity: 0,
-                transform: " scale(0)",
+                transform: ' scale(0)',
               }}
               animate={{
                 opacity: 1,
-                transform: " scale(1)",
+                transform: ' scale(1)',
               }}
               exit={{
                 opacity: 0,
-                transform: "scale(0)",
+                transform: 'scale(0)',
               }}
             >
               <h2>
-                Вы успешно выбрали способ оплаты оргвзноса наличными. Оплата
-                будет происходить во время регистрации на площадке конференции
+                Вы успешно выбрали способ оплаты оргвзноса наличными. Оплата будет происходить во
+                время регистрации на площадке конференции
               </h2>
               <img src={greenGalkaIcon} alt="✅" />
-              <button onClick={() => props.setOpenModal(false)}>
-                Перейти в профиль
-              </button>
+              <button onClick={() => props.setOpenModal(false)}>Перейти в профиль</button>
             </motion.div>
           </motion.div>
         )}

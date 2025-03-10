@@ -1,16 +1,11 @@
-import styles from "./HeadBlock.module.scss";
-import exportIcon from "@assets/img/AdminPanel/export.svg";
-import lupa from "@assets/img/UI/lupa.svg";
-import { apiExportArchiveState } from "../../../../apirequests/apirequests";
-import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import styles from './HeadBlock.module.scss';
+import exportIcon from '@assets/img/AdminPanel/export.svg';
+import lupa from '@assets/img/UI/lupa.svg';
+import { apiExportArchiveState } from '../../../../apirequests/apirequests';
+import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
-function HeadBlock({
-  conferenceid,
-  shearchParam,
-  setShearchParam,
-  funSaveTableData,
-}) {
+function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableData }) {
   const [loadingArhive, setLoadingArchive] = useState(false);
   const [loadingDoc, setLoadingDoc] = useState(false);
   const funExportArchive = async () => {
@@ -18,9 +13,9 @@ function HeadBlock({
     setLoadingArchive(true);
     try {
       const response = await apiExportArchiveState(conferenceid);
-      const blob = new Blob([response.data], { type: "application/zip" });
+      const blob = new Blob([response.data], { type: 'application/zip' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
       a.download = `archive_${conferenceid}.zip`;
       document.body.appendChild(a);
@@ -29,7 +24,7 @@ function HeadBlock({
       document.body.removeChild(a);
       setLoadingArchive(false);
     } catch (error) {
-      console.error("Ошибка при скачивании архива:", error);
+      console.error('Ошибка при скачивании архива:', error);
       setLoadingArchive(false);
     }
   };
@@ -39,7 +34,7 @@ function HeadBlock({
         <img src={lupa} alt="🔍" />
         <input
           value={shearchParam}
-          onChange={(e) => setShearchParam(e.target.value)}
+          onChange={e => setShearchParam(e.target.value)}
           type="text"
           placeholder="Поиск"
         />
@@ -58,7 +53,7 @@ function HeadBlock({
                 animate={{ rotate: 360, opacity: 1 }}
                 transition={{
                   opacity: { duration: 1 }, // Плавное появление за 1 секунду
-                  rotate: { repeat: Infinity, duration: 1, ease: "linear" }, // Бесконечное вращение
+                  rotate: { repeat: Infinity, duration: 1, ease: 'linear' }, // Бесконечное вращение
                 }}
               />
             ) : (
@@ -73,10 +68,7 @@ function HeadBlock({
           </AnimatePresence>
           <span>Экспорт архива статей</span>
         </button>
-        <button
-          className={styles.export_doklad}
-          onClick={() => setLoadingDoc(!loadingDoc)}
-        >
+        <button className={styles.export_doklad} onClick={() => setLoadingDoc(!loadingDoc)}>
           <AnimatePresence>
             {loadingDoc ? (
               <motion.div
@@ -86,7 +78,7 @@ function HeadBlock({
                 animate={{ rotate: 360, opacity: 1 }}
                 transition={{
                   opacity: { duration: 1 }, // Плавное появление за 1 секунду
-                  rotate: { repeat: Infinity, duration: 1, ease: "linear" }, // Бесконечное вращение
+                  rotate: { repeat: Infinity, duration: 1, ease: 'linear' }, // Бесконечное вращение
                 }}
               />
             ) : (

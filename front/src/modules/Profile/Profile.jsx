@@ -1,22 +1,22 @@
-import styles from "./Profile.module.scss";
-import ProfilePictureBackground from "./../../assets/img/ProfilePictureBackground.svg";
-import noPhotoLk from "./../../assets/img/noPhotoLk.svg";
-import editPhotoLk from "./../../assets/img/EditPhotoLk.png";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fioToString } from "../../utils/functions/funcions";
-import { fetchUserData } from "../../store/userSlice/user.Slice";
-import { server } from "../../apirequests/apirequests";
-import { useNavigate } from "react-router-dom";
-import ModalNal from "./components/ModalNal/ModalNal";
-import ModalPhoto from "./components/ModalPhoto/ModalPhoto";
-import Orgwznos from "./components/Orgwznos/Orgwznos";
-import ModalBeznal from "./components/ModalBeznal/ModalBeznal";
+import styles from './Profile.module.scss';
+import ProfilePictureBackground from './../../assets/img/ProfilePictureBackground.svg';
+import noPhotoLk from './../../assets/img/noPhotoLk.svg';
+import editPhotoLk from './../../assets/img/EditPhotoLk.png';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fioToString } from '../../utils/functions/funcions';
+import { fetchUserData } from '../../store/userSlice/user.Slice';
+import { server } from '../../apirequests/apirequests';
+import { useNavigate } from 'react-router-dom';
+import ModalNal from './components/ModalNal/ModalNal';
+import ModalPhoto from './components/ModalPhoto/ModalPhoto';
+import Orgwznos from './components/Orgwznos/Orgwznos';
+import ModalBeznal from './components/ModalBeznal/ModalBeznal';
 
 function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const user = useSelector((state) => state.user.user.data);
+  const user = useSelector(state => state.user.user.data);
   const [showProfilePhoto, setShowProfilePhoto] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openModalBeznal, setOpenModalBeznal] = useState(false);
@@ -40,10 +40,7 @@ function Profile() {
     <section className={styles.Profile}>
       <ModalNal openModal={openModal} setOpenModal={setOpenModal} />
 
-      <ModalBeznal
-        openModalBeznal={openModalBeznal}
-        setOpenModalBeznal={setOpenModalBeznal}
-      />
+      <ModalBeznal openModalBeznal={openModalBeznal} setOpenModalBeznal={setOpenModalBeznal} />
       <ModalPhoto
         funOpenPhotoProfile={funOpenPhotoProfile}
         showProfilePhoto={showProfilePhoto}
@@ -58,13 +55,13 @@ function Profile() {
             className={styles.noPhotoLk}
             onClick={funOpenPhotoProfile}
             alt="img"
-            onError={(e) => (e.target.src = noPhotoLk)}
+            onError={e => (e.target.src = noPhotoLk)}
           />
         </div>
 
         <img
           src={editPhotoLk}
-          onClick={() => navigate("/account/settings/profile")}
+          onClick={() => navigate('/account/settings/profile')}
           className={styles.editPhotoLk}
         />
       </div>
@@ -72,10 +69,10 @@ function Profile() {
         <div className={styles.mainSectionInfoPeople}>
           <p>{fioToString(user?.name, user?.surname, user?.patronymic)}</p>
           <p>
-            <span>Ученое звание:</span> {user?.academicTitle || "Отсутствует"}
+            <span>Ученое звание:</span> {user?.academicTitle || 'Отсутствует'}
           </p>
           <p>
-            <span>Степень:</span> {user?.degree || "Отсутствует"}
+            <span>Степень:</span> {user?.degree || 'Отсутствует'}
           </p>
         </div>
       </div>
@@ -83,16 +80,16 @@ function Profile() {
         <div className={styles.containerMoreInfoOne}>
           <div className={styles.info_block}>
             <p>
-              <span>Организация:</span> {user?.organization || "Отсутствует"}
+              <span>Организация:</span> {user?.organization || 'Отсутствует'}
             </p>
             <p>
-              <span>Должность:</span> {user?.position || "Отсутствует"}
+              <span>Должность:</span> {user?.position || 'Отсутствует'}
             </p>
             <p>
-              <span>Email:</span> {user?.email || "Отсутствует"}
+              <span>Email:</span> {user?.email || 'Отсутствует'}
             </p>
             <p>
-              <span>Телефон:</span> {user?.phone || "Отсутствует"}
+              <span>Телефон:</span> {user?.phone || 'Отсутствует'}
             </p>
           </div>
           <Orgwznos user={user} funNal={funNal} funBeznal={funBeznal} />
@@ -102,7 +99,7 @@ function Profile() {
             user?.reports?.map((el, index) => (
               <div key={index} className={styles.containerMoreInfoSecondText}>
                 <p>Название доклада №{index + 1}:</p>
-                <p>{el.name || "Отсутствует"}</p>
+                <p>{el.name || 'Отсутствует'}</p>
               </div>
             ))
           ) : (

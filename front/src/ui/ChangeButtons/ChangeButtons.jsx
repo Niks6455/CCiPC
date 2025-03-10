@@ -25,9 +25,7 @@ export default function ChangeButtons({ buttonArray, setIndex }) {
 function Button({ isActive, Icon, setActive, text }) {
   return (
     <div
-      className={`${styles.button} ${
-        isActive ? styles.button_active : styles.button_passive
-      }`}
+      className={`${styles.button} ${isActive ? styles.button_active : styles.button_passive}`}
       onClick={() => setActive()}
     >
       <span className={`${styles.button_text}`}>{text}</span>

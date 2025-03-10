@@ -1,11 +1,11 @@
-import { useEffect, useRef, useState } from "react";
-import styles from "./StagesConference.module.scss";
-import { ReactComponent as CalendarIcon } from "@assets/img/UI/calendar.svg";
-import { ReactComponent as Delete } from "@assets/img/UI/x.svg";
-import { ReactComponent as Plus } from "@assets/img/UI/plus.svg";
-import { Calendar } from "primereact/calendar";
-import "primereact/resources/themes/saga-blue/theme.css";
-import "./../style.css";
+import { useEffect, useRef, useState } from 'react';
+import styles from './StagesConference.module.scss';
+import { ReactComponent as CalendarIcon } from '@assets/img/UI/calendar.svg';
+import { ReactComponent as Delete } from '@assets/img/UI/x.svg';
+import { ReactComponent as Plus } from '@assets/img/UI/plus.svg';
+import { Calendar } from 'primereact/calendar';
+import 'primereact/resources/themes/saga-blue/theme.css';
+import './../style.css';
 
 function StagesConference({ data, setData }) {
   const [editItemIndex, setEditItemIndex] = useState(null);
@@ -14,17 +14,17 @@ function StagesConference({ data, setData }) {
 
   //! добавить пустой этап
   const funAddStage = () => {
-    const stage = [...data?.stages, { date: "", name: "" }];
+    const stage = [...data?.stages, { date: '', name: '' }];
     setData({ ...data, stages: stage });
   };
 
   //! удалить этап по индексу
-  const funDeleteStage = (index) => {
+  const funDeleteStage = index => {
     const stage = [...data?.stages];
-    console.log("stage", stage);
+    console.log('stage', stage);
     if (data.deadlineUploadingReports === stage[index]?.date) {
       stage.splice(index, 1);
-      setData({ ...data, deadlineUploadingReports: "", stages: stage });
+      setData({ ...data, deadlineUploadingReports: '', stages: stage });
     } else {
       stage.splice(index, 1);
       setData({ ...data, stages: stage });
@@ -32,7 +32,7 @@ function StagesConference({ data, setData }) {
   };
 
   //! открытие календаря
-  const funClickCalendar = (index) => {
+  const funClickCalendar = index => {
     if (index === editItemIndex) {
       setEditItemIndex(null);
     } else {
@@ -43,7 +43,7 @@ function StagesConference({ data, setData }) {
   //! изменение даты в этапе конференции
   const funSetData = (index, e) => {
     const stage = [...data?.stages];
-    const date = new Date(e.target.value).toLocaleDateString("ru-RU");
+    const date = new Date(e.target.value).toLocaleDateString('ru-RU');
     stage[index].date = date;
     setData({ ...data, stages: stage });
     setEditItemIndex(null);
@@ -58,14 +58,14 @@ function StagesConference({ data, setData }) {
 
   //! закрытие календаря приклике вне него
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setEditItemIndex(null);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -87,10 +87,7 @@ function StagesConference({ data, setData }) {
               })
           )?.map((item, index) => (
             <li key={index}>
-              <div
-                className={styles.left_block}
-                ref={index === editItemIndex ? calendarRef : null}
-              >
+              <div className={styles.left_block} ref={index === editItemIndex ? calendarRef : null}>
                 <div className={styles.calendar}>
                   <button
                     className={styles.button_calendar}
@@ -105,37 +102,34 @@ function StagesConference({ data, setData }) {
                           locale="ru"
                           inline
                           showWeek
-                          onChange={(e) => funSetData(index, e)}
+                          onChange={e => funSetData(index, e)}
                         />
                       </div>
                     </div>
                   )}
                 </div>
 
-                <div
-                  className={styles.date}
-                  onClick={() => funClickCalendar(index)}
-                >
-                  <span className={`${item.date ? "" : styles.edit}`}>
-                    {item.date || "дд.мм.гггг"}
+                <div className={styles.date} onClick={() => funClickCalendar(index)}>
+                  <span className={`${item.date ? '' : styles.edit}`}>
+                    {item.date || 'дд.мм.гггг'}
                   </span>
                 </div>
                 <div className={styles.point}></div>
                 <div className={styles.info}>
                   <input
-                    onFocus={(e) => {
+                    onFocus={e => {
                       setIsEditing(true);
-                      e.target.placeholder = "";
+                      e.target.placeholder = '';
                     }} // Устанавливаем режим редактирования
-                    onBlur={(e) => {
+                    onBlur={e => {
                       setIsEditing(false);
-                      e.target.placeholder = "Название этапа";
+                      e.target.placeholder = 'Название этапа';
                     }} // Выключаем режим редактирования
                     type="text"
                     placeholder="Название этапа"
-                    className={`${item.name ? "" : styles.edit}`}
+                    className={`${item.name ? '' : styles.edit}`}
                     value={item.name}
-                    onChange={(e) => funSetStagesName(index, e)}
+                    onChange={e => funSetStagesName(index, e)}
                   />
                 </div>
               </div>

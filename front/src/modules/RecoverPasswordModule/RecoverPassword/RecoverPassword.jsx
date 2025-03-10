@@ -1,25 +1,18 @@
-import { useContext, useRef, useState, useEffect } from "react";
-import styles from "./RecoverPassword.module.scss";
-import DataContext from "../../../context";
-import logo from "@assets/img/logo.png";
-import confirm from "@assets/img/confirm.svg";
-import Footer from "../../../components/Footer/Footer";
-import errorLogo from "@assets/img/UI/error.svg";
-import glaz from "@assets/img/UI/glaz.svg";
-import noglaz from "@assets/img/UI/noglaz.svg";
-import InputPassword from "../../../ui/InputPassword/InputPassword";
-import listErrorNoHover from "@assets/img/UI/listErrorNoActive.svg";
-import listErrorOnHover from "@assets/img/UI/listError.svg";
-import {
-  funCapitalLetter,
-  funDigit,
-  funEightSymbols,
-} from "@utils/functions/PasswordValidation";
-import { useNavigate, useOutletContext } from "react-router-dom";
-import {
-  apiPasswordRecovery,
-  CheckEmail,
-} from "../../../apirequests/apirequests";
+import { useContext, useRef, useState, useEffect } from 'react';
+import styles from './RecoverPassword.module.scss';
+import DataContext from '../../../context';
+import logo from '@assets/img/logo.png';
+import confirm from '@assets/img/confirm.svg';
+import Footer from '../../../components/Footer/Footer';
+import errorLogo from '@assets/img/UI/error.svg';
+import glaz from '@assets/img/UI/glaz.svg';
+import noglaz from '@assets/img/UI/noglaz.svg';
+import InputPassword from '../../../ui/InputPassword/InputPassword';
+import listErrorNoHover from '@assets/img/UI/listErrorNoActive.svg';
+import listErrorOnHover from '@assets/img/UI/listError.svg';
+import { funCapitalLetter, funDigit, funEightSymbols } from '@utils/functions/PasswordValidation';
+import { useNavigate, useOutletContext } from 'react-router-dom';
+import { apiPasswordRecovery, CheckEmail } from '../../../apirequests/apirequests';
 
 function RecoverPassword() {
   //! востановление по почте true по телефону false
@@ -27,54 +20,47 @@ function RecoverPassword() {
   const { email, setEmail } = useOutletContext();
 
   const context = useContext(DataContext);
-  const [code, setCode] = useState(["", "", "", "", "", ""]); // Для кода
+  const [code, setCode] = useState(['', '', '', '', '', '']); // Для кода
   const [codStatus, setCodStatus] = useState(true); // статус ошибки (код неверный)
   const [codeConfirmed, setCodeConfirmed] = useState(false);
-  const [errors, setErrors] = useState([
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-  ]); // Для ошибок
+  const [errors, setErrors] = useState([false, false, false, false, false, false]); // Для ошибок
   const [timer, setTimer] = useState(5); // Таймер в секундах
   const [isButtonActive, setIsButtonActive] = useState(false); // Состояние кнопки
   const inputsRef = useRef([]);
 
   const [inputTypes, setInputTypes] = useState({
-    newpassword: "password",
-    rewnewpassword: "password",
+    newpassword: 'password',
+    rewnewpassword: 'password',
   });
 
   const [formData, setFormData] = useState({
-    newpassword: "",
-    rewnewpassword: "",
+    newpassword: '',
+    rewnewpassword: '',
   });
 
   const [errorsPassword, setErrorsPassword] = useState({
-    newpassword: "",
-    rewnewpassword: "",
+    newpassword: '',
+    rewnewpassword: '',
   });
 
   const navigate = useNavigate();
 
   const [errorListPassword, setErrorListPassword] = useState([
     {
-      id: "0",
-      text: "Не менее 8 символов",
+      id: '0',
+      text: 'Не менее 8 символов',
       done: false,
       functionCheck: funEightSymbols,
     },
     {
-      id: "1",
-      text: "Не менее 1 заглавной буквы",
+      id: '1',
+      text: 'Не менее 1 заглавной буквы',
       done: false,
       functionCheck: funCapitalLetter,
     },
     {
-      id: "2",
-      text: "Не менее 1 цифры",
+      id: '2',
+      text: 'Не менее 1 цифры',
       done: false,
       functionCheck: funDigit,
     },
@@ -85,7 +71,7 @@ function RecoverPassword() {
     let interval;
     if (timer > 0) {
       interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
+        setTimer(prev => prev - 1);
       }, 1000);
     } else {
       setIsButtonActive(true); // Делаем кнопку активной
@@ -95,7 +81,7 @@ function RecoverPassword() {
 
   const handleResendCode = () => {
     if (!isButtonActive) return;
-    console.log("Код повторно отправлен");
+    console.log('Код повторно отправлен');
     setTimer(60); // Сбрасываем таймер
     setIsButtonActive(false); // Делаем кнопку неактивной
   };
@@ -114,27 +100,27 @@ function RecoverPassword() {
   };
 
   const handleKeyDown = (index, e) => {
-    if (e.key === "Backspace" && !code[index] && index > 0) {
+    if (e.key === 'Backspace' && !code[index] && index > 0) {
       inputsRef.current[index - 1].focus();
     }
   };
 
   const handleSubmit = () => {
-    const newErrors = code.map((digit) => digit === "");
+    const newErrors = code.map(digit => digit === '');
     setErrors(newErrors);
-    if (newErrors.some((error) => error)) {
-      console.log("Некоторые поля пустые");
+    if (newErrors.some(error => error)) {
+      console.log('Некоторые поля пустые');
       return;
     }
-    const fullCode = code.join("");
-    console.log("Код отправлен на сервер:", fullCode);
+    const fullCode = code.join('');
+    console.log('Код отправлен на сервер:', fullCode);
     //! если код не совпал на сервере
     const data = {
       email: email,
       code: fullCode,
       type: 1,
     };
-    CheckEmail(data).then((res) => {
+    CheckEmail(data).then(res => {
       if (res?.status === 200) {
         setCodStatus(true);
         setCodeConfirmed(true);
@@ -153,21 +139,21 @@ function RecoverPassword() {
     let isValid = true;
     const newErrors = {};
     // Проверка обязательных полей
-    ["newpassword", "rewnewpassword"].forEach((field) => {
+    ['newpassword', 'rewnewpassword'].forEach(field => {
       if (!formData[field]) {
-        newErrors[field] = "Поле обязательно для заполнения";
+        newErrors[field] = 'Поле обязательно для заполнения';
         isValid = false;
       }
     });
 
     // Проверка совпадения паролей
     if (formData.newpassword !== formData.rewnewpassword) {
-      newErrors.newpassword = "Пароли не совпадают";
+      newErrors.newpassword = 'Пароли не совпадают';
       isValid = false;
     }
 
-    if (errorListPassword.find((el) => !el.done)) {
-      newErrors.newpassword = "Некорректный пароль";
+    if (errorListPassword.find(el => !el.done)) {
+      newErrors.newpassword = 'Некорректный пароль';
       isValid = false;
     }
 
@@ -177,37 +163,37 @@ function RecoverPassword() {
 
   const handleSubmitPassword = () => {
     if (validate()) {
-      const fullCode = code.join("");
+      const fullCode = code.join('');
       const data = {
         code: fullCode,
         email: email,
         newPassword: formData.newpassword,
         repeatPassword: formData.rewnewpassword,
       };
-      apiPasswordRecovery(data).then((res) => {
+      apiPasswordRecovery(data).then(res => {
         if (res?.status === 200) {
-          console.log("Форма отправлена", formData);
-          navigate("/authorization");
+          console.log('Форма отправлена', formData);
+          navigate('/authorization');
         }
       });
     } else {
-      console.log("Валидация не прошла");
+      console.log('Валидация не прошла');
     }
   };
 
-  const clickRigthImg = (name) => {
-    if (inputTypes[name] === "password") {
-      setInputTypes({ ...inputTypes, [name]: "text" });
+  const clickRigthImg = name => {
+    if (inputTypes[name] === 'password') {
+      setInputTypes({ ...inputTypes, [name]: 'text' });
     } else {
-      setInputTypes({ ...inputTypes, [name]: "password" });
+      setInputTypes({ ...inputTypes, [name]: 'password' });
     }
   };
 
-  const handleChangePassword = (e) => {
+  const handleChangePassword = e => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
     // Очистка ошибки при изменении значения
-    setErrors({ ...errors, [name]: "" });
+    setErrors({ ...errors, [name]: '' });
   };
 
   return (
@@ -227,19 +213,16 @@ function RecoverPassword() {
               </div>
               {isRecoverType ? (
                 <p className={styles.ConfirmLoginGalcaText}>
-                  На адрес вашей электронной почты{" "}
-                  <span className={styles.mail}>
-                    {context?.mailValue || email}
-                  </span>{" "}
-                  отправлено письмо с проверочным кодом. Введите полученный код
-                  в поле ниже и нажмите “Продолжить”.
+                  На адрес вашей электронной почты{' '}
+                  <span className={styles.mail}>{context?.mailValue || email}</span> отправлено
+                  письмо с проверочным кодом. Введите полученный код в поле ниже и нажмите
+                  “Продолжить”.
                 </p>
               ) : (
                 <p className={styles.ConfirmLoginGalcaText}>
-                  На номер вашего телефона{" "}
-                  <span className={styles.mail}>+{context?.numberValue}</span>{" "}
-                  отправлено сообщение с проверочным кодом. Введите полученный
-                  код в поле ниже и нажмите “Продолжить”.
+                  На номер вашего телефона{' '}
+                  <span className={styles.mail}>+{context?.numberValue}</span> отправлено сообщение
+                  с проверочным кодом. Введите полученный код в поле ниже и нажмите “Продолжить”.
                 </p>
               )}
             </div>
@@ -262,10 +245,10 @@ function RecoverPassword() {
                   type="text"
                   value={digit}
                   maxLength={1}
-                  onChange={(e) => handleChange(index, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(index, e)}
-                  ref={(el) => (inputsRef.current[index] = el)}
-                  className={errors[index] ? styles.error : ""}
+                  onChange={e => handleChange(index, e.target.value)}
+                  onKeyDown={e => handleKeyDown(index, e)}
+                  ref={el => (inputsRef.current[index] = el)}
+                  className={errors[index] ? styles.error : ''}
                 />
               ))}
             </div>
@@ -275,16 +258,14 @@ function RecoverPassword() {
               <button
                 onClick={handleResendCode}
                 style={{
-                  color: isButtonActive ? "#006D49" : "#858B89",
-                  cursor: isButtonActive ? "pointer" : "not-allowed",
+                  color: isButtonActive ? '#006D49' : '#858B89',
+                  cursor: isButtonActive ? 'pointer' : 'not-allowed',
                 }}
                 disabled={!isButtonActive}
               >
                 Повторно выслать код
               </button>
-              <p className={styles.CodeTimer}>
-                {timer > 0 ? `0:${timer}` : ""}
-              </p>
+              <p className={styles.CodeTimer}>{timer > 0 ? `0:${timer}` : ''}</p>
             </div>
           </div>
           <div className={styles.submitButton}>
@@ -312,7 +293,7 @@ function RecoverPassword() {
           <div className={styles.InputContainer}>
             <div className={styles.InputBox}>
               <InputPassword
-                name={"newpassword"}
+                name={'newpassword'}
                 onChange={handleChangePassword}
                 value={formData.newpassword}
                 placeholder="Придумайте пароль"
@@ -324,14 +305,14 @@ function RecoverPassword() {
                 type={inputTypes.newpassword}
                 rigthImg={glaz}
                 rigthImgActive={noglaz}
-                rigthImgActiveAction={inputTypes.newpassword === "text"}
-                rigthImgClick={() => clickRigthImg("newpassword")}
-                autoComplete={"off"}
+                rigthImgActiveAction={inputTypes.newpassword === 'text'}
+                rigthImgClick={() => clickRigthImg('newpassword')}
+                autoComplete={'off'}
               />
             </div>
             <div className={styles.InputBox}>
               <InputPassword
-                name={"rewnewpassword"}
+                name={'rewnewpassword'}
                 onChange={handleChangePassword}
                 value={formData.rewnewpassword}
                 placeholder="Повторите пароль"
@@ -343,9 +324,9 @@ function RecoverPassword() {
                 type={inputTypes.rewnewpassword}
                 rigthImg={glaz}
                 rigthImgActive={noglaz}
-                rigthImgActiveAction={inputTypes.rewnewpassword === "text"}
-                rigthImgClick={() => clickRigthImg("rewnewpassword")}
-                autoComplete={"off"}
+                rigthImgActiveAction={inputTypes.rewnewpassword === 'text'}
+                rigthImgClick={() => clickRigthImg('rewnewpassword')}
+                autoComplete={'off'}
               />
             </div>
           </div>

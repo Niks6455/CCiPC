@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const BasicSlice = createSlice({
-  name: "BasicSlice",
+  name: 'BasicSlice',
   initialState: {
-    BasicSlice : 1,
+    BasicSlice: 1,
   },
 
   reducers: {
@@ -12,8 +12,6 @@ const BasicSlice = createSlice({
       const { number } = action.payload;
       state.BasicSlice = number;
     },
-
-   
   },
 });
 

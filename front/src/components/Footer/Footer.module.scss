@@ -6,7 +6,7 @@ $w3: 650px;
 $w4: 480px;
 
 .footer {
-  height: 256px;
+  height: var(--heightFooterPc);
   background-color: var(--GreenColorDefault);
   display: flex;
   align-items: center;
@@ -19,9 +19,11 @@ $w4: 480px;
   @media (max-width: $w2) {
     padding: 30px 0px;
     margin: 0 auto;
+    height: var(--heightFooterPlan);
   }
   @media (max-width: $w4) {
     padding: 40px 25px;
+    height: var(--heightFooterPhone);
   }
   .footerContainer {
     display: flex;

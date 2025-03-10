@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import styles from "./Input.module.scss";
-import galka from "./../../assets/img/UI/galka.svg";
-import krest from "./../../assets/img/UI/krest.svg";
+import { useEffect, useState } from 'react';
+import styles from './Input.module.scss';
+import galka from './../../assets/img/UI/galka.svg';
+import krest from './../../assets/img/UI/krest.svg';
 
 function Input(props) {
   const [errorListShow, setErrorListShow] = useState(false);
@@ -14,17 +14,15 @@ function Input(props) {
   };
 
   //! функция проверки по множеству ошибок
-  const selectErrors = (e) => {
+  const selectErrors = e => {
     if (props.errorList) {
       const value = e.target.value;
-      const updatedLists = props.errorList?.map((fun) =>
-        fun.functionCheck(value)
-      ); // Получаем массив обновленных списков
-      console.log("updatedLists", updatedLists);
-      const combinedList = [...props.errorList].map((el) => {
+      const updatedLists = props.errorList?.map(fun => fun.functionCheck(value)); // Получаем массив обновленных списков
+      console.log('updatedLists', updatedLists);
+      const combinedList = [...props.errorList].map(el => {
         return {
           ...el,
-          done: updatedLists.find((item) => item.id === el.id)?.done,
+          done: updatedLists.find(item => item.id === el.id)?.done,
         };
       });
       props.setErrorList(combinedList); // Обновляем состояние с новым объединенным списком
@@ -32,24 +30,20 @@ function Input(props) {
   };
 
   useEffect(() => {
-    console.log("props.errorList", props.errorList);
+    console.log('props.errorList', props.errorList);
   }, [props.errorList]);
 
   const getListErrorContainer = () => {
     return (
       <div
         className={`${styles.errorsListContainer} ${
-          props.labelText ? styles.erroListLabelContainer : ""
+          props.labelText ? styles.erroListLabelContainer : ''
         }`}
       >
         <ul>
-          {props.errorList?.map((el) => (
+          {props.errorList?.map(el => (
             <li key={el.id}>
-              {el.done ? (
-                <img src={galka} alt="✔️" />
-              ) : (
-                <img src={krest} alt="❌" />
-              )}
+              {el.done ? <img src={galka} alt="✔️" /> : <img src={krest} alt="❌" />}
 
               {el.text}
             </li>
@@ -70,11 +64,7 @@ function Input(props) {
           onMouseEnter={funOpenListErrors}
           onMouseLeave={funClouseListErrors}
           className={styles.errorListImg}
-          src={
-            errorListShow
-              ? props?.errorListImgHover
-              : props?.errorListImgNoHover
-          }
+          src={errorListShow ? props?.errorListImgHover : props?.errorListImgNoHover}
           alt="!"
         />
       )}
@@ -89,11 +79,7 @@ function Input(props) {
               onMouseEnter={funOpenListErrors}
               onMouseLeave={funClouseListErrors}
               className={styles.errorListLabel}
-              src={
-                errorListShow
-                  ? props?.errorListImgHover
-                  : props?.errorListImgNoHover
-              }
+              src={errorListShow ? props?.errorListImgHover : props?.errorListImgNoHover}
               alt="!"
             />
           )}
@@ -104,32 +90,26 @@ function Input(props) {
         <img
           onClick={props.rigthImgClick ? props.rigthImgClick : () => {}}
           className={styles.rigthImg}
-          src={
-            props.rigthImgActiveAction ? props.rigthImgActive : props.rigthImg
-          }
+          src={props.rigthImgActiveAction ? props.rigthImgActive : props.rigthImg}
           alt="показать пароль"
         />
       )}
       <input
         name={props?.name}
-        onChange={(e) => {
+        onChange={e => {
           props?.onChange(e);
           selectErrors(e);
         }}
         disabled={props?.disabled}
         value={props?.value}
         placeholder={props?.placeholder}
-        className={props?.error ? styles.errorInput : ""}
-        type={props.type || "text"}
+        className={props?.error ? styles.errorInput : ''}
+        type={props.type || 'text'}
         style={{
           paddingLeft:
-            props?.imgSrc && !props?.value && "55px"
-              ? !props?.value
-                ? "55px"
-                : ""
-              : "25px",
+            props?.imgSrc && !props?.value && '55px' ? (!props?.value ? '55px' : '') : '25px',
         }}
-        autoComplete={props.autoComplete ? props.autoComplete : "on"}
+        autoComplete={props.autoComplete ? props.autoComplete : 'on'}
       />
       {props?.value && !props?.error && (
         <div className={styles.placeholderClose}>{props?.placeholder}</div>

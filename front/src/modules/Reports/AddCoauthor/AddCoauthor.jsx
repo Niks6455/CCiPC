@@ -1,65 +1,59 @@
-import styles from "./AddCoauthor.module.scss";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import leftArrow from "./../../../assets/img/UI/leftArrow.svg";
-import plus from "./../../../assets/img/UI/plus.svg";
-import errorList from "./../../../assets/img/UI/errorZnak.svg";
+import styles from './AddCoauthor.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import leftArrow from './../../../assets/img/UI/leftArrow.svg';
+import plus from './../../../assets/img/UI/plus.svg';
+import errorList from './../../../assets/img/UI/errorZnak.svg';
 import {
   addSoauthors,
   deleteCoauthor,
   funSaveDataState,
   setCoauthorAutocompletion,
   setValueCoauthors,
-} from "../../../store/reportCreateSlice/reportCreateSlice";
-import InputLabel from "../../../ui/InputLabel/InputLabel";
-import trash from "./../../../assets/img/UI/trash.svg";
-import InputListForma from "../../../components/InputListForma/InputListForma";
-import { formParticipationList } from "../../../utils/Lists/List";
+} from '../../../store/reportCreateSlice/reportCreateSlice';
+import InputLabel from '../../../ui/InputLabel/InputLabel';
+import trash from './../../../assets/img/UI/trash.svg';
+import InputListForma from '../../../components/InputListForma/InputListForma';
+import { formParticipationList } from '../../../utils/Lists/List';
 import {
   capitalizeFirstLetter,
   formatPhoneNumber,
   validateEmail,
-} from "../../../utils/functions/Validations";
-import { inpustType, inpustTypeEmail } from "./data";
-import SameEmail from "../../../components/AddReportModal/SameEmail/SameEmail";
-import SuccessModal from "../../../components/AddReportModal/SuccessModal/SuccessModal";
-import NotFullyFilled from "../../../components/AddReportModal/NotFullyFilled/NotFullyFilled";
-import NotFullyFilledCoauthors from "../../../components/AddReportModal/NotFullyFilledCoauthors/NotFullyFilledCoauthors";
-import {
-  apiCreateReport,
-  apiEditReport,
-  uploadPhoto,
-} from "../../../apirequests/apirequests";
-import { fetchUserData } from "../../../store/userSlice/user.Slice";
-import { fetchReports } from "../../../store/reportsSlice/reportsSlice";
+} from '../../../utils/functions/Validations';
+import { inpustType, inpustTypeEmail } from './data';
+import SameEmail from '../../../components/AddReportModal/SameEmail/SameEmail';
+import SuccessModal from '../../../components/AddReportModal/SuccessModal/SuccessModal';
+import NotFullyFilled from '../../../components/AddReportModal/NotFullyFilled/NotFullyFilled';
+import NotFullyFilledCoauthors from '../../../components/AddReportModal/NotFullyFilledCoauthors/NotFullyFilledCoauthors';
+import { apiCreateReport, apiEditReport, uploadPhoto } from '../../../apirequests/apirequests';
+import { fetchUserData } from '../../../store/userSlice/user.Slice';
+import { fetchReports } from '../../../store/reportsSlice/reportsSlice';
 
 function AddCoauthor({ edit, number }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const report = useSelector((state) => state.reportCreateSlice);
+  const report = useSelector(state => state.reportCreateSlice);
 
-  const funDeleteCoauthor = (index) => {
+  const funDeleteCoauthor = index => {
     dispatch(deleteCoauthor({ index }));
   };
 
-  const funNoEmail = (index) => {
-    dispatch(setCoauthorAutocompletion({ index, autocompletion: "true" }));
+  const funNoEmail = index => {
+    dispatch(setCoauthorAutocompletion({ index, autocompletion: 'true' }));
   };
 
   const funChangeInput = (index, key, value) => {
-    if (key === "email") {
+    if (key === 'email') {
       if (validateEmail(value) && value) {
-        dispatch(
-          setCoauthorAutocompletion({ index, autocompletion: "noemail" })
-        );
+        dispatch(setCoauthorAutocompletion({ index, autocompletion: 'noemail' }));
       }
       if (!validateEmail(value)) {
-        dispatch(setCoauthorAutocompletion({ index, autocompletion: "" }));
+        dispatch(setCoauthorAutocompletion({ index, autocompletion: '' }));
       }
     }
     let newValue = value;
-    const item = inpustType.find((el) => el.key === key);
-    if (key === "phone") {
+    const item = inpustType.find(el => el.key === key);
+    if (key === 'phone') {
       newValue = formatPhoneNumber(value);
     }
     //! делаем букву заглавной
@@ -83,61 +77,59 @@ function AddCoauthor({ edit, number }) {
 
   //! сохранение данных
   const funSaveData = () => {
-    console.log("report", report);
+    console.log('report', report);
     if (edit) {
       //! редактирование доклада
       const temp = {
-        coAuthors: report.data?.soauthors?.map((soauthor) => ({
-          name: soauthor?.data?.name || "",
-          surname: soauthor?.data?.surname || "",
-          patronymic: soauthor?.data?.patronymic || "",
-          email: soauthor?.data?.email || "",
+        coAuthors: report.data?.soauthors?.map(soauthor => ({
+          name: soauthor?.data?.name || '',
+          surname: soauthor?.data?.surname || '',
+          patronymic: soauthor?.data?.patronymic || '',
+          email: soauthor?.data?.email || '',
         })),
-        comment: report.data.comments || "",
-        conclusion: report.data.fileExpertOpinion || "",
-        direction: report.data.directionConference || "",
-        form: report.data.formParticipation || "",
-        status: report.data.participationStatus || "",
-        name: report.data.name || "",
-        reportFile: report.data.fileArticle || "",
-        organization: report.data.organization || "",
+        comment: report.data.comments || '',
+        conclusion: report.data.fileExpertOpinion || '',
+        direction: report.data.directionConference || '',
+        form: report.data.formParticipation || '',
+        status: report.data.participationStatus || '',
+        name: report.data.name || '',
+        reportFile: report.data.fileArticle || '',
+        organization: report.data.organization || '',
       };
-      apiEditReport(report.data.id, temp).then((res) => {
-        console.log("res", res);
+      apiEditReport(report.data.id, temp).then(res => {
+        console.log('res', res);
         if (res?.status === 200) {
           dispatch(fetchReports());
 
           const uploadPromises = [];
 
           // Если fileArticle — файл, добавляем загрузку в массив промисов
-          if (typeof report.data.fileArticle !== "string") {
+          if (typeof report.data.fileArticle !== 'string') {
             const formDataReport = new FormData();
-            formDataReport.append("file", report.data.fileArticle);
-            formDataReport.append("reportId", res?.data?.report?.id);
-            uploadPromises.push(uploadPhoto(formDataReport, "REPORT"));
+            formDataReport.append('file', report.data.fileArticle);
+            formDataReport.append('reportId', res?.data?.report?.id);
+            uploadPromises.push(uploadPhoto(formDataReport, 'REPORT'));
           }
 
           // Если fileExpertOpinion — файл, добавляем загрузку в массив промисов
-          if (typeof report.data.fileExpertOpinion !== "string") {
+          if (typeof report.data.fileExpertOpinion !== 'string') {
             const formDataConcl = new FormData();
-            formDataConcl.append("file", report.data.fileExpertOpinion);
-            formDataConcl.append("reportId", res?.data?.report?.id);
-            uploadPromises.push(uploadPhoto(formDataConcl, "CONCLUSION"));
+            formDataConcl.append('file', report.data.fileExpertOpinion);
+            formDataConcl.append('reportId', res?.data?.report?.id);
+            uploadPromises.push(uploadPhoto(formDataConcl, 'CONCLUSION'));
           }
 
           // Ждем выполнения всех загрузок
           Promise.all(uploadPromises)
-            .then((results) => {
+            .then(results => {
               // Проверяем, что все запросы успешны
-              if (results.every((res) => res?.status === 200)) {
+              if (results.every(res => res?.status === 200)) {
                 dispatch(fetchReports());
               }
             })
             .finally(() => {
               // Навигация после всех запросов (даже если что-то не загрузилось)
-              navigate(
-                `./../viewreports?idReport=${report.data.id}&number=${number}`
-              );
+              navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
             });
         }
       });
@@ -152,27 +144,27 @@ function AddCoauthor({ edit, number }) {
         direction: report.data.directionConference,
         comment: report.data.comments,
         organization: report.data.organization,
-        status: report.data.participationStatus || "",
-        coAuthors: report.data.soauthors.map((el) => ({
+        status: report.data.participationStatus || '',
+        coAuthors: report.data.soauthors.map(el => ({
           name: el.data.name,
           surname: el.data.surname,
           patronymic: el.data.patronymic,
           email: el.data.email,
         })),
       };
-      apiCreateReport(data).then((res) => {
-        console.log("res", res);
+      apiCreateReport(data).then(res => {
+        console.log('res', res);
         if (res?.status === 200) {
           // создаем формдату для файла
           const formDataReport = new FormData();
-          formDataReport.append("file", report.data.fileArticle);
-          formDataReport.append("reportId", res?.data?.report?.id);
+          formDataReport.append('file', report.data.fileArticle);
+          formDataReport.append('reportId', res?.data?.report?.id);
 
           const formDataConcl = new FormData();
-          formDataConcl.append("file", report.data.fileExpertOpinion);
-          formDataConcl.append("reportId", res?.data?.report?.id);
-          uploadPhoto(formDataReport, "REPORT"); // файл с докладом
-          uploadPhoto(formDataConcl, "CONCLUSION"); // файл с заключением
+          formDataConcl.append('file', report.data.fileExpertOpinion);
+          formDataConcl.append('reportId', res?.data?.report?.id);
+          uploadPhoto(formDataReport, 'REPORT'); // файл с докладом
+          uploadPhoto(formDataConcl, 'CONCLUSION'); // файл с заключением
           dispatch(fetchUserData());
           dispatch(fetchReports());
         }
@@ -184,26 +176,17 @@ function AddCoauthor({ edit, number }) {
     <div className={styles.AddCoauthor}>
       {report?.openPopUpName && (
         <div className={styles.popups}>
-          {report?.openPopUpName === "SameEmail" && <SameEmail />}
-          {report?.openPopUpName === "SuccessModal" && (
-            <SuccessModal name={report?.data?.name} />
-          )}
-          {report?.openPopUpName === "NotFullyFilled" && <NotFullyFilled />}
-          {report?.openPopUpName === "NotFullyFilledCoauthors" && (
-            <NotFullyFilledCoauthors />
-          )}
+          {report?.openPopUpName === 'SameEmail' && <SameEmail />}
+          {report?.openPopUpName === 'SuccessModal' && <SuccessModal name={report?.data?.name} />}
+          {report?.openPopUpName === 'NotFullyFilled' && <NotFullyFilled />}
+          {report?.openPopUpName === 'NotFullyFilledCoauthors' && <NotFullyFilledCoauthors />}
         </div>
       )}
 
       <h2 className={styles.title}>Соавторы</h2>
       {!edit && (
         <div className={styles.backImg}>
-          <img
-            src={leftArrow}
-            alt="назад"
-            draggable="false"
-            onClick={() => navigate(-1)}
-          />
+          <img src={leftArrow} alt="назад" draggable="false" onClick={() => navigate(-1)} />
         </div>
       )}
 
@@ -213,7 +196,7 @@ function AddCoauthor({ edit, number }) {
             className={styles.sliderInner}
             style={{
               width: `${report.sliderState}%`,
-              transition: "all 0.15s linear",
+              transition: 'all 0.15s linear',
             }}
           ></div>
         </div>
@@ -227,7 +210,7 @@ function AddCoauthor({ edit, number }) {
               <img src={trash} alt="удалить" />
             </button>
           </div>
-          {inpustTypeEmail.map((inp) => (
+          {inpustTypeEmail.map(inp => (
             <div className={styles.inputbox} key={inp.id}>
               <InputLabel
                 label={inp.label}
@@ -239,20 +222,20 @@ function AddCoauthor({ edit, number }) {
                 placeholder={inp.placeholder}
                 error={inp.error}
               />
-              {soauthtor.autocompletion === "noemail" && (
+              {soauthtor.autocompletion === 'noemail' && (
                 <div className={styles.modalEmail}>
                   <p>
-                    Пользователь с такой почтой не найден на платформе.
-                    Необходимо внести данные о соавторе вручную.
+                    Пользователь с такой почтой не найден на платформе. Необходимо внести данные о
+                    соавторе вручную.
                   </p>
                   <button onClick={() => funNoEmail(index)}>Продолжить</button>
                 </div>
               )}
-              {soauthtor.autocompletion === "emailhave" && (
+              {soauthtor.autocompletion === 'emailhave' && (
                 <div className={styles.modalEmail}>
                   <p>
-                    Пользователь с такой почтой найден на платформе. Данные о
-                    соавторе заполнятся автоматически, кроме его формы участия.
+                    Пользователь с такой почтой найден на платформе. Данные о соавторе заполнятся
+                    автоматически, кроме его формы участия.
                   </p>
                   <button>Продолжить</button>
                 </div>
@@ -260,9 +243,9 @@ function AddCoauthor({ edit, number }) {
             </div>
           ))}
 
-          {soauthtor.autocompletion === "true" && (
+          {soauthtor.autocompletion === 'true' && (
             <>
-              {inpustType.map((inp) => (
+              {inpustType.map(inp => (
                 <div className={styles.inputbox} key={inp.id}>
                   <InputLabel
                     label={inp.label}
@@ -290,10 +273,7 @@ function AddCoauthor({ edit, number }) {
           )}
         </div>
       ))}
-      <button
-        className={styles.addsoaftor}
-        onClick={() => dispatch(addSoauthors())}
-      >
+      <button className={styles.addsoaftor} onClick={() => dispatch(addSoauthors())}>
         <span>Добавить соавтора</span>
         <img src={plus} alt="+" />
       </button>
@@ -302,13 +282,11 @@ function AddCoauthor({ edit, number }) {
         <div className={styles.text}>
           <img src={errorList} alt="img" />
           <span>
-            В срок до XX.XX.XХХX необходимо прислать заявку на доклад, а в срок
-            до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
+            В срок до XX.XX.XХХX необходимо прислать заявку на доклад, а в срок до ХХ.ХХ.ХХХХ
+            загрузить статью и экспертное заключение.
           </span>
         </div>
-        <button onClick={funSaveData}>
-          {edit ? "Сохранить изменения" : "Сохранить"}
-        </button>
+        <button onClick={funSaveData}>{edit ? 'Сохранить изменения' : 'Сохранить'}</button>
       </div>
     </div>
   );

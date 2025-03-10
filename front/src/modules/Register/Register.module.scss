@@ -88,7 +88,7 @@ $w9: 390px;
         height: 54px;
         font-size: 18px;
       }
-      div[name="error"] {
+      div[name='error'] {
         font-size: 14px;
       }
     }
@@ -104,7 +104,7 @@ $w9: 390px;
         width: 42vw;
         font-size: 14px;
       }
-      div[name="error"] {
+      div[name='error'] {
         font-size: 12px;
       }
     }
@@ -116,7 +116,7 @@ $w9: 390px;
         height: 54px;
         font-size: 16px;
       }
-      div[name="error"] {
+      div[name='error'] {
         font-size: 14px;
       }
     }
@@ -127,7 +127,7 @@ $w9: 390px;
       input {
         font-size: 14px;
       }
-      div[name="error"] {
+      div[name='error'] {
         font-size: 12px;
       }
     }
@@ -165,14 +165,14 @@ $w9: 390px;
       }
       .lineOne {
         position: relative;
-        content: "";
+        content: '';
         height: 1px;
         background-color: var(--InputColors);
         width: 214px;
       }
       .lineTwo {
         position: relative;
-        content: "";
+        content: '';
         height: 1px;
         background-color: var(--InputColors);
         width: 214px;

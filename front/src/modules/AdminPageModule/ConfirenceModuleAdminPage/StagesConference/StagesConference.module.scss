@@ -1,4 +1,4 @@
-@import "./../mixin.scss";
+@import './../mixin.scss';
 
 .StagesConference {
   .stages_conference_title {
@@ -75,7 +75,7 @@
               display: flex;
               position: absolute;
               z-index: 100;
-              content: "";
+              content: '';
               width: 8px;
               height: 8px;
               border-radius: 50%;

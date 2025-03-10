@@ -1,22 +1,18 @@
-import styles from "./ProfileEditing.module.scss";
-import profilePhoto from "./../../assets/img/noPhotoLk.svg";
-import Input from "../../ui/Input/Input";
-import InputList from "../../ui/InputList/InputList";
-import { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import DataContext from "../../context";
-import { useDispatch, useSelector } from "react-redux";
-import { ReactComponent as Close } from "./../../assets/img/UI/bigX.svg";
-import {
-  apiUpdateUser,
-  server,
-  uploadPhoto,
-} from "../../apirequests/apirequests";
-import { disEditUser, setEditUser } from "../../store/userSlice/user.Slice";
-import { inputsData } from "./data";
-import cameraIcon from "@assets/img/UI/camera.svg";
-import { AnimatePresence, motion } from "framer-motion";
-import redxIcon from "@assets/img/UI/redX.svg";
+import styles from './ProfileEditing.module.scss';
+import profilePhoto from './../../assets/img/noPhotoLk.svg';
+import Input from '../../ui/Input/Input';
+import InputList from '../../ui/InputList/InputList';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import DataContext from '../../context';
+import { useDispatch, useSelector } from 'react-redux';
+import { ReactComponent as Close } from './../../assets/img/UI/bigX.svg';
+import { apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
+import { disEditUser, setEditUser } from '../../store/userSlice/user.Slice';
+import { inputsData } from './data';
+import cameraIcon from '@assets/img/UI/camera.svg';
+import { AnimatePresence, motion } from 'framer-motion';
+import redxIcon from '@assets/img/UI/redX.svg';
 
 function ProfileEditing() {
   const navigate = useNavigate();
@@ -26,15 +22,15 @@ function ProfileEditing() {
   const refList = [ref1, ref2];
   const fileInputRef = useRef(null);
   const [openPhoto, setOpenPhoto] = useState(false);
-  const [openList, setOpenList] = useState("");
+  const [openList, setOpenList] = useState('');
   const context = useContext(DataContext);
-  const formData = useSelector((state) => state.user.editUser.data);
-  const user = useSelector((state) => state.user.user.data);
+  const formData = useSelector(state => state.user.editUser.data);
+  const user = useSelector(state => state.user.user.data);
   const [userPhoto, setUserPhoto] = useState(null);
   const [urlPhoto, setUrlPhoto] = useState(null);
   const [popUpSize, setPopUpSize] = useState(false);
 
-  console.log("formData", formData);
+  console.log('formData', formData);
 
   useEffect(() => {
     setUrlPhoto(`${server}/${user?.avatar}`);
@@ -47,14 +43,14 @@ function ProfileEditing() {
   }, [user]);
 
   const [errors, setErrors] = useState({
-    name: "",
-    patronymic: "",
-    academicTitle: "",
-    degree: "",
-    position: "",
-    organization: "",
-    email: "",
-    number: "",
+    name: '',
+    patronymic: '',
+    academicTitle: '',
+    degree: '',
+    position: '',
+    organization: '',
+    email: '',
+    number: '',
   });
 
   //! загрузка фото
@@ -62,7 +58,7 @@ function ProfileEditing() {
     fileInputRef.current.click();
   };
 
-  const handleFileUpload = (file) => {
+  const handleFileUpload = file => {
     if (file.size > 10 * 1024 * 1024) {
       setPopUpSize(true);
     } else {
@@ -76,7 +72,7 @@ function ProfileEditing() {
   const funDeletePhoto = () => {
     setUrlPhoto(null);
     setUserPhoto(null);
-    dispatch(setEditUser({ key: "avatar", value: null }));
+    dispatch(setEditUser({ key: 'avatar', value: null }));
   };
 
   const funSelectedElement = (key, value) => {
@@ -84,15 +80,15 @@ function ProfileEditing() {
     if (!formData.hasOwnProperty(key)) {
       return;
     }
-    console.log("key", key);
-    setErrors({ ...errors, [key]: "" });
+    console.log('key', key);
+    setErrors({ ...errors, [key]: '' });
     // setFormData({ ...formData, [key]: value });
     dispatch(setEditUser({ key, value }));
   };
 
-  const formatPhoneNumber = (value) => {
+  const formatPhoneNumber = value => {
     // Форматируем номер в виде +7 (XXX) XXX-XX-XX
-    const cleaned = value.replace(/\D/g, "");
+    const cleaned = value.replace(/\D/g, '');
     const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
     if (match) {
       return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
@@ -106,56 +102,53 @@ function ProfileEditing() {
 
     // Проверка обязательных полей
     [
-      "name",
-      "surname",
-      "academicTitle",
-      "degree",
-      "position",
-      "organization",
-      "email",
-      "phone",
-    ].forEach((field) => {
+      'name',
+      'surname',
+      'academicTitle',
+      'degree',
+      'position',
+      'organization',
+      'email',
+      'phone',
+    ].forEach(field => {
       if (!formData[field]) {
-        newErrors[field] = "Поле обязательно для заполнения";
+        newErrors[field] = 'Поле обязательно для заполнения';
         isValid = false;
       }
     });
 
     // Проверка корректности Email
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Некорректный Email";
+      newErrors.email = 'Некорректный Email';
       isValid = false;
     }
 
     // Проверка номера телефона
-    if (
-      formData.phone &&
-      !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)
-    ) {
-      newErrors.phone = "Номер должен быть в формате +7 (XXX) XXX-XX-XX";
+    if (formData.phone && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)) {
+      newErrors.phone = 'Номер должен быть в формате +7 (XXX) XXX-XX-XX';
       isValid = false;
     }
-    console.log("newErrors", newErrors);
+    console.log('newErrors', newErrors);
     setErrors(newErrors);
     return isValid;
   };
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
 
     // Если поле "phone", форматируем номер телефона
-    const formattedValue = name === "phone" ? formatPhoneNumber(value) : value;
+    const formattedValue = name === 'phone' ? formatPhoneNumber(value) : value;
 
     // setFormData({ ...formData, [name]: formattedValue });
     dispatch(setEditUser({ key: name, value: formattedValue }));
 
     // Очистка ошибки при изменении значения
-    setErrors({ ...errors, [name]: "" });
+    setErrors({ ...errors, [name]: '' });
   };
 
-  const funOpenList = (param) => {
+  const funOpenList = param => {
     if (param === openList) {
-      setOpenList("");
+      setOpenList('');
     } else {
       setOpenList(param);
     }
@@ -163,35 +156,31 @@ function ProfileEditing() {
 
   const handleSubmit = () => {
     if (validate()) {
-      apiUpdateUser(formData).then((res) => {
-        console.log("res", res);
+      apiUpdateUser(formData).then(res => {
+        console.log('res', res);
         if (res?.status === 200) {
-          console.log("Форма отправлена", formData);
+          console.log('Форма отправлена', formData);
         }
         const file = new FormData();
-        file.append("file", userPhoto);
+        file.append('file', userPhoto);
         if (userPhoto) {
-          uploadPhoto(file, "AVATAR");
+          uploadPhoto(file, 'AVATAR');
         }
       });
     } else {
-      console.log("Валидация не прошла");
+      console.log('Валидация не прошла');
     }
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        refList.every(
-          (item) => item.current && !item.current.contains(event.target)
-        )
-      ) {
-        funOpenList("");
+    const handleClickOutside = event => {
+      if (refList.every(item => item.current && !item.current.contains(event.target))) {
+        funOpenList('');
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -214,15 +203,15 @@ function ProfileEditing() {
               className={styles.popUp}
               initial={{
                 opacity: 0,
-                transform: "translate(-50%, -50%) scale(0)",
+                transform: 'translate(-50%, -50%) scale(0)',
               }}
               animate={{
                 opacity: 1,
-                transform: "translate(-50%, -50%) scale(1)",
+                transform: 'translate(-50%, -50%) scale(1)',
               }}
               exit={{
                 opacity: 0,
-                transform: "translate(-50%, -50%) scale(0)",
+                transform: 'translate(-50%, -50%) scale(0)',
               }}
             >
               <h2>Размер фотографии превышает допустимый предел в 10 Мб</h2>
@@ -244,15 +233,15 @@ function ProfileEditing() {
             <motion.div
               initial={{
                 opacity: 0,
-                transform: "translate(-50%, -50%) scale(0)",
+                transform: 'translate(-50%, -50%) scale(0)',
               }}
               animate={{
                 opacity: 1,
-                transform: "translate(-50%, -50%) scale(1)",
+                transform: 'translate(-50%, -50%) scale(1)',
               }}
               exit={{
                 opacity: 0,
-                transform: "translate(-50%, -50%) scale(0)",
+                transform: 'translate(-50%, -50%) scale(0)',
               }}
               className={styles.ProfilePhotoShow}
             >
@@ -260,7 +249,7 @@ function ProfileEditing() {
                 className={styles.ProfileImg}
                 src={urlPhoto || profilePhoto}
                 alt="img"
-                onError={(e) => (e.target.src = profilePhoto)}
+                onError={e => (e.target.src = profilePhoto)}
               />
 
               <Close onClick={funOpenPhoto} className={styles.close} />
@@ -277,7 +266,7 @@ function ProfileEditing() {
           <img
             className={styles.photo_heve}
             src={urlPhoto || profilePhoto}
-            onError={(e) => (e.target.src = profilePhoto)}
+            onError={e => (e.target.src = profilePhoto)}
             alt="img"
           />
         </div>
@@ -285,8 +274,8 @@ function ProfileEditing() {
           accept="image/*"
           ref={fileInputRef}
           type="file"
-          style={{ display: "none" }}
-          onChange={(e) => handleFileUpload(e.target.files[0])}
+          style={{ display: 'none' }}
+          onChange={e => handleFileUpload(e.target.files[0])}
         />
         <button className={styles.btn1} onClick={funUploadPhoto}>
           Загрузить новое фото
@@ -312,9 +301,9 @@ function ProfileEditing() {
                       divRef={refList[index - 3]}
                       list={item.list}
                       labelText={item.name}
-                      styleArrow={{ height: "54px", bottom: "25px" }}
-                      listStyle={{ transform: "translateY(calc(100% - 26px))" }}
-                      inputerrorStyle={{ top: "25px" }}
+                      styleArrow={{ height: '54px', bottom: '25px' }}
+                      listStyle={{ transform: 'translateY(calc(100% - 26px))' }}
+                      inputerrorStyle={{ top: '25px' }}
                       funSelectElement={funSelectedElement}
                       error={errors[item.title]}
                     />
@@ -326,11 +315,11 @@ function ProfileEditing() {
                       placeholder=""
                       error={errors[item.title]}
                       labelText={item.name}
-                      inputerrorStyle={{ top: "25px" }}
+                      inputerrorStyle={{ top: '25px' }}
                     />
                   )}
                 </div>
-              )
+              ),
           )}
         </div>
         <div className={styles.boxRigth}>
@@ -343,26 +332,22 @@ function ProfileEditing() {
                     name={item.title}
                     onChange={handleChange}
                     value={formData[item.title]}
-                    placeholder={""}
+                    placeholder={''}
                     labelText={item.name}
                     error={errors[item.title]}
-                    inputerrorStyle={{ top: "25px" }}
+                    inputerrorStyle={{ top: '25px' }}
                   />
                 </div>
-              )
+              ),
           )}
-          <button
-            type="button"
-            className={styles.SaveButton}
-            onClick={handleSubmit}
-          >
+          <button type="button" className={styles.SaveButton} onClick={handleSubmit}>
             Сохранить изменения
           </button>
           <button
             className={styles.noSaveButton}
             onClick={() => {
-              context.setSelectFrameLks("profile");
-              navigate("/account/profile");
+              context.setSelectFrameLks('profile');
+              navigate('/account/profile');
             }}
           >
             Выйти без сохранения

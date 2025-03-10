@@ -1,35 +1,34 @@
-.Сollections{
-    .title{
-        font-size: 32px;
-        font-weight: 500;
-        margin-bottom: 40px;
-        color: #333;
+.Сollections {
+  .title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  .ButtonAddContainer {
+    display: flex;
+    justify-content: end;
+    margin-bottom: 25px;
+    .ButtonAdd {
+      @include ButtonGreen;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 52px;
+      width: 280px;
     }
-    .ButtonAddContainer{
-        display: flex;
-        justify-content: end;
-        margin-bottom: 25px;
-        .ButtonAdd{
-            @include ButtonGreen;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 52px;
-            width: 280px;
-        }
+  }
+  .orgCargCont {
+    position: relative;
+    display: flex;
+    left: -16px;
+    top: -11px;
+    .orgCargContCards {
+      margin: 11px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 32px;
     }
-    .orgCargCont{
-        position: relative;
-        display: flex;
-        left: -16px;
-        top: -11px;
-        .orgCargContCards{
-            margin: 11px 16px;
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            gap: 32px;
-        }
-    }
+  }
 }
-

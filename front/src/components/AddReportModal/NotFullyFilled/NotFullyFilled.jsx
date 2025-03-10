@@ -1,15 +1,15 @@
-import { useDispatch } from "react-redux";
-import styles from "./NotFullyFilled.module.scss";
-import { useNavigate } from "react-router-dom";
-import { setOpenPopUpName } from "../../../store/reportCreateSlice/reportCreateSlice";
-import circleGalka from "./../../../assets/img/UI/circleGalka.svg";
+import { useDispatch } from 'react-redux';
+import styles from './NotFullyFilled.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { setOpenPopUpName } from '../../../store/reportCreateSlice/reportCreateSlice';
+import circleGalka from './../../../assets/img/UI/circleGalka.svg';
 
 function NotFullyFilled() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const funCloseModal = () => {
-    dispatch(setOpenPopUpName({ name: "" }));
-    navigate("/account/profile");
+    dispatch(setOpenPopUpName({ name: '' }));
+    navigate('/account/profile');
   };
   return (
     <div className={styles.NotFullyFilled}>

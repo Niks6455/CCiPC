@@ -11,12 +11,11 @@ function Participants() {
   const [filteredTable, setFilteredTable] = useState(tableData);
 
   const searchInData = (data, searchText) => {
-    return data.filter((item) =>
+    return data.filter(item =>
       Object.values(item).some(
-        (value) =>
-          typeof value === 'string' &&
-          value.toLowerCase().includes(searchText.toLowerCase())
-      )
+        value =>
+          typeof value === 'string' && value.toLowerCase().includes(searchText.toLowerCase()),
+      ),
     );
   };
 
@@ -26,31 +25,25 @@ function Participants() {
 
   return (
     <>
-    <NavBar/>
+      <NavBar />
       <main className={styles.Participants}>
-        <Layout>
-          <div className={styles.ParticipantsInner}>
-            <div className={styles.Title}>
-              <p>Участники конференции</p>
-            </div>
-            <div className={styles.inputComponentInner}>
-              <div className={styles.inputComponentInnerContainer}>
-                <img src={Search} />
-                <input
-                  className={styles.inputComponent}
-                  placeholder="Поиск"
-                  onChange={(e) => setFilter(e.target.value)}
-                  value={filter}
-                />
-              </div>
-
-              <UniversalTable
-                tableHeader={tableHead}
-                tableBody={filteredTable}
+        <div className={styles.ParticipantsInner}>
+          <div className={styles.Title}>
+            <p>Участники конференции</p>
+          </div>
+          <div className={styles.inputComponentInner}>
+            <div className={styles.inputComponentInnerContainer}>
+              <img src={Search} />
+              <input
+                className={styles.inputComponent}
+                placeholder="Поиск"
+                onChange={e => setFilter(e.target.value)}
+                value={filter}
               />
             </div>
+            <UniversalTable tableHeader={tableHead} tableBody={filteredTable} />
           </div>
-        </Layout>
+        </div>
       </main>
       <Footer />
     </>

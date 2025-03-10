@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { tableHeader } from "../data";
-import styles from "./TableModule.module.scss";
-import arrowIcon from "@assets/img/UI/arrowMini.svg";
-import DirectionList from "./DirectionList";
-import { AnimatePresence, motion } from "framer-motion";
+import { useEffect, useRef, useState } from 'react';
+import { tableHeader } from '../data';
+import styles from './TableModule.module.scss';
+import arrowIcon from '@assets/img/UI/arrowMini.svg';
+import DirectionList from './DirectionList';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function TableModule({ prewData, tableData, setTableData, direction }) {
   const [openDirList, setOpenDirList] = useState(null);
@@ -22,11 +22,11 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
       posY = rect.top + window.scrollY - 300; // Поднимаем блок вверх
     }
     setPosDirList({ x: posX, y: posY });
-    setOpenDirList((prew) => (prew === index ? null : index));
+    setOpenDirList(prew => (prew === index ? null : index));
   };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (
         listRef.current &&
         !listRef.current.contains(event.target) &&
@@ -36,9 +36,9 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
         setOpenDirList(null);
       }
     };
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
 
@@ -76,36 +76,30 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
             <tr key={indexRow}>
               <td>{indexRow + 1}</td>
               {tableHeader.slice(1).map((columnKey, indexCol) =>
-                columnKey.key === "direction" ? (
+                columnKey.key === 'direction' ? (
                   <td
                     ref={openDirList === indexRow ? listRef : null}
                     key={indexCol}
-                    onClick={(e) => funOpenDirList(e, indexRow)}
-                    style={{ cursor: "pointer" }}
+                    onClick={e => funOpenDirList(e, indexRow)}
+                    style={{ cursor: 'pointer' }}
                     className={
-                      prewData[indexRow]?.direction !== row.direction
-                        ? styles.editData
-                        : ""
+                      prewData[indexRow]?.direction !== row.direction ? styles.editData : ''
                     }
                   >
                     <div className={styles.direction_container}>
-                      <div className={styles.left_box}>
-                        {row[columnKey.key]}
-                      </div>
+                      <div className={styles.left_box}>{row[columnKey.key]}</div>
                       <div className={styles.rigth_box}>
                         <img
                           src={arrowIcon}
                           alt="⬇️"
-                          className={`${
-                            openDirList === indexRow ? styles.open : ""
-                          }`}
+                          className={`${openDirList === indexRow ? styles.open : ''}`}
                         />
                       </div>
                     </div>
                   </td>
                 ) : (
                   <td key={indexCol}>{row[columnKey.key]}</td>
-                )
+                ),
               )}
             </tr>
           ))}

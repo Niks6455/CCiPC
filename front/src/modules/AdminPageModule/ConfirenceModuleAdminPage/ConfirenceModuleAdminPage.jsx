@@ -1,27 +1,24 @@
-import { useEffect, useState } from "react";
-import styles from "./ConfirenceModuleAdminPage.module.scss";
-import StagesConference from "./StagesConference/StagesConference";
-import Logotips from "./Logotips/Logotips";
-import DocumentsModule from "./DocumentsModule/DocumentsModule";
-import AboutConference from "./AboutConference/AboutConference";
-import Directions from "./Directions/Directions";
-import DateAdsess from "./DateAdsess/DateAdsess";
-import Organizers from "./Organizers/Organizers";
+import { useEffect, useState } from 'react';
+import styles from './ConfirenceModuleAdminPage.module.scss';
+import StagesConference from './StagesConference/StagesConference';
+import Logotips from './Logotips/Logotips';
+import DocumentsModule from './DocumentsModule/DocumentsModule';
+import AboutConference from './AboutConference/AboutConference';
+import Directions from './Directions/Directions';
+import DateAdsess from './DateAdsess/DateAdsess';
+import Organizers from './Organizers/Organizers';
 import {
   apiGetConferencesById,
   apiPutConferencesById,
   uploadPhoto,
-} from "../../../apirequests/apirequests";
-import { useSelector } from "react-redux";
-import { useQuery } from "@tanstack/react-query";
-import {
-  convertDate,
-  convertDateTire,
-} from "../../../utils/functions/funcions";
+} from '../../../apirequests/apirequests';
+import { useSelector } from 'react-redux';
+import { useQuery } from '@tanstack/react-query';
+import { convertDate, convertDateTire } from '../../../utils/functions/funcions';
 
 function ConfirenceModuleAdminPage() {
   const [data, setData] = useState([]);
-  const conferenses = useSelector((state) => state.conferences?.data);
+  const conferenses = useSelector(state => state.conferences?.data);
   const [conferenseId, setConferenseId] = useState(null);
 
   const conferensetQery = useQuery({
@@ -39,11 +36,11 @@ function ConfirenceModuleAdminPage() {
   //! получение конференции
   useEffect(() => {
     const qery = conferensetQery?.data?.data?.conference;
-    console.log("conferensetQery", qery);
+    console.log('conferensetQery', qery);
 
     if (qery) {
       let data = {
-        stages: qery.stages.map((item) => ({
+        stages: qery.stages.map(item => ({
           date: convertDate(item.date),
           name: item.name,
         })),
@@ -69,63 +66,63 @@ function ConfirenceModuleAdminPage() {
   }, [conferensetQery?.data?.data?.conference]);
 
   useEffect(() => {
-    console.log("data", data);
+    console.log('data', data);
   }, [data]);
 
   //! для отправки файла
   const funApiEditFile = (file, key) => {
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("conferenceId", conferenseId);
+    formData.append('file', file);
+    formData.append('conferenceId', conferenseId);
     uploadPhoto(formData, key);
   };
 
   //! отправляем измененные данные на бэк
   const funEditDataApi = () => {
     const dat = {
-      stages: data.stages.map((item) => ({
+      stages: data.stages.map(item => ({
         date: convertDateTire(item.date),
         name: item.name,
       })),
       description: data.aboutConference,
       directions: data.directions,
-      date: ["2025-05-05", "2025-08-01"],
+      date: ['2025-05-05', '2025-08-01'],
       // date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
     };
     //! сохранение логотпа хедера
-    if (typeof data.logoHeader === "object") {
-      funApiEditFile(data.logoHeader, "HEADER");
+    if (typeof data.logoHeader === 'object') {
+      funApiEditFile(data.logoHeader, 'HEADER');
     }
     //! сохранение логотпа футера
-    if (typeof data.logoFooter === "object") {
-      funApiEditFile(data.logoFooter, "FOOTER");
+    if (typeof data.logoFooter === 'object') {
+      funApiEditFile(data.logoFooter, 'FOOTER');
     }
     //! файла программы конференции
-    if (typeof data.programConference === "object") {
-      funApiEditFile(data.programConference, "PROGRAM");
+    if (typeof data.programConference === 'object') {
+      funApiEditFile(data.programConference, 'PROGRAM');
     }
     //! файла буклета
-    if (typeof data.informationLetter === "object") {
-      funApiEditFile(data.informationLetter, "LETTER");
+    if (typeof data.informationLetter === 'object') {
+      funApiEditFile(data.informationLetter, 'LETTER');
     }
     //! файл коллекции работ
-    if (typeof data.worksCollection === "object") {
-      funApiEditFile(data.worksCollection, "COLLECTION");
+    if (typeof data.worksCollection === 'object') {
+      funApiEditFile(data.worksCollection, 'COLLECTION');
     }
     //! файл шаблона статьи
-    console.log("data.аrticleTemplate", data.аrticleTemplate);
-    if (typeof data.аrticleTemplate === "object") {
-      funApiEditFile(data.аrticleTemplate, "SAMPLE");
+    console.log('data.аrticleTemplate', data.аrticleTemplate);
+    if (typeof data.аrticleTemplate === 'object') {
+      funApiEditFile(data.аrticleTemplate, 'SAMPLE');
     }
     //! файл документа о платёже индивидуальных
-    if (typeof data.cashlessIndividual === "object") {
-      funApiEditFile(data.cashlessIndividual, "INDIVIDUAL");
+    if (typeof data.cashlessIndividual === 'object') {
+      funApiEditFile(data.cashlessIndividual, 'INDIVIDUAL');
     }
     //! файл документа о платёже юрлиц
-    if (typeof data.cashlessEntities === "object") {
-      funApiEditFile(data.cashlessEntities, "LEGAL");
+    if (typeof data.cashlessEntities === 'object') {
+      funApiEditFile(data.cashlessEntities, 'LEGAL');
     }
 
     apiPutConferencesById(dat, conferenseId);
@@ -143,16 +140,16 @@ function ConfirenceModuleAdminPage() {
       <Organizers
         data={data}
         setData={setData}
-        itemKey={"organizers"}
-        name={"Организаторы"}
-        buttonName={"Добавить организатора"}
+        itemKey={'organizers'}
+        name={'Организаторы'}
+        buttonName={'Добавить организатора'}
       />
       <Organizers
         data={data}
         setData={setData}
-        itemKey={"partners"}
-        name={"Партнёры"}
-        buttonName={"Добавить партнёра"}
+        itemKey={'partners'}
+        name={'Партнёры'}
+        buttonName={'Добавить партнёра'}
       />
       <div className={styles.buttons}>
         <div className={styles.buttons_inner}>
