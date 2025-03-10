@@ -32,7 +32,7 @@ export default function (to, type, ...arg) {
     };
 
     // отправка сообщений на production
-    if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'production') {
         smtp.sendMail(mail);
     } else {
         console.log(mail);
