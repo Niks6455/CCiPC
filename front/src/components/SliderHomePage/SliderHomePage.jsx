@@ -10,7 +10,7 @@ const SliderHomePage = () => {
   useEffect(() => {
     getAllNews().then(res => {
       if (res?.status === 200) {
-        setSlides(res?.data?.news.splice(0, 5));
+        setSlides(res?.data?.news?.splice(0, 5));
       }
     });
   }, []);
@@ -32,7 +32,7 @@ const SliderHomePage = () => {
     // Вызываем checkPosition при изменении currentSlide, чтобы иметь возможность отслеживать текущий флаг
     console.log('Current slide:', currentSlide, 'Flag:', checkPosition(currentSlide));
   }, [currentSlide]);
- 
+
   const navigate = useNavigate();
   return (
     <div className={styles.SliderHomePage}>
@@ -41,7 +41,7 @@ const SliderHomePage = () => {
           className={styles.sliderWrapper}
           // style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
-          {slides.map(slide => (
+          {slides?.map(slide => (
             <div
               key={slide.id}
               className={`${styles.slide} ${styles[checkPosition(currentSlide)]}`}

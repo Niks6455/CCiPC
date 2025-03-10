@@ -14,7 +14,7 @@ function SliderHomePageMobile() {
   useEffect(() => {
     getAllNews().then(res => {
       if (res?.status === 200) {
-        setSlides(res?.data?.news.splice(0, 5));
+        setSlides(res?.data?.news?.splice(0, 5));
       }
     });
   }, []);
