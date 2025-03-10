@@ -1,5 +1,6 @@
 $w1: 1366px;
 $w2: 769px;
+$w3: 480px;
 
 header {
   height: torem(180px); /* 180px в rem */
@@ -13,12 +14,14 @@ header {
   @media (max-width: $w2) {
     height: torem(100px); /* 180px в rem */
   }
+  @media (max-width: $w3) {
+    top: torem(270px);
+  }
   .logo {
     cursor: pointer;
     margin: 0 torem(180px) 0 torem(20px); /* Отступы */
     @media (max-width: $w2) {
-    display: none;
-    
+      display: none;
     }
     img {
       width: torem(110px);
@@ -31,12 +34,21 @@ header {
     @media (max-width: $w2) {
       margin-left: torem(30px);
     }
+    @media (max-width: $w3) {
+      margin-left: torem(20px);
+    }
+
     img {
       width: torem(110px);
       height: torem(68px);
       @media (max-width: $w2) {
         width: torem(47px);
         height: torem(49px);
+      }
+      @media (max-width: $w3) {
+        width: torem(72px);
+        height: torem(72px);
+        filter: brightness(0) invert(1);
       }
     }
     p {
@@ -52,6 +64,14 @@ header {
         width: torem(404px);
         text-wrap: wrap;
       }
+      @media (max-width: $w3) {
+        font-weight: 600;
+        color: #f0f3f2;
+        width: torem(283px);
+        br {
+          display: none;
+        }
+      }
     }
   }
 
@@ -64,7 +84,11 @@ header {
     border-radius: 0px 0px 50px 0px;
     @media (max-width: $w2) {
       height: torem(100px); /* 180px в rem */
-      padding-top: torem(15px); 
+      padding-top: torem(15px);
+      border-radius: 0px 0px 30px 0px;
+    }
+    @media (max-width: $w3) {
+      background: none;
     }
     .TitleText {
       display: flex;
@@ -87,12 +111,15 @@ header {
     @media (max-width: $w2) {
       top: 0;
     }
+    @media (max-width: $w3) {
+      display: none;
+    }
     ul {
       list-style: none;
       margin-left: 0;
       padding-left: 0;
       li {
-        margin: torem(20px) 0; 
+        margin: torem(20px) 0;
         color: #fff;
         transition: 0.05s linear all;
         display: flex;
@@ -100,11 +127,11 @@ header {
         font-size: torem(18px);
         @media (max-width: $w1) {
           font-size: torem(22px);
-          margin: torem(18px) 0; 
+          margin: torem(18px) 0;
         }
         @media (max-width: $w2) {
           font-size: torem(16px);
-          margin: torem(10px) 0; 
+          margin: torem(10px) 0;
         }
         .arowLi {
           display: none;
@@ -113,10 +140,19 @@ header {
           position: relative;
           left: torem(5px); /* 5px в rem */
           top: torem(2px); /* 2px в rem */
+          width: torem(20px); /* 20px в rem */
+          height: torem(20px);
+          @media (max-width: $w2) {
+            width: torem(12px); /* 20px в rem */
+            height: torem(12px);
+          }
         }
         &:hover {
           padding-left: torem(35px); /* 35px в rem */
           cursor: pointer;
+          @media (max-width: $w2) {
+            padding-left: torem(10px); /* 35px в rem */
+          }
           .arowLi {
             display: block;
           }
@@ -134,7 +170,7 @@ header {
     color: #fff;
     cursor: pointer;
     img {
-      margin-left:torem(5px); /* 5px в rem */
+      margin-left: torem(5px); /* 5px в rem */
     }
   }
 }

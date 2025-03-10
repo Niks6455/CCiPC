@@ -1,5 +1,6 @@
 $w1: 1366px;
 $w2: 769px;
+$w3: 480px;
 
 .SliderHomePageTop {
   margin-top: torem(70px);
@@ -35,16 +36,26 @@ $w2: 769px;
     @media (max-width: $w2) {
       margin: torem(10px) 0;
     }
+    @media (max-width: $w3) {
+      margin-bottom: torem(30px);
+    }
   }
   .Slider {
     display: flex;
     animation: scroll 40s linear infinite; /* Анимация для бесконечного скролла */
     font-size: torem(18px);
+    @media (max-width: $w3) {
+      animation: none;
+    }
     ul {
       list-style: none;
       display: flex;
       padding: 0;
       margin: 0;
+      @media (max-width: $w3) {
+        display: flex;
+        flex-direction: column;
+      }
     }
     li {
       color: var(--GreenColorText);
@@ -58,17 +69,32 @@ $w2: 769px;
       }
       @media (max-width: $w2) {
         font-size: torem(14px);
-         width: torem(274px);
+        width: torem(274px);
+      }
+      @media (max-width: $w3) {
+        width: calc(100% - torem(40px));
+        padding: 0 torem(20px);
+        flex-direction: column;
+        align-items: start;
       }
       .sliderLine {
         margin: 0 torem(20px);
         @media (max-width: $w2) {
           margin: 0 torem(18px);
         }
-        img{
+        @media (max-width: $w3) {
+          width: 100%;
+          margin: 0;
+          border-bottom: torem(2px) dashed var(--GreenColorText);
+          margin-bottom: torem(20px);
+          padding-bottom: torem(20px);
+        }
+        img {
           width: torem(3px);
           height: torem(42px);
-         
+          @media (max-width: $w3) {
+            display: none;
+          }
         }
       }
       .date {

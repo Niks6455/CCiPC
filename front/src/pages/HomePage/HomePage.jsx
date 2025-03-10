@@ -14,7 +14,7 @@ import Organization3 from '@assets/img/UI/org3.png';
 import Organization4 from '@assets/img/UI/org4.png';
 import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHomePageMobile';
 function HomePage() {
-  const context = useContext(DataContext);
+  // const context = useContext(DataContext);
   const textData = textDataHomePage;
   return (
     <div className={styles.HomePage}>
@@ -80,7 +80,7 @@ function HomePage() {
         </section>
       </Layout>
       <SliderHomePage />
-      <SliderHomePageMobile/>
+      <SliderHomePageMobile />
       <Layout>
         <section className={styles.imgSection}>
           <div className={styles.Title}>
