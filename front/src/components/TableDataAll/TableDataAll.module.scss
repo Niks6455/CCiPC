@@ -21,6 +21,14 @@
         .TableDataAllFirstBlock {
             display: flex;
             justify-content: space-between;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+            .TableDataAllFIO{
+                font-size: 16px;
+                font-weight: 600;
+                line-height: 1;
+            }
             button {
                 background: none;
                 border: none;
@@ -36,5 +44,18 @@
                 }
             }
         }
+        .textCont{
+            margin-bottom: 30px;
+            .textContTitle{
+                color: #333333;
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+            .textContSubTitle{
+                font-size: 16px;
+                font-weight: 400;
+            }
+        }
+       
     }
 }

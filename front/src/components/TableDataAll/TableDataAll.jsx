@@ -11,6 +11,12 @@ function TableDataAll(props) {
     const refBackdrop = useRef(null);
     const dispatch = useDispatch();
 
+    const splitFio = (fio) => {
+        return fio?.map((name, index) => (
+          <span key={index}>{name}<br /></span>
+        ));
+      };
+
     useEffect(() => {
         const element = refForm.current;
         const backdrop = refBackdrop.current;
@@ -40,7 +46,7 @@ function TableDataAll(props) {
             <div className={styles.TableDataAllInner} ref={refForm}>
                 <div className={styles.TableDataAllFirstBlock}>
                     <div className={styles.TableDataAllFIO}>
-                        {props.data.fio}
+                        {splitFio(props?.data?.fio)}
                     </div>
                     <button>
                         <img
@@ -51,6 +57,30 @@ function TableDataAll(props) {
                             }}
                         />
                     </button>
+                </div>
+                <div className={styles.textCont}>
+                    <div className={styles.textContTitle}>
+                        <p>Организация</p>
+                    </div>
+                    <div className={styles.textContSubtitle}>
+                        <p>{props?.data?.organization}</p>
+                    </div>
+                </div>
+                <div className={styles.textCont}>
+                    <div className={styles.textContTitle}>
+                        <p>Направление</p>
+                    </div>
+                    <div className={styles.textContSubtitle}>
+                        <p>{props?.data?.direction}</p>
+                    </div>
+                </div>
+                <div className={styles.textCont}>
+                    <div className={styles.textContTitle}>
+                        <p>Доклад</p>
+                    </div>
+                    <div className={styles.textContSubtitle}>
+                        <p>{props?.data?.name}</p>
+                    </div>
                 </div>
             </div>
         </section>

@@ -14,8 +14,11 @@ function Participants() {
   const [filteredTable, setFilteredTable] = useState([]);
   const store = (useSelector((state) => state.participants));
   const [defaultData, setDefaultData] = useState([]);
-  const conferenceId = useSelector((state) => state.conferences.data[0].id);
+  const conferenceId = useSelector((state) => state?.conferences?.data[0]?.id);
   useEffect(()=>{
+    if(!conferenceId){
+      return
+    }
     getConferencesParticipants(conferenceId).then((res)=>{
       if(res.status === 200){
         setDefaultData(res.data.participants)
@@ -50,13 +53,16 @@ function Participants() {
           </div>
           <div className={styles.inputComponentInner}>
             <div className={styles.inputComponentInnerContainer}>
-              <img src={Search} />
-              <input
-                className={styles.inputComponent}
-                placeholder="Поиск"
-                onChange={e => setFilter(e.target.value)}
-                value={filter}
-              />
+              <div className={styles.inputComponentInnerContainerInner}>
+                <img src={Search} />
+                  <input
+                    className={styles.inputComponent}
+                    placeholder="Поиск"
+                    onChange={e => setFilter(e.target.value)}
+                    value={filter}
+                  />
+              </div>
+             
             </div>
             <UniversalTable tableHeader={tableHead} tableBody={filteredTable} />
           </div>
