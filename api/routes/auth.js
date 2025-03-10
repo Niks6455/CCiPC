@@ -4,6 +4,7 @@ import { Router } from 'express';
 import authCtrl from '../controllers/auth.js';
 import { asyncRoute } from '../utils/errors.js';
 import verify from "../middlewares/verify-token.js";
+import roles from "../config/roles.js";
 const router = Router();
 
 
@@ -144,7 +145,9 @@ const router = Router();
  *                   description: статус
  * /auth/changePassword:
  *   post:
- *     summary: для смены пароля
+ *     summary: Смена пароля пользователя
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -154,10 +157,13 @@ const router = Router();
  *             properties:
  *               currentPassword:
  *                 type: string
+ *                 description: Текущий пароль пользователя
  *               newPassword:
  *                 type: string
+ *                 description: Новый пароль, который пользователь хочет установить
  *               repeatPassword:
- *                  type: string
+ *                 type: string
+ *                 description: Повтор нового пароля для подтверждения
  *             required:
  *               - currentPassword
  *               - newPassword
@@ -172,7 +178,7 @@ const router = Router();
  *               properties:
  *                 status:
  *                   type: string
- *                   description: статус
+ *                   description: Статус операции
  * /auth/recovery:
  *   post:
  *     summary: восстановление пароля

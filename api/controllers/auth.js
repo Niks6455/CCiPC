@@ -117,10 +117,10 @@ export default {
         res.json({status: 'Ok'})
     },
 
-    async reset({ body: {currentPassword, newPassword, repeatPassword, code, email }, user}, res) {
+    async reset({ body: {currentPassword, newPassword, repeatPassword, code, email }, user, admin }, res) {
         if(newPassword !== repeatPassword || !validatePassword(newPassword)) throw new AppErrorInvalid('newPassword')
-        if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
-        if(!user && (!code || !email)) throw new AppErrorMissing('code')
+        if((user || admin) && !currentPassword) throw new AppErrorMissing('currentPassword')
+        if(!user && !admin && (!code || !email)) throw new AppErrorMissing('code')
         if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword }, user )
         else await authService.resetPassword({newPassword, repeatPassword, code, email })
         res.json({status: 'ok'})
