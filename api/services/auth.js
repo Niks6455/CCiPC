@@ -11,6 +11,7 @@ import Conference from "../models/conference.js";
 import Report from "../models/report.js";
 import qs from "querystring";
 import sync from '../utils/sync.js'
+import axios from "axios";
 const verificationCodes= {};
 const resetCodes= {};
 
@@ -34,7 +35,7 @@ export default {
     },
 
     async loginSfedu(code, code_verifier){
-/*
+
         let accessToken;
         try {
             // Обмен кода на токен доступа у Microsoft Azure
@@ -59,6 +60,7 @@ export default {
         const { unique_name: email, name } = jwt.decode(accessToken);
 
 
+
         const participant=await Participant.findOne({
             where: { email: email }
         })
@@ -66,9 +68,11 @@ export default {
         if(participant) {
             const { jwt: token } = jwt.generate({ id: participant.id });
             return { token, participant };
-
         }
-*/
+
+
+/*
+
 
         try {
 
@@ -77,7 +81,7 @@ export default {
 
         } catch (e){
             console.log(e.message)
-        }
+        }*/
     },
 
     async login(email, password){
