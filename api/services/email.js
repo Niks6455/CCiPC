@@ -2,14 +2,14 @@ import { createTransport } from 'nodemailer';
 import templates from '../config/email-templates.js';
 import { SystemError } from '../utils/errors.js';
 
-const address = process.env.MAIL_USER;
+const address = process.env.MAIL_HOST;
 
 // объект для отправления писем на outlook
 const smtp = createTransport({
-    host: 'outlook.office365.com',
-    port: 587,
+    host: address,
+    port: 465,
     secure: false,
-    auth: { user: address, pass: process.env.MAIL_PASS },
+    auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASS },
 });
 
 export default function (to, type, ...arg) {
@@ -32,7 +32,7 @@ export default function (to, type, ...arg) {
     };
 
     // отправка сообщений на production
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'development') {
         smtp.sendMail(mail);
     } else {
         console.log(mail);

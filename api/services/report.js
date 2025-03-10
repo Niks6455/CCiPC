@@ -6,6 +6,7 @@ import ParticipantInConference from "../models/participant-in-conference.js";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import cache from "../utils/cache.js";
 import Participant from "../models/participant.js";
+import sendMail from "./email.js";
 export default {
     async create( reportInfo, conferenceId, participant) {
 
@@ -55,6 +56,7 @@ export default {
 
             const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
 
+
             const participantsExist = await Participant.findAll({
             where: {
                 email: {
@@ -101,6 +103,10 @@ export default {
             }
 
             emailsNotInDatabase.forEach(email => {
+                const person= reportInfo.coAuthors.find(user=>user.email === email)
+                if(person){
+                    sendMail(email, 'report', `${person?.surname} ${person?.name} ${person?.patronymic ? person?.patronymic : ''}`.trim(), email);
+                }
                 const reportsIds= cache[email] ?? []
                 reportsIds.push(report.id)
                 cache[email]=[...new Set(reportsIds)];
