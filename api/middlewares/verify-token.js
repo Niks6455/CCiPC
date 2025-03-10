@@ -53,7 +53,6 @@ function combine(...verifications) {
 
 async function general(req, res, next) {
     const authorization = req.headers.authorization;
-    console.log(authorization)
     if (authorization?.split(' ')[0] !== 'Bearer') throw new AppErrorInvalid('token', 401);
 
     try {
