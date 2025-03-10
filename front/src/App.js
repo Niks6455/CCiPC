@@ -99,7 +99,7 @@ function App() {
         '12. Проблемы математического моделирования и управления в области медицины',
       ],
     };
-    apiCreateConferences(dataConferences);
+    // apiCreateConferences(dataConferences);
   }, []);
 
   const context = {
