@@ -17,6 +17,7 @@ import reportCreateSlice from './reportCreateSlice/reportCreateSlice.js';
 import UserSlice from './userSlice/user.Slice.js';
 import conferencesSlice from './conferencesSlice/conferences.Slice.js';
 import newsSlice from './newsSlice/newsSlice.js';
+import participantsSlice from './participantsSlice/participantsSlice.js';
 const rootReducer = combineReducers({
   BasicSlice: basicSlice,
   reportsSlice: reportsSlice,
@@ -24,13 +25,14 @@ const rootReducer = combineReducers({
   user: UserSlice,
   conferences: conferencesSlice,
   news: newsSlice,
+  participants: participantsSlice
 });
 
 const persistConfig = {
   key: 'root',
   storage,
   whitelist: ['BasicSlice', 'UserSlice', 'news'],
-  blacklist: ['reportsSlice', 'reportCreateSlice'],
+  blacklist: ['reportsSlice', 'reportCreateSlice', 'participants'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
