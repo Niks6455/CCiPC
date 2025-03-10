@@ -4,13 +4,15 @@ import committeeType from "../config/committee.js";
 import { map } from '../utils/mappers/committee.js'
 export default {
 
-    async find(req,res){
-        const committee=await committeeService.find()
+    async find({query: { conferenceId }},res){
+        if(!conferenceId) throw  new AppErrorMissing('conferenceId')
+        const committee=await committeeService.find(conferenceId)
         res.json({committee: committee.map(c=> map(c))})
     },
 
-    async create({ body: {fio, organization, type } },res){
+    async create({ body: {fio, organization, type, conferenceId } },res){
         if(!fio) throw new AppErrorMissing('fio')
+        if(!conferenceId) throw new AppErrorMissing('conferenceId')
         if(!organization) throw new AppErrorMissing('organization')
         if(type === undefined) throw new AppErrorMissing('type')
         if(!Object.values(committeeType).includes(type)) throw new AppErrorInvalid('type')

@@ -7,16 +7,9 @@ import ParticipantOfReport from "../models/participant-of-report.js";
 import cache from "../utils/cache.js";
 import Participant from "../models/participant.js";
 export default {
-    async create( reportInfo, participant) {
+    async create( reportInfo, conferenceId, participant) {
 
-        const conference = await Conference.findOne({
-            where: {
-                date: {
-                    [Op.gte]: new Date(), // Ищем события, которые происходят сегодня или позже
-                },
-            },
-            order: [['date', 'ASC']], // Сортируем по дате в порядке возрастания
-        });
+        const conference = await Conference.findByPk(conferenceId);
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
@@ -236,11 +229,11 @@ export default {
                     const participantInConferencePromises = participantsExistIds.map(participantId => {
                         return ParticipantInConference.findOrCreate({
                             where: {
-                                conferenceId: conference.id,
+                                conferenceId: report.conferenceId,
                                 participantId: participantId
                             },
                             defaults: {
-                                conferenceId: conference.id,
+                                conferenceId: report.conferenceId,
                                 participantId: participantId
                             }
                         });

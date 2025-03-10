@@ -42,7 +42,7 @@ function checkValidate(objects) {
 }
 export default {
 
-    async create({body: {name, form, direction, organization, comment, status, coAuthors }, user}, res) {
+    async create({body: {name, form, direction, organization, comment, status, coAuthors, conferenceId }, user}, res) {
 
         if (!name) throw new AppErrorMissing('name')
         if (!form) throw new AppErrorMissing('form')
@@ -50,10 +50,11 @@ export default {
         if(!organization) throw new AppErrorMissing('organization')
         if(!status) throw new AppErrorMissing('status')
         if(!comment) throw new AppErrorMissing('comment')
+        if(!conferenceId) throw new AppErrorMissing('conferenceId')
 
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
 
-        const  report =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, user)
+        const  report =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, conferenceId, user)
 
         res.json({ report: report })
     },
