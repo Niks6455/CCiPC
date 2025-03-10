@@ -147,13 +147,14 @@ const getValue = (value, key, rowIndex, rowId, row) => {
               ))}
             </tr>
           ))}
-          {tableBodyData.length === 0 && (
+          {(!tableBodyData || tableBodyData.length === 0) && (
             <tr>
-              <td colSpan={10} className={styles.tableNotData}>
+              <td colSpan={tableHeaderData.length} className={styles.tableNotData}>
                 Нет данных
               </td>
             </tr>
           )}
+
         </tbody>
       </table>
     </div>

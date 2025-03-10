@@ -7,6 +7,7 @@
   box-sizing: border-box;
   overflow-x: auto; /* Горизонтальный скролл */
   width: 90%;
+
   /* Добавляем для больших экранов, где может понадобиться фиксированная ширина */
   @media (min-width: 1600px) {
     max-width: 1635px;
@@ -19,6 +20,7 @@
     min-height: 100px;
     overflow-x: auto;
     font-size: 16px;
+    min-width: 1368px;
     thead {
       position: sticky;
       top: 0;
@@ -120,16 +122,14 @@
 }
 
 .tableNotData {
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  padding: 20px;
   font-size: 18px;
   color: var(--GrayColorInput);
+  background-color: #f7f7f7;
   width: 100%;
-  position: absolute;
-  pointer-events: none;
 }
+
 
 .arrowTableCont{
   display: flex;

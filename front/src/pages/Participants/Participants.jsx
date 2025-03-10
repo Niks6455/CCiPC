@@ -37,7 +37,7 @@ function Participants() {
   };
 
   useEffect(() => {
-    setFilteredTable(searchInData(tableData, filter));
+    setFilteredTable(searchInData(defaultData, filter));
   }, [filter]);
 
   useEffect(()=>{
