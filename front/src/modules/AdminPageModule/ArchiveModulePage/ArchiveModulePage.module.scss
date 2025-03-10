@@ -1,27 +1,41 @@
-.ArchiveModulePage{
-    .title{
-        font-size: 32px;
-        font-weight: 500;
-        margin-bottom: 40px;
-        color: #333;
+.ArchiveModulePage {
+  .title {
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 40px;
+    color: #333;
+  }
+  .ArchiveModuleTitle {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    .subtitle {
+      font-size: 24px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 25px;
     }
-    .ArchiveModuleTitle{
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        .subtitle{
-            font-size: 24px;
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 25px;
-        }
-        button{
-            @include ButtonGreen;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 52px;
-            width: 280px;
-        }
+    button {
+      @include ButtonGreen;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 52px;
+      width: 280px;
+      margin-bottom: 25px;
     }
+  }
+  .orgCargCont {
+    position: relative;
+    display: flex;
+    left: -16px;
+    top: -11px;
+    .orgCargContCards {
+      margin: 11px 16px;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      gap: 32px;
+    }
+  }
 }

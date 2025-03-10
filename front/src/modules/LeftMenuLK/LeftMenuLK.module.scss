@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import '../../styles/colors.scss';
 
 .LeftMenuLk {
   padding: 10px 0px 0px 20px;
@@ -6,7 +6,7 @@
   border-right: 1px solid var(--InputColors);
   width: 310px;
   min-width: 310px;
-  min-height: calc(100vh - 256px);
+  @include maxMinContent();
   height: auto;
   box-sizing: border-box;
   .LeftMenuLkInner {

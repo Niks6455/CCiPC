@@ -1,5 +1,10 @@
 @import "./colors.scss";
 
+$w1: 1400px;
+$w2: 780px;
+$w3: 650px;
+$w4: 480px;
+
 @mixin InputTitle($fs: 18px) {
   font-family: Overpass, sans-serif;
   font-size: $fs;
@@ -371,5 +376,16 @@
   &:checked {
     background-color: #004529; /* Зеленый/90 */
     border-color: #004529; /* Опционально, можно усилить цвет границы */
+  }
+}
+
+
+@mixin maxMinContent($mt: 0px) {
+  min-height: calc(100vh - var(--heightFooterPc) - $mt);
+  @media (max-width: $w1) {
+    min-height: calc(100vh - var(--heightFooterPlan) - $mt);
+  }
+  @media (max-width: $w4) {
+    min-height: calc(100vh - var(--heightFooterPhone) - $mt);
   }
 }

@@ -81,6 +81,7 @@
       transition: none;
     }
   }
+
   .container_file {
     position: relative;
     display: flex;
@@ -126,8 +127,11 @@
         img {
           width: 57px;
           height: 62px;
+          cursor: pointer;
         }
         span {
+          cursor: pointer;
+
           max-width: 80%;
           font-family: Overpass, sans-serif;
           font-weight: 400;

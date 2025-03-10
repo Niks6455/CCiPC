@@ -13,7 +13,7 @@
     border-spacing: 0;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
-    font-family: "Arial", sans-serif;
+    font-family: 'Arial', sans-serif;
 
     thead {
       background-color: #e7eae9;
@@ -63,44 +63,44 @@
       }
     }
 
-    td[name="number"],
-    th[name="number"] {
+    td[name='number'],
+    th[name='number'] {
       display: table-cell;
       vertical-align: middle;
       text-align: center;
       min-width: 60px;
     }
 
-    td[name="participationForm"],
-    td[name="participationStatus"],
-    td[name="paymentForm"],
-    td[name="sumOrgWznos"],
-    td[name="confirmation"],
-    th[name="participationForm"],
-    th[name="participationStatus"],
-    th[name="paymentForm"],
-    th[name="sumOrgWznos"],
-    th[name="confirmation"] {
+    td[name='participationForm'],
+    td[name='participationStatus'],
+    td[name='paymentForm'],
+    td[name='sumOrgWznos'],
+    td[name='confirmation'],
+    th[name='participationForm'],
+    th[name='participationStatus'],
+    th[name='paymentForm'],
+    th[name='sumOrgWznos'],
+    th[name='confirmation'] {
       display: table-cell;
       vertical-align: middle;
       text-align: center;
       min-width: 120px;
     }
 
-    td[name="fio"],
-    th[name="fio"] {
+    td[name='fio'],
+    th[name='fio'] {
       min-width: 350px;
     }
-    td[name="report"],
-    th[name="report"] {
+    td[name='report'],
+    th[name='report'] {
       min-width: 590px;
     }
-    td[name="organization"],
-    th[name="organization"] {
+    td[name='organization'],
+    th[name='organization'] {
       min-width: 300px;
     }
-    td[name="paymentForm"],
-    th[name="paymentForm"] {
+    td[name='paymentForm'],
+    th[name='paymentForm'] {
       text-wrap: nowrap;
       min-width: 280px;
       display: table-cell;

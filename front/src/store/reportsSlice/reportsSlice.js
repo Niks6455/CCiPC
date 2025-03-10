@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { apiGetReports } from "../../apirequests/apirequests";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { apiGetReports } from '../../apirequests/apirequests';
 
 /*
     directionConference - Направление конференции
@@ -68,26 +68,26 @@ import { apiGetReports } from "../../apirequests/apirequests";
 
 // Асинхронный thunk для получения данных пользователя
 export const fetchReports = createAsyncThunk(
-  "user/fetchReports",
+  'user/fetchReports',
   async (_, { rejectWithValue }) => {
     try {
       const response = await apiGetReports();
       if (response?.status === 200) {
         return response.data; // Возвращаем данные пользователя
       } else {
-        return rejectWithValue("Ошибка получения данных");
+        return rejectWithValue('Ошибка получения данных');
       }
     } catch (error) {
       return rejectWithValue(error.message);
     }
-  }
+  },
 );
 
 const reportsSlice = createSlice({
-  name: "reports",
+  name: 'reports',
   initialState: {
     data: [],
-    status: "idle", // idle | loading | succeeded | failed
+    status: 'idle', // idle | loading | succeeded | failed
     error: null,
   },
 
@@ -99,33 +99,32 @@ const reportsSlice = createSlice({
 
     disDeleteReport(state, actions) {
       const { id } = actions.payload;
-      state.data = state.data.filter((report) => report.id !== id);
+      state.data = state.data.filter(report => report.id !== id);
     },
     disResetReports(state) {
       state.data = [];
-      state.status = "idle";
+      state.status = 'idle';
       state.error = null;
     },
   },
 
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchReports.pending, (state) => {
-        state.status = "loading";
+      .addCase(fetchReports.pending, state => {
+        state.status = 'loading';
         state.error = null;
       })
       .addCase(fetchReports.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.status = 'succeeded';
         state.data = action.payload.reports; // Обновляем данные
       })
       .addCase(fetchReports.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload || "Неизвестная ошибка";
+        state.status = 'failed';
+        state.error = action.payload || 'Неизвестная ошибка';
       });
   },
 });
 
-export const { disResetReports, disGetReports, disDeleteReport } =
-  reportsSlice.actions;
+export const { disResetReports, disGetReports, disDeleteReport } = reportsSlice.actions;
 
 export default reportsSlice.reducer;

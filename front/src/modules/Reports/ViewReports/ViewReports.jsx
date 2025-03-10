@@ -1,25 +1,40 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useSearchParams } from "react-router-dom"; // Импортируем хук для работы с query params
-import styles from "./ViewReports.module.scss";
-import { ReactComponent as BlockFile } from "./../../../assets/img/blockFile.svg";
-import { ReactComponent as Trash } from "./../../../assets/img/UI/trash.svg";
-import { apiDeleteReport } from "../../../apirequests/apirequests";
-import { disDeleteReport } from "../../../store/reportsSlice/reportsSlice";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useSearchParams } from 'react-router-dom'; // Импортируем хук для работы с query params
+import styles from './ViewReports.module.scss';
+import { ReactComponent as BlockFile } from './../../../assets/img/blockFile.svg';
+import { ReactComponent as Trash } from './../../../assets/img/UI/trash.svg';
+import { apiDeleteReport, apiGetReportId, server } from '../../../apirequests/apirequests';
+import { disDeleteReport } from '../../../store/reportsSlice/reportsSlice';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
+import { decodeFileName } from '../../../utils/functions/funcions';
+import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
 
 function ViewReports() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const report = useSelector((state) => state.reportsSlice.data);
+  const report = useSelector(state => state.reportsSlice.data);
   const [searchParams] = useSearchParams(); // Получаем query параметры
   const [reportData, setReportData] = useState(null);
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState('');
   const [showTooltip, setShowTooltip] = useState(null);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
+  const [idReport, setIdReport] = useState(null);
 
-  const handleMouseEnter = (index) => {
+  const reportQery = useQuery({
+    queryKey: [`${idReport}`, idReport],
+    queryFn: () => apiGetReportId(idReport),
+    enabled: !!idReport,
+  });
+
+  useEffect(() => {
+    setReportData(reportQery?.data?.data?.report);
+  }, [reportQery]);
+
+  const handleMouseEnter = index => {
     // Устанавливаем таймер для задержки
     const timeout = setTimeout(() => {
       setShowTooltip(index);
@@ -34,21 +49,17 @@ function ViewReports() {
     setShowTooltip(null);
   };
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = event => {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
 
   useEffect(() => {
-    const idReport = searchParams.get("idReport"); // Получаем idReport из query параметров
-    setNumber(searchParams.get("number")); // Получаем idReport из query параметров
-    if (idReport && report.length > 0) {
-      setReportData(report.find((item) => item.id === idReport));
+    const idReport = searchParams.get('idReport'); // Получаем idReport из query параметров
+    if (idReport) {
+      setIdReport(idReport);
     }
+    setNumber(searchParams.get('number')); // Получаем number из query параметров
   }, [searchParams, report]); // Запускаем useEffect при изменении query параметров или списка докладов
-
-  useEffect(() => {
-    console.log("reportData", reportData);
-  }, [reportData]);
 
   //! функция удаления доклада
   const deleteReportOpenModal = () => {
@@ -58,45 +69,63 @@ function ViewReports() {
 
   const funDeleteReport = () => {
     //! удаляем доклад
-    apiDeleteReport(reportData.id).then((res) => {
+    const id = idReport;
+    apiDeleteReport(id).then(res => {
       if (res?.status === 200) {
-        dispatch(disDeleteReport(reportData.id));
+        console.log('reportData', id);
+        dispatch(disDeleteReport({ id }));
         setIsModalDelete(false);
-        navigate("/account/profile");
+        navigate('/account/profile');
       }
     });
   };
 
+  const funOpenFile = file => {
+    //открытие файла по ссылке
+    window.open(`${server}/${file}`, '_blank');
+  };
+
+  const getFileName = file => {
+    if (!file) return 'Документ.pdf';
+    return decodeFileName(file);
+  };
+
   return (
     <section className={styles.ViewReports}>
-      {isModalDelete && (
-        <div className={styles.modal_container}>
-          <div className={styles.modal_delete_report}>
-            <h2>
-              Вы действительно хотите удалить доклад “Название доклада”?
-              Отменить это действие будет невозможно.
-            </h2>
-            <div className={styles.button_container}>
-              <button
-                className={styles.cancle}
-                onClick={() => setIsModalDelete(false)}
-              >
-                Назад
-              </button>
-              <button className={styles.delete} onClick={funDeleteReport}>
-                Удалить
-              </button>
-            </div>
+      <AnimatePresence>
+        {isModalDelete && (
+          <div className={styles.modal_container}>
+            <motion.div
+              className={styles.modal_delete_report}
+              initial={{ opacity: 0, scale: 0.6 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.6 }}
+            >
+              <h2>
+                {`Вы действительно хотите удалить доклад “${reportData?.name}”?
+                Отменить это действие будет невозможно.`}
+              </h2>
+              <div className={styles.button_container}>
+                <button className={styles.cancle} onClick={() => setIsModalDelete(false)}>
+                  Назад
+                </button>
+                <button className={styles.delete} onClick={funDeleteReport}>
+                  Удалить
+                </button>
+              </div>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
       <div className={styles.ViewReportsInner}>
         <div className={styles.ViewReportsInnerFirst}>
           <div className={styles.ViewReportsBlock}>
-            <p className={styles.ViewReportsTitle}>
-              Название доклада № {number}:
-            </p>
+            <p className={styles.ViewReportsTitle}>Автор:</p>
+            <p>{reportData?.author?.fio}</p>
+          </div>
+          <div className={styles.ViewReportsBlock}>
+            <p className={styles.ViewReportsTitle}>Название доклада № {number}:</p>
             <p>{reportData?.name}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
@@ -104,8 +133,12 @@ function ViewReports() {
             <p>{reportData?.direction}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
+            <p className={styles.ViewReportsTitle}>Форма участия:</p>
+            <p>{reportData?.author?.form}</p>
+          </div>
+          <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Статус участия:</p>
-            <p>{reportData?.form}</p>
+            <p>{reportData?.author?.status}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Комментарий:</p>
@@ -115,23 +148,36 @@ function ViewReports() {
         <div className={styles.ViewReportsInnerSecond}>
           <div className={styles.ViewReportsSoauthors}>
             <p className={styles.ViewReportsTitle}>Соавторы:</p>
-            {reportData?.coAuthors?.map((item, index) => (
+            {Array.from(
+              { length: reportData?.cacheCoAuthors },
+              (_, index) => index + reportData?.cacheCoAuthors,
+            ).map((_, index) => (
               <div key={index}>
-                <p className={styles.name}>{`${index + 1}. ${item?.name} ${
-                  item?.surname
-                } ${item?.patronymic}`}</p>
+                <p className={styles.name}>{`${
+                  index + 1
+                }. Данный соавтор еще не зарегистрировался на платформе`}</p>
+              </div>
+            ))}
+            {reportData?.coAuthors?.map((item, index) => (
+              <div key={index + 'coAuthors'}>
+                <p className={styles.name}>{`${
+                  index + 1 + reportData?.cacheCoAuthors
+                }. ${item.fio}`}</p>
                 <ul>
                   <li>
-                    {" "}
-                    <p>{item?.organization}</p>
+                    <p>{item?.organization || 'Отсутствует'}</p>
                   </li>
                   <li>
-                    {" "}
-                    <p>{item?.email}</p>
+                    <p>{item?.email || 'Отсутствует'}</p>
                   </li>
                   <li>
-                    {" "}
-                    <p>{item?.phone}</p>
+                    <p>{item?.phone || 'Отсутствует'}</p>
+                  </li>
+                  <li>
+                    <p>{item?.status || 'Отсутствует'}</p>
+                  </li>
+                  <li>
+                    <p>{item?.form || 'Отсутствует'}</p>
                   </li>
                 </ul>
               </div>
@@ -149,19 +195,22 @@ function ViewReports() {
           <p className={styles.fileLoudersTitle}>Доклад:</p>
           <>
             <div className={styles.fileName}>
-              <span>{report.reportFile?.name || "Документ.pdf"}</span>
+              <span>{getFileName(reportData?.reportFile) || 'Документ.pdf'}</span>
             </div>
-            <BlockFile className={styles.blockFile} />
+            <BlockFile
+              className={styles.blockFile}
+              onClick={() => funOpenFile(reportData?.reportFile)}
+            />
           </>
           {showTooltip === 1 && (
             <div
               style={{
-                left: coordinates.x - 445,
-                top: coordinates.y - 460,
+                left: coordinates.x - 380,
+                top: coordinates.y - 530,
               }}
               className={styles.repName}
             >
-              Открыть
+              Просмотреть
             </div>
           )}
         </div>
@@ -174,9 +223,12 @@ function ViewReports() {
           <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
           <>
             <div className={styles.fileName}>
-              <span>{report.conclusion?.name || "Документ.pdf"}</span>
+              <span>{getFileName(reportData?.conclusion) || 'Документ.pdf'}</span>
             </div>
-            <BlockFile className={styles.blockFile} />
+            <BlockFile
+              className={styles.blockFile}
+              onClick={() => funOpenFile(reportData?.conclusion)}
+            />
           </>
           {showTooltip === 2 && (
             <div
@@ -194,18 +246,14 @@ function ViewReports() {
       <div className={styles.EditDataReport}>
         <button
           className={styles.button_edit}
-          onClick={() =>
-            navigate(
-              `/account/editreport?idReport=${reportData?.id}&number=${number}`
-            )
-          }
+          onClick={() => {
+            dispatch(disSetResetReport());
+            navigate(`/account/editreport?idReport=${idReport}&number=${number}`);
+          }}
         >
           Редактировать данные
         </button>
-        <button
-          className={styles.button_delete}
-          onClick={deleteReportOpenModal}
-        >
+        <button className={styles.button_delete} onClick={deleteReportOpenModal}>
           <span>Удалить доклад</span>
           <Trash />
         </button>

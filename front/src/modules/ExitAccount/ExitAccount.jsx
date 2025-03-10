@@ -1,18 +1,18 @@
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import styles from "./ExitAccount.module.scss";
-import DataContext from "../../context";
-import ExitImg from "./../../assets/img/exit.png";
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from './ExitAccount.module.scss';
+import DataContext from '../../context';
+import ExitImg from './../../assets/img/exit.png';
 
 function ExitAccount(props) {
   const navigate = useNavigate();
   const context = useContext(DataContext);
 
   const funExcit = () => {
-    navigate("/authorization");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("userData");
+    navigate('/authorization');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('userData');
     props.funResetAllApi();
   };
 
@@ -26,8 +26,8 @@ function ExitAccount(props) {
         <div className={styles.ExitAccountButton}>
           <button
             onClick={() => {
-              navigate("/account/profile");
-              context.setSelectFrameLks("profile");
+              navigate('/account/profile');
+              context.setSelectFrameLks('profile');
             }}
           >
             В профиль

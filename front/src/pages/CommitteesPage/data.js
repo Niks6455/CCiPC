@@ -1,33 +1,12 @@
-export const organizationComiteData = [
-  {
-    photo: '/img/NotPhoto.svg',
-    name: 'Иванов И.И.',
-    university: 'Южный федеральный университет',
-  },
-  {
-    photo: '/img/NotPhoto.svg',
-    name: 'Иванов И.И.',
-    university: 'Южный федеральный университет',
-  },
-  {
-    photo: '/img/NotPhoto.svg',
-    name: 'Иванов И.И.',
-    university: 'Южный федеральный университет',
-  },
-  {
-    photo: '/img/NotPhoto.svg',
-    name: 'Иванов И.И.',
-    university: 'Южный федеральный университет',
-  },
-  {
-    photo: '/img/NotPhoto.svg',
-    name: 'Иванов И.И.',
-    university: 'Южный федеральный университет',
-  },
-];
+const defaultMember = {
+  photo: '/img/NotPhoto.svg',
+  name: 'Иванов И.И.',
+  university: 'Южный федеральный университет',
+};
+
+export const organizationComiteData = Array(5).fill(defaultMember);
 
 export const programmingComiteData = [
- 
   {
     photo: '/img/NotPhoto.svg',
     name: 'Иванов И.И.',

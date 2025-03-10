@@ -1,61 +1,207 @@
 @import "../../styles/colors.scss";
-.footer{
-    height: 256px;
-    background-color: var(--GreenColorDefault);
-    display:flex;
-    align-items:center;
-    justify-content: space-between;
-    width:100%;
-    .footerContainer{
-        display:flex;
-        justify-content: space-between;
-        width:1340px;
-        .footerContainerLeft{
-            display: flex;
-            color: #fff;
-            .footerText{
-                font-size: 20px;
-                line-height: 26px;
-                margin-left: 30px;
-                p{
-                    &:first-child{
-                        margin: 15px 0px 50px 0px;
-                        font-size: 28px;
-                        line-height: 39px;
-                        font-weight: 500;
-                    }
-                    &:last-child{
-                        margin-bottom: 0px;
-                        font-size: 22px;
-                        font-weight: 300;
-                        line-height: 26px;
-                    }
-                }
-            }
-        }
-        .footerLink{
-            color: #fff;
-            display: flex;
-            align-items: end;
-            p{
-                font-size: 20px;
-                font-weight: 400;
-            }
-            .link{
-                display: flex;
-                font-size: 18px;
-                font-weight: 300;
-                a{
-                    text-decoration: none;
-                    color: var(--ColorLink);
-                    margin-left: 5px;
-                    cursor: pointer;
-                    &:hover{
-                        opacity: 0.6;
-                    }
-                }
-            }
-           
-        }
+
+$w1: 1400px;
+$w2: 780px;
+$w3: 650px;
+$w4: 480px;
+
+.footer {
+  height: var(--heightFooterPc);
+  background-color: var(--GreenColorDefault);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  @media (max-width: $w1) {
+    height: auto;
+    padding: 40px 30px;
+  }
+  @media (max-width: $w2) {
+    padding: 30px 0px;
+    margin: 0 auto;
+    height: var(--heightFooterPlan);
+  }
+  @media (max-width: $w4) {
+    padding: 40px 25px;
+    height: var(--heightFooterPhone);
+  }
+  .footerContainer {
+    display: flex;
+    width: 1345px;
+    @media (max-width: $w1) {
+      width: 100%;
     }
+    @media (max-width: $w2) {
+      justify-content: space-between;
+    }
+    @media (max-width: $w3) {
+      flex-direction: column;
+    }
+
+    .footerContainerLeft {
+      display: flex;
+      color: #fff;
+      .logo {
+        display: flex;
+        width: 272px;
+        @media (max-width: $w1) {
+          width: 180px;
+        }
+        @media (max-width: $w2) {
+          width: 160px;
+        }
+        @media (max-width: $w4) {
+          display: none;
+        }
+        img {
+          width: 100%;
+          min-height: calc(100% - 80px);
+        }
+      }
+      .footerText {
+        font-size: 20px;
+        line-height: 26px;
+        margin-left: 30px;
+        @media (max-width: $w2) {
+          margin-left: 15px;
+        }
+        @media (max-width: $w4) {
+          margin-left: 0px;
+        }
+        p {
+          &:first-child {
+            text-transform: uppercase;
+            margin: 15px 0px 50px 0px;
+            font-size: 28px;
+            line-height: 39px;
+            font-weight: 500;
+            width: 757px;
+            @media (max-width: $w1) {
+              width: 340px;
+              font-size: 18px;
+              line-height: 25.2px;
+              margin: 0;
+              margin-bottom: 15px;
+            }
+            @media (max-width: $w2) {
+              width: 270px;
+              line-height: 18px;
+              font-size: 14px;
+            }
+            @media (max-width: $w4) {
+              width: 100%;
+              font-weight: 500;
+              font-size: 18px;
+              line-height: 25.2px;
+            }
+          }
+          &:last-child {
+            margin-bottom: 0px;
+            font-size: 22px;
+            font-weight: 300;
+            line-height: 26px;
+            @media (max-width: $w1) {
+              width: 206px;
+              font-size: 16px;
+              line-height: 19.2px;
+            }
+            @media (max-width: $w2) {
+              width: 186px;
+              line-height: 18px;
+              font-size: 14px;
+            }
+            @media (max-width: $w4) {
+              font-weight: 300;
+              font-size: 16px;
+              line-height: 19.2px;
+              width: 206px;
+            }
+          }
+        }
+      }
+    }
+    .footerLink {
+      color: #fff;
+      display: flex;
+      align-items: end;
+      margin-left: 76px;
+      text-align: right;
+      @media (max-width: $w1) {
+        margin-left: 12px;
+      }
+      @media (max-width: $w2) {
+        margin-left: 0px;
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        justify-content: left;
+        text-align: left;
+        margin-top: 20px;
+        div {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+        }
+      }
+      @media (max-width: $w4) {
+        margin-top: 40px;
+        div {
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+        }
+      }
+      p {
+        font-size: 20px;
+        font-weight: 400;
+        margin-bottom: 5px;
+        @media (max-width: $w1) {
+          font-weight: 400;
+          font-size: 16px;
+        }
+        @media (max-width: $w2) {
+          font-size: 14px;
+        }
+        @media (max-width: $w3) {
+          margin: 0;
+        }
+        @media (max-width: $w4) {
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 20.8px;
+        }
+      }
+      .link {
+        display: flex;
+        font-size: 18px;
+        font-weight: 300;
+        padding: 0;
+        margin: 0;
+        text-wrap: nowrap;
+        @media (max-width: $w1) {
+          font-weight: 300;
+          font-size: 14px;
+        }
+        @media (max-width: $w3) {
+          margin-left: 5px;
+        }
+        @media (max-width: $w4) {
+          margin-left: 0px;
+          font-size: 14px;
+          line-height: 16.8px;
+          margin-top: 5px;
+        }
+
+        a {
+          text-decoration: none;
+          color: var(--ColorLink);
+          margin-left: 5px;
+          cursor: pointer;
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
 }

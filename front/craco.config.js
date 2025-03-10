@@ -8,9 +8,10 @@ module.exports = {
       "@pages": path.resolve(__dirname, "src/pages"),
       "@store": path.resolve(__dirname, "src/store"),
       "@styles": path.resolve(__dirname, "src/styles"),
-      "@assets": path.resolve(__dirname, "src/assets")
-    }
-  },style: {
+      "@assets": path.resolve(__dirname, "src/assets"),
+    },
+  },
+  style: {
     sass: {
       loaderOptions: {
         additionalData: `

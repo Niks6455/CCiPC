@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 /*
     directionConference - Направление конференции
@@ -13,39 +13,38 @@ import { createSlice } from "@reduxjs/toolkit";
 */
 
 const keys = [
-  "name",
-  "directionConference",
-  "formParticipation",
-  "participationStatus",
-  "fileArticle",
-  "fileExpertOpinion",
-  "comments",
-  "soauthors",
-  "organization",
+  'name',
+  'directionConference',
+  'formParticipation',
+  'participationStatus',
+  'fileArticle',
+  'fileExpertOpinion',
+  'comments',
+  'soauthors',
+  'organization',
 ];
 
 const keysCoauthors = [
-  "name",
-  "surname",
-  "patronymic",
-  "organization",
-  "email",
-  "phone",
-  "formParticipation",
+  'name',
+  'surname',
+  'patronymic',
+  // "organization",
+  'email',
+  // "phone",
+  // "formParticipation",
 ];
 
 //! функция расчета sliderState
-const calculateSliderState = (state) => {
+const calculateSliderState = state => {
   let slider = 0;
   let length = keys.length;
-  keys.map((key) => {
-    if (key === "soauthors") {
-      if (state.data.soauthors.length > 0) {
-        length =
-          keys.length - 1 + state.data.soauthors.length * keysCoauthors.length;
-        state.data.soauthors.map((author) => {
-          keysCoauthors.map((key) => {
-            if (author.data[key] !== "" && author.data[key] !== null) {
+  keys.map(key => {
+    if (key === 'soauthors') {
+      if (state.data?.soauthors?.length > 0) {
+        length = keys.length - 1 + state.data.soauthors.length * keysCoauthors.length;
+        state.data.soauthors.map(author => {
+          keysCoauthors.map(key => {
+            if (author.data[key] !== '' && author.data[key] !== null) {
               slider += 1;
             }
           });
@@ -54,7 +53,7 @@ const calculateSliderState = (state) => {
         length = keys.length - 1;
       }
     } else {
-      if (state.data[key] !== "" && state.data[key] !== null) {
+      if (state.data[key] !== '' && state.data[key] !== null) {
         slider += 1;
       }
     }
@@ -63,24 +62,24 @@ const calculateSliderState = (state) => {
 };
 
 const reportCreateSlice = createSlice({
-  name: "reportCreate",
+  name: 'reportCreate',
   initialState: {
     data: {
-      id: "id1",
-      status: "save",
+      id: 'id1',
+      status: 'save',
       number: 1,
-      name: "",
-      directionConference: "",
-      formParticipation: "",
-      participationStatus: "",
+      name: '',
+      directionConference: '',
+      formParticipation: '',
+      participationStatus: '',
       fileArticle: null,
       fileExpertOpinion: null,
-      comments: "",
+      comments: '',
       soauthors: [],
-      organization: "",
+      organization: '',
     },
     sliderState: 0,
-    openPopUpName: "",
+    openPopUpName: '',
   },
 
   reducers: {
@@ -91,20 +90,39 @@ const reportCreateSlice = createSlice({
       state.sliderState = calculateSliderState(state);
     },
 
+    disSetResetReport(state) {
+      state.data = {
+        id: 'id1',
+        status: 'save',
+        number: 1,
+        name: '',
+        directionConference: '',
+        formParticipation: '',
+        participationStatus: '',
+        fileArticle: null,
+        fileExpertOpinion: null,
+        comments: '',
+        soauthors: [],
+        organization: '',
+      };
+      state.sliderState = 0;
+      state.openPopUpName = '';
+    },
+
     addSoauthors(state) {
       state.data.soauthors = [
         ...state.data.soauthors,
         {
           data: {
-            name: "",
-            surname: "",
-            patronymic: "",
-            organization: "",
-            email: "",
-            phone: "",
-            formParticipation: "",
+            name: '',
+            surname: '',
+            patronymic: '',
+            organization: '',
+            email: '',
+            phone: '',
+            formParticipation: '',
           },
-          autocompletion: "",
+          autocompletion: '',
         },
       ];
       //! считаем прогресс
@@ -127,44 +145,27 @@ const reportCreateSlice = createSlice({
     },
 
     funSaveDataState(state) {
-      //! определяем есть ли соавторы с одинаковой почтой
-      const emails = state.data.soauthors.map(
-        (soauthor) => soauthor.data.email
+      const emails = state.data.soauthors.map(soauthor => soauthor.data.email);
+      if (new Set(emails).size !== emails.length) {
+        state.openPopUpName = 'SameEmail';
+        return;
+      }
+
+      const hasEmptyCoauthor = state.data.soauthors.some(coauthor =>
+        keysCoauthors.some(key => coauthor.data[key] === '' || coauthor.data[key] === null),
       );
-      const uniqueEmails = new Set(emails);
-      if (emails.length !== uniqueEmails.size) {
-        state.openPopUpName = "SameEmail";
+
+      if (hasEmptyCoauthor) {
+        state.openPopUpName = 'NotFullyFilledCoauthors';
         return;
       }
 
-      //! проверяем что есть соавторы но их поля заполненны не полностью
-      if (state.data.soauthors.length > 0) {
-        let modal = "";
-        state.data.soauthors.map((soauthor) => {
-          keysCoauthors.map((key) => {
-            if (soauthor.data[key] === "" || soauthor.data[key] === null) {
-              modal = "NotFullyFilledCoauthors";
-              return;
-            }
-          });
-        });
-        if (modal === "NotFullyFilledCoauthors") {
-          state.openPopUpName = modal;
-          return;
-        }
-      }
-
-      //! проверим что все поля заполненны корректно и полностью
-      if (state.sliderState === 100) {
-        state.openPopUpName = "SuccessModal";
-        return;
-      }
-
-      //! поля заполненны но не полностью
       if (state.sliderState < 100) {
-        state.openPopUpName = "NotFullyFilled";
+        state.openPopUpName = 'NotFullyFilled';
         return;
       }
+
+      state.openPopUpName = 'SuccessModal';
     },
 
     setOpenPopUpName(state, action) {
@@ -182,7 +183,7 @@ const reportCreateSlice = createSlice({
       const { data } = action.payload;
       state.data = data;
       state.sliderState = 0;
-      state.openPopUpName = "";
+      state.openPopUpName = '';
     },
   },
 });
@@ -196,6 +197,7 @@ export const {
   funSaveDataState,
   setCoauthorAutocompletion,
   disEditReport,
+  disSetResetReport,
 } = reportCreateSlice.actions;
 
 export default reportCreateSlice.reducer;

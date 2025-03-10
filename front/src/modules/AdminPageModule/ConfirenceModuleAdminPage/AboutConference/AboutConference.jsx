@@ -1,7 +1,7 @@
-import styles from "./AboutConference.module.scss";
+import styles from './AboutConference.module.scss';
 
 function AboutConference({ data, setData }) {
-  const funChangeAbout = (e) => {
+  const funChangeAbout = e => {
     setData({ ...data, aboutConference: e.target.value });
   };
 

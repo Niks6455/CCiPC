@@ -1,7 +1,15 @@
-@import "./mixin.scss";
+@import './mixin.scss';
 .ConfirenceModuleAdminPage {
   h2 {
     @include titleH2;
     margin-bottom: 40px;
+  }
+  .buttons {
+    display: flex;
+    justify-content: end;
+    .buttons_inner {
+      display: flex;
+      flex-direction: row;
+    }
   }
 }

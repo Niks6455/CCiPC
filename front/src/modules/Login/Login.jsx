@@ -1,45 +1,45 @@
-import React, { useContext, useState } from "react";
-import Input from "../../ui/Input/Input";
-import styles from "./Login.module.scss";
-import DataContext from "../../context";
-import { useNavigate } from "react-router-dom";
-import logo from "./../../assets/img/logo.png";
-import sfeduLogo from "./../../assets/img/SfeduLogo.svg";
-import { LoginFunc, sandResetPassword } from "../../apirequests/apirequests";
+import React, { useContext, useState } from 'react';
+import Input from '../../ui/Input/Input';
+import styles from './Login.module.scss';
+import DataContext from '../../context';
+import { useNavigate } from 'react-router-dom';
+import logo from './../../assets/img/logo.png';
+import sfeduLogo from './../../assets/img/SfeduLogo.svg';
+import { LoginFunc, sandResetPassword } from '../../apirequests/apirequests';
 function Login(props) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
   const [errors, setErrors] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
 
     // Очистка ошибки при изменении значения
-    setErrors({ ...errors, [name]: "" });
+    setErrors({ ...errors, [name]: '' });
   };
 
   const validate = () => {
     let isValid = true;
     const newErrors = {};
     if (!formData.email) {
-      newErrors.email = "Введите Email*";
+      newErrors.email = 'Введите Email*';
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Некорректный Email*";
+      newErrors.email = 'Некорректный Email*';
       isValid = false;
     }
 
     if (!formData.password) {
-      newErrors.password = "Введите пароль*";
+      newErrors.password = 'Введите пароль*';
       isValid = false;
     }
 
@@ -50,9 +50,9 @@ function Login(props) {
   const handleSubmit = () => {
     // navigate("/HomePage");
     if (validate()) {
-      LoginFunc(formData).then((data) => {
+      LoginFunc(formData).then(data => {
         if (data?.status === 200) {
-          navigate("/");
+          navigate('/');
           props.funGetAllApi();
         }
       });
@@ -90,7 +90,14 @@ function Login(props) {
             autoComplete={true}
           />
           <div className={styles.forgetPassword}>
-            <p onClick={() => {navigate("/recoverpassword"); sandResetPassword()}}>Забыли пароль?</p>
+            <p
+              onClick={() => {
+                navigate('/recoverpassword');
+                sandResetPassword();
+              }}
+            >
+              Забыли пароль?
+            </p>
           </div>
         </div>
       </div>
@@ -114,7 +121,7 @@ function Login(props) {
       </div>
       <div className={styles.noAccount}>
         <p>Еще нет аккаунта?</p>
-        <p onClick={() => context.setAuthPage("Register")}>Зарегистрируйтесь</p>
+        <p onClick={() => context.setAuthPage('Register')}>Зарегистрируйтесь</p>
       </div>
     </section>
   );

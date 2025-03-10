@@ -1,136 +1,142 @@
 .CardOrganization {
-    width: 362px;
-    height: 737px;
-    background-color: #fff;
-    border-radius: 30px;
-    position: relative;
-    padding: 20px;
-    box-sizing: border-box;
-  
-    .CardOrganizationInner {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-        .CardOrganizationInnerImg{
-            position: relative;
-            .CardOrganizationInnerImgInput{
-                position: absolute;
-                top: 0;
-                left: 0;
-                opacity: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 322px !important;
-                height: 322px !important;
-                cursor: pointer;
-                transition: 0.1s linear all;
-                &:hover{
-                    opacity: 1;
-                    backdrop-filter: blur(5px);
-                }
-                img{
-                    width: 50px !important;
-                    height: 50px !important;
-                    margin: 0px 10px;
-                    cursor: pointer;
-                    transition: 0.1s linear all;
-                    &:hover{
-                        opacity: 0.6;
-                    }
-                }
-            }
-            
+  width: 362px;
+  height: 579px;
+  background-color: #fff;
+  border-radius: 30px;
+  position: relative;
+  padding: 20px;
+  box-sizing: border-box;
 
-        }
-      .Img {
-        width: 322px !important;
-        height: 322px !important;
-        object-fit: contain;
-        border-radius: 10px;
-      }
-  
-      .CardOrganizationInnerInfo {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        margin-top: 10px;
-        
-        label {
-          font-size: 18px;
-          margin-bottom: 10px;
-          font-weight: 500;
-        }
-  
-        input, textarea {
-          font-size: 18px;
-          padding: 20px;
-          border: 1px solid var(--InputColors);
-          color: #333;
-          border-radius: 10px;
-          &::placeholder {
-            color: var(--InputTextColor);
-          }
-        }
-  
-        textarea {
-          height: auto;
-          max-height: 145px;
-          resize: none;
-        }
-      }
-  
-      .buttonContainer {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 20px;
-        opacity: 0; // Начальное состояние для анимации
-        height: 0;
-        overflow: hidden;
+  .CardOrganizationInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .CardOrganizationInnerImg {
+      position: relative;
+      .CardOrganizationInnerImgInput {
         position: absolute;
-        bottom: 17px;
-        width: calc(100% - 40px);
-        button {
-          width: 100%;
-          padding: 15px;
-          font-size: 20px;
-          border-radius: 10px;
-          border: none;
-          cursor: pointer;
-          font-weight: 500;
-        }
-  
-        .cancel {
-          background-color: #00452914;
-          color: #333;
-        
-          &:hover {
-            background-color: #cfcfcf;
-          }
-        }
-  
-        .save {
-          @include ButtonGreen();
-        }
-      }
-  
-      .delete {
-        position: absolute;
-        bottom: 20px;
-        width: calc(100% - 40px);
+        top: 0;
+        left: 0;
+        opacity: 0;
         display: flex;
-        justify-content: center;
         align-items: center;
-        height: 52px;
-         @include ButtonRedBorder();
+        justify-content: center;
+        width: 322px !important;
+        height: 230px !important;
+        cursor: pointer;
+        transition: 0.1s linear all;
+        &:hover {
+          opacity: 1;
+          backdrop-filter: blur(5px);
+        }
         img {
-          width: 24px!important;
-          height: 24px!important;
-          margin-left: 10px;
+          width: 50px !important;
+          height: 50px !important;
+          margin: 0px 10px;
+          cursor: pointer;
+          transition: 0.1s linear all;
+          &:hover {
+            opacity: 0.6;
+          }
         }
       }
     }
+    .Img {
+      width: 322px !important;
+      height: 230px !important;
+      object-fit: contain;
+      border-radius: 10px;
+    }
+
+    .CardOrganizationInnerInfo {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 10px;
+      position: relative;
+      .error {
+        position: absolute;
+        color: var(--ErrorColor);
+        background-color: #fff;
+        padding: 5px;
+        top: 16px;
+        right: 15px;
+      }
+      label {
+        font-size: 18px;
+        margin-bottom: 10px;
+        font-weight: 500;
+      }
+
+      input,
+      textarea {
+        font-size: 18px;
+        padding: 15px;
+        border: 1px solid var(--InputColors);
+        color: #333;
+        border-radius: 10px;
+        &::placeholder {
+          color: var(--InputTextColor);
+        }
+      }
+
+      textarea {
+        height: auto;
+        max-height: 135px;
+        resize: none;
+      }
+    }
+
+    .buttonContainer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+      opacity: 0; // Начальное состояние для анимации
+      height: 0;
+      overflow: hidden;
+      position: absolute;
+      bottom: 17px;
+      width: calc(100% - 40px);
+      button {
+        width: 100%;
+        padding: 15px;
+        font-size: 20px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .cancel {
+        background-color: #00452914;
+        color: #333;
+
+        &:hover {
+          background-color: #cfcfcf;
+        }
+      }
+
+      .save {
+        @include ButtonGreen();
+      }
+    }
+
+    .delete {
+      position: absolute;
+      bottom: 20px;
+      width: calc(100% - 40px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 52px;
+      @include ButtonRedBorder();
+      img {
+        width: 24px !important;
+        height: 24px !important;
+        margin-left: 10px;
+      }
+    }
   }
-  
+}

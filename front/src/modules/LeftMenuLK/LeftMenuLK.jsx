@@ -1,30 +1,30 @@
-import { useContext, useState } from "react";
-import styles from "./LeftMenuLK.module.scss";
-import DataContext from "../../context";
-import logo from "./../../assets/img/logo.png";
-import { useNavigate } from "react-router-dom";
-import documentImg from "./../../assets/img/UI/document.png";
-import exitImg from "./../../assets/img/UI/exit.png";
-import deleteImg from "./../../assets/img/UI/delete.png";
-import SettingsImg from "./../../assets/img/UI/settings.png";
-import ArchiveiMG from "./../../assets/img/UI/archive.png";
-import Lk from "./../../assets/img/UI/lk.png";
-import { ReactComponent as BlackArrowBottom } from "./../../assets/img/UI/blackArrowBottom.svg";
-import { useSelector } from "react-redux";
+import { useContext, useState } from 'react';
+import styles from './LeftMenuLK.module.scss';
+import DataContext from '../../context';
+import logo from './../../assets/img/logo.png';
+import { useNavigate } from 'react-router-dom';
+import documentImg from './../../assets/img/UI/document.png';
+import exitImg from './../../assets/img/UI/exit.png';
+import deleteImg from './../../assets/img/UI/delete.png';
+import SettingsImg from './../../assets/img/UI/settings.png';
+import ArchiveiMG from './../../assets/img/UI/archive.png';
+import Lk from './../../assets/img/UI/lk.png';
+import { ReactComponent as BlackArrowBottom } from './../../assets/img/UI/blackArrowBottom.svg';
+import { useSelector } from 'react-redux';
 
 function LeftMenuLk() {
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
   const [dokladOpen, setDokladOpen] = useState(false);
   const navigate = useNavigate();
-  const reports = useSelector((state) => state.reportsSlice);
+  const reports = useSelector(state => state.reportsSlice);
 
   //! появление названия
   const [showTooltip, setShowTooltip] = useState(null);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
 
-  const handleMouseEnter = (index) => {
+  const handleMouseEnter = index => {
     // Устанавливаем таймер для задержки
     const timeout = setTimeout(() => {
       setShowTooltip(index);
@@ -39,60 +39,44 @@ function LeftMenuLk() {
     setShowTooltip(null);
   };
 
-  const handleMouseMove = (event) => {
+  const handleMouseMove = event => {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
   return (
     <section className={styles.LeftMenuLk}>
       <div className={styles.LeftMenuLkInner}>
-        <img
-          src={logo}
-          className={styles.LogoImg}
-          onClick={() => navigate("/")}
-        />
+        <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
         <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
         <ul className={styles.LeftMenuLkList}>
           <li
-            className={
-              context.selectFrameLks === "profile" ? styles.Active : ""
-            }
+            className={context.selectFrameLks === 'profile' ? styles.Active : ''}
             onClick={() => {
-              context.setSelectFrameLks("profile");
-              navigate("profile");
+              context.setSelectFrameLks('profile');
+              navigate('profile');
             }}
           >
             <img src={Lk} /> Профиль
           </li>
           <li
-            className={
-              context.selectFrameLks === "documents" ? styles.Active : ""
-            }
+            className={context.selectFrameLks === 'documents' ? styles.Active : ''}
             onClick={() => {
-              navigate("documents");
+              navigate('documents');
               setDokladOpen(!dokladOpen);
-              context.setSelectFrameLks("documents");
+              context.setSelectFrameLks('documents');
             }}
           >
             <img src={documentImg} />
             <span>Мои доклады</span>
-            <BlackArrowBottom
-              className={`${styles.arrow} ${dokladOpen ? styles.open : ""}`}
-            />
+            <BlackArrowBottom className={`${styles.arrow} ${dokladOpen ? styles.open : ''}`} />
           </li>
-          <div
-            className={`${styles.listSetings} ${
-              dokladOpen && styles.setingOpen
-            }`}
-          >
+          <div className={`${styles.listSetings} ${dokladOpen && styles.setingOpen}`}>
             {reports.data.map((rep, index) => (
               <li
                 key={index}
                 onMouseEnter={() => handleMouseEnter(index)}
                 onMouseLeave={() => handleMouseLeave()}
                 onMouseMove={handleMouseMove}
-                onClick={() =>
-                  navigate(`viewreports?idReport=${rep.id}&number=${index + 1}`)
-                }
+                onClick={() => navigate(`viewreports?idReport=${rep.id}&number=${index + 1}`)}
               >
                 {index === showTooltip && (
                   <div
@@ -110,83 +94,61 @@ function LeftMenuLk() {
             ))}
           </div>
           <li
-            className={
-              context.selectFrameLks === "ArchivPhoto" ? styles.Active : ""
-            }
+            className={context.selectFrameLks === 'ArchivPhoto' ? styles.Active : ''}
             onClick={() => {
-              context.setSelectFrameLks("ArchivPhoto");
-              navigate("archivephoto");
+              context.setSelectFrameLks('ArchivPhoto');
+              navigate('archivephoto');
             }}
           >
             <img src={ArchiveiMG} /> Архив фото
           </li>
           <li
-            className={
-              context.selectFrameLks === "settings" ? styles.Active : ""
-            }
+            className={context.selectFrameLks === 'settings' ? styles.Active : ''}
             onClick={() => {
-              context.setSelectFrameLks("settings");
+              context.setSelectFrameLks('settings');
               setSetingOpen(!setingOpen);
-              context.setSelectFrameLks("settings");
+              context.setSelectFrameLks('settings');
             }}
           >
             <img src={SettingsImg} />
             <span>Настройки</span>
-            <BlackArrowBottom
-              className={`${styles.arrow} ${setingOpen ? styles.open : ""}`}
-            />
+            <BlackArrowBottom className={`${styles.arrow} ${setingOpen ? styles.open : ''}`} />
           </li>
-          <div
-            className={`${styles.listSetings} ${
-              setingOpen && styles.setingOpen
-            }`}
-          >
+          <div className={`${styles.listSetings} ${setingOpen && styles.setingOpen}`}>
             <li
               onClick={() => {
-                navigate("settings/profile");
-                context.setSelectFrameLks("settings/profile");
+                navigate('settings/profile');
+                context.setSelectFrameLks('settings/profile');
               }}
-              className={
-                context.selectFrameLks === "settings/profile"
-                  ? styles.Active
-                  : ""
-              }
+              className={context.selectFrameLks === 'settings/profile' ? styles.Active : ''}
             >
               Изменить профиль
             </li>
             <li
               onClick={() => {
-                navigate("settings/changepassword");
-                context.setSelectFrameLks("settings/changepassword");
+                navigate('settings/changepassword');
+                context.setSelectFrameLks('settings/changepassword');
               }}
-              className={
-                context.selectFrameLks === "settings/changepassword"
-                  ? styles.Active
-                  : ""
-              }
+              className={context.selectFrameLks === 'settings/changepassword' ? styles.Active : ''}
             >
               Сменить пароль
             </li>
           </div>
 
           <li
-            className={
-              context.selectFrameLks === "ExitAccount" ? styles.Active : ""
-            }
+            className={context.selectFrameLks === 'ExitAccount' ? styles.Active : ''}
             onClick={() => {
-              navigate("exitaccount");
-              context.setSelectFrameLks("ExitAccount");
+              navigate('exitaccount');
+              context.setSelectFrameLks('ExitAccount');
             }}
           >
             <img src={exitImg} /> Выйти из аккаунта
           </li>
           <li
-            className={
-              context.selectFrameLks === "DeleteAccount" ? styles.Active : ""
-            }
+            className={context.selectFrameLks === 'DeleteAccount' ? styles.Active : ''}
             onClick={() => {
-              navigate("deleteaccount");
-              context.setSelectFrameLks("DeleteAccount");
+              navigate('deleteaccount');
+              context.setSelectFrameLks('DeleteAccount');
             }}
           >
             <img src={deleteImg} /> Удалить аккаунт

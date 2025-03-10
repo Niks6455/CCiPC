@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styles from './UniversalTable.module.scss';
 
 function UniversalTable(props) {
@@ -33,7 +33,7 @@ function UniversalTable(props) {
         <tbody>
           {tableBodyData?.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {tableHeaderData.map((header) => (
+              {tableHeaderData.map(header => (
                 <td key={header.key} name={header.key} className={header.key}>
                   {getValue(row[header.key], header.key, rowIndex, row.id, row)}
                 </td>

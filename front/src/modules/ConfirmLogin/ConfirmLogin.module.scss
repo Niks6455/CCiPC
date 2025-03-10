@@ -1,113 +1,232 @@
-@import "../../styles/colors.scss";
+$w1: 780px;
+$w2: 540px;
 
-.ConfirmLoginLogo{
-    display: flex;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 40px;
+.ConfirmLoginLogo {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 70px;
+  img {
+    width: 150px;
+  }
+  @media (max-width: $w1) {
+    display: none;
+  }
 }
-.ConfirmLoginTitle{
-    p{
-        text-align: center;
-        color: var(--GrayTextDefault);
-        &:first-child{
-            font-size: 32px;
-            line-height: 38px;
-            font-weight: 900;
-            margin: 40px 0px 20px 0px;
-        }
-    }
-}
-.ConfirmLoginGalca{
-    display: flex;
-    justify-content: center;
-    margin-bottom: 70px;
-    .ConfirmLoginGalcaImg{
-        display: flex;
-        justify-content: center;
-        margin: 40px 0px;
- 
-    }
-    p{
-        max-width: 856px;
+.ConfirmLoginTitle {
+  @media (max-width: $w1) {
+    margin-top: 74px;
+  }
+  @media (max-width: $w2) {
+    margin-top: 14px;
+  }
+
+  p {
+    text-align: center;
+    color: var(--GrayTextDefault);
+    &:first-child {
+      font-size: 32px;
+      line-height: 38px;
+      font-weight: 900;
+      @media (max-width: $w1) {
         font-size: 20px;
-        color: var(--GrayTextDefault);
+      }
+      @media (max-width: $w2) {
+        max-width: 310px;
+        margin: 0 auto;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 120%;
+        letter-spacing: 0%;
+        text-align: center;
+      }
     }
-    .mail{
-        color: var(--GreenLinkSecond);
-    }
+  }
 }
-.code{
+.ConfirmLoginGalca {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 70px;
+  @media (max-width: $w1) {
+    margin-bottom: 40px;
+  }
+  .ConfirmLoginGalcaImg {
     display: flex;
     justify-content: center;
-    margin-bottom: 70px;
+    margin: 40px 0px;
+    @media (max-width: $w1) {
+      margin: 30px 0px;
+    }
+    @media (max-width: $w2) {
+      img {
+        width: 64px;
+        height: 64px;
+      }
+    }
+  }
+  p {
+    text-align: center;
+    max-width: 856px;
     font-size: 20px;
     color: var(--GrayTextDefault);
+    @media (max-width: $w1) {
+      max-width: 495px;
+    }
+    @media (max-width: $w2) {
+      font-size: 16px;
+      width: calc(100vw - 40px);
+    }
+  }
+  .mail {
+    color: var(--GreenLinkSecond);
+  }
 }
-.codeInput{
-    display: flex;
-    justify-content: center;
-    color: var(--GrayTextDefault);
-    .codeInputInner{
-        display: flex;
-        justify-content: space-between;
-        width: 634px;
-    }
-    input{
-        width: 79px;
-        border: none;
-        border-bottom: 3px  solid var(--GrayTextDefault);
-        height: 100px;
-        font-size: 84px;
-        line-height: 100px;
-        text-align: center;
-        background-color: inherit;
-        &:focus{
-            outline: none;
-        }
-    }
-    .error{
-        border-bottom: 3px  solid var(--ErrorColor);
-    }
+.code {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 70px;
+  font-size: 20px;
+  color: var(--GrayTextDefault);
+  @media (max-width: $w1) {
+    margin-bottom: 40px;
+  }
+  @media (max-width: $w2) {
+    font-size: 16px;
+  }
 }
-.CodeSubmit{
+.codeInput {
+  display: flex;
+  justify-content: center;
+  color: var(--GrayTextDefault);
+  .codeInputInner {
     display: flex;
-    justify-content: center;
-    margin-top: 30px;
-    .CodeSubmitCode{
-        display: flex;
-        font-size: 18px;
-        button{
-            border: none;
-            font-size: 18px;
-            background-color: inherit;
-        }
-        p{
-            margin-left: 5px;
-            color: var(--GreenColorDefault);
-            font-size: 18px;
-        }
+    justify-content: space-between;
+    width: 634px;
+    @media (max-width: $w1) {
+      max-width: 512px;
     }
+    @media (max-width: $w2) {
+      width: calc(100vw - 40px);
+    }
+  }
+  input {
+    width: 79px;
+    border: none;
+    border-bottom: 3px solid var(--GrayTextDefault);
+    height: 100px;
+    font-size: 84px;
+    line-height: 100px;
+    text-align: center;
+    background-color: inherit;
+    &:focus {
+      outline: none;
+    }
+    @media (max-width: $w1) {
+      width: 64px;
+      font-family: Overpass, sans-serif;
+      font-weight: 200;
+      font-size: 67.84px;
+    }
+    @media (max-width: $w2) {
+      width: calc((80vw - 40px) / 6);
+      height: 50px;
+      font-weight: 200;
+      font-size: 46.37px;
+    }
+  }
+  .error {
+    border-bottom: 3px solid var(--ErrorColor);
+  }
 }
-.submitButton{
+.CodeSubmit {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  .CodeSubmitCode {
     display: flex;
+    font-size: 18px;
+    button {
+      border: none;
+      font-size: 18px;
+      background-color: inherit;
+      @media (max-width: $w2) {
+        font-size: 14px;
+      }
+    }
+    p {
+      margin-left: 5px;
+      color: var(--GreenColorDefault);
+      font-size: 18px;
+      @media (max-width: $w2) {
+        font-size: 14px;
+      }
+    }
+  }
+}
+.submitButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 30px 0px 130px 0px;
+  @media (max-width: $w1) {
+    margin: 0;
+    margin-bottom: 100px;
+  }
+  @media (max-width: $w2) {
+    width: calc(100vw - 40px);
+    margin: 0 auto;
+    margin-bottom: 100px;
+  }
+
+  .error_auth {
+    margin-top: 5px;
+    color: #b32020;
+    font-family: Overpass, sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    text-align: center;
+    height: 34px;
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: center;
-    margin: 30px 0px 130px 0px;
-    button{
-        border: none;
-        border-radius: 10px;
-        background-color: var(--GreenColorDefault);
-        cursor: pointer;
-        color: #fff;
-        width: 634px;
-        height: 66px;
-        font-size: 22px;
-        &:hover{
-            background-color: var(--GreenColorHover);
-        }
-        &:active{
-            background-color: var(--GreenColorActive);
-        }
+    @media (max-width: $w2) {
+      font-size: 14px;
     }
+    img {
+      margin-right: 5px;
+      width: 34px;
+      height: 34px;
+      @media (max-width: $w2) {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  button {
+    border: none;
+    border-radius: 10px;
+    background-color: var(--GreenColorDefault);
+    cursor: pointer;
+    color: #fff;
+    width: 634px;
+    height: 66px;
+    font-size: 22px;
+    &:hover {
+      background-color: var(--GreenColorHover);
+    }
+    &:active {
+      background-color: var(--GreenColorActive);
+    }
+    @media (max-width: $w1) {
+      margin: 0 auto;
+      margin-top: 40px;
+      max-width: 400px;
+      width: 100%;
+      height: 54px;
+    }
+    @media (max-width: $w2) {
+      font-size: 16px;
+    }
+  }
 }

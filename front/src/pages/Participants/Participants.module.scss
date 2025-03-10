@@ -1,6 +1,6 @@
 .Participants {
   margin: 100px 0px 70px 0px;
-  min-height: calc(100vh - 426px);
+  @include maxMinContent(170px);
   .Title {
     display: flex;
     justify-content: center;

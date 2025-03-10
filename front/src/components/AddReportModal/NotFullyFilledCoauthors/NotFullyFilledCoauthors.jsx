@@ -1,18 +1,18 @@
-import { useDispatch } from "react-redux";
-import styles from "./NotFullyFilledCoauthors.module.scss";
-import { setOpenPopUpName } from "../../../store/reportCreateSlice/reportCreateSlice";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import styles from './NotFullyFilledCoauthors.module.scss';
+import { setOpenPopUpName } from '../../../store/reportCreateSlice/reportCreateSlice';
+import { useNavigate } from 'react-router-dom';
 
 function NotFullyFilledCoauthors() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const funCloseModal = () => {
-    dispatch(setOpenPopUpName({ name: "" }));
+    dispatch(setOpenPopUpName({ name: '' }));
   };
 
   const funSaveData = () => {
-    dispatch(setOpenPopUpName({ name: "" }));
-    navigate("/account/profile");
+    dispatch(setOpenPopUpName({ name: '' }));
+    navigate('/account/profile');
   };
 
   return (
