@@ -19,6 +19,11 @@ const ajv = new Ajv()
 }
 
 
+function validateName(name) {
+    const nameRegex = /^[a-zA-Zа-яА-ЯёЁ-]{1,50}$/;
+    return nameRegex.test(name);
+}
+
 function validateEmail(email) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     return emailRegex.test(email);
@@ -32,7 +37,8 @@ function checkValidate(objects) {
     for (const obj of objects) {
 
         const email = obj.email;
-
+        if(!validateName(obj.name)) throw new AppErrorInvalid('name')
+        if(!validateName(obj.surname)) throw new AppErrorInvalid('surname')
         if(!validateEmail(email)) throw new AppErrorInvalid('email')
         const valid = validate(obj);
 
