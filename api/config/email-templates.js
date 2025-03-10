@@ -10,5 +10,10 @@ export default {
         template: (code) =>
             `<h1>Здраствуйте! Код для восстановления пароля на платформе CCPC.</h1>
 <p><strong>${code}</strong></p>`,
+    },
+    report: {
+        subject: 'Report on conference',
+        template: (fio) => `<h1>Здраствуйте! ${fio} вас добавили соавтором в доклад на конфиренцию, пройдите регистрацию на платформе CCPC и заполните необходимую информацию в личном кабинете.</h1>
+<p><strong>${process.env.WEB_URL}</strong></p>`,
     }
 }
