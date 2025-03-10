@@ -169,7 +169,6 @@ export default {
         const urls= files.map(file=>file.path)
         if (typesPhoto[type] === 6) {
                 const org = [conference?.organization, ...urls].filter(Boolean); // Убираем возможные undefined значения
-                console.log(org);
                 await conference.update({ organization: org });
             }
         if (typesPhoto[type] === 7) {

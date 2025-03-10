@@ -7,7 +7,7 @@ import {sequelize} from "../models/index.js";
 import fs from "fs";
 
 export default {
-    async find() {
+    async find(conferenceId) {
         const subquery = await CommitteeInConference.findAll({
             attributes: [
                 'type',
@@ -33,9 +33,7 @@ export default {
                             as: "conference",
                             required: true,
                             where: {
-                                date: {
-                                    [Op.gte]: new Date(),
-                                },
+                               id: conferenceId
                             },
                         },
                     ],
@@ -47,15 +45,8 @@ export default {
         return result
     },
 
-    async create(infoCommittee){
-        const conference = await Conference.findOne({
-            where: {
-                date: {
-                    [Op.gte]: new Date(), // Ищем события, которые происходят сегодня или позже
-                },
-            },
-            order: [['date', 'ASC']], // Сортируем по дате в порядке возрастания
-        })
+    async create(infoCommittee, conferenceId){
+        const conference = await Conference.findByPk(conferenceId)
 
         if(!conference) throw  new AppErrorNotExist('conference')
 

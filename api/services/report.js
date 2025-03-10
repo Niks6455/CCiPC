@@ -6,17 +6,11 @@ import ParticipantInConference from "../models/participant-in-conference.js";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import cache from "../utils/cache.js";
 import Participant from "../models/participant.js";
+import sendMail from "./email.js";
 export default {
-    async create( reportInfo, participant) {
+    async create( reportInfo, conferenceId, participant) {
 
-        const conference = await Conference.findOne({
-            where: {
-                date: {
-                    [Op.gte]: new Date(), // Ищем события, которые происходят сегодня или позже
-                },
-            },
-            order: [['date', 'ASC']], // Сортируем по дате в порядке возрастания
-        });
+        const conference = await Conference.findByPk(conferenceId);
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
@@ -61,6 +55,7 @@ export default {
         if(reportInfo?.coAuthors?.length > 0){
 
             const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
+
 
             const participantsExist = await Participant.findAll({
             where: {
@@ -108,6 +103,10 @@ export default {
             }
 
             emailsNotInDatabase.forEach(email => {
+                const person= reportInfo.coAuthors.find(user=>user.email === email)
+                if(person){
+                    sendMail(email, 'report', `${person?.surname} ${person?.name} ${person?.patronymic ? person?.patronymic : ''}`.trim(), email);
+                }
                 const reportsIds= cache[email] ?? []
                 reportsIds.push(report.id)
                 cache[email]=[...new Set(reportsIds)];
@@ -236,11 +235,11 @@ export default {
                     const participantInConferencePromises = participantsExistIds.map(participantId => {
                         return ParticipantInConference.findOrCreate({
                             where: {
-                                conferenceId: conference.id,
+                                conferenceId: report.conferenceId,
                                 participantId: participantId
                             },
                             defaults: {
-                                conferenceId: conference.id,
+                                conferenceId: report.conferenceId,
                                 participantId: participantId
                             }
                         });

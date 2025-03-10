@@ -19,6 +19,16 @@ const ajv = new Ajv()
 }
 
 
+function validateName(name) {
+    const nameRegex = /^[a-zA-Zа-яА-ЯёЁ-]{1,50}$/;
+    return nameRegex.test(name);
+}
+
+function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+
 const validate = ajv.compile(schemaCoAuthors)
 
 function checkValidate(objects) {
@@ -27,7 +37,9 @@ function checkValidate(objects) {
     for (const obj of objects) {
 
         const email = obj.email;
-
+        if(!validateName(obj.name)) throw new AppErrorInvalid('name')
+        if(!validateName(obj.surname)) throw new AppErrorInvalid('surname')
+        if(!validateEmail(email)) throw new AppErrorInvalid('email')
         const valid = validate(obj);
 
         if(!valid) throw new AppErrorInvalid('coAuthors')
@@ -42,7 +54,7 @@ function checkValidate(objects) {
 }
 export default {
 
-    async create({body: {name, form, direction, organization, comment, status, coAuthors }, user}, res) {
+    async create({body: {name, form, direction, organization, comment, status, coAuthors, conferenceId }, user}, res) {
 
         if (!name) throw new AppErrorMissing('name')
         if (!form) throw new AppErrorMissing('form')
@@ -50,10 +62,11 @@ export default {
         if(!organization) throw new AppErrorMissing('organization')
         if(!status) throw new AppErrorMissing('status')
         if(!comment) throw new AppErrorMissing('comment')
+        if(!conferenceId) throw new AppErrorMissing('conferenceId')
 
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
 
-        const  report =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, user)
+        const  report =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, conferenceId, user)
 
         res.json({ report: report })
     },

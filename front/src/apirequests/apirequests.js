@@ -1,5 +1,9 @@
 import api from './axios';
-export const server = 'http://localhost:3000';
+// export const server = 'http://localhost:3000';
+// export const server = `${window.location.href}`;
+export const server = `${window.location.href}/api`;
+
+
 
 //! Запрос на Выход
 export const logout = async () => {
