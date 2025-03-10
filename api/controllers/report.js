@@ -19,6 +19,11 @@ const ajv = new Ajv()
 }
 
 
+function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+
 const validate = ajv.compile(schemaCoAuthors)
 
 function checkValidate(objects) {
@@ -28,6 +33,7 @@ function checkValidate(objects) {
 
         const email = obj.email;
 
+        if(!validateEmail(email)) throw new AppErrorInvalid('email')
         const valid = validate(obj);
 
         if(!valid) throw new AppErrorInvalid('coAuthors')

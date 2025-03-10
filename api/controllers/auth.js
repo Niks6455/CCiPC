@@ -8,6 +8,11 @@ const atLeastOneDigit = /\d/,
     atLeastOneSpecial = /[!@_#$%^&*]/,
     otherChars = /[^0-9a-zA-Z!@_#$%^&*]/g;
 
+function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+}
+
 export default {
 
     async login({body: {email, password}}, res) {
@@ -33,8 +38,10 @@ export default {
             password.length >= 8 &&
             password.length <= 20;
 
-        if (!isValid) throw new AppErrorInvalid('password');
 
+
+        if (!isValid) throw new AppErrorInvalid('password');
+        if(!validateEmail(email)) throw new AppErrorInvalid('email')
 
         if(!name) throw new AppErrorMissing('name')
         if(!surname) throw new AppErrorMissing('surname')
@@ -56,6 +63,8 @@ export default {
 
     async checkEmail({body: { email, code, type }}, res) {
         if(!email) throw new AppErrorMissing('email')
+        if(!validateEmail(email)) throw new AppErrorInvalid('email')
+
         if(!code) throw new AppErrorMissing('code')
         if(type === undefined) throw new AppErrorMissing('type')
         const { participant, token } = await authService.checkEmail(email, code, type)
@@ -71,13 +80,13 @@ export default {
 
     async sandCodeChangePassword({body:  { email } }, res){
         if(!email) throw new AppErrorMissing('email')
+        if(!validateEmail(email)) throw new AppErrorInvalid('email')
         const code = randomCode(6, '0123456789');
         await authService.sandCodeChangePassword(email, code)
         res.json({status: 'Ok'})
     },
 
     async reset({ body: {currentPassword, newPassword, repeatPassword, code, email }, user}, res) {
-
         if(newPassword !== repeatPassword || newPassword === undefined) throw new AppErrorInvalid('newPassword')
         if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
         if(!user && (!code || !email)) throw new AppErrorMissing('code')
