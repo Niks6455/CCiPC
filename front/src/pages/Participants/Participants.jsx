@@ -6,9 +6,12 @@ import styles from './Participants.module.scss';
 import { useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import Search from '../../assets/img/search.svg';
+import { useSelector } from 'react-redux';
+import TableDataAll from '../../components/TableDataAll/TableDataAll.jsx';
 function Participants() {
   const [filter, setFilter] = useState('');
   const [filteredTable, setFilteredTable] = useState(tableData);
+  const store = (useSelector((state) => state.participants));
 
   const searchInData = (data, searchText) => {
     return data.filter(item =>
@@ -23,6 +26,9 @@ function Participants() {
     setFilteredTable(searchInData(tableData, filter));
   }, [filter]);
 
+  useEffect(()=>{
+    console.log("store.selectParticipantsData", store.selectParticipantsData)
+  },[store.selectParticipantsData])
   return (
     <>
       <NavBar />
@@ -45,6 +51,7 @@ function Participants() {
           </div>
         </div>
       </main>
+        {store.selectParticipantsData && <TableDataAll data={store.selectParticipantsData}/>}
       <Footer />
     </>
   );
