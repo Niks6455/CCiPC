@@ -13,9 +13,8 @@ function UniversalTable(props) {
   const [initialTableBodyData, setInitialTableBodyData] = useState([]);
   const tableRef = useRef(null);
   const windowWidth = useWindowWidth();
-  const store = (useSelector((state) => state.participants));
+  const store = (useSelector((state) => state?.participants));
   const dispatch = useDispatch();
-  console.log("store", store)
   const [activeIndex, setActiveIndex] = useState(2); // Стартовый индекс для 'Направление'
 
   const values = [
@@ -41,20 +40,35 @@ function UniversalTable(props) {
     setActiveIndex((prevIndex) => (prevIndex - 1 + values.length) % values.length);
   };
 
-  const getValue = (value, key, rowIndex, rowId, row) => {
-    switch (key) {
-      case 'number':
-        return rowIndex + 1;
-      case 'vizion':
-        return (
-          <div className={styles.buttonTable}>
-            <img src={glaz} onClick={()=>dispatch(setSelectDataParticipants({data: row}))}/>
-          </div>
-        );
-      default:
-        return value || '___';
-    }
+  const splitFio = (fio) => {
+   if (Array.isArray(fio)){
+    return fio.map((name, index) => (
+      <span key={index}>{name}<br /></span>
+    ));
+   }else{
+    return fio
+   }
+   
   };
+
+  
+const getValue = (value, key, rowIndex, rowId, row) => {
+  switch (key) {
+    case 'fio':
+      return <div>{splitFio(value)}</div>;
+    case 'number':
+      return rowIndex + 1;
+    case 'vizion':
+      return (
+        <div className={styles.buttonTable}>
+          <img src={glaz} onClick={() => dispatch(setSelectDataParticipants({ data: row }))} />
+        </div>
+      );
+    default:
+      return value || '___';
+  }
+};
+  
 
   useEffect(() => {
     // Обновляем заголовок таблицы в зависимости от активного индекса
@@ -72,7 +86,9 @@ function UniversalTable(props) {
   useEffect(() => {
     const updatedHeaderData = [...initialTableHeaderData];
     const index = updatedHeaderData.findIndex(item => item.key === 'vizion');
-
+    if(windowWidth <= 580){
+      updatedHeaderData.splice(2);
+    }
     if (windowWidth <= 780) {
       updatedHeaderData.splice(3);
 
@@ -93,8 +109,8 @@ function UniversalTable(props) {
       <table>
         <thead>
           {tableHeaderData?.map((el, index) => (
-            <th key={index} name={el.key} style={{width: index === 2 && windowWidth <= 780 ? '215px' : ''}}>
-              {index === 2 && windowWidth <= 780 ? (
+            <th key={index} name={el.key} style={{width: index === 2 && windowWidth <= 780 && windowWidth >= 580 ? '215px' : ''}}>
+              {index === 2 && windowWidth <= 780 && windowWidth >= 580 ? (
                 <div className={styles.arrowTableCont}>
                   <div>
                     <img
@@ -131,13 +147,14 @@ function UniversalTable(props) {
               ))}
             </tr>
           ))}
-          {tableBodyData.length === 0 && (
+          {(!tableBodyData || tableBodyData.length === 0) && (
             <tr>
-              <td colSpan={10} className={styles.tableNotData}>
+              <td colSpan={tableHeaderData.length} className={styles.tableNotData}>
                 Нет данных
               </td>
             </tr>
           )}
+
         </tbody>
       </table>
     </div>
