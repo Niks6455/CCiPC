@@ -75,28 +75,28 @@ function ConfirenceModuleAdminPage() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('conferenceId', conferenseId);
-    uploadPhoto(formData, key).then((res)=>{
-      if(res?.status !== 200){
-        alert("Файл не загружен", key)
+    uploadPhoto(formData, key).then(res => {
+      if (res?.status !== 200) {
+        alert('Файл не загружен', key);
       }
     });
   };
 
   //! отправка файлов массивом организаторы и партнеры
   const funApiEditFileMulti = (files, key) => {
-    const data = files.map((item) => item.value).filter(item => item && typeof item !== "string");
+    const data = files.map(item => item.value).filter(item => item && typeof item !== 'string');
     const formData = new FormData();
-    console.log("files", data);
-    if(data.length > 0) {
-      formData.append('files', data);
+    if (data.length > 0) {
+      data.forEach(file => {
+        formData.append('files', file);
+      });
       formData.append('conferenceId', conferenseId);
-      uploadMulti(formData, key).then((res)=>{
-        if(res?.status !== 200){
-          alert("Файл не загружен", key)
+      uploadMulti(formData, key).then(res => {
+        if (res?.status !== 200) {
+          alert('Файл не загружен', key);
         }
       });
     }
-
   };
 
   //! отправляем измененные данные на бэк
@@ -149,7 +149,6 @@ function ConfirenceModuleAdminPage() {
     if (data.organizers) {
       funApiEditFileMulti(data.organizers, 'ORGANIZATION');
     }
-    
 
     apiPutConferencesById(dat, conferenseId);
   };
