@@ -21,6 +21,8 @@ function ConfirenceModuleAdminPage() {
   const [data, setData] = useState([]);
   const conferenses = useSelector(state => state.conferences?.data);
   const [conferenseId, setConferenseId] = useState(null);
+  const [deleteOrganizer, setDeleteOrganizer] = useState([]);
+  const [deletePartners, setDeletePartners] = useState([]);
 
   const conferensetQery = useQuery({
     queryKey: [`${conferenseId}`, conferenseId],
@@ -64,6 +66,8 @@ function ConfirenceModuleAdminPage() {
       };
       setData(data);
     }
+    setDeleteOrganizer([]);
+    setDeletePartners([]);
   }, [conferensetQery?.data?.data?.conference]);
 
   useEffect(() => {
@@ -111,6 +115,8 @@ function ConfirenceModuleAdminPage() {
       date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
+      partner: deletePartners,
+      organizers: deleteOrganizer,
     };
     //! сохранение логотпа хедера
     if (typeof data.logoHeader === 'object') {
@@ -149,8 +155,17 @@ function ConfirenceModuleAdminPage() {
     if (data.organizers) {
       funApiEditFileMulti(data.organizers, 'ORGANIZATION');
     }
+    //! картинки партнеры
+    if (data.organizers) {
+      funApiEditFileMulti(data.partners, 'PARTNER');
+    }
 
-    apiPutConferencesById(dat, conferenseId);
+    apiPutConferencesById(dat, conferenseId).then(res => {
+      if (res?.status === 200) {
+        setDeleteOrganizer([]);
+        setDeletePartners([]);
+      }
+    });
   };
 
   return (
@@ -168,6 +183,8 @@ function ConfirenceModuleAdminPage() {
         itemKey={'organizers'}
         name={'Организаторы'}
         buttonName={'Добавить организатора'}
+        deleteMass={deleteOrganizer}
+        setDeleteMass={setDeleteOrganizer}
       />
       <Organizers
         data={data}
@@ -175,6 +192,8 @@ function ConfirenceModuleAdminPage() {
         itemKey={'partners'}
         name={'Партнёры'}
         buttonName={'Добавить партнёра'}
+        deleteMass={deletePartners}
+        setDeleteMass={setDeletePartners}
       />
       <div className={styles.buttons}>
         <div className={styles.buttons_inner}>
