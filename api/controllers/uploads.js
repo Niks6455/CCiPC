@@ -169,12 +169,12 @@ export default {
 
         const urls= files.map(file=>file.path)
         if (typesPhoto[type] === 6) {
-            const org = [...conference?.organization, ...urls].filter(Boolean); // Убираем возможные undefined значения
+            const org = [...(conference?.organization ?? []), ...urls].filter(Boolean); // Убираем возможные undefined значения
             await conference.update({ organization: org });
             }
         if (typesPhoto[type] === 7) {
-                const partner = [...conference?.partner, ...urls].filter(Boolean); // Убираем возможные undefined значения
-                await conference.update({ partner: partner });
+            const partner = [...(conference?.partner ?? []), ...urls].filter(Boolean); // Убираем возможные undefined значения            console.log(partner)
+            await conference.update({ partner: partner });
             }
 
 
