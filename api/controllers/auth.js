@@ -117,11 +117,12 @@ export default {
         res.json({status: 'Ok'})
     },
 
-    async reset({ body: {currentPassword, newPassword, repeatPassword, code, email }, user}, res) {
+    async reset({ body: { currentPassword, newPassword, repeatPassword, code, email }, user, admin }, res) {
         if(newPassword !== repeatPassword || !validatePassword(newPassword)) throw new AppErrorInvalid('newPassword')
-        if(user && !currentPassword) throw new AppErrorMissing('currentPassword')
-        if(!user && (!code || !email)) throw new AppErrorMissing('code')
-        if(user) await  authService.resetPassword({currentPassword, newPassword, repeatPassword }, user )
+        const userToReset = user || admin; // Определяем, кто выполняет сброс пароля
+        if(userToReset && !currentPassword) throw new AppErrorMissing('currentPassword')
+        if(!userToReset && (!code || !email)) throw new AppErrorMissing('code')
+        if(userToReset) await  authService.resetPassword({currentPassword, newPassword, repeatPassword }, userToReset )
         else await authService.resetPassword({newPassword, repeatPassword, code, email })
         res.json({status: 'ok'})
     },
