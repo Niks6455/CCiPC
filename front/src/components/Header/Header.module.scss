@@ -67,7 +67,7 @@ header {
       @media (max-width: $w3) {
         font-weight: 600;
         color: #f0f3f2;
-        width: torem(283px);
+        width: torem(273px);
         br {
           display: none;
         }
@@ -89,6 +89,8 @@ header {
     }
     @media (max-width: $w3) {
       background: none;
+      padding: 0;
+      max-width: 100vw;
     }
     .TitleText {
       display: flex;

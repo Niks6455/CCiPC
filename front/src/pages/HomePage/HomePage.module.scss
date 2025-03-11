@@ -1,147 +1,226 @@
 $w1: 1366px;
 $w2: 769px;
+$w3: 480px;
 
-.HomePage{
-    overflow-x: hidden;
-    .Title{
-        p{
-            font-size: torem(30px);
-            font-weight: 900; 
-            line-height: torem(39px);
-            @media (max-width: $w2) {
-                font-size: torem(20px);
-                line-height: torem(29px);
-                font-weight: 500;
-                padding-left: torem(30px);
-            }
-        }
+.HomePage {
+  overflow-x: hidden;
+  .Title {
+    p {
+      font-size: torem(30px);
+      font-weight: 900;
+      line-height: torem(39px);
+      @media (max-width: $w2) {
+        font-size: torem(20px);
+        line-height: torem(29px);
+        font-weight: 500;
+        padding-left: torem(30px);
+      }
+      @media (max-width: $w3) {
+        font-weight: 400;
+        font-size: torem(18px);
+        line-height: 120%;
+        letter-spacing: 0%;
+        padding-left: torem(20px);
+      }
     }
-    .textSection{
-        margin: torem(150px) 0px;
+  }
+  .textSection {
+    margin: torem(150px) 0px;
+    @media (max-width: $w2) {
+      margin: torem(100px) 0px;
+      margin-bottom: torem(50px);
+    }
+    @media (max-width: $w3) {
+      margin: torem(70px) 0px;
+    }
+    .textSectionIner {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      @media (max-width: $w3) {
+        display: flex;
+        flex-direction: column;
+      }
+      .textSectionInerText {
+        margin-top: torem(100px);
         @media (max-width: $w2) {
-            margin: torem(100px) 0px;
-            margin-bottom: torem(50px);
+          margin-left: torem(-110px);
+          max-width: 58vw;
         }
-        .textSectionIner{
-            display: grid;
-            grid-template-columns: 50% 50%;
-            .textSectionInerText{
-                margin-top: torem(100px);
-                @media (max-width: $w2) {
-                margin-left: torem(-110px);
-                max-width: 58vw;
-                
-                }
-                .textSectionInerTextTile{
-                    margin-bottom:torem(-30px);
-                    font-weight: 700;
-                    @media (max-width: $w2) {
-                        font-size: torem(18px);
-                        font-weight: 600;
-                        margin-bottom:torem(-45px);
-
-                    }
-                }
-                p{
-                    color: var(--GrayTextDefault);
-                    margin: torem(50px) 0px;
-                    font-size: torem(20px);
-                    line-height: torem(26px);
-                    font-weight: 400;
-                    @media (max-width: $w1) {
-                        font-size: torem(22px);
-                        line-height: torem(28px);
-                    }
-                    @media (max-width: $w2) {
-                        font-size: torem(16px);
-                        line-height: torem(24px);
-                    }
-                }
-                .textSectionInerTextLine{
-                    border-left: torem(4px) solid #58B191;
-                    height: 100%;
-                    padding-left: torem(20px);
-                }
-            }
+        @media (max-width: $w3) {
+          margin: 0;
+          max-width: 100vw;
+          padding: 0 torem(20px);
         }
+        .textSectionInerTextTile {
+          margin-bottom: torem(-30px);
+          font-weight: 700;
+          @media (max-width: $w2) {
+            font-size: torem(18px);
+            font-weight: 600;
+            margin-bottom: torem(-45px);
+          }
+          @media (max-width: $w3) {
+            margin: 0;
+            font-size: torem(16px);
+            margin-bottom: torem(-10px);
+          }
+        }
+        p {
+          color: var(--GrayTextDefault);
+          margin: torem(50px) 0px;
+          font-size: torem(20px);
+          line-height: torem(26px);
+          font-weight: 400;
+          @media (max-width: $w1) {
+            font-size: torem(22px);
+            line-height: torem(28px);
+          }
+          @media (max-width: $w2) {
+            font-size: torem(16px);
+            line-height: torem(24px);
+          }
+          @media (max-width: $w3) {
+            margin: torem(20px) 0px;
+            font-weight: 400;
+            font-size: torem(16px);
+            line-height: 130%;
+            letter-spacing: 0%;
+          }
+        }
+        .textSectionInerTextLine {
+          border-left: torem(4px) solid #58b191;
+          height: 100%;
+          padding-left: torem(20px);
+        }
+      }
     }
-    .clickerSection{
-        margin-bottom: torem(150px);
+  }
+  .pc {
+    display: flex;
+    @media (max-width: $w3) {
+      display: none !important;
+    }
+  }
+  .mobile {
+    display: none !important;
+    @media (max-width: $w3) {
+      display: flex !important;
+    }
+  }
+  .clickerSection {
+    margin-bottom: torem(150px);
+    @media (max-width: $w2) {
+      margin-bottom: torem(100px);
+    }
+    @media (max-width: $w3) {
+      margin-bottom: torem(70px);
+    }
+
+    .blockTextCompetitionsInner {
+      margin-top: torem(50px);
+      display: flex;
+      width: 100%;
+      flex-wrap: wrap;
+      padding: 0 torem(30px);
+      @media (max-width: $w3) {
+        padding: 0 torem(20px);
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-direction: column;
+        margin-top: torem(20px);
+      }
+      .row_items {
+        display: flex;
+        flex-direction: row;
+      }
+      .blockTextCompetitions {
+        color: var(--GrayTextDefault);
+        padding: torem(30px);
+        border: torem(3px) solid var(--GreenColorText);
+        width: max-content;
+        margin: torem(15px) torem(8px);
+        border-radius: torem(30px);
+        max-width: torem(324px);
+        display: flex;
+        align-items: center;
+        font-size: torem(20px);
+        line-height: torem(26px);
+        max-height: torem(138px);
+        @media (max-width: $w1) {
+          max-width: torem(364px);
+          max-height: torem(168px);
+          font-size: torem(22px);
+          line-height: torem(28px);
+        }
+
         @media (max-width: $w2) {
-            margin-bottom: torem(100px);
+          max-width: torem(282px);
+          width: auto;
+          max-height: torem(93px);
+          font-size: torem(16px);
+          line-height: torem(20px);
+          border-radius: torem(20px);
+          padding: torem(15px);
+          margin: torem(10px) torem(8px);
         }
-        .blockTextCompetitionsInner{
-            margin-top: torem(50px);
-            display: flex;
-            width: 100%;
-            flex-wrap: wrap;
-            padding: 0 torem(30px);
-            .blockTextCompetitions{
-                color: var(--GrayTextDefault);
-                padding: torem(30px);
-                border: torem(3px) solid var(--GreenColorText);
-                width: max-content;
-                margin: torem(15px) torem(8px);
-                border-radius: torem(30px);
-                max-width: torem(324px);
-                display: flex;
-                align-items: center;
-                font-size: torem(20px);
-                line-height: torem(26px);
-                max-height: torem(138px);
-                @media (max-width: $w1) {
-                    max-width: torem(364px);
-                    max-height: torem(168px);
-                    font-size: torem(22px);
-                    line-height: torem(28px);
-                }
-
-                @media (max-width: $w2) {
-                    max-width: torem(282px);
-                    width: auto;
-                    max-height: torem(93px);
-                    font-size: torem(16px);
-                    line-height: torem(20px);
-                    border-radius: torem(20px);
-                    padding: torem(15px);
-                    margin: torem(10px) torem(8px);
-
-                }
-                cursor: pointer;
-                transition: 0.05s linear all;
-                &:hover{
-                    background-color: var(--GreenColorText);
-                    color: #fff;
-                }
-            }
+        @media (max-width: $w3) {
+          width: 100vw;
+          max-width: 100vw;
+          margin: torem(10px) torem(4px);
+          min-width: max-content;
         }
+
+        cursor: pointer;
+        transition: 0.05s linear all;
+        &:hover {
+          background-color: var(--GreenColorText);
+          color: #fff;
+        }
+      }
     }
-    .imgSection{
-        margin: torem(50px) 0px torem(150px) 0px;
+  }
+  .imgSection {
+    margin: torem(50px) 0px torem(150px) 0px;
+    @media (max-width: $w2) {
+      margin: torem(50px) 0px torem(47px) 0px;
+      &:last-child {
+        margin-bottom: torem(100px);
+      }
+    }
+    p {
+      @media (max-width: $w3) {
+        font-size: torem(18px);
+        text-transform: uppercase;
+      }
+    }
+    .imgSectionInner {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      @media (max-width: $w2) {
+        max-width: calc(100vw - torem(60px));
+        box-sizing: border-box;
+        margin: torem(50px) torem(30px);
+        flex-wrap: wrap;
+      }
+      @media (max-width: $w3) {
+        padding: 0 torem(20px);
+        margin: torem(30px) torem(30px);
+      }
+      img {
+        height: torem(200px);
         @media (max-width: $w2) {
-            margin: torem(50px) 0px torem(47px) 0px;
-            &:last-child{
-                margin-bottom: torem(100px);
-            }
+          height: torem(120px);
         }
-        .imgSectionInner{
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            @media (max-width: $w2) {
-                max-width: calc(100vw - torem(60px));
-                box-sizing: border-box;
-                margin: torem(50px) torem(30px);
-                flex-wrap: wrap;
-                
-            }
-            img{
-                height: torem(200px);
-                @media (max-width: $w2) {
-                    height: torem(120px);
-                }
-            }
+        @media (max-width: $w3) {
+          width: torem(120px);
+          height: auto;
+          padding: torem(10px);
+          margin-bottom: torem(35px);
         }
+      }
     }
+  }
 }

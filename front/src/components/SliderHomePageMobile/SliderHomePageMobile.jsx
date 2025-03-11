@@ -4,6 +4,7 @@ import { getAllNews, server } from '../../apirequests/apirequests';
 import { ReactComponent as ArrowIcon } from '@assets/img/UI/SliderDefault.svg';
 import { useNavigate } from 'react-router-dom';
 import newsArrIcon from '@assets/img/UI/newsArr.svg';
+import { ReactComponent as SlideArrowIcon } from '@assets/img/UI/slideArrow.svg';
 
 function SliderHomePageMobile() {
   const navigate = useNavigate();
@@ -62,6 +63,17 @@ function SliderHomePageMobile() {
                   name={`${index === slides.length - 1}button`}
                 >
                   <ArrowIcon />
+                </button>
+              </div>
+              <div className={`${styles.navigate} ${styles.mobile_navigate}`}>
+                <button onClick={() => scrollToPrevious(index)} name={`${index}button`}>
+                  <SlideArrowIcon />
+                </button>
+                <button
+                  onClick={() => scrollToNext(index)}
+                  name={`${index === slides.length - 1}button`}
+                >
+                  <SlideArrowIcon />
                 </button>
               </div>
               <img className={styles.main_img} src={`${server}/${item?.img}`} alt="img" />

@@ -17,6 +17,9 @@ $w3: 480px;
       font-size: torem(14px);
       padding-left: torem(32px);
     }
+    @media (max-width: $w3) {
+      padding-left: torem(20px);
+    }
   }
   .SliderHomePageTopInner {
     overflow: hidden; /* Чтобы скрыть лишние элементы */
@@ -73,7 +76,7 @@ $w3: 480px;
       }
       @media (max-width: $w3) {
         width: calc(100% - torem(40px));
-        padding: 0 torem(20px);
+        padding: 0 torem(0px);
         flex-direction: column;
         align-items: start;
       }

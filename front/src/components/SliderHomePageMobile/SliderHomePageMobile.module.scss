@@ -1,5 +1,26 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .SliderHomePageMobile {
+  display: none;
+  @media (max-width: $w2) {
+    display: flex;
+  }
   width: 100%;
+  .mobile_navigate {
+    display: none;
+    @media (max-width: $w3) {
+      display: flex !important;
+      position: absolute;
+      right: torem(10px) !important;
+      top: torem(18px) !important;
+    }
+    button {
+      width: torem(55px) !important;
+      height: torem(41px) !important;
+    }
+  }
   .slider {
     min-width: 100%;
     display: flex;
@@ -9,6 +30,9 @@
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     background-color: #004529;
+    @media (max-width: $w3) {
+      position: relative;
+    }
 
     &::-webkit-scrollbar {
       display: none;
@@ -35,6 +59,10 @@
       padding: 0;
       padding: torem(30px);
       padding-top: torem(50px);
+      @media (max-width: $w3) {
+        padding: torem(20px);
+        padding-top: torem(60px);
+      }
     }
 
     .description {
@@ -46,10 +74,17 @@
       color: #ffffff;
       margin-bottom: torem(70px);
       padding: 0 torem(30px);
+      @media (max-width: $w3) {
+        padding: 0 torem(20px);
+        margin-bottom: torem(30px);
+      }
     }
     .image {
       width: 100%;
       position: relative;
+      @media (max-width: $w3) {
+        position: static;
+      }
       .allNews {
         cursor: pointer;
         border: none;
@@ -65,6 +100,11 @@
         flex-direction: row;
         align-items: center;
         @include HoverActiveOpasity;
+        @media (max-width: $w3) {
+          padding: torem(6px) torem(15px);
+          right: auto;
+          left: torem(20px);
+        }
         span {
           font-family: Overpass, sans-serif;
           font-weight: 400;
@@ -74,10 +114,17 @@
           text-align: center;
           color: #ffffff;
           margin-right: torem(10px);
+          @media (max-width: $w3) {
+            font-size: torem(18px);
+            margin-right: 0;
+          }
         }
         img {
           width: torem(24px);
           height: torem(24px);
+          @media (max-width: $w3) {
+            display: none;
+          }
         }
       }
       .navigate {
@@ -87,6 +134,9 @@
         display: flex;
         flex-direction: row;
         align-items: center;
+        @media (max-width: $w3) {
+          display: none;
+        }
         button {
           @include ButtonIcon;
           border-radius: 50%;
@@ -97,21 +147,14 @@
           &:first-child {
             transform: scaleX(-1);
             &[name='0button'] {
-              cursor: not-allowed;
-              svg * {
-                fill: #c7c7c7c5;
-              }
+              display: none;
             }
           }
           &:last-child {
             &[name='truebutton'] {
-              cursor: not-allowed;
-              svg * {
-                fill: #c7c7c7c5;
-              }
+              display: none;
             }
           }
-
           svg {
             height: 100%;
             width: 100%;

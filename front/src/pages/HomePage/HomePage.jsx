@@ -69,12 +69,28 @@ function HomePage() {
             <div className={styles.Title}>
               <p>НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ</p>
             </div>
-            <div className={styles.blockTextCompetitionsInner}>
+            <div className={`${styles.blockTextCompetitionsInner} ${styles.pc}`}>
               {textData.map((el, index) => (
                 <div key={index} className={styles.blockTextCompetitions}>
                   <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
                 </div>
               ))}
+            </div>
+            <div className={`${styles.blockTextCompetitionsInner} ${styles.mobile}`}>
+              <div className={styles.row_items}>
+                {textData.slice(0, textData.length / 2 + 1).map((el, index) => (
+                  <div key={index} className={styles.blockTextCompetitions}>
+                    <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.row_items}>
+                {textData.slice(textData.length / 2 + 1, textData.length).map((el, index) => (
+                  <div key={index} className={styles.blockTextCompetitions}>
+                    <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
