@@ -50,6 +50,7 @@ const fileFilter = (req, file, cb) => {
 const multiFileFilter = (req, file, cb) => {
     const { type } = req.query; // Get the type from the query parameters
 
+
     if (!type) {
         return cb(new AppError(errorCodes.Missing)); // If type is missing
     }
@@ -65,8 +66,8 @@ const multiFileFilter = (req, file, cb) => {
 // Storage configuration for handling file uploads
 const multiStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        const { type } = req.query;
 
+        const { type } = req.query;
 
         // Validate the type
         if (!type || !(type in typesPhoto)) {
@@ -168,12 +169,12 @@ export default {
 
         const urls= files.map(file=>file.path)
         if (typesPhoto[type] === 6) {
-                const org = [conference?.organization, ...urls].filter(Boolean); // Убираем возможные undefined значения
-                await conference.update({ organization: org });
+            const org = [...(conference?.organization ?? []), ...urls].filter(Boolean); // Убираем возможные undefined значения
+            await conference.update({ organization: org });
             }
         if (typesPhoto[type] === 7) {
-                const partner = [conference?.partner, ...urls].filter(Boolean); // Убираем возможные undefined значения
-                await conference.update({ partner: partner });
+            const partner = [...(conference?.partner ?? []), ...urls].filter(Boolean); // Убираем возможные undefined значения            console.log(partner)
+            await conference.update({ partner: partner });
             }
 
 

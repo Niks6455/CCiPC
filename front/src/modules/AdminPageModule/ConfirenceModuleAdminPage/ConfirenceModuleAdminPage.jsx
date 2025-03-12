@@ -10,6 +10,7 @@ import Organizers from './Organizers/Organizers';
 import {
   apiGetConferencesById,
   apiPutConferencesById,
+  uploadMulti,
   uploadPhoto,
 } from '../../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
@@ -20,6 +21,8 @@ function ConfirenceModuleAdminPage() {
   const [data, setData] = useState([]);
   const conferenses = useSelector(state => state.conferences?.data);
   const [conferenseId, setConferenseId] = useState(null);
+  const [deleteOrganizer, setDeleteOrganizer] = useState([]);
+  const [deletePartners, setDeletePartners] = useState([]);
 
   const conferensetQery = useQuery({
     queryKey: [`${conferenseId}`, conferenseId],
@@ -57,12 +60,14 @@ function ConfirenceModuleAdminPage() {
         dateFirst: qery.date?.[0]?.value,
         dateSecond: qery.date?.[1]?.value,
         address: qery.address,
-        organizers: qery.organizers,
-        partners: qery.partners,
+        organizers: qery.organization || [],
+        partners: qery.partner || [],
         deadlineUploadingReports: convertDate(qery.deadline),
       };
       setData(data);
     }
+    setDeleteOrganizer([]);
+    setDeletePartners([]);
   }, [conferensetQery?.data?.data?.conference]);
 
   useEffect(() => {
@@ -74,7 +79,28 @@ function ConfirenceModuleAdminPage() {
     const formData = new FormData();
     formData.append('file', file);
     formData.append('conferenceId', conferenseId);
-    uploadPhoto(formData, key);
+    uploadPhoto(formData, key).then(res => {
+      if (res?.status !== 200) {
+        alert('Файл не загружен', key);
+      }
+    });
+  };
+
+  //! отправка файлов массивом организаторы и партнеры
+  const funApiEditFileMulti = (files, key) => {
+    const data = files.map(item => item.value).filter(item => item && typeof item !== 'string');
+    const formData = new FormData();
+    if (data.length > 0) {
+      data.forEach(file => {
+        formData.append('files', file);
+      });
+      formData.append('conferenceId', conferenseId);
+      uploadMulti(formData, key).then(res => {
+        if (res?.status !== 200) {
+          alert('Файл не загружен', key);
+        }
+      });
+    }
   };
 
   //! отправляем измененные данные на бэк
@@ -89,6 +115,8 @@ function ConfirenceModuleAdminPage() {
       date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
+      partner: deletePartners,
+      organizers: deleteOrganizer,
     };
     //! сохранение логотпа хедера
     if (typeof data.logoHeader === 'object') {
@@ -123,8 +151,21 @@ function ConfirenceModuleAdminPage() {
     if (typeof data.cashlessEntities === 'object') {
       funApiEditFile(data.cashlessEntities, 'LEGAL');
     }
+    //! картинки организаторы
+    if (data.organizers) {
+      funApiEditFileMulti(data.organizers, 'ORGANIZATION');
+    }
+    //! картинки партнеры
+    if (data.organizers) {
+      funApiEditFileMulti(data.partners, 'PARTNER');
+    }
 
-    apiPutConferencesById(dat, conferenseId);
+    apiPutConferencesById(dat, conferenseId).then(res => {
+      if (res?.status === 200) {
+        setDeleteOrganizer([]);
+        setDeletePartners([]);
+      }
+    });
   };
 
   return (
@@ -142,6 +183,8 @@ function ConfirenceModuleAdminPage() {
         itemKey={'organizers'}
         name={'Организаторы'}
         buttonName={'Добавить организатора'}
+        deleteMass={deleteOrganizer}
+        setDeleteMass={setDeleteOrganizer}
       />
       <Organizers
         data={data}
@@ -149,6 +192,8 @@ function ConfirenceModuleAdminPage() {
         itemKey={'partners'}
         name={'Партнёры'}
         buttonName={'Добавить партнёра'}
+        deleteMass={deletePartners}
+        setDeleteMass={setDeletePartners}
       />
       <div className={styles.buttons}>
         <div className={styles.buttons_inner}>

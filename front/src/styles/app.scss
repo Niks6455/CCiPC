@@ -1,30 +1,37 @@
-@import "slick-carousel/slick/slick.css";
-@import "slick-carousel/slick/slick-theme.css";
-@import "./colors.scss";
-@import "./mixin.scss";
-@import "./vareables.scss";
+@import 'slick-carousel/slick/slick.css';
+@import 'slick-carousel/slick/slick-theme.css';
+@import './colors.scss';
+@import './mixin.scss';
+@import './vareables.scss';
 
 @font-face {
-  font-family: "Overpass";
-  src: url("../assets/fonts/Overpass/overpass-regular.woff2") format("woff2"),
-    url("../assets/fonts/Overpass/overpass-regular.woff") format("woff"),
-    url("../assets/fonts/Overpass/overpass-regular.ttf") format("truetype");
+  font-family: 'Overpass';
+  src:
+    url('../assets/fonts/Overpass/overpass-regular.woff2') format('woff2'),
+    url('../assets/fonts/Overpass/overpass-regular.woff') format('woff'),
+    url('../assets/fonts/Overpass/overpass-regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400; /* Нормальный вес */
   font-display: swap; /* Улучшает производительность загрузки */
 }
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 html,
 body {
-  font-family: "Overpass", sans-serif;
+  font-family: 'Overpass', sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   @include ScrollBar;
   &::-webkit-scrollbar {
-    width: 15px;
-    height: 8px;
+    width: torem(15px);
+    height: torem(8px);
     background-color: transparent;
+    @media (max-width: $w2) {
+      width: torem(8px);
+    }
   }
   &::-webkit-scrollbar-thumb:hover {
     background-color: #a5b0ad;
@@ -32,15 +39,22 @@ body {
 }
 html {
   scroll-behavior: smooth;
+  font-size: 0.8333333333333vw;
+  @media (max-width: $w2) {
+    font-size: 2.0833333333333vw;
+  }
+  @media (max-width: $w3) {
+    font-size: 4.10257vw;
+  }
 }
 * {
-  font-family: "Overpass", sans-serif;
+  font-family: 'Overpass', sans-serif;
 }
 
 p {
   margin: 0;
   padding: 0;
-  font-family: "Overpass", sans-serif;
+  font-family: 'Overpass', sans-serif;
 }
 
 body {

@@ -1,17 +1,17 @@
 @import '../../styles/colors.scss';
 
 .Profile {
-  width: calc(100vw - 700px);
+  width: calc(100vw - torem(700px));
 
   .profile_img_container {
     .photo_lk {
-      width: 300px;
-      height: 300px;
+      width: torem(300px);
+      height: torem(300px);
       border-radius: 50%;
       overflow: hidden;
       position: absolute;
-      left: 40px;
-      top: 40px;
+      left: torem(40px);
+      top: torem(40px);
       cursor: pointer;
       img {
         width: 100%;
@@ -24,12 +24,16 @@
     position: absolute;
     left: 0;
     top: 0;
+    width: torem(458px);
+    height: torem(247px);
   }
 
   .editPhotoLk {
     position: absolute;
-    left: 280px;
-    top: 80px;
+    left: torem(280px);
+    top: torem(80px);
+    width: torem(50px);
+    height: torem(50px);
     cursor: pointer;
     transition: 0.1s linear all;
     &:hover {
@@ -38,17 +42,17 @@
   }
   .mainSection {
     color: var(--GrayTextDefault);
-    margin-top: 95px;
+    margin-top: torem(95px);
     .mainSectionInfoPeople {
-      margin-left: 360px;
+      margin-left: torem(360px);
       p {
-        font-size: 20px;
+        font-size: torem(20px);
         &:first-child {
           font-weight: 500;
-          font-size: 32px;
+          font-size: torem(32px);
         }
         &:nth-child(2) {
-          margin: 10px 0px 20px 0px;
+          margin: torem(10px) 0px torem(20px) 0px;
         }
         span {
           font-weight: 600;
@@ -57,18 +61,18 @@
     }
   }
   .containerMoreInfo {
-    margin-top: 136px;
+    margin-top: torem(136px);
     display: flex;
     .containerMoreInfoSecond {
-      margin-left: 182px;
+      margin-left: torem(182px);
     }
     .containerMoreInfoOne {
       display: flex;
       flex-direction: column;
       .info_block {
         p {
-          font-size: 20px;
-          margin-bottom: 20px;
+          font-size: torem(20px);
+          margin-bottom: torem(20px);
           span {
             font-weight: 600;
           }
@@ -76,11 +80,11 @@
       }
     }
     .containerMoreInfoSecond {
-      width: 419px;
+      width: torem(419px);
       .containerMoreInfoSecondText {
-        margin-bottom: 20px;
+        margin-bottom: torem(20px);
         p {
-          font-size: 20px;
+          font-size: torem(20px);
           &:first-child {
             font-weight: 600;
           }
@@ -88,7 +92,7 @@
         span {
           font-family: Overpass, sans-serif;
           font-weight: 400;
-          font-size: 20px;
+          font-size: torem(20px);
           color: #333333;
         }
       }
