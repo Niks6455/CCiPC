@@ -1,4 +1,4 @@
-import {DataTypes, Model, STRING} from 'sequelize';
+import {DataTypes, Model } from 'sequelize';
 import { v4 as uuidv4 } from 'uuid';
 
 export default class Report extends Model {
