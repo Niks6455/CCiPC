@@ -5,6 +5,7 @@ import FileComponent from '../FileComponent/FileComponent';
 import borderIcon from '@assets/img/AdminPanel/borderFile.svg';
 import { useEffect, useRef, useState } from 'react';
 import { createArchive, uploadPhoto } from '../../../apirequests/apirequests';
+import { useSelector } from 'react-redux';
 
 function AddArchive(props) {
   const [file, setFile] = useState(null);
@@ -13,6 +14,7 @@ function AddArchive(props) {
   const [errorName, setErrorName] = useState('');
   const [errorUrl, setErrorUrl] = useState('');
   const textareaRef = useRef(null);
+  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
 
   //! Обработчик выбора файла
   const handleFileChange = file => {
@@ -29,6 +31,8 @@ function AddArchive(props) {
       textareaRef.current.style.overflowY = newHeight >= 135 ? 'auto' : 'hidden'; // Скролл только при необходимости
     }
   };
+
+
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -63,7 +67,9 @@ function AddArchive(props) {
       name: name,
       url: url,
       type: 0,
+      conferenceId: conferenceid
     };
+    console.log("data", data)
 
     try {
       const resp = await createArchive(data);

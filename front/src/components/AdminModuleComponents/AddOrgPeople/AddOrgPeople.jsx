@@ -5,6 +5,7 @@ import addPhoto from '@assets/img/AdminPanel/addPhoto.svg';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import FileComponent from '../FileComponent/FileComponent';
 import { createOrgCommitet, uploadPhoto } from '../../../apirequests/apirequests';
+import { useSelector } from 'react-redux';
 
 function AddOrgPeople(props) {
   const [file, setFile] = useState(null);
@@ -12,7 +13,7 @@ function AddOrgPeople(props) {
   const [organization, setOrganization] = useState('');
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
-
+  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
   useEffect(() => {
     gsap.fromTo(
       containerRef.current,
@@ -22,7 +23,7 @@ function AddOrgPeople(props) {
   }, []);
 
   const createOrg = () => {
-    const data = { fio, organization, type: props?.type };
+    const data = { fio, organization, type: props?.type, conferenceId: conferenceid };
 
     createOrgCommitet(data).then(res => {
       if (res?.status === 200) {
