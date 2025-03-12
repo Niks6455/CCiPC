@@ -23,6 +23,7 @@ import Conference from "../models/conference.js";
 import Participant from "../models/participant.js";
 import Committee from "../models/committee.js";
 import Archive from "../models/archive.js";
+import { v4 as uuidv4 } from 'uuid';
 import ParticipantInConference from "../models/participant-in-conference.js";
 const dir= './uploads'
 
@@ -94,7 +95,7 @@ const multiStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         // Use the original file name
-        cb(null, file.originalname);
+        cb(null, uuidv4());
     },
 });
 

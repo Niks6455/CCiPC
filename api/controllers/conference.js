@@ -104,6 +104,8 @@ export default {
 
     async create({body: { date, address, stages, description, directions, deadline }, admin }, res) {
         if(date?.length < 1) throw new AppErrorInvalid('date')
+        date.sort((a, b) => new Date(a) - new Date(b));
+
         if(!description) throw new AppErrorMissing('description')
         if(!address) throw new AppErrorMissing('address')
 
@@ -180,6 +182,7 @@ export default {
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
         if(!id) throw new AppErrorMissing('id')
         if(date && date?.length < 1) throw new AppErrorInvalid('date')
+        if(date) date.sort((a, b) => new Date(a) - new Date(b));
 
 
         const rangeDate = date ? [ new Date(date[0]), new Date(date[1]) ] : [];

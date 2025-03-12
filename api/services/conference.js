@@ -16,7 +16,7 @@ import typesFiles from "../config/typesFiles.js";
 
 async function deleteFile(filePath) {
     try {
-        await fs.unlink(filePath);
+        await fs.promises.unlink(filePath);
         console.log(`Файл удален: ${filePath}`);
     } catch (err) {
         console.error(`Ошибка при удалении файла: ${filePath}`, err);
@@ -40,16 +40,25 @@ async function processJsonField(conference, conferenceInfo, fieldName, types, va
 // Функция для обработки массивов (organization, partner)
 async function processArrayField(conference, conferenceInfo, fieldName) {
     if (conference?.[fieldName] && conferenceInfo?.[fieldName]) {
-        const files = new Set([...conference[fieldName], ...conferenceInfo[fieldName]]);
-        for (const file of files) {
-            await deleteFile(file);
+
+        const filesToKeep = new Set(conferenceInfo[fieldName]);
+
+        for (const file of conference[fieldName]) {
+            if (filesToKeep.has(file)) {
+                await deleteFile(file);
+            }
         }
-        await conference.update({ [fieldName]: conferenceInfo[fieldName] });
-        conference.changed(fieldName, true);
-        await conference.save();
+
+            const updatedFiles = conference[fieldName].filter(file => !filesToKeep.has(file));
+
+            await conference.update({[fieldName]: updatedFiles});
+            conference.changed(fieldName, true);
+            await conference.save();
+
+            delete conferenceInfo?.[fieldName];
+
     }
 }
-
 
 export default {
 
