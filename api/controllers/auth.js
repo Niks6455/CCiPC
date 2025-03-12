@@ -21,8 +21,8 @@ function validateEmail(email) {
 }
 
 function validateName(name) {
-    const nameRegex = /^[a-zA-Zа-яА-ЯёЁ-]{1,50}$/;
-    return nameRegex.test(name);
+    const nameRegex = /^([a-zA-Zа-яА-ЯёЁ-]+( [a-zA-Zа-яА-ЯёЁ-]+)?)?$/;
+    return name.length > 0 && name.length <= 50 && nameRegex.test(name);
 }
 
 function validatePhoneNumber(phone) {
@@ -71,7 +71,7 @@ export default {
         if(!surname) throw new AppErrorMissing('surname')
         if(!validateName(surname)) throw new AppErrorInvalid('surname')
 
-        if(patronymic && !validateName(patronymic)) throw new AppErrorInvalid('patronymic')
+        if(patronymic && !validateName(patronymic) && patronymic.length < 5) throw new AppErrorInvalid('patronymic')
         if(!academicTitle) throw new AppErrorMissing('academicTitle')
         if(!degree) throw new AppErrorMissing('degree')
         if(!position) throw new AppErrorMissing('position')
