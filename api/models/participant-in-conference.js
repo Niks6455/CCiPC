@@ -5,7 +5,7 @@ export default class ParticipantInConference extends Model {
     static initialize(sequelize) {
         ParticipantInConference.init(
             {
-                id: { type: DataTypes.UUID, primaryKey: true },
+                id: { type: DataTypes.UUID, primaryKey: true, unique: true },
                 formPay: {type: DataTypes.ENUM('Безналичный', 'Наличный', 'Не выбран'), allowNull: true, defaultValue: 'Не выбран'},
                 sum: {type: DataTypes.INTEGER, allowNull: true},
                 status : { type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false},
