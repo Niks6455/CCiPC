@@ -395,7 +395,7 @@ export default {
             foundObject.participantId=p.participantId
             foundObject.formPay=p.formPay
             foundObject.comment=p.comment
-            foundObject.agreement=p.agreement
+            foundObject.accord=p.accord
             foundObject.receipt=p.receipt
             if (foundObject.sum == null) foundObject.sum = p.sum;
             if (foundObject.status == null) foundObject.status = p.status;
