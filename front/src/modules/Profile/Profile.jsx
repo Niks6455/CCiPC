@@ -45,7 +45,6 @@ function Profile() {
     apiUpdateUser({ formPay: 'Не выбран' }).then(res => {
       if (res?.status === 200) {
         dispatch(fetchUserData());
-        setOpenModal(true);
       }
     });
   };

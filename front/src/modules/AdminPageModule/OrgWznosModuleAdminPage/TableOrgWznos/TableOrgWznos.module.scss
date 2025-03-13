@@ -1,11 +1,11 @@
 .TableOrgWznos {
   margin-top: torem(25px);
-  max-height: 58vh;
   overflow: auto;
   border-bottom: torem(1px) solid #c8d0ce;
   border-radius: torem(8px);
   width: calc(100% + torem(8px));
   @include ScrollBar;
+  min-height: 60vh;
 
   table {
     min-width: 100%;

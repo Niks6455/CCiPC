@@ -2,19 +2,47 @@ import styles from './Orgwznos.module.scss';
 import vitalIcon from '@assets/img/UI/vitalIcon.svg';
 import FileComponent from './../../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { useState } from 'react';
-import { server } from '../../../../apirequests/apirequests';
+import { server, uploadPhoto } from '../../../../apirequests/apirequests';
 import loadIcon from '@assets/img/AdminPanel/load.svg';
+import { useSelector } from 'react-redux';
+import ReqError from '../../../../components/ReqError/ReqError';
 
 function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
   const [fileAccord, setFileAccord] = useState(null);
   const [fileReceipt, setFileReceipt] = useState(null);
+  const conferenseId = useSelector(state => state.conferences?.data[0]?.id);
+  const [errors, setErrors] = useState([]);
 
-  const funChangeAccord = value => {
-    setFileAccord(value);
-  };
-
-  const funChangeReceipt = value => {
-    setFileReceipt(value);
+  const funChangeAccord = (value, name) => {
+    setErrors(prev => prev.filter(item => item.key !== name));
+    if (value) {
+      const renamedFile = new File(
+        [value],
+        `Скан квитанции ${user.name} ${user.surname} ${user.patronymic}`,
+        { type: value.type },
+      );
+      console.log('renamedFile', renamedFile);
+      if (name === 'AGREEMENT') {
+        setFileAccord(renamedFile);
+      }
+      if (name === 'RECEIPT') {
+        setFileReceipt(renamedFile);
+      }
+      const file = new FormData();
+      file.append('file', value);
+      file.append('conferenceId', conferenseId);
+      uploadPhoto(file, name).then(res => {
+        if (res?.status !== 200)
+          setErrors(prev => [
+            ...prev,
+            {
+              key: name,
+              succes: false,
+              text: 'Ошибка при загрузке договора',
+            },
+          ]);
+      });
+    }
   };
 
   const funGetOrgwznos = () => {
@@ -63,6 +91,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
       if (fee[0]?.sum && fee[0]?.formPay === 'Безналичный') {
         return (
           <div className={styles.orgwznos_files}>
+            <ReqError errors={errors} setErrors={setErrors} />
             <h3>Оргвзнос:</h3>
             <span>Прикрепите подписанный скан договора и скан квитанции</span>
             <div className={styles.files}>
@@ -76,8 +105,10 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     data={fileAccord}
                     setData={funChangeAccord}
                     typeFile={['application/pdf']}
+                    itemKey={'AGREEMENT'}
                     accept={'.pdf'}
                     name={'fileAccord'}
+                    fileName={`Скан договора ${user.surname} ${user.name} ${user.patronymic}`}
                     icon={'pdf'}
                     text={'Загрузите скан договора<br/>в формате PDF'}
                   />
@@ -98,9 +129,11 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     }
                     fileSize={50}
                     data={fileReceipt}
-                    setData={funChangeReceipt}
+                    setData={funChangeAccord}
                     typeFile={['application/pdf']}
                     accept={'.pdf'}
+                    itemKey={'RECEIPT'}
+                    fileName={`Скан квитанции ${user.surname} ${user.name} ${user.patronymic}`}
                     name={'fileReceipt'}
                     icon={'pdf'}
                     text={'Загрузите скан квитанции<br/>в формате PDF'}

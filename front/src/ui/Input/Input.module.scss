@@ -1,4 +1,6 @@
-@import './../../styles/colors.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .Input {
   display: flex;
@@ -81,6 +83,8 @@
     position: relative;
     .errorListLabel {
       margin-left: torem(10px);
+      width: torem(24px);
+      height: torem(24px);
     }
   }
 

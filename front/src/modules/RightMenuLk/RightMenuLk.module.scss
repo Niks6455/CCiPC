@@ -2,6 +2,12 @@ $w1: 1366px;
 $w2: 769px;
 $w3: 480px;
 
+.RightMenuLkhide {
+  width: 0;
+  min-width: 0;
+  border: none;
+}
+
 .RightMenuLk {
   @media (max-width: $w2) {
     display: none;

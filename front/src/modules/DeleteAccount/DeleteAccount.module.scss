@@ -1,37 +1,65 @@
-@import '../../styles/colors.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .DeleteAccount {
-  margin-top: 200px;
+  margin-top: torem(200px);
+  @media (max-width: $w2) {
+    margin-top: torem(135px);
+    min-height: calc(100vh - torem(410px));
+    width: 100vw;
+  }
   .DeleteAccountImg {
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: torem(40px);
+    @media (max-width: $w2) {
+      margin-bottom: torem(35px);
+      img {
+        width: torem(40px);
+        height: torem(40px);
+      }
+    }
   }
   p {
-    font-size: 26px;
+    font-size: torem(26px);
     font-weight: 400;
-    line-height: 36px;
+    line-height: torem(36px);
     color: #333333;
     text-align: center;
+    @media (max-width: $w2) {
+      font-size: torem(22px);
+      font-weight: 500;
+    }
   }
   .DeleteAccountButton {
     display: flex;
     justify-content: center;
-    margin-top: 57px;
+    margin-top: torem(57px);
+    @media (max-width: $w2) {
+      margin-top: torem(40px);
+    }
     button {
-      height: 60px;
-      margin: 0px 10px;
-      border-radius: 10px;
+      height: torem(60px);
+      margin: 0px torem(10px);
+      border-radius: torem(10px);
       border: none;
-      font-size: 22px;
+      font-size: torem(22px);
       cursor: pointer;
       transition: all 0.1s linear;
+      @media (max-width: $w2) {
+        font-size: torem(18px);
+      }
       &:first-child {
-        margin-right: 20px;
+        margin-right: torem(20px);
         color: #fff;
         background-color: var(--GreenColorDefault);
-        width: 220px;
+        width: torem(220px);
+        @media (max-width: $w2) {
+          width: torem(250px);
+          height: torem(54px);
+        }
         &:hover {
           background-color: var(--GreenColorHover);
         }
@@ -40,12 +68,15 @@
         }
       }
       &:last-child {
-        margin-right: 20px;
+        margin-right: torem(20px);
         color: #fff;
-        border: 1px solid var(--GreenColorDefault);
-        width: 170px;
+        border: torem(1px) solid var(--GreenColorDefault);
+        width: torem(170px);
         background-color: inherit;
         color: var(--GreenColorDefault);
+        @media (max-width: $w2) {
+          height: torem(54px);
+        }
         &:hover {
           background-color: var(--MenuHover);
         }

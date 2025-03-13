@@ -30,6 +30,7 @@ function OrgWznosModuleAdminPage() {
   }, [tableData]);
 
   useEffect(() => {
+    console.log('qery?.data?.data?.participants', qery?.data?.data?.participants);
     const data = qery?.data?.data?.participants?.map(item => ({
       id: item.id,
       fio: item.fio || '',
@@ -67,11 +68,16 @@ function OrgWznosModuleAdminPage() {
 
   const funSaveData = () => {
     console.log('originalData', originalData);
-    const data = originalData.map(item => ({
-      id: item.id,
-      sum: item.sumOrgWznos,
-      status: item.confirmation,
-    }));
+    const data = originalData.reduce((acc, item) => {
+      if (!acc.some(existingItem => existingItem.id === item.id)) {
+        acc.push({
+          id: item.id,
+          sum: item.sumOrgWznos,
+          status: item.confirmation,
+        });
+      }
+      return acc;
+    }, []);
     console.log('data', data);
     apiUpdateOrgWznos(conferenceid, { feeInfo: data }).then(res => {
       if (res?.status === 200) {
@@ -101,7 +107,13 @@ function OrgWznosModuleAdminPage() {
           Сохранить
         </button>
       </div>
-      <TableOrgWznos prewData={[...testData]} tableData={tableData} setTableData={setTableData} />
+      <TableOrgWznos
+        prewData={[...(qery?.data?.data?.participants || [])]}
+        originalData={originalData}
+        tableData={tableData}
+        setTableData={setTableData}
+        setOriginalData={setOriginalData}
+      />
     </section>
   );
 }
