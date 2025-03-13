@@ -41,6 +41,15 @@ function Profile() {
     setOpenModalBeznal(true);
   };
 
+  const funChangeFormPay = () => {
+    apiUpdateUser({ formPay: 'Не выбран' }).then(res => {
+      if (res?.status === 200) {
+        dispatch(fetchUserData());
+        setOpenModal(true);
+      }
+    });
+  };
+
   return (
     <section className={styles.Profile}>
       <ModalNal openModal={openModal} setOpenModal={setOpenModal} />
@@ -97,7 +106,12 @@ function Profile() {
               <span>Телефон:</span> {user?.phone || 'Отсутствует'}
             </p>
           </div>
-          <Orgwznos user={user} funNal={funNal} funBeznal={funBeznal} />
+          <Orgwznos
+            user={user}
+            funNal={funNal}
+            funBeznal={funBeznal}
+            funChangeFormPay={funChangeFormPay}
+          />
         </div>
         <div className={styles.containerMoreInfoSecond}>
           {user?.reports?.length > 0 ? (

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { server } from '../../../../apirequests/apirequests';
 import loadIcon from '@assets/img/AdminPanel/load.svg';
 
-function Orgwznos({ user, funNal, funBeznal }) {
+function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
   const [fileAccord, setFileAccord] = useState(null);
   const [fileReceipt, setFileReceipt] = useState(null);
 
@@ -19,8 +19,9 @@ function Orgwznos({ user, funNal, funBeznal }) {
 
   const funGetOrgwznos = () => {
     const fee = user?.fee;
+    console.log('fee', fee);
     if (fee?.length > 0) {
-      if (!fee[0]?.sum) {
+      if (!fee[0]?.sum && fee[0]?.formPay === 'Не выбран') {
         return (
           <div className={styles.orgwznos}>
             <div className={styles.title}>
@@ -36,7 +37,7 @@ function Orgwznos({ user, funNal, funBeznal }) {
         );
       }
 
-      if (fee[0]?.sum) {
+      if (fee[0]?.sum && fee[0]?.formPay === 'Не выбран') {
         return (
           <div className={styles.orgwznos_summ}>
             <h3>
@@ -49,7 +50,7 @@ function Orgwznos({ user, funNal, funBeznal }) {
           </div>
         );
       }
-      if (fee[0]?.formPay === 'Наличный') {
+      if (fee[0]?.sum && fee[0]?.formPay === 'Наличный') {
         return (
           <div className={styles.orgwznos_summ}>
             <h3>
@@ -59,7 +60,7 @@ function Orgwznos({ user, funNal, funBeznal }) {
           </div>
         );
       }
-      if (fee[0]?.formPay === 'Безналичный') {
+      if (fee[0]?.sum && fee[0]?.formPay === 'Безналичный') {
         return (
           <div className={styles.orgwznos_files}>
             <h3>Оргвзнос:</h3>
@@ -113,7 +114,9 @@ function Orgwznos({ user, funNal, funBeznal }) {
                 </div>
               </div>
             </div>
-            <button className={styles.btn_change}>Сменить способ оплаты</button>
+            <button className={styles.btn_change} onClick={funChangeFormPay}>
+              Сменить способ оплаты
+            </button>
           </div>
         );
       }
