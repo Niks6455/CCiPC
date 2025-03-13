@@ -100,8 +100,7 @@ export default {
             }))
         }
 
-
-        if(participantInfo?.formPay && participant?.participantInConference) await participant?.participantInConference.update({formPay : participantInfo.formPay })
+        if(participantInfo?.formPay && participant?.participantInConference) await participant?.participantInConference[0].update({formPay : participantInfo.formPay })
 
         if(participantInfo.email && participantInfo.email !== participant.email) {
 
