@@ -1,13 +1,13 @@
 .Logotips {
   width: 100%;
   height: auto;
-  margin-top: 40px;
+  margin-top: torem(40px);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   h3 {
     @include titleBlock;
-    margin-bottom: 10px;
+    margin-bottom: torem(10px);
   }
   .file_cont {
     display: flex;

@@ -2,14 +2,30 @@
 .ConfirenceModuleAdminPage {
   h2 {
     @include titleH2;
-    margin-bottom: 40px;
+    margin-bottom: torem(40px);
   }
   .buttons {
     display: flex;
     justify-content: end;
+    margin-top: torem(25px);
     .buttons_inner {
       display: flex;
       flex-direction: row;
+      button {
+        &:first-child {
+          @include ButtonCancel;
+          margin-right: torem(25px);
+          width: torem(262px);
+          height: torem(52px);
+          font-size: torem(18px);
+        }
+        &:last-child {
+          @include ButtonGreen;
+          width: torem(262px);
+          height: torem(52px);
+          font-size: torem(18px);
+        }
+      }
     }
   }
 }

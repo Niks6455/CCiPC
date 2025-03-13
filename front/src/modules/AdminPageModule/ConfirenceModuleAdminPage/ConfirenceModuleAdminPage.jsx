@@ -36,8 +36,7 @@ function ConfirenceModuleAdminPage() {
     }
   }, [conferenses]);
 
-  //! получение конференции
-  useEffect(() => {
+  const funUpdData = () => {
     const qery = conferensetQery?.data?.data?.conference;
     console.log('conferensetQery', qery);
 
@@ -68,6 +67,11 @@ function ConfirenceModuleAdminPage() {
     }
     setDeleteOrganizer([]);
     setDeletePartners([]);
+  };
+
+  //! получение конференции
+  useEffect(() => {
+    funUpdData();
   }, [conferensetQery?.data?.data?.conference]);
 
   useEffect(() => {
@@ -168,6 +172,13 @@ function ConfirenceModuleAdminPage() {
     });
   };
 
+  //! функция отмена
+  const funCancelData = () => {
+    setDeleteOrganizer([]);
+    setDeletePartners([]);
+    funUpdData();
+  };
+
   return (
     <section className={styles.ConfirenceModuleAdminPage}>
       <h2 className={styles.title}>Конференция</h2>
@@ -197,7 +208,7 @@ function ConfirenceModuleAdminPage() {
       />
       <div className={styles.buttons}>
         <div className={styles.buttons_inner}>
-          <button>Отмена</button>
+          <button onClick={funCancelData}>Отмена</button>
           <button onClick={funEditDataApi}>Сохранить изменения</button>
         </div>
       </div>

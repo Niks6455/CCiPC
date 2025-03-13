@@ -3,7 +3,7 @@
 .StagesConference {
   .stages_conference_title {
     @include titleBlock;
-    margin-bottom: 10px;
+    margin-bottom: torem(10px);
   }
   .stages_conference_block {
     width: 100%;
@@ -16,7 +16,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 18px;
+        margin-bottom: torem(18px);
 
         .left_block {
           width: 100%;
@@ -27,6 +27,13 @@
           .calendar {
             display: flex;
             position: relative;
+            width: 26px;
+            height: 26px;
+            margin-right: torem(10px);
+            img {
+              width: torem(18px);
+              height: torem(18px);
+            }
           }
           .calendar_show {
             display: flex;
@@ -34,16 +41,16 @@
             top: 100%;
             background-color: #fff;
             z-index: 101;
-            border-radius: 10px;
+            border-radius: torem(10px);
           }
           .button_calendar {
-            padding: 4px;
+            padding: torem(4px);
             margin: 0;
             * {
-              width: 18px;
-              height: 18px;
+              width: torem(18px);
+              height: torem(18px);
             }
-            margin-right: 10px;
+            margin-right: torem(10px);
 
             @include ButtonIcon;
             @include HoverActiveOpasity;
@@ -55,10 +62,10 @@
             margin: 0;
             display: flex;
             align-items: center;
-            margin-right: 16px;
-            width: 94px;
-            padding-top: 2px;
-            min-width: 94px;
+            margin-right: torem(16px);
+            width: torem(94px);
+            padding-top: torem(2px);
+            min-width: torem(94px);
             span {
               @include inputLight;
             }
@@ -69,15 +76,15 @@
           .point {
             position: relative;
             display: flex;
-            width: 8px;
-            margin-right: 12px;
+            width: torem(8px);
+            margin-right: torem(12px);
             &::after {
               display: flex;
               position: absolute;
               z-index: 100;
               content: '';
-              width: 8px;
-              height: 8px;
+              width: torem(8px);
+              height: torem(8px);
               border-radius: 50%;
               background-color: #c8d0ce;
               top: 50%;
@@ -85,7 +92,7 @@
             }
           }
           .info {
-            padding-top: 2px;
+            padding-top: torem(2px);
             width: 100%;
 
             input {
@@ -116,10 +123,15 @@
 
     .add_stage {
       button {
-        padding: 10px 10px;
+        padding: torem(10px) torem(10px);
         @include ButtonLight;
+        img {
+          width: torem(24px);
+          height: torem(24px);
+        }
         span {
-          margin-left: 10px;
+          margin-left: torem(10px);
+          font-size: torem(18px);
         }
       }
     }

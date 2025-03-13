@@ -1,16 +1,16 @@
 .TableModule {
-  margin-top: 25px;
+  margin-top: torem(25px);
   max-height: 58vh;
   overflow: auto;
-  border-bottom: 1px solid #c8d0ce;
-  border-radius: 8px;
+  border-bottom: torem(1px) solid #c8d0ce;
+  border-radius: torem(8px);
 
   table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    border: torem(1px) solid #e0e0e0;
+    border-radius: torem(8px);
     font-family: 'Arial', sans-serif;
 
     thead {
@@ -19,19 +19,19 @@
       top: 0;
       z-index: 10;
       th {
-        padding: 12px;
+        padding: torem(12px);
         text-align: center;
         font-weight: 700;
-        font-size: 18px;
+        font-size: torem(18px);
         color: #333;
-        border-bottom: 2px solid #d0d7de;
+        border-bottom: torem(2px) solid #d0d7de;
 
         &:first-child {
-          border-top-left-radius: 8px;
+          border-top-left-radius: torem(8px);
         }
 
         &:last-child {
-          border-top-right-radius: 8px;
+          border-top-right-radius: torem(8px);
         }
       }
     }
@@ -41,20 +41,20 @@
         &:hover {
           background-color: #f0f4f8;
         }
-        height: 81px;
+        height: torem(81px);
         td {
-          padding: 10px 12px;
-          border: 1px solid #e0e0e0;
+          padding: torem(10px) torem(12px);
+          border: torem(1px) solid #e0e0e0;
           vertical-align: middle;
           color: #444;
           background-color: inherit;
           transition: all 0.2s linear;
         }
         td:nth-child(5) {
-          max-width: 310px;
+          max-width: torem(310px);
         }
         td:nth-child(6) {
-          min-width: 310px;
+          min-width: torem(310px);
         }
 
         &:last-child td {
@@ -74,11 +74,11 @@
       position: relative;
       justify-content: space-between;
       .rigth_box {
-        margin-left: 10px;
+        margin-left: torem(10px);
         img {
-          width: 24px;
-          height: 24px;
-          padding: 5px;
+          width: torem(24px);
+          height: torem(24px);
+          padding: torem(5px);
           transform: scaleY(-1);
           transition: all 0.2s linear;
         }
@@ -94,13 +94,13 @@
 .DirectionList {
   position: fixed;
   background-color: #f0f3f2;
-  max-height: 500px;
-  width: 310px;
+  max-height: torem(500px);
+  width: torem(310px);
   overflow: auto;
   overflow-x: hidden;
-  border-radius: 10px;
+  border-radius: torem(10px);
   z-index: 1000;
-  border: 1px solid #c8d0ce;
+  border: torem(1px) solid #c8d0ce;
 
   ul {
     @include listNoStyle;
@@ -108,11 +108,11 @@
     li {
       cursor: pointer;
       width: 100%;
-      padding: 20px;
+      padding: torem(20px);
       font-family: Overpass, sans-serif;
       font-weight: 400;
-      font-size: 16px;
-      line-height: 19.2px;
+      font-size: torem(16px);
+      line-height: torem(19px);
     }
     .selected {
       background-color: #00452940;

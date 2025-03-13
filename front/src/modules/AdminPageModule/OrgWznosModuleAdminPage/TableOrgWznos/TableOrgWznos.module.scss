@@ -1,18 +1,18 @@
 .TableOrgWznos {
-  margin-top: 25px;
+  margin-top: torem(25px);
   max-height: 58vh;
   overflow: auto;
-  border-bottom: 1px solid #c8d0ce;
-  border-radius: 8px;
-  width: calc(100% + 8px);
+  border-bottom: torem(1px) solid #c8d0ce;
+  border-radius: torem(8px);
+  width: calc(100% + torem(8px));
   @include ScrollBar;
 
   table {
     min-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+    border: torem(1px) solid #e0e0e0;
+    border-radius: torem(8px);
     font-family: 'Arial', sans-serif;
 
     thead {
@@ -21,19 +21,19 @@
       top: 0;
       z-index: 10;
       th {
-        padding: 12px;
+        padding: torem(12px);
         text-align: center;
         font-weight: 700;
-        font-size: 18px;
+        font-size: torem(18px);
         color: #333;
-        border-bottom: 2px solid #d0d7de;
+        border-bottom: torem(2px) solid #d0d7de;
 
         &:first-child {
-          border-top-left-radius: 8px;
+          border-top-left-radius: torem(8px);
         }
 
         &:last-child {
-          border-top-right-radius: 8px;
+          border-top-right-radius: torem(8px);
         }
       }
     }
@@ -43,10 +43,10 @@
         &:hover {
           background-color: #f0f4f8;
         }
-        height: 81px;
+        height: torem(81px);
         td {
-          padding: 20px;
-          border: 1px solid #e0e0e0;
+          padding: torem(20px);
+          border: torem(1px) solid #e0e0e0;
           vertical-align: middle;
           color: #444;
           background-color: inherit;
@@ -68,7 +68,7 @@
       display: table-cell;
       vertical-align: middle;
       text-align: center;
-      min-width: 60px;
+      min-width: torem(60px);
     }
 
     td[name='participationForm'],
@@ -84,25 +84,25 @@
       display: table-cell;
       vertical-align: middle;
       text-align: center;
-      min-width: 120px;
+      min-width: torem(120px);
     }
 
     td[name='fio'],
     th[name='fio'] {
-      min-width: 350px;
+      min-width: torem(350px);
     }
     td[name='report'],
     th[name='report'] {
-      min-width: 590px;
+      min-width: torem(590px);
     }
     td[name='organization'],
     th[name='organization'] {
-      min-width: 300px;
+      min-width: torem(300px);
     }
     td[name='paymentForm'],
     th[name='paymentForm'] {
       text-wrap: nowrap;
-      min-width: 280px;
+      min-width: torem(280px);
       display: table-cell;
       vertical-align: middle;
       text-align: center;
@@ -122,12 +122,12 @@
       justify-content: center;
       align-items: center;
       background-color: #e7eae9;
-      border-radius: 4px;
-      padding: 4px 8px;
+      border-radius: torem(4px);
+      padding: torem(4px) torem(8px);
       width: fit-content;
       margin: 0 auto;
       img {
-        margin-right: 4px;
+        margin-right: torem(4px);
       }
       span {
         margin: 0;
@@ -136,30 +136,30 @@
       .contract_list {
         position: absolute;
         z-index: 100;
-        top: calc(100% + 7px);
+        top: calc(100% + torem(7px));
         left: 0;
         display: flex;
         flex-direction: column;
         width: 100%;
-        border: 1px solid #c8d0ce;
+        border: torem(1px) solid #c8d0ce;
         background-color: #f0f3f2;
-        border-radius: 4px;
+        border-radius: torem(4px);
         overflow: hidden;
         .box {
           display: flex;
           flex-direction: row;
           align-items: center;
-          padding: 8px;
+          padding: torem(8px);
           @include HoverActive;
           img {
-            margin-right: 8px;
-            width: 14px;
-            height: 14px;
+            margin-right: torem(8px);
+            width: torem(14px);
+            height: torem(14px);
           }
           span {
             font-weight: 400;
-            font-size: 16px;
-            line-height: 19.2px;
+            font-size: torem(16px);
+            line-height: torem(19px);
             letter-spacing: 0%;
             text-align: center;
             text-decoration: underline;
@@ -171,11 +171,11 @@
       }
     }
     .sum_container {
-      border: 1px solid #c8d0ce;
-      width: 92px;
-      height: 62px;
+      border: torem(1px) solid #c8d0ce;
+      width: torem(92px);
+      height: torem(62px);
       background-color: #ffffff;
-      border-radius: 10px;
+      border-radius: torem(10px);
       display: flex;
       flex-direction: row;
       justify-content: center;
@@ -183,7 +183,7 @@
       transition: all 0.2s linear;
 
       input {
-        border-radius: 8px;
+        border-radius: torem(8px);
         width: 100%;
         height: 100%;
         outline: none;
@@ -191,8 +191,8 @@
         background-color: inherit;
         font-family: Overpass;
         font-weight: 400;
-        font-size: 18px;
-        line-height: 21.6px;
+        font-size: torem(18px);
+        line-height: torem(21px);
         letter-spacing: 0%;
         text-align: center;
         color: #333333;
@@ -210,20 +210,20 @@
         position: relative;
         margin: 0 auto;
         width: auto;
-        height: 20px;
+        height: torem(20px);
       }
       .confirmation {
         @include InputCheckBox;
-        width: 20px;
-        height: 20px;
+        width: torem(20px);
+        height: torem(20px);
         padding: 0;
         margin: 0;
       }
       .check_icon {
         cursor: pointer;
 
-        width: 12px;
-        height: 9px;
+        width: torem(12px);
+        height: torem(9px);
         position: absolute;
         top: 50%;
         left: 50%;

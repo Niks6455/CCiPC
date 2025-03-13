@@ -1,19 +1,19 @@
 .AboutConference {
   width: 100%;
-  margin-top: 40px;
+  margin-top: torem(40px);
   h3 {
     @include titleBlock;
-    margin-bottom: 10px;
+    margin-bottom: torem(10px);
   }
   textarea {
     width: 100%;
     @include TextArea;
     font-weight: 400;
-    font-size: 18px;
-    line-height: 27px;
+    font-size: torem(18px);
+    line-height: torem(27px);
     letter-spacing: 0%;
-    min-height: 387px;
-    padding: 20px;
+    min-height: torem(387px);
+    padding: torem(20px);
     color: #333333;
   }
 }
