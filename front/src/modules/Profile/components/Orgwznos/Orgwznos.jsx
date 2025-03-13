@@ -20,8 +20,7 @@ function Orgwznos({ user, funNal, funBeznal }) {
   const funGetOrgwznos = () => {
     const fee = user?.fee;
     if (fee?.length > 0) {
-      // if (!fee[0]?.summ) {
-      if (false) {
+      if (!fee[0]?.summ) {
         return (
           <div className={styles.orgwznos}>
             <div className={styles.title}>
@@ -61,7 +60,7 @@ function Orgwznos({ user, funNal, funBeznal }) {
           </div>
         );
       }
-      if (true) {
+      if (false) {
         return (
           <div className={styles.orgwznos_files}>
             <h3>Оргвзнос:</h3>

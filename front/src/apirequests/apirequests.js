@@ -3,8 +3,6 @@ export const server = 'http://localhost:3000';
 // export const server = `${window.location.href}`;
 // export const server = `${window.location.href}/api`;
 
-
-
 //! Запрос на Выход
 export const logout = async () => {
   const data = { refreshToken: localStorage.getItem('refreshToken') };
@@ -331,6 +329,16 @@ export const getOrgWznos = async id => {
   }
 };
 
+//! получение оргвзнос таблицы в админ панели
+export const apiUpdateOrgWznos = async (id, data) => {
+  try {
+    const response = await api.put(`${server}/conferences/${id}/fee`, data);
+    return response;
+  } catch (error) {
+    console.log('getOrgWznos ', error);
+  }
+};
+
 //! экспорт архива статей
 export const apiExportArchiveState = async id => {
   try {
@@ -357,7 +365,7 @@ export const uploadPhoto = async (file, type) => {
   }
 };
 
-//! загрузка файлов массивом 
+//! загрузка файлов массивом
 export const uploadMulti = async (file, type) => {
   try {
     const response = await api.post(`${server}/uploads/multi?type=${type}`, file, {
@@ -433,4 +441,3 @@ export const getConferencesParticipants = async id => {
     console.log('getConfParticipants ', error);
   }
 };
-

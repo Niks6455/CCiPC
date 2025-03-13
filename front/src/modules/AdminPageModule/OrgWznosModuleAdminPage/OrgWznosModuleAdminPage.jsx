@@ -3,7 +3,7 @@ import styles from './OrgWznosModuleAdminPage.module.scss';
 import lupa from '@assets/img/UI/lupa.svg';
 import TableOrgWznos from './TableOrgWznos/TableOrgWznos';
 import { testData } from './data';
-import { getOrgWznos } from '../../../apirequests/apirequests';
+import { apiUpdateOrgWznos, getOrgWznos } from '../../../apirequests/apirequests';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
 
@@ -29,6 +29,7 @@ function OrgWznosModuleAdminPage() {
 
   useEffect(() => {
     const data = qery?.data?.data?.participants?.map(item => ({
+      id: item.id,
       fio: item.fio || '',
       report: item.name || '',
       organization: item.organization || '',
@@ -62,6 +63,17 @@ function OrgWznosModuleAdminPage() {
     }
   }, [shearchParam, originalData]);
 
+  const funSaveData = () => {
+    console.log('originalData', originalData);
+    const data = originalData.map(item => ({
+      id: item.id,
+      sum: item.sumOrgWznos,
+      status: item.confirmation,
+    }));
+    console.log('data', data);
+    apiUpdateOrgWznos(conferenceid, { feeInfo: data }).then(res => console.log('res', res));
+  };
+
   return (
     <section className={styles.OrgWznosModuleAdminPage}>
       <h1>Оргвзнос</h1>
@@ -75,7 +87,9 @@ function OrgWznosModuleAdminPage() {
             placeholder="Поиск"
           />
         </div>
-        <button className={styles.save}>Сохранить</button>
+        <button className={styles.save} onClick={funSaveData}>
+          Сохранить
+        </button>
       </div>
       <TableOrgWznos prewData={[...testData]} tableData={tableData} setTableData={setTableData} />
     </section>

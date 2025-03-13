@@ -16,6 +16,7 @@ import {
 import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { convertDate, convertDateTire } from '../../../utils/functions/funcions';
+import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSuccessfully';
 
 function ConfirenceModuleAdminPage() {
   const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ function ConfirenceModuleAdminPage() {
   const [conferenseId, setConferenseId] = useState(null);
   const [deleteOrganizer, setDeleteOrganizer] = useState([]);
   const [deletePartners, setDeletePartners] = useState([]);
+  const [modalSucces, setModalSucces] = useState(false);
 
   const conferensetQery = useQuery({
     queryKey: [`${conferenseId}`, conferenseId],
@@ -120,7 +122,7 @@ function ConfirenceModuleAdminPage() {
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
       partner: deletePartners,
-      organizers: deleteOrganizer,
+      organization: deleteOrganizer,
     };
     //! сохранение логотпа хедера
     if (typeof data.logoHeader === 'object') {
@@ -143,7 +145,6 @@ function ConfirenceModuleAdminPage() {
       funApiEditFile(data.worksCollection, 'COLLECTION');
     }
     //! файл шаблона статьи
-    console.log('data.аrticleTemplate', data.аrticleTemplate);
     if (typeof data.аrticleTemplate === 'object') {
       funApiEditFile(data.аrticleTemplate, 'SAMPLE');
     }
@@ -161,13 +162,15 @@ function ConfirenceModuleAdminPage() {
     }
     //! картинки партнеры
     if (data.organizers) {
-      funApiEditFileMulti(data.partners, 'PARTNER');
+      funApiEditFileMulti(data.partners, 'PARTNER111');
     }
 
     apiPutConferencesById(dat, conferenseId).then(res => {
       if (res?.status === 200) {
         setDeleteOrganizer([]);
         setDeletePartners([]);
+        setModalSucces(true);
+        funUpdData();
       }
     });
   };
@@ -181,6 +184,7 @@ function ConfirenceModuleAdminPage() {
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>
+      <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
       <h2 className={styles.title}>Конференция</h2>
       <StagesConference data={data} setData={setData} />
       <DateAdsess data={data} setData={setData} />

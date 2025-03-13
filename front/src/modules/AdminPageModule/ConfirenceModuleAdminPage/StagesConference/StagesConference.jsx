@@ -21,7 +21,6 @@ function StagesConference({ data, setData }) {
   //! удалить этап по индексу
   const funDeleteStage = index => {
     const stage = [...data?.stages];
-    console.log('stage', stage);
     if (data.deadlineUploadingReports === stage[index]?.date) {
       stage.splice(index, 1);
       setData({ ...data, deadlineUploadingReports: '', stages: stage });

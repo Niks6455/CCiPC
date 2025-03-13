@@ -34,15 +34,12 @@ function FileComponent(props) {
       const dataTransfer = new DataTransfer();
       dataTransfer.items.add(file);
       inputElement.files = dataTransfer.files;
-
-      console.log('Файл успешно установлен в input', file);
     } catch (error) {
       console.error('Ошибка при загрузке файла:', error);
     }
   }
 
   useEffect(() => {
-    console.log('props.logoHeader', props.logoHeader);
     if (typeof props.logoHeader === 'string') {
       setLogoHeader(props.logoHeader);
       setIsVisibleHeader(true);
@@ -126,7 +123,6 @@ function FileComponent(props) {
       setIsDragging(null);
     }, 300);
     const file = event.dataTransfer.files[0];
-    console.log('file', file);
     funChangeLogoHeader(file);
   };
 

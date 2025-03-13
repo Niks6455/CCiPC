@@ -38,8 +38,6 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
     }
   };
 
-  console.log('data[itemKey]', data[itemKey]);
-
   return (
     <div className={styles.Organizers}>
       <h3>{name}</h3>
