@@ -7,6 +7,7 @@ import plusLigthImg from '@assets/img/UI/plusLigth.svg';
 import AddOrgPeople from '@components/AdminModuleComponents/AddOrgPeople/AddOrgPeople';
 import { getOrgCommitet } from '../../../apirequests/apirequests';
 import CardOrganization from './CardOrganization/CardOrganization';
+import { useSelector } from 'react-redux';
 
 function OrgazmCommetet() {
   const [activeButtonFirst, setActiveButtonFirst] = useState(0);
@@ -17,15 +18,17 @@ function OrgazmCommetet() {
   const [dataCommitetOne, setDataCommitetOne] = useState([]);
   const [dataCommitetTwo, setDataCommitetTwo] = useState([]);
   const addOrgPeopleRef = useRef(null);
-
+  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
   useEffect(() => {
     getDataOrg();
   }, []);
 
   const getDataOrg = async () => {
-    const res = await getOrgCommitet();
-    if (res?.status === 200) {
-      setDataOrgAll(res.data.committee);
+    if (conferenceid) {
+      const res = await getOrgCommitet();
+      if (res?.status === 200) {
+        setDataOrgAll(res.data.committee);
+      }
     }
   };
 
