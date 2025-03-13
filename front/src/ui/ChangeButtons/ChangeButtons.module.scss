@@ -1,11 +1,31 @@
+.buttonsContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow-x: hidden;
+  padding-bottom: 5px;
+}
+
 .buttons {
   display: flex;
   gap: 25px;
   margin-top: 20px;
   margin-bottom: 40px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  justify-content: center;
+  width: 100vw;
+  padding-bottom: 10px;
+  @include ScrollBar();
+  @media (max-width: 900px) {
+    gap: 15px;
+  }
 
   .button {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     border-radius: 10px;
     padding: 5px 10px;
@@ -13,6 +33,9 @@
     background-color: #0045290a;
     border: 1px #00452940 solid;
     cursor: pointer;
+    @media (max-width: 900px) {
+      padding: 5px;
+    }
   }
 
   .button_active {
@@ -26,5 +49,8 @@
   .button_text {
     font-weight: 500;
     font-size: 18px;
+    @media (max-width: 900px) {
+      font-size: 16px;
+    }
   }
 }

@@ -2,24 +2,71 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 100px;
+  @media (max-width: 990px) {
+    margin-top: 70px;
+  }
 }
+
+
+.logo{
+  width: 110px;
+  height: 110px;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  @media (max-width: 990px) {
+    width: 60px;
+    height: 60px;
+    top: 15px;
+    left: 15px;
+  }
+  @media (max-width: 520px) {
+    display: none;
+  }
+}
+
 
 h2 {
   font-size: 30px;
   font-weight: 600;
+  @media (max-width: 1376px) {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  @media (max-width: 770px) {
+    font-size: 18px;
+  }
 }
 
 .organizationComite {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
-
   .organizationComiteImages {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
+    @media (max-width: 1376px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 770px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
+
+.organizationComiteImagesEmpty{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100%;
+  p{
+    font-size: 20px;
+    font-weight: 600;
+    color: #004529;
   }
 }
 
@@ -34,27 +81,38 @@ h2 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
-    
+    @media (max-width: 1376px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 770px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 }
 
-
-.greenArrow{
-  background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
-  width: 80px;
-  height: 80px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  cursor: pointer;
-  position: fixed;
-  right: 50px;
-  bottom: 50px;
-  z-index: 500;
-  transition: 0.08s linear all;
-  &:hover {
-      background-image: url("./../../assets/img/UI/ArrTopHover.svg");
+.greenArrowContainer{
+  display: block;
+  @media (max-width: 770px) {
+    display: none;
   }
-  &:active {
-      background-image: url("./../../assets/img/UI/ArrTopActive.svg");
+  .greenArrow{
+    background-image: url("./../../assets/img/UI/ArrTopDefault.svg");
+    width: 80px;
+    height: 80px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    z-index: 500;
+    transition: 0.08s linear all;
+    &:hover {
+        background-image: url("./../../assets/img/UI/ArrTopHover.svg");
+    }
+    &:active {
+        background-image: url("./../../assets/img/UI/ArrTopActive.svg");
+    }
   }
 }

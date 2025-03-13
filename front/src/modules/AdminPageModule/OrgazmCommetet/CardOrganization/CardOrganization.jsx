@@ -12,7 +12,7 @@ import {
 import deletePhoto2Img from '@assets/img/AdminPanel/deletePhoto.svg';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
 
-function CardOrganization(props) {
+function CardOrganization({ item, updateCardData, getDataOrg }) {
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
@@ -20,9 +20,9 @@ function CardOrganization(props) {
   const imgRef = useRef(null);
 
   const defaultValue = {
-    img: props?.item?.img || '',
-    fio: props?.item?.fio || '',
-    organization: props?.item?.organization || '',
+    img: item?.img || '',
+    fio: item?.fio || '',
+    organization: item?.organization || '',
   };
   const [file, setFile] = useState(null);
   const refFile = useRef(null);
@@ -82,17 +82,21 @@ function CardOrganization(props) {
   };
 
   const handleCancel = () => setDataItem(defaultValue);
+
   const handleSave = () => {
-    updateOrgCommitet(dataItem, props.item.id).then(res => {
+    updateOrgCommitet(dataItem, item.id).then(res => {
       if (res?.status === 200) {
-        props?.getDataOrg();
+        updateCardData(item.id, dataItem);
+        setIsChanged(false);
+        getDataOrg();
       }
     });
   };
+
   const handleDelete = () => {
-    deleteOrgCommitet(props.item.id).then(res => {
+    deleteOrgCommitet(item.id).then(res => {
       if (res?.status === 200) {
-        props?.getDataOrg();
+        getDataOrg();
       }
     });
   };
@@ -102,10 +106,13 @@ function CardOrganization(props) {
     setFile(file);
     const formFile = new FormData();
     formFile.append('file', file);
-    formFile.append('committeeId', props?.item?.committeeId);
+    formFile.append('committeeId', item?.committeeId);
+
     uploadPhoto(formFile, 'COMMITTEE').then(res => {
       if (res?.status === 200) {
-        props?.getDataOrg();
+        console.log('res', res);
+        updateCardData(item.id, { ...dataItem, img: res.data.url });
+        getDataOrg();
       }
     });
   };
@@ -146,7 +153,6 @@ function CardOrganization(props) {
           />
         </div>
 
-        {/* Если есть изменения → Отменить и Сохранить, иначе → Удалить */}
         {isChanged ? (
           <div className={styles.buttonContainer} ref={buttonContainerRef}>
             <button className={styles.cancel} onClick={handleCancel}>

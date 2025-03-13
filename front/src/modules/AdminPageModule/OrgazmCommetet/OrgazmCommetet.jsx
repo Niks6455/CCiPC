@@ -19,15 +19,17 @@ function OrgazmCommetet() {
   const [dataCommitetTwo, setDataCommitetTwo] = useState([]);
   const addOrgPeopleRef = useRef(null);
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
+  
   useEffect(() => {
     getDataOrg();
-  }, []);
+  }, [conferenceid]);
 
   const getDataOrg = async () => {
     if (conferenceid) {
-      const res = await getOrgCommitet();
+      const res = await getOrgCommitet(conferenceid);
       if (res?.status === 200) {
         setDataOrgAll(res.data.committee);
+        filterCommittees();
       }
     }
   };
@@ -45,6 +47,14 @@ function OrgazmCommetet() {
     setDataCommitetTwo(committeeTwo);
   };
 
+  const updateCardData = (id, newData) => {
+    setDataOrgAll(prevData =>
+      prevData.map(item =>
+        item.id === id ? { ...item, ...newData } : item
+      )
+    );
+  };
+
   const closeCreateOne = () => {
     if (addOrgPeopleRef.current) {
       gsap.to(addOrgPeopleRef.current, {
@@ -52,10 +62,14 @@ function OrgazmCommetet() {
         y: -20,
         duration: 0.4,
         ease: 'power2.in',
-        onComplete: () => setAddFirstOne(false),
+        onComplete: () => {
+          setAddFirstOne(false);
+          getDataOrg();
+        },
       });
     } else {
       setAddFirstOne(false);
+      getDataOrg();
     }
   };
 
@@ -66,10 +80,14 @@ function OrgazmCommetet() {
         y: -20,
         duration: 0.4,
         ease: 'power2.in',
-        onComplete: () => setAddFirstTwo(false),
+        onComplete: () => {
+          setAddFirstTwo(false);
+          getDataOrg();
+        },
       });
     } else {
       setAddFirstTwo(false);
+      getDataOrg();
     }
   };
 
@@ -109,7 +127,12 @@ function OrgazmCommetet() {
                 />
               )}
               {dataCommitetOne.map(item => (
-                <CardOrganization key={item.id} getDataOrg={getDataOrg} item={item} />
+                <CardOrganization
+                  key={item.id}
+                  getDataOrg={getDataOrg}
+                  item={item}
+                  updateCardData={updateCardData}
+                />
               ))}
             </div>
           </div>
@@ -157,7 +180,12 @@ function OrgazmCommetet() {
                 />
               )}
               {dataCommitetTwo.map(item => (
-                <CardOrganization key={item.id} getDataOrg={getDataOrg} item={item} />
+                <CardOrganization
+                  key={item.id}
+                  getDataOrg={getDataOrg}
+                  item={item}
+                  updateCardData={updateCardData}
+                />
               ))}
             </div>
           </div>

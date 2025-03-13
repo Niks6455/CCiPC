@@ -37,6 +37,8 @@ function AddOrgPeople(props) {
             }
           });
         }
+        props?.closeCreateOne();
+        props?.getDataOrg();
       }
     });
   };
