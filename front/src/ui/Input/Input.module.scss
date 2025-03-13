@@ -114,6 +114,7 @@ $w3: 480px;
     font-size: torem(20px);
     color: #000;
     box-sizing: border-box;
+    padding-left: torem(25px);
     &::placeholder {
       color: var(--InputTextColor);
     }
@@ -134,6 +135,7 @@ $w3: 480px;
     top: 0px;
     padding: 0px torem(5px);
     background-color: #f0f3f2;
+    transform: translateY(torem(25px));
   }
   .placeholderClose {
     color: #858b89;

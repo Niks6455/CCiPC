@@ -2,14 +2,14 @@
 @import '../../../styles/mixin.scss';
 
 .ViewReports {
-  width: 1170px;
+  width: torem(1170px);
 
   //! попа
   .modal_container {
     @include PopupBlur;
     .modal_delete_report {
       @include PopupContainer;
-      padding: 0 158px;
+      padding: 0 torem(158px);
     }
     h2 {
       @include PopupTitle;
@@ -19,15 +19,15 @@
       flex-direction: row;
       .cancle {
         @include ButtonGreen;
-        margin-right: 20px;
-        width: 160px;
-        height: 54px;
+        margin-right: torem(20px);
+        width: torem(160px);
+        height: torem(54px);
       }
 
       .delete {
         @include ButtonRedBorder;
-        width: 160px;
-        height: 54px;
+        width: torem(160px);
+        height: torem(54px);
       }
     }
   }
@@ -36,15 +36,15 @@
     display: flex;
     justify-content: start;
     .ViewReportsInnerFirst {
-      max-width: 560px;
-      min-width: 560px;
-      margin-right: 35px;
+      max-width: torem(560px);
+      min-width: torem(560px);
+      margin-right: torem(35px);
 
       .ViewReportsBlock {
-        margin-bottom: 20px;
+        margin-bottom: torem(20px);
         .ViewReportsTitle {
           @include TextStrong;
-          margin-bottom: 10px;
+          margin-bottom: torem(10px);
         }
         p {
           @include TextDefault;
@@ -52,24 +52,24 @@
       }
     }
     .ViewReportsInnerSecond {
-      max-width: 540px;
-      margin-left: 35px;
+      max-width: torem(540px);
+      margin-left: torem(35px);
       .ViewReportsTitle {
-        margin-bottom: 10px;
+        margin-bottom: torem(10px);
         @include TextStrong;
       }
       .name {
         @include TextDefault;
-        margin-bottom: 5px;
+        margin-bottom: torem(5px);
         font-weight: 500;
       }
       ul {
         margin-top: 0;
-        padding-left: 16px;
-        margin-bottom: 20px;
+        padding-left: torem(16px);
+        margin-bottom: torem(20px);
         li {
           @include TextDefault;
-          margin: 3px 0px;
+          margin: torem(3px) 0px;
         }
       }
     }
@@ -78,21 +78,24 @@
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 40px;
+    margin-top: torem(40px);
     .fileLoudersInner {
       position: relative;
-      max-width: 540px;
+      max-width: torem(540px);
     }
     .fileLoudersTitle {
       @include TextStrong;
-      margin-bottom: 10px;
+      margin-bottom: torem(10px);
     }
     .fileContur {
-      margin-top: 10px;
+      margin-top: torem(10px);
       position: relative;
+      height: max-content;
 
       .blockFile {
-        border-radius: 10px;
+        width: torem(546px);
+        height: torem(155px);
+        border-radius: torem(10px);
         fill: #fff;
         transition: all 0.15s linear;
         cursor: pointer;
@@ -105,10 +108,10 @@
       .trash {
         cursor: pointer;
         position: absolute;
-        right: 15px;
-        top: 15px;
-        padding: 5px;
-        border-radius: 5px;
+        right: torem(15px);
+        top: torem(15px);
+        padding: torem(5px);
+        border-radius: torem(5px);
         @include HoverActive;
       }
       .fileName {
@@ -117,20 +120,20 @@
         left: 50%;
         transform: translateX(-50%);
         position: absolute;
-        top: 130px;
-        width: 244px;
-        height: 60px;
+        bottom: torem(8px);
+        width: torem(244px);
+        height: torem(60px);
         // background-color: var(--BodyBgColor);
         z-index: 10;
-        padding-top: 5px;
+        padding-top: torem(5px);
         box-sizing: border-box;
         pointer-events: none;
 
         span {
           font-family: Overpass, sans-serif;
-          font-size: 16px;
+          font-size: torem(16px);
           font-weight: 400;
-          line-height: 19.2px;
+          line-height: torem(19px);
           text-align: center;
           text-underline-position: from-font;
           text-decoration-skip-ink: none;
@@ -143,38 +146,40 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
-    margin-top: 40px;
+    margin-top: torem(40px);
     .button_edit {
       @include ButtonGreen;
-      width: 412px;
-      height: 64px;
+      width: torem(412px);
+      height: torem(64px);
       margin: 0 auto;
-      margin-bottom: 15px;
+      margin-bottom: torem(15px);
+      font-size: torem(20px);
     }
     .button_delete {
       @include ButtonRedBorder;
       margin: 0 auto;
-      width: 412px;
-      height: 64px;
+      width: torem(412px);
+      height: torem(64px);
+      font-size: torem(20px);
     }
   }
   .repName {
     position: absolute;
-    max-width: 340px;
+    max-width: torem(340px);
     z-index: 100;
     left: 0;
-    top: 0px;
+    top: 0;
     background-color: #fff;
-    padding: 10px;
+    padding: torem(10px);
     font-family: Overpass, sans-serif;
-    font-size: 16px;
+    font-size: torem(16px);
     font-weight: 400;
-    line-height: 19.2px;
+    line-height: torem(19px);
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     color: #5b605e;
-    border-radius: 6px;
-    border: 1px solid #e7eae9;
+    border-radius: torem(6px);
+    border: torem(1px) solid #e7eae9;
   }
 }
