@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   user: UserSlice,
   conferences: conferencesSlice,
   news: newsSlice,
-  participants: participantsSlice
+  participants: participantsSlice,
 });
 
 const persistConfig = {

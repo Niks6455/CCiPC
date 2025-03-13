@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const ParticipantsSlice = createSlice({
   name: 'participantsSlice',
   initialState: {
-    selectParticipantsData:null
+    selectParticipantsData: null,
   },
 
   reducers: {

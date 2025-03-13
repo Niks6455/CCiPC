@@ -32,8 +32,6 @@ function AddArchive(props) {
     }
   };
 
-
-
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'; // Устанавливает высоту под контент
@@ -67,9 +65,9 @@ function AddArchive(props) {
       name: name,
       url: url,
       type: 0,
-      conferenceId: conferenceid
+      conferenceId: conferenceid,
     };
-    console.log("data", data)
+    console.log('data', data);
 
     try {
       const resp = await createArchive(data);
