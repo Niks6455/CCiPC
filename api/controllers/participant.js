@@ -15,7 +15,7 @@ export default {
             if(name || surname || patronymic || organization || email) throw  new AppErrorInvalid('isMicrosoft')
         }
 
-        if(formPay &&  !['Безналичный', 'Наличный'].includes(formPay)) throw  new AppErrorInvalid('formPay')
+        if(formPay &&  !['Безналичный', 'Наличный', 'Не выбран'].includes(formPay)) throw  new AppErrorInvalid('formPay')
 
         const participant = await participantService.update({email, name, surname, patronymic, academicTitle, degree, position, organization, phone, avatar, accord, receipt, formPay}, user.id)
 
