@@ -6,12 +6,14 @@ import { testData } from './data';
 import { apiUpdateOrgWznos, getOrgWznos } from '../../../apirequests/apirequests';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
+import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSuccessfully';
 
 function OrgWznosModuleAdminPage() {
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
   const [shearchParam, setShearchParam] = useState('');
   const [originalData, setOriginalData] = useState([]);
   const [tableData, setTableData] = useState([]);
+  const [modalSucces, setModalSucces] = useState(null);
 
   const qery = useQuery({
     queryKey: ['conference/fee', conferenceid], // Уникальный ключ, зависящий от conferenceid
@@ -71,11 +73,19 @@ function OrgWznosModuleAdminPage() {
       status: item.confirmation,
     }));
     console.log('data', data);
-    apiUpdateOrgWznos(conferenceid, { feeInfo: data }).then(res => console.log('res', res));
+    apiUpdateOrgWznos(conferenceid, { feeInfo: data }).then(res => {
+      if (res?.status === 200) {
+        setModalSucces(true);
+      } else {
+        setModalSucces(false);
+      }
+    });
   };
 
   return (
     <section className={styles.OrgWznosModuleAdminPage}>
+      <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
+
       <h1>Оргвзнос</h1>
       <div className={styles.head_menu}>
         <div className={styles.left_block}>

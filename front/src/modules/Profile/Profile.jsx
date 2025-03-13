@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fioToString } from '../../utils/functions/funcions';
 import { fetchUserData } from '../../store/userSlice/user.Slice';
-import { server } from '../../apirequests/apirequests';
+import { apiUpdateUser, server } from '../../apirequests/apirequests';
 import { useNavigate } from 'react-router-dom';
 import ModalNal from './components/ModalNal/ModalNal';
 import ModalPhoto from './components/ModalPhoto/ModalPhoto';
@@ -30,7 +30,12 @@ function Profile() {
   }, []);
 
   const funNal = () => {
-    setOpenModal(true);
+    apiUpdateUser({ formPay: 'Наличный' }).then(res => {
+      if (res?.status === 200) {
+        dispatch(fetchUserData());
+        setOpenModal(true);
+      }
+    });
   };
   const funBeznal = () => {
     setOpenModalBeznal(true);

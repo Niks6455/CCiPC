@@ -1,9 +1,16 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .Lks {
   display: flex;
   width: 100%;
   justify-content: space-between;
   .LksContainer {
-    padding: 50px 80px;
+    padding: torem(50px) torem(80px);
+    @media (max-width: $w2) {
+      padding: 0;
+    }
     box-sizing: border-box;
     position: relative;
   }

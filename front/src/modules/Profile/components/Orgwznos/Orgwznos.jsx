@@ -20,7 +20,7 @@ function Orgwznos({ user, funNal, funBeznal }) {
   const funGetOrgwznos = () => {
     const fee = user?.fee;
     if (fee?.length > 0) {
-      if (!fee[0]?.summ) {
+      if (!fee[0]?.sum) {
         return (
           <div className={styles.orgwznos}>
             <div className={styles.title}>
@@ -36,12 +36,11 @@ function Orgwznos({ user, funNal, funBeznal }) {
         );
       }
 
-      // if (fee[0]?.summ) {
-      if (false) {
+      if (fee[0]?.sum) {
         return (
           <div className={styles.orgwznos_summ}>
             <h3>
-              Счет для оплаты оргвзноса: <span>{fee[0]?.summ + ' '}₽ </span>
+              Счет для оплаты оргвзноса: <span>{fee[0]?.sum + ' '}₽ </span>
             </h3>
             <div className={styles.buttons}>
               <button onClick={funNal}>Наличный расчёт</button>
@@ -50,17 +49,17 @@ function Orgwznos({ user, funNal, funBeznal }) {
           </div>
         );
       }
-      if (false) {
+      if (fee[0]?.formPay === 'Наличный') {
         return (
           <div className={styles.orgwznos_summ}>
             <h3>
-              Счет для оплаты оргвзноса: <span>{fee[0]?.summ + ' '}₽ </span>
+              Счет для оплаты оргвзноса: <span>{fee[0]?.sum + ' '}₽ </span>
             </h3>
             <button className={styles.btn_change}>Сменить способ оплаты</button>
           </div>
         );
       }
-      if (false) {
+      if (fee[0]?.formPay === 'Безналичный') {
         return (
           <div className={styles.orgwznos_files}>
             <h3>Оргвзнос:</h3>

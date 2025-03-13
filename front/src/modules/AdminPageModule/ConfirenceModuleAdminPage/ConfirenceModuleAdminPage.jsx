@@ -17,6 +17,8 @@ import { useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { convertDate, convertDateTire } from '../../../utils/functions/funcions';
 import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSuccessfully';
+import { fileKeys } from './data';
+import ReqError from '../../../components/ReqError/ReqError';
 
 function ConfirenceModuleAdminPage() {
   const [data, setData] = useState([]);
@@ -24,13 +26,25 @@ function ConfirenceModuleAdminPage() {
   const [conferenseId, setConferenseId] = useState(null);
   const [deleteOrganizer, setDeleteOrganizer] = useState([]);
   const [deletePartners, setDeletePartners] = useState([]);
-  const [modalSucces, setModalSucces] = useState(false);
+  const [modalSucces, setModalSucces] = useState(null);
+  const [errors, setErrors] = useState([]);
 
   const conferensetQery = useQuery({
     queryKey: [`${conferenseId}`, conferenseId],
     queryFn: () => apiGetConferencesById(conferenseId),
     enabled: !!conferenseId,
   });
+
+  const funSetErrors = (key, value) => {
+    setErrors(errors => [
+      ...errors,
+      {
+        key: key,
+        succes: value,
+        text: fileKeys?.find(item => item.name === key)?.errorname,
+      },
+    ]);
+  };
 
   useEffect(() => {
     if (conferenses?.[0]?.id) {
@@ -76,36 +90,46 @@ function ConfirenceModuleAdminPage() {
     funUpdData();
   }, [conferensetQery?.data?.data?.conference]);
 
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
-
   //! для отправки файла
   const funApiEditFile = (file, key) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('conferenceId', conferenseId);
-    uploadPhoto(formData, key).then(res => {
-      if (res?.status !== 200) {
-        alert('Файл не загружен', key);
-      }
-    });
+    if (typeof file === 'object') {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('conferenceId', conferenseId);
+      uploadPhoto(formData, key).then(res => {
+        if (res?.status !== 200) {
+          funSetErrors(key, false);
+        } else {
+          funSetErrors(key, true);
+        }
+      });
+    } else {
+      funSetErrors(key, true);
+    }
   };
 
   //! отправка файлов массивом организаторы и партнеры
   const funApiEditFileMulti = (files, key) => {
-    const data = files.map(item => item.value).filter(item => item && typeof item !== 'string');
-    const formData = new FormData();
-    if (data.length > 0) {
-      data.forEach(file => {
-        formData.append('files', file);
-      });
-      formData.append('conferenceId', conferenseId);
-      uploadMulti(formData, key).then(res => {
-        if (res?.status !== 200) {
-          alert('Файл не загружен', key);
-        }
-      });
+    if (files) {
+      const data = files.map(item => item.value).filter(item => item && typeof item !== 'string');
+      const formData = new FormData();
+      if (data.length > 0) {
+        data.forEach(file => {
+          formData.append('files', file);
+        });
+        formData.append('conferenceId', conferenseId);
+        uploadMulti(formData, key).then(res => {
+          if (res?.status !== 200) {
+            funSetErrors(key, false);
+          } else {
+            funSetErrors(key, true);
+          }
+        });
+      } else {
+        funSetErrors(key, true);
+      }
+    } else {
+      funSetErrors(key, true);
     }
   };
 
@@ -124,53 +148,25 @@ function ConfirenceModuleAdminPage() {
       partner: deletePartners,
       organization: deleteOrganizer,
     };
-    //! сохранение логотпа хедера
-    if (typeof data.logoHeader === 'object') {
-      funApiEditFile(data.logoHeader, 'HEADER');
-    }
-    //! сохранение логотпа футера
-    if (typeof data.logoFooter === 'object') {
-      funApiEditFile(data.logoFooter, 'FOOTER');
-    }
-    //! файла программы конференции
-    if (typeof data.programConference === 'object') {
-      funApiEditFile(data.programConference, 'PROGRAM');
-    }
-    //! файла буклета
-    if (typeof data.informationLetter === 'object') {
-      funApiEditFile(data.informationLetter, 'LETTER');
-    }
-    //! файл коллекции работ
-    if (typeof data.worksCollection === 'object') {
-      funApiEditFile(data.worksCollection, 'COLLECTION');
-    }
-    //! файл шаблона статьи
-    if (typeof data.аrticleTemplate === 'object') {
-      funApiEditFile(data.аrticleTemplate, 'SAMPLE');
-    }
-    //! файл документа о платёже индивидуальных
-    if (typeof data.cashlessIndividual === 'object') {
-      funApiEditFile(data.cashlessIndividual, 'INDIVIDUAL');
-    }
-    //! файл документа о платёже юрлиц
-    if (typeof data.cashlessEntities === 'object') {
-      funApiEditFile(data.cashlessEntities, 'LEGAL');
-    }
-    //! картинки организаторы
-    if (data.organizers) {
-      funApiEditFileMulti(data.organizers, 'ORGANIZATION');
-    }
-    //! картинки партнеры
-    if (data.organizers) {
-      funApiEditFileMulti(data.partners, 'PARTNER111');
-    }
+    //! загрузка файлов
+    fileKeys.map(item => {
+      if (item.fun === 'funApiEditFile') {
+        funApiEditFile(data[item.key], item.name);
+      }
+      if (item.fun === 'funApiEditFileMulti') {
+        funApiEditFileMulti(data[item.key], item.name);
+      }
+    });
 
     apiPutConferencesById(dat, conferenseId).then(res => {
       if (res?.status === 200) {
         setDeleteOrganizer([]);
         setDeletePartners([]);
+        funSetErrors('main', true);
         setModalSucces(true);
-        funUpdData();
+      } else {
+        funSetErrors('main', false);
+        setModalSucces(false);
       }
     });
   };
@@ -184,6 +180,7 @@ function ConfirenceModuleAdminPage() {
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>
+      <ReqError errors={errors.filter(item => !item.succes)} setErrors={setErrors} />
       <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
       <h2 className={styles.title}>Конференция</h2>
       <StagesConference data={data} setData={setData} />

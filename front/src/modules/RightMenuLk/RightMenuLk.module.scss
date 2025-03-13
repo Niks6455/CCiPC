@@ -1,9 +1,16 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .RightMenuLk {
-  padding: 10px 0 0 20px;
+  @media (max-width: $w2) {
+    display: none;
+  }
+  padding: torem(10px) 0 0 torem(20px);
   display: block;
-  border-left: 1px solid var(--InputColors);
-  width: 310px;
-  min-width: 310px;
+  border-left: torem(1px) solid var(--InputColors);
+  width: torem(310px);
+  min-width: torem(310px);
   @include maxMinContent();
   box-sizing: border-box;
   position: relative;
@@ -22,7 +29,7 @@
           display: flex;
           align-items: center;
           cursor: pointer;
-          font-size: 18px;
+          font-size: torem(18px);
           font-weight: 700;
           position: relative;
 
@@ -38,8 +45,8 @@
           }
 
           .arrowTopMenu {
-            margin-left: 10px;
-            height: 10px;
+            margin-left: torem(10px);
+            height: torem(10px);
             transform: rotate(180deg);
             transition: 0.1s linear all;
           }
@@ -57,9 +64,9 @@
               z-index: 10;
 
               li {
-                padding: 10px 15px;
+                padding: torem(10px) torem(15px);
                 color: var(--GreenColorDefault);
-                font-size: 18px;
+                font-size: torem(18px);
                 font-weight: 700;
                 display: flex;
                 align-items: center;
@@ -77,15 +84,15 @@
   }
   .RightMenuText {
     position: absolute;
-    bottom: 63px;
-    right: 20px;
-    width: 210px;
+    bottom: torem(63px);
+    right: torem(20px);
+    width: torem(210px);
     text-align: end;
     color: var(--InputTextColor);
-    line-height: 19px;
-    font-size: 16px;
+    line-height: torem(19px);
+    font-size: torem(16px);
     .RightMenuTextCont {
-      margin-bottom: 20px;
+      margin-bottom: torem(20px);
     }
     .RightMenuTextGroup {
       font-weight: 700;

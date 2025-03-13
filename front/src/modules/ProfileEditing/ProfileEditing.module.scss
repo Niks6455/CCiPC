@@ -1,9 +1,22 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .ProfileEditing {
-  width: calc(100vw - 700px);
+  width: calc(100vw - torem(700px));
   display: flex;
   flex-direction: column;
   align-items: start;
-  padding: 60px 40px;
+  padding: torem(60px) torem(40px);
+  @media (max-width: $w2) {
+    width: 100vw;
+    padding: torem(50px) 0;
+    justify-content: center;
+    align-items: normal;
+  }
+  @media (max-width: $w3) {
+    padding: torem(42px) 0;
+  }
   .bacgraund {
     position: fixed;
     top: 0;
@@ -16,8 +29,8 @@
   }
   .ProfilePhotoShow {
     z-index: 1001;
-    width: calc(550px + 81px);
-    height: 550px;
+    width: calc(torem(550px) + torem(81px));
+    height: torem(550px);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -25,6 +38,17 @@
     display: flex;
     justify-content: end;
     flex-direction: row;
+    @media (max-width: $w2) {
+      position: fixed;
+      width: 80vw;
+      top: 40%;
+      left: calc(50% + torem(40px));
+    }
+    @media (max-width: $w3) {
+      left: calc(50% + torem(30px));
+      height: calc(80vw - torem(61px));
+    }
+
     .ProfileImg {
       display: flex;
       width: 100%;
@@ -33,10 +57,13 @@
       object-fit: cover;
     }
     .close {
-      transform: translate(23px, -23px);
-      width: 81px;
-      height: 81px;
+      transform: translate(torem(23px), torem(-23px));
+      width: torem(81px);
+      height: torem(81px);
       display: flex;
+      @media (max-width: $w2) {
+        transform: translate(torem(-40px), torem(-23px));
+      }
       cursor: pointer;
       &:hover {
         * {
@@ -50,8 +77,8 @@
     @include PopupContainer;
     position: absolute;
     z-index: 1002;
-    width: 856px;
-    height: 380px;
+    width: torem(856px);
+    height: torem(380px);
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -60,27 +87,43 @@
       @include PopupTitle;
     }
     img {
-      margin-top: 40px;
-      margin-bottom: 40px;
+      margin-top: torem(40px);
+      margin-bottom: torem(40px);
     }
     button {
       @include ButtonGreen;
-      width: 280px;
-      height: 54px;
+      width: torem(280px);
+      height: torem(54px);
     }
   }
   .head {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    @media (max-width: $w2) {
+      flex-direction: column;
+    }
+
     .profilePhoto {
-      width: 110px;
-      height: 110px;
+      width: torem(110px);
+      height: torem(110px);
       border-radius: 50%;
-      margin-right: 20px;
+      margin-right: torem(20px);
       overflow: hidden;
       position: relative;
       cursor: pointer;
+      @media (max-width: $w2) {
+        width: torem(182px);
+        height: torem(182px);
+        margin: 0;
+        margin-bottom: torem(25px);
+      }
+      @media (max-width: $w3) {
+        width: torem(228px);
+        height: torem(228px);
+        margin-bottom: torem(20px);
+      }
       &:hover {
         .hover_bg {
           opacity: 1;
@@ -122,30 +165,48 @@
         align-items: center;
         backdrop-filter: blur(3.299999952316284px);
         img {
-          width: 64px;
-          height: 64px;
+          width: torem(64px);
+          height: torem(64px);
           transition: all 0.2s linear;
           transform: scale(0.7);
         }
       }
     }
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      @media (max-width: $w3) {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+    }
     button {
-      border-radius: 10px;
-      padding: 16px 25px;
+      border-radius: torem(10px);
+      padding: torem(16px) torem(25px);
       font-family: Overpass, sans-serif;
-      font-size: 18px;
+      font-size: torem(18px);
       font-weight: 400;
-      line-height: 21.6px;
+      line-height: torem(21px);
       text-align: center;
       text-underline-position: from-font;
       text-decoration-skip-ink: none;
       cursor: pointer;
+      @media (max-width: $w3) {
+        padding: 0;
+      }
     }
     .btn1 {
       background-color: #004529;
       border: none;
       color: #fff;
-      margin-right: 10px;
+      margin-right: torem(10px);
+      @media (max-width: $w3) {
+        margin: 0;
+        margin-bottom: torem(5px);
+        width: torem(244px);
+        height: torem(44px);
+      }
 
       &:hover {
         background-color: #002d1b;
@@ -159,7 +220,12 @@
     .btn2 {
       background-color: var(--BodyBgColor);
       color: #004529;
-      border: 1px solid #004529;
+      border: torem(1px) solid #004529;
+      @media (max-width: $w3) {
+        width: torem(171px);
+        height: torem(44px);
+      }
+
       &:hover {
         background-color: #0045290a;
         transition: all 0.1s linear;
@@ -175,23 +241,36 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    margin-top: 40px;
+    margin-top: torem(40px);
+    @media (max-width: $w2) {
+      flex-direction: column;
+      width: torem(413px);
+      margin: 0 auto;
+      padding-top: torem(50px);
+    }
+    @media (max-width: $w3) {
+      padding-top: torem(30px);
+      width: calc(100vw - torem(40px));
+    }
     .boxLeft {
       display: flex;
       flex-direction: column;
-      margin-right: 142px;
+      margin-right: torem(142px);
+      @media (max-width: $w2) {
+        margin: 0;
+      }
     }
     .boxRigth {
       display: flex;
       flex-direction: column;
 
       .SaveButton {
-        border-radius: 10px;
-        padding: 16px 25px;
+        border-radius: torem(10px);
+        padding: torem(16px) torem(25px);
         font-family: Overpass, sans-serif;
-        font-size: 18px;
+        font-size: torem(18px);
         font-weight: 400;
-        line-height: 21.6px;
+        line-height: torem(21px);
         text-align: center;
         text-underline-position: from-font;
         text-decoration-skip-ink: none;
@@ -199,8 +278,11 @@
         background-color: #004529;
         border: none;
         color: #fff;
-        margin-top: 25px;
-        height: 60px;
+        margin-top: torem(25px);
+        height: torem(60px);
+        @media (max-width: $w2) {
+          margin-top: torem(10px);
+        }
         &:hover {
           background-color: #002d1b;
           transition: all 0.1s linear;
@@ -212,15 +294,44 @@
       }
       .noSaveButton {
         @include ButtonLightBorder;
-        height: 60px;
-        margin-top: 25px;
+        font-size: torem(18px);
+        height: torem(60px);
+        margin-top: torem(25px);
+        @media (max-width: $w2) {
+          margin-top: torem(20px);
+          margin-bottom: torem(150px);
+        }
+        @media (max-width: $w3) {
+          margin-top: torem(10px);
+          margin-bottom: torem(94px);
+        }
       }
     }
     .item {
       input {
-        width: 413px;
-        height: 54px;
-        margin-bottom: 25px;
+        width: torem(413px);
+        height: torem(54px);
+        margin-bottom: torem(25px);
+        @media (max-width: $w2) {
+          width: 100%;
+          margin-bottom: torem(20px);
+        }
+        @media (max-width: $w3) {
+          font-size: torem(16px);
+        }
+      }
+      @media (max-width: $w3) {
+        span {
+          font-size: torem(14px);
+        }
+        img {
+          padding-top: torem(2px);
+          width: torem(14px);
+        }
+        div:nth-child(3) {
+          padding-top: torem(18px);
+          z-index: -1;
+        }
       }
     }
   }

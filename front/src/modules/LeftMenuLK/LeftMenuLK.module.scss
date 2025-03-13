@@ -1,6 +1,11 @@
-@import '../../styles/colors.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .LeftMenuLk {
+  @media (max-width: $w2) {
+    display: none;
+  }
   padding: torem(10px) 0px 0px torem(20px);
   display: block;
   border-right: torem(1px) solid var(--InputColors);
