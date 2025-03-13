@@ -13,11 +13,15 @@ import Organization2 from '@assets/img/UI/org2.png';
 import Organization3 from '@assets/img/UI/org3.png';
 import Organization4 from '@assets/img/UI/org4.png';
 import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHomePageMobile';
+import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 function HomePage() {
   // const context = useContext(DataContext);
   const textData = textDataHomePage;
   return (
     <div className={styles.HomePage}>
+      <header style={{ position: 'absolute', top: '0', left: '0', width: '100%', zIndex: '1000' }}>
+        <HeaderPhone />
+      </header>
       <Header />
       <TopMainInfo />
       <SliderHomePageTop />

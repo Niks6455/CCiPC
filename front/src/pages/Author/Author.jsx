@@ -10,6 +10,7 @@ import NavBar from '../../components/NavBar/NavBar.jsx';
 import Book from '../../assets/img/Book.svg';
 import Cap from '../../assets/img/Cap.svg';
 import { getAllArchiveReport } from '../../apirequests/apirequests.js';
+import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 function Author() {
   const [selectedButton, setSelectedButton] = useState('Registration');
   const [data, setData] = useState([]);
@@ -22,6 +23,7 @@ function Author() {
   return (
     <main>
       <NavBar />
+      <HeaderPhone />
       <Layout>
         <div className={styles.author}>
           <h1 className={styles.h1}>заявка на участие</h1>

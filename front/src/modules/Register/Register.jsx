@@ -144,14 +144,13 @@ function Register() {
       // type 0 это подтверждение
       // сброс пароля type 1
       const data = {
-        ...formData, 
-        phone: `+${formData.phone.replace(/\D/g, '')}`
-      }
+        ...formData,
+        phone: `+${formData.phone.replace(/\D/g, '')}`,
+      };
       console.log('data', data);
       apiRegister(data).then(res => {
-        
         console.log('res', res);
-        
+
         if (res?.status === 200) {
           context.setAuthPage('ConfirmLogin');
           context.setMailValue(formData.email);

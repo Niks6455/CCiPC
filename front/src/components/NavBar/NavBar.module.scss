@@ -3,6 +3,9 @@
   right: 25px;
   top: 25px;
   z-index: 1000;
+  @media (max-width: 768px) {
+    display: none;
+  }
   .NavBarButton {
     display: flex;
     align-items: center;

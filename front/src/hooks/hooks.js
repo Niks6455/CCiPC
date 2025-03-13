@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 //!Хук для определения ширины экрана
 export const useWindowWidth = () => {
@@ -7,8 +7,8 @@ export const useWindowWidth = () => {
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
 
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   return width;

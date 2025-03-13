@@ -13,7 +13,7 @@ function UniversalTable(props) {
   const [initialTableBodyData, setInitialTableBodyData] = useState([]);
   const tableRef = useRef(null);
   const windowWidth = useWindowWidth();
-  const store = (useSelector((state) => state?.participants));
+  const store = useSelector(state => state?.participants);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(2); // Стартовый индекс для 'Направление'
 
@@ -33,46 +33,46 @@ function UniversalTable(props) {
 
   // Логика для переключения индекса
   const slideNext = () => {
-    setActiveIndex((prevIndex) => (prevIndex + 1) % values.length);
+    setActiveIndex(prevIndex => (prevIndex + 1) % values.length);
   };
 
   const slidePrev = () => {
-    setActiveIndex((prevIndex) => (prevIndex - 1 + values.length) % values.length);
+    setActiveIndex(prevIndex => (prevIndex - 1 + values.length) % values.length);
   };
 
-  const splitFio = (fio) => {
-   if (Array.isArray(fio)){
-    return fio.map((name, index) => (
-      <span key={index}>{name}<br /></span>
-    ));
-   }else{
-    return fio
-   }
-   
+  const splitFio = fio => {
+    if (Array.isArray(fio)) {
+      return fio.map((name, index) => (
+        <span key={index}>
+          {name}
+          <br />
+        </span>
+      ));
+    } else {
+      return fio;
+    }
   };
 
-  
-const getValue = (value, key, rowIndex, rowId, row) => {
-  switch (key) {
-    case 'fio':
-      return <div>{splitFio(value)}</div>;
-    case 'number':
-      return rowIndex + 1;
-    case 'vizion':
-      return (
-        <div className={styles.buttonTable}>
-          <img src={glaz} onClick={() => dispatch(setSelectDataParticipants({ data: row }))} />
-        </div>
-      );
-    default:
-      return value || '___';
-  }
-};
-  
+  const getValue = (value, key, rowIndex, rowId, row) => {
+    switch (key) {
+      case 'fio':
+        return <div>{splitFio(value)}</div>;
+      case 'number':
+        return rowIndex + 1;
+      case 'vizion':
+        return (
+          <div className={styles.buttonTable}>
+            <img src={glaz} onClick={() => dispatch(setSelectDataParticipants({ data: row }))} />
+          </div>
+        );
+      default:
+        return value || '___';
+    }
+  };
 
   useEffect(() => {
     // Обновляем заголовок таблицы в зависимости от активного индекса
-    const updatedHeaderData = [...tableHeaderData];    
+    const updatedHeaderData = [...tableHeaderData];
     // Заменяем значение в ячейке с индексом 2
     updatedHeaderData[2] = {
       key: values[activeIndex].key,
@@ -86,7 +86,7 @@ const getValue = (value, key, rowIndex, rowId, row) => {
   useEffect(() => {
     const updatedHeaderData = [...initialTableHeaderData];
     const index = updatedHeaderData.findIndex(item => item.key === 'vizion');
-    if(windowWidth <= 580){
+    if (windowWidth <= 580) {
       updatedHeaderData.splice(2);
     }
     if (windowWidth <= 780) {
@@ -109,15 +109,17 @@ const getValue = (value, key, rowIndex, rowId, row) => {
       <table>
         <thead>
           {tableHeaderData?.map((el, index) => (
-            <th key={index} name={el.key} style={{width: index === 2 && windowWidth <= 780 && windowWidth >= 580 ? '215px' : ''}}>
+            <th
+              key={index}
+              name={el.key}
+              style={{
+                width: index === 2 && windowWidth <= 780 && windowWidth >= 580 ? '215px' : '',
+              }}
+            >
               {index === 2 && windowWidth <= 780 && windowWidth >= 580 ? (
                 <div className={styles.arrowTableCont}>
                   <div>
-                    <img
-                      src={arrowTable}
-                      className={styles.arrowTable}
-                      onClick={slidePrev}
-                    />
+                    <img src={arrowTable} className={styles.arrowTable} onClick={slidePrev} />
                   </div>
                   <p>{el.value}</p>
                   <div>
@@ -130,9 +132,7 @@ const getValue = (value, key, rowIndex, rowId, row) => {
                   </div>
                 </div>
               ) : (
-                <>
-                  {el.value}
-                </>
+                <>{el.value}</>
               )}
             </th>
           ))}
@@ -154,7 +154,6 @@ const getValue = (value, key, rowIndex, rowId, row) => {
               </td>
             </tr>
           )}
-
         </tbody>
       </table>
     </div>

@@ -21,6 +21,9 @@
     overflow-x: auto;
     font-size: 16px;
     min-width: 1368px;
+    @media (max-width: 1368px) {
+      min-width: 90%;
+    }
     thead {
       position: sticky;
       top: 0;

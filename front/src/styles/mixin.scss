@@ -419,3 +419,11 @@ $w4: 480px;
 @function torem($px, $base: 16px) {
   @return $px / $base * 1rem;
 }
+
+@mixin HoverActiveOpacity() {
+  cursor: pointer;
+  transition: all 0.15s linear;
+  &:hover {
+    opacity: 0.6;
+  }
+}
