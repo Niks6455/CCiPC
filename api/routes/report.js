@@ -46,6 +46,12 @@ const router = Router();
  *                 type: string
  *               comment:
  *                 type: string
+ *               conferenceId:
+ *                  type: string
+ *               organization:
+ *                  type: string
+ *               status:
+ *                  type: string
  *               coAuthors:
  *                 type: array
  *                 items:
@@ -55,6 +61,9 @@ const router = Router();
  *               - form
  *               - direction
  *               - comment
+ *               - organization
+ *               - status
+ *               - conferenceId
  *     responses:
  *       200:
  *         description: Успешный ответ
@@ -134,27 +143,35 @@ const router = Router();
  *         schema:
  *           type: string
  *           format: uuid
- *     requestBody:
- *       required: false
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               name:
- *                 type: string
- *               form:
- *                 type: string
- *               direction:
- *                 type: string
- *               status:
- *                  type: string
- *               comment:
- *                 type: string
- *               coAuthors:
- *                 type: array
- *                 items:
- *                   type: object
+ *           requestBody:
+ *   required: false
+ *   content:
+ *     application/json:
+ *       schema:
+ *         type: object
+ *         properties:
+ *           name:
+ *             type: string
+ *           form:
+ *             type: string
+ *           direction:
+ *             type: string
+ *           comment:
+ *             type: string
+ *           conferenceId:
+ *             type: string
+ *           organization:
+ *             type: string
+ *           status:
+ *             type: string
+ *           coAuthors:
+ *             type: array
+ *             items:
+ *               type: string
+ *           coAuthorsIds:
+ *             type: array
+ *             items:
+ *               type: string
  *     responses:
  *       200:
  *         description: Успешный ответ
