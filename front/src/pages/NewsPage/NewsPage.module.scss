@@ -1,4 +1,9 @@
-.logo{
+$w1: 1400px;
+$w2: 780px;
+$w3: 650px;
+$w4: 480px;
+
+.logo {
   width: 110px;
   height: 110px;
   position: absolute;
@@ -16,41 +21,46 @@
 }
 
 .NewsPage {
-    overflow: hidden;
-    margin-top: 170px;
-    @include maxMinContent(146px);
-    @media (max-width: 990px) {
-      margin-top: 70px;
-    }
-    .NewsPageContainer {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      justify-content: center;
-      box-sizing: border-box;
+  overflow: hidden;
+  margin-top: 170px;
+  width: 100vw;
+  margin-bottom: torem(100px);
+  @include maxMinContent(146px);
+  @media (max-width: 990px) {
+    margin-top: 70px;
+  }
 
-      @media (max-width: 1390px) {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      @media (max-width: 920px) {
-        grid-template-columns: 1fr;
-      }
+  .NewsPageContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    box-sizing: border-box;
+
+    @media (max-width: 1390px) {
+      grid-template-columns: repeat(2, 1fr);
     }
-    .Title{
-        display: flex;
-        justify-content: center;
-        h2{
-            font-size: 30px;
-            font-weight: 600; 
-            @media (max-width: 990px) {
-              font-size: 18px;
-              font-weight: 500;
-            }
-        }
+    @media (max-width: 920px) {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
     }
   }
-  .ClickerYears{
+  .Title {
     display: flex;
     justify-content: center;
-    margin-top: 48px;
+    h2 {
+      font-size: 30px;
+      font-weight: 600;
+      @media (max-width: 990px) {
+        font-size: 18px;
+        font-weight: 500;
+      }
+    }
   }
-  
+}
+.ClickerYears {
+  display: flex;
+  justify-content: center;
+  margin-top: 48px;
+}

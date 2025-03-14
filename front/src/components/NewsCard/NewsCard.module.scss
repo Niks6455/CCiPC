@@ -1,3 +1,6 @@
+$w1: 780px;
+$w2: 480px;
+
 .newsCard {
   position: relative;
   width: 100%; /* Задаётся ширина карточки через grid */
@@ -10,7 +13,7 @@
   height: max-content;
   @media (max-width: 990px) {
     width: 412px;
-    margin: 20px auto;
+    margin: 20px 20px;
   }
   @media (max-width: 460px) {
     width: 350px;
@@ -25,17 +28,20 @@
     transition: all 0.3s ease-out; /* Добавляем плавный переход для padding */
     background-color: #fff;
     border-radius: 10px;
-    .newsCardDate{
+    .newsCardDate {
       color: var(--GrayOne);
       font-size: 18px;
       line-height: 21px;
     }
-    .newsCardTitle{
+    .newsCardTitle {
       font-size: 32px;
       font-weight: 500;
       line-height: 44px;
+      @media (max-width: $w1) {
+        font-size: 18px;
+      }
     }
-    .newsCardText{
+    .newsCardText {
       color: var(--GraySecond);
       font-size: 20px;
       font-weight: 400;
@@ -62,8 +68,6 @@
     padding-top: 290px;
   }
 
-  
-
   img {
     position: absolute;
     top: 0; /* Изначально картинка частично скрыта сверху */
@@ -71,7 +75,9 @@
     height: auto;
     width: 100%;
     height: auto;
-    transition: top 0.3s ease, transform 0.3s ease;
+    transition:
+      top 0.3s ease,
+      transform 0.3s ease;
     border-radius: 10px 10px 0 0;
     @media (max-width: 990px) {
       height: 300px;
