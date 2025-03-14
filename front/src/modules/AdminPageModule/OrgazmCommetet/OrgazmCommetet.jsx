@@ -39,19 +39,13 @@ function OrgazmCommetet() {
   }, [dataOrgAll, activeButtonFirst, activeButtonTwoo]);
 
   const filterCommittees = () => {
-    console.log('dataOrgAllLast', dataOrgAll);
     const committeeOne = dataOrgAll?.find(item => item?.type === activeButtonFirst)?.committees || [];
-    const committeeTwo =
-      dataOrgAll?.find(item => item?.type === activeButtonTwoo + 2)?.committees || [];
-
+    const committeeTwo =dataOrgAll?.find(item => item?.type === activeButtonTwoo + 2)?.committees || [];
     setDataCommitetOne(committeeOne);
     setDataCommitetTwo(committeeTwo);
   };
 
   const updateCardData = (id, newUrl) => {
-    console.log('newData', newUrl);
-    console.log('id', id);
-    console.log('dataOrgAll', dataOrgAll);
     const updateData = dataOrgAll.map(confirensis => {
         return {...confirensis, committees: confirensis.committees.map(item => {
           if (item.id === id) {
@@ -61,13 +55,9 @@ function OrgazmCommetet() {
         })
       }
     });
-    console.log('updateData', updateData);
     setDataOrgAll(updateData)
   };
 
-  useEffect(() => {
-    console.log('dataOrgAll', dataOrgAll);
-  }, [dataOrgAll]);
 
   const closeCreateOne = () => {
     if (addOrgPeopleRef.current) {

@@ -121,6 +121,17 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
     });
   };
 
+  const handleDeleteImg = () => {
+   const data = {...item, img: ''};
+   updateOrgCommitet(data, item.id).then(res => {
+    if (res?.status === 200) {
+      updateCardData(item.id, dataItem);
+      setIsChanged(false);
+      getDataOrg();
+    }
+  });
+  };
+
   return (
     <div ref={cardRef} className={styles.CardOrganization}>
       <div className={styles.CardOrganizationInner}>
@@ -132,7 +143,7 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
             alt={dataItem?.fio}
           />
           <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} alt="Удалить" />
+            <img src={deletePhoto2Img} alt="Удалить" onClick={() => handleDeleteImg()}/>
             <img src={editPhoto2Img} alt="Редактирование" onClick={() => refFile.current.click()} />
           </div>
           <input
