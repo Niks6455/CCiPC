@@ -78,7 +78,7 @@ export default function CommitteesPage() {
     <>
       <img src={logoHeader} className={styles.logo} />
       <NavBar />
-      <HeaderPhone/>
+      <HeaderPhone />
       <div>
         <Layout>
           <main className={styles.organizationComiteMain}>
@@ -130,7 +130,6 @@ export default function CommitteesPage() {
           </a>
         </div>
       )}
-      <Footer />
     </>
   );
 }

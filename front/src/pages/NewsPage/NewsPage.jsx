@@ -83,7 +83,6 @@ function NewsPage() {
           </div>
         </Layout>
       </main>
-      <Footer />
     </>
   );
 }

@@ -1,4 +1,4 @@
-@import "../../styles/colors.scss";
+@import '../../styles/colors.scss';
 
 $w1: 1400px;
 $w2: 780px;
@@ -25,7 +25,7 @@ $w4: 480px;
   .footerContainer {
     display: flex;
     width: torem(1345px);
-  
+
     @media (max-width: $w2) {
       width: 100%;
       justify-content: space-between;
@@ -88,7 +88,7 @@ $w4: 480px;
             font-size: torem(22px);
             font-weight: 300;
             line-height: torem(26px);
-        
+
             @media (max-width: $w2) {
               width: 186px;
               line-height: 18px;
@@ -136,7 +136,7 @@ $w4: 480px;
         font-size: torem(20px);
         font-weight: 400;
         margin-bottom: torem(5px);
-   
+
         @media (max-width: $w2) {
           font-weight: 400;
           font-size: 14px;

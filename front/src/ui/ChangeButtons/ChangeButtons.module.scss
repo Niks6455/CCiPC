@@ -4,37 +4,37 @@
   align-items: center;
   width: 100%;
   overflow-x: hidden;
-  padding-bottom: 5px;
+  padding-bottom: torem(5px);
 }
 
 .buttons {
   display: flex;
-  gap: 25px;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  gap: torem(25px);
+  margin-top: torem(20px);
+  margin-bottom: torem(40px);
   overflow-x: auto;
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   justify-content: center;
   width: 100vw;
-  padding-bottom: 10px;
+  padding-bottom: torem(10px);
   @include ScrollBar();
   @media (max-width: 900px) {
-    gap: 15px;
+    gap: torem(15px);
   }
 
   .button {
     display: inline-flex;
     align-items: center;
-    border-radius: 10px;
-    padding: 5px 10px;
-    gap: 5px;
+    border-radius: torem(10px);
+    padding: torem(5px) torem(10px);
+    gap: torem(5px);
     background-color: #0045290a;
-    border: 1px #00452940 solid;
+    border: torem(1px) #00452940 solid;
     cursor: pointer;
     @media (max-width: 900px) {
-      padding: 5px;
+      padding: torem(5px);
     }
   }
 
@@ -48,9 +48,9 @@
 
   .button_text {
     font-weight: 500;
-    font-size: 18px;
+    font-size: torem(18px);
     @media (max-width: 900px) {
-      font-size: 16px;
+      font-size: torem(16px);
     }
   }
 }

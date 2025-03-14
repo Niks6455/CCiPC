@@ -70,7 +70,6 @@ function Participants() {
         </div>
       </main>
       {store.selectParticipantsData && <TableDataAll data={store.selectParticipantsData} />}
-      <Footer />
     </>
   );
 }

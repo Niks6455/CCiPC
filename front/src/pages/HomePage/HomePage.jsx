@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import DataContext from '../../context';
 import Header from '@components/Header/Header';
 import Layout from '../../ui/Layout/Layout';
 import styles from './HomePage.module.scss';
@@ -19,15 +17,12 @@ function HomePage() {
   const textData = textDataHomePage;
   return (
     <div className={styles.HomePage}>
-      <header style={{ position: 'absolute', top: '0', left: '0', width: '100%', zIndex: '1000' }}>
-        <HeaderPhone />
-      </header>
+      <HeaderPhone />
       <Header />
       <TopMainInfo />
       <SliderHomePageTop />
       <Layout>
         <section className={styles.textSection}>
-          {/* <img style={{position: "absolute", top: "30rem", left: "50%", transform: "translate(-50%, -50%)", width: "30rem"}} src="./tuzik.png" alt="tuzik"/> */}
           <div className={styles.textSectionIner}>
             <div className={styles.Title}>
               <p>
@@ -125,7 +120,7 @@ function HomePage() {
           </div>
         </section>
       </Layout>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

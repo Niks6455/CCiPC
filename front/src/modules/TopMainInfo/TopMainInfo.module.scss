@@ -199,6 +199,8 @@ $w3: 480px;
   @media (max-width: $w2) {
     width: torem(50px);
     height: torem(50px);
+    right: torem(25px);
+    bottom: torem(25px);
   }
 }
 .TopMainInfoMobile_comtainer {

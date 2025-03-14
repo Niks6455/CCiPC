@@ -17,7 +17,6 @@ function AdminPage() {
         </div>
         <RightMenuLk />
       </main>
-      <Footer />
     </>
   );
 }
