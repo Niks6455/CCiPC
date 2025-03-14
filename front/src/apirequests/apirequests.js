@@ -260,9 +260,9 @@ export const updateOrgCommitet = async (data, id) => {
 };
 
 //!Получение  Human Оргкомитета
-export const getOrgCommitet = async () => {
+export const getOrgCommitet = async id => {
   try {
-    const response = await api.get(`${server}/committees`);
+    const response = await api.get(`${server}/committees?conferenceId=${id}`);
     return response;
   } catch (error) {
     console.log('apiCreateReport ', error);

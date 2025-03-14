@@ -8,15 +8,30 @@
     height: 412px;
     border-radius: 10px;
     background-color: #fff;
-   
+    @media (max-width: 1376px) {
+      width: 350px;
+      height: 350px;
+    }
+    @media (max-width: 768px) {
+      width: 300px;
+      height: 300px;
+    }
   }
   .name {
     font-weight: 700;
     font-size: 22px;
+    text-align: center;
+    @media (max-width: 1376px) {
+      font-size: 18px;
+    }
   }
 
   .university {
     font-weight: 400;
     font-size: 20px;
+    text-align: center;
+    @media (max-width: 1376px) {
+      font-size: 16px;
+    }
   }
 }

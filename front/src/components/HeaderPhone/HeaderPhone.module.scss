@@ -9,6 +9,9 @@
     right: 0;
     z-index: 1000;
     display: none;
+    @media (max-width: 768px) {
+        display: flex;
+    }
     .NavBarMenu {
         span {
             display: flex;

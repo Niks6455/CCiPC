@@ -9,16 +9,19 @@ export default function ChangeButtons({ buttonArray, setIndex }) {
   }, [activeButton]);
 
   return (
-    <div className={styles.buttons}>
-      {buttonArray.map((button, index) => (
-        <Button
-          key={index}
-          {...button}
-          isActive={activeButton === index}
-          setActive={() => setActiveButton(index)}
-        />
-      ))}
+    <div className={styles.buttonsContainer}>
+      <div className={styles.buttons}>
+        {buttonArray.map((button, index) => (
+          <Button
+            key={index}
+            {...button}
+            isActive={activeButton === index}
+            setActive={() => setActiveButton(index)}
+          />
+        ))}
+      </div>
     </div>
+
   );
 }
 

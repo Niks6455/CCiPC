@@ -9,6 +9,7 @@ import Search from '../../assets/img/search.svg';
 import { useSelector } from 'react-redux';
 import TableDataAll from '../../components/TableDataAll/TableDataAll.jsx';
 import { getConferencesParticipants } from '../../apirequests/apirequests.js';
+import HeaderPhone from '../../components/HeaderPhone/HeaderPhone.jsx';
 function Participants() {
   const [filter, setFilter] = useState('');
   const [filteredTable, setFilteredTable] = useState([]);
@@ -46,10 +47,11 @@ function Participants() {
   return (
     <>
       <NavBar />
+      <HeaderPhone />
       <main className={styles.Participants}>
         <div className={styles.ParticipantsInner}>
           <div className={styles.Title}>
-            <p>Участники конференции</p>
+            <h2>УЧАСТНИКИ КОНФЕРЕНЦИИ</h2>
           </div>
           <div className={styles.inputComponentInner}>
             <div className={styles.inputComponentInnerContainer}>
