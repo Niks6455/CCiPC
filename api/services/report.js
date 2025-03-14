@@ -14,6 +14,8 @@ export default {
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
+        if(!conference?.directions?.includes(reportInfo.direction)) throw  new AppErrorNotExist('direction')
+
         const checkReport= await Report.findOne({
             where: {
                 name: reportInfo.name,
@@ -40,7 +42,6 @@ export default {
             comment: reportInfo.comment,
             conferenceId: conference.id,
         })
-
 
 
         await ParticipantOfReport.create({
@@ -187,12 +188,18 @@ export default {
     async update(reportInfo, reportId, participant) {
 
         const report = await Report.findByPk(reportId, {
-                include: {
+                include: [{
                     model: ParticipantOfReport,
                     as: 'participantOfReport',
                     required: true,
                     where: { participantId: participant.id }
-                }
+                },
+                    {
+                        model: Conference,
+                        as: 'conference',
+                        required: true
+                    }
+                ]
             })
 
         if(!report) throw new AppErrorInvalid('report')
@@ -200,10 +207,12 @@ export default {
 
 
         if(report.participantOfReport[0].who === 'Автор'){
+
+            if(reportInfo?.direction &&!report.conference?.directions.includes(reportInfo.direction)) throw  new AppErrorNotExist('direction')
             await report.update({
-                name: reportInfo.name,
-                direction: reportInfo.direction,
-                comment: reportInfo.comment,
+                name: reportInfo?.name,
+                direction: reportInfo?.direction,
+                comment: reportInfo?.comment,
             })
 
 
