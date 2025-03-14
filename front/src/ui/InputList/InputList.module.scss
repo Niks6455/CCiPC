@@ -1,49 +1,46 @@
-@import "./../../styles/colors.scss";
+@import './../../styles/colors.scss';
 
 .InputList {
   display: flex;
   position: relative;
   flex-direction: column;
-  //   img {
-  //     position: absolute;
-  //     left: 25px;
-  //     top: 35px;
-  //   }
   .arrow {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    right: 20px;
+    right: torem(20px);
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top: torem(5px);
     bottom: 0;
-    // transform: translateY(-50%) scaleY(-1);
     cursor: pointer;
     box-sizing: border-box;
     img {
-      width: 14.52px;
-      height: 10.52px;
+      width: torem(14px);
+      height: torem(10px);
     }
   }
   .labelText {
     font-family: Overpass, sans-serif;
-    font-size: 18px;
+    font-size: torem(18px);
     font-weight: 500;
-    line-height: 21.6px;
+    line-height: torem(21px);
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    transform: translateY(5px);
+    transform: translateY(torem(5px));
   }
   input {
-    width: 490px;
-    height: 64px;
-    border-radius: 10px;
+    width: torem(490px);
+    height: torem(64px);
+    border-radius: torem(10px);
     border: none;
-    border: 1px solid var(--InputColors);
+    border: torem(1px) solid var(--InputColors);
     background-color: inherit;
-    margin: 15px 0px;
-    font-size: 20px;
+    margin: torem(15px) 0px;
+    font-size: torem(20px);
     color: #000;
     box-sizing: border-box;
     &::placeholder {
@@ -58,7 +55,7 @@
     border-bottom-left-radius: 0;
   }
   .errorInputList {
-    border: 1px solid var(--ErrorColor);
+    border: torem(1px) solid var(--ErrorColor);
   }
 
   .List {
@@ -70,12 +67,12 @@
     background-color: #f0f3f2;
     z-index: 100;
     bottom: 0;
-    width: calc(100% - 2px);
-    border: 1px solid #c8d0ce;
-    border-radius: 10px;
+    width: calc(100% - torem(2px));
+    border: torem(1px) solid #c8d0ce;
+    border-radius: torem(10px);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    transform: translateY(calc(100% - 16px));
+    transform: translateY(calc(100% - torem(16px)));
 
     ul {
       outline: none;
@@ -85,18 +82,18 @@
 
       overflow-y: auto;
       &::-webkit-scrollbar {
-        width: 12px; /* Ширина вертикального скролла */
-        height: 12px; /* Высота горизонтального скролла */
+        width: torem(12px); /* Ширина вертикального скролла */
+        height: torem(12px); /* Высота горизонтального скролла */
       }
 
       &::-webkit-scrollbar-track {
         background: #f1f1f1; /* Цвет фона трека скролла */
-        border-radius: 10px; /* Закругление углов трека */
+        border-radius: torem(10px); /* Закругление углов трека */
       }
 
       &::-webkit-scrollbar-thumb {
         background: #888; /* Цвет ползунка скролла */
-        border-radius: 10px; /* Закругление углов ползунка */
+        border-radius: torem(10px); /* Закругление углов ползунка */
       }
 
       &::-webkit-scrollbar-thumb:hover {
@@ -114,35 +111,35 @@
     li {
       display: flex;
       align-items: center;
-      min-height: 64px;
-      padding: 20px;
+      min-height: torem(64px);
+      padding: torem(20px);
       box-sizing: border-box;
     }
   }
   .open {
-    max-height: 560px;
+    max-height: torem(560px);
     opacity: 1;
     transition: max-height 0.3s linear;
   }
 
   .errorText {
     color: var(--ErrorColor);
-    font-size: 16px;
-    margin-top: 4px;
+    font-size: torem(16px);
+    margin-top: torem(4px);
     position: absolute;
-    right: 20px;
+    right: torem(20px);
     top: 0px;
-    padding: 0px 5px;
+    padding: 0px torem(5px);
     background-color: #f0f3f2;
   }
   .placeholderClose {
     color: #858b89;
-    font-size: 16px;
-    margin-top: 4px;
+    font-size: torem(16px);
+    margin-top: torem(4px);
     position: absolute;
-    left: 20px;
+    left: torem(20px);
     top: 0px;
-    padding: 0px 5px;
+    padding: 0px torem(5px);
     background-color: #f0f3f2;
   }
 }

@@ -1,30 +1,30 @@
 .LeftMenuAdminPage {
-  padding: 10px 0px 0px 20px;
+  padding: torem(10px) 0px 0px torem(20px);
   display: block;
-  border-right: 1px solid var(--InputColors);
-  width: 310px;
-  min-width: 310px;
+  border-right: torem(1px) solid var(--InputColors);
+  width: torem(310px);
+  min-width: torem(310px);
   @include maxMinContent();
   height: auto;
   box-sizing: border-box;
   .LeftMenuAdminPageInner {
     position: fixed;
-    width: 310px;
-    min-width: 310px;
+    width: torem(310px);
+    min-width: torem(310px);
     z-index: 10000;
     .LogoImg {
-      width: 110px;
-      height: 110px;
+      width: torem(110px);
+      height: torem(110px);
       cursor: pointer;
     }
     .Title {
-      font-size: 22px;
+      font-size: torem(22px);
       font-weight: 700;
-      margin: 48px 0px 40px 0px;
+      margin: torem(48px) 0px torem(40px) 0px;
     }
     .LeftMenuLkList {
       list-style: none;
-      padding-left: 30px;
+      padding-left: torem(30px);
       a {
         text-decoration: none;
         color: inherit;
@@ -38,16 +38,16 @@
         position: relative;
         justify-content: start;
         align-items: center;
-        margin: 10px 33px 0px 0px;
-        height: 46px;
+        margin: torem(10px) torem(33px) 0px 0px;
+        height: torem(46px);
 
         // width: 240px;
         cursor: pointer;
-        padding-left: 10px;
+        padding-left: torem(10px);
         box-sizing: border-box;
-        border-radius: 5px;
+        border-radius: torem(5px);
         img {
-          margin-right: 10px;
+          margin-right: torem(10px);
         }
         &:hover {
           background-color: var(--MenuHover);
@@ -55,7 +55,7 @@
         .arrow {
           position: absolute;
           z-index: 10;
-          right: 10px;
+          right: torem(10px);
           top: 50%;
           transform: translateY(-50%);
           transition: transform 0.15s linear;

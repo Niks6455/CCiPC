@@ -1,32 +1,40 @@
 .UniversalTable {
   max-height: 75vh;
-  overflow-y: scroll; /* Скроллинг останется функциональным */
+  overflow: auto; /* Обеспечивает скроллинг при необходимости */
   border-radius: 8px;
   margin: 0 auto;
-  max-width: 1635px;
+  max-width: 100%; /* Делаем таблицу гибкой по ширине */
   box-sizing: border-box;
-  table {
+  overflow-x: auto; /* Горизонтальный скролл */
+  width: 90%;
 
+  /* Добавляем для больших экранов, где может понадобиться фиксированная ширина */
+  @media (min-width: 1600px) {
+    max-width: 1635px;
+  }
+  
+  table {
+    padding: 0px 20px;
     margin: 0 auto;
-    border-collapse: collapse; /* Убирает отступы между ячейками */
-    min-height: auto;
-    border-radius: 8px;
+    border-collapse: collapse;
     min-height: 100px;
-    overflow-x: scroll;
+    overflow-x: auto;
     font-size: 16px;
+    min-width: 1368px;
+    @media (max-width: 1368px) {
+      min-width: 90%;
+    }
     thead {
       position: sticky;
       top: 0;
       z-index: 1;
       background-color: #e7eae9;
+      
       th {
-        border-bottom: 2px solid #ccc; /* Горизонтальная линия под заголовком */
-        position: relative;
-
-        border-bottom: none;
-
         padding: 15px;
         z-index: 10;
+        border-bottom: 2px solid #ccc;
+        
         &:nth-child(1) {
           border-radius: 8px 0 0 0;
         }
@@ -37,33 +45,47 @@
     }
 
     tbody {
-      &:first-child {
-        border-top: none;
-        background-color: red;
-      }
       tr {
-        transition: background-color 0.3s; /* Плавный переход цвета при наведении */
-        border-bottom: 1px solid #e0e0e0; /* Горизонтальные линии между строками */
+        transition: background-color 0.3s;
+        border-bottom: 1px solid #e0e0e0;
       }
-      tr {
-        &:hover td {
-          background-color: var(--TableColorMouse) !important;
-          cursor: pointer;
-        }
+      
+      tr:hover td {
+        background-color: var(--TableColorMouse) !important;
+        cursor: pointer;
       }
+      
       td {
         padding: 10px;
         background-color: #f7f7f7;
         border: 1px solid #c8d0ce;
-        border-top: none;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 21px;
-
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 21px;
       }
+      
       td[name='number'] {
         text-align: center;
       }
+
+      .buttonTable {
+        
+        width: 48px;
+        height: 52px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &:hover {
+        background-color: #0045290A;
+        }
+        img{
+          left: 0!important;
+          top: 0!important;
+        }
+      
+      }
+     
+      
     }
 
     .imgTable {
@@ -75,107 +97,56 @@
       }
     }
   }
-  .status {
-    padding: 5px 10px;
-    border-radius: 8px;
-    transition: 0.08s linear all;
-    &:hover {
-      opacity: 0.6;
-    }
+
+  /* Стили для скроллбара */
+  ::-webkit-scrollbar {
+    width: 8px;
   }
-  .setectedTr td {
-    background-color: var(--TableSelectedTr) !important;
+
+  ::-webkit-scrollbar-track {
+    background-color: transparent !important;
   }
-  .infoContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    a {
-      text-decoration: none;
-    }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
   }
-  .info {
-    display: flex;
-    align-items: center;
-    padding: 5px 10px;
-    background-color: var(--GrenColor);
-    border-radius: 6px;
-    border: none;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    width: 150px;
-    transition: 0.1s all linear;
-    &:hover {
-      background-color: var(--GrenColorHover);
-    }
-    &:active {
-      background-color: var(--GrenColorActive);
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa;
+  }
+
+  /* Адаптивность для маленьких экранов */
+  @media (max-width: 768px) {
+    table {
+      font-size: 14px;
     }
   }
 }
+
 .tableNotData {
-  height: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
+  padding: 20px;
   font-size: 18px;
   color: var(--GrayColorInput);
-  width: 1309px;
-  position: absolute;
-  pointer-events: none;
+  background-color: #f7f7f7;
+  width: 100%;
 }
 
-/* Стили для скроллбара */
-::-webkit-scrollbar {
-  width: 8px; /* Ширина скроллбара */
-}
 
-::-webkit-scrollbar-track {
-  background-color: transparent !important; /* Убираем фон трека скроллбара */
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #ccc; /* Цвет ползунка */
-  border-radius: 4px; /* Закругление ползунка */
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: #aaa; /* Цвет ползунка при наведении */
-}
-.CheckListContainer {
-  position: relative;
-  .statusList {
-    position: absolute;
-    left: -100px;
-    top: 0px;
-    width: 100px;
-    z-index: 10;
-    height: 160px;
-    background-color: #fff;
-    border-radius: 8px;
-    text-align: start;
-    list-style: none;
-    li {
-      padding: 5px 10px;
-      &:hover {
-        cursor: pointer;
-        background-color: var(--TableColorMouse);
-      }
+.arrowTableCont{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 180px;
+  img{
+    left: 0px!important;
+    top: 2px!important;
+    margin: 0px 10px;
+    cursor: pointer;
+    transition: 0.1s linear all;
+    &:hover {
+      background-color: #0045290A;
     }
-  }
-}
-.RoleClicker {
-  padding: 3px 0px;
-  background-color: var(--GrenColor);
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.1s all linear;
-  &:hover {
-    background-color: var(--GrenColorHover);
-  }
-  &:active {
-    background-color: var(--GrenColorActive);
   }
 }

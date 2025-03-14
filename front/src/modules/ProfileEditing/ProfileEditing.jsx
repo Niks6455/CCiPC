@@ -277,12 +277,14 @@ function ProfileEditing() {
           style={{ display: 'none' }}
           onChange={e => handleFileUpload(e.target.files[0])}
         />
-        <button className={styles.btn1} onClick={funUploadPhoto}>
-          Загрузить новое фото
-        </button>
-        <button className={styles.btn2} onClick={funDeletePhoto}>
-          Удалить фото
-        </button>
+        <div className={styles.buttons}>
+          <button className={styles.btn1} onClick={funUploadPhoto}>
+            Загрузить новое фото
+          </button>
+          <button className={styles.btn2} onClick={funDeletePhoto}>
+            Удалить фото
+          </button>
+        </div>
       </div>
       <div className={styles.container}>
         <div className={styles.boxLeft}>

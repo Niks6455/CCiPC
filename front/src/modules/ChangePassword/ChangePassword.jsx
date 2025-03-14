@@ -148,7 +148,6 @@ function ChangePassword() {
           placeholder=""
           error={errors.currentPassword}
           labelText={'Текущий пароль*'}
-          inputerrorStyle={{ top: '25px' }}
           type={inputTypes.currentPassword}
           rigthImg={glaz}
           rigthImgActive={noglaz}
@@ -163,7 +162,6 @@ function ChangePassword() {
           placeholder=""
           error={errors.newpassword}
           labelText={'Придумайте новый пароль*'}
-          inputerrorStyle={{ top: '25px' }}
           type={inputTypes.newpassword}
           rigthImg={glaz}
           rigthImgActive={noglaz}
@@ -182,7 +180,6 @@ function ChangePassword() {
           placeholder=""
           error={errors.rewnewpassword}
           labelText={'Повторите новый пароль*'}
-          inputerrorStyle={{ top: '25px' }}
           type={inputTypes.rewnewpassword}
           rigthImg={glaz}
           rigthImgActive={noglaz}

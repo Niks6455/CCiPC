@@ -1,0 +1,36 @@
+.ReqError {
+  position: fixed;
+  right: torem(30px);
+  top: torem(100px);
+  z-index: 10000;
+  .list {
+    display: flex;
+    flex-direction: column;
+    max-height: 40vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    @include ScrollBar;
+  }
+  .item {
+    color: #fff;
+    background-color: #f1070777;
+    display: flex;
+    flex-direction: row;
+    width: torem(300px);
+    margin-bottom: torem(10px);
+    border-radius: torem(10px);
+    padding: torem(5px);
+    button {
+      @include ButtonIcon;
+      width: torem(24px);
+      height: torem(24px);
+      margin-right: torem(5px);
+      svg * {
+        fill: #fff;
+      }
+    }
+    span {
+      padding-top: torem(3px);
+    }
+  }
+}

@@ -1,18 +1,19 @@
-@import "./../../styles/colors.scss";
+$w1: 1366px;
+$w2: 769px;
 
 .ButtonCont {
   button {
-    width: 376px;
-    height: 116px;
+    width: torem(376px);
+    height: torem(116px);
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 30px;
-    border: 1px 0px 0px 0px;
+    border-radius: torem(30px);
+    border: torem(1px) 0px 0px 0px;
     opacity: 0px;
     background-color: var(--GreenColorDefault);
     color: #fff;
-    font-size: 30px;
+    font-size: torem(30px);
     border: none;
     cursor: pointer;
     transition: 0.05s linear all;
@@ -21,6 +22,12 @@
     }
     &:active {
       background-color: var(--GreenColorActive);
+    }
+    @media (max-width: $w2) {
+      width: torem(210px);
+      height: torem(66px);
+      font-size: torem(20px);
+      border-radius: torem(20px);
     }
   }
 }

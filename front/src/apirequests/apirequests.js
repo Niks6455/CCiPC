@@ -1,9 +1,7 @@
 import api from './axios';
-// export const server = 'http://localhost:3000';
+export const server = 'http://localhost:3000';
 // export const server = `${window.location.href}`;
-export const server = `${window.location.href}/api`;
-
-
+// export const server = `${window.location.href}/api`;
 
 //! Запрос на Выход
 export const logout = async () => {
@@ -331,6 +329,16 @@ export const getOrgWznos = async id => {
   }
 };
 
+//! получение оргвзнос таблицы в админ панели
+export const apiUpdateOrgWznos = async (id, data) => {
+  try {
+    const response = await api.put(`${server}/conferences/${id}/fee`, data);
+    return response;
+  } catch (error) {
+    console.log('getOrgWznos ', error);
+  }
+};
+
 //! экспорт архива статей
 export const apiExportArchiveState = async id => {
   try {
@@ -347,6 +355,20 @@ export const apiExportArchiveState = async id => {
 export const uploadPhoto = async (file, type) => {
   try {
     const response = await api.post(`${server}/uploads?type=${type}`, file, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+    return response;
+  } catch (error) {
+    console.error('uploadPhoto ', error);
+  }
+};
+
+//! загрузка файлов массивом
+export const uploadMulti = async (file, type) => {
+  try {
+    const response = await api.post(`${server}/uploads/multi?type=${type}`, file, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
@@ -404,6 +426,16 @@ export const updateArchive = async (data, id) => {
 export const deleteArchive = async id => {
   try {
     const response = await api.delete(`${server}/archive/${id}`);
+    return response;
+  } catch (error) {
+    console.log('getConfParticipants ', error);
+  }
+};
+
+//! Получение Архивов фотографий
+export const getConferencesParticipants = async id => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/participants`);
     return response;
   } catch (error) {
     console.log('getConfParticipants ', error);

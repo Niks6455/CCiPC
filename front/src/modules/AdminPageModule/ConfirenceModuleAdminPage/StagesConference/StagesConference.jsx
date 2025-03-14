@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './StagesConference.module.scss';
-import { ReactComponent as CalendarIcon } from '@assets/img/UI/calendar.svg';
+import CalendarIcon from '@assets/img/UI/calendar.svg';
 import { ReactComponent as Delete } from '@assets/img/UI/x.svg';
-import { ReactComponent as Plus } from '@assets/img/UI/plus.svg';
+import Plus from '@assets/img/UI/plus.svg';
 import { Calendar } from 'primereact/calendar';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import './../style.css';
@@ -21,7 +21,6 @@ function StagesConference({ data, setData }) {
   //! удалить этап по индексу
   const funDeleteStage = index => {
     const stage = [...data?.stages];
-    console.log('stage', stage);
     if (data.deadlineUploadingReports === stage[index]?.date) {
       stage.splice(index, 1);
       setData({ ...data, deadlineUploadingReports: '', stages: stage });
@@ -93,7 +92,7 @@ function StagesConference({ data, setData }) {
                     className={styles.button_calendar}
                     onClick={() => funClickCalendar(index)}
                   >
-                    <CalendarIcon />
+                    <img src={CalendarIcon} alt="img" />
                   </button>
                   {editItemIndex === index && (
                     <div className={styles.calendar_show}>
@@ -143,7 +142,7 @@ function StagesConference({ data, setData }) {
         </ul>
         <div className={styles.add_stage}>
           <button onClick={funAddStage}>
-            <Plus />
+            <img src={Plus} alt="img" />
             <span>Добавить этап</span>
           </button>
         </div>

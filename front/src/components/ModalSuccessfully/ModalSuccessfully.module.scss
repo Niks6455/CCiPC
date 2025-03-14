@@ -1,0 +1,30 @@
+.ModalSuccessfully {
+  @include PopupBlur;
+
+  .container {
+    @include PopupContainer;
+    height: max-content;
+    padding: torem(70px);
+    h2 {
+      font-family: Overpass, sans-serif;
+      font-weight: 500;
+      font-size: torem(20px);
+      line-height: 130%;
+      letter-spacing: 0%;
+      text-align: center;
+      padding: 0;
+      margin: 0;
+      color: #333333;
+    }
+    img {
+      width: torem(80px);
+      height: torem(80px);
+      margin: torem(40px);
+    }
+    button {
+      @include ButtonGreen;
+      width: torem(280px);
+      height: torem(54px);
+    }
+  }
+}

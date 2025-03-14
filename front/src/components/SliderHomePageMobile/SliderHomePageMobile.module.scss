@@ -1,0 +1,190 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
+.SliderHomePageMobile {
+  display: none;
+  @media (max-width: $w2) {
+    display: flex;
+  }
+  width: 100%;
+  .mobile_navigate {
+    display: none;
+    @media (max-width: $w3) {
+      display: flex !important;
+      position: absolute;
+      right: torem(10px) !important;
+      top: torem(18px) !important;
+    }
+    button {
+      width: torem(55px) !important;
+      height: torem(41px) !important;
+    }
+  }
+  .slider {
+    min-width: 100%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    background-color: #004529;
+    @media (max-width: $w3) {
+      position: relative;
+    }
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+  .slide {
+    scroll-snap-align: center;
+    flex: 0 0 100%;
+    width: 100%;
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    position: relative;
+
+    h2 {
+      font-family: Overpass, sans-serif;
+      font-weight: 900;
+      font-size: torem(20px);
+      line-height: 120%;
+      letter-spacing: 0%;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      padding: torem(30px);
+      padding-top: torem(50px);
+      @media (max-width: $w3) {
+        padding: torem(20px);
+        padding-top: torem(60px);
+      }
+    }
+
+    .description {
+      font-family: Overpass, sans-serif;
+      font-weight: 400;
+      font-size: torem(16px);
+      line-height: 130%;
+      letter-spacing: 0%;
+      color: #ffffff;
+      margin-bottom: torem(70px);
+      padding: 0 torem(30px);
+      @media (max-width: $w3) {
+        padding: 0 torem(20px);
+        margin-bottom: torem(30px);
+      }
+    }
+    .image {
+      width: 100%;
+      position: relative;
+      @media (max-width: $w3) {
+        position: static;
+      }
+      .allNews {
+        cursor: pointer;
+        border: none;
+        position: absolute;
+        bottom: torem(15px);
+        right: torem(15px);
+        background-color: #ffffff80;
+        backdrop-filter: blur(6px);
+        padding: torem(10px) torem(20px);
+        border-radius: torem(20px);
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        @include HoverActiveOpasity;
+        @media (max-width: $w3) {
+          padding: torem(6px) torem(15px);
+          right: auto;
+          left: torem(20px);
+        }
+        span {
+          font-family: Overpass, sans-serif;
+          font-weight: 400;
+          font-size: torem(20px);
+          line-height: 130%;
+          letter-spacing: 0%;
+          text-align: center;
+          color: #ffffff;
+          margin-right: torem(10px);
+          @media (max-width: $w3) {
+            font-size: torem(18px);
+            margin-right: 0;
+          }
+        }
+        img {
+          width: torem(24px);
+          height: torem(24px);
+          @media (max-width: $w3) {
+            display: none;
+          }
+        }
+      }
+      .navigate {
+        position: absolute;
+        right: torem(30px);
+        top: torem(10px);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        @media (max-width: $w3) {
+          display: none;
+        }
+        button {
+          @include ButtonIcon;
+          border-radius: 50%;
+          padding: 0;
+          width: torem(68px);
+          height: torem(68px);
+          transition: all 0.2s linear;
+          &:first-child {
+            transform: scaleX(-1);
+            &[name='0button'] {
+              display: none;
+            }
+          }
+          &:last-child {
+            &[name='truebutton'] {
+              display: none;
+            }
+          }
+          svg {
+            height: 100%;
+            width: 100%;
+          }
+          &:hover {
+            svg {
+              fill: #ffffff40;
+            }
+          }
+          &:active {
+            svg {
+              fill: #ffffffb2;
+            }
+          }
+        }
+        span {
+          font-family: Overpass, sans-serif;
+          font-weight: 500;
+          font-size: torem(40px);
+          line-height: 120%;
+          letter-spacing: 0%;
+          color: #ffffff;
+          margin: auto torem(20px);
+        }
+      }
+      .main_img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}

@@ -10,7 +10,7 @@ import galkaBelay from '@assets/img/UI/galkaBelay.svg';
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-function TableOrgWznos({ prewData, tableData, setTableData }) {
+function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOriginalData }) {
   const [contractListShow, setContractListShow] = useState(null);
   const [inputSumEdit, setInputSumEdit] = useState(null);
   const refContractList = useRef(null);
@@ -38,18 +38,20 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
   };
 
   const funChangeSumm = (e, index) => {
-    let newData = [...tableData];
+    let newData = [...originalData];
     let val = e.target.value.replace(/[^0-9]/g, '');
     if (val <= 99999) {
-      newData[index].sumOrgWznos = Number(val);
-      setTableData(newData);
+      // newData[index].sumOrgWznos = Number(val);
+      newData.map(item => item.id === newData[index].id && (item.sumOrgWznos = Number(val)));
+      setOriginalData(newData);
     }
   };
 
   const funChangeConfirmation = indexRow => {
-    let newData = [...tableData];
-    newData[indexRow].confirmation = !newData[indexRow].confirmation;
-    setTableData(newData);
+    let newData = [...originalData];
+    const conf = !newData[indexRow].confirmation;
+    newData.map(item => item.id === newData[indexRow].id && (item.confirmation = conf));
+    setOriginalData(newData);
   };
 
   //! функция форматирования строк в таблице
@@ -76,7 +78,7 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
             onClick={e => funChangeContractListShow(e, indexRow)}
             ref={contractListShow === indexRow ? refContractList : null}
           >
-            {row[columnKey.key] === 'Безналичный расчёт' && (
+            {row[columnKey.key] === 'Безналичный' && (
               <>
                 {docLoad === 0 && <img src={paymentFormICon} alt="📃" />}
                 {docLoad === 1 && <img src={paymentForm1ICon} alt="📃" />}
@@ -85,7 +87,7 @@ function TableOrgWznos({ prewData, tableData, setTableData }) {
             )}
 
             <span>{row[columnKey.key]}</span>
-            {row[columnKey.key] === 'Безналичный расчёт' && (
+            {row[columnKey.key] === 'Безналичный' && (
               <AnimatePresence>
                 {contractListShow === indexRow && (
                   <motion.div

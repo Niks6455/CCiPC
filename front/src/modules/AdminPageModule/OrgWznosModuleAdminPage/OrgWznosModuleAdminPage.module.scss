@@ -1,32 +1,32 @@
 .OrgWznosModuleAdminPage {
-  width: calc(100vw - 470px);
+  width: calc(100vw - torem(470px));
   h1 {
     font-family: Overpass, sans-serif;
     font-weight: 500;
-    font-size: 32px;
-    line-height: 44.8px;
+    font-size: torem(32px);
+    line-height: torem(44px);
     letter-spacing: 0%;
     color: #333333;
     padding: 0;
     margin: 0;
-    margin-bottom: 40px;
+    margin-bottom: torem(40px);
   }
   .head_menu {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    height: 52px;
+    height: torem(52px);
   }
   .left_block {
     display: flex;
-    width: 412px;
-    border: 1px solid #c8d0ce;
-    border-radius: 10px;
-    padding: 14px 15px;
+    width: torem(412px);
+    border: torem(1px) solid #c8d0ce;
+    border-radius: torem(10px);
+    padding: torem(14px) torem(15px);
     img {
-      width: 24px;
-      height: 24px;
-      margin-right: 10px;
+      width: torem(24px);
+      height: torem(24px);
+      margin-right: torem(10px);
     }
     input {
       border: none;
@@ -34,7 +34,7 @@
       height: 100%;
       font-family: Overpass, sans-serif;
       font-weight: 400;
-      font-size: 18px;
+      font-size: torem(18px);
       color: #333333;
       background: none;
       outline: none;
@@ -45,7 +45,7 @@
   }
   .save {
     @include ButtonGreen();
-    width: 280px;
+    width: torem(280px);
     height: 100%;
   }
 }

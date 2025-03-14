@@ -1,47 +1,52 @@
-@import '../../styles/colors.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .LeftMenuLk {
-  padding: 10px 0px 0px 20px;
+  @media (max-width: $w2) {
+    display: none;
+  }
+  padding: torem(10px) 0px 0px torem(20px);
   display: block;
-  border-right: 1px solid var(--InputColors);
-  width: 310px;
-  min-width: 310px;
+  border-right: torem(1px) solid var(--InputColors);
+  width: torem(310px);
+  min-width: torem(310px);
   @include maxMinContent();
   height: auto;
   box-sizing: border-box;
   .LeftMenuLkInner {
     position: fixed;
-    width: 310px;
-    min-width: 310px;
+    width: torem(310px);
+    min-width: torem(310px);
     z-index: 10000;
   }
   .LogoImg {
-    width: 110px;
-    height: 110px;
+    width: torem(110px);
+    height: torem(110px);
     cursor: pointer;
   }
   .LeftMenuLkTitle {
-    margin: 48px 0px 40px 0px;
-    font-size: 22px;
+    margin: torem(48px) 0px torem(40px) 0px;
+    font-size: torem(22px);
     font-weight: 700;
   }
   .LeftMenuLkList {
     list-style: none;
-    padding-left: 30px;
+    padding-left: torem(30px);
     li {
       display: flex;
       position: relative;
       justify-content: start;
       align-items: center;
-      margin: 10px 33px 0px 0px;
-      height: 46px;
+      margin: torem(10px) torem(33px) 0px 0px;
+      height: torem(46px);
       // width: 240px;
       cursor: pointer;
-      padding-left: 10px;
+      padding-left: torem(10px);
       box-sizing: border-box;
-      border-radius: 5px;
+      border-radius: torem(5px);
       img {
-        margin-right: 10px;
+        margin-right: torem(10px);
       }
       &:hover {
         background-color: var(--MenuHover);
@@ -49,7 +54,7 @@
       .arrow {
         position: absolute;
         z-index: 10;
-        right: 10px;
+        right: torem(10px);
         top: 50%;
         transform: translateY(-50%);
         transition: transform 0.15s linear;
@@ -72,12 +77,12 @@
       box-sizing: border-box;
     }
     .listSetings {
-      padding-left: 34px;
+      padding-left: torem(34px);
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s linear;
-      width: 205px !important;
-      border-radius: 5px;
+      width: torem(205px) !important;
+      border-radius: torem(5px);
       li {
         margin-right: 0;
         position: static;
@@ -85,7 +90,7 @@
     }
     .setingOpen {
       height: auto;
-      max-height: 258px;
+      max-height: torem(258px);
       transition: max-height 0.3s linear;
       li {
         margin-right: 0;
@@ -93,23 +98,23 @@
     }
     .repName {
       position: absolute;
-      max-width: 340px;
+      max-width: torem(340px);
       width: max-content;
       z-index: 10000;
       right: -400;
       top: 0;
       background-color: #fff;
-      padding: 10px;
+      padding: torem(10px);
       font-family: Overpass, sans-serif;
-      font-size: 16px;
+      font-size: torem(16px);
       font-weight: 400;
-      line-height: 19.2px;
+      line-height: torem(19px);
       text-align: left;
       text-underline-position: from-font;
       text-decoration-skip-ink: none;
       color: #5b605e;
-      border-radius: 6px;
-      border: 1px solid #e7eae9;
+      border-radius: torem(6px);
+      border: torem(1px) solid #e7eae9;
     }
   }
 }

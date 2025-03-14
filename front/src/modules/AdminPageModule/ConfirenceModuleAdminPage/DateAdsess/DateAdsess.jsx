@@ -16,7 +16,6 @@ function DateAdsess({ data, setData }) {
     const handleClickOutside = event => {
       if (calendarRef.current && !calendarRef.current.contains(event.target)) {
         setCalendarShow(false);
-        console.log('calendarShow', false);
       }
       if (listRef.current && !listRef.current.contains(event.target)) {
         setListOpen(false);
@@ -88,7 +87,6 @@ function DateAdsess({ data, setData }) {
   };
 
   const funOpenCalendar = e => {
-    console.log('e', e.target.id);
     if (e.target.nodeName === 'INPUT' || e.target.id.includes('open_calendar')) {
       setCalendarShow(!calendarShow);
     } else {

@@ -12,16 +12,22 @@ import Organization1 from '@assets/img/UI/org1.png';
 import Organization2 from '@assets/img/UI/org2.png';
 import Organization3 from '@assets/img/UI/org3.png';
 import Organization4 from '@assets/img/UI/org4.png';
+import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHomePageMobile';
+import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 function HomePage() {
-  const context = useContext(DataContext);
+  // const context = useContext(DataContext);
   const textData = textDataHomePage;
   return (
     <div className={styles.HomePage}>
+      <header style={{ position: 'absolute', top: '0', left: '0', width: '100%', zIndex: '1000' }}>
+        <HeaderPhone />
+      </header>
       <Header />
       <TopMainInfo />
       <SliderHomePageTop />
       <Layout>
         <section className={styles.textSection}>
+          {/* <img style={{position: "absolute", top: "30rem", left: "50%", transform: "translate(-50%, -50%)", width: "30rem"}} src="./tuzik.png" alt="tuzik"/> */}
           <div className={styles.textSectionIner}>
             <div className={styles.Title}>
               <p>
@@ -67,17 +73,34 @@ function HomePage() {
             <div className={styles.Title}>
               <p>НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ</p>
             </div>
-            <div className={styles.blockTextCompetitionsInner}>
+            <div className={`${styles.blockTextCompetitionsInner} ${styles.pc}`}>
               {textData.map((el, index) => (
                 <div key={index} className={styles.blockTextCompetitions}>
                   <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
                 </div>
               ))}
             </div>
+            <div className={`${styles.blockTextCompetitionsInner} ${styles.mobile}`}>
+              <div className={styles.row_items}>
+                {textData.slice(0, textData.length / 2 + 1).map((el, index) => (
+                  <div key={index} className={styles.blockTextCompetitions}>
+                    <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.row_items}>
+                {textData.slice(textData.length / 2 + 1, textData.length).map((el, index) => (
+                  <div key={index} className={styles.blockTextCompetitions}>
+                    <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
       </Layout>
       <SliderHomePage />
+      <SliderHomePageMobile />
       <Layout>
         <section className={styles.imgSection}>
           <div className={styles.Title}>

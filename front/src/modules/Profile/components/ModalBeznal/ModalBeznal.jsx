@@ -2,8 +2,21 @@ import styles from './ModalBeznal.module.scss';
 import docIcon from '@assets/img/AdminPanel/docImport.svg';
 import loadIcon from '@assets/img/AdminPanel/load.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import { apiUpdateUser } from '../../../../apirequests/apirequests';
+import { fetchUserData } from '../../../../store/userSlice/user.Slice';
+import { useDispatch } from 'react-redux';
 
 function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
+  const dispatch = useDispatch();
+  const funPutApiSelf = () => {
+    apiUpdateUser({ formPay: 'Безналичный' }).then(res => {
+      if (res?.status === 200) {
+        setOpenModalBeznal(false);
+        dispatch(fetchUserData());
+      }
+    });
+  };
+
   return (
     <div className={styles.ModalBeznal}>
       <AnimatePresence>
@@ -56,7 +69,7 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
               </div>
               <div className={styles.buttons}>
                 <button onClick={() => setOpenModalBeznal(false)}>Сменить способ оплаты</button>
-                <button onClick={() => setOpenModalBeznal(false)}>Продолжить</button>
+                <button onClick={funPutApiSelf}>Продолжить</button>
               </div>
             </motion.div>
           </motion.div>
