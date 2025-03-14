@@ -14,7 +14,7 @@ export default {
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
-        if(conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
+        if(conference?.deadline && conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
 
         if(!conference?.directions?.includes(reportInfo.direction)) throw  new AppErrorNotExist('direction')
 

@@ -293,7 +293,7 @@ export default {
 
             if(!participantInConference) throw new AppErrorNotExist('participantInConference')
 
-            if(participantInConference?.conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
+            if(conference?.deadline && conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
             if(typesFile[type] === 9) await participantInConference.update({accord: file.path})
             else await participantInConference.update({receipt: file.path})
         }
