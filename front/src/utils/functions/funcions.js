@@ -71,7 +71,9 @@ export function formatDateRange(dateStart, dateFinish) {
   const startMonth = months[start.getUTCMonth()];
   const endMonth = months[end.getUTCMonth()];
   const year = start.getUTCFullYear();
-
+  if (!dateFinish) {
+    return `${startDay} ${startMonth} ${year}`;
+  }
   if (start.getUTCMonth() === end.getUTCMonth()) {
     return `${startDay}-${endDay} ${startMonth} ${year}`;
   } else {
