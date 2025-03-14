@@ -1,4 +1,6 @@
-@import '../../styles/colors.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .Profile {
   width: calc(100vw - torem(700px));
