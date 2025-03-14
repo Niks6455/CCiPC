@@ -10,6 +10,5 @@ export default {
     LEGAL: 8,
     AGREEMENT: 9,
     RECEIPT: 10
-
 };
 
