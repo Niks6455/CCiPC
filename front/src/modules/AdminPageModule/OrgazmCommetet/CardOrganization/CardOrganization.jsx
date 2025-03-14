@@ -19,15 +19,20 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
   const cardRef = useRef(null);
   const imgRef = useRef(null);
 
-  const defaultValue = {
+  const [defaultValue, setDefaultValue] = useState({
     img: item?.img || '',
     fio: item?.fio || '',
     organization: item?.organization || '',
-  };
+  });
   const [file, setFile] = useState(null);
   const refFile = useRef(null);
   const [dataItem, setDataItem] = useState(defaultValue);
   const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    setDataItem(item);
+    setDefaultValue(item);
+  }, [item]);
 
   // Проверка изменений
   useEffect(() => {
@@ -111,8 +116,7 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
     uploadPhoto(formFile, 'COMMITTEE').then(res => {
       if (res?.status === 200) {
         console.log('res', res);
-        updateCardData(item.id, { ...dataItem, img: res.data.url });
-        getDataOrg();
+        updateCardData(item.id, res.data.url);
       }
     });
   };
@@ -124,8 +128,8 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
           <img
             ref={imgRef}
             className={styles.Img}
-            src={dataItem.img ? `${server}/${dataItem.img}` : notPhoto}
-            alt={dataItem.fio}
+            src={dataItem?.img ? `${server}/${dataItem?.img}` : notPhoto}
+            alt={dataItem?.fio}
           />
           <div className={styles.CardOrganizationInnerImgInput}>
             <img src={deletePhoto2Img} alt="Удалить" />

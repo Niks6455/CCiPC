@@ -39,21 +39,35 @@ function OrgazmCommetet() {
   }, [dataOrgAll, activeButtonFirst, activeButtonTwoo]);
 
   const filterCommittees = () => {
-    const committeeOne = dataOrgAll.find(item => item.type === activeButtonFirst)?.committees || [];
+    console.log('dataOrgAllLast', dataOrgAll);
+    const committeeOne = dataOrgAll?.find(item => item?.type === activeButtonFirst)?.committees || [];
     const committeeTwo =
-      dataOrgAll.find(item => item.type === activeButtonTwoo + 2)?.committees || [];
+      dataOrgAll?.find(item => item?.type === activeButtonTwoo + 2)?.committees || [];
 
     setDataCommitetOne(committeeOne);
     setDataCommitetTwo(committeeTwo);
   };
 
-  const updateCardData = (id, newData) => {
-    setDataOrgAll(prevData =>
-      prevData.map(item =>
-        item.id === id ? { ...item, ...newData } : item
-      )
-    );
+  const updateCardData = (id, newUrl) => {
+    console.log('newData', newUrl);
+    console.log('id', id);
+    console.log('dataOrgAll', dataOrgAll);
+    const updateData = dataOrgAll.map(confirensis => {
+        return {...confirensis, committees: confirensis.committees.map(item => {
+          if (item.id === id) {
+            return { ...item, img: newUrl }
+          }
+          return item
+        })
+      }
+    });
+    console.log('updateData', updateData);
+    setDataOrgAll(updateData)
   };
+
+  useEffect(() => {
+    console.log('dataOrgAll', dataOrgAll);
+  }, [dataOrgAll]);
 
   const closeCreateOne = () => {
     if (addOrgPeopleRef.current) {
