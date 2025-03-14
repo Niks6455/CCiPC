@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import HomePage from './pages/HomePage/HomePage';
 import DataContext from './context';
 import './styles/app.scss';
@@ -39,6 +39,7 @@ import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/Rec
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
 import { apiCreateConferences } from './apirequests/apirequests';
 import Footer from './components/Footer/Footer';
+import { useWindowWidth } from './hooks/hooks';
 
 function App() {
   const dispatch = useDispatch();
@@ -118,19 +119,25 @@ function App() {
     setNumberValue,
   };
 
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    if (footerRef?.current) {
+      const footerHeight = footerRef.current.offsetHeight;
+      console.log('footerHeight', footerHeight);
+      const mainDiv = document.getElementById('#main_inner');
+      if (mainDiv) {
+        mainDiv.style.minHeight = `calc(100vh - ${footerHeight}px)`;
+      }
+    }
+  }, [footerRef, useWindowWidth()]);
+
   return (
     <DataContext.Provider value={context}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <main
-            style={{
-              fontFamily: 'REX',
-              display: 'flex',
-              minHeight: '100vh',
-              flexDirection: 'column',
-            }}
-          >
-            <div style={{ display: 'flex', flex: '1' }}>
+          <main>
+            <div id="#main_inner">
               <Routes>
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="*" element={<NoteFoundPage />} />{' '}
@@ -173,7 +180,7 @@ function App() {
                 </Route>
               </Routes>
             </div>
-            <Footer />
+            <Footer footerRef={footerRef} />
           </main>
         </BrowserRouter>
       </QueryClientProvider>

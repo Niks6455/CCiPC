@@ -351,6 +351,18 @@ export const apiExportArchiveState = async id => {
   }
 };
 
+//! экспорт докладов
+export const apiExportReports = async id => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/exportReports`, {
+      responseType: 'blob', // Ожидаем бинарные данные (архив)
+    });
+    return response;
+  } catch (error) {
+    console.log('apiExportReports ', error);
+  }
+};
+
 //! загрузка файлов
 export const uploadPhoto = async (file, type) => {
   try {

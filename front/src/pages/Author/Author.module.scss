@@ -11,6 +11,7 @@ $w4: 480px;
   align-items: center;
   font-weight: 300;
   padding: 70px 30px 100px 30px;
+  margin: 0 auto;
   @include maxMinContent();
   @media (max-width: $w4) {
     width: 100vw;
@@ -46,6 +47,9 @@ $w4: 480px;
   }
   @media (max-width: 656px) {
     justify-content: start;
+    width: 100vw;
+    padding: 0 25px;
+    padding-bottom: 5px;
   }
   .button {
     display: flex;
@@ -74,6 +78,11 @@ $w4: 480px;
 }
 
 .registration {
+  padding: 0 25px;
+  @media (max-width: $w4) {
+    padding: 0;
+  }
+
   .bold {
     font-weight: 700;
   }

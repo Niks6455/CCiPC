@@ -3,11 +3,11 @@ import styles from './Footer.module.scss';
 import footerLogo from '../../assets/img/FooterText.svg';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
-function Footer() {
+function Footer({ footerRef }) {
   const conferense = useSelector(state => state.conferences?.data[0]);
   console.log('conferense', conferense);
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} ref={footerRef}>
       <Layout>
         <div className={styles.footerContainer}>
           <div className={styles.footerContainerLeft}>
