@@ -3,8 +3,8 @@ import Ajv from 'ajv'
 import reportService from "../services/report.js";
 import { map } from '../utils/mappers/report.js'
 const ajv = new Ajv()
-import status from "../config/status.js";
-import form from "../config/form.js";
+import statusReport from "../config/status.js";
+import formReport from "../config/form.js";
 
  const schemaCoAuthors = {
      type: "object",
@@ -65,8 +65,8 @@ export default {
         if(!comment) throw new AppErrorMissing('comment')
         if(!conferenceId) throw new AppErrorMissing('conferenceId')
 
-        if(!status.includes(status)) throw new AppErrorInvalid('status')
-        if(!form.includes(form)) throw new AppErrorInvalid('form')
+        if(!statusReport.includes(status)) throw new AppErrorInvalid('status')
+        if(!formReport.includes(form)) throw new AppErrorInvalid('form')
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
 
         const  report =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, conferenceId, user)
@@ -77,8 +77,8 @@ export default {
     async update({body: { name, organization, form, direction, status,  comment, coAuthors, coAuthorsIds }, params: { id }, user }, res) {
         if(!id) throw new AppErrorMissing('id')
 
-        if(status && !status.includes(status)) throw new AppErrorInvalid('status')
-        if(form && !form.includes(form)) throw new AppErrorInvalid('form')
+        if(status && !statusReport.includes(status)) throw new AppErrorInvalid('status')
+        if(form && !formReport.includes(form)) throw new AppErrorInvalid('form')
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
         const report = await reportService.update({ name, form, status, organization, direction, comment, coAuthors, coAuthorsIds }, id , user)
         res.json({report: report})
