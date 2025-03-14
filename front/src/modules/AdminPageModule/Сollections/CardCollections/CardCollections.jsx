@@ -63,9 +63,9 @@ function CardCollections(props) {
   };
 
   const handleFileUpload = event => {
-    const file = event.target.files[0];
+    const file = event?.target?.files[0];
     if (file) {
-      setDataItem(prev => ({ ...prev, file: file, fileName: file.name }));
+      setDataItem(prev => ({ ...prev, file: file, fileName: file?.name }));
     }
   };
 
@@ -78,28 +78,28 @@ function CardCollections(props) {
     setErrorText('');
   };
 
-  const handleSave = () => {
-    if (dataItem.name === '') {
+  const handleSave = async () => {
+    if (!dataItem.name) {
       setErrorText('Это обязательное поле');
       return;
     }
-    const data = {
-      name: dataItem.name,
-      type: 1,
-    };
-    updateArchive(data, props.item.id).then(res => {
+
+    const data = { name: dataItem.name, type: 1 };
+
+    try {
+      const res = await updateArchive(data, props.item.id);
       if (res?.status === 200) {
         if (dataItem?.file) {
           const formData = new FormData();
           formData.append('file', dataItem.file);
-          formData.append('archiveId', props?.item?.id);
-          uploadPhoto(formData, 'COLLECTION_ARCHIVE');
-          props?.updateData();
-        } else {
-          props?.updateData();
+          formData.append('archiveId', props.item.id);
+          await uploadPhoto(formData, 'COLLECTION_ARCHIVE');
         }
+        props.updateData();
       }
-    });
+    } catch (error) {
+      console.error('Ошибка при сохранении:', error);
+    }
   };
 
   const handleDelete = () => {
@@ -108,6 +108,15 @@ function CardCollections(props) {
         props?.updateData();
       }
     });
+  };
+
+  const spliseFileName = () => {
+    const name = dataItem?.fileName;
+    if (name && name.length > 30) {
+      const extension = name.split('.').pop();
+      return name.slice(0, 30) + '...' + extension;
+    }
+    return name;
   };
 
   return (
@@ -126,7 +135,7 @@ function CardCollections(props) {
         {dataItem?.file || dataItem?.fileName ? (
           <div className={styles.fileDisplay}>
             <div className={styles.fileDisplayInner}>
-              <span>{dataItem?.fileName}</span>
+              <span>{spliseFileName()}</span>
               <img
                 src={closeIcon}
                 alt="Удалить файл"
