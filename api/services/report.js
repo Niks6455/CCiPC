@@ -14,6 +14,8 @@ export default {
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
+        if(conference?.deadline && conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
+
         if(!conference?.directions?.includes(reportInfo.direction)) throw  new AppErrorNotExist('direction')
 
         const checkReport= await Report.findOne({
@@ -197,14 +199,17 @@ export default {
                     {
                         model: Conference,
                         as: 'conference',
-                        required: true
+                        required: true,
+                        where: {
+                            deadline: {
+                                [Op.lte]: new Date() // Проверяем, что deadline меньше или равен текущей дате
+                            }
+                        }
                     }
                 ]
             })
 
         if(!report) throw new AppErrorInvalid('report')
-
-
 
         if(report.participantOfReport[0].who === 'Автор'){
 

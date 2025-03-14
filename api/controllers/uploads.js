@@ -25,6 +25,7 @@ import Committee from "../models/committee.js";
 import Archive from "../models/archive.js";
 import { v4 as uuidv4 } from 'uuid';
 import ParticipantInConference from "../models/participant-in-conference.js";
+import {Op} from "sequelize";
 const dir= './uploads'
 
 
@@ -282,11 +283,17 @@ export default {
                  where: {
                      participantId: user.id,
                      conferenceId: conference.id
+                 },
+                 include:{
+                     model: Conference,
+                     as: 'conference',
+                     required: true,
                  }
              })
 
             if(!participantInConference) throw new AppErrorNotExist('participantInConference')
 
+            if(conference?.deadline && conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
             if(typesFile[type] === 9) await participantInConference.update({accord: file.path})
             else await participantInConference.update({receipt: file.path})
         }
