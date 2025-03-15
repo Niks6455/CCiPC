@@ -1,4 +1,11 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .ModalPhoto {
+  @media (max-width: $w3) {
+    display: none;
+  }
   .bacgraund {
     @include PopupBlur;
     z-index: 10001;
@@ -6,8 +13,8 @@
 
   .ProfilePhotoShow {
     z-index: 10003;
-    width: calc(550px + 81px);
-    height: 550px;
+    width: calc(torem(550px) + torem(81px));
+    height: torem(550px);
     position: absolute;
     top: 50%;
     left: 50%;
@@ -15,7 +22,7 @@
     display: flex;
     justify-content: end;
     flex-direction: row;
-    // backdrop-filter: blur(5px);
+
     .ProfileImg {
       display: flex;
       width: 100%;
@@ -24,9 +31,9 @@
       object-fit: cover;
     }
     .close {
-      transform: translate(23px, -23px);
-      width: 81px;
-      height: 81px;
+      transform: translate(torem(23px), torem(-23px));
+      width: torem(81px);
+      height: torem(81px);
       display: flex;
       cursor: pointer;
       &:hover {

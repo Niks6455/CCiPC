@@ -1,5 +1,12 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .Orgwznos {
   margin-top: torem(60px);
+  @media (max-width: $w2) {
+    margin-top: 0;
+  }
   .orgwznos {
     display: flex;
     flex-direction: column;
@@ -10,6 +17,10 @@
       img {
         width: torem(24px);
         height: torem(24px);
+        @media (max-width: $w2) {
+          width: torem(22px);
+          height: torem(22px);
+        }
       }
       h3 {
         font-family: Overpass, sans-serif;
@@ -20,6 +31,13 @@
         padding: 0;
         margin: 0;
         margin-left: torem(5px);
+        @media (max-width: $w2) {
+          font-size: torem(18px);
+          font-weight: 700;
+        }
+        @media (max-width: $w3) {
+          font-size: torem(16px);
+        }
       }
     }
     p {
@@ -31,6 +49,17 @@
       padding: 0;
       margin: 0;
       max-width: torem(490px);
+      @media (max-width: $w2) {
+        font-size: torem(18px);
+        margin-bottom: torem(15px);
+      }
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+        max-width: 90%;
+        br {
+          display: none;
+        }
+      }
     }
   }
   .orgwznos_summ {
@@ -43,6 +72,13 @@
       color: #006d49;
       margin-bottom: torem(30px);
       padding: 0;
+      @media (max-width: $w2) {
+        margin: 0;
+      }
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+      }
+
       span {
         font-family: Overpass, sans-serif;
         font-weight: 400;
@@ -50,11 +86,22 @@
         color: #006d49;
         padding: 0;
         margin: 0;
+        @media (max-width: $w3) {
+          font-size: torem(16px);
+        }
       }
     }
     .buttons {
       display: flex;
       flex-direction: row;
+      @media (max-width: $w2) {
+        margin-bottom: torem(15px);
+        margin-top: torem(15px);
+      }
+      @media (max-width: $w3) {
+        margin-bottom: torem(10px);
+        margin-top: torem(10px);
+      }
       button {
         @include ButtonGreen;
         font-size: torem(16px);
@@ -69,6 +116,17 @@
       @include ButtonGreenBorder;
       width: torem(350px);
       height: torem(44px);
+      font-size: torem(18px);
+      @media (max-width: $w2) {
+        margin-top: torem(15px);
+        margin-bottom: torem(15px);
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        font-size: torem(14px);
+        margin-top: torem(10px);
+        margin-bottom: torem(20px);
+      }
     }
   }
   .orgwznos_files {
@@ -80,6 +138,10 @@
       padding: 0;
       margin: 0;
       margin-bottom: torem(5px);
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+        font-weight: 700;
+      }
     }
     span {
       padding: 0;
@@ -88,22 +150,43 @@
       font-weight: 400;
       font-size: torem(20px);
       color: #333333;
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+      }
     }
     .btn_change {
       @include ButtonGreenBorder;
       width: torem(470px);
       height: torem(44px);
       margin-top: torem(20px);
+      font-size: torem(18px);
+      @media (max-width: $w2) {
+        margin-top: torem(15px);
+        margin-bottom: torem(15px);
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        font-size: torem(14px);
+        margin-top: torem(10px);
+        margin-bottom: torem(20px);
+      }
     }
   }
   .files {
     display: flex;
     flex-direction: row;
+    @media (max-width: $w3) {
+      flex-direction: column;
+    }
     .file_container {
       display: flex;
       flex-direction: column;
       margin-top: torem(20px);
       width: torem(224px);
+      @media (max-width: $w3) {
+        width: 100%;
+        margin-top: torem(10px);
+      }
       &:first-child {
         margin-right: torem(20px);
       }
@@ -127,7 +210,10 @@
           @include HoverActiveOpasity;
           align-items: center;
           margin-top: torem(2px);
-
+          img {
+            width: torem(24px);
+            height: torem(25px);
+          }
           span {
             font-family: Overpass, sans-serif;
             font-weight: 400;

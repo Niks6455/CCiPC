@@ -105,6 +105,17 @@ function CreateReport({ edit }) {
           value={report.data.formParticipation}
           handleChangeForm={handleChangeForm}
         />
+        <div className={`${styles.input_organization} ${styles.organization_mobile}`}>
+          <span>Организация</span>
+          <input
+            type="text"
+            value={report.data.organization}
+            onChange={e => handleChangeForm('organization', e.target.value)}
+            placeholder="Ваша организация"
+            onFocus={e => (e.target.placeholder = '')}
+            onBlur={e => (e.target.placeholder = 'Ваша организация')}
+          />
+        </div>
         <InputListForma
           name={'Статус участия'}
           list={participationStatus}
@@ -114,7 +125,7 @@ function CreateReport({ edit }) {
         />
       </div>
       <div className={styles.inputsContainer}>
-        <div className={styles.input_organization}>
+        <div className={`${styles.input_organization} ${styles.organization_pc}`}>
           <span>Организация</span>
           <input
             type="text"
@@ -132,21 +143,18 @@ function CreateReport({ edit }) {
           <p>Добавить файл со статьёй</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
-              {!report.data.fileArticle && <BorderIcon className={styles.border} />}
-              <div className={styles.file_inner}>
-                <FileComponent
-                  logoHeader={report.data.fileArticle}
-                  data={report.data.fileArticle}
-                  setData={value => funChangeFile(value, 'fileArticle')}
-                  typeFile={['application/pdf']}
-                  accept={'.pdf'}
-                  name={'fileArticle'}
-                  icon={'pdf'}
-                  itemKey={'fileArticle'}
-                  fileSize={20} // размер файла
-                  text={'Необходимо загрузить<br/>файл в формате PDF'}
-                />
-              </div>
+              <FileComponent
+                logoHeader={report.data.fileArticle}
+                data={report.data.fileArticle}
+                setData={value => funChangeFile(value, 'fileArticle')}
+                typeFile={['application/pdf']}
+                accept={'.pdf'}
+                name={'fileArticle'}
+                icon={'pdf'}
+                itemKey={'fileArticle'}
+                fileSize={20} // размер файла
+                text={'Необходимо загрузить<br/>файл в формате PDF'}
+              />
             </div>
 
             <div className={styles.downloadShablon}>
@@ -161,21 +169,18 @@ function CreateReport({ edit }) {
           <p>Добавить файл с экспертным заключением</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
-              {!report.data.fileExpertOpinion && <BorderIcon className={styles.border} />}
-              <div className={styles.file_inner}>
-                <FileComponent
-                  logoHeader={report.data.fileExpertOpinion}
-                  data={report.data.fileExpertOpinion}
-                  setData={value => funChangeFile(value, 'fileExpertOpinion')}
-                  typeFile={['application/pdf']}
-                  accept={'.pdf'}
-                  name={'fileExpertOpinion'}
-                  icon={'pdf'}
-                  itemKey={'fileExpertOpinion'}
-                  fileSize={20} // размер файла
-                  text={'Необходимо загрузить<br/>файл в формате PDF'}
-                />
-              </div>
+              <FileComponent
+                logoHeader={report.data.fileExpertOpinion}
+                data={report.data.fileExpertOpinion}
+                setData={value => funChangeFile(value, 'fileExpertOpinion')}
+                typeFile={['application/pdf']}
+                accept={'.pdf'}
+                name={'fileExpertOpinion'}
+                icon={'pdf'}
+                itemKey={'fileExpertOpinion'}
+                fileSize={20} // размер файла
+                text={'Необходимо загрузить<br/>файл в формате PDF'}
+              />
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom'; // Импортируем хук для работы с query params
 import styles from './ViewReports.module.scss';
-import { ReactComponent as BlockFile } from './../../../assets/img/blockFile.svg';
+import BlockFile from './../../../assets/img/UI/blackFile.svg';
 import { ReactComponent as Trash } from './../../../assets/img/UI/trash.svg';
 import { apiDeleteReport, apiGetReportId, server } from '../../../apirequests/apirequests';
 import { disDeleteReport } from '../../../store/reportsSlice/reportsSlice';
@@ -102,8 +102,9 @@ function ViewReports() {
               exit={{ opacity: 0, scale: 0.6 }}
             >
               <h2>
-                {`Вы действительно хотите удалить доклад “${reportData?.name}”?
-                Отменить это действие будет невозможно.`}
+                Вы действительно хотите удалить доклад
+                <br /> "{reportData?.name}”? <br />
+                Отменить это действие будет невозможно.
               </h2>
               <div className={styles.button_container}>
                 <button className={styles.cancle} onClick={() => setIsModalDelete(false)}>
@@ -193,15 +194,13 @@ function ViewReports() {
           onMouseMove={handleMouseMove}
         >
           <p className={styles.fileLoudersTitle}>Доклад:</p>
-          <>
+          <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.reportFile)}>
+            <img src={BlockFile} alt="img" />
             <div className={styles.fileName}>
               <span>{getFileName(reportData?.reportFile) || 'Документ.pdf'}</span>
             </div>
-            <BlockFile
-              className={styles.blockFile}
-              onClick={() => funOpenFile(reportData?.reportFile)}
-            />
-          </>
+            {/* <BlockFile /> */}
+          </div>
           {showTooltip === 1 && (
             <div
               style={{
@@ -221,15 +220,17 @@ function ViewReports() {
           onMouseMove={handleMouseMove}
         >
           <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
-          <>
+          <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.conclusion)}>
+            <img src={BlockFile} alt="img" />
+
             <div className={styles.fileName}>
               <span>{getFileName(reportData?.conclusion) || 'Документ.pdf'}</span>
             </div>
-            <BlockFile
+            {/* <BlockFile
               className={styles.blockFile}
               onClick={() => funOpenFile(reportData?.conclusion)}
-            />
-          </>
+            /> */}
+          </div>
           {showTooltip === 2 && (
             <div
               style={{

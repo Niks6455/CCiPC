@@ -52,43 +52,44 @@ function Profile() {
   return (
     <section className={styles.Profile}>
       <ModalNal openModal={openModal} setOpenModal={setOpenModal} />
-
       <ModalBeznal openModalBeznal={openModalBeznal} setOpenModalBeznal={setOpenModalBeznal} />
       <ModalPhoto
         funOpenPhotoProfile={funOpenPhotoProfile}
         showProfilePhoto={showProfilePhoto}
         user={user}
       />
+      <div className={styles.container_head}>
+        <div className={styles.profile_img_container}>
+          <img src={ProfilePictureBackground} className={styles.ProfileImg} />
+          <div className={styles.photo_lk}>
+            <img
+              src={`${server}/${user?.avatar}`}
+              className={styles.noPhotoLk}
+              onClick={funOpenPhotoProfile}
+              alt="img"
+              onError={e => (e.target.src = noPhotoLk)}
+            />
+          </div>
 
-      <div className={styles.profile_img_container}>
-        <img src={ProfilePictureBackground} className={styles.ProfileImg} />
-        <div className={styles.photo_lk}>
           <img
-            src={`${server}/${user?.avatar}`}
-            className={styles.noPhotoLk}
-            onClick={funOpenPhotoProfile}
-            alt="img"
-            onError={e => (e.target.src = noPhotoLk)}
+            src={editPhotoLk}
+            onClick={() => navigate('/account/settings/profile')}
+            className={styles.editPhotoLk}
           />
         </div>
-
-        <img
-          src={editPhotoLk}
-          onClick={() => navigate('/account/settings/profile')}
-          className={styles.editPhotoLk}
-        />
-      </div>
-      <div className={styles.mainSection}>
-        <div className={styles.mainSectionInfoPeople}>
-          <p>{fioToString(user?.name, user?.surname, user?.patronymic)}</p>
-          <p>
-            <span>Ученое звание:</span> {user?.academicTitle || 'Отсутствует'}
-          </p>
-          <p>
-            <span>Степень:</span> {user?.degree || 'Отсутствует'}
-          </p>
+        <div className={styles.mainSection}>
+          <div className={styles.mainSectionInfoPeople}>
+            <p>{fioToString(user?.name, user?.surname, user?.patronymic)}</p>
+            <p>
+              <span>Ученое звание:</span> {user?.academicTitle || 'Отсутствует'}
+            </p>
+            <p>
+              <span>Степень:</span> {user?.degree || 'Отсутствует'}
+            </p>
+          </div>
         </div>
       </div>
+
       <div className={styles.containerMoreInfo}>
         <div className={styles.containerMoreInfoOne}>
           <div className={styles.info_block}>

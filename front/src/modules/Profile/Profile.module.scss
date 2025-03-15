@@ -4,8 +4,36 @@ $w3: 480px;
 
 .Profile {
   width: calc(100vw - torem(700px));
+  @media (max-width: $w2) {
+    width: 100vw;
+    padding: torem(30px);
+    padding-top: torem(97px);
+    padding-bottom: torem(83px);
+  }
+  @media (max-width: $w3) {
+    padding: torem(50px) torem(20px);
+  }
+
+  .container_head {
+    @media (max-width: $w2) {
+      display: flex;
+      flex-direction: row;
+    }
+    @media (max-width: $w3) {
+      flex-direction: column;
+    }
+  }
 
   .profile_img_container {
+    @media (max-width: $w2) {
+      position: relative;
+      width: torem(230px);
+      height: torem(230px);
+    }
+    @media (max-width: $w3) {
+      width: 100%;
+      min-height: calc(100vw - torem(90px));
+    }
     .photo_lk {
       width: torem(300px);
       height: torem(300px);
@@ -15,6 +43,19 @@ $w3: 480px;
       left: torem(40px);
       top: torem(40px);
       cursor: pointer;
+      @media (max-width: $w2) {
+        width: torem(230px);
+        height: torem(230px);
+        left: 0;
+        top: 0;
+      }
+      @media (max-width: $w3) {
+        width: calc(100vw - torem(90px));
+        height: calc(100vw - torem(90px));
+        left: auto;
+        position: static;
+        margin: 0 auto;
+      }
       img {
         width: 100%;
         height: 100%;
@@ -28,6 +69,9 @@ $w3: 480px;
     top: 0;
     width: torem(458px);
     height: torem(247px);
+    @media (max-width: $w2) {
+      display: none;
+    }
   }
 
   .editPhotoLk {
@@ -38,6 +82,16 @@ $w3: 480px;
     height: torem(50px);
     cursor: pointer;
     transition: 0.1s linear all;
+    @media (max-width: $w2) {
+      top: torem(13px);
+      left: auto;
+      right: torem(17px);
+      width: torem(34px);
+      height: torem(34px);
+    }
+    @media (max-width: $w3) {
+      right: calc(torem(45px) + torem(17px)); //torem(25px);
+    }
     &:hover {
       opacity: 0.6;
     }
@@ -45,19 +99,65 @@ $w3: 480px;
   .mainSection {
     color: var(--GrayTextDefault);
     margin-top: torem(95px);
+    @media (max-width: $w2) {
+      margin: 0;
+      padding-top: torem(89px);
+      padding-left: torem(22px);
+    }
+    @media (max-width: $w3) {
+      padding: 0;
+      padding-top: torem(20px);
+    }
     .mainSectionInfoPeople {
       margin-left: torem(360px);
+      @media (max-width: $w2) {
+        margin: 0;
+      }
       p {
         font-size: torem(20px);
         &:first-child {
           font-weight: 500;
           font-size: torem(32px);
+          @media (max-width: $w2) {
+            font-size: torem(22px);
+            font-weight: 700;
+          }
+          @media (max-width: $w3) {
+            font-size: torem(18px);
+          }
+        }
+
+        &:nth-child(2),
+        &:nth-child(3) {
+          margin: torem(10px) 0px torem(20px) 0px;
+          @media (max-width: $w2) {
+            font-size: torem(18px);
+            font-weight: 400;
+          }
+          @media (max-width: $w3) {
+            font-size: torem(16px);
+            margin-bottom: 0;
+          }
         }
         &:nth-child(2) {
-          margin: torem(10px) 0px torem(20px) 0px;
+          @media (max-width: $w2) {
+            margin: 0;
+            margin-top: torem(20px);
+            margin-bottom: torem(10px);
+          }
+          @media (max-width: $w3) {
+            margin-top: torem(15px);
+          }
         }
         span {
           font-weight: 600;
+          @media (max-width: $w2) {
+            font-size: torem(18px);
+            font-weight: 700;
+          }
+          @media (max-width: $w3) {
+            font-size: torem(16px);
+          }
         }
       }
     }
@@ -65,8 +165,18 @@ $w3: 480px;
   .containerMoreInfo {
     margin-top: torem(136px);
     display: flex;
+    @media (max-width: $w2) {
+      margin-top: torem(40px);
+      flex-direction: column;
+    }
+    @media (max-width: $w3) {
+      margin-top: torem(10px);
+    }
     .containerMoreInfoSecond {
       margin-left: torem(182px);
+      @media (max-width: $w2) {
+        margin: 0;
+      }
     }
     .containerMoreInfoOne {
       display: flex;
@@ -75,8 +185,23 @@ $w3: 480px;
         p {
           font-size: torem(20px);
           margin-bottom: torem(20px);
+          @media (max-width: $w2) {
+            margin-bottom: torem(15px);
+            font-size: torem(18px);
+            font-weight: 400;
+          }
+          @media (max-width: $w3) {
+            font-size: torem(16px);
+          }
           span {
             font-weight: 600;
+            @media (max-width: $w2) {
+              font-weight: 700;
+              font-size: torem(18px);
+            }
+            @media (max-width: $w3) {
+              font-size: torem(16px);
+            }
           }
         }
       }
@@ -85,10 +210,21 @@ $w3: 480px;
       width: torem(419px);
       .containerMoreInfoSecondText {
         margin-bottom: torem(20px);
+        @media (max-width: $w3) {
+          margin-bottom: torem(10px);
+        }
         p {
           font-size: torem(20px);
           &:first-child {
             font-weight: 600;
+          }
+          @media (max-width: $w2) {
+            font-size: torem(18px);
+            font-weight: 400;
+            margin-bottom: torem(5px);
+          }
+          @media (max-width: $w3) {
+            font-size: torem(16px);
           }
         }
         span {
@@ -96,6 +232,10 @@ $w3: 480px;
           font-weight: 400;
           font-size: torem(20px);
           color: #333333;
+          @media (max-width: $w2) {
+            font-weight: 700;
+            font-size: torem(18px);
+          }
         }
       }
     }

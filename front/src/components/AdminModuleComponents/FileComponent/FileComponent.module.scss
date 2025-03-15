@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .FileComponent {
   width: 100%;
   height: 100%;
@@ -54,6 +58,10 @@
       img {
         width: torem(57px);
         height: torem(62px);
+        @media (max-width: $w2) {
+          width: torem(47px);
+          height: torem(43px);
+        }
       }
 
       span {
@@ -92,6 +100,8 @@
     width: 100%;
     height: 100%;
     border: torem(2px) solid #c8d0ce;
+    border-radius: torem(10px);
+    background-color: #fff;
     border-radius: torem(10px);
 
     .container_file_inner {
@@ -132,6 +142,10 @@
           width: torem(57px);
           height: torem(62px);
           cursor: pointer;
+          @media (max-width: $w2) {
+            width: torem(47px);
+            height: torem(43px);
+          }
         }
         span {
           cursor: pointer;
@@ -178,6 +192,14 @@
     .delete {
       width: torem(36px);
       height: torem(36px);
+      img {
+        width: torem(36px);
+        height: torem(36px);
+        @media (max-width: $w3) {
+          width: torem(16px);
+          height: torem(16px);
+        }
+      }
       box-sizing: border-box;
       position: absolute;
       right: torem(20px);
@@ -187,6 +209,10 @@
       @include HoverActive;
       padding: torem(7px);
       border-radius: torem(5px);
+      @media (max-width: $w3) {
+        top: torem(5px);
+        right: torem(5px);
+      }
     }
   }
 }

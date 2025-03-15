@@ -21,7 +21,7 @@ function InputListForma(props) {
   }, []);
 
   return (
-    <div className={styles.InputListForma}>
+    <div name="InputListForma" className={styles.InputListForma}>
       <p>{props.name}</p>
       <div className={styles.boxInner} ref={refCalendar}>
         <input

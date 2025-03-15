@@ -3,7 +3,7 @@ import vitalIcon from '@assets/img/UI/vitalIcon.svg';
 import FileComponent from './../../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { useState } from 'react';
 import { server, uploadPhoto } from '../../../../apirequests/apirequests';
-import loadIcon from '@assets/img/AdminPanel/load.svg';
+import loadIcon from '@assets/img/AdminPanel/greenLoad.svg';
 import { useSelector } from 'react-redux';
 import ReqError from '../../../../components/ReqError/ReqError';
 
@@ -49,7 +49,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
     const fee = user?.fee;
     console.log('fee', fee);
     if (fee?.length > 0) {
-      if (!fee[0]?.sum && fee[0]?.formPay === 'Не выбран') {
+      if (!fee[0]?.sum || fee[0]?.sum === 0) {
         return (
           <div className={styles.orgwznos}>
             <div className={styles.title}>
@@ -84,7 +84,9 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
             <h3>
               Счет для оплаты оргвзноса: <span>{fee[0]?.sum + ' '}₽ </span>
             </h3>
-            <button className={styles.btn_change}>Сменить способ оплаты</button>
+            <button className={styles.btn_change} onClick={funChangeFormPay}>
+              Сменить способ оплаты
+            </button>
           </div>
         );
       }
