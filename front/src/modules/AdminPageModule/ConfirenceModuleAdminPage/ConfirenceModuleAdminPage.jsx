@@ -13,14 +13,16 @@ import {
   uploadMulti,
   uploadPhoto,
 } from '../../../apirequests/apirequests';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { convertDate, convertDateTire } from '../../../utils/functions/funcions';
 import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSuccessfully';
 import { fileKeys } from './data';
 import ReqError from '../../../components/ReqError/ReqError';
+import { fetchConferences } from '../../../store/conferencesSlice/conferences.Slice';
 
 function ConfirenceModuleAdminPage() {
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const conferenses = useSelector(state => state.conferences?.data);
   const [conferenseId, setConferenseId] = useState(null);
@@ -71,7 +73,7 @@ function ConfirenceModuleAdminPage() {
         cashlessIndividual: qery.documents?.INDIVIDUAL,
         cashlessEntities: qery.documents?.LEGAL,
         aboutConference: qery.description,
-        directions: qery.directions,
+        directions: qery.directions.map(el => el.name),
         dateFirst: qery.date?.[0]?.value,
         dateSecond: qery.date?.[1]?.value,
         address: qery.address,
@@ -164,6 +166,7 @@ function ConfirenceModuleAdminPage() {
         setDeletePartners([]);
         funSetErrors('main', true);
         setModalSucces(true);
+        dispatch(fetchConferences());
       } else {
         funSetErrors('main', false);
         setModalSucces(false);

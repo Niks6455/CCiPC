@@ -71,7 +71,9 @@ export function formatDateRange(dateStart, dateFinish) {
   const startMonth = months[start.getUTCMonth()];
   const endMonth = months[end.getUTCMonth()];
   const year = start.getUTCFullYear();
-
+  if (!dateFinish) {
+    return `${startDay} ${startMonth} ${year}`;
+  }
   if (start.getUTCMonth() === end.getUTCMonth()) {
     return `${startDay}-${endDay} ${startMonth} ${year}`;
   } else {
@@ -154,7 +156,7 @@ export const formatDateRangePrimereact = (startDate, endDate) => {
   if (startYear === endYear) {
     if (start.getMonth() === end.getMonth()) {
       // Same month and year
-      return `${startDay}-${endDay} ${startMonth} ${startYear}`;
+      return `${startDay} - ${endDay} ${startMonth} ${startYear}`;
     } else {
       // Different months, same year
       return `${startDay} ${startMonth} - ${endDay} ${endMonth} ${startYear}`;

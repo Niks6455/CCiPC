@@ -1,15 +1,45 @@
-@import '../../../styles/colors.scss';
-@import '../../../styles/mixin.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .ViewReports {
   width: torem(1170px);
+  @media (max-width: $w2) {
+    width: 100vw;
+    padding: torem(34px) torem(30px);
+    padding-bottom: torem(89px);
+  }
+  @media (max-width: $w3) {
+    padding: torem(5px) torem(20px);
+    padding-bottom: torem(137px);
+  }
 
-  //! попа
+  //! попап
   .modal_container {
     @include PopupBlur;
+    @media (max-width: $w2) {
+      height: 100vh;
+    }
     .modal_delete_report {
       @include PopupContainer;
       padding: 0 torem(158px);
+      br {
+        display: none;
+      }
+      @media (max-width: $w2) {
+        width: calc(100vw - torem(200px));
+        padding: torem(70px) torem(40px);
+        br {
+          display: block;
+        }
+      }
+      @media (max-width: $w3) {
+        width: calc(100vw - torem(20px));
+        padding: torem(70px) torem(10px);
+        br:first-child {
+          display: none;
+        }
+      }
     }
     h2 {
       @include PopupTitle;
@@ -22,12 +52,14 @@
         margin-right: torem(20px);
         width: torem(160px);
         height: torem(54px);
+        font-size: torem(20px);
       }
 
       .delete {
         @include ButtonRedBorder;
         width: torem(160px);
         height: torem(54px);
+        font-size: torem(20px);
       }
     }
   }
@@ -35,16 +67,37 @@
   .ViewReportsInner {
     display: flex;
     justify-content: start;
+    @media (max-width: $w2) {
+      flex-direction: column;
+    }
     .ViewReportsInnerFirst {
       max-width: torem(560px);
       min-width: torem(560px);
       margin-right: torem(35px);
+      @media (max-width: $w3) {
+        margin-bottom: torem(15px);
+      }
+      @media (max-width: $w2) {
+        max-width: auto;
+        min-width: auto;
+        margin-right: 0;
+      }
 
       .ViewReportsBlock {
         margin-bottom: torem(20px);
+        @media (max-width: $w3) {
+          margin-bottom: torem(15px);
+        }
         .ViewReportsTitle {
           @include TextStrong;
           margin-bottom: torem(10px);
+
+          @media (max-width: $w2) {
+            margin-bottom: torem(5px);
+          }
+          @media (max-width: $w3) {
+            margin-bottom: 0px;
+          }
         }
         p {
           @include TextDefault;
@@ -54,6 +107,10 @@
     .ViewReportsInnerSecond {
       max-width: torem(540px);
       margin-left: torem(35px);
+      @media (max-width: $w2) {
+        max-width: auto;
+        margin: 0;
+      }
       .ViewReportsTitle {
         margin-bottom: torem(10px);
         @include TextStrong;
@@ -79,6 +136,13 @@
     justify-content: space-between;
     width: 100%;
     margin-top: torem(40px);
+    @media (max-width: $w2) {
+      margin-top: torem(30px);
+    }
+    @media (max-width: $w3) {
+      margin-top: torem(15px);
+      flex-direction: column;
+    }
     .fileLoudersInner {
       position: relative;
       max-width: torem(540px);
@@ -91,18 +155,35 @@
       margin-top: torem(10px);
       position: relative;
       height: max-content;
+      @media (max-width: $w3) {
+        &:last-child {
+          padding-top: torem(15px);
+        }
+      }
 
       .blockFile {
-        width: torem(546px);
-        height: torem(155px);
+        display: flex;
+        padding-top: torem(20px);
+        justify-content: center;
+        border: torem(1.5px) solid #858b89;
+        width: torem(548px);
+        height: torem(158px);
         border-radius: torem(10px);
-        fill: #fff;
+        background-color: #fff;
         transition: all 0.15s linear;
         cursor: pointer;
         &:hover {
           background-color: #0045290a;
-          fill: #e7eae9;
           transition: all 0.15s linear;
+        }
+        @media (max-width: $w2) {
+          width: torem(340px);
+          height: torem(158px);
+        }
+
+        img {
+          width: torem(65px);
+          height: torem(63px);
         }
       }
       .trash {
@@ -147,6 +228,16 @@
     justify-content: center;
     flex-direction: column;
     margin-top: torem(40px);
+    @media (max-width: $w2) {
+      margin-top: torem(50px);
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
+    @media (max-width: $w3) {
+      margin-top: torem(30px);
+      flex-direction: column;
+    }
     .button_edit {
       @include ButtonGreen;
       width: torem(412px);
@@ -154,6 +245,17 @@
       margin: 0 auto;
       margin-bottom: torem(15px);
       font-size: torem(20px);
+      @media (max-width: $w2) {
+        width: torem(340px);
+        height: torem(54px);
+        padding: 0;
+        margin: 0;
+        font-size: torem(18px);
+      }
+      @media (max-width: $w3) {
+        margin-bottom: torem(10px);
+        font-size: torem(16px);
+      }
     }
     .button_delete {
       @include ButtonRedBorder;
@@ -161,6 +263,20 @@
       width: torem(412px);
       height: torem(64px);
       font-size: torem(20px);
+      svg {
+        width: torem(24px);
+        height: torem(24px);
+      }
+      @media (max-width: $w2) {
+        width: torem(340px);
+        height: torem(54px);
+        padding: 0;
+        margin: 0;
+        font-size: torem(18px);
+      }
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+      }
     }
   }
   .repName {

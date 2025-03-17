@@ -1,27 +1,38 @@
-@import './../../../styles/mixin.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .CreateReport {
   width: 100%;
   position: relative;
   margin: 0 auto;
   box-sizing: border-box;
+  @media (max-width: $w2) {
+    margin-top: torem(35px);
+    width: 100vw;
+    padding: 0 torem(30px);
+  }
   .title {
     display: flex;
     justify-content: center;
     font-family: Overpass, sans-serif;
-    font-size: 32px;
+    font-size: torem(32px);
     font-weight: 500;
     text-align: center;
     color: #333333;
     margin: 0;
+    @media (max-width: $w2) {
+      font-size: torem(26px);
+      font-weight: 400;
+    }
   }
   .slider {
     position: relative;
     background-color: #e7eae9;
     width: 100%;
-    border-radius: 5px;
-    height: 5px;
-    margin-top: 20px;
+    border-radius: torem(5px);
+    height: torem(5px);
+    margin-top: torem(20px);
 
     .sliderInner {
       position: absolute;
@@ -33,26 +44,31 @@
   }
   .nameReport {
     @include InputTitle();
-    margin-top: 25px;
+    margin-top: torem(25px);
+    @media (max-width: $w2) {
+      margin-top: torem(40px);
+    }
   }
 
   .name_report_container {
     position: relative;
     display: flex;
-    margin-top: 10px;
+    margin-top: torem(10px);
+    margin-bottom: torem(25px);
+
     .error_name {
       position: absolute;
-      top: -10px;
-      right: 15px;
-      height: 20px;
+      top: torem(-10px);
+      right: torem(15px);
+      height: torem(20px);
       background-color: var(--BodyBgColor);
-      padding: 0 5px;
+      padding: 0 torem(5px);
       transition: all 0.2s linear;
       span {
         color: #b32020;
         font-family: Overpass, sans-serif;
         font-weight: 500;
-        font-size: 16px;
+        font-size: torem(16px);
       }
     }
     .nameReportInput {
@@ -60,7 +76,7 @@
       transition: all 0.2s linear;
     }
     .error_input_name {
-      border: 1px solid #b32020;
+      border: torem(1px) solid #b32020;
       transition: all 0.2s linear;
     }
   }
@@ -68,29 +84,53 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 25px;
+    margin-bottom: torem(25px);
+
+    @media (max-width: $w2) {
+      flex-wrap: wrap;
+      div[name='InputListForma'] {
+        margin-top: torem(25px);
+      }
+    }
 
     .input_organization {
       display: flex;
       flex-direction: column;
       span {
-        margin-bottom: 10px;
+        margin-bottom: torem(10px);
         font-family: Overpass, sans-serif;
         font-weight: 500;
-        font-size: 18px;
+        font-size: torem(18px);
         color: #333333;
       }
       input {
-        border: 1px solid #c8d0ce;
-        width: 350px;
-        height: 54px;
-        border-radius: 10px;
+        border: torem(1px) solid #c8d0ce;
+        width: torem(350px);
+        height: torem(54px);
+        border-radius: torem(10px);
         background: none;
         outline: none;
-        padding: 16px 20px;
+        padding: torem(16px) torem(20px);
         font-family: Overpass, sans-serif;
         font-weight: 400;
-        font-size: 18px;
+        font-size: torem(18px);
+        @media (max-width: $w2) {
+          width: torem(340px);
+        }
+      }
+    }
+
+    .organization_mobile {
+      display: none;
+      @media (max-width: $w2) {
+        display: flex;
+        margin-top: torem(25px);
+      }
+    }
+    .organization_pc {
+      display: flex;
+      @media (max-width: $w2) {
+        display: none;
       }
     }
   }
@@ -101,32 +141,35 @@
     width: 100%;
 
     .box {
-      width: 548px;
-      margin-top: 40px;
+      width: torem(548px);
+      margin-top: torem(40px);
+      @media (max-width: $w2) {
+        width: torem(340px);
+      }
       p {
-        @include InputTitle(18px);
+        @include InputTitle;
+        @media (max-width: $w2) {
+          height: torem(44px);
+          display: flex;
+          align-items: end;
+        }
       }
       .fileContur {
-        margin-top: 10px;
+        margin-top: torem(10px);
         .file_block {
           position: relative;
           width: 100%;
-          height: 217px;
-          margin-bottom: 5px;
+          height: torem(217px);
+          margin-bottom: torem(5px);
+          border: torem(1px) solid #858b89;
+          border-radius: torem(10px);
+
           .border {
             width: 100%;
-            height: max-content;
-          }
-          .file_inner {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
           }
         }
         .fileImport {
-          border-radius: 10px;
+          border-radius: torem(10px);
 
           cursor: pointer;
           fill: var(--BodyBgColor);
@@ -157,10 +200,10 @@
         .trash {
           cursor: pointer;
           position: absolute;
-          right: 15px;
-          top: 15px;
-          padding: 5px;
-          border-radius: 5px;
+          right: torem(15px);
+          top: torem(15px);
+          padding: torem(5px);
+          border-radius: torem(5px);
           @include HoverActive;
         }
         .fileName {
@@ -169,18 +212,18 @@
           left: 50%;
           transform: translateX(-50%);
           position: absolute;
-          top: 90px;
-          width: 244px;
-          height: 60px;
+          top: torem(90px);
+          width: torem(244px);
+          height: torem(60px);
           // background-color: var(--BodyBgColor);
           z-index: 10;
-          padding-top: 5px;
+          padding-top: torem(5px);
           box-sizing: border-box;
           span {
             font-family: Overpass, sans-serif;
-            font-size: 16px;
+            font-size: torem(16px);
             font-weight: 400;
-            line-height: 19.2px;
+            line-height: torem(19px);
             text-align: center;
             text-underline-position: from-font;
             text-decoration-skip-ink: none;
@@ -195,15 +238,15 @@
         align-items: center;
         justify-content: end;
         font-family: Overpass, sans-serif;
-        font-size: 18px;
+        font-size: torem(18px);
         font-weight: 400;
-        line-height: 21.6px;
+        line-height: torem(21px);
         text-align: left;
         text-underline-position: from-font;
         text-decoration-skip-ink: none;
         color: #004529;
         img {
-          margin-left: 5px;
+          margin-left: torem(5px);
         }
         .shablon {
           cursor: pointer;
@@ -215,10 +258,10 @@
     }
   }
   .context {
-    margin-top: 40px;
+    margin-top: torem(40px);
     p {
-      @include InputTitle(18px);
-      margin-bottom: 10px;
+      @include InputTitle;
+      margin-bottom: torem(10px);
     }
     textarea {
       @include TextArea;
@@ -228,22 +271,22 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 35px;
+    margin-top: torem(35px);
     .text {
       display: flex;
       align-items: start;
       flex-direction: row;
-      width: 796px;
-      margin-top: 8px;
+      width: torem(769px);
+      margin-top: torem(8px);
       img {
-        margin-right: 6px;
+        margin-right: torem(6px);
       }
     }
     button {
       @include ButtonGreen;
-      padding: 20px;
-      width: 350px;
-      height: 64px;
+      padding: torem(20px);
+      width: torem(350px);
+      height: torem(64px);
     }
   }
 }

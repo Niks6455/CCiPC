@@ -194,7 +194,7 @@ function FileComponent(props) {
                   src={props.icon === 'doc' ? docIcon : pdfIconImport}
                   alt="Файл загружен"
                 />
-                <span onClick={funOpenFile}>
+                <span name="file_name" onClick={funOpenFile}>
                   {props.fileName || props.data?.name || decodeFileName(fileName)}
                 </span>
               </div>

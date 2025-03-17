@@ -6,8 +6,12 @@ import rect from '../../assets/img/rect.svg';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import DataContext from '../../context';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { formatDateRangePrimereact } from '../../utils/functions/funcions';
+import { server } from '../../apirequests/apirequests';
 
 function TopMainInfo() {
+  const conference = useSelector(state => state.conferences.data[0]);
   const arrowRef = useRef(null); // Реф для стрелки
   const navigate = useNavigate();
   const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
@@ -34,7 +38,12 @@ function TopMainInfo() {
               <Layout>
                 <div className={styles.mainTopDate}>
                   <p>
-                    23 - 29 сентября 2025 года <br /> пос. Нижний Архыз
+                    {formatDateRangePrimereact(
+                      conference?.date[0].value,
+                      conference?.date[1].value,
+                    )}
+                    {' года'}
+                    <br /> {conference?.address}
                   </p>
                 </div>
                 <div className={styles.mainTopList}>
@@ -42,33 +51,44 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
+                        href={`${server}/${conference?.documents?.PROGRAM}`}
                         rel="noreferrer"
                       >
                         Программа <br /> конференции
                       </a>
                       <a
                         target="_blank"
-                        href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
+                        href={`${server}/${conference?.documents?.PROGRAM}`}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
                     </li>
                     <li>
-                      Информационное <br /> письмо
-                      <span className={styles.clicker}></span>
+                      <a
+                        target="_blank"
+                        href={`${server}/${conference?.documents?.LETTER}`}
+                        rel="noreferrer"
+                      >
+                        Информационное <br /> письмо
+                      </a>
+                      <a
+                        target="_blank"
+                        href={`${server}/${conference?.documents?.LETTER}`}
+                        className={styles.clicker}
+                        rel="noreferrer"
+                      ></a>
                     </li>
                     <li>
                       <a
                         target="_blank"
-                        href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
+                        href={`${server}/${conference?.documents?.COLLECTION}`}
                         rel="noreferrer"
                       >
                         Сборник <br /> научных трудов
                       </a>
                       <a
                         target="_blank"
-                        href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
+                        href={`${server}/${conference?.documents?.COLLECTION}`}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>

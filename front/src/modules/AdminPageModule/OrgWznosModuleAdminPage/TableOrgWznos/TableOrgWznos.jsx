@@ -9,6 +9,7 @@ import galkaBelay from '@assets/img/UI/galkaBelay.svg';
 
 import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { server } from '../../../../apirequests/apirequests';
 
 function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOriginalData }) {
   const [contractListShow, setContractListShow] = useState(null);
@@ -98,7 +99,7 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
                     id="contractList"
                   >
                     <a
-                      href={row.contract}
+                      href={`${server}/${row.contract}`}
                       target="_blank"
                       className={styles.box}
                       id="contractList"
@@ -114,7 +115,7 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
                       </span>
                     </a>
                     <a
-                      href={row.receipt}
+                      href={`${server}/${row.receipt}`}
                       target="_blank"
                       className={styles.box}
                       id="contractList"

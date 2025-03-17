@@ -14,11 +14,15 @@ import exampleFile from './../../../utils/files/template.docx';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { ReactComponent as BorderIcon } from '@assets/img/AdminPanel/border2.svg';
+import { server } from '../../../apirequests/apirequests';
+import { decodeFileName } from '../../../utils/functions/funcions';
 
 function CreateReport({ edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
+  const conference = useSelector(state => state.conferences.data[0]);
+  console.log('conference', conference);
   // const conferences = useSelector((state) => state.conferences.data);
   const [errorName, setErrorName] = useState(false);
 
@@ -29,13 +33,22 @@ function CreateReport({ edit }) {
   }, []);
 
   //! функция скачивания шаблока
-  const funDownloadShablon = () => {
-    const link = document.createElement('a');
-    link.href = exampleFile; // Указываем путь к файлу
-    link.download = 'template.docx'; // Имя файла для скачивания
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const funDownloadShablon = async () => {
+    try {
+      const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+      if (!response.ok) throw new Error('Ошибка загрузки файла');
+      const blob = await response.blob();
+      const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href); // Освобождаем память
+    } catch (error) {
+      console.error('Ошибка загрузки файла:', error);
+    }
   };
 
   const funChangeFile = (value, key) => {
@@ -93,7 +106,7 @@ function CreateReport({ edit }) {
       <div className={styles.inputsContainer}>
         <InputListForma
           name={'Направление конференции'}
-          list={directionConferenceList}
+          list={conference?.directions.map(el => ({ text: el.name, id: el.id }))}
           itemKey={'directionConference'}
           value={report.data.directionConference}
           handleChangeForm={handleChangeForm}
@@ -105,6 +118,17 @@ function CreateReport({ edit }) {
           value={report.data.formParticipation}
           handleChangeForm={handleChangeForm}
         />
+        <div className={`${styles.input_organization} ${styles.organization_mobile}`}>
+          <span>Организация</span>
+          <input
+            type="text"
+            value={report.data.organization}
+            onChange={e => handleChangeForm('organization', e.target.value)}
+            placeholder="Ваша организация"
+            onFocus={e => (e.target.placeholder = '')}
+            onBlur={e => (e.target.placeholder = 'Ваша организация')}
+          />
+        </div>
         <InputListForma
           name={'Статус участия'}
           list={participationStatus}
@@ -114,7 +138,7 @@ function CreateReport({ edit }) {
         />
       </div>
       <div className={styles.inputsContainer}>
-        <div className={styles.input_organization}>
+        <div className={`${styles.input_organization} ${styles.organization_pc}`}>
           <span>Организация</span>
           <input
             type="text"
@@ -132,21 +156,18 @@ function CreateReport({ edit }) {
           <p>Добавить файл со статьёй</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
-              {!report.data.fileArticle && <BorderIcon className={styles.border} />}
-              <div className={styles.file_inner}>
-                <FileComponent
-                  logoHeader={report.data.fileArticle}
-                  data={report.data.fileArticle}
-                  setData={value => funChangeFile(value, 'fileArticle')}
-                  typeFile={['application/pdf']}
-                  accept={'.pdf'}
-                  name={'fileArticle'}
-                  icon={'pdf'}
-                  itemKey={'fileArticle'}
-                  fileSize={20} // размер файла
-                  text={'Необходимо загрузить<br/>файл в формате PDF'}
-                />
-              </div>
+              <FileComponent
+                logoHeader={report.data.fileArticle}
+                data={report.data.fileArticle}
+                setData={value => funChangeFile(value, 'fileArticle')}
+                typeFile={['application/pdf']}
+                accept={'.pdf'}
+                name={'fileArticle'}
+                icon={'pdf'}
+                itemKey={'fileArticle'}
+                fileSize={20} // размер файла
+                text={'Необходимо загрузить<br/>файл в формате PDF'}
+              />
             </div>
 
             <div className={styles.downloadShablon}>
@@ -161,21 +182,18 @@ function CreateReport({ edit }) {
           <p>Добавить файл с экспертным заключением</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
-              {!report.data.fileExpertOpinion && <BorderIcon className={styles.border} />}
-              <div className={styles.file_inner}>
-                <FileComponent
-                  logoHeader={report.data.fileExpertOpinion}
-                  data={report.data.fileExpertOpinion}
-                  setData={value => funChangeFile(value, 'fileExpertOpinion')}
-                  typeFile={['application/pdf']}
-                  accept={'.pdf'}
-                  name={'fileExpertOpinion'}
-                  icon={'pdf'}
-                  itemKey={'fileExpertOpinion'}
-                  fileSize={20} // размер файла
-                  text={'Необходимо загрузить<br/>файл в формате PDF'}
-                />
-              </div>
+              <FileComponent
+                logoHeader={report.data.fileExpertOpinion}
+                data={report.data.fileExpertOpinion}
+                setData={value => funChangeFile(value, 'fileExpertOpinion')}
+                typeFile={['application/pdf']}
+                accept={'.pdf'}
+                name={'fileExpertOpinion'}
+                icon={'pdf'}
+                itemKey={'fileExpertOpinion'}
+                fileSize={20} // размер файла
+                text={'Необходимо загрузить<br/>файл в формате PDF'}
+              />
             </div>
           </div>
         </div>

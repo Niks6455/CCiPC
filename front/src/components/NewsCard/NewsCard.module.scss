@@ -24,10 +24,24 @@ $w2: 480px;
   .newsCardContent {
     position: relative;
     z-index: 2;
-    padding: 20px;
+    padding: 40px 20px;
     transition: all 0.3s ease-out; /* Добавляем плавный переход для padding */
     background-color: #fff;
     border-radius: 10px;
+    @media (max-width: 990px) {
+      padding: 20px;
+    }
+    span {
+      font-size: 18px;
+      color: #858b89;
+      margin: 0;
+      @media (max-width: 990px) {
+        font-size: 16px;
+      }
+      @media (max-width: 770px) {
+        font-size: 14px;
+      }
+    }
     .newsCardDate {
       color: var(--GrayOne);
       font-size: 18px;
@@ -37,8 +51,14 @@ $w2: 480px;
       font-size: 32px;
       font-weight: 500;
       line-height: 44px;
+      padding: 0;
+      margin: 0;
+      padding-top: 20px;
+      padding-bottom: 10px;
       @media (max-width: $w1) {
         font-size: 18px;
+        padding: 0;
+        margin: 0;
       }
     }
     .newsCardText {
@@ -46,6 +66,9 @@ $w2: 480px;
       font-size: 20px;
       font-weight: 400;
       line-height: 26px;
+      @media (max-width: $w1) {
+        font-size: 16px;
+      }
     }
   }
   @media (min-width: 990px) {
@@ -60,7 +83,6 @@ $w2: 480px;
       }
       .newsCardContent {
         padding-top: 280px; /* Изменение отступа только для текущей карточки */
-        // background-color: inherit;
       }
     }
   }
