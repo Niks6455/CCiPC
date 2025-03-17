@@ -17,7 +17,9 @@ export default class Conference extends Model {
                 logo: {type: DataTypes.JSONB, allowNull: true },
                 description: {type: DataTypes.TEXT, allowNull: true},
                 documents: {type: DataTypes.JSONB, allowNull: true },
+/*
                 directions: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: true },
+*/
                 deadline: { type: DataTypes.DATEONLY, allowNull: true },
 
     },

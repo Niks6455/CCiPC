@@ -132,7 +132,7 @@ export default {
         const data = participants.map(participant => ({
             name: participant.name,
             id:participant.id,
-            direction: participant.direction,
+            direction: participant?.direction.name,
             comment: participant.comment,
             participants: participant.participantOfReport.map(p => ({
                 name: p.participant.name,
@@ -200,7 +200,7 @@ export default {
         const data = participants.map(participant => ({
             name: participant.name,
             id:participant.id,
-            direction: participant.direction,
+            direction: participant?.direction.name,
             comment: participant.comment,
             participants: participant.participantOfReport.map(p => ({
                 name: p.participant.name,

@@ -11,6 +11,7 @@ import participantRoute from './routes/participant.js'
 import newsRoute from './routes/news.js';
 import committeeRoute from './routes/committee.js'
 import archiveRoute from './routes/archive.js'
+import directionRoute from './routes/direction.js'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 
@@ -120,6 +121,7 @@ app.use('/participants', participantRoute);
 app.use('/news', newsRoute)
 app.use('/committees', committeeRoute)
 app.use('/archive', archiveRoute)
+app.use('/directions', directionRoute)
 
 // Handle 404 AND 500
 app

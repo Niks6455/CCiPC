@@ -1,6 +1,4 @@
 import typesFiles from "../config/typesFiles.js";
-
-
 const acceptedTypesFiles = /doc|docx|pdf/;
 const acceptedTypesPhoto = /png|jpg|jpeg/;
 import path from 'path';
@@ -196,8 +194,6 @@ export default {
 
         if((typesFile[type] === 9 || typesFile[type] === 10) && !conferenceId) throw new AppErrorMissing('conferenceId');
 
-
-
         if(typesPhoto[type]=== 1 && !newsId) throw new AppErrorMissing('newsId')
 
         if(newsId)
@@ -217,7 +213,6 @@ export default {
             if(!committee) throw new AppErrorNotExist('committeeId');
             await committee.update({ img: file.path })
             return res.json({url: file.path});
-
         }
 
         if((typesFile[type] === 4 || typesFile[type] === 5) && !reportId) throw new AppErrorMissing('reportId');

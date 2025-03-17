@@ -1,4 +1,4 @@
-import {AppErrorDuplicate, AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
+import { AppErrorInvalid, AppErrorMissing } from "../utils/errors.js";
 import Ajv from 'ajv'
 import reportService from "../services/report.js";
 import { map } from '../utils/mappers/report.js'
@@ -55,11 +55,11 @@ function checkValidate(objects) {
 }
 export default {
 
-    async create({body: {name, form, direction, organization, comment, status, coAuthors, conferenceId }, user}, res) {
+    async create({body: {name, form, organization, comment, status, coAuthors, conferenceId, directionId }, user}, res) {
 
         if (!name) throw new AppErrorMissing('name')
         if (!form) throw new AppErrorMissing('form')
-        if(!direction) throw new AppErrorMissing('direction')
+        if(!directionId) throw new AppErrorMissing('direction')
         if(!organization) throw new AppErrorMissing('organization')
         if(!status) throw new AppErrorMissing('status')
         if(!comment) throw new AppErrorMissing('comment')
@@ -69,18 +69,18 @@ export default {
         if(!formReport.includes(form)) throw new AppErrorInvalid('form')
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
 
-        const  report =await reportService.create({name, form, direction, comment, organization, status , coAuthors}, conferenceId, user)
+        const  report =await reportService.create({name, form, directionId, comment, organization, status , coAuthors}, conferenceId, user)
 
         res.json({ report: report })
     },
 
-    async update({body: { name, organization, form, direction, status,  comment, coAuthors, coAuthorsIds }, params: { id }, user }, res) {
+    async update({body: { name, organization, form, status,  comment, coAuthors, coAuthorsIds,directionId }, params: { id }, user }, res) {
         if(!id) throw new AppErrorMissing('id')
 
         if(status && !statusReport.includes(status)) throw new AppErrorInvalid('status')
         if(form && !formReport.includes(form)) throw new AppErrorInvalid('form')
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
-        const report = await reportService.update({ name, form, status, organization, direction, comment, coAuthors, coAuthorsIds }, id , user)
+        const report = await reportService.update({ name, form, status, organization, directionId, comment, coAuthors, coAuthorsIds }, id , user)
         res.json({report: report})
     },
 
