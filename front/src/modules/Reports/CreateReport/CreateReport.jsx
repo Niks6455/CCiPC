@@ -14,11 +14,15 @@ import exampleFile from './../../../utils/files/template.docx';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { ReactComponent as BorderIcon } from '@assets/img/AdminPanel/border2.svg';
+import { server } from '../../../apirequests/apirequests';
+import { decodeFileName } from '../../../utils/functions/funcions';
 
 function CreateReport({ edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
+  const conference = useSelector(state => state.conferences.data[0]);
+  console.log('conference', conference);
   // const conferences = useSelector((state) => state.conferences.data);
   const [errorName, setErrorName] = useState(false);
 
@@ -29,13 +33,22 @@ function CreateReport({ edit }) {
   }, []);
 
   //! функция скачивания шаблока
-  const funDownloadShablon = () => {
-    const link = document.createElement('a');
-    link.href = exampleFile; // Указываем путь к файлу
-    link.download = 'template.docx'; // Имя файла для скачивания
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const funDownloadShablon = async () => {
+    try {
+      const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+      if (!response.ok) throw new Error('Ошибка загрузки файла');
+      const blob = await response.blob();
+      const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href); // Освобождаем память
+    } catch (error) {
+      console.error('Ошибка загрузки файла:', error);
+    }
   };
 
   const funChangeFile = (value, key) => {
@@ -93,7 +106,7 @@ function CreateReport({ edit }) {
       <div className={styles.inputsContainer}>
         <InputListForma
           name={'Направление конференции'}
-          list={directionConferenceList}
+          list={conference?.directions.map(el => ({ text: el.name, id: el.id }))}
           itemKey={'directionConference'}
           value={report.data.directionConference}
           handleChangeForm={handleChangeForm}

@@ -34,6 +34,7 @@ function AddCoauthor({ edit, number }) {
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
   const conferenceId = useSelector(state => state.conferences?.data[0]?.id);
+  const conference = useSelector(state => state.conferences.data[0]);
 
   const funDeleteCoauthor = index => {
     dispatch(deleteCoauthor({ index }));
@@ -142,7 +143,8 @@ function AddCoauthor({ edit, number }) {
       const data = {
         name: report.data.name,
         form: report.data.formParticipation,
-        direction: report.data.directionConference,
+        directionId: conference?.directions.find(el => el.name === report.data.directionConference)
+          .id,
         comment: report.data.comments,
         organization: report.data.organization,
         status: report.data.participationStatus || '',

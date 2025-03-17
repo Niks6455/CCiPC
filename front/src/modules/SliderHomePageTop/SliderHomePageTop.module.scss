@@ -62,11 +62,15 @@ $w3: 480px;
     }
     li {
       color: var(--GreenColorText);
-      margin: 0 torem(20px); /* Отступы между элементами */
-      width: torem(365px);
+      max-width: torem(300px);
       display: flex;
       align-items: center;
       font-size: torem(18px);
+      .sliderItem {
+        display: flex;
+        flex-direction: column;
+        width: max-content;
+      }
       @media (max-width: $w1) {
         font-size: torem(20px);
       }
@@ -81,7 +85,10 @@ $w3: 480px;
         align-items: start;
       }
       .sliderLine {
-        margin: 0 torem(20px);
+        margin: 0 torem(33px);
+        display: flex;
+        align-items: center;
+        height: 100%;
         @media (max-width: $w2) {
           margin: 0 torem(18px);
         }
@@ -102,6 +109,7 @@ $w3: 480px;
       }
       .date {
         font-weight: 900;
+        margin-bottom: 5px;
         @media (max-width: $w2) {
           font-weight: 500;
           font-size: torem(16px);

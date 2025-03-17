@@ -156,7 +156,7 @@ export const formatDateRangePrimereact = (startDate, endDate) => {
   if (startYear === endYear) {
     if (start.getMonth() === end.getMonth()) {
       // Same month and year
-      return `${startDay}-${endDay} ${startMonth} ${startYear}`;
+      return `${startDay} - ${endDay} ${startMonth} ${startYear}`;
     } else {
       // Different months, same year
       return `${startDay} ${startMonth} - ${endDay} ${endMonth} ${startYear}`;

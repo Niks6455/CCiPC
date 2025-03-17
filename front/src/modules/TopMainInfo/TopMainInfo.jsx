@@ -6,8 +6,11 @@ import rect from '../../assets/img/rect.svg';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import DataContext from '../../context';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 
 function TopMainInfo() {
+  const conference = useSelector(state => state.conferences.data[0]);
   const arrowRef = useRef(null); // Реф для стрелки
   const navigate = useNavigate();
   const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
@@ -34,7 +37,12 @@ function TopMainInfo() {
               <Layout>
                 <div className={styles.mainTopDate}>
                   <p>
-                    23 - 29 сентября 2025 года <br /> пос. Нижний Архыз
+                    {formatDateRangePrimereact(
+                      conference?.date[0].value,
+                      conference?.date[1].value,
+                    )}
+                    {' года'}
+                    <br /> {conference?.address}
                   </p>
                 </div>
                 <div className={styles.mainTopList}>

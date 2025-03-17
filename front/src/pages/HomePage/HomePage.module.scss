@@ -42,6 +42,7 @@ $w3: 480px;
       }
       .textSectionInerText {
         margin-top: torem(100px);
+
         @media (max-width: $w2) {
           margin-left: torem(-110px);
           max-width: 58vw;
@@ -63,6 +64,31 @@ $w3: 480px;
             margin: 0;
             font-size: torem(16px);
             margin-bottom: torem(-10px);
+          }
+        }
+        div[name='line'] {
+          border-left: torem(4px) solid #58b191;
+          height: 100%;
+          padding-left: torem(20px);
+          color: var(--GrayTextDefault);
+          margin: torem(50px) 0px;
+          font-size: torem(20px);
+          line-height: torem(26px);
+          font-weight: 400;
+          @media (max-width: $w1) {
+            font-size: torem(22px);
+            line-height: torem(28px);
+          }
+          @media (max-width: $w2) {
+            font-size: torem(16px);
+            line-height: torem(24px);
+          }
+          @media (max-width: $w3) {
+            margin: torem(20px) 0px;
+            font-weight: 400;
+            font-size: torem(16px);
+            line-height: 130%;
+            letter-spacing: 0%;
           }
         }
         p {
