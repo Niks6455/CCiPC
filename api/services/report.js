@@ -7,6 +7,8 @@ import ParticipantOfReport from "../models/participant-of-report.js";
 import cache from "../utils/cache.js";
 import Participant from "../models/participant.js";
 import sendMail from "./email.js";
+import Direction from "../models/direction.js";
+import DirectionInConference from "../models/direction-in-conference.js";
 export default {
     async create( reportInfo, conferenceId, participant) {
 
@@ -16,7 +18,18 @@ export default {
 
         if(conference?.deadline && conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
 
-        if(!conference?.directions?.includes(reportInfo.direction)) throw  new AppErrorNotExist('direction')
+        const direction = await Direction.findByPk(reportInfo.directionId, {
+            include: {
+                model: DirectionInConference,
+                as: 'directionInConference',
+                required: true,
+                where: {
+                    conferenceId: conference.id,
+                }
+            }
+        })
+
+        if(!direction) throw new AppErrorNotExist('direction')
 
         const checkReport= await Report.findOne({
             where: {
@@ -40,7 +53,7 @@ export default {
 
         const report=await Report.create({
             name: reportInfo.name,
-            direction: reportInfo.direction,
+            direction: direction.id,
             comment: reportInfo.comment,
             conferenceId: conference.id,
         })
@@ -143,7 +156,7 @@ export default {
         return await Report.bulkCreate(
             reportsInfo,
             {
-                updateOnDuplicate: ["direction"],
+                updateOnDuplicate: ["directionId"],
             })
     },
 
@@ -190,7 +203,13 @@ export default {
     async update(reportInfo, reportId, participant) {
 
         const report = await Report.findByPk(reportId, {
-                include: [{
+                include: [
+                    {
+                        model: Direction,
+                        as: 'direction',
+                        required: false
+                    },
+                    {
                     model: ParticipantOfReport,
                     as: 'participantOfReport',
                     required: true,
@@ -213,10 +232,22 @@ export default {
 
         if(report.participantOfReport[0].who === 'Автор'){
 
-            if(reportInfo?.direction &&!report.conference?.directions.includes(reportInfo.direction)) throw  new AppErrorNotExist('direction')
+            if(reportInfo?.directionId){
+                const direction = await Direction.findByPk(reportInfo.directionId, {
+                    include: {
+                        model: DirectionInConference,
+                        as: 'directionInConference',
+                        required: true,
+                        where: {
+                            conferenceId: report.conferenceId
+                        }
+                    }
+                })
+                if(!direction)  throw  new AppErrorNotExist('direction')
+            }
             await report.update({
                 name: reportInfo?.name,
-                direction: reportInfo?.direction,
+                directionId: reportInfo?.directionId,
                 comment: reportInfo?.comment,
             })
 

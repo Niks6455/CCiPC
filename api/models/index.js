@@ -9,6 +9,8 @@ import Committee from "./committee.js";
 import CommitteeInConference from "./committee-in-conference.js";
 import Archive from "./archive.js";
 import ParticipantOfReport from "./participant-of-report.js";
+import Direction from "./direction.js";
+import DirectionInConference from "./direction-in-conference.js";
 import 'dotenv/config'
 
 
@@ -23,7 +25,9 @@ export const models = {
    Committee,
    CommitteeInConference,
    Archive,
-   ParticipantOfReport
+   ParticipantOfReport,
+   Direction,
+   DirectionInConference
 };
 
 // Подключение к БД с парамтрами из .env
