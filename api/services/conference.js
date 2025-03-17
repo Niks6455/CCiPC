@@ -12,7 +12,8 @@ import {sequelize} from "../models/index.js";
 import typesPhoto from "../config/typesPhoto.js";
 import fs from "fs";
 import typesFiles from "../config/typesFiles.js";
-
+import Direction from "../models/direction.js";
+import DirectionInConference from "../models/direction-in-conference.js";
 
 async function deleteFile(filePath) {
     try {
@@ -65,8 +66,7 @@ export default {
     async find(){
         return await Conference.findAll({
             order: [['createdAt', 'ASC']],
-            include :
-                {
+            include : [{
                     model: CommitteeInConference,
                     as: 'committeeInConference',
                     required: false,
@@ -76,7 +76,11 @@ export default {
                        as: 'committee',
                        required: false,
                    }
-                }
+                }, {
+                model: Direction,
+                as: 'directions',
+                required: false,
+            }],
         })
     },
 
@@ -99,7 +103,45 @@ export default {
 
 
     async create(conferenceInfo){
-        return await Conference.create({...conferenceInfo});
+
+        let directions
+        if (conferenceInfo?.directions?.length > 0) {
+            // Инициализация массива directions
+            directions = await Promise.all(conferenceInfo.directions.map(async (direction) => {
+                const [foundDirection] = await Direction.findOrCreate({
+                    where: {
+                        name: direction
+                    },
+                    defaults: {
+                        name: direction
+                    }
+                });
+                return foundDirection; // Возвращаем найденное или созданное направление
+            }));
+
+            delete conferenceInfo.directions; // Удаляем directions из conferenceInfo
+        }
+
+        const conference = await Conference.create({ ...conferenceInfo });
+
+
+        if (directions && directions.length > 0) {
+            const directionsInConference = await Promise.all(directions.map(async (direction) => {
+                const [foundDirectionInConference] = await DirectionInConference.findOrCreate({
+                    where: {
+                        directionId: direction.id,
+                        conferenceId: conference.id,
+                    },
+                    defaults: {
+                        directionId: direction.id,
+                        conferenceId: conference.id,
+                    }
+                });
+                return foundDirectionInConference; // Возвращаем найденное или созданное направление в конференции
+            }));
+        }
+
+        return conference;
     },
 
 
@@ -118,7 +160,12 @@ export default {
                  conferenceId:conferenceId,
              },
              order: [['createdAt', 'DESC']],
-             include: {
+             include: [{
+                 model: Direction,
+                 as: 'direction',
+                 required: false,
+             },
+                 {
                  model: ParticipantOfReport,
                  as: 'participantOfReport',
                  required: true,
@@ -162,74 +209,8 @@ export default {
                              : []),
                      },
                  }
-             }
+             }]
          })
-
-         /*conference.participants = await ParticipantInConference.findAll({
-            where: {
-                conferenceId:conferenceId,
-            },
-            include: {
-                model: Participant,
-                as: 'participant',
-                required: false,
-                where: {
-                        ...(surname && { surname: {[Op.like]: `%${surname}%`}}),
-                        ...(name ? [{name: {[Op.like]: `%${name}%`}}] : []),
-                        ...(patronymic ? [{patronymic: {[Op.like]: `%${patronymic}%`}}] : []),
-                        ...(surname && name
-                            ? [
-                                {
-                                    [Op.and]: [
-                                        {surname: {[Op.like]: `%${name}%`}},
-                                        {name: {[Op.like]: `%${surname}%`}},
-                                    ],
-                                },
-                            ]
-                            : []),
-                        ...(surname && patronymic
-                            ? [
-                                {
-                                    [Op.and]: [
-                                        {surname: {[Op.like]: `%${patronymic}%`}},
-                                        {patronymic: {[Op.like]: `%${surname}%`}},
-                                    ],
-                                },
-                            ]
-                            : []),
-                        ...(name && patronymic
-                            ? [
-                                {
-                                    [Op.and]: [
-                                        {name: {[Op.like]: `%${patronymic}%`}},
-                                        {patronymic: {[Op.like]: `%${name}%`}},
-                                    ],
-                                },
-                            ]
-                            : []),
-                },
-                include: {
-                    model: ParticipantOfReport,
-                    as: 'participantOfReport',
-                    required: false,
-                    include: {
-                        model: Report,
-                        as: 'report',
-                        required: false
-                    }
-                },
-                group: ['Participant.id', 'ParticipantOfReport.id', 'report.id'], // Указываем группировку
-            },
-         })*/
-
-
-
-        /*const combinedResults = [...conference.participants[0], ...conference.participants[1]];
-
-        const uniqueResults = Array.from(
-            new Map(combinedResults.map((item) => [item.id, item])).values()
-        );*/
-
 
     },
 
@@ -245,74 +226,40 @@ export default {
         const conference =await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference')
 
-
-        /*if(conference?.logo && conferenceInfo?.logo) {
-            for (const [key, value] of Object.entries(conferenceInfo.logo)) {
-                if(typesFiles[key] === 4 || typesPhoto[key] === 5) {
-                    if(value === null){
-                        fs.unlink(conference.logo[conferenceInfo.logo], (err=> {
-                            if (err) console.log(err);
-                        }))
-                        delete conference.logo[key]; // Замените jsonField на имя вашего поля
-                        conference.changed('logo', true);
-                        // Сохраняем изменения
-                        await conference.save();
+        let directions
+        if (conferenceInfo?.directions?.length > 0) {
+            // Инициализация массива directions
+            directions = await Promise.all(conferenceInfo.directions.map(async (direction) => {
+                const [foundDirection] = await Direction.findOrCreate({
+                    where: {
+                        name: direction
+                    },
+                    defaults: {
+                        name: direction
                     }
-                }
-            }
+                });
+                return foundDirection; // Возвращаем найденное или созданное направление
+            }));
+
+            delete conferenceInfo.directions; // Удаляем directions из conferenceInfo
         }
 
-        if(conference?.documents && conferenceInfo?.documents ) {
-            for (const [key, value] of Object.entries(conferenceInfo.documents)) {
-                if(typesFiles[key] === 5 || typesFiles[key] === 6 || typesFiles[key] === 7 || typesFiles[key] === 8) {
-                    if(value === null){
-                        fs.unlink(conference.documents[conferenceInfo.documents], (err=> {
-                            if (err) console.log(err);
-                        }))
-                        delete conference.documents[key]; // Замените jsonField на имя вашего поля
-                        conference.changed('documents', true);
-                        // Сохраняем изменения
-                        await conference.save();
+
+        if (directions && directions.length > 0) {
+            const directionsInConference = await Promise.all(directions.map(async (direction) => {
+                const [foundDirectionInConference] = await DirectionInConference.findOrCreate({
+                    where: {
+                        directionId: direction.id,
+                        conferenceId: conference.id,
+                    },
+                    defaults: {
+                        directionId: direction.id,
+                        conferenceId: conference.id,
                     }
-                }
-            }
+                });
+                return foundDirectionInConference; // Возвращаем найденное или созданное направление в конференции
+            }));
         }
-
-        if(conference?.organization && conferenceInfo?.organization ) {
-
-            const files= new Set([...conference.organization, ...conferenceInfo?.organization]);
-
-            for (const file of files) {
-                fs.unlink(file, (err=> {
-                    if (err) console.log(err);
-                }))
-            }
-
-            await conference.update({organization: conferenceInfo.organization })
-            conference.changed('organization', true);
-
-            await conference.save();
-
-
-        }
-
-        if(conference?.partner && conferenceInfo?.partner ) {
-
-            const files= new Set([...conference.partner, ...conferenceInfo?.partner]);
-
-            for (const file of files) {
-                fs.unlink(file, (err=> {
-                    if (err) console.log(err);
-                }))
-            }
-
-            await conference.update({partner: conferenceInfo.partner })
-            conference.changed('partner', true);
-
-            await conference.save();
-
-
-        }*/
 
         await processJsonField(conference, conferenceInfo, 'logo', typesPhoto, [4, 5]);
 
@@ -355,6 +302,10 @@ export default {
             },
             order: [['createdAt', 'DESC']],
             include: [{
+                model: Direction,
+                as: 'direction',
+                required: false,
+            },{
                 model: ParticipantOfReport,
                 as: 'participantOfReport',
                 required: true,
@@ -430,7 +381,6 @@ export default {
 
         const reports = await Report.findAll({
             attributes: [
-                'direction',
                 'name', // Missing comma added here
                 [sequelize.fn('COUNT', sequelize.col('Report.id')), 'reportCount']
             ],
@@ -438,6 +388,11 @@ export default {
                 conferenceId: conferenceId,
             },
             include: [
+                {
+                  model: Direction,
+                  as: 'direction',
+                  required: true
+                },
                 {
                     model: ParticipantOfReport,
                     as: 'participantOfReport',
@@ -451,14 +406,14 @@ export default {
                     ]
                 }
             ],
-            group: ['direction', 'Report.name', 'Report.id', 'participantOfReport.id', 'participantOfReport.participant.id'], // Grouping corrected
+            group: ['Report.name', 'Report.id', 'participantOfReport.id', 'participantOfReport.participant.id'], // Grouping corrected
         });
 
 
         const workbook = new ExcelJS.Workbook();
 
         reports.forEach(report => {
-            const worksheet = workbook.addWorksheet(`${report.direction}`);
+            const worksheet = workbook.addWorksheet(`${report.direction.name}`);
             worksheet.columns = [
                 { header: 'Кто' },
                 { header: 'ФИО' },
