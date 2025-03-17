@@ -20,6 +20,9 @@ const router = Router();
  *           schema:
  *             type: object
  *             properties:
+ *               conferenceId:
+ *                 type: string
+ *                 format: uuid
  *               fio:
  *                 type: string
  *               organization:
@@ -30,6 +33,7 @@ const router = Router();
  *               - organization
  *               - fio
  *               - type
+ *               - conferenceId
  *     responses:
  *       200:
  *         description: Успешный ответ
