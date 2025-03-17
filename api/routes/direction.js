@@ -14,3 +14,5 @@ router.route('/:id')
     .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.update))
     .get(asyncRoute(directionCtrl.findOne))
     .delete(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.delete))
+
+export default router
