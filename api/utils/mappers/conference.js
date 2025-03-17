@@ -10,7 +10,7 @@ export function map(data){
         partner: data.partner,
         logo: data.logo,
         documents: data.documents,
-        directions: data.directions,
+        directions: data?.directions ?? null,
         deadline: data.deadline,
         committee: data?.committee ?? null,
         description: data?.description ?? null,
