@@ -1,4 +1,4 @@
-import {AppErrorDuplicate, AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
+import { AppErrorInvalid, AppErrorMissing } from "../utils/errors.js";
 import Ajv from 'ajv'
 import reportService from "../services/report.js";
 import { map } from '../utils/mappers/report.js'
