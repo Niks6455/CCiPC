@@ -97,6 +97,11 @@ export default {
                         required: false,
                     },
                 },
+                {
+                    model: Direction,
+                    as: 'directions',
+                    required: false,
+                }
             ],
         });
     },
