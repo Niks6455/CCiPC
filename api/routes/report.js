@@ -42,7 +42,7 @@ const router = Router();
  *                 type: string
  *               form:
  *                 type: string
- *               direction:
+ *               directionId:
  *                 type: string
  *               comment:
  *                 type: string
@@ -59,7 +59,7 @@ const router = Router();
  *             required:
  *               - name
  *               - form
- *               - direction
+ *               - directionId
  *               - comment
  *               - organization
  *               - status
@@ -154,7 +154,7 @@ const router = Router();
  *             type: string
  *           form:
  *             type: string
- *           direction:
+ *           directionId:
  *             type: string
  *           comment:
  *             type: string

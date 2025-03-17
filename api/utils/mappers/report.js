@@ -4,7 +4,7 @@ export function map(report){
         comment: report.comment,
         reportFile : report.reportFile ?? null,
         conclusion: report.conclusion ?? null,
-        direction: report.direction,
+        direction: report.direction ?? null,
         cacheCoAuthors: report.cacheCoAuthors ?? 0,
         author: report?.participantOfReport.filter(p=> p.who === 'Автор').map(p=>({
             id: p.id,

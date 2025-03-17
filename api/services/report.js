@@ -176,7 +176,11 @@ export default {
 
     async findOne(reportId, participant) {
         const report= await Report.findByPk(reportId, {
-            include: {
+            include: [{
+                model: Direction,
+                as: 'direction',
+                required: false
+            },{
                 model: ParticipantOfReport,
                 as: 'participantOfReport',
                 required: true,
@@ -187,7 +191,7 @@ export default {
                     required: true,
                     attributes: ['email', 'name', 'surname', 'patronymic', 'phone'],
                 }
-            }
+            }]
 
         })
 
