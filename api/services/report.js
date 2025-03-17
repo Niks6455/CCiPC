@@ -16,7 +16,7 @@ export default {
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
-        if(conference?.deadline && conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
+        if(conference?.deadline && conference?.deadline >= new Date().toISOString().split('T')[0]) throw new AppErrorInvalid('deadline')
 
         const direction = await Direction.findByPk(reportInfo.directionId, {
             include: {
@@ -53,7 +53,7 @@ export default {
 
         const report=await Report.create({
             name: reportInfo.name,
-            direction: direction.id,
+            directionId: direction.id,
             comment: reportInfo.comment,
             conferenceId: conference.id,
         })
@@ -225,12 +225,13 @@ export default {
                         required: true,
                         where: {
                             deadline: {
-                                [Op.lte]: new Date() // Проверяем, что deadline меньше или равен текущей дате
+                                [Op.gte]:  new Date().toISOString().split('T')[0]  // Проверяем, что deadline меньше или равен текущей дате
                             }
                         }
                     }
                 ]
             })
+
 
         if(!report) throw new AppErrorInvalid('report')
 

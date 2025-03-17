@@ -143,35 +143,35 @@ const router = Router();
  *         schema:
  *           type: string
  *           format: uuid
- *           requestBody:
- *   required: false
- *   content:
- *     application/json:
- *       schema:
- *         type: object
- *         properties:
- *           name:
- *             type: string
- *           form:
- *             type: string
- *           directionId:
- *             type: string
- *           comment:
- *             type: string
- *           conferenceId:
- *             type: string
- *           organization:
- *             type: string
- *           status:
- *             type: string
- *           coAuthors:
- *             type: array
- *             items:
- *               type: string
- *           coAuthorsIds:
- *             type: array
- *             items:
- *               type: string
+ *     requestBody:
+ *       required: false
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               form:
+ *                 type: string
+ *               directionId:
+ *                 type: string
+ *               comment:
+ *                 type: string
+ *               conferenceId:
+ *                 type: string
+ *               organization:
+ *                 type: string
+ *               status:
+ *                 type: string
+ *               coAuthors:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *               coAuthorsIds:
+ *                 type: array
+ *                 items:
+ *                   type: string
  *     responses:
  *       200:
  *         description: Успешный ответ

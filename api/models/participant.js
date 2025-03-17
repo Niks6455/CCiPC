@@ -30,7 +30,7 @@ export default class Participant extends Model {
             },
             {
                 sequelize,
-                    schema: process.env.NODE_ENV,
+                schema: process.env.NODE_ENV,
                 paranoid: true,
                 modelName: 'Participant',
                 tableName: 'participants',
