@@ -131,7 +131,7 @@ function ViewReports() {
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Направление конференции:</p>
-            <p>{reportData?.direction}</p>
+            <p>{reportData?.direction?.name}</p>
           </div>
           <div className={styles.ViewReportsBlock}>
             <p className={styles.ViewReportsTitle}>Форма участия:</p>

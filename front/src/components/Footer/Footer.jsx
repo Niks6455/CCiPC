@@ -3,6 +3,7 @@ import styles from './Footer.module.scss';
 import footerLogo from '../../assets/img/FooterText.svg';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
+import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 function Footer({ footerRef }) {
   const conferense = useSelector(state => state.conferences?.data[0]);
   console.log('conferense', conferense);
@@ -20,7 +21,11 @@ function Footer({ footerRef }) {
             </div>
             <div className={styles.footerText}>
               <p>Всероссийская научная конференция "Системный синтез и прикладная синергетика"</p>
-              <p>23 - 29 сентября 2025 года пос. Нижний Архыз</p>
+              <p>
+                {' '}
+                {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value)}
+                {' года'} {conferense?.address}
+              </p>
             </div>
           </div>
           <div className={styles.footerLink}>
