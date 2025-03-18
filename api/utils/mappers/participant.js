@@ -2,11 +2,11 @@
 
 export function mapShort(participant){
     return {
-        name: participant.name,
-        surname: participant.surname,
+        name: participant?.name,
+        surname: participant?.surname,
         patronymic: participant?.patronymic,
-        organization: participant.organization,
-        phone: participant.phone
+        organization: participant?.organization,
+        phone: participant?.phone
     }
 }
 
