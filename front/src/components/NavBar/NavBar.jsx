@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styles from './NavBar.module.scss';
 import closeImg from './../../assets/img/closeImg.png';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +9,20 @@ function NavBar() {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
+  const refMenu = useRef(null);
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (refMenu.current && !refMenu.current.contains(event.target)) {
+        context.setActiveMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [context]);
+  
   return (
     <section className={styles.NavBar}>
       <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
@@ -21,8 +34,8 @@ function NavBar() {
         </div>
       </button>
       <div
-        onClick={() => context.setActiveMenu(false)}
         className={`${styles.menu} ${context.activeMenu ? styles.active : styles.disable}`}
+        ref={refMenu}
       >
         <div className={styles.menuInner}>
           <button>
