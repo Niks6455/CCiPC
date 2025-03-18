@@ -7,6 +7,7 @@ import { useContext, useEffect } from 'react';
 import DataContext from '../../context';
 import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 function Lks() {
   const context = useContext(DataContext);
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ function Lks() {
           <Outlet />
         </div>
         <RightMenuLk />
+        <HeaderPhone />
       </main>
     </>
   );

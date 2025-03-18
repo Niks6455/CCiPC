@@ -4,32 +4,67 @@
     display: flex;
     justify-content: center;
     margin-bottom: 140px;
+    @media (max-width: 768px) {
+        padding: 0px 20px;
+    }
     .Title{
         margin: 200px 0px 70px 0px;
         display: flex;
         justify-content: center;
+        @media (max-width: 768px) {
+            margin: 94px 0px 50px 0px;
+            text-align: center;
+        }
+        @media (max-width: 460px) {
+            margin: 50px 0px 50px 0px;
+        }
         p{
             font-size: 54px;
             font-weight: 500; 
             line-height: 64px;
+            @media (max-width: 768px) {
+                font-size: 22px;
+                line-height: 130%;
+            }
+            @media (max-width: 460px) {
+                font-size: 20px;
+            }
         }
     }
     .NoteFoundPageText{
         display: flex;
         .NoteFoundPageTextContainer{
             max-width: 656px;
+            @media (max-width: 768px) {
+                max-width: 516px;
+                margin: 0 auto;
+              }
+              .NoteFoundPageTextContainerTitle{
+                text-align: center;
+              }
             p{
                 &:first-child{
                     font-size: 190px;
                     line-height: 228px;
                     color: var(--GreenColorHover);
                     margin-top: -30px;
+                    @media (max-width: 768px) {
+                      font-size: 140px;
+                      line-height: 120%;
+                    }
+                    @media (max-width: 460px) {
+                        font-size: 110px;
+                    }
                 }
                 &:nth-child(2){
                     font-size: 20px;
                     line-height: 32px;
                     font-weight: 300;
                     color: #333;
+                    @media (max-width: 768px) {
+                        font-size: 16px;
+                        line-height: 130%;
+                    }
                     span{
                         color: var(--ColorLink);
                         cursor: pointer;
@@ -62,6 +97,9 @@
             margin-left: 50px;
             box-sizing: border-box;
             width: 100%;
+            @media (max-width: 1426px) {
+              display: none;
+            }
         }
     }
 }
