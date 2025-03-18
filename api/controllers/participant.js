@@ -26,7 +26,7 @@ export default {
     async findByEmail({ query }, res){
         if(!query.email) throw new AppErrorMissing('email')
         const participant = await participantService.findByEmail(query.email);
-        res.json({ participant : mapShort(participant) });
+        res.json({ participant : mapShort(participant) ?? null });
     },
 
 

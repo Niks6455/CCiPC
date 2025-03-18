@@ -1,0 +1,33 @@
+@import './../../../styles/mixin.scss';
+
+.FildeModal {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 70px;
+  border-radius: 10px;
+  max-width: 60vw;
+  .title {
+    font-family: Overpass, sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 26px;
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-bottom: 40px;
+  }
+  .btnred {
+    @include ButtonGreen;
+    width: 310px;
+    height: 54px;
+    margin: 0 auto;
+  }
+  .galka {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    margin-bottom: 40px;
+  }
+}

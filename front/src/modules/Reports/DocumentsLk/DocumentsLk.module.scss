@@ -1,64 +1,102 @@
-@import '../../../styles/colors.scss';
-@import '../../../styles/mixin.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .DocumentsLk {
   width: 100%;
   position: relative;
   margin: 0 auto;
+  @media (max-width: $w2) {
+    width: 100vw;
+  }
 
   .notDocument {
     display: flex;
     justify-content: center;
-    // height: calc(100vh - 356px);
-    margin-top: 225px;
+    margin-top: torem(225px);
+    @media (max-width: $w3) {
+      margin-top: torem(115px);
+    }
     .notDocumentInner {
       .notDocumentInnerImg {
         display: flex;
         justify-content: center;
-        margin-bottom: 40px;
+        margin-bottom: torem(40px);
+        @media (max-width: $w2) {
+          margin-bottom: torem(30px);
+        }
+        @media (max-width: $w3) {
+          margin-bottom: torem(20px);
+        }
         img {
-          width: 40px;
-          height: 40px;
+          width: torem(40px);
+          height: torem(40px);
+          @media (max-width: $w3) {
+            width: torem(33px);
+            height: torem(33px);
+          }
         }
       }
       .notDocumentTitle {
         p {
-          font-size: 32px;
+          font-size: torem(32px);
           font-weight: 500;
           color: var(--GrayTextDefault);
           text-align: center;
+          @media (max-width: $w2) {
+            font-size: torem(26px);
+          }
+          @media (max-width: $w3) {
+            font-size: torem(22px);
+          }
         }
       }
       .notDocumentSubTitle {
-        margin: 5px 0px 20px 0px;
+        margin: torem(5px) 0px torem(20px) 0px;
 
         p {
-          font-size: 20px;
+          font-size: torem(20px);
           font-weight: 400;
           color: var(--GraySecond);
+          @media (max-width: $w2) {
+            font-size: torem(18px);
+          }
+          @media (max-width: $w3) {
+            font-size: torem(16px);
+          }
         }
       }
       .notDocumentButton {
         display: flex;
         justify-content: center;
         button {
-          @include ButtonGreen(18px);
-          width: 189px;
-          height: 52px;
+          @include ButtonGreen(torem(18px));
+          width: torem(189px);
+          height: torem(52px);
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 13px;
+          padding: torem(13px);
           img {
-            margin-right: 10px;
-            width: 24px;
-            height: 24px;
+            margin-right: torem(10px);
+            width: torem(24px);
+            height: torem(24px);
+            @media (max-width: $w3) {
+              width: torem(20px);
+              height: torem(20px);
+            }
           }
           span {
             font-family: Overpass, sans-serif;
-            font-size: 22px;
+            font-size: torem(22px);
             font-weight: 500;
             text-align: center;
+            @media (max-width: $w2) {
+              font-size: torem(18px);
+            }
+            @media (max-width: $w3) {
+              font-size: torem(16px);
+            }
           }
         }
       }

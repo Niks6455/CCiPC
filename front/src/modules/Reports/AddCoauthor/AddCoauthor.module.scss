@@ -1,10 +1,30 @@
-@import '../../../styles/mixin.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .AddCoauthor {
   width: calc(100vw - torem(700px));
   position: relative;
   margin: 0 auto;
 
+  @media (max-width: $w2) {
+    width: 100vw;
+    margin-top: torem(24px);
+    padding: 0 torem(30px);
+  }
+  @media (max-width: $w3) {
+    margin-top: torem(15px);
+  }
+  .head {
+    display: flex;
+    flex-direction: column;
+    @media (max-width: $w2) {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      // transform: translateX(torem(-30px));
+    }
+  }
   .title {
     display: flex;
     justify-content: center;
@@ -14,6 +34,15 @@
     text-align: center;
     color: #333333;
     margin: 0;
+    @media (max-width: $w2) {
+      font-size: torem(26px);
+      font-weight: 400;
+      order: 2;
+    }
+    @media (max-width: $w3) {
+      font-weight: 700;
+      font-size: torem(18px);
+    }
   }
   .slider {
     position: relative;
@@ -21,6 +50,9 @@
     width: 100%;
     border-radius: torem(5px);
     height: torem(5px);
+    @media (max-width: $w2) {
+      display: none;
+    }
 
     .sliderInner {
       position: absolute;
@@ -33,10 +65,25 @@
   .backImg {
     display: flex;
     transform: translateY(torem(-10px));
+    @media (max-width: $w2) {
+      order: 1;
+      transform: none;
+      transform: translateX(torem(-20px));
+      position: absolute;
+      left: torem(103px);
+    }
+    @media (max-width: $w3) {
+      transform: translateX(torem(-10px));
+    }
+
     img {
       cursor: pointer;
       border-radius: torem(5px);
       @include HoverActive;
+      @media (max-width: $w3) {
+        width: torem(37px);
+        height: torem(27px);
+      }
     }
   }
   .addsoaftor {
@@ -50,6 +97,10 @@
     margin-top: torem(25px);
     box-sizing: border-box;
     text-wrap: nowrap;
+    @media (max-width: $w2) {
+      font-size: torem(18px);
+      font-weight: 400;
+    }
     img {
       margin-left: torem(10px);
     }
@@ -59,14 +110,41 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: torem(100px);
+    margin-top: torem(35px);
+    @media (max-width: $w2) {
+      flex-direction: column;
+      width: torem(508px);
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      margin-top: torem(100px);
+      margin-bottom: torem(135px);
+    }
+    @media (max-width: $w3) {
+      width: 100%;
+      margin-top: torem(40px);
+    }
+
     .text {
       display: flex;
       align-items: start;
       flex-direction: row;
       width: torem(769px);
       margin-top: torem(8px);
+      @media (max-width: $w2) {
+        order: 2;
+        width: 100%;
+        color: #5b605e;
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        font-size: torem(14px);
+        font-weight: 400;
+      }
       img {
+        @media (max-width: $w2) {
+          display: none;
+        }
         margin-right: torem(6px);
       }
     }
@@ -75,7 +153,16 @@
       padding: torem(20px);
       width: torem(350px);
       height: torem(64px);
-      text-wrap: nowrap;
+      @media (max-width: $w2) {
+        order: 1;
+        width: torem(413px);
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        font-size: torem(16px);
+        font-weight: 500;
+        height: torem(54px);
+      }
     }
   }
   .inputContainer {
@@ -90,6 +177,9 @@
     height: torem(86px);
     margin-bottom: torem(25px);
     position: relative;
+    @media (max-width: $w2) {
+      width: torem(340px);
+    }
   }
   .modalEmail {
     width: torem(555px);
@@ -104,6 +194,13 @@
     border-radius: torem(10px);
     left: 0;
     z-index: 100;
+    @media (max-width: $w2) {
+      padding: torem(22px) torem(30px);
+      width: torem(500px);
+    }
+    @media (max-width: $w3) {
+      width: 100%;
+    }
 
     p {
       font-family: Overpass, sans-serif;
@@ -114,12 +211,25 @@
       text-underline-position: from-font;
       text-decoration-skip-ink: none;
       margin-bottom: torem(22px);
+      @media (max-width: $w2) {
+        font-size: torem(16px);
+      }
+      @media (max-width: $w3) {
+        font-size: torem(14px);
+      }
     }
     button {
       @include ButtonGreen;
       width: torem(172px);
       height: torem(46px);
       margin: 0 auto;
+      @media (max-width: $w2) {
+        font-size: torem(18px);
+        font-weight: 400;
+      }
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+      }
     }
   }
   .deletecoauthor {
@@ -128,6 +238,13 @@
     width: 100%;
     margin-top: torem(20px);
     margin-bottom: torem(20px);
+    @media (max-width: $w2) {
+      margin-top: torem(50px);
+    }
+    @media (max-width: $w3) {
+      margin-top: torem(10px);
+      margin-bottom: torem(10px);
+    }
 
     button {
       display: flex;
@@ -135,8 +252,24 @@
       align-items: center;
       @include ButtonRed(torem(18px));
       padding: torem(16px);
+      @media (max-width: $w2) {
+        font-size: torem(18px);
+        font-weight: 400;
+      }
+      @media (max-width: $w3) {
+        font-size: torem(14px);
+      }
+      span {
+        padding-top: torem(4px);
+      }
       img {
+        width: torem(24px);
+        height: torem(24px);
         margin-left: torem(10px);
+        @media (max-width: $w3) {
+          width: torem(19px);
+          height: torem(19px);
+        }
       }
     }
   }

@@ -12,6 +12,11 @@ $w3: 480px;
     width: 100vw;
     padding: 0 torem(30px);
   }
+  @media (max-width: $w3) {
+    margin-top: torem(15px);
+    padding: 0 torem(20px);
+  }
+
   .title {
     display: flex;
     justify-content: center;
@@ -25,6 +30,10 @@ $w3: 480px;
       font-size: torem(26px);
       font-weight: 400;
     }
+    @media (max-width: $w3) {
+      font-size: torem(18px);
+      font-weight: 700;
+    }
   }
   .slider {
     position: relative;
@@ -33,6 +42,9 @@ $w3: 480px;
     border-radius: torem(5px);
     height: torem(5px);
     margin-top: torem(20px);
+    @media (max-width: $w2) {
+      display: none;
+    }
 
     .sliderInner {
       position: absolute;
@@ -48,6 +60,9 @@ $w3: 480px;
     @media (max-width: $w2) {
       margin-top: torem(40px);
     }
+    @media (max-width: $w3) {
+      margin-top: torem(20px);
+    }
   }
 
   .name_report_container {
@@ -55,6 +70,9 @@ $w3: 480px;
     display: flex;
     margin-top: torem(10px);
     margin-bottom: torem(25px);
+    @media (max-width: $w3) {
+      margin-top: torem(5px);
+    }
 
     .error_name {
       position: absolute;
@@ -92,16 +110,42 @@ $w3: 480px;
         margin-top: torem(25px);
       }
     }
+    @media (max-width: $w3) {
+      width: 100%;
+      margin-bottom: 0;
+    }
 
     .input_organization {
       display: flex;
       flex-direction: column;
+      .error {
+        position: absolute;
+        color: #b32020;
+        right: torem(20px);
+        top: torem(-8px);
+        height: torem(20px);
+        background-color: var(--BodyBgColor);
+        font-size: torem(16px);
+        padding: 0 torem(5px);
+      }
       span {
         margin-bottom: torem(10px);
         font-family: Overpass, sans-serif;
         font-weight: 500;
         font-size: torem(18px);
         color: #333333;
+        @media (max-width: $w3) {
+          font-size: torem(14px);
+        }
+      }
+      .input_organization_block {
+        width: torem(350px);
+        height: torem(54px);
+        position: relative;
+
+        .error_input {
+          border: #b32020 torem(1px) solid;
+        }
       }
       input {
         border: torem(1px) solid #c8d0ce;
@@ -117,6 +161,10 @@ $w3: 480px;
         @media (max-width: $w2) {
           width: torem(340px);
         }
+        @media (max-width: $w3) {
+          font-size: torem(14px);
+          width: 100%;
+        }
       }
     }
 
@@ -125,6 +173,9 @@ $w3: 480px;
       @media (max-width: $w2) {
         display: flex;
         margin-top: torem(25px);
+      }
+      @media (max-width: $w3) {
+        width: 100%;
       }
     }
     .organization_pc {
@@ -139,12 +190,20 @@ $w3: 480px;
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    @media (max-width: $w3) {
+      flex-direction: column;
+      margin-top: torem(20px);
+    }
 
     .box {
       width: torem(548px);
       margin-top: torem(40px);
       @media (max-width: $w2) {
         width: torem(340px);
+      }
+      @media (max-width: $w3) {
+        margin-top: torem(0px);
+        width: 100%;
       }
       p {
         @include InputTitle;
@@ -156,6 +215,7 @@ $w3: 480px;
       }
       .fileContur {
         margin-top: torem(10px);
+
         .file_block {
           position: relative;
           width: 100%;
@@ -163,6 +223,9 @@ $w3: 480px;
           margin-bottom: torem(5px);
           border: torem(1px) solid #858b89;
           border-radius: torem(10px);
+          @media (max-width: $w3) {
+            height: torem(158px);
+          }
 
           .border {
             width: 100%;
@@ -253,15 +316,44 @@ $w3: 480px;
           display: flex;
           flex-direction: row;
           align-items: center;
+          @media (max-width: $w3) {
+            font-size: torem(16px);
+          }
         }
       }
     }
   }
   .context {
     margin-top: torem(40px);
+    @media (max-width: $w3) {
+      margin-top: torem(30px);
+    }
+    .input_comments_block {
+      position: relative;
+      height: torem(120px);
+      width: 100%;
+      .error_textarea {
+        border: #b32020 torem(1px) solid;
+      }
+      .error {
+        position: absolute;
+        color: #b32020;
+        right: torem(20px);
+        top: torem(-8px);
+        height: torem(20px);
+        background-color: var(--BodyBgColor);
+        font-size: torem(16px);
+        padding: 0 torem(5px);
+      }
+    }
     p {
       @include InputTitle;
       margin-bottom: torem(10px);
+      @media (max-width: $w3) {
+        font-weight: 400;
+        font-size: torem(14px);
+        line-height: 120%;
+      }
     }
     textarea {
       @include TextArea;
@@ -272,13 +364,39 @@ $w3: 480px;
     flex-direction: row;
     justify-content: space-between;
     margin-top: torem(35px);
+    @media (max-width: $w2) {
+      flex-direction: column;
+      width: torem(508px);
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+      margin-top: torem(30px);
+      margin-bottom: torem(135px);
+    }
+    @media (max-width: $w3) {
+      width: 100%;
+    }
+
     .text {
       display: flex;
       align-items: start;
       flex-direction: row;
       width: torem(769px);
       margin-top: torem(8px);
+      @media (max-width: $w2) {
+        order: 2;
+        width: 100%;
+        color: #5b605e;
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        font-size: torem(14px);
+        font-weight: 400;
+      }
       img {
+        @media (max-width: $w2) {
+          display: none;
+        }
         margin-right: torem(6px);
       }
     }
@@ -287,6 +405,16 @@ $w3: 480px;
       padding: torem(20px);
       width: torem(350px);
       height: torem(64px);
+      @media (max-width: $w2) {
+        order: 1;
+        width: torem(413px);
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        font-size: torem(16px);
+        font-weight: 500;
+        height: torem(54px);
+      }
     }
   }
 }

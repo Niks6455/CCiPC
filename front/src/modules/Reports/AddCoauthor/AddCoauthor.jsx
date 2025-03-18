@@ -7,14 +7,15 @@ import errorList from './../../../assets/img/UI/errorZnak.svg';
 import {
   addSoauthors,
   deleteCoauthor,
+  disSetResetReport,
   funSaveDataState,
   setCoauthorAutocompletion,
+  setCoauthorDataApi,
+  setOpenPopUpName,
   setValueCoauthors,
 } from '../../../store/reportCreateSlice/reportCreateSlice';
 import InputLabel from '../../../ui/InputLabel/InputLabel';
 import trash from './../../../assets/img/UI/trash.svg';
-import InputListForma from '../../../components/InputListForma/InputListForma';
-import { formParticipationList } from '../../../utils/Lists/List';
 import {
   capitalizeFirstLetter,
   formatPhoneNumber,
@@ -25,9 +26,15 @@ import SameEmail from '../../../components/AddReportModal/SameEmail/SameEmail';
 import SuccessModal from '../../../components/AddReportModal/SuccessModal/SuccessModal';
 import NotFullyFilled from '../../../components/AddReportModal/NotFullyFilled/NotFullyFilled';
 import NotFullyFilledCoauthors from '../../../components/AddReportModal/NotFullyFilledCoauthors/NotFullyFilledCoauthors';
-import { apiCreateReport, apiEditReport, uploadPhoto } from '../../../apirequests/apirequests';
+import {
+  apiCreateReport,
+  apiEditReport,
+  getUserEmail,
+  uploadPhoto,
+} from '../../../apirequests/apirequests';
 import { fetchUserData } from '../../../store/userSlice/user.Slice';
 import { fetchReports } from '../../../store/reportsSlice/reportsSlice';
+import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal';
 
 function AddCoauthor({ edit, number }) {
   const navigate = useNavigate();
@@ -47,7 +54,26 @@ function AddCoauthor({ edit, number }) {
   const funChangeInput = (index, key, value) => {
     if (key === 'email') {
       if (validateEmail(value) && value) {
-        dispatch(setCoauthorAutocompletion({ index, autocompletion: 'noemail' }));
+        getUserEmail(value).then(res => {
+          console.log('res', res);
+          if (res?.status === 200) {
+            if (res?.data?.participant?.name) {
+              dispatch(
+                setCoauthorAutocompletion({
+                  index,
+                  autocompletion: 'emailhave',
+                }),
+              );
+              dispatch(setCoauthorDataApi({ index, data: res.data.participant }));
+            } else {
+              dispatch(setCoauthorAutocompletion({ index, autocompletion: 'noemail' }));
+              dispatch(setCoauthorDataApi({ index, data: null }));
+            }
+          } else {
+            dispatch(setCoauthorAutocompletion({ index, autocompletion: 'noemail' }));
+            dispatch(setCoauthorDataApi({ index, data: null }));
+          }
+        });
       }
       if (!validateEmail(value)) {
         dispatch(setCoauthorAutocompletion({ index, autocompletion: '' }));
@@ -70,11 +96,6 @@ function AddCoauthor({ edit, number }) {
     }
 
     dispatch(setValueCoauthors({ index, key, value: newValue }));
-  };
-
-  //! функция onChange на InputListForm
-  const handleChangeForm = (key, value, index) => {
-    dispatch(setValueCoauthors({ index, key, value }));
   };
 
   //! сохранение данных
@@ -102,9 +123,7 @@ function AddCoauthor({ edit, number }) {
         console.log('res', res);
         if (res?.status === 200) {
           dispatch(fetchReports());
-
           const uploadPromises = [];
-
           // Если fileArticle — файл, добавляем загрузку в массив промисов
           if (typeof report.data.fileArticle !== 'string') {
             const formDataReport = new FormData();
@@ -112,7 +131,6 @@ function AddCoauthor({ edit, number }) {
             formDataReport.append('reportId', res?.data?.report?.id);
             uploadPromises.push(uploadPhoto(formDataReport, 'REPORT'));
           }
-
           // Если fileExpertOpinion — файл, добавляем загрузку в массив промисов
           if (typeof report.data.fileExpertOpinion !== 'string') {
             const formDataConcl = new FormData();
@@ -120,7 +138,6 @@ function AddCoauthor({ edit, number }) {
             formDataConcl.append('reportId', res?.data?.report?.id);
             uploadPromises.push(uploadPhoto(formDataConcl, 'CONCLUSION'));
           }
-
           // Ждем выполнения всех загрузок
           Promise.all(uploadPromises)
             .then(results => {
@@ -132,6 +149,7 @@ function AddCoauthor({ edit, number }) {
             .finally(() => {
               // Навигация после всех запросов (даже если что-то не загрузилось)
               navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
+              dispatch(disSetResetReport());
             });
         }
       });
@@ -139,7 +157,6 @@ function AddCoauthor({ edit, number }) {
       return;
     } else {
       //! создание доклада
-      dispatch(funSaveDataState());
       const data = {
         name: report.data.name,
         form: report.data.formParticipation,
@@ -163,7 +180,6 @@ function AddCoauthor({ edit, number }) {
           const formDataReport = new FormData();
           formDataReport.append('file', report.data.fileArticle);
           formDataReport.append('reportId', res?.data?.report?.id);
-
           const formDataConcl = new FormData();
           formDataConcl.append('file', report.data.fileExpertOpinion);
           formDataConcl.append('reportId', res?.data?.report?.id);
@@ -171,6 +187,9 @@ function AddCoauthor({ edit, number }) {
           uploadPhoto(formDataConcl, 'CONCLUSION'); // файл с заключением
           dispatch(fetchUserData());
           dispatch(fetchReports());
+          dispatch(funSaveDataState());
+        } else {
+          dispatch(setOpenPopUpName({ name: 'FildeModal' }));
         }
       });
     }
@@ -182,17 +201,22 @@ function AddCoauthor({ edit, number }) {
         <div className={styles.popups}>
           {report?.openPopUpName === 'SameEmail' && <SameEmail />}
           {report?.openPopUpName === 'SuccessModal' && <SuccessModal name={report?.data?.name} />}
-          {report?.openPopUpName === 'NotFullyFilled' && <NotFullyFilled />}
+          {report?.openPopUpName === 'FildeModal' && <FildeModal name={report?.data?.name} />}
+          {report?.openPopUpName === 'NotFullyFilled' && (
+            <NotFullyFilled name={report?.data?.name} />
+          )}
           {report?.openPopUpName === 'NotFullyFilledCoauthors' && <NotFullyFilledCoauthors />}
         </div>
       )}
 
-      <h2 className={styles.title}>Соавторы</h2>
-      {!edit && (
-        <div className={styles.backImg}>
-          <img src={leftArrow} alt="назад" draggable="false" onClick={() => navigate(-1)} />
-        </div>
-      )}
+      <div className={styles.head}>
+        <h2 className={styles.title}>Соавторы</h2>
+        {!edit && (
+          <div className={styles.backImg}>
+            <img src={leftArrow} alt="назад" draggable="false" onClick={() => navigate(-1)} />
+          </div>
+        )}
+      </div>
 
       {!edit && (
         <div className={styles.slider}>
@@ -241,7 +265,7 @@ function AddCoauthor({ edit, number }) {
                     Пользователь с такой почтой найден на платформе. Данные о соавторе заполнятся
                     автоматически, кроме его формы участия.
                   </p>
-                  <button>Продолжить</button>
+                  <button onClick={() => funNoEmail(index)}>Продолжить</button>
                 </div>
               )}
             </div>
@@ -263,16 +287,6 @@ function AddCoauthor({ edit, number }) {
                   />
                 </div>
               ))}
-              {/* <div className={styles.inputbox}>
-                <InputListForma
-                  name={"Форма участия*"}
-                  list={formParticipationList}
-                  itemKey={"formParticipation"}
-                  value={report.data.soauthors[index]?.data?.formParticipation}
-                  handleChangeForm={handleChangeForm}
-                  index={index}
-                />
-              </div> */}
             </>
           )}
         </div>

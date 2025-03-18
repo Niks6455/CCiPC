@@ -1,6 +1,18 @@
-@import '../../styles/mixin.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .InputListForma {
+  .error {
+    position: absolute;
+    color: #b32020;
+    right: torem(20px);
+    top: torem(-8px);
+    height: torem(20px);
+    background-color: var(--BodyBgColor);
+    font-size: torem(16px);
+    padding: 0 torem(5px);
+  }
   p {
     @include InputTitle();
     margin-bottom: torem(10px);
@@ -23,6 +35,9 @@
     background-color: inherit;
     cursor: pointer;
     transition: all 0.5s linear;
+    @media (max-width: $w3) {
+      font-size: torem(14px);
+    }
   }
   .active {
     border-bottom-left-radius: 0;
@@ -32,6 +47,11 @@
   .boxInner {
     position: relative;
     width: torem(350px);
+  }
+  .errorBoxInner {
+    input {
+      border: #b32020 torem(1px) solid;
+    }
   }
   .ArrowBottom {
     position: absolute;

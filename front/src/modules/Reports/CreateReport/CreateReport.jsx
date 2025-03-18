@@ -1,21 +1,16 @@
 import { useEffect, useState } from 'react';
 import styles from './CreateReport.module.scss';
-import {
-  directionConferenceList,
-  formParticipationList,
-  participationStatus,
-} from '../../../utils/Lists/List';
+import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 import errorList from './../../../assets/img/UI/errorZnak.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { disSetResetReport, setValue } from '../../../store/reportCreateSlice/reportCreateSlice';
 import InputListForma from '../../../components/InputListForma/InputListForma';
 import download from './../../../assets/img/UI/download.svg';
-import exampleFile from './../../../utils/files/template.docx';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
-import { ReactComponent as BorderIcon } from '@assets/img/AdminPanel/border2.svg';
 import { server } from '../../../apirequests/apirequests';
 import { decodeFileName } from '../../../utils/functions/funcions';
+import { funGetError, funValidateAll } from './functions';
 
 function CreateReport({ edit }) {
   const navigate = useNavigate();
@@ -23,14 +18,13 @@ function CreateReport({ edit }) {
   const report = useSelector(state => state.reportCreateSlice);
   const conference = useSelector(state => state.conferences.data[0]);
   console.log('conference', conference);
-  // const conferences = useSelector((state) => state.conferences.data);
-  const [errorName, setErrorName] = useState(false);
+  const [errors, setErrors] = useState([]);
 
-  useEffect(() => {
-    if (!edit) {
-      dispatch(disSetResetReport());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!edit) {
+  //     dispatch(disSetResetReport());
+  //   }
+  // }, []);
 
   //! функция скачивания шаблока
   const funDownloadShablon = async () => {
@@ -60,16 +54,21 @@ function CreateReport({ edit }) {
   const handleChangeForm = (name, text) => {
     dispatch(setValue({ key: name, value: text }));
     console.log('name', name);
+    console.log('errors', errors);
+    setErrors(prev => prev.filter(item => item.key !== name));
   };
 
   //! изменение названия доклада с валидацией
   const funChangeNameReport = value => {
-    if (value.length > 300) {
-      setErrorName(true);
-    } else {
-      setErrorName(false);
-    }
+    setErrors(prev => prev.filter(item => item.key !== 'name'));
     dispatch(setValue({ key: 'name', value: value }));
+  };
+
+  const funNextStep = () => {
+    setErrors(funValidateAll(report.data));
+    if (funValidateAll(report.data).length === 0) {
+      navigate('/account/addcoauthor');
+    }
   };
 
   return (
@@ -90,14 +89,14 @@ function CreateReport({ edit }) {
       <p className={styles.nameReport}>Полное название доклада</p>
 
       <div className={styles.name_report_container}>
-        {errorName && (
+        {funGetError(errors, 'name') && (
           <div className={styles.error_name}>
-            <span>Не более 300 символов*</span>
+            <span>{funGetError(errors, 'name')}</span>
           </div>
         )}
         <textarea
           type="text"
-          className={`${errorName ? styles.error_input_name : ''} ${styles.nameReportInput}`}
+          className={`${funGetError(errors, 'name') ? styles.error_input_name : ''} ${styles.nameReportInput}`}
           value={report.data.name}
           onChange={event => funChangeNameReport(event.target.value)}
         />
@@ -110,6 +109,7 @@ function CreateReport({ edit }) {
           itemKey={'directionConference'}
           value={report.data.directionConference}
           handleChangeForm={handleChangeForm}
+          error={funGetError(errors, 'directionConference')}
         />
         <InputListForma
           name={'Форма участия'}
@@ -117,6 +117,7 @@ function CreateReport({ edit }) {
           itemKey={'formParticipation'}
           value={report.data.formParticipation}
           handleChangeForm={handleChangeForm}
+          error={funGetError(errors, 'formParticipation')}
         />
         <div className={`${styles.input_organization} ${styles.organization_mobile}`}>
           <span>Организация</span>
@@ -135,19 +136,26 @@ function CreateReport({ edit }) {
           itemKey={'participationStatus'}
           value={report.data.participationStatus}
           handleChangeForm={handleChangeForm}
+          error={funGetError(errors, 'participationStatus')}
         />
       </div>
       <div className={styles.inputsContainer}>
         <div className={`${styles.input_organization} ${styles.organization_pc}`}>
           <span>Организация</span>
-          <input
-            type="text"
-            value={report.data.organization}
-            onChange={e => handleChangeForm('organization', e.target.value)}
-            placeholder="Ваша организация"
-            onFocus={e => (e.target.placeholder = '')}
-            onBlur={e => (e.target.placeholder = 'Ваша организация')}
-          />
+          <div className={styles.input_organization_block}>
+            {funGetError(errors, 'organization') && (
+              <span className={styles.error}>{funGetError(errors, 'organization')}</span>
+            )}
+            <input
+              className={funGetError(errors, 'organization') ? styles.error_input : ''}
+              type="text"
+              value={report.data.organization}
+              onChange={e => handleChangeForm('organization', e.target.value)}
+              placeholder="Ваша организация"
+              onFocus={e => (e.target.placeholder = '')}
+              onBlur={e => (e.target.placeholder = 'Ваша организация')}
+            />
+          </div>
         </div>
       </div>
 
@@ -200,15 +208,24 @@ function CreateReport({ edit }) {
       </div>
       <div className={styles.context}>
         <p>Комментарий (пожелания по прибытию, по расселению; свободное текстовое поле)</p>
-        <textarea
-          type="text"
-          readOnly={false}
-          placeholder="Ваш комментарий"
-          onFocus={e => (e.target.placeholder = '')}
-          onBlur={e => (e.target.placeholder = 'Ваш комментарий')}
-          value={report.data.comments}
-          onChange={event => dispatch(setValue({ key: 'comments', value: event.target.value }))}
-        />
+        <div className={styles.input_comments_block}>
+          {funGetError(errors, 'comments') && (
+            <span className={styles.error}>{funGetError(errors, 'comments')}</span>
+          )}
+          <textarea
+            className={funGetError(errors, 'comments') ? styles.error_textarea : ''}
+            type="text"
+            readOnly={false}
+            placeholder="Ваш комментарий"
+            onFocus={e => (e.target.placeholder = '')}
+            onBlur={e => (e.target.placeholder = 'Ваш комментарий')}
+            value={report.data.comments}
+            onChange={event => {
+              dispatch(setValue({ key: 'comments', value: event.target.value }));
+              setErrors(prev => prev.filter(item => item.key !== 'comments'));
+            }}
+          />
+        </div>
       </div>
       {!edit && (
         <div className={styles.srokContainer}>
@@ -219,12 +236,7 @@ function CreateReport({ edit }) {
               статью и экспертное заключение.
             </span>
           </div>
-          <button
-            style={errorName ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
-            onClick={() => !errorName && navigate('/account/addcoauthor')}
-          >
-            Следующий шаг
-          </button>
+          <button onClick={() => funNextStep()}>Следующий шаг</button>
         </div>
       )}
     </div>
