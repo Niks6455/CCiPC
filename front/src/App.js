@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import HomePage from './pages/HomePage/HomePage';
 import DataContext from './context';
 import './styles/app.scss';
@@ -38,6 +38,8 @@ import EnteringEmail from './modules/RecoverPasswordModule/EnteringEmail/Enterin
 import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/RecoverPassword';
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
 import { apiCreateConferences } from './apirequests/apirequests';
+import Footer from './components/Footer/Footer';
+import { useWindowWidth } from './hooks/hooks';
 
 function App() {
   const dispatch = useDispatch();
@@ -117,52 +119,68 @@ function App() {
     setNumberValue,
   };
 
+  const footerRef = useRef(null);
+
+  useEffect(() => {
+    if (footerRef?.current) {
+      const footerHeight = footerRef.current.offsetHeight;
+      console.log('footerHeight', footerHeight);
+      const mainDiv = document.getElementById('#main_inner');
+      if (mainDiv) {
+        mainDiv.style.minHeight = `calc(100vh - ${footerHeight}px)`;
+      }
+    }
+  }, [footerRef, useWindowWidth()]);
+
   return (
     <DataContext.Provider value={context}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <main style={{ fontFamily: 'REX' }}>
-            <Routes>
-              <Route path="/" element={<HomePage />}></Route>
-              <Route path="*" element={<NoteFoundPage />} />{' '}
-              <Route
-                path="/authorization"
-                element={<AuthPage funGetAllApi={funGetAllApi} />}
-              ></Route>
-              <Route path="/participants" element={<Participants />}></Route>
-              <Route path="/account" element={<Lks />}>
-                <Route path="documents" element={<DocumentsLk />}></Route>
-                <Route path="createreport" element={<CreateReport />} />
-                <Route path="addcoauthor" element={<AddCoauthor />} />
-                <Route path="profile" element={<Profile />}></Route>
-                <Route path="deleteaccount" element={<DeleteAccount />}></Route>
+          <main>
+            <div id="#main_inner">
+              <Routes>
+                <Route path="/" element={<HomePage />}></Route>
+                <Route path="*" element={<NoteFoundPage />} />{' '}
                 <Route
-                  path="exitaccount"
-                  element={<ExitAccount funResetAllApi={funResetAllApi} />}
+                  path="/authorization"
+                  element={<AuthPage funGetAllApi={funGetAllApi} />}
                 ></Route>
-                <Route path="archivephoto" element={<ArchivPhoto />}></Route>
-                <Route path="settings/profile" element={<ProfileEditing />} />
-                <Route path="settings/changepassword" element={<ChangePassword />} />
-                <Route path="viewreports" element={<ViewReports />} />
-                <Route path="editreport" element={<EditReport />} />
-              </Route>
-              <Route path="/news" element={<NewsPage />}></Route>
-              <Route path="/author" element={<Author />}></Route>
-              <Route path="/recoverpassword" element={<RecoverPasswordPage />}>
-                <Route path="" element={<EnteringEmail />}></Route>
-                <Route path="checkemail" element={<RecoverPassword />}></Route>
-              </Route>
-              <Route path="/organizationcomite" element={<CommitteesPage />}></Route>
-              <Route path="/adminPage/*" element={<AdminPage />}>
-                <Route path="archive" element={<ArchiveModulePage />} />
-                <Route path="collections" element={<Сollections />} />
-                <Route path="participants" element={<ColaboratorsModuleAdminPage />} />
-                <Route path="committee" element={<OrgazmCommetet />} />
-                <Route path="news" element={<NewsModuleAdminPage />} />
-                <Route path="conferences" element={<ConfirenceModuleAdminPage />} />
-                <Route path="registrationFee" element={<OrgWznosModuleAdminPage />} />
-              </Route>
-            </Routes>
+                <Route path="/participants" element={<Participants />}></Route>
+                <Route path="/account" element={<Lks />}>
+                  <Route path="documents" element={<DocumentsLk />}></Route>
+                  <Route path="createreport" element={<CreateReport />} />
+                  <Route path="addcoauthor" element={<AddCoauthor />} />
+                  <Route path="profile" element={<Profile />}></Route>
+                  <Route path="deleteaccount" element={<DeleteAccount />}></Route>
+                  <Route
+                    path="exitaccount"
+                    element={<ExitAccount funResetAllApi={funResetAllApi} />}
+                  ></Route>
+                  <Route path="archivephoto" element={<ArchivPhoto />}></Route>
+                  <Route path="settings/profile" element={<ProfileEditing />} />
+                  <Route path="settings/changepassword" element={<ChangePassword />} />
+                  <Route path="viewreports" element={<ViewReports />} />
+                  <Route path="editreport" element={<EditReport />} />
+                </Route>
+                <Route path="/news" element={<NewsPage />}></Route>
+                <Route path="/author" element={<Author />}></Route>
+                <Route path="/recoverpassword" element={<RecoverPasswordPage />}>
+                  <Route path="" element={<EnteringEmail />}></Route>
+                  <Route path="checkemail" element={<RecoverPassword />}></Route>
+                </Route>
+                <Route path="/organizationcomite" element={<CommitteesPage />}></Route>
+                <Route path="/adminPage/*" element={<AdminPage />}>
+                  <Route path="archive" element={<ArchiveModulePage />} />
+                  <Route path="collections" element={<Сollections />} />
+                  <Route path="participants" element={<ColaboratorsModuleAdminPage />} />
+                  <Route path="committee" element={<OrgazmCommetet />} />
+                  <Route path="news" element={<NewsModuleAdminPage />} />
+                  <Route path="conferences" element={<ConfirenceModuleAdminPage />} />
+                  <Route path="registrationFee" element={<OrgWznosModuleAdminPage />} />
+                </Route>
+              </Routes>
+            </div>
+            <Footer footerRef={footerRef} />
           </main>
         </BrowserRouter>
       </QueryClientProvider>

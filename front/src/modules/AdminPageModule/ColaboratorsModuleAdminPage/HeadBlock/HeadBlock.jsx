@@ -1,7 +1,7 @@
 import styles from './HeadBlock.module.scss';
 import exportIcon from '@assets/img/AdminPanel/export.svg';
 import lupa from '@assets/img/UI/lupa.svg';
-import { apiExportArchiveState } from '../../../../apirequests/apirequests';
+import { apiExportArchiveState, apiExportReports } from '../../../../apirequests/apirequests';
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
@@ -26,6 +26,27 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
     } catch (error) {
       console.error('Ошибка при скачивании архива:', error);
       setLoadingArchive(false);
+    }
+  };
+
+  const funExportRepots = async () => {
+    if (!conferenceid) return;
+    setLoadingDoc(true);
+    try {
+      const response = await apiExportReports(conferenceid);
+      const blob = new Blob([response.data]);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `archive_${conferenceid}.xlsx`;
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      setLoadingDoc(false);
+    } catch (error) {
+      console.error('Ошибка при скачивании архива:', error);
+      setLoadingDoc(false);
     }
   };
   return (
@@ -68,7 +89,7 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
           </AnimatePresence>
           <span>Экспорт архива статей</span>
         </button>
-        <button className={styles.export_doklad} onClick={() => setLoadingDoc(!loadingDoc)}>
+        <button className={styles.export_doklad} onClick={funExportRepots}>
           <AnimatePresence>
             {loadingDoc ? (
               <motion.div

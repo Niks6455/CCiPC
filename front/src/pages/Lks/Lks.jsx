@@ -27,7 +27,6 @@ function Lks() {
         </div>
         <RightMenuLk />
       </main>
-      <Footer />
     </>
   );
 }

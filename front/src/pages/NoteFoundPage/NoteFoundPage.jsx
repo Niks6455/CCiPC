@@ -35,7 +35,6 @@ function NoteFoundPage() {
           </Layout>
         </div>
       </section>
-      <Footer />
     </>
   );
 }

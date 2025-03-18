@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './AddCollectioonsCard.module.scss';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import { createArchive, uploadPhoto } from '../../../../apirequests/apirequests';
@@ -61,6 +61,15 @@ function AddCollectioonsCard(props) {
     }
   };
 
+  const spliseFileName = () => {
+    const name = fileData.name;
+    if (name && name.length > 30) {
+      const extension = name.split('.').pop();
+      return name.slice(0, 30) + '...' + extension;
+    }
+    return name;
+  };
+
   return (
     <div className={styles.AddCollectioonsCard}>
       <div className={styles.AddCollectioonsCardInner}>
@@ -87,7 +96,7 @@ function AddCollectioonsCard(props) {
           />
           <div className={styles.fileUploadContainer}>
             <button onClick={handleUploadClick} style={{ color: fileData ? '#58B191' : '#b32020' }}>
-              {fileData ? fileData.name : 'Загрузите PDF-файл'}
+              {fileData ? spliseFileName() : 'Загрузите PDF-файл'}
             </button>
             {fileData && (
               <button className={styles.removeFile} onClick={removeFile}>

@@ -4,11 +4,13 @@ import styles from './CommitteesPage.module.scss';
 import ChangeButtons from '../../ui/ChangeButtons/ChangeButtons';
 import { useContext, useEffect, useState } from 'react';
 import ProfileCard from '../../components/ProfileCard/ProfileCard';
-import { organizationComiteData, programmingComiteData } from './data';
+import logoHeader from './../../assets/img/logo.png';
 import NavBar from '../../components/NavBar/NavBar';
 import DataContext from '../../context';
 import Cap from '../../assets/img/Cap.svg';
 import { getOrgCommitet } from '../../apirequests/apirequests';
+import { useSelector } from 'react-redux';
+import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 export default function CommitteesPage() {
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
@@ -50,9 +52,10 @@ export default function CommitteesPage() {
   useEffect(() => {
     getDataOrg();
   }, []);
+  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
 
   const getDataOrg = async () => {
-    const res = await getOrgCommitet();
+    const res = await getOrgCommitet(conferenceid);
     if (res?.status === 200) {
       setDataOrgAll(res.data.committee);
     }
@@ -73,7 +76,9 @@ export default function CommitteesPage() {
   };
   return (
     <>
+      <img src={logoHeader} className={styles.logo} />
       <NavBar />
+      <HeaderPhone />
       <div>
         <Layout>
           <main className={styles.organizationComiteMain}>
@@ -86,6 +91,11 @@ export default function CommitteesPage() {
               </div>
               {/* images */}
               <div className={styles.organizationComiteImages}>
+                {datePeopleOne?.length === 0 && (
+                  <div className={styles.organizationComiteImagesEmpty}>
+                    <p>Комитет еще не сформирован</p>
+                  </div>
+                )}
                 {datePeopleOne?.map((el, index) => (
                   <ProfileCard data={el} key={index} />
                 ))}
@@ -103,19 +113,23 @@ export default function CommitteesPage() {
                 {datePeopleSecond?.map((el, index) => (
                   <ProfileCard data={el} key={index} />
                 ))}
+                {datePeopleSecond?.length === 0 && (
+                  <div className={styles.organizationComiteImagesEmpty}>
+                    <p>Комитет еще не сформирован</p>
+                  </div>
+                )}
               </div>
             </div>
           </main>
         </Layout>
       </div>{' '}
       {!context.activeMenu && (
-        <div>
+        <div className={styles.greenArrowContainer}>
           <a href="#top">
             <div className={styles.greenArrow}></div>
           </a>
         </div>
       )}
-      <Footer />
     </>
   );
 }

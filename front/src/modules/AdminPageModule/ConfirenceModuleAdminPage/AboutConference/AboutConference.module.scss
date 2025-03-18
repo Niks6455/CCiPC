@@ -1,6 +1,12 @@
 .AboutConference {
   width: 100%;
   margin-top: torem(40px);
+  position: relative;
+  .head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
   h3 {
     @include titleBlock;
     margin-bottom: torem(10px);
@@ -15,5 +21,20 @@
     min-height: torem(387px);
     padding: torem(20px);
     color: #333333;
+  }
+
+  .contextMenu {
+    list-style: none;
+    margin: 0;
+    display: flex;
+    li {
+      color: #333333;
+      margin-left: torem(10px);
+      cursor: pointer;
+      transition: all 0.2s linear;
+      &:hover {
+        opacity: 0.6;
+      }
+    }
   }
 }

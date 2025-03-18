@@ -1,13 +1,11 @@
 .AdminPage {
-    display: flex;
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+  .AdminPageContainer {
+    padding: 50px 80px;
+    box-sizing: border-box;
+    position: relative;
     width: 100%;
-    justify-content: space-between;
-    .AdminPageContainer {
-      padding: 50px 80px;
-      box-sizing: border-box;
-      position: relative;
-      width: 100%;
-    }
-  
   }
-  
+}

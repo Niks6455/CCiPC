@@ -1,176 +1,177 @@
-.HeaderPhoneContainer{
-    align-items: center;
-    justify-content: end;
-    padding: 10px 20px;
-    height: 50px;
-    width: 100%;
+.HeaderPhoneContainer {
+  align-items: center;
+  justify-content: end;
+  padding: 10px 20px;
+  height: 50px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+  z-index: -1;
+  @media (max-width: 480px) {
+    display: flex;
+    z-index: 10000;
     position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 1000;
-    display: none;
+  }
+  .NavBarMenu {
+    span {
+      display: flex;
+      justify-content: end;
+      height: 4px;
+      margin-bottom: 5px;
+      transition: 0.15s linear all;
+      width: 100%;
+      border-radius: 3px;
+      &:nth-child(1) {
+        width: 37px;
+        background-color: var(--GreenColorDefault);
+      }
+      &:nth-child(2) {
+        width: 27px;
+        background-color: var(--GreenColorDefault);
+        margin-left: 10px;
+      }
+    }
+  }
+  &:hover {
+    cursor: pointer;
     .NavBarMenu {
+      span {
+        &:nth-child(1) {
+          width: 37px;
+        }
+        &:nth-child(2) {
+          width: 27px;
+          margin-left: 0px;
+        }
+        &:nth-child(3) {
+          width: 22px;
+        }
+      }
+    }
+  }
+  @media (max-width: 480px) {
+    display: flex;
+  }
+  .NavBarMenuContainer {
+    position: absolute;
+    top: 0px;
+    right: 0;
+    background-color: #00000047;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.5s ease;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    display: flex;
+    justify-content: start;
+    flex-direction: column;
+    align-items: start;
+    .NavBarMenu {
+      span {
+        display: flex;
+        justify-content: end;
+        height: 4px;
+        margin-bottom: 5px;
+        transition: 0.15s linear all;
+        width: 100%;
+        border-radius: 3px;
+        &:nth-child(1) {
+          width: 37px;
+          background-color: #fff;
+        }
+        &:nth-child(2) {
+          width: 27px;
+          background-color: #fff;
+          margin-left: 10px;
+        }
+      }
+    }
+    &:hover {
+      cursor: pointer;
+      .NavBarMenu {
         span {
-            display: flex;
-            justify-content: end;
-            height: 4px;
-            margin-bottom: 5px;
-            transition: 0.15s linear all;
-            width: 100%;
-            border-radius: 3px;
-            &:nth-child(1) {
+          &:nth-child(1) {
             width: 37px;
-            background-color: var(--GreenColorDefault);
-            }
-            &:nth-child(2) {
+          }
+          &:nth-child(2) {
             width: 27px;
-            background-color: var(--GreenColorDefault);
-            margin-left: 10px;
-            }
+            margin-left: 0px;
+          }
+          &:nth-child(3) {
+            width: 22px;
+          }
         }
-        }
-        &:hover {
-        cursor: pointer;
-        .NavBarMenu {
-            span {
-            &:nth-child(1) {
-                width: 37px;
-            }
-            &:nth-child(2) {
-                width: 27px;
-                margin-left: 0px;
-            }
-            &:nth-child(3) {
-                width: 22px;
-            }
-            }
-        }
+      }
     }
-    @media (max-width: 480px) {
-        display: flex;
+    .NavBarMenuContainerInner {
+      background-color: var(--GreenColorDefault);
+      border-radius: 0px 0px 10px 10px;
+      width: 100%;
+      display: flex;
+      justify-content: end;
+      flex-direction: column;
+      align-items: end;
+      padding: 0px 20px 15px 20px;
+      box-sizing: border-box;
     }
-    .NavBarMenuContainer{
-        position: absolute;
-        top: 0px;
-        right: 0;
-        background-color: #00000047;
-        backdrop-filter: blur(10px);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: opacity 0.5s ease;
-        width: 100vw;
-        height: 100vh;
-        z-index: 1000;
-        display: flex;
-        justify-content: start;
-        flex-direction: column;
-        align-items: start;
-        .NavBarMenu {
-            span {
-                display: flex;
-                justify-content: end;
-                height: 4px;
-                margin-bottom: 5px;
-                transition: 0.15s linear all;
-                width: 100%;
-                border-radius: 3px;
-                &:nth-child(1) {
-                width: 37px;
-                background-color: #fff;
-                }
-                &:nth-child(2) {
-                width: 27px;
-                background-color: #fff;
-                margin-left: 10px;
-                }
-            }
-            }
-            &:hover {
-            cursor: pointer;
-            .NavBarMenu {
-                span {
-                &:nth-child(1) {
-                    width: 37px;
-                }
-                &:nth-child(2) {
-                    width: 27px;
-                    margin-left: 0px;
-                }
-                &:nth-child(3) {
-                    width: 22px;
-                }
-                }
-            }
-        }
-        .NavBarMenuContainerInner{
-            background-color: var(--GreenColorDefault);
-            border-radius: 0px 0px 10px 10px;
-            width: 100%;
-            display: flex;
-            justify-content: end;
-            flex-direction: column;
-            align-items: end;
-            padding: 0px  20px 15px 20px;
-            box-sizing: border-box;
-        }
-    }
- 
-    .NavBarMenuList {
-        display: flex;
-        align-items: end;
-        list-style: none;
-        margin: 0;
-        display: flex;
-        align-items: end;
-        flex-direction: column;
-        li {
-            padding: 10px 20px;
-            text-decoration: none;
-            color: #fff;
-            cursor: pointer;
-        }
-        .NavBarMenuListInner{
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            img{
-                margin-left: 10px;
-            }
-        }
-        .NavBarMenuListInnerLi{
-            width: 100%;
-            img{
-                margin-left: 10px;
-            }
-        }
-        .NavBarMenuListOpener{
-            li{
-                text-align: end;
-               
-            }
-            .NavBarMenuListInnerLiImg{
-                display: flex;
-                align-items: center;
-                justify-content: end;
-                span{
-                    position: relative;
-                    left: -5px;
-                    top: 3px;
-                }
-                svg * {
-                    fill: #fff;
-                    width: 20px;
-                    height: 20px;
-                }
-            }
-        }
+  }
 
+  .NavBarMenuList {
+    display: flex;
+    align-items: end;
+    list-style: none;
+    margin: 0;
+    display: flex;
+    align-items: end;
+    flex-direction: column;
+    li {
+      padding: 10px 20px;
+      text-decoration: none;
+      color: #fff;
+      cursor: pointer;
     }
-    .NavBarMenuButton{
-        background-color: transparent;
-        border: none;
-        cursor: pointer;
-        padding: 20px 0px;
+    .NavBarMenuListInner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      img {
+        margin-left: 10px;
+      }
     }
-    
+    .NavBarMenuListInnerLi {
+      width: 100%;
+      img {
+        margin-left: 10px;
+      }
+    }
+    .NavBarMenuListOpener {
+      li {
+        text-align: end;
+      }
+      .NavBarMenuListInnerLiImg {
+        display: flex;
+        align-items: center;
+        justify-content: end;
+        span {
+          position: relative;
+          left: -5px;
+          top: 3px;
+        }
+        svg * {
+          fill: #fff;
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+  .NavBarMenuButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 20px 0px;
+  }
 }
-

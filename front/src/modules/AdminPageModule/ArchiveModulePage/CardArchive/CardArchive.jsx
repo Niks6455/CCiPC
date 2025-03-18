@@ -127,6 +127,13 @@ function CardArchive({ item, updateData }) {
     });
   };
 
+  const handleDeleteImg = () => {
+    const data = {...item, file: ''};
+    updateArchive(data, item.id).then(res => {
+      if (res?.status === 200) updateData();
+    });
+  };
+  
   return (
     <div className={styles.CardOrganization} key={item.id}>
       <div className={styles.CardOrganizationInner}>
@@ -137,7 +144,7 @@ function CardArchive({ item, updateData }) {
             alt="Фото"
           />
           <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} alt="Удалить" />
+            <img src={deletePhoto2Img} onClick={() => handleDeleteImg()} alt="Удалить" />
             <img src={editPhoto2Img} alt="Редактировать" onClick={() => refFile.current.click()} />
           </div>
           <input
