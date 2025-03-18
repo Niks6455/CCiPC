@@ -453,3 +453,13 @@ export const getConferencesParticipants = async id => {
     console.log('getConfParticipants ', error);
   }
 };
+
+//! Получение пользователя по почте
+export const getUserEmail = async email => {
+  try {
+    const response = await api.get(`${server}/participants/checkEmail?email=${email}`);
+    return response;
+  } catch (error) {
+    console.log('getUserEmail ', error);
+  }
+};

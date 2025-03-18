@@ -1,4 +1,6 @@
-@import "./../../styles/mixin.scss";
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .InputLabel {
   display: flex;
@@ -7,38 +9,50 @@
   height: 100%;
   position: relative;
   .label {
-    @include InputTitle(18px);
-    margin-bottom: 10px;
+    @include InputTitle(torem(18px));
+    margin-bottom: torem(10px);
     color: #333333;
   }
 
   .error {
-    padding: 0 5px;
+    padding: 0 torem(5px);
     position: absolute;
-    right: 20px;
-    top: 25px;
+    right: torem(20px);
+    top: torem(25px);
     color: #b32020;
     font-family: Overpass, sans-serif;
-    font-size: 16px;
+    font-size: torem(16px);
     font-weight: 500;
-    line-height: 19.2px;
+    line-height: torem(19px);
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     background-color: var(--BodyBgColor);
+    @media (max-width: $w2) {
+      font-size: torem(14px);
+    }
+    @media (max-width: $w3) {
+      font-size: torem(12px);
+    }
   }
 
   .maininput {
     display: flex;
-    padding: 16px 20px;
+    padding: torem(16px) torem(20px);
     box-sizing: border-box;
-    border: 1px solid #c8d0ce;
-    border-radius: 10px;
+    border: torem(1px) solid #c8d0ce;
+    border-radius: torem(10px);
     outline: none;
     background-color: var(--BodyBgColor);
     font-family: Overpass, sans-serif;
-    font-size: 18px;
+    font-size: torem(18px);
     font-weight: 400;
-    line-height: 21.6px;
+    line-height: torem(21px);
+    @media (max-width: $w2) {
+      font-size: torem(16px);
+    }
+    @media (max-width: $w3) {
+      font-size: torem(14px);
+    }
   }
 }
