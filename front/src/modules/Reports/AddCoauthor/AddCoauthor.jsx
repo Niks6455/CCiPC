@@ -57,13 +57,18 @@ function AddCoauthor({ edit, number }) {
         getUserEmail(value).then(res => {
           console.log('res', res);
           if (res?.status === 200) {
-            dispatch(
-              setCoauthorAutocompletion({
-                index,
-                autocompletion: 'emailhave',
-              }),
-            );
-            dispatch(setCoauthorDataApi({ index, data: res.data.participant }));
+            if (res?.data?.participant?.name) {
+              dispatch(
+                setCoauthorAutocompletion({
+                  index,
+                  autocompletion: 'emailhave',
+                }),
+              );
+              dispatch(setCoauthorDataApi({ index, data: res.data.participant }));
+            } else {
+              dispatch(setCoauthorAutocompletion({ index, autocompletion: 'noemail' }));
+              dispatch(setCoauthorDataApi({ index, data: null }));
+            }
           } else {
             dispatch(setCoauthorAutocompletion({ index, autocompletion: 'noemail' }));
             dispatch(setCoauthorDataApi({ index, data: null }));

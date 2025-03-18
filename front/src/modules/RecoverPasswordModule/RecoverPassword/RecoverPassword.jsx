@@ -335,8 +335,6 @@ function RecoverPassword() {
           </div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 }
