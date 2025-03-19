@@ -1,41 +1,48 @@
 import { useEffect, useState } from 'react';
 import styles from './CreateReport.module.scss';
-import {
-  directionConferenceList,
-  formParticipationList,
-  participationStatus,
-} from '../../../utils/Lists/List';
+import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 import errorList from './../../../assets/img/UI/errorZnak.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { disSetResetReport, setValue } from '../../../store/reportCreateSlice/reportCreateSlice';
 import InputListForma from '../../../components/InputListForma/InputListForma';
 import download from './../../../assets/img/UI/download.svg';
-import exampleFile from './../../../utils/files/template.docx';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
-import { ReactComponent as BorderIcon } from '@assets/img/AdminPanel/border2.svg';
+import { server } from '../../../apirequests/apirequests';
+import { decodeFileName } from '../../../utils/functions/funcions';
+import { funGetError, funValidateAll } from './functions';
 
 function CreateReport({ edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
-  // const conferences = useSelector((state) => state.conferences.data);
-  const [errorName, setErrorName] = useState(false);
+  const conference = useSelector(state => state.conferences.data[0]);
+  console.log('conference', conference);
+  const [errors, setErrors] = useState([]);
 
-  useEffect(() => {
-    if (!edit) {
-      dispatch(disSetResetReport());
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!edit) {
+  //     dispatch(disSetResetReport());
+  //   }
+  // }, []);
 
   //! функция скачивания шаблока
-  const funDownloadShablon = () => {
-    const link = document.createElement('a');
-    link.href = exampleFile; // Указываем путь к файлу
-    link.download = 'template.docx'; // Имя файла для скачивания
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const funDownloadShablon = async () => {
+    try {
+      const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+      if (!response.ok) throw new Error('Ошибка загрузки файла');
+      const blob = await response.blob();
+      const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href); // Освобождаем память
+    } catch (error) {
+      console.error('Ошибка загрузки файла:', error);
+    }
   };
 
   const funChangeFile = (value, key) => {
@@ -47,16 +54,21 @@ function CreateReport({ edit }) {
   const handleChangeForm = (name, text) => {
     dispatch(setValue({ key: name, value: text }));
     console.log('name', name);
+    console.log('errors', errors);
+    setErrors(prev => prev.filter(item => item.key !== name));
   };
 
   //! изменение названия доклада с валидацией
   const funChangeNameReport = value => {
-    if (value.length > 300) {
-      setErrorName(true);
-    } else {
-      setErrorName(false);
-    }
+    setErrors(prev => prev.filter(item => item.key !== 'name'));
     dispatch(setValue({ key: 'name', value: value }));
+  };
+
+  const funNextStep = () => {
+    setErrors(funValidateAll(report.data));
+    if (funValidateAll(report.data).length === 0) {
+      navigate('/account/addcoauthor');
+    }
   };
 
   return (
@@ -77,14 +89,14 @@ function CreateReport({ edit }) {
       <p className={styles.nameReport}>Полное название доклада</p>
 
       <div className={styles.name_report_container}>
-        {errorName && (
+        {funGetError(errors, 'name') && (
           <div className={styles.error_name}>
-            <span>Не более 300 символов*</span>
+            <span>{funGetError(errors, 'name')}</span>
           </div>
         )}
         <textarea
           type="text"
-          className={`${errorName ? styles.error_input_name : ''} ${styles.nameReportInput}`}
+          className={`${funGetError(errors, 'name') ? styles.error_input_name : ''} ${styles.nameReportInput}`}
           value={report.data.name}
           onChange={event => funChangeNameReport(event.target.value)}
         />
@@ -93,10 +105,11 @@ function CreateReport({ edit }) {
       <div className={styles.inputsContainer}>
         <InputListForma
           name={'Направление конференции'}
-          list={directionConferenceList}
+          list={conference?.directions.map(el => ({ text: el.name, id: el.id }))}
           itemKey={'directionConference'}
           value={report.data.directionConference}
           handleChangeForm={handleChangeForm}
+          error={funGetError(errors, 'directionConference')}
         />
         <InputListForma
           name={'Форма участия'}
@@ -104,17 +117,9 @@ function CreateReport({ edit }) {
           itemKey={'formParticipation'}
           value={report.data.formParticipation}
           handleChangeForm={handleChangeForm}
+          error={funGetError(errors, 'formParticipation')}
         />
-        <InputListForma
-          name={'Статус участия'}
-          list={participationStatus}
-          itemKey={'participationStatus'}
-          value={report.data.participationStatus}
-          handleChangeForm={handleChangeForm}
-        />
-      </div>
-      <div className={styles.inputsContainer}>
-        <div className={styles.input_organization}>
+        <div className={`${styles.input_organization} ${styles.organization_mobile}`}>
           <span>Организация</span>
           <input
             type="text"
@@ -125,6 +130,33 @@ function CreateReport({ edit }) {
             onBlur={e => (e.target.placeholder = 'Ваша организация')}
           />
         </div>
+        <InputListForma
+          name={'Статус участия'}
+          list={participationStatus}
+          itemKey={'participationStatus'}
+          value={report.data.participationStatus}
+          handleChangeForm={handleChangeForm}
+          error={funGetError(errors, 'participationStatus')}
+        />
+      </div>
+      <div className={styles.inputsContainer}>
+        <div className={`${styles.input_organization} ${styles.organization_pc}`}>
+          <span>Организация</span>
+          <div className={styles.input_organization_block}>
+            {funGetError(errors, 'organization') && (
+              <span className={styles.error}>{funGetError(errors, 'organization')}</span>
+            )}
+            <input
+              className={funGetError(errors, 'organization') ? styles.error_input : ''}
+              type="text"
+              value={report.data.organization}
+              onChange={e => handleChangeForm('organization', e.target.value)}
+              placeholder="Ваша организация"
+              onFocus={e => (e.target.placeholder = '')}
+              onBlur={e => (e.target.placeholder = 'Ваша организация')}
+            />
+          </div>
+        </div>
       </div>
 
       <div className={styles.fileContainer}>
@@ -132,21 +164,18 @@ function CreateReport({ edit }) {
           <p>Добавить файл со статьёй</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
-              {!report.data.fileArticle && <BorderIcon className={styles.border} />}
-              <div className={styles.file_inner}>
-                <FileComponent
-                  logoHeader={report.data.fileArticle}
-                  data={report.data.fileArticle}
-                  setData={value => funChangeFile(value, 'fileArticle')}
-                  typeFile={['application/pdf']}
-                  accept={'.pdf'}
-                  name={'fileArticle'}
-                  icon={'pdf'}
-                  itemKey={'fileArticle'}
-                  fileSize={20} // размер файла
-                  text={'Необходимо загрузить<br/>файл в формате PDF'}
-                />
-              </div>
+              <FileComponent
+                logoHeader={report.data.fileArticle}
+                data={report.data.fileArticle}
+                setData={value => funChangeFile(value, 'fileArticle')}
+                typeFile={['application/pdf']}
+                accept={'.pdf'}
+                name={'fileArticle'}
+                icon={'pdf'}
+                itemKey={'fileArticle'}
+                fileSize={20} // размер файла
+                text={'Необходимо загрузить<br/>файл в формате PDF'}
+              />
             </div>
 
             <div className={styles.downloadShablon}>
@@ -161,36 +190,42 @@ function CreateReport({ edit }) {
           <p>Добавить файл с экспертным заключением</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
-              {!report.data.fileExpertOpinion && <BorderIcon className={styles.border} />}
-              <div className={styles.file_inner}>
-                <FileComponent
-                  logoHeader={report.data.fileExpertOpinion}
-                  data={report.data.fileExpertOpinion}
-                  setData={value => funChangeFile(value, 'fileExpertOpinion')}
-                  typeFile={['application/pdf']}
-                  accept={'.pdf'}
-                  name={'fileExpertOpinion'}
-                  icon={'pdf'}
-                  itemKey={'fileExpertOpinion'}
-                  fileSize={20} // размер файла
-                  text={'Необходимо загрузить<br/>файл в формате PDF'}
-                />
-              </div>
+              <FileComponent
+                logoHeader={report.data.fileExpertOpinion}
+                data={report.data.fileExpertOpinion}
+                setData={value => funChangeFile(value, 'fileExpertOpinion')}
+                typeFile={['application/pdf']}
+                accept={'.pdf'}
+                name={'fileExpertOpinion'}
+                icon={'pdf'}
+                itemKey={'fileExpertOpinion'}
+                fileSize={20} // размер файла
+                text={'Необходимо загрузить<br/>файл в формате PDF'}
+              />
             </div>
           </div>
         </div>
       </div>
       <div className={styles.context}>
         <p>Комментарий (пожелания по прибытию, по расселению; свободное текстовое поле)</p>
-        <textarea
-          type="text"
-          readOnly={false}
-          placeholder="Ваш комментарий"
-          onFocus={e => (e.target.placeholder = '')}
-          onBlur={e => (e.target.placeholder = 'Ваш комментарий')}
-          value={report.data.comments}
-          onChange={event => dispatch(setValue({ key: 'comments', value: event.target.value }))}
-        />
+        <div className={styles.input_comments_block}>
+          {funGetError(errors, 'comments') && (
+            <span className={styles.error}>{funGetError(errors, 'comments')}</span>
+          )}
+          <textarea
+            className={funGetError(errors, 'comments') ? styles.error_textarea : ''}
+            type="text"
+            readOnly={false}
+            placeholder="Ваш комментарий"
+            onFocus={e => (e.target.placeholder = '')}
+            onBlur={e => (e.target.placeholder = 'Ваш комментарий')}
+            value={report.data.comments}
+            onChange={event => {
+              dispatch(setValue({ key: 'comments', value: event.target.value }));
+              setErrors(prev => prev.filter(item => item.key !== 'comments'));
+            }}
+          />
+        </div>
       </div>
       {!edit && (
         <div className={styles.srokContainer}>
@@ -201,12 +236,7 @@ function CreateReport({ edit }) {
               статью и экспертное заключение.
             </span>
           </div>
-          <button
-            style={errorName ? { cursor: 'not-allowed' } : { cursor: 'pointer' }}
-            onClick={() => !errorName && navigate('/account/addcoauthor')}
-          >
-            Следующий шаг
-          </button>
+          <button onClick={() => funNextStep()}>Следующий шаг</button>
         </div>
       )}
     </div>

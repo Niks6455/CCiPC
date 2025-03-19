@@ -150,21 +150,17 @@ const reportCreateSlice = createSlice({
         state.openPopUpName = 'SameEmail';
         return;
       }
-
       const hasEmptyCoauthor = state.data.soauthors.some(coauthor =>
         keysCoauthors.some(key => coauthor.data[key] === '' || coauthor.data[key] === null),
       );
-
       if (hasEmptyCoauthor) {
         state.openPopUpName = 'NotFullyFilledCoauthors';
         return;
       }
-
       if (state.sliderState < 100) {
         state.openPopUpName = 'NotFullyFilled';
         return;
       }
-
       state.openPopUpName = 'SuccessModal';
     },
 
@@ -176,6 +172,20 @@ const reportCreateSlice = createSlice({
     setCoauthorAutocompletion(state, action) {
       const { index, autocompletion } = action.payload;
       state.data.soauthors[index].autocompletion = autocompletion;
+    },
+    setCoauthorDataApi(state, action) {
+      const { index, data } = action.payload;
+      console.log('data', data);
+      if (data) {
+        state.data.soauthors[index].data = { ...state.data.soauthors[index].data, ...data };
+      } else {
+        state.data.soauthors[index].data = {
+          ...state.data.soauthors[index].data,
+          name: '',
+          surname: '',
+          patronymic: '',
+        };
+      }
     },
 
     //! редактирование
@@ -195,6 +205,7 @@ export const {
   setValueCoauthors,
   setOpenPopUpName,
   funSaveDataState,
+  setCoauthorDataApi,
   setCoauthorAutocompletion,
   disEditReport,
   disSetResetReport,

@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .ModalNal {
   .bacgraund {
     @include PopupBlur;
@@ -5,27 +9,41 @@
     .container {
       @include PopupContainer;
       height: max-content;
-
-      padding: 70px;
+      padding: torem(70px);
+      @media (max-width: $w2) {
+        width: calc(100vw - torem(140px));
+      }
+      @media (max-width: $w3) {
+        width: calc(100vw - torem(40px));
+        padding: torem(70px) torem(20px);
+      }
       h2 {
         font-family: Overpass, sans-serif;
         font-weight: 500;
-        font-size: 20px;
+        font-size: torem(20px);
         line-height: 130%;
         letter-spacing: 0%;
         text-align: center;
-        margin-bottom: 40px;
-        max-width: 716px;
+        margin-bottom: torem(40px);
+        max-width: torem(716px);
       }
       img {
-        width: 80px;
-        height: 80px;
-        margin-bottom: 40px;
+        width: torem(80px);
+        height: torem(80px);
+        margin-bottom: torem(40px);
+        @media (max-width: $w3) {
+          width: torem(60px);
+          height: torem(60px);
+        }
       }
       button {
         @include ButtonGreen;
-        width: 280px;
-        height: 54px;
+        width: torem(280px);
+        height: torem(54px);
+        font-size: torem(20px);
+        @media (max-width: $w3) {
+          font-size: torem(16px);
+        }
       }
     }
   }

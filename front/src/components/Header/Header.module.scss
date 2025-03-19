@@ -9,7 +9,7 @@ header {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 2;
+  z-index: 1;
   width: 100vw;
   @media (max-width: $w2) {
     height: torem(100px); /* 180px в rem */
@@ -111,6 +111,7 @@ header {
     position: absolute;
     left: torem(32px);
     top: torem(-90px);
+    z-index: 10000;
     @media (max-width: $w2) {
       top: 0;
     }

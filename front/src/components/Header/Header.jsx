@@ -5,8 +5,12 @@ import LogoHomePage from './../../assets/img/logo.png';
 import footerLogo from './../../assets/img/Headernumber.png';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
+import { server } from '../../apirequests/apirequests';
+
 function Header() {
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
+  const conference = useSelector(state => state.conferences.data[0]);
+  console.log('conference', conference);
 
   console.log('autorisation', autorisation);
   const navigate = useNavigate();
@@ -17,7 +21,11 @@ function Header() {
           <img src={LogoHomePage} alt="logo" onClick={() => navigate('/')} />
         </div>
         <div className={styles.logoInner}>
-          <img src={footerLogo} alt="logo" />
+          <img
+            src={`${server}/${conference?.logo?.FOOTER}`}
+            alt="logo"
+            onError={e => (e.target.display = 'none')}
+          />
           <p>
             Всероссийская научная конференция
             <br /> "Системный синтез и прикладная синергетика"

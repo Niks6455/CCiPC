@@ -88,7 +88,6 @@ function Author() {
           )}
         </div>
       </Layout>
-      <Footer />
     </main>
   );
 }

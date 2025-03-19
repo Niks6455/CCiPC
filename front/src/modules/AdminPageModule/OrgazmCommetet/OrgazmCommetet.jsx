@@ -19,15 +19,17 @@ function OrgazmCommetet() {
   const [dataCommitetTwo, setDataCommitetTwo] = useState([]);
   const addOrgPeopleRef = useRef(null);
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
+  
   useEffect(() => {
     getDataOrg();
-  }, []);
+  }, [conferenceid]);
 
   const getDataOrg = async () => {
     if (conferenceid) {
-      const res = await getOrgCommitet();
+      const res = await getOrgCommitet(conferenceid);
       if (res?.status === 200) {
         setDataOrgAll(res.data.committee);
+        filterCommittees();
       }
     }
   };
@@ -37,13 +39,25 @@ function OrgazmCommetet() {
   }, [dataOrgAll, activeButtonFirst, activeButtonTwoo]);
 
   const filterCommittees = () => {
-    const committeeOne = dataOrgAll.find(item => item.type === activeButtonFirst)?.committees || [];
-    const committeeTwo =
-      dataOrgAll.find(item => item.type === activeButtonTwoo + 2)?.committees || [];
-
+    const committeeOne = dataOrgAll?.find(item => item?.type === activeButtonFirst)?.committees || [];
+    const committeeTwo =dataOrgAll?.find(item => item?.type === activeButtonTwoo + 2)?.committees || [];
     setDataCommitetOne(committeeOne);
     setDataCommitetTwo(committeeTwo);
   };
+
+  const updateCardData = (id, newUrl) => {
+    const updateData = dataOrgAll.map(confirensis => {
+        return {...confirensis, committees: confirensis.committees.map(item => {
+          if (item.id === id) {
+            return { ...item, img: newUrl }
+          }
+          return item
+        })
+      }
+    });
+    setDataOrgAll(updateData)
+  };
+
 
   const closeCreateOne = () => {
     if (addOrgPeopleRef.current) {
@@ -52,10 +66,14 @@ function OrgazmCommetet() {
         y: -20,
         duration: 0.4,
         ease: 'power2.in',
-        onComplete: () => setAddFirstOne(false),
+        onComplete: () => {
+          setAddFirstOne(false);
+          getDataOrg();
+        },
       });
     } else {
       setAddFirstOne(false);
+      getDataOrg();
     }
   };
 
@@ -66,10 +84,14 @@ function OrgazmCommetet() {
         y: -20,
         duration: 0.4,
         ease: 'power2.in',
-        onComplete: () => setAddFirstTwo(false),
+        onComplete: () => {
+          setAddFirstTwo(false);
+          getDataOrg();
+        },
       });
     } else {
       setAddFirstTwo(false);
+      getDataOrg();
     }
   };
 
@@ -109,7 +131,12 @@ function OrgazmCommetet() {
                 />
               )}
               {dataCommitetOne.map(item => (
-                <CardOrganization key={item.id} getDataOrg={getDataOrg} item={item} />
+                <CardOrganization
+                  key={item.id}
+                  getDataOrg={getDataOrg}
+                  item={item}
+                  updateCardData={updateCardData}
+                />
               ))}
             </div>
           </div>
@@ -157,7 +184,12 @@ function OrgazmCommetet() {
                 />
               )}
               {dataCommitetTwo.map(item => (
-                <CardOrganization key={item.id} getDataOrg={getDataOrg} item={item} />
+                <CardOrganization
+                  key={item.id}
+                  getDataOrg={getDataOrg}
+                  item={item}
+                  updateCardData={updateCardData}
+                />
               ))}
             </div>
           </div>

@@ -3,9 +3,9 @@ $w2: 769px;
 $w3: 480px;
 
 .RightMenuLkhide {
-  width: 0;
-  min-width: 0;
-  border: none;
+  width: 0 !important;
+  min-width: 0 !important;
+  border: none !important;
 }
 
 .RightMenuLk {

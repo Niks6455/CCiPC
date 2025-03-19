@@ -11,7 +11,6 @@ function RecoverPasswordPage() {
     <div className={styles.RecoverPasswordPage}>
       <NavBar />
       <Outlet context={{ email, setEmail }} />
-      <Footer />
     </div>
   );
 }

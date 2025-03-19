@@ -260,9 +260,9 @@ export const updateOrgCommitet = async (data, id) => {
 };
 
 //!Получение  Human Оргкомитета
-export const getOrgCommitet = async () => {
+export const getOrgCommitet = async id => {
   try {
-    const response = await api.get(`${server}/committees`);
+    const response = await api.get(`${server}/committees?conferenceId=${id}`);
     return response;
   } catch (error) {
     console.log('apiCreateReport ', error);
@@ -348,6 +348,18 @@ export const apiExportArchiveState = async id => {
     return response;
   } catch (error) {
     console.log('getConfParticipants ', error);
+  }
+};
+
+//! экспорт докладов
+export const apiExportReports = async id => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/exportReports`, {
+      responseType: 'blob', // Ожидаем бинарные данные (архив)
+    });
+    return response;
+  } catch (error) {
+    console.log('apiExportReports ', error);
   }
 };
 
@@ -439,5 +451,15 @@ export const getConferencesParticipants = async id => {
     return response;
   } catch (error) {
     console.log('getConfParticipants ', error);
+  }
+};
+
+//! Получение пользователя по почте
+export const getUserEmail = async email => {
+  try {
+    const response = await api.get(`${server}/participants/checkEmail?email=${email}`);
+    return response;
+  } catch (error) {
+    console.log('getUserEmail ', error);
   }
 };

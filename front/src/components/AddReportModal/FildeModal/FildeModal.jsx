@@ -1,13 +1,13 @@
 import { useDispatch } from 'react-redux';
-import styles from './SuccessModal.module.scss';
+import styles from './FildeModal.module.scss';
 import { useNavigate } from 'react-router-dom';
 import {
   disSetResetReport,
   setOpenPopUpName,
 } from '../../../store/reportCreateSlice/reportCreateSlice';
-import circleGalka from './../../../assets/img/UI/circleGalka.svg';
+import circleGalka from './../../../assets/img/UI/error.svg';
 
-function SuccessModal({ name }) {
+function FildeModal({ name }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const funCloseModal = () => {
@@ -16,8 +16,8 @@ function SuccessModal({ name }) {
     dispatch(disSetResetReport());
   };
   return (
-    <div className={styles.SuccessModal}>
-      <p className={styles.title}>Вы успешно подали доклад {name && `"${name}"`}.</p>
+    <div className={styles.FildeModal}>
+      <p className={styles.title}>Ошибка добавления доклада: {name && `"${name}"`}.</p>
       <img className={styles.galka} src={circleGalka} alt="img" />
       <button onClick={funCloseModal} className={styles.btnred}>
         Перейти в профиль
@@ -26,4 +26,4 @@ function SuccessModal({ name }) {
   );
 }
 
-export default SuccessModal;
+export default FildeModal;

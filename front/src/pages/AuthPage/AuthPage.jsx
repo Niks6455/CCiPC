@@ -24,7 +24,6 @@ function AuthPage(props) {
           ) : null}
         </Layout>
       </main>
-      <Footer />
     </>
   );
 }

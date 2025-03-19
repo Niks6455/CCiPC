@@ -1,55 +1,94 @@
+$w1: 780px;
+$w2: 480px;
+
 .newsCard {
   position: relative;
   width: 100%; /* Задаётся ширина карточки через grid */
   overflow: hidden;
   border-radius: 10px;
-  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  // transition: box-shadow 0.3s ease, transform 0.3s ease, height 0.3s ease;
   box-sizing: border-box;
   padding-top: 40px;
-  margin: 32px;
+  margin: 16px;
   width: 412px;
   height: max-content;
+  @media (max-width: 990px) {
+    width: 412px;
+    margin: 20px 20px;
+  }
+  @media (max-width: 460px) {
+    width: 350px;
+  }
+  @media (max-width: 380px) {
+    width: 300px;
+  }
   .newsCardContent {
     position: relative;
     z-index: 2;
-    padding: 20px;
+    padding: 40px 20px;
     transition: all 0.3s ease-out; /* Добавляем плавный переход для padding */
     background-color: #fff;
     border-radius: 10px;
-    .newsCardDate{
+    @media (max-width: 990px) {
+      padding: 20px;
+    }
+    span {
+      font-size: 18px;
+      color: #858b89;
+      margin: 0;
+      @media (max-width: 990px) {
+        font-size: 16px;
+      }
+      @media (max-width: 770px) {
+        font-size: 14px;
+      }
+    }
+    .newsCardDate {
       color: var(--GrayOne);
       font-size: 18px;
       line-height: 21px;
     }
-    .newsCardTitle{
+    .newsCardTitle {
       font-size: 32px;
       font-weight: 500;
       line-height: 44px;
+      padding: 0;
+      margin: 0;
+      padding-top: 20px;
+      padding-bottom: 10px;
+      @media (max-width: $w1) {
+        font-size: 18px;
+        padding: 0;
+        margin: 0;
+      }
     }
-    .newsCardText{
+    .newsCardText {
       color: var(--GraySecond);
       font-size: 20px;
       font-weight: 400;
       line-height: 26px;
+      @media (max-width: $w1) {
+        font-size: 16px;
+      }
     }
   }
-  &:hover {
-    // box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    transform: translateY(-5px);
-    cursor: pointer;
-    img {
-      top: 0; /* При наведении картинка становится видимой полностью */
-      transform: scale(1.2); /* Легкое увеличение картинки */
-      z-index: 10;
-    }
-    .newsCardContent {
-      padding-top: 280px; /* Изменение отступа только для текущей карточки */
-      // background-color: inherit;
+  @media (min-width: 990px) {
+    &:hover {
+      // box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+      cursor: pointer;
+      img {
+        top: 0; /* При наведении картинка становится видимой полностью */
+        transform: scale(1.2); /* Легкое увеличение картинки */
+        z-index: 10;
+      }
+      .newsCardContent {
+        padding-top: 280px; /* Изменение отступа только для текущей карточки */
+      }
     }
   }
-
-  
+  @media (max-width: 990px) {
+    padding-top: 290px;
+  }
 
   img {
     position: absolute;
@@ -58,7 +97,13 @@
     height: auto;
     width: 100%;
     height: auto;
-    transition: top 0.3s ease, transform 0.3s ease;
+    transition:
+      top 0.3s ease,
+      transform 0.3s ease;
     border-radius: 10px 10px 0 0;
+    @media (max-width: 990px) {
+      height: 300px;
+      object-fit: cover;
+    }
   }
 }

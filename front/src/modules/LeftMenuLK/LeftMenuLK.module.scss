@@ -33,12 +33,13 @@ $w3: 480px;
   .LeftMenuLkList {
     list-style: none;
     padding-left: torem(30px);
+    width: calc(100% - torem(30px));
     li {
       display: flex;
       position: relative;
       justify-content: start;
       align-items: center;
-      margin: torem(10px) torem(33px) 0px 0px;
+      margin: torem(10px) torem(0px) 0px 0px;
       height: torem(46px);
       // width: 240px;
       cursor: pointer;
@@ -81,7 +82,7 @@ $w3: 480px;
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s linear;
-      width: torem(205px) !important;
+      width: 100% !important;
       border-radius: torem(5px);
       li {
         margin-right: 0;
@@ -91,8 +92,12 @@ $w3: 480px;
     .setingOpen {
       height: auto;
       max-height: torem(258px);
+      overflow: auto;
+      overflow-x: hidden;
       transition: max-height 0.3s linear;
+      @include ScrollBar;
       li {
+        width: 100%;
         margin-right: 0;
       }
     }

@@ -21,9 +21,13 @@ function InputListForma(props) {
   }, []);
 
   return (
-    <div className={styles.InputListForma}>
+    <div name="InputListForma" className={styles.InputListForma}>
       <p>{props.name}</p>
-      <div className={styles.boxInner} ref={refCalendar}>
+      <div
+        className={`${styles.boxInner} ${props.error ? styles.errorBoxInner : ''}`}
+        ref={refCalendar}
+      >
+        {props.error && <span className={styles.error}>{props.error}</span>}
         <input
           type="text"
           placeholder="Не выбрано"

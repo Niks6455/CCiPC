@@ -12,22 +12,27 @@ import {
 import deletePhoto2Img from '@assets/img/AdminPanel/deletePhoto.svg';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
 
-function CardOrganization(props) {
+function CardOrganization({ item, updateCardData, getDataOrg }) {
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
   const cardRef = useRef(null);
   const imgRef = useRef(null);
 
-  const defaultValue = {
-    img: props?.item?.img || '',
-    fio: props?.item?.fio || '',
-    organization: props?.item?.organization || '',
-  };
+  const [defaultValue, setDefaultValue] = useState({
+    img: item?.img || '',
+    fio: item?.fio || '',
+    organization: item?.organization || '',
+  });
   const [file, setFile] = useState(null);
   const refFile = useRef(null);
   const [dataItem, setDataItem] = useState(defaultValue);
   const [isChanged, setIsChanged] = useState(false);
+
+  useEffect(() => {
+    setDataItem(item);
+    setDefaultValue(item);
+  }, [item]);
 
   // Проверка изменений
   useEffect(() => {
@@ -82,17 +87,21 @@ function CardOrganization(props) {
   };
 
   const handleCancel = () => setDataItem(defaultValue);
+
   const handleSave = () => {
-    updateOrgCommitet(dataItem, props.item.id).then(res => {
+    updateOrgCommitet(dataItem, item.id).then(res => {
       if (res?.status === 200) {
-        props?.getDataOrg();
+        updateCardData(item.id, dataItem);
+        setIsChanged(false);
+        getDataOrg();
       }
     });
   };
+
   const handleDelete = () => {
-    deleteOrgCommitet(props.item.id).then(res => {
+    deleteOrgCommitet(item.id).then(res => {
       if (res?.status === 200) {
-        props?.getDataOrg();
+        getDataOrg();
       }
     });
   };
@@ -102,12 +111,25 @@ function CardOrganization(props) {
     setFile(file);
     const formFile = new FormData();
     formFile.append('file', file);
-    formFile.append('committeeId', props?.item?.committeeId);
+    formFile.append('committeeId', item?.committeeId);
+
     uploadPhoto(formFile, 'COMMITTEE').then(res => {
       if (res?.status === 200) {
-        props?.getDataOrg();
+        console.log('res', res);
+        updateCardData(item.id, res.data.url);
       }
     });
+  };
+
+  const handleDeleteImg = () => {
+   const data = {...item, img: ''};
+   updateOrgCommitet(data, item.id).then(res => {
+    if (res?.status === 200) {
+      updateCardData(item.id, dataItem);
+      setIsChanged(false);
+      getDataOrg();
+    }
+  });
   };
 
   return (
@@ -117,11 +139,11 @@ function CardOrganization(props) {
           <img
             ref={imgRef}
             className={styles.Img}
-            src={dataItem.img ? `${server}/${dataItem.img}` : notPhoto}
-            alt={dataItem.fio}
+            src={dataItem?.img ? `${server}/${dataItem?.img}` : notPhoto}
+            alt={dataItem?.fio}
           />
           <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} alt="Удалить" />
+            <img src={deletePhoto2Img} alt="Удалить" onClick={() => handleDeleteImg()}/>
             <img src={editPhoto2Img} alt="Редактирование" onClick={() => refFile.current.click()} />
           </div>
           <input
@@ -146,7 +168,6 @@ function CardOrganization(props) {
           />
         </div>
 
-        {/* Если есть изменения → Отменить и Сохранить, иначе → Удалить */}
         {isChanged ? (
           <div className={styles.buttonContainer} ref={buttonContainerRef}>
             <button className={styles.cancel} onClick={handleCancel}>

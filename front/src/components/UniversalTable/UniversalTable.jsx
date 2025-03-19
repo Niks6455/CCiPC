@@ -29,6 +29,7 @@ function UniversalTable(props) {
     setInitialTableBodyData(props?.tableBody);
     setTableHeaderData(props?.tableHeader);
     setTableBodyData(props?.tableBody);
+    checkWidth();
   }, [props?.tableHeader, props?.tableBody]);
 
   // Логика для переключения индекса
@@ -83,7 +84,7 @@ function UniversalTable(props) {
     setTableHeaderData(updatedHeaderData);
   }, [activeIndex, initialTableHeaderData]);
 
-  useEffect(() => {
+  const checkWidth = () =>{
     const updatedHeaderData = [...initialTableHeaderData];
     const index = updatedHeaderData.findIndex(item => item.key === 'vizion');
     if (windowWidth <= 580) {
@@ -102,6 +103,9 @@ function UniversalTable(props) {
     }
 
     setTableHeaderData(updatedHeaderData);
+  }
+  useEffect(() => {
+    checkWidth();
   }, [windowWidth, initialTableHeaderData]);
 
   return (

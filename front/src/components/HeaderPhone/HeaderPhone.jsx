@@ -25,7 +25,7 @@ function HeaderPhone() {
     setActiveMenuListSecond(false);
   };
   return (
-    <header>
+    <div>
       <div className={styles.HeaderPhoneContainer}>
         <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(!activeMenu)}>
           <div className={styles.NavBarMenu}>
@@ -165,7 +165,7 @@ function HeaderPhone() {
                       )}
                     </AnimatePresence>
                   </motion.div>
-
+                  <li onClick={() => navigateTo('/')}>Главаня</li>
                   <li onClick={() => navigateTo('/author')}>Автору</li>
                   <li onClick={() => navigateTo('/news')}>Новости</li>
                   <li onClick={() => navigateTo('/participants')}>Участники</li>
@@ -176,7 +176,7 @@ function HeaderPhone() {
           )}
         </AnimatePresence>
       </div>
-    </header>
+    </div>
   );
 }
 
