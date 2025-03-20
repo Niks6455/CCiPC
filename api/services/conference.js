@@ -385,18 +385,14 @@ export default {
 
 
         const reports = await Report.findAll({
-            attributes: [
-                'name', // Missing comma added here
-                [sequelize.fn('COUNT', sequelize.col('Report.id')), 'reportCount']
-            ],
             where: {
-                conferenceId: conferenceId,
+                conferenceId: conferenceId, // Фильтр по conferenceId
             },
             include: [
                 {
-                  model: Direction,
-                  as: 'direction',
-                  required: true
+                    model: Direction,
+                    as: 'direction',
+                    required: true,
                 },
                 {
                     model: ParticipantOfReport,
@@ -406,19 +402,50 @@ export default {
                         {
                             model: Participant,
                             as: 'participant',
-                            required: true
+                            required: true,
                         }
                     ]
                 }
             ],
-            group: ['Report.name', 'Report.id', 'participantOfReport.id', 'participantOfReport.participant.id'], // Grouping corrected
         });
 
+// Группировка отчетов по направлению
+        const groupedReports = reports.reduce((acc, report) => {
+            const direction = report.direction.name;
+
+            if (!acc[direction]) {
+                acc[direction] = {
+                    direction: direction,
+                    reports: [],
+                    participantCount: 0,
+                };
+            }
+
+            acc[direction].reports.push(report);
+            acc[direction].participantCount += report.participantOfReport.length;
+
+            return acc;
+        }, {});
+
+// Преобразуем объект в массив
+        const resultReports = Object.values(groupedReports);
 
         const workbook = new ExcelJS.Workbook();
 
-        reports.forEach(report => {
-            const worksheet = workbook.addWorksheet(`${report.direction.name}`);
+        resultReports.forEach(report => {
+            let sheetName = report.direction;
+
+            // Проверка на существование листа и создание уникального имени
+            let existingSheet = workbook.getWorksheet(sheetName);
+            if (existingSheet) {
+                let counter = 1;
+                while (workbook.getWorksheet(`${sheetName} (${counter})`)) {
+                    counter++;
+                }
+                sheetName = `${sheetName} (${counter})`;
+            }
+
+            const worksheet = workbook.addWorksheet(sheetName);
             worksheet.columns = [
                 { header: 'Кто' },
                 { header: 'ФИО' },
@@ -429,22 +456,26 @@ export default {
                 { header: 'Доклад' }
             ];
 
-            // Add rows for participants
-            const rows = report.participantOfReport.map(data => [
-                data.who,
-                `${data.participant.surname} ${data.participant.name} ${data.participant?.patronymic ?? ''}`.trim(),
-                data.organization,
-                data.participant.email,
-                data.status,
-                data.form,
-                report.name
-            ]);
+            // Подготовка строк для участников
+            const rows = report.reports.map(data => {
+                const participant = data.participantOfReport[0].participant;
+                return [
+                    data.participantOfReport[0].who,
+                    `${participant.surname} ${participant.name} ${participant.patronymic || ''}`.trim(),
+                    data.participantOfReport[0].organization,
+                    participant.email,
+                    data.participantOfReport[0].status,
+                    data.participantOfReport[0].form,
+                    data.name
+                ];
+            });
+
             worksheet.addRows(rows);
 
-            // Merge cells for the "Доклад" column
-            worksheet.mergeCells(`G2:G${report.participantOfReport.length + 1}`);
+            // Объединение ячеек для колонки "Доклад"
+            worksheet.mergeCells(`G2:G${report.participantCount + 1}`); // +1 для корректного диапазона
         });
 
-        return workbook
-    }
+        return workbook;
+        }
 }
