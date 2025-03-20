@@ -22,7 +22,7 @@ function HomePage() {
       <HeaderPhone />
       <Header />
       <TopMainInfo />
-      {conference?.stages?.length > 0 && <SliderHomePageTop />}
+      {conference && conference?.stages?.length > 0 && <SliderHomePageTop />}
       <Layout>
         <section className={styles.textSection}>
           <div className={styles.textSectionIner}>
@@ -33,7 +33,7 @@ function HomePage() {
                 РАЗВИТИЯ, НО И ДЛЯ ЗДОРОВЬЯ!
               </p>
             </div>
-            {conference?.description && (
+            {conference && conference?.description && (
               <div className={styles.textSectionInerText}>
                 <div
                   className={styles.text}
@@ -49,7 +49,7 @@ function HomePage() {
               <p>НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ</p>
             </div>
             <div className={`${styles.blockTextCompetitionsInner} ${styles.pc}`}>
-              {conference?.directions?.map((el, index) => (
+              {conference && conference?.directions?.map((el, index) => (
                 <div key={index} className={styles.blockTextCompetitions}>
                   <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
                 </div>
@@ -57,14 +57,14 @@ function HomePage() {
             </div>
             <div className={`${styles.blockTextCompetitionsInner} ${styles.mobile}`}>
               <div className={styles.row_items}>
-                {conference?.directions?.slice(0, textData.length / 2 + 1).map((el, index) => (
+                {conference && conference?.directions?.slice(0, textData?.length / 2 + 1).map((el, index) => (
                   <div key={index} className={styles.blockTextCompetitions}>
                     <p dangerouslySetInnerHTML={{ __html: el.text }}></p>
                   </div>
                 ))}
               </div>
               <div className={styles.row_items}>
-                {conference?.directions
+                {conference && conference?.directions
                   ?.slice(textData.length / 2 + 1, textData.length)
                   .map((el, index) => (
                     <div key={index} className={styles.blockTextCompetitions}>
@@ -79,7 +79,7 @@ function HomePage() {
       <SliderHomePage />
       <SliderHomePageMobile />
       <Layout>
-        {conference?.organization.length > 0 && (
+        {conference && conference?.organization?.length > 0 && (
           <section className={styles.imgSection}>
             <div className={styles.Title}>
               <p>Организаторы</p>
@@ -91,7 +91,7 @@ function HomePage() {
             </div>
           </section>
         )}
-        {conference?.partner?.length > 0 && (
+        {conference && conference?.partner?.length > 0 && (
           <section className={styles.imgSection}>
             <div className={styles.Title}>
               <p>Партнёры</p>

@@ -55,7 +55,7 @@ function NewsPage() {
             <h2>НОВОСТИ</h2>
           </div>
           <div className={styles.ClickerYears}>
-            <ClickerYears />
+            <ClickerYears data={allDataSliders} />
           </div>
           <div className={styles.NewsPageContainer}>
             <div className={styles.NewsPageContainerInner}>

@@ -165,7 +165,7 @@ function HeaderPhone() {
                       )}
                     </AnimatePresence>
                   </motion.div>
-                  <li onClick={() => navigateTo('/')}>Главаня</li>
+                  <li onClick={() => navigateTo('/')}>Главная</li>
                   <li onClick={() => navigateTo('/author')}>Автору</li>
                   <li onClick={() => navigateTo('/news')}>Новости</li>
                   <li onClick={() => navigateTo('/participants')}>Участники</li>
