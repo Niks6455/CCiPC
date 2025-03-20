@@ -49,6 +49,8 @@ $w3: 480px;
     font-size: torem(18px);
     @media (max-width: $w3) {
       animation: none;
+      width: 100%;
+      padding: 0 torem(20px);
     }
     ul {
       list-style: none;
@@ -58,6 +60,7 @@ $w3: 480px;
       @media (max-width: $w3) {
         display: flex;
         flex-direction: column;
+        width: 100%;
       }
     }
     li {
@@ -79,10 +82,10 @@ $w3: 480px;
         width: torem(274px);
       }
       @media (max-width: $w3) {
-        width: calc(100% - torem(40px));
-        padding: 0 torem(0px);
+        width: 100%;
         flex-direction: column;
         align-items: start;
+        max-width: 100%;
       }
       .sliderLine {
         margin: 0 torem(33px);

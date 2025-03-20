@@ -4,6 +4,7 @@
   overflow: auto;
   border-bottom: torem(1px) solid #c8d0ce;
   border-radius: torem(8px);
+  @include ScrollBar;
 
   table {
     width: 100%;

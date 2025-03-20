@@ -1,9 +1,6 @@
-@import '../../styles/colors.scss';
-
-$w1: 1400px;
-$w2: 780px;
-$w3: 780px;
-$w4: 480px;
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .footer {
   height: torem(265px);
@@ -12,75 +9,106 @@ $w4: 480px;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-
   @media (max-width: $w2) {
-    padding: 30px 0px;
-    margin: 0 auto;
-    height: var(--heightFooterPlan);
+    height: torem(208px);
   }
-  @media (max-width: $w4) {
-    padding: 40px 25px;
-    height: var(--heightFooterPhone);
+  @media (max-width: $w3) {
+    height: auto;
   }
+
   .footerContainer {
     display: flex;
     width: torem(1345px);
-
+    height: torem(265px);
+    padding: torem(40px) 0;
+    box-sizing: border-box;
     @media (max-width: $w2) {
-      width: 100%;
-      justify-content: space-between;
+      width: 100vw;
+      height: torem(208px);
+      padding: torem(40px) torem(30px);
     }
     @media (max-width: $w3) {
+      height: auto;
+      width: 100vw;
+      padding: torem(40px) torem(25px);
       flex-direction: column;
     }
-
     .footerContainerLeft {
       display: flex;
       color: #fff;
+      @media (max-width: $w2) {
+        width: torem(530px);
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+      }
       .logo {
         display: flex;
-        width: torem(272px);
+        width: torem(270px);
+        height: torem(195px);
+        overflow: hidden;
         @media (max-width: $w2) {
-          width: 160px;
+          width: torem(159px);
+          height: torem(128px);
         }
-        @media (max-width: $w4) {
+        @media (max-width: $w3) {
           display: none;
         }
+
         img {
+          object-fit: cover;
           width: 100%;
-          min-height: calc(100% - 80px);
+          height: 100%;
         }
       }
       .footerText {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
         font-size: torem(20px);
         line-height: torem(26px);
         margin-left: torem(30px);
+        padding: torem(15px) 0;
         @media (max-width: $w2) {
-          margin-left: 15px;
+          height: torem(128px);
+          padding: 0;
+          margin: 0;
+          padding-left: torem(30px);
+          box-sizing: border-box;
         }
-        @media (max-width: $w4) {
-          margin-left: 0px;
+        @media (max-width: $w3) {
+          margin: 0;
+          padding: 0;
+          padding-bottom: torem(40px);
+          height: auto;
         }
+
         p {
           &:first-child {
             text-transform: uppercase;
-            margin: torem(15px) 0px torem(50px) 0px;
+            padding: torem(15px) 0px torem(35px) 0px;
             font-size: torem(28px);
             line-height: torem(39px);
             font-weight: 500;
             width: torem(757px);
             @media (max-width: $w2) {
-              width: 270px;
-              line-height: 18px;
-              font-size: 14px;
-              margin: 0;
-              margin-bottom: 15px;
+              font-size: torem(18px);
+              line-height: 140%;
+              letter-spacing: 0%;
+              width: torem(340px);
+              padding: 0;
+              padding-bottom: torem(15px);
             }
-            @media (max-width: $w4) {
-              width: 100%;
-              font-weight: 500;
-              font-size: 18px;
-              line-height: 25px;
+
+            img {
+              display: none;
+              @media (max-width: $w3) {
+                float: left;
+                display: flex;
+                width: torem(20px);
+                height: torem(20px);
+                filter: brightness(0) invert(1);
+              }
             }
           }
           &:last-child {
@@ -88,17 +116,12 @@ $w4: 480px;
             font-size: torem(22px);
             font-weight: 300;
             line-height: torem(26px);
-
             @media (max-width: $w2) {
-              width: 186px;
-              line-height: 18px;
-              font-size: 14px;
-            }
-            @media (max-width: $w4) {
               font-weight: 300;
-              font-size: 16px;
-              line-height: 19.2px;
-              width: 206px;
+              font-size: torem(16px);
+              line-height: 120%;
+              letter-spacing: 0%;
+              width: torem(206px);
             }
           }
         }
@@ -111,43 +134,21 @@ $w4: 480px;
       margin-left: torem(76px);
       text-align: right;
       @media (max-width: $w2) {
-        margin-left: 0px;
+        margin-left: torem(15px);
       }
       @media (max-width: $w3) {
-        width: 100%;
-        justify-content: left;
         text-align: left;
-        margin-top: 20px;
-        div {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-        }
-      }
-      @media (max-width: $w4) {
-        margin-top: 40px;
-        div {
-          display: flex;
-          flex-direction: column;
-          align-items: start;
-        }
+        margin: 0;
       }
       p {
         font-size: torem(20px);
         font-weight: 400;
         margin-bottom: torem(5px);
-
         @media (max-width: $w2) {
           font-weight: 400;
-          font-size: 14px;
-        }
-        @media (max-width: $w3) {
-          margin: 0;
-        }
-        @media (max-width: $w4) {
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 20.8px;
+          font-size: torem(16px);
+          line-height: 130%;
+          letter-spacing: 0%;
         }
       }
       .link {
@@ -158,17 +159,11 @@ $w4: 480px;
         margin: 0;
         text-wrap: nowrap;
         @media (max-width: $w2) {
-          font-weight: 300;
-          font-size: 14px;
+          width: torem(165px);
+          font-size: torem(14px);
         }
         @media (max-width: $w3) {
-          margin-left: 5px;
-        }
-        @media (max-width: $w4) {
-          margin-left: 0px;
-          font-size: 14px;
-          line-height: 16.8px;
-          margin-top: 5px;
+          width: 100%;
         }
 
         a {

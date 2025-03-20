@@ -72,11 +72,11 @@ function App() {
   };
 
   useEffect(() => {
-    const accessToken = localStorage.getItem('accessToken');
-    console.log('accessToken', accessToken);
-    if (accessToken !== null) {
-      funGetAllApi();
-    }
+    // const accessToken = localStorage.getItem('accessToken');
+    // console.log('accessToken', accessToken);
+    // if (accessToken !== null) {
+    funGetAllApi();
+    // }
   }, [dispatch]);
 
   useEffect(() => {
