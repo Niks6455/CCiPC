@@ -465,3 +465,13 @@ export const getUserEmail = async email => {
     console.log('getUserEmail ', error);
   }
 };
+
+//! удаление пользователя
+export const apiDeleteAccount = async () => {
+  try {
+    const response = await api.delete(`${server}/participants/self`);
+    return response;
+  } catch (error) {
+    console.log('apiDeleteAccount ', error);
+  }
+};
