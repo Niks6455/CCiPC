@@ -1,4 +1,6 @@
-@import './../../styles/colors.scss';
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .InputList {
   display: flex;
@@ -40,6 +42,7 @@
     border: torem(1px) solid var(--InputColors);
     background-color: inherit;
     margin: torem(15px) 0px;
+    padding: torem(20px);
     font-size: torem(20px);
     color: #000;
     box-sizing: border-box;
@@ -49,6 +52,16 @@
     &:focus {
       outline: none;
     }
+    @media (max-width: $w2) {
+      font-size: torem(18px);
+      height: torem(54px);
+    }
+    @media (max-width: $w3) {
+      font-size: torem(16px);
+    }
+  }
+  .paddingLeft {
+    padding-left: torem(60px);
   }
   .openInput {
     border-bottom-right-radius: 0;
@@ -67,7 +80,7 @@
     background-color: #f0f3f2;
     z-index: 100;
     bottom: 0;
-    width: calc(100% - torem(2px));
+    width: 100%;
     border: torem(1px) solid #c8d0ce;
     border-radius: torem(10px);
     border-top-left-radius: 0;
@@ -114,6 +127,16 @@
       min-height: torem(64px);
       padding: torem(20px);
       box-sizing: border-box;
+      font-weight: 400;
+      font-size: torem(20px);
+      @media (max-width: $w2) {
+        font-size: torem(18px);
+      }
+      @media (max-width: $w3) {
+        font-size: torem(14px);
+        min-height: auto;
+        padding: torem(15px) torem(20px);
+      }
     }
   }
   .open {

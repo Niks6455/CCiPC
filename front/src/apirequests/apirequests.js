@@ -9,7 +9,6 @@ export const logout = async () => {
   console.log(data);
   try {
     const response = await api.post(`${server}/auth/logout`, data);
-
     return response;
   } catch (error) {
     alert('Ошибка при выходе из системы !');
@@ -64,6 +63,9 @@ export const LoginFunc = async UserData => {
 export const CheckEmail = async Data => {
   try {
     const response = await api.post(`${server}/auth/checkEmail`, Data);
+    const { participant, jwt } = response.data;
+    localStorage.setItem('accessToken', jwt);
+    localStorage.setItem('userData', JSON.stringify(participant));
     return response;
   } catch (error) {
     console.error('CheckEmail', error);

@@ -14,10 +14,15 @@ import {
   funEightSymbols,
 } from '../../utils/functions/PasswordValidation';
 import { apiRegister } from '../../apirequests/apirequests';
+import { formatPhoneNumber } from '../../utils/functions/Validations';
+import glaz from '@assets/img/UI/glaz.svg';
+import noglaz from '@assets/img/UI/noglaz.svg';
 
 function Register() {
   const context = useContext(DataContext);
   const [openList, setOpenList] = useState('');
+  const [passActionFirst, setPassActionFirst] = useState('password');
+  const [passActionSecond, setPassActionSecond] = useState('password');
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
@@ -75,24 +80,9 @@ function Register() {
 
   const handleChange = e => {
     const { name, value } = e.target;
-
-    // Если поле "number", форматируем номер телефона
     const formattedValue = name === 'phone' ? formatPhoneNumber(value) : value;
-
     setFormData({ ...formData, [name]: formattedValue });
-
-    // Очистка ошибки при изменении значения
     setErrors({ ...errors, [name]: '' });
-  };
-
-  const formatPhoneNumber = value => {
-    // Форматируем номер в виде +7 (XXX) XXX-XX-XX
-    const cleaned = value.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
-    if (match) {
-      return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
-    }
-    return cleaned.slice(0, 16); // Ограничение длины
   };
 
   const validate = () => {
@@ -188,6 +178,21 @@ function Register() {
     };
   }, []);
 
+  const clickRigthImg = name => {
+    if (name === 'password') {
+      setPassActionFirst('text');
+    } else {
+      setPassActionFirst('password');
+    }
+  };
+  const clickRigthImgSecond = name => {
+    if (name === 'password') {
+      setPassActionSecond('text');
+    } else {
+      setPassActionSecond('password');
+    }
+  };
+
   return (
     <section className={styles.Login}>
       <div className={styles.LoginLogo}>
@@ -199,7 +204,7 @@ function Register() {
       </div>
       <div className={styles.input}>
         <div className={styles.inputInner}>
-          <div className={styles.inputInnerBlock}>
+          <div className={styles.first}>
             <Input
               name="name"
               onChange={handleChange}
@@ -209,16 +214,6 @@ function Register() {
               autoComplete={'new-password'}
             />
             <Input
-              name="organization"
-              onChange={handleChange}
-              value={formData.organization}
-              placeholder="Организация*"
-              error={errors.organization}
-              autoComplete={'new-password'}
-            />
-          </div>
-          <div className={styles.inputInnerBlock}>
-            <Input
               name="surname"
               onChange={handleChange}
               value={formData.surname}
@@ -227,32 +222,12 @@ function Register() {
               autoComplete={'new-password'}
             />
             <Input
-              name="email"
-              onChange={handleChange}
-              value={formData.email}
-              placeholder="Email (логин)*"
-              error={errors.email}
-              autoComplete={'new-password'}
-            />
-          </div>
-          <div className={styles.inputInnerBlock}>
-            <Input
               name="patronymic"
               onChange={handleChange}
               value={formData.patronymic}
               placeholder="Отчество"
               autoComplete={'new-password'}
             />
-            <Input
-              name="phone"
-              onChange={handleChange}
-              value={formData.phone}
-              placeholder="Номер телефона*"
-              error={errors.phone}
-              autoComplete={'new-password'}
-            />
-          </div>
-          <div className={styles.inputInnerBlock}>
             <InputList
               name="academicTitle"
               onChange={handleChange}
@@ -264,22 +239,6 @@ function Register() {
               list={zwanieList}
               funSelectElement={funSelectedElement}
             />
-            <Input
-              name="password"
-              onChange={handleChange}
-              value={formData.password}
-              placeholder="Придумайте пароль*"
-              error={errors.password}
-              type="password"
-              errorList={errorListPassword}
-              setErrorList={setErrorListPassword}
-              errorListImgHover={listErrorOnHover}
-              errorListImgNoHover={listErrorNoHover}
-              imgSrc={lock}
-              autoComplete={'new-password'}
-            />
-          </div>
-          <div className={styles.inputInnerBlock}>
             <InputList
               name="degree"
               onChange={handleChange}
@@ -291,18 +250,7 @@ function Register() {
               list={stepenList}
               funSelectElement={funSelectedElement}
             />
-            <Input
-              name="confirmPassword"
-              onChange={handleChange}
-              value={formData.confirmPassword}
-              placeholder="Повторите пароль*"
-              error={errors.confirmPassword}
-              type="password"
-              imgSrc={lock}
-              autoComplete={'new-password'}
-            />
-          </div>
-          <div className={styles.inputInnerBlock}>
+
             <InputList
               name="position"
               onChange={handleChange}
@@ -314,6 +262,64 @@ function Register() {
               list={doljnostList}
               funSelectElement={funSelectedElement}
               error={errors.position}
+            />
+          </div>
+          <div className={styles.secind}>
+            <Input
+              name="organization"
+              onChange={handleChange}
+              value={formData.organization}
+              placeholder="Организация*"
+              error={errors.organization}
+              autoComplete={'new-password'}
+            />
+            <Input
+              name="email"
+              onChange={handleChange}
+              value={formData.email}
+              placeholder="Email (логин)*"
+              error={errors.email}
+              autoComplete={'new-password'}
+            />
+            <Input
+              name="phone"
+              onChange={handleChange}
+              value={formData.phone}
+              placeholder="Номер телефона*"
+              error={errors.phone}
+              autoComplete={'new-password'}
+            />
+            <Input
+              name="password"
+              onChange={handleChange}
+              value={formData.password}
+              placeholder="Придумайте пароль*"
+              error={errors.password}
+              errorList={errorListPassword}
+              setErrorList={setErrorListPassword}
+              errorListImgHover={listErrorOnHover}
+              errorListImgNoHover={listErrorNoHover}
+              imgSrc={lock}
+              autoComplete={'new-password'}
+              type={passActionFirst}
+              rigthImg={glaz}
+              rigthImgActive={noglaz}
+              rigthImgActiveAction={passActionFirst === 'text'}
+              rigthImgClick={() => clickRigthImg(passActionFirst)}
+            />
+            <Input
+              name="confirmPassword"
+              onChange={handleChange}
+              value={formData.confirmPassword}
+              placeholder="Повторите пароль*"
+              error={errors.confirmPassword}
+              type={passActionSecond}
+              imgSrc={lock}
+              autoComplete={'new-password'}
+              rigthImg={glaz}
+              rigthImgActive={noglaz}
+              rigthImgActiveAction={passActionSecond === 'text'}
+              rigthImgClick={() => clickRigthImgSecond(passActionSecond)}
             />
           </div>
         </div>

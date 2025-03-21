@@ -6,8 +6,10 @@ import confirm from './../../assets/img/confirm.svg';
 import errorItem from '@assets/img/UI/error.svg';
 import { CheckEmail } from '../../apirequests/apirequests';
 import { AnimatePresence, motion } from 'framer-motion';
-function ConfirmLogin() {
+import { useNavigate } from 'react-router-dom';
+function ConfirmLogin(props) {
   const context = useContext(DataContext);
+  const navigete = useNavigate();
   const [code, setCode] = useState(['', '', '', '', '', '']); // Для кода
   const [errorAuth, setErrorAuth] = useState(false);
   const [errors, setErrors] = useState([false, false, false, false, false, false]); // Для ошибок
@@ -72,8 +74,9 @@ function ConfirmLogin() {
     };
     CheckEmail(data).then(resp => {
       if (resp?.status === 200) {
-        context?.setAuthPage('Auth');
         setErrorAuth(false);
+        props.funGetAllApi();
+        navigete('/');
       } else {
         setErrorAuth(true);
       }

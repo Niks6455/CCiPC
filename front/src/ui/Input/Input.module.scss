@@ -11,6 +11,8 @@ $w3: 480px;
     left: torem(25px);
     top: 50%;
     transform: translateY(-50%);
+    width: torem(24px);
+    height: torem(24px);
   }
   .errorListImg {
     position: absolute;
@@ -54,6 +56,8 @@ $w3: 480px;
       color: #5b605e;
       img {
         margin-right: torem(4px);
+        width: torem(24px);
+        height: torem(24px);
       }
     }
   }
@@ -95,7 +99,7 @@ $w3: 480px;
     height: torem(24px);
     position: absolute;
     right: torem(5px);
-    top: calc(50% + torem(10px));
+    top: calc(50%);
     transform: translateY(-50%);
     cursor: pointer;
     // z-index: 1000;
@@ -121,7 +125,19 @@ $w3: 480px;
     &:focus {
       outline: none;
     }
+    @media (max-width: $w2) {
+      font-size: torem(18px);
+      height: torem(54px);
+    }
+    @media (max-width: $w3) {
+      font-size: torem(16px);
+    }
   }
+
+  .padding_left {
+    padding-left: torem(60px);
+  }
+
   .errorInput {
     border: torem(1px) solid var(--ErrorColor);
   }
@@ -132,7 +148,7 @@ $w3: 480px;
     margin-top: torem(4px);
     position: absolute;
     right: torem(20px);
-    top: 0px;
+    top: torem(-25px);
     padding: 0px torem(5px);
     background-color: #f0f3f2;
     transform: translateY(torem(25px));
