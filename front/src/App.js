@@ -43,15 +43,14 @@ import { useWindowWidth } from './hooks/hooks';
 
 function App() {
   const dispatch = useDispatch();
-
   const queryClient = new QueryClient();
 
   const [authPage, setAuthPage] = useState('Auth');
   const [mailValue, setMailValue] = useState('');
-  const [numberValue, setNumberValue] = useState('79805005050');
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState('profile');
   const [activeMenu, setActiveMenu] = useState(false);
+  const [userRole, setUserRole] = useState(1);
 
   const funGetAllApi = () => {
     //! получение данных пользователя
@@ -70,6 +69,16 @@ function App() {
     //! чистим данные конференций
     dispatch(disResetConferences());
   };
+
+  console.log(
+    "localStorage.getItem('userData')",
+    JSON.parse(localStorage.getItem('userData'))?.participant?.role,
+  );
+  useEffect(() => {
+    const userData = localStorage.getItem('userData');
+    const userRole = userData ? JSON.parse(userData)?.participant?.role : 1;
+    setUserRole(userRole);
+  }, [localStorage.getItem('userData')]);
 
   useEffect(() => {
     // const accessToken = localStorage.getItem('accessToken');
@@ -115,8 +124,6 @@ function App() {
     setSelectFrameLks,
     activeMenu,
     setActiveMenu,
-    numberValue,
-    setNumberValue,
   };
 
   const footerRef = useRef(null);
@@ -168,15 +175,17 @@ function App() {
                   <Route path="checkemail" element={<RecoverPassword />}></Route>
                 </Route>
                 <Route path="/organizationcomite" element={<CommitteesPage />}></Route>
-                <Route path="/adminPage/*" element={<AdminPage />}>
-                  <Route path="archive" element={<ArchiveModulePage />} />
-                  <Route path="collections" element={<Сollections />} />
-                  <Route path="participants" element={<ColaboratorsModuleAdminPage />} />
-                  <Route path="committee" element={<OrgazmCommetet />} />
-                  <Route path="news" element={<NewsModuleAdminPage />} />
-                  <Route path="conferences" element={<ConfirenceModuleAdminPage />} />
-                  <Route path="registrationFee" element={<OrgWznosModuleAdminPage />} />
-                </Route>
+                {userRole === 1 && (
+                  <Route path="/adminPage/*" element={<AdminPage />}>
+                    <Route path="archive" element={<ArchiveModulePage />} />
+                    <Route path="collections" element={<Сollections />} />
+                    <Route path="participants" element={<ColaboratorsModuleAdminPage />} />
+                    <Route path="committee" element={<OrgazmCommetet />} />
+                    <Route path="news" element={<NewsModuleAdminPage />} />
+                    <Route path="conferences" element={<ConfirenceModuleAdminPage />} />
+                    <Route path="registrationFee" element={<OrgWznosModuleAdminPage />} />
+                  </Route>
+                )}
               </Routes>
             </div>
             <Footer footerRef={footerRef} />
