@@ -124,7 +124,6 @@ function App() {
   useEffect(() => {
     if (footerRef?.current) {
       const footerHeight = footerRef.current.offsetHeight;
-      console.log('footerHeight', footerHeight);
       const mainDiv = document.getElementById('#main_inner');
       if (mainDiv) {
         mainDiv.style.minHeight = `calc(100vh - ${footerHeight}px)`;
