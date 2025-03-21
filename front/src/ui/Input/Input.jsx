@@ -103,7 +103,7 @@ function Input(props) {
         disabled={props?.disabled}
         value={props?.value}
         placeholder={props?.placeholder}
-        className={`${props?.error ? styles.errorInput : ''}`}
+        className={`${props?.error ? styles.errorInput : ''} ${props?.imgSrc && !props?.value ? styles.padding_left : ''}`}
         type={props.type || 'text'}
         autoComplete={props.autoComplete ? props.autoComplete : 'on'}
       />
