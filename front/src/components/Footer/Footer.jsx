@@ -6,7 +6,7 @@ import { server } from '../../apirequests/apirequests';
 import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 function Footer({ footerRef }) {
   const conferense = useSelector(state => state.conferences?.data[0]);
-  console.log('conferense', conferense);
+
   return (
     <footer className={styles.footer} ref={footerRef}>
       <Layout>

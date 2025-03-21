@@ -179,6 +179,7 @@ function OrgazmCommetet() {
               {addFirstTwo && (
                 <AddOrgPeople
                   ref={addOrgPeopleRef}
+                  getDataOrg={getDataOrg}
                   type={activeButtonTwoo + 2}
                   closeCreateOne={closeCreateTwo}
                 />

@@ -4,6 +4,16 @@
   gap: 10px; /* Убираем отступы между элементами */
   max-width: 1300px;
   margin: 0 auto;
+  @media (max-width: 930px) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+    padding: 20px;
+  }
+  @media (max-width: 460px) {
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 350px;
+  }
+
   .photoItem {
     width: 100%; /* Растягиваем по ширине колонки */
     height: 300px;
@@ -12,6 +22,13 @@
     transition: 0.1s linear all;
     border-radius: 10px;
     cursor: pointer;
+    @media (max-width: 1260px) {
+      height: 250px;
+    }
+    @media (max-width: 460px) {
+      height: 300px;
+    }
+ 
     &:hover {
       .photo {
         scale: 1.1;
@@ -54,6 +71,9 @@
       padding: 5px 10px;
       box-sizing: border-box;
       text-align: center;
+      @media (max-width: 1260px) {
+        height: 40px;
+      }
       .photoTitle {
         width: 100%;
         color: #fff;

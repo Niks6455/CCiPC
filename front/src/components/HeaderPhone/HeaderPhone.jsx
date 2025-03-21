@@ -1,5 +1,5 @@
 import styles from './HeaderPhone.module.scss';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import arrow from '@assets/img/arrow.svg';
@@ -17,6 +17,7 @@ function HeaderPhone() {
   const navigate = useNavigate();
   const [activeMenuListFirst, setActiveMenuListFirst] = useState(false);
   const [activeMenuListSecond, setActiveMenuListSecond] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   const navigateTo = path => {
     navigate(path);
@@ -24,9 +25,26 @@ function HeaderPhone() {
     setActiveMenuListFirst(false);
     setActiveMenuListSecond(false);
   };
+
+  const updateVisibility = () => {
+    const url = window.location.href;
+    const shouldShow = (url.includes('/account') && window.innerWidth < 770) || window.innerWidth < 480;
+    setIsVisible(shouldShow);
+  };
+
+  useEffect(() => {
+    updateVisibility(); // Initial check
+    window.addEventListener('resize', updateVisibility); // Update on resize
+    return () => window.removeEventListener('resize', updateVisibility); // Cleanup on unmount
+  }, []);
+
   return (
     <div>
-      <div className={styles.HeaderPhoneContainer}>
+      <div className={styles.HeaderPhoneContainer} style={{
+          display: isVisible ? 'flex' : 'none',
+          position: isVisible ? 'fixed' : 'absolute',
+          zIndex: isVisible ? 10000 : -1,
+        }} >
         <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(!activeMenu)}>
           <div className={styles.NavBarMenu}>
             <span></span>
@@ -105,7 +123,7 @@ function HeaderPhone() {
                               <p>Мои доклады</p>
                             </div>
                           </li>
-                          <li onClick={() => navigateTo('/account/archive')}>
+                          <li onClick={() => navigateTo('/account/archivephoto')}>
                             <div className={styles.NavBarMenuListInnerLiImg}>
                               <span>
                                 <img src={archive} />
