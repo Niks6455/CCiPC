@@ -93,7 +93,7 @@ function Login(props) {
             <p
               onClick={() => {
                 navigate('/recoverpassword');
-                sandResetPassword();
+                // sandResetPassword();
               }}
             >
               Забыли пароль?

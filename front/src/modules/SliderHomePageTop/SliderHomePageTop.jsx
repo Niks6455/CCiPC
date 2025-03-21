@@ -1,11 +1,17 @@
 import Layout from '../../ui/Layout/Layout';
 import styles from './SliderHomePageTop.module.scss';
-import { dataSlider } from './date';
 import LineSlider from '../../assets/img/LineSlider.svg';
 import { useSelector } from 'react-redux';
+import { useWindowWidth } from '../../hooks/hooks';
+import { useEffect, useState } from 'react';
 function SliderHomePageTop() {
+  const [mobile, setMobile] = useState(false);
   // Дублируем массив данных для бесконечного скролла
   const conferenceStages = useSelector(state => state.conferences.data[0].stages);
+  useEffect(() => {
+    console.log(' useWindowWidth()', window.innerWidth);
+    setMobile(window.innerWidth < 480);
+  }, [useWindowWidth()]);
 
   return (
     <div className={styles.SliderHomePageTop}>
@@ -17,7 +23,7 @@ function SliderHomePageTop() {
         <div className={styles.SliderHomePageTopInner}>
           <div className={styles.Slider}>
             <ul>
-              {Array(100)
+              {Array(mobile ? 1 : 100)
                 .fill(conferenceStages)
                 .flat()
                 .map((el, index) => (
