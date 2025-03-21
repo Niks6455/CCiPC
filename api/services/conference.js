@@ -5,7 +5,7 @@ import {AppErrorAlreadyExists, AppErrorInvalid, AppErrorMissing, AppErrorNotExis
 import ParticipantInConference from "../models/participant-in-conference.js";
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
-import {Op} from "sequelize";
+import {Op, Sequelize} from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import ExcelJS from 'exceljs';
 import {sequelize} from "../models/index.js";
@@ -398,19 +398,26 @@ export default {
                     model: ParticipantOfReport,
                     as: 'participantOfReport',
                     required: true,
-                    include: [
+                    include:
                         {
                             model: Participant,
                             as: 'participant',
                             required: true,
                         }
-                    ]
                 }
             ],
+            group: ['direction.id', 'Report.id', 'participantOfReport.id','participantOfReport.participant.id'], // Группировка по directionId
+            attributes: {
+                include: [
+                    [sequelize.fn('COUNT', sequelize.col('participantOfReport.participant_id')), 'participantCount'], // Подсчет участников
+                    [sequelize.fn('COUNT', sequelize.col('Report.id')), 'reportCount'] // Подсчет докладов
+                ]
+            }
         });
 
+
 // Группировка отчетов по направлению
-        const groupedReports = reports.reduce((acc, report) => {
+     /*   const groupedReports = reports.reduce((acc, report) => {
             const direction = report.direction.name;
 
             if (!acc[direction]) {
@@ -425,15 +432,14 @@ export default {
             acc[direction].participantCount += report.participantOfReport.length;
 
             return acc;
-        }, {});
+        }, {});*/
 
 // Преобразуем объект в массив
-        const resultReports = Object.values(groupedReports);
 
         const workbook = new ExcelJS.Workbook();
 
-        resultReports.forEach(report => {
-            let sheetName = report.direction;
+        reports.forEach(report => {
+            let sheetName = report.direction.name;
 
             // Проверка на существование листа и создание уникального имени
             let existingSheet = workbook.getWorksheet(sheetName);
@@ -456,24 +462,22 @@ export default {
                 { header: 'Доклад' }
             ];
 
+
             // Подготовка строк для участников
-            const rows = report.reports.map(data => {
-                const participant = data.participantOfReport[0].participant;
-                return [
-                    data.participantOfReport[0].who,
-                    `${participant.surname} ${participant.name} ${participant.patronymic || ''}`.trim(),
-                    data.participantOfReport[0].organization,
-                    participant.email,
-                    data.participantOfReport[0].status,
-                    data.participantOfReport[0].form,
-                    data.name
-                ];
-            });
+            const rows = report.participantOfReport.map(data => [
+                data.who,
+                `${data.participant.surname} ${data.participant.name} ${data.participant?.patronymic ?? ''}`.trim(),
+                data.organization,
+                data.participant.email,
+                data.status,
+                data.form,
+                report.name
+            ]);
 
             worksheet.addRows(rows);
 
             // Объединение ячеек для колонки "Доклад"
-            worksheet.mergeCells(`G2:G${report.participantCount + 1}`); // +1 для корректного диапазона
+            worksheet.mergeCells(`G2:G${report.participantOfReport.length + 1}`);
         });
 
         return workbook;
