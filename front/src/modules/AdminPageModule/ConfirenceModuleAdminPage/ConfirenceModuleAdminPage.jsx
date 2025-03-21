@@ -8,6 +8,7 @@ import Directions from './Directions/Directions';
 import DateAdsess from './DateAdsess/DateAdsess';
 import Organizers from './Organizers/Organizers';
 import {
+  apiCreateConferences,
   apiGetConferencesById,
   apiPutConferencesById,
   uploadMulti,
@@ -17,13 +18,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
 import { convertDate, convertDateTire } from '../../../utils/functions/funcions';
 import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSuccessfully';
-import { fileKeys } from './data';
+import { conferenceDataNull, fileKeys } from './data';
 import ReqError from '../../../components/ReqError/ReqError';
 import { fetchConferences } from '../../../store/conferencesSlice/conferences.Slice';
 
 function ConfirenceModuleAdminPage() {
   const dispatch = useDispatch();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(conferenceDataNull);
   const conferenses = useSelector(state => state.conferences?.data);
   const [conferenseId, setConferenseId] = useState(null);
   const [deleteOrganizer, setDeleteOrganizer] = useState([]);
@@ -37,6 +38,10 @@ function ConfirenceModuleAdminPage() {
     enabled: !!conferenseId,
   });
 
+  useEffect(() => {
+    console.log('data', data);
+  }, [data]);
+
   const funSetErrors = (key, value) => {
     setErrors(errors => [
       ...errors,
@@ -48,6 +53,7 @@ function ConfirenceModuleAdminPage() {
     ]);
   };
 
+  //! запись id конференции
   useEffect(() => {
     if (conferenses?.[0]?.id) {
       setConferenseId(conferenses[0]?.id);
@@ -158,18 +164,35 @@ function ConfirenceModuleAdminPage() {
       }
     });
 
-    apiPutConferencesById(dat, conferenseId).then(res => {
-      if (res?.status === 200) {
-        setDeleteOrganizer([]);
-        setDeletePartners([]);
-        funSetErrors('main', true);
-        setModalSucces(true);
-        dispatch(fetchConferences());
-      } else {
-        funSetErrors('main', false);
-        setModalSucces(false);
-      }
-    });
+    //! если конференция создана
+    if (conferenseId) {
+      apiPutConferencesById(dat, conferenseId).then(res => {
+        if (res?.status === 200) {
+          setDeleteOrganizer([]);
+          setDeletePartners([]);
+          funSetErrors('main', true);
+          setModalSucces(true);
+          dispatch(fetchConferences());
+        } else {
+          funSetErrors('main', false);
+          setModalSucces(false);
+        }
+      });
+    } else {
+      //! если конференция еще не создана
+      apiCreateConferences(dat).then(res => {
+        if (res?.status === 200) {
+          setDeleteOrganizer([]);
+          setDeletePartners([]);
+          funSetErrors('main', true);
+          setModalSucces(true);
+          dispatch(fetchConferences());
+        } else {
+          funSetErrors('main', false);
+          setModalSucces(false);
+        }
+      });
+    }
   };
 
   //! функция отмена

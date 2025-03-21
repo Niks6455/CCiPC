@@ -43,41 +43,43 @@ function HomePage() {
             )}
           </div>
         </section>
-        <section className={styles.clickerSection}>
-          <div>
-            <div className={styles.Title}>
-              <p>НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ</p>
-            </div>
-            <div className={`${styles.blockTextCompetitionsInner} ${styles.pc}`}>
-              {conference &&
-                conference?.directions?.map((el, index) => (
-                  <div key={index} className={styles.blockTextCompetitions}>
-                    <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
-                  </div>
-                ))}
-            </div>
-            <div className={`${styles.blockTextCompetitionsInner} ${styles.mobile}`}>
-              <div className={styles.row_items}>
+        {conference?.directions?.length > 0 && (
+          <section className={styles.clickerSection}>
+            <div>
+              <div className={styles.Title}>
+                <p>НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ</p>
+              </div>
+              <div className={`${styles.blockTextCompetitionsInner} ${styles.pc}`}>
                 {conference &&
-                  conference?.directions?.slice(0, textData?.length / 2 + 1).map((el, index) => (
+                  conference?.directions?.map((el, index) => (
                     <div key={index} className={styles.blockTextCompetitions}>
                       <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
                     </div>
                   ))}
               </div>
-              <div className={styles.row_items}>
-                {conference &&
-                  conference?.directions
-                    ?.slice(textData.length / 2 + 1, textData.length)
-                    .map((el, index) => (
+              <div className={`${styles.blockTextCompetitionsInner} ${styles.mobile}`}>
+                <div className={styles.row_items}>
+                  {conference &&
+                    conference?.directions?.slice(0, textData?.length / 2 + 1).map((el, index) => (
                       <div key={index} className={styles.blockTextCompetitions}>
                         <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
                       </div>
                     ))}
+                </div>
+                <div className={styles.row_items}>
+                  {conference &&
+                    conference?.directions
+                      ?.slice(textData.length / 2 + 1, textData.length)
+                      .map((el, index) => (
+                        <div key={index} className={styles.blockTextCompetitions}>
+                          <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
+                        </div>
+                      ))}
+                </div>
               </div>
             </div>
-          </div>
-        </section>
+          </section>
+        )}
       </Layout>
       <SliderHomePage />
       <SliderHomePageMobile />

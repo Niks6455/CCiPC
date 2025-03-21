@@ -152,7 +152,7 @@ function App() {
                   element={<AuthPage funGetAllApi={funGetAllApi} />}
                 ></Route>
                 <Route path="/participants" element={<Participants />}></Route>
-                <Route path="/account" element={<Lks />}>
+                <Route path="/account" element={<Lks userRole={userRole} />}>
                   <Route path="documents" element={<DocumentsLk />}></Route>
                   <Route path="createreport" element={<CreateReport />} />
                   <Route path="addcoauthor" element={<AddCoauthor />} />

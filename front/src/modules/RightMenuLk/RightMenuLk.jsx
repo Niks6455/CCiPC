@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './RightMenuLk.module.scss';
 import NavBar from '../../components/NavBar/NavBar';
-function RightMenuLk() {
+function RightMenuLk(props) {
   const checkPathName = () => {
     return window.location.pathname.includes('/adminPage');
   };
@@ -9,7 +9,7 @@ function RightMenuLk() {
   return (
     <section className={`${styles.RightMenuLk} ${checkPathName() ? styles.RightMenuLkhide : ''}`}>
       <div className={styles.RightMenuLkContainer}>
-        <NavBar />
+        <NavBar userRole={props.userRole} />
       </div>
     </section>
   );
