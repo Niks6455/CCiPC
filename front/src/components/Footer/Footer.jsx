@@ -6,7 +6,7 @@ import { server } from '../../apirequests/apirequests';
 import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 function Footer({ footerRef }) {
   const conferense = useSelector(state => state.conferences?.data[0]);
-  console.log('conferense', conferense);
+
   return (
     <footer className={styles.footer} ref={footerRef}>
       <Layout>
@@ -20,7 +20,14 @@ function Footer({ footerRef }) {
               />
             </div>
             <div className={styles.footerText}>
-              <p>Всероссийская научная конференция "Системный синтез и прикладная синергетика"</p>
+              <p>
+                <img
+                  src={`${server}/${conferense?.logo?.FOOTER}` || footerLogo}
+                  alt="logo"
+                  onError={e => (e.target.src = footerLogo)}
+                />
+                Всероссийская научная конференция "Системный синтез и прикладная синергетика"
+              </p>
               <p>
                 {' '}
                 {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value)}

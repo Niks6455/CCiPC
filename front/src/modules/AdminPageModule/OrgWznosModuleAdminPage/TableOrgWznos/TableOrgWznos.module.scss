@@ -4,8 +4,9 @@
   border-bottom: torem(1px) solid #c8d0ce;
   border-radius: torem(8px);
   width: calc(100%);
+  min-height: 58vh;
+  max-height: 58vh;
   @include ScrollBar;
-  min-height: 60vh;
 
   table {
     min-width: 100%;

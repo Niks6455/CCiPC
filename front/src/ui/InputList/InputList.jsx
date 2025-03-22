@@ -25,13 +25,11 @@ function InputList(props) {
         placeholder={props?.placeholder}
         className={`${props?.error ? styles.errorInputList : ''} ${
           props?.open && styles.openInput
-        }`}
+        } ${props?.imgSrc && !props?.value ? styles.paddingLeft : ''}`}
         type={props.type || 'text'}
-        style={{
-          paddingLeft:
-            props?.imgSrc && !props?.value && '55px' ? (!props?.value ? '55px' : '') : '25px',
-        }}
         autoComplete={!props.autoComplete && 'new-password'}
+        onClick={() => props.funOpen(props?.name)}
+        readOnly={props.readOnly || true}
       />
       <div
         className={styles.arrow}

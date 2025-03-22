@@ -56,8 +56,6 @@ function ConfirenceModuleAdminPage() {
 
   const funUpdData = () => {
     const qery = conferensetQery?.data?.data?.conference;
-    console.log('conferensetQery', qery);
-
     if (qery) {
       let data = {
         stages: qery.stages.map(item => ({

@@ -1,8 +1,6 @@
 services:
   app:
     image: git.rdcenter.ru/rdcenter/ccipc-backend:main
-    volumes:
-      - "/srv/ccipc/node_modules"
     env_file:
       - stack.env
     ports:

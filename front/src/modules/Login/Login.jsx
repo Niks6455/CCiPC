@@ -5,9 +5,12 @@ import DataContext from '../../context';
 import { useNavigate } from 'react-router-dom';
 import logo from './../../assets/img/logo.png';
 import sfeduLogo from './../../assets/img/SfeduLogo.svg';
-import { LoginFunc, sandResetPassword } from '../../apirequests/apirequests';
+import { LoginFunc } from '../../apirequests/apirequests';
+import glaz from '@assets/img/UI/glaz.svg';
+import noglaz from '@assets/img/UI/noglaz.svg';
 function Login(props) {
   const context = useContext(DataContext);
+  const [passActionFirst, setPassActionFirst] = useState('password');
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: '',
@@ -59,6 +62,14 @@ function Login(props) {
     }
   };
 
+  const clickRigthImg = name => {
+    if (name === 'password') {
+      setPassActionFirst('text');
+    } else {
+      setPassActionFirst('password');
+    }
+  };
+
   return (
     <section className={styles.Login}>
       <div className={styles.LoginLogo}>
@@ -86,14 +97,18 @@ function Login(props) {
             placeholder="Пароль"
             imgSrc="/img/password.svg"
             error={errors.password}
-            type="password"
-            autoComplete={true}
+            type={passActionFirst}
+            rigthImg={glaz}
+            rigthImgActive={noglaz}
+            rigthImgActiveAction={passActionFirst === 'text'}
+            rigthImgClick={() => clickRigthImg(passActionFirst)}
+            autoComplete={'off'}
           />
           <div className={styles.forgetPassword}>
             <p
               onClick={() => {
                 navigate('/recoverpassword');
-                sandResetPassword();
+                // sandResetPassword();
               }}
             >
               Забыли пароль?

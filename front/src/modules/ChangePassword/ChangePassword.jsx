@@ -1,4 +1,4 @@
-import { act, useState } from 'react';
+import { useState } from 'react';
 import styles from './ChangePassword.module.scss';
 import Input from '../../ui/Input/Input';
 import glaz from '@assets/img/UI/glaz.svg';
@@ -10,7 +10,6 @@ import {
   funDigit,
   funEightSymbols,
 } from '../../utils/functions/PasswordValidation';
-import { useMutation } from '@tanstack/react-query';
 import { apiChangePassword } from '../../apirequests/apirequests';
 import confitmIcon from '@assets/img/confirm.svg';
 import { useNavigate } from 'react-router-dom';

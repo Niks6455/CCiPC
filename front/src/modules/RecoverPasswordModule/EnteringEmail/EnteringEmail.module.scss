@@ -1,9 +1,17 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .EnteringEmail {
   width: 100%;
   min-height: 80vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media (max-width: $w3) {
+    width: 100vw;
+    padding: torem(30px);
+  }
   .container {
     display: flex;
     flex-direction: column;
@@ -11,75 +19,97 @@
     .logo {
       display: flex;
       justify-content: center;
-      height: 170px;
-      width: 170px;
+      height: torem(170px);
+      width: torem(170px);
       margin: 0 auto;
-      margin-bottom: 40px;
+      margin-bottom: torem(40px);
+      @media (max-width: $w3) {
+        height: torem(100px);
+        width: torem(100px);
+      }
       img {
-        height: 170px;
-        width: 170px;
+        height: torem(170px);
+        width: torem(170px);
+        @media (max-width: $w3) {
+          height: torem(100px);
+          width: torem(100px);
+        }
       }
     }
 
     h2 {
       font-family: Overpass, sans-serif;
       font-weight: 900;
-      font-size: 32px;
-      line-height: 38.4px;
+      font-size: torem(32px);
+      line-height: torem(38px);
       letter-spacing: 0%;
       text-align: center;
       color: #333333;
       padding: 0;
       margin: 0 auto;
-      margin-bottom: 20px;
+      margin-bottom: torem(20px);
+      @media (max-width: $w3) {
+        font-size: torem(22px);
+      }
     }
     p {
       font-family: Overpass, sans-serif;
       font-weight: 400;
-      font-size: 18px;
-      line-height: 21.6px;
+      font-size: torem(18px);
+      line-height: torem(21px);
       letter-spacing: 0%;
       text-align: center;
       color: #333333;
       padding: 0;
       margin: 0 auto;
-      margin-bottom: 40px;
-      max-width: 460px;
+      margin-bottom: torem(40px);
+      max-width: torem(460px);
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+      }
     }
     .email_input_container {
       position: relative;
-      margin-bottom: 40px;
-      width: 490px;
-      height: 64px;
-      border-radius: 10px;
-      border: 1px solid #c8d0ce;
+      margin-bottom: torem(40px);
+      width: torem(490px);
+      height: torem(64px);
+      border-radius: torem(10px);
+      border: torem(1px) solid #c8d0ce;
       display: flex;
       flex-direction: row;
       align-items: center;
-      padding: 20px;
+      padding: torem(20px);
       box-sizing: border-box;
       transition: all 0.2s linear;
+      @media (max-width: $w3) {
+        width: 100%;
+        height: torem(52px);
+        margin-bottom: torem(20px);
+      }
 
       .error {
         position: absolute;
         top: -10px;
-        right: 25px;
+        right: torem(25px);
         background-color: var(--BodyBgColor);
-        height: 20px;
+        height: torem(20px);
         z-index: 100;
-        padding: 0 5px;
+        padding: 0 torem(5px);
 
         span {
           color: #b32020;
           font-family: Overpass, sans-serif;
           font-weight: 500;
-          font-size: 16px;
+          font-size: torem(16px);
+          @media (max-width: $w3) {
+            font-size: torem(14px);
+          }
         }
       }
       svg {
-        width: 24px;
-        height: 24px;
-        margin-right: 10px;
+        width: torem(24px);
+        height: torem(24px);
+        margin-right: torem(10px);
         transition: all 0.2s linear;
       }
       .error_icon {
@@ -97,17 +127,25 @@
         font-family: Overpass, sans-serif;
         font-weight: 400;
         color: #333;
-        font-size: 20px;
+        font-size: torem(20px);
+        @media (max-width: $w3) {
+          font-size: torem(16px);
+          height: torem(52px);
+        }
       }
     }
     .error_box {
-      border: 1px solid #b32020;
+      border: torem(1px) solid #b32020;
       transition: all 0.2s linear;
     }
     .next_button {
       @include ButtonGreen;
-      width: 490px;
-      height: 64px;
+      width: torem(490px);
+      height: torem(64px);
+      @media (max-width: $w3) {
+        width: 100%;
+        height: torem(52px);
+      }
     }
   }
 }

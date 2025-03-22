@@ -47,6 +47,8 @@
         box-sizing: border-box;
         border-radius: torem(5px);
         img {
+          width: torem(24px);
+          height: torem(24px);
           margin-right: torem(10px);
         }
         &:hover {

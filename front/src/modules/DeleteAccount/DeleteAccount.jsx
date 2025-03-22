@@ -3,9 +3,19 @@ import deleteImg from './../../assets/img/delete.png';
 import style from './DeleteAccount.module.scss';
 import { useContext } from 'react';
 import DataContext from '../../context';
+import { apiDeleteAccount } from '../../apirequests/apirequests';
 function DeleteAccount() {
   const navigate = useNavigate();
   const context = useContext(DataContext);
+  const funDeleteAccaunt = () => {
+    apiDeleteAccount().then(res => {
+      if (res?.status === 200) {
+        navigate('/authorization');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('userData');
+      }
+    });
+  };
   return (
     <section className={style.DeleteAccount}>
       <div>
@@ -25,7 +35,7 @@ function DeleteAccount() {
           >
             Нет
           </button>
-          <button>Да</button>
+          <button onClick={funDeleteAccaunt}>Да</button>
         </div>
       </div>
     </section>

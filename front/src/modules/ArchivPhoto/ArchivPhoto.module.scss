@@ -4,14 +4,31 @@
   gap: 10px; /* Убираем отступы между элементами */
   max-width: 1300px;
   margin: 0 auto;
+  @media (max-width: 930px) {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+    padding: 20px;
+  }
+  @media (max-width: 460px) {
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 350px;
+  }
+
   .photoItem {
     width: 100%; /* Растягиваем по ширине колонки */
-    height: 300px;
+    height: torem(300px);
     overflow: hidden; /* Обрезаем лишнее */
     position: relative;
     transition: 0.1s linear all;
     border-radius: 10px;
     cursor: pointer;
+    @media (max-width: 1260px) {
+      height: torem(250px);
+    }
+    @media (max-width: 460px) {
+      height: torem(300px);
+    }
+ 
     &:hover {
       .photo {
         scale: 1.1;
@@ -31,10 +48,10 @@
 
     .linkArrow {
       position: absolute;
-      right: 20px;
-      top: 15px;
-      width: 38px;
-      height: 38px;
+      right: torem(20px);
+      top: torem(15px);
+      width: torem(38px);
+      height: torem(38px);
       opacity: 0;
       transition: 0.2s linear all;
     }
@@ -43,7 +60,7 @@
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 60px;
+      height: torem(60px);
       background: rgba(0, 28, 20, 0.25);
       backdrop-filter: blur(10px);
       z-index: 5;
@@ -54,10 +71,13 @@
       padding: 5px 10px;
       box-sizing: border-box;
       text-align: center;
+      @media (max-width: 1260px) {
+        height: torem(40px);
+      }
       .photoTitle {
         width: 100%;
         color: #fff;
-        font-size: 18px;
+        font-size: torem(18px);
         font-weight: 700;
         z-index: 10;
       }
@@ -72,7 +92,7 @@
     background-color: #fff;
     padding: 10px;
     font-family: Overpass, sans-serif;
-    font-size: 16px;
+    font-size: torem(16px);
     font-weight: 400;
     line-height: 19.2px;
     text-align: left;
