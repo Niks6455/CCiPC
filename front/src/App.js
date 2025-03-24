@@ -39,7 +39,6 @@ import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/Rec
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
 import Footer from './components/Footer/Footer';
 import { useLocalStorage, useWindowWidth } from './hooks/hooks';
-import { useWindowWidth } from './hooks/hooks';
 import Login from './modules/Login/Login';
 import Register from './modules/Register/Register';
 import ConfirmLogin from './modules/ConfirmLogin/ConfirmLogin';
