@@ -59,7 +59,7 @@ export default {
                 }
             })
 
-            if(checkTitle) throw new AppErrorAlreadyExists('title')
+            if(checkTitle && news.title !== title) throw new AppErrorAlreadyExists('title')
 
         }
 
