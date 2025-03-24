@@ -90,3 +90,23 @@ export const fileKeys = [
     errorname: 'Данные не сохранены!',
   },
 ];
+
+export const conferenceDataNull = {
+  stages: [],
+  logoHeader: null,
+  logoFooter: null,
+  programConference: null,
+  informationLetter: null,
+  worksCollection: null,
+  аrticleTemplate: null,
+  cashlessIndividual: null,
+  cashlessEntities: null,
+  aboutConference: '',
+  directions: [],
+  dateFirst: '',
+  dateSecond: '',
+  address: '',
+  organizers: [],
+  partners: [],
+  deadlineUploadingReports: '',
+};
