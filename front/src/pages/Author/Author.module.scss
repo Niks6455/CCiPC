@@ -94,6 +94,15 @@ $w4: 480px;
 
   .registration_text_1 {
     font-size: 22px;
+    a{
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.1s linear all;
+      &:hover{
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+    }
     @media (max-width: $w2) {
       font-size: 16px;
     }
@@ -111,6 +120,15 @@ $w4: 480px;
   .registration_text_3 {
     font-size: 20px;
     margin-top: 40px;
+    a{
+      cursor: pointer;
+      text-decoration: none;
+      transition: 0.1s linear all;
+      &:hover{
+        opacity: 0.8;
+        text-decoration: underline;
+      }
+    }
     @media (max-width: $w2) {
       margin-top: 20px;
       font-size: 16px;

@@ -4,8 +4,9 @@ import loadIcon from '@assets/img/AdminPanel/load.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { apiUpdateUser } from '../../../../apirequests/apirequests';
 import { fetchUserData } from '../../../../store/userSlice/user.Slice';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { server } from '../../../../apirequests/apirequests';
+import { decodeFileName } from '../../../../utils/functions/funcions';
 function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
   const dispatch = useDispatch();
   const funPutApiSelf = () => {
@@ -15,6 +16,25 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
         dispatch(fetchUserData());
       }
     });
+  };
+  const conference = useSelector(state => state?.conferences?.data[0]);
+  console.log('conference', conference);
+  const funDownloadShablon = async (docName) => {
+    try {
+      const response = await fetch(`${server}/${conference?.documents?.[docName]}`);
+      if (!response.ok) throw new Error('Ошибка загрузки файла');
+      const blob = await response.blob();
+      const name = decodeFileName(conference?.documents?.[docName]?.split('\\').pop());
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href); // Освобождаем память
+    } catch (error) {
+      console.error('Ошибка загрузки файла:', error);
+    }
   };
 
   return (
@@ -48,7 +68,7 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
                 кабинет
               </h2>
               <div className={styles.file_container}>
-                <button className={styles.inner}>
+                <button className={styles.inner} onClick={() => funDownloadShablon("INDIVIDUAL")}>
                   <img src={docIcon} alt="doc" />
                   <div className={styles.doc_name}>
                     <span>Для ФИЗИЧЕСКОГО лица</span>
@@ -57,7 +77,7 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
                     </button>
                   </div>
                 </button>
-                <button className={styles.inner}>
+                <button className={styles.inner} onClick={() => funDownloadShablon("LEGAL")}>
                   <img src={docIcon} alt="doc" />
                   <div className={styles.doc_name}>
                     <span>Для ЮРИДИЧЕСКОГО лица</span>

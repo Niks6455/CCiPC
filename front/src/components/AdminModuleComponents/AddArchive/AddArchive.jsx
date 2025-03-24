@@ -26,16 +26,16 @@ function AddArchive(props) {
     setUrl(e.target.value);
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'; // Сброс текущей высоты
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 135); // Ограничение 150px
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 87); // Ограничение 150px
       textareaRef.current.style.height = `${newHeight}px`;
-      textareaRef.current.style.overflowY = newHeight >= 135 ? 'auto' : 'hidden'; // Скролл только при необходимости
+      textareaRef.current.style.overflowY = newHeight >= 87 ? 'auto' : 'hidden'; // Скролл только при необходимости
     }
   };
 
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto'; // Устанавливает высоту под контент
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 135);
+      const newHeight = Math.min(textareaRef.current.scrollHeight, 87);
       textareaRef.current.style.height = `${newHeight}px`;
     }
   }, []);

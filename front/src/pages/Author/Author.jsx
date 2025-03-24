@@ -11,14 +11,37 @@ import Book from '../../assets/img/Book.svg';
 import Cap from '../../assets/img/Cap.svg';
 import { getAllArchiveReport } from '../../apirequests/apirequests.js';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
+import { useSelector } from 'react-redux';
+import { server } from '../../apirequests/apirequests.js';
+import { decodeFileName } from '../../utils/functions/funcions.js';
 function Author() {
   const [selectedButton, setSelectedButton] = useState('Registration');
   const [data, setData] = useState([]);
-
+  const conference = useSelector(state => state?.conferences?.data[0]);
   useEffect(() => {
     getAllArchiveReport().then(res => setData(res?.data?.archives || []));
     console.log('data', data);
   }, [selectedButton]);
+
+  console.log('conference', conference);
+    //! функция скачивания шаблока
+    const funDownloadShablon = async () => {
+      try {
+        const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+        if (!response.ok) throw new Error('Ошибка загрузки файла');
+        const blob = await response.blob();
+        const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(link.href); // Освобождаем память
+      } catch (error) {
+        console.error('Ошибка загрузки файла:', error);
+      }
+    };
 
   return (
     <main>
@@ -51,24 +74,24 @@ function Author() {
             <div className={styles.registration}>
               <p className={styles.registration_text_1}>
                 Для участия в конференции необходимо{' '}
-                <Link className={styles.green_link} to="/authorization">
+                <Link className={styles.green_link} to="/login/authorization">
                   зарегистрироваться
                 </Link>
                 <span className={styles.bold}> на платформе и подать заявку</span>,
                 заполнив регистрационную форму в{' '}
-                <Link className={styles.green_link} to="/account">
+                <Link className={styles.green_link} to="/account/profile">
                   {' '}
                   личном кабинете
                 </Link>
-                . В срок до XX.XX.XX необходимо прислать заявку на доклад, заполнив обязательные
-                поля, а в срок до ХХ.ХХ.ХХХХ загрузить статью и экспертное заключение.
+                . В срок до {conference?.date[0]?.value || 'XXXX-XX-XX'} необходимо прислать заявку на доклад, заполнив обязательные
+                поля, а в срок до {conference?.deadline || 'XXXX-XX-XX'} загрузить статью и экспертное заключение.
               </p>
               <p className={styles.registration_text_2}>
                 <span className={styles.bold}>При подаче заявки прикрепляются:</span>
               </p>
               <p className={styles.registration_text_3}>
                 1) доклад, оформленный по{' '}
-                <a href="#" target="_blank" className={styles.green_link}>
+                <a onClick={funDownloadShablon} target="_blank" className={styles.green_link}>
                   шаблону
                 </a>{' '}
                 в Word;
