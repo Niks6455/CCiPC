@@ -8,7 +8,7 @@ const address = process.env.MAIL_HOST;
 const smtp = createTransport({
     host: address,
     port: 465,
-    secure: false,
+    secure: true,
     auth: { user: process.env.MAIL_USER, pass: process.env.MAIL_PASS },
 });
 
