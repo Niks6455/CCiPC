@@ -4,7 +4,7 @@ import LeftMenuLk from '../../modules/LeftMenuLK/LeftMenuLK';
 import { Outlet, useNavigate } from 'react-router-dom';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useEffect } from 'react';
-function Lks() {
+function Lks(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -20,7 +20,7 @@ function Lks() {
         <div className={styles.LksContainer}>
           <Outlet />
         </div>
-        <RightMenuLk />
+        <RightMenuLk userRole={props.userRole} />
         <HeaderPhone />
       </main>
     </>

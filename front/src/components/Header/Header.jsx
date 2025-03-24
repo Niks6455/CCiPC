@@ -24,7 +24,7 @@ function Header() {
           <img
             src={`${server}/${conference?.logo?.FOOTER}`}
             alt="logo"
-            onError={e => (e.target.display = 'none')}
+            onError={e => (e.target.style.display = 'none')}
           />
           <p>
             Всероссийская научная конференция
