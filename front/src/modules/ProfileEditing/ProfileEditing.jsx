@@ -30,8 +30,6 @@ function ProfileEditing() {
   const [urlPhoto, setUrlPhoto] = useState(null);
   const [popUpSize, setPopUpSize] = useState(false);
 
-  console.log('formData', formData);
-
   useEffect(() => {
     setUrlPhoto(`${server}/${user?.avatar}`);
   }, [user?.avatar]);
@@ -80,7 +78,6 @@ function ProfileEditing() {
     if (!formData.hasOwnProperty(key)) {
       return;
     }
-    console.log('key', key);
     setErrors({ ...errors, [key]: '' });
     // setFormData({ ...formData, [key]: value });
     dispatch(setEditUser({ key, value }));
@@ -128,7 +125,6 @@ function ProfileEditing() {
       newErrors.phone = 'Номер должен быть в формате +7 (XXX) XXX-XX-XX';
       isValid = false;
     }
-    console.log('newErrors', newErrors);
     setErrors(newErrors);
     return isValid;
   };
@@ -157,7 +153,6 @@ function ProfileEditing() {
   const handleSubmit = () => {
     if (validate()) {
       apiUpdateUser(formData).then(res => {
-        console.log('res', res);
         if (res?.status === 200) {
           console.log('Форма отправлена', formData);
         }

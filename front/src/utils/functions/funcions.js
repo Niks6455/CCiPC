@@ -118,8 +118,6 @@ export const generateTitleFromLink = url => {
 
 //! форматирование даты
 export const formatDateRangePrimereact = (startDate, endDate) => {
-  console.log('startDate', startDate);
-  console.log('endDate', endDate);
   const months = [
     'января',
     'февраля',

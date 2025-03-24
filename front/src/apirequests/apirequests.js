@@ -49,10 +49,9 @@ export const sandResetPassword = async data => {
 export const LoginFunc = async UserData => {
   try {
     const response = await api.post(`${server}/auth/login`, UserData);
-    const { token, refreshToken, ...userData } = response.data;
+    const { participant, token } = response.data;
     localStorage.setItem('accessToken', token);
-    localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('userData', JSON.stringify(userData));
+    localStorage.setItem('userData', JSON.stringify(participant));
     return response;
   } catch (error) {
     alert('Пользователь не найден!');

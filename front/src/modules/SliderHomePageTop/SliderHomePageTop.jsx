@@ -9,7 +9,6 @@ function SliderHomePageTop() {
   // Дублируем массив данных для бесконечного скролла
   const conferenceStages = useSelector(state => state.conferences.data[0].stages);
   useEffect(() => {
-    console.log(' useWindowWidth()', window.innerWidth);
     setMobile(window.innerWidth < 480);
   }, [useWindowWidth()]);
 

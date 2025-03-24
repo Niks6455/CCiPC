@@ -12,7 +12,6 @@ import { server } from '../../apirequests/apirequests';
 function HomePage() {
   const conference = useSelector(state => state.conferences.data[0]);
   const textData = textDataHomePage;
-  console.log('conference?.description ', conference?.description);
   const getDescription = text => {
     let newText = text.replace(/\n/g, '<p>');
     return newText;
@@ -90,8 +89,8 @@ function HomePage() {
               <p>Организаторы</p>
             </div>
             <div className={styles.imgSectionInner}>
-              {conference?.organization?.map(el => (
-                <img src={`${server}/${el}`} alt="Organization1" />
+              {conference?.organization?.map((el, index) => (
+                <img src={`${server}/${el}`} alt="Organization1" key={index} />
               ))}
             </div>
           </section>
@@ -102,8 +101,8 @@ function HomePage() {
               <p>Партнёры</p>
             </div>
             <div className={styles.imgSectionInner}>
-              {conference?.partner?.map(el => (
-                <img src={`${server}/${el}`} alt="Organization1" />
+              {conference?.partner?.map((el, index) => (
+                <img src={`${server}/${el}`} alt="Organization1" key={index} />
               ))}
             </div>
           </section>

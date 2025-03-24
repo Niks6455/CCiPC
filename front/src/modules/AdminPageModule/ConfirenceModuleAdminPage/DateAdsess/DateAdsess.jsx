@@ -87,7 +87,6 @@ function DateAdsess({ data, setData }) {
     }
   };
 
-  console.log('date', date);
   return (
     <div className={styles.DateAdsess}>
       <div className={styles.container}>

@@ -11,7 +11,6 @@ function ExitAccount(props) {
   const funExcit = () => {
     navigate('/authorization');
     localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     localStorage.removeItem('userData');
     props.funResetAllApi();
   };

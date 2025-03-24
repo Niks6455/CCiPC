@@ -20,10 +20,6 @@ function SliderHomePageMobile() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log('slides', slides);
-  }, [slides]);
-
   const scrollToNext = index => {
     if (index < itemsRef.current.length - 1) {
       itemsRef.current[index + 1]?.scrollIntoView({

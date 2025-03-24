@@ -37,9 +37,6 @@ function ConfirenceModuleAdminPage() {
     queryFn: () => apiGetConferencesById(conferenseId),
     enabled: !!conferenseId,
   });
-  useEffect(() => {
-    console.log('data', data);
-  }, [data]);
 
   const funSetErrors = (key, value) => {
     setErrors(errors => [
