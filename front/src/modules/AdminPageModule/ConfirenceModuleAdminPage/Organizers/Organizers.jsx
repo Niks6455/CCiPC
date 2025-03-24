@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import FileComponent from '../../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import styles from './Organizers.module.scss';
 import plusIcon from '@assets/img/UI/plus.svg';

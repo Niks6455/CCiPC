@@ -118,6 +118,8 @@ export const generateTitleFromLink = url => {
 
 //! форматирование даты
 export const formatDateRangePrimereact = (startDate, endDate) => {
+  console.log('startDate', startDate);
+  console.log('endDate', endDate);
   const months = [
     'января',
     'февраля',
@@ -134,7 +136,7 @@ export const formatDateRangePrimereact = (startDate, endDate) => {
   ];
 
   // Check if startDate and endDate are valid
-  if (!startDate || isNaN(new Date(startDate).getTime())) {
+  if (!startDate || isNaN(new Date(startDate)?.getTime())) {
     return ''; // Return an empty string if startDate is invalid
   }
 
@@ -143,7 +145,7 @@ export const formatDateRangePrimereact = (startDate, endDate) => {
   const startMonth = months[start.getMonth()];
   const startYear = start.getFullYear();
 
-  if (!endDate || isNaN(new Date(endDate).getTime())) {
+  if (!endDate || isNaN(new Date(endDate)?.getTime())) {
     // If endDate is invalid, return only the start date
     return `${startDay} ${startMonth} ${startYear}`;
   }

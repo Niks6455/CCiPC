@@ -50,6 +50,8 @@ function StagesConference({ data, setData }) {
 
   //! изменение название этапа конференции
   const funSetStagesName = (index, e) => {
+    console.log('index', index);
+    console.log('e.target.value', e.target.value);
     const stage = [...data?.stages];
     stage[index].name = e.target.value;
     setData({ ...data, stages: stage });
@@ -67,6 +69,8 @@ function StagesConference({ data, setData }) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  console.log('data?.stages', data?.stages);
 
   return (
     <div className={styles.StagesConference}>

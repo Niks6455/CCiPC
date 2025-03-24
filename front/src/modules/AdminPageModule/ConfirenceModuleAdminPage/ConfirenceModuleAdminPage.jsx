@@ -37,7 +37,6 @@ function ConfirenceModuleAdminPage() {
     queryFn: () => apiGetConferencesById(conferenseId),
     enabled: !!conferenseId,
   });
-
   useEffect(() => {
     console.log('data', data);
   }, [data]);
@@ -97,7 +96,7 @@ function ConfirenceModuleAdminPage() {
   }, [conferensetQery?.data?.data?.conference]);
 
   //! для отправки файла
-  const funApiEditFile = (file, key) => {
+  const funApiEditFile = (file, key, conferenseId) => {
     if (typeof file === 'object') {
       const formData = new FormData();
       formData.append('file', file);
@@ -115,7 +114,7 @@ function ConfirenceModuleAdminPage() {
   };
 
   //! отправка файлов массивом организаторы и партнеры
-  const funApiEditFileMulti = (files, key) => {
+  const funApiEditFileMulti = (files, key, conferenseId) => {
     if (files) {
       const data = files.map(item => item.value).filter(item => item && typeof item !== 'string');
       const formData = new FormData();
@@ -154,15 +153,6 @@ function ConfirenceModuleAdminPage() {
       partner: deletePartners,
       organization: deleteOrganizer,
     };
-    //! загрузка файлов
-    fileKeys.map(item => {
-      if (item.fun === 'funApiEditFile') {
-        funApiEditFile(data[item.key], item.name);
-      }
-      if (item.fun === 'funApiEditFileMulti') {
-        funApiEditFileMulti(data[item.key], item.name);
-      }
-    });
 
     //! если конференция создана
     if (conferenseId) {
@@ -173,6 +163,15 @@ function ConfirenceModuleAdminPage() {
           funSetErrors('main', true);
           setModalSucces(true);
           dispatch(fetchConferences());
+          //! загрузка файлов
+          fileKeys.map(item => {
+            if (item.fun === 'funApiEditFile') {
+              funApiEditFile(data[item.key], item.name, conferenseId);
+            }
+            if (item.fun === 'funApiEditFileMulti') {
+              funApiEditFileMulti(data[item.key], item.name, conferenseId);
+            }
+          });
         } else {
           funSetErrors('main', false);
           setModalSucces(false);
@@ -187,6 +186,15 @@ function ConfirenceModuleAdminPage() {
           funSetErrors('main', true);
           setModalSucces(true);
           dispatch(fetchConferences());
+          //! загрузка файлов
+          fileKeys.map(item => {
+            if (item.fun === 'funApiEditFile') {
+              funApiEditFile(data[item.key], item.name, res.data.conference.id);
+            }
+            if (item.fun === 'funApiEditFileMulti') {
+              funApiEditFileMulti(data[item.key], item.name, res.data.conference.id);
+            }
+          });
         } else {
           funSetErrors('main', false);
           setModalSucces(false);
@@ -234,7 +242,10 @@ function ConfirenceModuleAdminPage() {
       <div className={styles.buttons}>
         <div className={styles.buttons_inner}>
           <button onClick={funCancelData}>Отмена</button>
-          <button onClick={funEditDataApi}>Сохранить изменения</button>
+          <button onClick={funEditDataApi}>
+            {' '}
+            {!conferenseId ? 'Создать' : 'Сохранить изменения'}
+          </button>
         </div>
       </div>
     </section>

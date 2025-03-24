@@ -12,6 +12,7 @@ import { server } from '../../apirequests/apirequests';
 
 function TopMainInfo() {
   const conference = useSelector(state => state.conferences.data[0]);
+  const userData = useSelector(state => state.user.user.data);
   const arrowRef = useRef(null); // Реф для стрелки
   const navigate = useNavigate();
   const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
@@ -19,7 +20,7 @@ function TopMainInfo() {
 
   const funClickRequest = () => {
     const assetsToken = localStorage.getItem('accessToken');
-    if (assetsToken === null) {
+    if (assetsToken === null || !userData) {
       navigate('/authorization');
     } else {
       navigate('/account/documents');
