@@ -3,11 +3,13 @@ import styles from './DocumentsLk.module.scss';
 import { useNavigate } from 'react-router-dom';
 import document from './../../../assets/img/document.svg';
 import plus from './../../../assets/img/UI/plusLigth.svg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { apiCreateReport } from '../../../apirequests/apirequests';
+import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
 
 function DocumentsLk() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const reports = useSelector(state => state.reportsSlice.data);
   const [length, setLength] = useState(reports.length);
   useEffect(() => {
@@ -17,6 +19,7 @@ function DocumentsLk() {
   //! при клике на создать доклад
   const creatReaport = () => {
     navigate('/account/createreport');
+    dispatch(disSetResetReport());
   };
 
   return (

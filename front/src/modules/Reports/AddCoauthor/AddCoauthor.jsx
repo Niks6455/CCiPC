@@ -42,9 +42,12 @@ function AddCoauthor({ edit, number }) {
   const report = useSelector(state => state.reportCreateSlice);
   const conferenceId = useSelector(state => state.conferences?.data[0]?.id);
   const conference = useSelector(state => state.conferences.data[0]);
+  const directions = useSelector(state => state.conferences.data[0]?.directions);
+  console.log('directions', directions);
 
-  const funDeleteCoauthor = index => {
-    dispatch(deleteCoauthor({ index }));
+  const funDeleteCoauthor = (index, id) => {
+    console.log('id', id);
+    dispatch(deleteCoauthor({ index, id }));
   };
 
   const funNoEmail = index => {
@@ -104,15 +107,18 @@ function AddCoauthor({ edit, number }) {
     if (edit) {
       //! редактирование доклада
       const temp = {
-        coAuthors: report.data?.soauthors?.map(soauthor => ({
-          name: soauthor?.data?.name || '',
-          surname: soauthor?.data?.surname || '',
-          patronymic: soauthor?.data?.patronymic || '',
-          email: soauthor?.data?.email || '',
-        })),
+        coAuthors: report.data?.soauthors
+          .filter(el => report.data.originSoauthors.map(soauthor => soauthor.id).includes(el.id))
+          ?.map(soauthor => ({
+            name: soauthor?.data?.name || '',
+            surname: soauthor?.data?.surname || '',
+            patronymic: soauthor?.data?.patronymic || '',
+            email: soauthor?.data?.email || '',
+          })),
+        coAuthorsIds: report.data?.coAuthorsIds,
         comment: report.data.comments || '',
         conclusion: report.data.fileExpertOpinion || '',
-        direction: report.data.directionConference || '',
+        directionId: directions.find(el => el.name === report.data.directionConference).id || '',
         form: report.data.formParticipation || '',
         status: report.data.participationStatus || '',
         name: report.data.name || '',
@@ -233,7 +239,7 @@ function AddCoauthor({ edit, number }) {
       {report?.data.soauthors?.map((soauthtor, index) => (
         <div key={index} className={styles.inputContainer}>
           <div className={styles.deletecoauthor}>
-            <button onClick={() => funDeleteCoauthor(index)}>
+            <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
               <span>Удалить соавтора №{index + 1}</span>
               <img src={trash} alt="удалить" />
             </button>

@@ -76,6 +76,7 @@ const reportCreateSlice = createSlice({
       fileExpertOpinion: null,
       comments: '',
       soauthors: [],
+      coAuthorsIds: [],
       organization: '',
     },
     sliderState: 0,
@@ -103,6 +104,7 @@ const reportCreateSlice = createSlice({
         fileExpertOpinion: null,
         comments: '',
         soauthors: [],
+        coAuthorsIds: [],
         organization: '',
       };
       state.sliderState = 0;
@@ -130,7 +132,10 @@ const reportCreateSlice = createSlice({
     },
 
     deleteCoauthor(state, action) {
-      const { index } = action.payload;
+      const { index, id } = action.payload;
+      if (id) {
+        state.data.coAuthorsIds = [...state.data.coAuthorsIds, id];
+      }
       state.data.soauthors = state.data.soauthors.filter((_, i) => i !== index);
       state.sliderState = calculateSliderState(state);
     },
