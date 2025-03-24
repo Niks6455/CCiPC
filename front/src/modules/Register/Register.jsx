@@ -17,6 +17,7 @@ import { apiRegister } from '../../apirequests/apirequests';
 import { formatPhoneNumber } from '../../utils/functions/Validations';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const context = useContext(DataContext);
@@ -127,7 +128,7 @@ function Register() {
     setErrors(newErrors);
     return isValid;
   };
-
+  const navigate = useNavigate();
   const handleSubmit = () => {
     if (validate()) {
       console.log('Форма отправлена', formData);
@@ -142,7 +143,7 @@ function Register() {
         console.log('res', res);
 
         if (res?.status === 200) {
-          context.setAuthPage('ConfirmLogin');
+          navigate("/login/confirmLogin");
           context.setMailValue(formData.email);
           sessionStorage.setItem('confirmEmail', formData.email);
           console.log(res);
@@ -343,8 +344,8 @@ function Register() {
         <button onClick={handleSubmit}>Зарегистрироваться</button>
       </div>
       <div className={styles.noAccount}>
-        <p>Еще нет аккаунта?</p>
-        <p onClick={() => context.setAuthPage('Auth')}>Авторизируйтесь</p>
+        <p>Уже есть аккаунт?</p>
+        <p onClick={() => navigate('/login/authorization')}>Авторизируйтесь</p>
       </div>
     </section>
   );

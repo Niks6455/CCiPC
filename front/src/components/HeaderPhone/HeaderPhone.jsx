@@ -38,6 +38,7 @@ function HeaderPhone() {
     return () => window.removeEventListener('resize', updateVisibility); // Cleanup on unmount
   }, []);
 
+
   return (
     <div>
       <div className={styles.HeaderPhoneContainer} style={{
@@ -85,7 +86,7 @@ function HeaderPhone() {
                       className={styles.NavBarMenuListInnerLi}
                       style={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}
                     >
-                      <span>Личный кабинет</span>
+                      <span> Личный кабинет</span>
                       <img
                         style={activeMenuListFirst ? { transform: 'rotate(180deg)' } : {}}
                         src={arrow}
@@ -93,6 +94,7 @@ function HeaderPhone() {
                       />
                     </div>
                   </li>
+               
                   <motion.div className={styles.NavBarMenuListOpener}>
                     <AnimatePresence>
                       {activeMenuListFirst && (
@@ -105,7 +107,7 @@ function HeaderPhone() {
                             onClick={() =>
                               autorisation
                                 ? navigate('/account/profile')
-                                : navigate('/authorization')
+                                : navigate('/login/authorization')
                             }
                           >
                             <div className={styles.NavBarMenuListInnerLiImg}>

@@ -38,13 +38,13 @@ function NavBar({ userRole }) {
         ref={refMenu}
       >
         <div className={styles.menuInner}>
-          <button>
+          <button onClick={() => context.setActiveMenu(false)}>
             Скрыть <img src={closeImg} alt="Close" />
           </button>
           <ul>
             <li
               onClick={() => {
-                navigate(autorisation ? '/account/profile' : '/authorization');
+                navigate(autorisation ? '/account/profile' : '/login/authorization');
                 context.setActiveMenu(false);
               }}
             >

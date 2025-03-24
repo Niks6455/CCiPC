@@ -39,6 +39,9 @@ import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/Rec
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
 import Footer from './components/Footer/Footer';
 import { useLocalStorage, useWindowWidth } from './hooks/hooks';
+import Login from './modules/Login/Login';
+import Register from './modules/Register/Register';
+import ConfirmLogin from './modules/ConfirmLogin/ConfirmLogin';
 
 function App() {
   const dispatch = useDispatch();
@@ -95,6 +98,7 @@ function App() {
     setSelectFrameLks,
     activeMenu,
     setActiveMenu,
+    funResetAllApi,
   };
 
   const footerRef = useRef(null);
@@ -121,10 +125,12 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="*" element={<NoteFoundPage />} />{' '}
-                <Route
-                  path="/authorization"
-                  element={<AuthPage funGetAllApi={funGetAllApi} />}
-                ></Route>
+
+                <Route path='/login/*' element={<AuthPage/>}>
+                  <Route path="authorization" element={<Login funGetAllApi={funGetAllApi}/>}></Route>
+                  <Route path="registration" element={<Register funGetAllApi={funGetAllApi}/>}></Route>
+                  <Route path="confirmLogin" element={<ConfirmLogin funGetAllApi={funGetAllApi}/>}></Route>
+                </Route>
                 <Route path="/participants" element={<Participants />}></Route>
                 <Route
                   path="/account"
