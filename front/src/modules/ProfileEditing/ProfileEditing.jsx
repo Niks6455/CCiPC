@@ -13,6 +13,7 @@ import { inputsData } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
+import { formatPhoneNumber } from '../../utils/functions/Validations';
 
 function ProfileEditing() {
   const navigate = useNavigate();
@@ -81,16 +82,6 @@ function ProfileEditing() {
     setErrors({ ...errors, [key]: '' });
     // setFormData({ ...formData, [key]: value });
     dispatch(setEditUser({ key, value }));
-  };
-
-  const formatPhoneNumber = value => {
-    // Форматируем номер в виде +7 (XXX) XXX-XX-XX
-    const cleaned = value.replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{1})(\d{3})(\d{3})(\d{2})(\d{2})$/);
-    if (match) {
-      return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}-${match[5]}`;
-    }
-    return cleaned.slice(0, 16); // Ограничение длины
   };
 
   const validate = () => {
