@@ -22,7 +22,7 @@ export default function (to, type, ...arg) {
 
     // объект сообщения
     const mail = {
-        from: { name: 'CCPC', address },
+        from: { name: 'CCPC', address: process.env.MAIL_USER },
         to,
         subject: replacement.subject,
         generateTextFromHTML: true,
