@@ -135,7 +135,7 @@ function Login(props) {
       </div>
       <div className={styles.noAccount}>
         <p>Еще нет аккаунта?</p>
-        <p onClick={() => context.setAuthPage('Register')}>Зарегистрируйтесь</p>
+        <p onClick={() => navigate('/login/registration')}>Зарегистрируйтесь</p>
       </div>
     </section>
   );

@@ -1,27 +1,18 @@
 import { useContext } from 'react';
 import DataContext from '../../context';
-import Register from '../../modules/Register/Register';
 import Layout from '../../ui/Layout/Layout';
 import styles from './AuthPage.module.scss';
-import Login from '../../modules/Login/Login';
-import ConfirmLogin from '../../modules/ConfirmLogin/ConfirmLogin';
-import Footer from '../../components/Footer/Footer';
 import NavBar from '../../components/NavBar/NavBar';
+import { Outlet } from 'react-router-dom';
+import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 function AuthPage(props) {
-  const context = useContext(DataContext);
-
   return (
     <>
       <main className={styles.AuthPage}>
         <NavBar />
+        <HeaderPhone/>
         <Layout>
-          {context.authPage === 'Auth' ? (
-            <Login funGetAllApi={props.funGetAllApi} />
-          ) : context.authPage === 'Register' ? (
-            <Register />
-          ) : context.authPage === 'ConfirmLogin' ? (
-            <ConfirmLogin funGetAllApi={props.funGetAllApi} />
-          ) : null}
+         <Outlet />
         </Layout>
       </main>
     </>

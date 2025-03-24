@@ -9,7 +9,7 @@ function ExitAccount(props) {
   const context = useContext(DataContext);
 
   const funExcit = () => {
-    navigate('/authorization');
+    navigate('/login/authorization');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('userData');
     props.funResetAllApi();
