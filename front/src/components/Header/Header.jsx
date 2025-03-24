@@ -55,7 +55,7 @@ function Header() {
             </li>
             <li
               onClick={() =>
-                autorisation ? navigate('/account/profile') : navigate('/authorization')
+                autorisation ? navigate('/account/profile') : navigate('/login/authorization')
               }
             >
               {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
