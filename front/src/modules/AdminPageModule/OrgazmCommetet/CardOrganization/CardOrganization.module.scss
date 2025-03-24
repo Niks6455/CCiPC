@@ -33,6 +33,7 @@
           width: 50px !important;
           height: 50px !important;
           margin: 0px 10px;
+          object-fit: cover;
           cursor: pointer;
           transition: 0.1s linear all;
           &:hover {
@@ -53,7 +54,15 @@
       flex-direction: column;
       width: 100%;
       margin-top: 10px;
-
+      position: relative;
+      .error {
+        position: absolute;
+        color: var(--ErrorColor);
+        background-color: #fff;
+        padding: 5px;
+        top: 16px;
+        right: 15px;
+      }
       label {
         font-size: 18px;
         margin-bottom: 10px;
@@ -62,6 +71,7 @@
 
       input,
       textarea {
+        position: relative;
         font-size: 18px;
         padding: 20px;
         border: 1px solid var(--InputColors);

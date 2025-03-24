@@ -37,7 +37,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import EnteringEmail from './modules/RecoverPasswordModule/EnteringEmail/EnteringEmail';
 import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/RecoverPassword';
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
-import { apiCreateConferences } from './apirequests/apirequests';
 import Footer from './components/Footer/Footer';
 import { useWindowWidth } from './hooks/hooks';
 
@@ -139,6 +138,7 @@ function App() {
   }, [footerRef, useWindowWidth()]);
 
   return (
+    
     <DataContext.Provider value={context}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
