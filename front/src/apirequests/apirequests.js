@@ -1,11 +1,8 @@
 import api from './axios';
 const URL = window.location.origin;
 console.log(URL);
-export let server = "";
-URL === 'http://localhost:3001' ? server = 'http://localhost:3000' : server = `${URL}/api`; 
-// export const server = 'http://localhost:3000';
-// export const server = `${window.location.href}`;
-// export const server = `${window.location.href}/api`;
+export let server = '';
+URL.includes('localhost') ? (server = 'http://localhost:3000') : (server = `${URL}/api`);
 
 //! Запрос на Выход
 export const logout = async () => {
