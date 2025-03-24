@@ -42,7 +42,7 @@ function OrgWznosModuleAdminPage() {
       sumOrgWznos: item.sum || 0,
       confirmation: item.status || false,
       author: item.who || '',
-      contract: null,
+      contract: item.accord || null,
       receipt: item.receipt || null,
     }));
     if (data && data.length > 0) {

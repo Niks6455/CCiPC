@@ -13,7 +13,10 @@ function HomePage() {
   const conference = useSelector(state => state.conferences.data[0]);
   const textData = textDataHomePage;
   const getDescription = text => {
-    let newText = text.replace(/\n/g, '<p>');
+    let newText = text
+      .split('\n')
+      .map(paragraph => `<p>${paragraph}</p>`)
+      .join('');
     return newText;
   };
   return (

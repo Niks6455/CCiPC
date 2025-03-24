@@ -116,7 +116,6 @@ function App() {
   console.log('userRole', userRole);
 
   return (
-    
     <DataContext.Provider value={context}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
@@ -125,17 +124,25 @@ function App() {
               <Routes>
                 <Route path="/" element={<HomePage />}></Route>
                 <Route path="*" element={<NoteFoundPage />} />{' '}
-
-                <Route path='/login/*' element={<AuthPage/>}>
-                  <Route path="authorization" element={<Login funGetAllApi={funGetAllApi}/>}></Route>
-                  <Route path="registration" element={<Register funGetAllApi={funGetAllApi}/>}></Route>
-                  <Route path="confirmLogin" element={<ConfirmLogin funGetAllApi={funGetAllApi}/>}></Route>
+                <Route path="/login/*" element={<AuthPage />}>
+                  <Route
+                    path="authorization"
+                    element={<Login funGetAllApi={funGetAllApi} />}
+                  ></Route>
+                  <Route
+                    path="registration"
+                    element={<Register funGetAllApi={funGetAllApi} />}
+                  ></Route>
+                  <Route
+                    path="confirmLogin"
+                    element={<ConfirmLogin funGetAllApi={funGetAllApi} />}
+                  ></Route>
                 </Route>
                 <Route path="/participants" element={<Participants />}></Route>
                 <Route
                   path="/account"
                   element={
-                    userRole === null ? (
+                    userRole === null || !user.email ? (
                       <AuthPage funGetAllApi={funGetAllApi} />
                     ) : (
                       <Lks userRole={userRole} />

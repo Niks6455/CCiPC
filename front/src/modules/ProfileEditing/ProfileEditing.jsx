@@ -14,6 +14,7 @@ import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
 import { formatPhoneNumber } from '../../utils/functions/Validations';
+import SuccessModal from '../../components/SuccessModal/SuccessModal';
 
 function ProfileEditing() {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ function ProfileEditing() {
   const [userPhoto, setUserPhoto] = useState(null);
   const [urlPhoto, setUrlPhoto] = useState(null);
   const [popUpSize, setPopUpSize] = useState(false);
+  const [modalSucces, setModalSucces] = useState(null);
 
   useEffect(() => {
     setUrlPhoto(`${server}/${user?.avatar}`);
@@ -146,6 +148,7 @@ function ProfileEditing() {
       apiUpdateUser(formData).then(res => {
         if (res?.status === 200) {
           console.log('Форма отправлена', formData);
+          setModalSucces(true);
         }
         const file = new FormData();
         file.append('file', userPhoto);
@@ -176,6 +179,7 @@ function ProfileEditing() {
 
   return (
     <div className={styles.ProfileEditing}>
+      <SuccessModal open={modalSucces} close={setModalSucces} />
       <AnimatePresence>
         {popUpSize && (
           <>

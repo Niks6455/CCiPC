@@ -1,0 +1,46 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
+.SuccessModal_blur {
+  @include PopupBlur;
+}
+
+.SuccessModal {
+  @include PopupContainer;
+  padding: torem(70px);
+  height: max-content;
+  @media (max-width: $w2) {
+    width: 60vw;
+  }
+  @media (max-width: $w3) {
+    width: 100vw;
+  }
+  .title {
+    font-family: Overpass, sans-serif;
+    font-size: torem(20px);
+    font-weight: 500;
+    line-height: torem(26px);
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-bottom: torem(40px);
+  }
+  .btnred {
+    @include ButtonGreen;
+    width: torem(310px);
+    height: torem(54px);
+    margin: 0 auto;
+    @media (max-width: $w3) {
+      font-size: torem(16px);
+      width: auto;
+      padding: 0 torem(40px);
+    }
+  }
+  .galka {
+    width: torem(80px);
+    height: torem(80px);
+    margin: 0 auto;
+    margin-bottom: torem(40px);
+  }
+}
