@@ -10,9 +10,6 @@ import { server } from '../../apirequests/apirequests';
 function Header() {
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const conference = useSelector(state => state.conferences.data[0]);
-  console.log('conference', conference);
-
-  console.log('autorisation', autorisation);
   const navigate = useNavigate();
   return (
     <header>

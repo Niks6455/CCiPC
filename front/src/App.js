@@ -22,7 +22,7 @@ import AddCoauthor from './modules/Reports/AddCoauthor/AddCoauthor';
 import ViewReports from './modules/Reports/ViewReports/ViewReports';
 import EditReport from './modules/Reports/EditReport/EditReport';
 import Сollections from './modules/AdminPageModule/Сollections/Сollections';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { disResetUser, fetchUserData } from './store/userSlice/user.Slice';
 import { disResetReports, fetchReports } from './store/reportsSlice/reportsSlice';
 import AdminPage from './pages/AdminPage/AdminPage';
@@ -38,24 +38,28 @@ import EnteringEmail from './modules/RecoverPasswordModule/EnteringEmail/Enterin
 import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/RecoverPassword';
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
 import Footer from './components/Footer/Footer';
-import { useWindowWidth } from './hooks/hooks';
+import { useLocalStorage, useWindowWidth } from './hooks/hooks';
 
 function App() {
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
 
+  const user = useSelector(state => state.user.user.data);
   const [authPage, setAuthPage] = useState('Auth');
   const [mailValue, setMailValue] = useState('');
   const [activeModule, setActiveModule] = useState(false);
   const [selectFrameLks, setSelectFrameLks] = useState('profile');
   const [activeMenu, setActiveMenu] = useState(false);
-  const [userRole, setUserRole] = useState(1);
+  const [userRole, setUserRole] = useState(null);
 
   const funGetAllApi = () => {
-    //! получение данных пользователя
-    dispatch(fetchUserData()); // Вызов асинхронного действия
-    //! получение докладов пользователя
-    dispatch(fetchReports());
+    const token = localStorage.getItem('accessToken');
+    if (token) {
+      //! получение данных пользователя
+      dispatch(fetchUserData()); // Вызов асинхронного действия
+      //! получение докладов пользователя
+      dispatch(fetchReports());
+    }
     //! получение всех конференций
     dispatch(fetchConferences());
   };
@@ -69,48 +73,16 @@ function App() {
     dispatch(disResetConferences());
   };
 
-  console.log(
-    "localStorage.getItem('userData')",
-    JSON.parse(localStorage.getItem('userData'))?.participant?.role,
-  );
   useEffect(() => {
     const userData = localStorage.getItem('userData');
-    const userRole = userData ? JSON.parse(userData)?.participant?.role : 1;
+    console.log('userData', userData);
+    const userRole = userData && userData !== 'undefined' ? JSON.parse(userData)?.role : null;
     setUserRole(userRole);
-  }, [localStorage.getItem('userData')]);
+  }, [useLocalStorage('userData'), user]);
 
   useEffect(() => {
-    // const accessToken = localStorage.getItem('accessToken');
-    // console.log('accessToken', accessToken);
-    // if (accessToken !== null) {
     funGetAllApi();
-    // }
   }, [dispatch]);
-
-  useEffect(() => {
-    //! создание конференции
-    const dataConferences = {
-      number: 1,
-      date: ['2025-03-10', '2025-05-12'],
-      address: 'Таганрог',
-      stages: [
-        {
-          name: 'Представление докладов и регистрационных форм',
-          date: '2024-09-01',
-        },
-      ],
-      description: 'Описание',
-      directions: [
-        '7. Проблемы математического моделирования и управления в области медицины',
-        '8. Проблемы математического моделирования и управления в области медицины',
-        '9. Проблемы математического моделирования и управления в области медицины',
-        '10. Проблемы математического моделирования и управления в области медицины',
-        '11. Проблемы математического моделирования и управления в области медицины',
-        '12. Проблемы математического моделирования и управления в области медицины',
-      ],
-    };
-    // apiCreateConferences(dataConferences);
-  }, []);
 
   const context = {
     setAuthPage,
@@ -137,6 +109,8 @@ function App() {
     }
   }, [footerRef, useWindowWidth()]);
 
+  console.log('userRole', userRole);
+
   return (
     
     <DataContext.Provider value={context}>
@@ -152,7 +126,16 @@ function App() {
                   element={<AuthPage funGetAllApi={funGetAllApi} />}
                 ></Route>
                 <Route path="/participants" element={<Participants />}></Route>
-                <Route path="/account" element={<Lks userRole={userRole} />}>
+                <Route
+                  path="/account"
+                  element={
+                    userRole === null ? (
+                      <AuthPage funGetAllApi={funGetAllApi} />
+                    ) : (
+                      <Lks userRole={userRole} />
+                    )
+                  }
+                >
                   <Route path="documents" element={<DocumentsLk />}></Route>
                   <Route path="createreport" element={<CreateReport />} />
                   <Route path="addcoauthor" element={<AddCoauthor />} />

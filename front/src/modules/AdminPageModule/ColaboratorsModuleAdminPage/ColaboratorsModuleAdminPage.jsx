@@ -49,7 +49,6 @@ function ColaboratorsModuleAdminPage() {
         id: item.id,
         direction: item.direction,
       }));
-      console.log('reqData', reqData);
       if (reqData && reqData.length > 0) {
         apiEditMassReports({ reportsInfo: reqData }).then(res => {
           if (res?.status === 200) {

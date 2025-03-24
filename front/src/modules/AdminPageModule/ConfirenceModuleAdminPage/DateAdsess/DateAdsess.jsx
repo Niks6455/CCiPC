@@ -27,14 +27,12 @@ function DateAdsess({ data, setData }) {
     };
   }, []);
 
-  // Ensure the initial state is an array of Date objects for the calendar
   const [date, setDate] = useState([
     data?.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
     data?.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
   ]);
 
   useEffect(() => {
-    // Update the calendar state when `data` changes
     setDate([
       data?.dateFirst ? new Date(data.dateFirst.split('.').reverse().join('-')) : null,
       data?.dateSecond ? new Date(data.dateSecond.split('.').reverse().join('-')) : null,
@@ -47,28 +45,23 @@ function DateAdsess({ data, setData }) {
 
   //! Function to handle date range selection
   const funSetData = e => {
-    let selectedDates = e.value; // Array of selected dates
+    let selectedDates = e.value;
 
     if (selectedDates && selectedDates.length > 0) {
-      // Format the first date if it exists
       const formattedDateFirst = selectedDates[0]
-        ? selectedDates[0].toLocaleDateString('ru-RU')
+        ? selectedDates[0]?.toLocaleDateString('ru-RU')
         : '';
 
-      // Format the second date only if it exists
       const formattedDateSecond =
         selectedDates.length === 2 && selectedDates[1]
-          ? selectedDates[1].toLocaleDateString('ru-RU')
+          ? selectedDates[1]?.toLocaleDateString('ru-RU')
           : '';
 
-      // Update `data` with formatted dates
       setData({
         ...data,
         dateFirst: formattedDateFirst,
         dateSecond: formattedDateSecond,
       });
-
-      // Update `date` state with Date objects
       setDate(selectedDates);
     }
   };
@@ -177,13 +170,13 @@ function DateAdsess({ data, setData }) {
               >
                 <div className="stage_calendar">
                   <Calendar
-                    value={date}
+                    value={date[0] ? [date[0], date[1]] : null}
                     locale="ru"
                     inline
                     showWeek
-                    selectionMode="range" // Enables range selection
-                    hideOnRangeSelection={false} // Keeps the calendar open after selecting a range
-                    onChange={funSetData} // Handles date changes
+                    selectionMode="range"
+                    hideOnRangeSelection={false}
+                    onChange={funSetData}
                   />
                 </div>
               </motion.div>

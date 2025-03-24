@@ -88,7 +88,6 @@ function Login(props) {
             placeholder="Email"
             imgSrc="/img/login.svg"
             error={errors.email}
-            autoComplete={true}
           />
           <Input
             name="password"
