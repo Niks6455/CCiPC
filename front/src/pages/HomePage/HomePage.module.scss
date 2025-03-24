@@ -5,6 +5,13 @@ $w3: 480px;
 .HomePage {
   overflow-x: hidden;
   .Title {
+    margin-bottom: torem(50px);
+    @media (max-width: $w2) {
+      margin-bottom: torem(40px);
+    }
+    @media (max-width: $w3) {
+      margin-bottom: torem(20px);
+    }
     p {
       font-size: torem(30px);
       font-weight: 900;

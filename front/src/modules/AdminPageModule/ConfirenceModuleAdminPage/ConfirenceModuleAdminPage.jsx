@@ -94,7 +94,7 @@ function ConfirenceModuleAdminPage() {
 
   //! для отправки файла
   const funApiEditFile = (file, key, conferenseId) => {
-    if (typeof file === 'object') {
+    if (file && typeof file === 'object') {
       const formData = new FormData();
       formData.append('file', file);
       formData.append('conferenceId', conferenseId);

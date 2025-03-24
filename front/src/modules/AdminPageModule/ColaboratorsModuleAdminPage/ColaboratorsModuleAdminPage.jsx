@@ -47,7 +47,7 @@ function ColaboratorsModuleAdminPage() {
     if (originalData?.length > 0) {
       const reqData = originalData.map(item => ({
         id: item.id,
-        direction: item.direction,
+        directionId: direction.find(dir => dir.name === item.direction).id,
       }));
       if (reqData && reqData.length > 0) {
         apiEditMassReports({ reportsInfo: reqData }).then(res => {

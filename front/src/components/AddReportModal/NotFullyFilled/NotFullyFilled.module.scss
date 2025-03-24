@@ -1,4 +1,4 @@
-@import "./../../../styles/mixin.scss";
+@import './../../../styles/mixin.scss';
 
 .NotFullyFilled {
   display: flex;
@@ -7,6 +7,8 @@
   background-color: #fff;
   padding: 70px;
   border-radius: 10px;
+  max-width: 60vw;
+
   .title {
     font-family: Overpass, sans-serif;
     font-size: 20px;

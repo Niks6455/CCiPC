@@ -244,7 +244,7 @@ $w3: 480px;
     margin-top: torem(40px);
     @media (max-width: $w2) {
       flex-direction: column;
-      width: torem(413px);
+      width: torem(450px);
       margin: 0 auto;
       padding-top: torem(50px);
     }
@@ -309,7 +309,7 @@ $w3: 480px;
     }
     .item {
       input {
-        width: torem(413px);
+        width: torem(450px);
         height: torem(54px);
         margin-bottom: torem(25px);
         @media (max-width: $w2) {
@@ -320,6 +320,10 @@ $w3: 480px;
           font-size: torem(16px);
         }
       }
+      div[name='error'] {
+        top: 0 !important;
+      }
+
       @media (max-width: $w3) {
         span {
           font-size: torem(14px);
@@ -331,6 +335,12 @@ $w3: 480px;
         div:nth-child(3) {
           padding-top: torem(18px);
           z-index: -1;
+        }
+        div[name='error'] {
+          top: 0 !important;
+          padding-top: 0 !important;
+          z-index: 100 !important;
+          font-size: torem(12px);
         }
       }
     }

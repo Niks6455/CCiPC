@@ -2,6 +2,7 @@ import styles from './TableModule.module.scss';
 import { motion } from 'framer-motion';
 
 function DirectionList({ listModalRef, posDirList, data, selected, funSetDirection, indexRow }) {
+  console.log('data', data);
   return (
     <motion.div
       ref={listModalRef}
@@ -17,11 +18,11 @@ function DirectionList({ listModalRef, posDirList, data, selected, funSetDirecti
       <ul>
         {data?.map((el, index) => (
           <li
-            className={selected === el ? styles.selected : ''}
+            className={selected === el.name ? styles.selected : ''}
             key={index}
             onClick={() => funSetDirection(el, indexRow)}
           >
-            {el}
+            {el.name}
           </li>
         ))}
       </ul>

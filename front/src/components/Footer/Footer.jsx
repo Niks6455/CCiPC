@@ -13,19 +13,15 @@ function Footer({ footerRef }) {
         <div className={styles.footerContainer}>
           <div className={styles.footerContainerLeft}>
             <div className={styles.logo}>
-              <img
-                src={`${server}/${conferense?.logo?.FOOTER}` || footerLogo}
-                alt="logo"
-                onError={e => (e.target.style.display = 'none')}
-              />
+              {conferense?.logo?.FOOTER && (
+                <img src={`${server}/${conferense?.logo?.FOOTER}`} alt="logo" />
+              )}
             </div>
             <div className={styles.footerText}>
               <p>
-                <img
-                  src={`${server}/${conferense?.logo?.FOOTER}` || footerLogo}
-                  alt="logo"
-                  onError={e => (e.target.style.display = 'none')}
-                />
+                {conferense?.logo?.FOOTER && (
+                  <img src={`${server}/${conferense?.logo?.FOOTER}`} alt="logo" />
+                )}
                 Всероссийская научная конференция "Системный синтез и прикладная синергетика"
               </p>
               {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value) ? (

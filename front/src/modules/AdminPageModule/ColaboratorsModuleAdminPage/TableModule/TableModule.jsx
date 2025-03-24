@@ -14,7 +14,7 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
   //! открыть лист для изменения направления
   const funOpenDirList = (e, index) => {
     e.stopPropagation();
-    const rect = e.target.getBoundingClientRect(); // Получаем координаты элемента
+    const rect = e.target?.getBoundingClientRect(); // Получаем координаты элемента
     let posY = rect.top + window.scrollY; // Координата сверху элемента
     let posX = rect.right + window.scrollX + 60; // Координата справа от элемента
     // Проверяем, выходит ли блок за нижнюю границу экрана
@@ -45,8 +45,17 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
   //! функция изменения направления
   const funSetDirection = (value, indexRow) => {
     let dat = [...tableData];
-    dat[indexRow].direction = value;
+    dat[indexRow].direction = value.name;
     setTableData(dat);
+  };
+
+  const getTdData = (key, row) => {
+    console.log('tableData', tableData);
+    if (key === 'fio') {
+      return row[key].map((el, index) => <p key={index}>{el}</p>);
+    }
+
+    return row[key];
   };
 
   return (
@@ -58,7 +67,7 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
             posDirList={posDirList}
             indexRow={openDirList}
             data={direction}
-            selected={tableData[openDirList]?.direction}
+            selected={tableData?.[openDirList]?.direction}
             funSetDirection={funSetDirection}
           />
         )}
@@ -98,7 +107,7 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
                     </div>
                   </td>
                 ) : (
-                  <td key={indexCol}>{row[columnKey.key]}</td>
+                  <td key={indexCol}>{getTdData(columnKey.key, row)}</td>
                 ),
               )}
             </tr>

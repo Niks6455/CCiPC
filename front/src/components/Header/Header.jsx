@@ -18,11 +18,10 @@ function Header() {
           <img src={LogoHomePage} alt="logo" onClick={() => navigate('/')} />
         </div>
         <div className={styles.logoInner}>
-          <img
-            src={`${server}/${conference?.logo?.FOOTER}`}
-            alt="logo"
-            onError={e => (e.target.style.display = 'none')}
-          />
+          {conference?.logo?.HEADER && (
+            <img src={`${server}/${conference?.logo?.HEADER}`} alt="logo" />
+          )}
+
           <p>
             Всероссийская научная конференция
             <br /> "Системный синтез и прикладная синергетика"
