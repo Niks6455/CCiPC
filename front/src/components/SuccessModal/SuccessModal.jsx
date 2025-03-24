@@ -19,7 +19,7 @@ function SuccessModal({ open, close }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
             >
-              <p className={styles.title}>Данные успешно сохранены.</p>
+              <p className={styles.title}>Данные успешно сохранены!</p>
               <img className={styles.galka} src={circleGalka} alt="img" />
               <button onClick={() => close(false)} className={styles.btnred}>
                 Закрыть
