@@ -18,30 +18,34 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
   const buttonDeleteRef = useRef(null);
   const cardRef = useRef(null);
   const imgRef = useRef(null);
-
-  const [defaultValue, setDefaultValue] = useState({
+  const refFile = useRef(null);
+  const [file, setFile] = useState(null);
+  const [dataItem, setDataItem] = useState({
     img: item?.img || '',
     fio: item?.fio || '',
     organization: item?.organization || '',
   });
-  const [file, setFile] = useState(null);
-  const refFile = useRef(null);
-  const [dataItem, setDataItem] = useState(defaultValue);
   const [isChanged, setIsChanged] = useState(false);
+  const [errorFio, setErrorFio] = useState('');
+  const [errorOrganization, setErrorOrganization] = useState('');
 
   useEffect(() => {
-    setDataItem(item);
-    setDefaultValue(item);
+    setDataItem({
+      img: item?.img || '',
+      fio: item?.fio || '',
+      organization: item?.organization || '',
+    });
+    setErrorFio('');
+    setErrorOrganization('');
   }, [item]);
 
-  // Проверка изменений
   useEffect(() => {
-    const hasChanged =
-      dataItem.fio !== defaultValue.fio ||
-      dataItem.organization !== defaultValue.organization ||
-      dataItem.img !== defaultValue.img;
-    setIsChanged(hasChanged);
-  }, [dataItem, defaultValue]);
+    setIsChanged(
+      dataItem.fio !== item?.fio ||
+      dataItem.organization !== item?.organization ||
+      dataItem.img !== item?.img
+    );
+  }, [dataItem, item]);
 
   // Анимация появления карточки
   useEffect(() => {
@@ -79,6 +83,8 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
 
   const handleEditData = (value, key) => {
     setDataItem(prev => ({ ...prev, [key]: value }));
+    if (key === 'fio') setErrorFio('');
+    if (key === 'organization') setErrorOrganization('');
 
     if (key === 'organization' && textareasRef.current) {
       textareasRef.current.style.height = 'auto';
@@ -86,16 +92,39 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
     }
   };
 
-  const handleCancel = () => setDataItem(defaultValue);
+  const handleCancel = () => {
+    setErrorFio('');
+    setErrorOrganization('');
+    setDataItem({
+      img: item?.img || '',
+      fio: item?.fio || '',
+      organization: item?.organization || '',
+    });
+  };
+
+  const validateFields = () => {
+    let valid = true;
+    if (!dataItem.fio) {
+      setErrorFio('Это обязательное поле');
+      valid = false;
+    }
+    if (!dataItem.organization) {
+      setErrorOrganization('Это обязательное поле');
+      valid = false;
+    }
+    return valid;
+  };
 
   const handleSave = () => {
-    updateOrgCommitet(dataItem, item.id).then(res => {
-      if (res?.status === 200) {
-        updateCardData(item.id, dataItem);
-        setIsChanged(false);
-        getDataOrg();
-      }
-    });
+    if (validateFields()) {
+      updateOrgCommitet(dataItem, item.id).then(res => {
+        if (res?.status === 200) {
+          updateCardData(item.id, dataItem);
+          setIsChanged(false);
+          getDataOrg();
+        }
+      });
+    }
   };
 
   const handleDelete = () => {
@@ -156,7 +185,8 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
 
         <div className={styles.CardOrganizationInnerInfo}>
           <label>ФИО</label>
-          <input value={dataItem.fio} onChange={e => handleEditData(e.target.value, 'fio')} />
+          <input value={dataItem.fio} onChange={e => handleEditData(e.target.value, 'fio')} style={{ borderColor: errorFio ? '#B32020' : '' }}/>
+          {errorFio && <span className={styles.error}>{errorFio}</span>}
         </div>
 
         <div className={styles.CardOrganizationInnerInfo}>
@@ -165,7 +195,9 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
             ref={textareasRef}
             value={dataItem.organization}
             onChange={e => handleEditData(e.target.value, 'organization')}
+            style={{ borderColor: errorOrganization ? '#B32020' : '' }}
           />
+           {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
         </div>
 
         {isChanged ? (

@@ -32,7 +32,7 @@ function CardArchive({ item, updateData }) {
     setErrorName('');
     setErrorUrl('');
   }, [item]);
-
+  
   useEffect(() => {
     setIsChanged(
       dataItem.name !== item?.name ||
@@ -72,12 +72,15 @@ function CardArchive({ item, updateData }) {
     }
   };
 
-  const handleCancel = () =>
+  const handleCancel = () =>{
+    setErrorName('');
+    setErrorUrl('');
     setDataItem({
       file: item?.file || '',
       name: item?.name || '',
       url: item?.url || '',
     });
+  }
 
   const validateFields = () => {
     let valid = true;

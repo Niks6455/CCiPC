@@ -37,14 +37,21 @@ function TopMainInfo() {
             <div className={styles.mainTopText}>
               <Layout>
                 <div className={styles.mainTopDate}>
-                  <p>
-                    {formatDateRangePrimereact(
-                      conference?.date[0].value,
-                      conference?.date[1].value,
-                    )}
-                    {' года'}
-                    <br /> {conference?.address}
-                  </p>
+                  {formatDateRangePrimereact(
+                    conference?.date[0].value,
+                    conference?.date[1].value,
+                  ) ? (
+                    <p>
+                      {formatDateRangePrimereact(
+                        conference?.date[0].value,
+                        conference?.date[1].value,
+                      )}
+                      {' года'}
+                      <br /> {conference?.address}
+                    </p>
+                  ) : (
+                    <p></p>
+                  )}
                 </div>
                 <div className={styles.mainTopList}>
                   <ul>

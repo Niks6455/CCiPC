@@ -1,7 +1,11 @@
 import axios from 'axios';
 
+const URL = window.location.origin;
+let server = "";
+URL === 'http://localhost:3001' ? server = 'http://localhost:3000' : server = `${URL}/api`; 
+
 const api = axios.create({
-  baseURL: 'http://localhost:3000',
+  baseURL: server,
 });
 
 // Добавляем interceptor для автоматического подставления токена

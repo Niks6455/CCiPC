@@ -25,6 +25,8 @@ $w4: 480px;
   margin-top: 170px;
   width: 100vw;
   margin-bottom: torem(100px);
+  max-width: 1420px;
+  margin: 170px auto 0px auto;
   @include maxMinContent(146px);
   @media (max-width: 990px) {
     margin-top: 70px;

@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
-function NavBar() {
+function NavBar({ userRole }) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const refMenu = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (refMenu.current && !refMenu.current.contains(event.target)) {
         context.setActiveMenu(false);
       }
@@ -22,7 +22,7 @@ function NavBar() {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [context]);
-  
+
   return (
     <section className={styles.NavBar}>
       <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
@@ -108,18 +108,19 @@ function NavBar() {
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
-
-            {/* <li
-              onClick={() => {
-                navigate('/adminPage/news');
-                context.setActiveMenu(false);
-              }}
-            >
-              Писюн{' '}
-              <span className={styles.arowLi}>
-                <img src={ArrowMenu} alt="Arrow" />
-              </span>
-            </li> */}
+            {userRole === 1 && (
+              <li
+                onClick={() => {
+                  navigate('/adminPage/news');
+                  context.setActiveMenu(false);
+                }}
+              >
+                Админ панель{' '}
+                <span className={styles.arowLi}>
+                  <img src={ArrowMenu} alt="Arrow" />
+                </span>
+              </li>
+            )}
           </ul>
           <div className={styles.RightMenuText}>
             <div className={styles.RightMenuTextCont}>

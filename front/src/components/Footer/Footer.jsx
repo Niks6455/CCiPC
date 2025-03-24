@@ -16,7 +16,7 @@ function Footer({ footerRef }) {
               <img
                 src={`${server}/${conferense?.logo?.FOOTER}` || footerLogo}
                 alt="logo"
-                onError={e => (e.target.src = footerLogo)}
+                onError={e => (e.target.style.display = 'none')}
               />
             </div>
             <div className={styles.footerText}>
@@ -24,15 +24,19 @@ function Footer({ footerRef }) {
                 <img
                   src={`${server}/${conferense?.logo?.FOOTER}` || footerLogo}
                   alt="logo"
-                  onError={e => (e.target.src = footerLogo)}
+                  onError={e => (e.target.style.display = 'none')}
                 />
                 Всероссийская научная конференция "Системный синтез и прикладная синергетика"
               </p>
-              <p>
-                {' '}
-                {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value)}
-                {' года'} {conferense?.address}
-              </p>
+              {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value) ? (
+                <p>
+                  {' '}
+                  {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value)}
+                  {' года'} {conferense?.address}
+                </p>
+              ) : (
+                <p></p>
+              )}
             </div>
           </div>
           <div className={styles.footerLink}>
