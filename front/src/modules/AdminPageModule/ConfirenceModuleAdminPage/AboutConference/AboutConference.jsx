@@ -8,18 +8,18 @@ function AboutConference({ data, setData }) {
     setData({ ...data, aboutConference: e.target.value });
   };
 
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (textareaRef.current && !textareaRef.current.contains(event.target)) {
-        setContextMenu(false);
-        handleContextMenu(event);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleClickOutside = event => {
+  //     if (textareaRef.current && !textareaRef.current.contains(event.target)) {
+  //       setContextMenu(false);
+  //       handleContextMenu(event);
+  //     }
+  //   };
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, []);
 
   // Показать контекстное меню, если есть выделенный текст
   const handleContextMenu = e => {

@@ -37,7 +37,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import EnteringEmail from './modules/RecoverPasswordModule/EnteringEmail/EnteringEmail';
 import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/RecoverPassword';
 import RecoverPasswordPage from './pages/RecoverPasswordPage/RecoverPasswordPage';
-import { apiCreateConferences } from './apirequests/apirequests';
 import Footer from './components/Footer/Footer';
 import { useWindowWidth } from './hooks/hooks';
 
@@ -81,37 +80,8 @@ function App() {
   }, [localStorage.getItem('userData')]);
 
   useEffect(() => {
-    // const accessToken = localStorage.getItem('accessToken');
-    // console.log('accessToken', accessToken);
-    // if (accessToken !== null) {
     funGetAllApi();
-    // }
   }, [dispatch]);
-
-  useEffect(() => {
-    //! создание конференции
-    const dataConferences = {
-      number: 1,
-      date: ['2025-03-10', '2025-05-12'],
-      address: 'Таганрог',
-      stages: [
-        {
-          name: 'Представление докладов и регистрационных форм',
-          date: '2024-09-01',
-        },
-      ],
-      description: 'Описание',
-      directions: [
-        '7. Проблемы математического моделирования и управления в области медицины',
-        '8. Проблемы математического моделирования и управления в области медицины',
-        '9. Проблемы математического моделирования и управления в области медицины',
-        '10. Проблемы математического моделирования и управления в области медицины',
-        '11. Проблемы математического моделирования и управления в области медицины',
-        '12. Проблемы математического моделирования и управления в области медицины',
-      ],
-    };
-    // apiCreateConferences(dataConferences);
-  }, []);
 
   const context = {
     setAuthPage,

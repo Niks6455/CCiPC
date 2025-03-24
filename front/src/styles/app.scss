@@ -61,3 +61,16 @@ p {
 body {
   background-color: #f0f3f2;
 }
+
+input {
+  // Убираем желтое выделение
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px var(--BodyBgColor) inset !important; // Замените 'white' на цвет фона вашего инпута
+    -webkit-text-fill-color: black; // Замените 'black' на цвет текста вашего инпута
+  }
+
+  // Убираем обводку при фокусе
+  &:focus {
+    outline: none; // Убираем стандартную обводку
+  }
+}
