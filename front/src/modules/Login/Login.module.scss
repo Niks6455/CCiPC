@@ -1,19 +1,20 @@
 $w1: 780px;
-$w2: 440px;
+$w2: 480px;
 $w3: 360px;
 
 .Login {
+  padding-bottom: torem(60px);
   .LoginLogo {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: torem(40px);
     width: 100%;
     @media (max-width: $w1) {
       display: none;
     }
     img {
-      width: 169px;
-      height: 169px;
+      width: torem(169px);
+      height: torem(169px);
       @media (max-width: $w1) {
         width: 100%;
         height: 100%;
@@ -21,47 +22,47 @@ $w3: 360px;
     }
   }
   .LoginTitle {
-    margin-top: 74px;
+    margin-top: torem(74px);
     @media (max-width: $w2) {
-      margin-top: 24px;
+      margin-top: torem(24px);
     }
     @media (max-width: $w3) {
-      margin-top: 10px;
+      margin-top: torem(10px);
     }
     p {
       text-align: center;
       &:first-child {
-        font-size: 32px;
-        line-height: 38px;
+        font-size: torem(32px);
+        line-height: torem(38px);
         font-weight: 900;
-        margin: 40px 0px 20px 0px;
+        margin: torem(40px) 0px torem(20px) 0px;
         @media (max-width: $w1) {
-          font-size: 20px;
-          line-height: 24px;
+          font-size: torem(20px);
+          line-height: torem(24px);
           margin: 0;
-          margin-bottom: 10px;
+          margin-bottom: torem(10px);
           padding: 0;
         }
         @media (max-width: $w2) {
           font-weight: 700;
-          font-size: 18px;
+          font-size: torem(18px);
         }
       }
       &:last-child {
-        font-size: 18px;
+        font-size: torem(18px);
         font-weight: 300;
-        line-height: 21px;
-        margin-bottom: calc(25px - 15px);
+        line-height: torem(21px);
+        margin-bottom: calc(torem(25px) - torem(15px));
         @media (max-width: $w1) {
           font-weight: 400;
-          font-size: 16px;
+          font-size: torem(16px);
         }
         @media (max-width: $w2) {
           font-weight: 500;
-          font-size: 16px;
-          max-width: 309px;
+          font-size: torem(16px);
+          max-width: torem(309px);
           margin: 0 auto;
-          margin-bottom: 25px;
+          margin-bottom: torem(25px);
         }
       }
     }
@@ -72,34 +73,34 @@ $w3: 360px;
     justify-content: center;
     @media (max-width: $w1) {
       input {
-        width: 400px;
-        height: 54px;
-        font-size: 18px;
+        width: torem(400px);
+        height: torem(54px);
+        font-size: torem(18px);
       }
       div[name='error'] {
-        font-size: 14px;
+        font-size: torem(14px);
       }
     }
     @media (max-width: $w2) {
       input {
-        width: calc(100vw - 40px);
-        height: 54px;
-        font-size: 16px;
-        margin: 10px 0;
+        width: calc(100vw - torem(40px));
+        height: torem(54px);
+        font-size: torem(16px);
+        margin: torem(10px) 0;
       }
       div[name='error'] {
-        font-size: 14px;
+        font-size: torem(14px);
       }
     }
     @media (max-width: $w3) {
       input {
-        width: calc(100vw - 40px);
-        height: 44px;
-        font-size: 14px;
-        margin: 10px 0;
+        width: calc(100vw - torem(40px));
+        height: torem(44px);
+        font-size: torem(14px);
+        margin: torem(10px) 0;
       }
       div[name='error'] {
-        font-size: 14px;
+        font-size: torem(14px);
       }
     }
   }
@@ -115,63 +116,63 @@ $w3: 360px;
       color: var(--GreenColorClick);
     }
     @media (max-width: $w1) {
-      font-size: 16px;
+      font-size: torem(16px);
       padding: 0;
       margin: 0;
-      margin-top: -10px;
+      margin-top: torem(-10px);
     }
     @media (max-width: $w2) {
-      margin-top: -5px;
-      font-size: 14px;
+      margin-top: torem(-5px);
+      font-size: torem(14px);
     }
   }
   .Maybe {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 30px 0px;
+    margin: torem(30px) 0px;
     @media (max-width: $w1) {
-      margin: 20px 0px;
+      margin: torem(20px) 0px;
     }
     .MaybeInner {
-      width: 490px;
+      width: torem(490px);
       display: flex;
       justify-content: space-between;
       align-items: center;
       @media (max-width: $w1) {
-        width: 400px;
+        width: torem(400px);
       }
       @media (max-width: $w2) {
-        width: calc(100vw - 40px);
+        width: calc(100vw - torem(40px));
       }
       p {
         width: max-content;
         text-align: center;
         @media (max-width: $w1) {
-          font-size: 16px;
-          padding: 0 15px;
+          font-size: torem(16px);
+          padding: 0 torem(15px);
         }
         @media (max-width: $w2) {
           font-weight: 400;
-          font-size: 16px;
+          font-size: torem(16px);
         }
         @media (max-width: $w3) {
-          font-size: 14px;
+          font-size: torem(14px);
         }
       }
       .lineOne {
         position: relative;
         content: '';
-        height: 1px;
+        height: torem(1px);
         background-color: var(--InputColors);
-        width: 214px;
+        width: torem(214px);
       }
       .lineTwo {
         position: relative;
         content: '';
-        height: 1px;
+        height: torem(1px);
         background-color: var(--InputColors);
-        width: 214px;
+        width: torem(214px);
       }
     }
   }
@@ -179,33 +180,33 @@ $w3: 360px;
     display: flex;
     justify-content: center;
     button {
-      width: 490px;
+      width: torem(490px);
       text-align: start;
       border: none;
-      border: 1px solid var(--InputColors);
-      border-radius: 10px;
+      border: torem(1px) solid var(--InputColors);
+      border-radius: torem(10px);
       color: var(--GrayTextDefault);
-      font-size: 20px;
-      height: 66px;
+      font-size: torem(20px);
+      height: torem(66px);
       align-items: center;
       display: flex;
       background-color: inherit;
-      padding-left: 20px;
+      padding-left: torem(20px);
       cursor: pointer;
       @media (max-width: $w1) {
-        width: 400px;
+        width: torem(400px);
       }
       @media (max-width: $w2) {
-        width: calc(100vw - 40px);
+        width: calc(100vw - torem(40px));
         font-weight: 400;
-        font-size: 16px;
+        font-size: torem(16px);
       }
       @media (max-width: $w3) {
-        font-size: 14px;
-        height: 54px;
+        font-size: torem(14px);
+        height: torem(54px);
       }
       img {
-        margin-right: 15px;
+        margin-right: torem(15px);
       }
     }
   }
@@ -213,19 +214,19 @@ $w3: 360px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 30px 0px 15px 0px;
+    margin: torem(30px) 0px torem(15px) 0px;
     @media (max-width: $w3) {
-      margin-top: 20px;
+      margin-top: torem(20px);
     }
     button {
       border: none;
-      border-radius: 10px;
+      border-radius: torem(10px);
       background-color: var(--GreenColorDefault);
       cursor: pointer;
       color: #fff;
-      width: 490px;
-      height: 66px;
-      font-size: 22px;
+      width: torem(490px);
+      height: torem(66px);
+      font-size: torem(22px);
       &:hover {
         background-color: var(--GreenColorHover);
       }
@@ -233,16 +234,16 @@ $w3: 360px;
         background-color: var(--GreenColorActive);
       }
       @media (max-width: $w1) {
-        width: 400px;
+        width: torem(400px);
       }
       @media (max-width: $w2) {
-        width: calc(100vw - 40px);
+        width: calc(100vw - torem(40px));
         font-weight: 400;
-        font-size: 16px;
+        font-size: torem(16px);
       }
       @media (max-width: $w3) {
-        font-size: 14px;
-        height: 54px;
+        font-size: torem(14px);
+        height: torem(54px);
       }
     }
   }
@@ -250,11 +251,11 @@ $w3: 360px;
     display: flex;
     color: var(--GrayTextDefault);
     justify-content: center;
-    margin-bottom: 150px;
+    margin-bottom: torem(150px);
     p {
       &:last-child {
         color: var(--GreenColorText);
-        margin-left: 10px;
+        margin-left: torem(10px);
         cursor: pointer;
         transition: 0.05s linear all;
         &:hover {
@@ -262,7 +263,7 @@ $w3: 360px;
         }
       }
       @media (max-width: $w3) {
-        font-size: 14px;
+        font-size: torem(14px);
       }
     }
   }

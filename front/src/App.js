@@ -42,6 +42,7 @@ import { useLocalStorage, useWindowWidth } from './hooks/hooks';
 import Login from './modules/Login/Login';
 import Register from './modules/Register/Register';
 import ConfirmLogin from './modules/ConfirmLogin/ConfirmLogin';
+import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
 
 function App() {
   const dispatch = useDispatch();
@@ -113,7 +114,7 @@ function App() {
     }
   }, [footerRef, useWindowWidth()]);
 
-  console.log('userRole', userRole);
+  console.log('user.email', user.email);
 
   return (
     <DataContext.Provider value={context}>
@@ -142,27 +143,81 @@ function App() {
                 <Route
                   path="/account"
                   element={
-                    userRole === null || !user.email ? (
-                      <AuthPage funGetAllApi={funGetAllApi} />
-                    ) : (
-                      <Lks userRole={userRole} />
-                    )
+                    <ProtectedRoute
+                      element={<Lks userRole={userRole} />}
+                      isAuthenticated={!!user.email}
+                    />
                   }
                 >
-                  <Route path="documents" element={<DocumentsLk />}></Route>
-                  <Route path="createreport" element={<CreateReport />} />
-                  <Route path="addcoauthor" element={<AddCoauthor />} />
-                  <Route path="profile" element={<Profile />}></Route>
-                  <Route path="deleteaccount" element={<DeleteAccount />}></Route>
+                  <Route
+                    path="documents"
+                    element={
+                      <ProtectedRoute element={<DocumentsLk />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="createreport"
+                    element={
+                      <ProtectedRoute element={<CreateReport />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="addcoauthor"
+                    element={
+                      <ProtectedRoute element={<AddCoauthor />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="profile"
+                    element={
+                      <ProtectedRoute element={<Profile />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="deleteaccount"
+                    element={
+                      <ProtectedRoute element={<DeleteAccount />} isAuthenticated={!!user.email} />
+                    }
+                  />
                   <Route
                     path="exitaccount"
-                    element={<ExitAccount funResetAllApi={funResetAllApi} />}
-                  ></Route>
-                  <Route path="archivephoto" element={<ArchivPhoto />}></Route>
-                  <Route path="settings/profile" element={<ProfileEditing />} />
-                  <Route path="settings/changepassword" element={<ChangePassword />} />
-                  <Route path="viewreports" element={<ViewReports />} />
-                  <Route path="editreport" element={<EditReport />} />
+                    element={
+                      <ProtectedRoute
+                        element={<ExitAccount funResetAllApi={funResetAllApi} />}
+                        isAuthenticated={!!user.email}
+                      />
+                    }
+                  />
+                  <Route
+                    path="archivephoto"
+                    element={
+                      <ProtectedRoute element={<ArchivPhoto />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="settings/profile"
+                    element={
+                      <ProtectedRoute element={<ProfileEditing />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="settings/changepassword"
+                    element={
+                      <ProtectedRoute element={<ChangePassword />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="viewreports"
+                    element={
+                      <ProtectedRoute element={<ViewReports />} isAuthenticated={!!user.email} />
+                    }
+                  />
+                  <Route
+                    path="editreport"
+                    element={
+                      <ProtectedRoute element={<EditReport />} isAuthenticated={!!user.email} />
+                    }
+                  />
                 </Route>
                 <Route path="/news" element={<NewsPage />}></Route>
                 <Route path="/author" element={<Author />}></Route>
