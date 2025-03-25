@@ -1,33 +1,40 @@
-@import "./../../../styles/mixin.scss";
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
 
 .SuccessModal {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 70px;
-  border-radius: 10px;
-  max-width: 60vw;
+  @include PopupContainer;
+  height: max-content;
+  padding: torem(70px);
+  @media (max-width: $w3) {
+    width: 100vw;
+    max-width: 100vw;
+  }
   .title {
     font-family: Overpass, sans-serif;
-    font-size: 20px;
+    font-size: torem(20px);
     font-weight: 500;
-    line-height: 26px;
+    line-height: torem(26px);
     text-align: center;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
-    margin-bottom: 40px;
+    margin-bottom: torem(40px);
   }
   .btnred {
     @include ButtonGreen;
-    width: 310px;
-    height: 54px;
+    width: torem(310px);
+    height: torem(54px);
     margin: 0 auto;
+    @media (max-width: $w3) {
+      width: max-content;
+      font-size: torem(16px);
+      padding: 0 torem(20px);
+    }
   }
   .galka {
-    width: 80px;
-    height: 80px;
+    width: torem(80px);
+    height: torem(80px);
     margin: 0 auto;
-    margin-bottom: 40px;
+    margin-bottom: torem(40px);
   }
 }

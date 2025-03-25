@@ -142,82 +142,45 @@ function App() {
                 <Route path="/participants" element={<Participants />}></Route>
                 <Route
                   path="/account"
-                  element={
-                    <ProtectedRoute
-                      element={<Lks userRole={userRole} />}
-                      isAuthenticated={!!user.email}
-                    />
-                  }
+                  element={<ProtectedRoute element={<Lks userRole={userRole} />} />}
                 >
-                  <Route
-                    path="documents"
-                    element={
-                      <ProtectedRoute element={<DocumentsLk />} isAuthenticated={!!user.email} />
-                    }
-                  />
+                  <Route path="documents" element={<ProtectedRoute element={<DocumentsLk />} />} />
                   <Route
                     path="createreport"
-                    element={
-                      <ProtectedRoute element={<CreateReport />} isAuthenticated={!!user.email} />
-                    }
+                    element={<ProtectedRoute element={<CreateReport />} />}
                   />
                   <Route
                     path="addcoauthor"
-                    element={
-                      <ProtectedRoute element={<AddCoauthor />} isAuthenticated={!!user.email} />
-                    }
+                    element={<ProtectedRoute element={<AddCoauthor />} />}
                   />
-                  <Route
-                    path="profile"
-                    element={
-                      <ProtectedRoute element={<Profile />} isAuthenticated={!!user.email} />
-                    }
-                  />
+                  <Route path="profile" element={<ProtectedRoute element={<Profile />} />} />
                   <Route
                     path="deleteaccount"
-                    element={
-                      <ProtectedRoute element={<DeleteAccount />} isAuthenticated={!!user.email} />
-                    }
+                    element={<ProtectedRoute element={<DeleteAccount />} />}
                   />
                   <Route
                     path="exitaccount"
                     element={
-                      <ProtectedRoute
-                        element={<ExitAccount funResetAllApi={funResetAllApi} />}
-                        isAuthenticated={!!user.email}
-                      />
+                      <ProtectedRoute element={<ExitAccount funResetAllApi={funResetAllApi} />} />
                     }
                   />
                   <Route
                     path="archivephoto"
-                    element={
-                      <ProtectedRoute element={<ArchivPhoto />} isAuthenticated={!!user.email} />
-                    }
+                    element={<ProtectedRoute element={<ArchivPhoto />} />}
                   />
                   <Route
                     path="settings/profile"
-                    element={
-                      <ProtectedRoute element={<ProfileEditing />} isAuthenticated={!!user.email} />
-                    }
+                    element={<ProtectedRoute element={<ProfileEditing />} />}
                   />
                   <Route
                     path="settings/changepassword"
-                    element={
-                      <ProtectedRoute element={<ChangePassword />} isAuthenticated={!!user.email} />
-                    }
+                    element={<ProtectedRoute element={<ChangePassword />} />}
                   />
                   <Route
                     path="viewreports"
-                    element={
-                      <ProtectedRoute element={<ViewReports />} isAuthenticated={!!user.email} />
-                    }
+                    element={<ProtectedRoute element={<ViewReports />} />}
                   />
-                  <Route
-                    path="editreport"
-                    element={
-                      <ProtectedRoute element={<EditReport />} isAuthenticated={!!user.email} />
-                    }
-                  />
+                  <Route path="editreport" element={<ProtectedRoute element={<EditReport />} />} />
                 </Route>
                 <Route path="/news" element={<NewsPage />}></Route>
                 <Route path="/author" element={<Author />}></Route>

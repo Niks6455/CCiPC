@@ -3,13 +3,13 @@ import styles from './CreateReport.module.scss';
 import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 import errorList from './../../../assets/img/UI/errorZnak.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { disSetResetReport, setValue } from '../../../store/reportCreateSlice/reportCreateSlice';
+import { setValue } from '../../../store/reportCreateSlice/reportCreateSlice';
 import InputListForma from '../../../components/InputListForma/InputListForma';
 import download from './../../../assets/img/UI/download.svg';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { server } from '../../../apirequests/apirequests';
-import { decodeFileName } from '../../../utils/functions/funcions';
+import { convertDate, decodeFileName } from '../../../utils/functions/funcions';
 import { funGetError, funValidateAll } from './functions';
 
 function CreateReport({ edit }) {
@@ -19,12 +19,6 @@ function CreateReport({ edit }) {
   const conference = useSelector(state => state.conferences.data[0]);
   console.log('conference', conference);
   const [errors, setErrors] = useState([]);
-
-  // useEffect(() => {
-  //   if (!edit) {
-  //     dispatch(disSetResetReport());
-  //   }
-  // }, []);
 
   //! функция скачивания шаблока
   const funDownloadShablon = async () => {
@@ -70,6 +64,30 @@ function CreateReport({ edit }) {
       navigate('/account/addcoauthor');
     }
   };
+
+  const [file1Url, setFile1Url] = useState(null);
+  const [file2Url, setFile2Url] = useState(null);
+  useEffect(() => {
+    if (report.data.fileArticle instanceof Blob) {
+      const url1 = window.URL.createObjectURL(report.data.fileArticle);
+      setFile1Url(url1);
+    } else {
+      console.error('fileArticle is not a valid Blob or File');
+    }
+
+    if (report.data.fileExpertOpinion instanceof Blob) {
+      const url2 = window.URL.createObjectURL(report.data.fileExpertOpinion);
+      setFile2Url(url2);
+    } else {
+      console.error('fileExpertOpinion is not a valid Blob or File');
+    }
+
+    // Cleanup function to revoke object URLs
+    return () => {
+      if (file1Url) window.URL.revokeObjectURL(file1Url);
+      if (file2Url) window.URL.revokeObjectURL(file2Url);
+    };
+  }, [report.data.fileArticle, report.data.fileExpertOpinion]);
 
   return (
     <div className={styles.CreateReport}>
@@ -165,7 +183,7 @@ function CreateReport({ edit }) {
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
               <FileComponent
-                logoHeader={report.data.fileArticle}
+                logoHeader={file1Url}
                 data={report.data.fileArticle}
                 setData={value => funChangeFile(value, 'fileArticle')}
                 typeFile={['application/pdf']}
@@ -191,7 +209,7 @@ function CreateReport({ edit }) {
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
               <FileComponent
-                logoHeader={report.data.fileExpertOpinion}
+                logoHeader={file2Url}
                 data={report.data.fileExpertOpinion}
                 setData={value => funChangeFile(value, 'fileExpertOpinion')}
                 typeFile={['application/pdf']}
@@ -232,8 +250,9 @@ function CreateReport({ edit }) {
           <div className={styles.text}>
             <img src={errorList} alt="img" />
             <span>
-              В срок до необходимо прислать заявку на доклад, а в срок до ХХ.ХХ.ХХХХ загрузить
-              статью и экспертное заключение.
+              В срок до {convertDate(conference?.date?.[0]?.value)} необходимо прислать заявку на
+              доклад, а в срок до {convertDate(conference?.deadline)} загрузить статью и экспертное
+              заключение.
             </span>
           </div>
           <button onClick={() => funNextStep()}>Следующий шаг</button>

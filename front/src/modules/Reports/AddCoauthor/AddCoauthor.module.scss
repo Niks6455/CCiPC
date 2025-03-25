@@ -274,16 +274,8 @@ $w3: 480px;
     }
   }
   .popups {
-    position: fixed;
-    z-index: 10000;
-    backdrop-filter: blur(3);
-    width: 100vw;
+    @include PopupBlur;
     height: 100vh;
-    left: 0;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    padding-top: torem(200px);
+    position: fixed;
   }
 }

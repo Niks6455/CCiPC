@@ -35,6 +35,7 @@ import {
 import { fetchUserData } from '../../../store/userSlice/user.Slice';
 import { fetchReports } from '../../../store/reportsSlice/reportsSlice';
 import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal';
+import { convertDate } from '../../../utils/functions/funcions';
 
 function AddCoauthor({ edit, number }) {
   const navigate = useNavigate();
@@ -306,8 +307,9 @@ function AddCoauthor({ edit, number }) {
         <div className={styles.text}>
           <img src={errorList} alt="img" />
           <span>
-            В срок до XX.XX.XХХX необходимо прислать заявку на доклад, а в срок до ХХ.ХХ.ХХХХ
-            загрузить статью и экспертное заключение.
+            В срок до {convertDate(conference?.date?.[0]?.value)} необходимо прислать заявку на
+            доклад, а в срок до {convertDate(conference?.deadline)} загрузить статью и экспертное
+            заключение.
           </span>
         </div>
         <button onClick={funSaveData}>{edit ? 'Сохранить изменения' : 'Сохранить'}</button>

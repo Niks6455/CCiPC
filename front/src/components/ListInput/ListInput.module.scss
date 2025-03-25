@@ -19,6 +19,7 @@ $w3: 480px;
     margin: 0;
     max-height: torem(400px);
     overflow-y: auto;
+    @include ScrollBar;
   }
 
   li {

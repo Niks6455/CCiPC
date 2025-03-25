@@ -106,8 +106,10 @@ $w3: 480px;
                 float: left;
                 display: flex;
                 width: torem(20px);
-                height: torem(20px);
+                height: torem(14px);
+                margin-top: torem(3px);
                 filter: brightness(0) invert(1);
+                margin-right: torem(8px);
               }
             }
           }

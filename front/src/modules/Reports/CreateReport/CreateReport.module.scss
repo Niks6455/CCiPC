@@ -230,6 +230,15 @@ $w3: 480px;
           .border {
             width: 100%;
           }
+
+          .delete {
+            position: absolute;
+            right: torem(20px);
+            top: torem(20px);
+            @include ButtonIcon;
+            @include HoverActiveOpacity;
+            z-index: 10000;
+          }
         }
         .fileImport {
           border-radius: torem(10px);

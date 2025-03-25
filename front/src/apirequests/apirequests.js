@@ -472,6 +472,7 @@ export const apiDeleteAccount = async () => {
     const response = await api.delete(`${server}/participants/self`);
     return response;
   } catch (error) {
+    localStorage.removeItem('accessToken');
     console.log('apiDeleteAccount ', error);
   }
 };
