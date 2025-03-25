@@ -9,8 +9,11 @@ import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHo
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
+import { useState } from 'react';
+
 function HomePage() {
   const conference = useSelector(state => state.conferences.data[0]);
+  const { topDiv, bottomDiv } = splitDirectionsEvenly(conference?.directions || []);
   const textData = textDataHomePage;
   const getDescription = text => {
     let newText = text
@@ -19,6 +22,67 @@ function HomePage() {
       .join('');
     return newText;
   };
+
+  const [style, setStyle] = useState([]);
+  const [style2, setStyle2] = useState([]);
+
+  //! обработка фото
+  const handleImageLoad = (event, index, setStyle) => {
+    console.log('event', event);
+    const { naturalWidth, naturalHeight } = event.target;
+    console.log('naturalWidth', naturalWidth);
+    console.log('naturalHeight', naturalHeight);
+    if (naturalWidth > naturalHeight * 2) {
+      setStyle(prevStyle => {
+        const newStyle = [...prevStyle];
+        newStyle[index] = { maxWidth: '100%' };
+        return newStyle;
+      });
+    }
+  };
+
+  const getElementName = text => {
+    const textMass = text.split(' ');
+    const formattedText = [];
+
+    if (textMass.length === 1) {
+      return null;
+    } else if (textMass.length === 2 && textMass[1].length > 2) {
+      return textMass.map((el, index) => `<p key=${index}>${el}</p>`).join('');
+    } else if (textMass.length === 3) {
+      formattedText.push(`<p key=0>${textMass[0]} ${textMass[1]}</p>`);
+      formattedText.push(`<p key=1>${textMass[2]}</p>`);
+      return formattedText.join('');
+    } else {
+      const chunkedText = [];
+      const isShortText = textMass.length <= 6;
+      const wordsPerLine = isShortText ? 2 : 3;
+
+      for (let i = 0; i < textMass.length; i += wordsPerLine) {
+        chunkedText.push(textMass.slice(i, i + wordsPerLine).join(' '));
+      }
+      return chunkedText.map((line, index) => `<p key=${index}>${line}</p>`).join('');
+    }
+  };
+
+  function splitDirectionsEvenly(directions) {
+    const topDiv = [];
+    const bottomDiv = [];
+    let topHeight = 0;
+    let bottomHeight = 2;
+    directions.forEach(el => {
+      const textLength = el.name.split(' ').length;
+      if (topHeight <= bottomHeight) {
+        topDiv.push(el);
+        topHeight += textLength;
+      } else {
+        bottomDiv.push(el);
+        bottomHeight += textLength;
+      }
+    });
+    return { topDiv, bottomDiv };
+  }
+
   return (
     <div className={styles.HomePage}>
       <HeaderPhone />
@@ -55,28 +119,24 @@ function HomePage() {
                 {conference &&
                   conference?.directions?.map((el, index) => (
                     <div key={index} className={styles.blockTextCompetitions}>
-                      <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
+                      <p dangerouslySetInnerHTML={{ __html: getElementName(el.name) }}></p>
                     </div>
                   ))}
               </div>
               <div className={`${styles.blockTextCompetitionsInner} ${styles.mobile}`}>
                 <div className={styles.row_items}>
-                  {conference &&
-                    conference?.directions?.slice(0, textData?.length / 2 + 1).map((el, index) => (
-                      <div key={index} className={styles.blockTextCompetitions}>
-                        <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
-                      </div>
-                    ))}
+                  {topDiv.map((el, index) => (
+                    <div key={index} className={styles.blockTextCompetitions}>
+                      <p dangerouslySetInnerHTML={{ __html: getElementName(el.name) }}></p>
+                    </div>
+                  ))}
                 </div>
                 <div className={styles.row_items}>
-                  {conference &&
-                    conference?.directions
-                      ?.slice(textData.length / 2 + 1, textData.length)
-                      .map((el, index) => (
-                        <div key={index} className={styles.blockTextCompetitions}>
-                          <p dangerouslySetInnerHTML={{ __html: el.name }}></p>
-                        </div>
-                      ))}
+                  {bottomDiv.map((el, index) => (
+                    <div key={index} className={styles.blockTextCompetitions}>
+                      <p dangerouslySetInnerHTML={{ __html: getElementName(el.name) }}></p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -87,13 +147,21 @@ function HomePage() {
       <SliderHomePageMobile />
       <Layout>
         {conference && conference?.organization?.length > 0 && (
-          <section className={styles.imgSection}>
+          <section className={`${styles.imgSection}`}>
             <div className={styles.Title}>
               <p>Организаторы</p>
             </div>
-            <div className={styles.imgSectionInner}>
+            <div
+              className={`${styles.imgSectionInner} ${conference?.organization?.length === 2 ? styles.two : ''}`}
+            >
               {conference?.organization?.map((el, index) => (
-                <img src={`${server}/${el}`} alt="Organization1" key={index} />
+                <img
+                  style={style2[index]}
+                  src={`${server}/${el}`}
+                  alt="Organization1"
+                  key={index}
+                  onLoad={e => handleImageLoad(e, index, setStyle2)}
+                />
               ))}
             </div>
           </section>
@@ -103,9 +171,17 @@ function HomePage() {
             <div className={styles.Title}>
               <p>Партнёры</p>
             </div>
-            <div className={styles.imgSectionInner}>
+            <div
+              className={`${styles.imgSectionInner}  ${conference?.partner?.length === 2 ? styles.two : ''}`}
+            >
               {conference?.partner?.map((el, index) => (
-                <img src={`${server}/${el}`} alt="Organization1" key={index} />
+                <img
+                  style={style[index]}
+                  src={`${server}/${el}`}
+                  alt="Organization1"
+                  key={index}
+                  onLoad={e => handleImageLoad(e, index, setStyle)}
+                />
               ))}
             </div>
           </section>
