@@ -27,12 +27,12 @@ function NoteFoundPage() {
                 <p>
                   Кажется, что-то пошло не так! Страница, которую вы запрашиваете, не существует.
                   Возможно, она была удалена, или вы набрали неверный адрес. Перейдите на нашу{' '}
-                  <span onClick={() => navigate('/HomePage')}>главную страницу</span> и попробуйте
+                  <span onClick={() => navigate('/')}>главную страницу</span> и попробуйте
                   найти необходимую вам информацию там.
                 </p>
                 <button onClick={() => navigate('/')}>Перейти на главную</button>
               </div>
-              <div>
+              <div className={styles.imgCont}>
                 <img src={NoteFound} alt="NoteFound" />
               </div>
             </div>

@@ -5,12 +5,14 @@ import { useNavigate, useOutletContext } from 'react-router-dom';
 import { validateEmail } from '../../../utils/functions/Validations';
 import { useState } from 'react';
 import { apiSandReset } from '../../../apirequests/apirequests';
+import { useDispatch, useSelector } from 'react-redux';
+import { setEmailSand } from '../../../store/userSlice/user.Slice';
 
 function EnteringEmail() {
   const navigate = useNavigate();
-  const { email, setEmail } = useOutletContext();
+  const [email, setEmail ] = useState();
   const [error, setError] = useState(false);
-
+  const dispatch = useDispatch();
   const funChangeEmail = e => {
     setEmail(e.target.value);
     if (validateEmail(e.target.value)) {
@@ -25,6 +27,8 @@ function EnteringEmail() {
       };
       apiSandReset(data).then(res => {
         if (res?.status === 200) {
+          dispatch(setEmailSand({ email: email}));
+          sessionStorage.setItem('confirmEmail', email);
           setError(false);
           navigate('checkemail');
         } else {
