@@ -316,7 +316,7 @@ export default {
             if(reportInfo?.coAuthorsIds?.length > 0){
                 await ParticipantOfReport.destroy({
                     where:{
-                        participantId: reportInfo.coAuthorsIds,
+                        id: reportInfo.coAuthorsIds,
                     }
                 })
             }
