@@ -11,7 +11,9 @@ import Cap from '../../assets/img/Cap.svg';
 import { getOrgCommitet } from '../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
+import { useNavigate } from 'react-router-dom';
 export default function CommitteesPage() {
+  const navigate = useNavigate();
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
   const [dataOrgAll, setDataOrgAll] = useState([]);
@@ -76,7 +78,12 @@ export default function CommitteesPage() {
   };
   return (
     <>
-      <img src={logoHeader} className={styles.logo} />
+      <img
+        style={{ cursor: 'pointer' }}
+        src={logoHeader}
+        className={styles.logo}
+        onClick={() => navigate('/')}
+      />
       <NavBar />
       <HeaderPhone />
       <div>

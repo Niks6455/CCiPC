@@ -8,8 +8,10 @@ import logoHeader from './../../assets/img/logo.png';
 import { useEffect, useState } from 'react';
 import { getAllNews } from '../../apirequests/apirequests';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
+import { useNavigate } from 'react-router-dom';
 
 function NewsPage() {
+  const navigate = useNavigate();
   const [dataSliderFirstColumn, setDataSliderFirstColumn] = useState([]);
   const [dataSliderTwoColumn, setDataSliderTwoColumn] = useState([]);
   const [dataSliderThreeColumn, setDataSliderThreeColumn] = useState([]);
@@ -46,7 +48,12 @@ function NewsPage() {
 
   return (
     <>
-      <img src={logoHeader} className={styles.logo} />
+      <img
+        style={{ cursor: 'pointer' }}
+        src={logoHeader}
+        className={styles.logo}
+        onClick={() => navigate('/')}
+      />
       <NavBar />
       <HeaderPhone />
       <main className={styles.NewsPage}>
