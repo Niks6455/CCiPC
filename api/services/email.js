@@ -33,6 +33,7 @@ export default function (to, type, ...arg) {
 
     // отправка сообщений на production
     if (process.env.NODE_ENV === 'production') {
+        console.log(mail);
         smtp.sendMail(mail);
     } else {
         console.log(mail);
