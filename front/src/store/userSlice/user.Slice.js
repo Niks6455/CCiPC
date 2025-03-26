@@ -29,6 +29,7 @@ const UserSlice = createSlice({
     editUser: {
       data: {},
     },
+    emailSend: "",
     status: 'idle', // idle | loading | succeeded | failed
     error: null,
   },
@@ -41,6 +42,11 @@ const UserSlice = createSlice({
 
     disEditUser(state) {
       state.editUser.data = state.user.data;
+    },
+
+    setEmailSand(state, action) {
+      const { email } = action.payload;
+      state.emailSend = email;
     },
 
     setEditUser(state, action) {
@@ -74,6 +80,6 @@ const UserSlice = createSlice({
   },
 });
 
-export const { disResetUser, setUserData, disEditUser, setEditUser } = UserSlice.actions;
+export const { disResetUser, setUserData, disEditUser, setEditUser, setEmailSand } = UserSlice.actions;
 
 export default UserSlice.reducer;

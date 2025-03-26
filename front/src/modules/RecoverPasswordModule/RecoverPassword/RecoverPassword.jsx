@@ -12,19 +12,21 @@ import listErrorNoHover from '@assets/img/UI/listErrorNoActive.svg';
 import listErrorOnHover from '@assets/img/UI/listError.svg';
 import { funCapitalLetter, funDigit, funEightSymbols } from '@utils/functions/PasswordValidation';
 import { useNavigate, useOutletContext } from 'react-router-dom';
-import { apiPasswordRecovery, CheckEmail } from '../../../apirequests/apirequests';
+import { apiPasswordRecovery, apiSandReset, CheckEmail } from '../../../apirequests/apirequests';
+import { useSelector } from 'react-redux';
 
 function RecoverPassword() {
   //! востановление по почте true по телефону false
   const [isRecoverType, setIsRecoverType] = useState(true);
-  const { email, setEmail } = useOutletContext();
+  const [email, setEmail ] = useState();
+  const store = useSelector(store => store.user);
 
   const context = useContext(DataContext);
   const [code, setCode] = useState(['', '', '', '', '', '']); // Для кода
   const [codStatus, setCodStatus] = useState(true); // статус ошибки (код неверный)
   const [codeConfirmed, setCodeConfirmed] = useState(false);
   const [errors, setErrors] = useState([false, false, false, false, false, false]); // Для ошибок
-  const [timer, setTimer] = useState(5); // Таймер в секундах
+  const [timer, setTimer] = useState(59); // Таймер в секундах
   const [isButtonActive, setIsButtonActive] = useState(false); // Состояние кнопки
   const inputsRef = useRef([]);
 
@@ -79,25 +81,41 @@ function RecoverPassword() {
     return () => clearInterval(interval); // Очищаем таймер при размонтировании
   }, [timer]);
 
+  useEffect(()=>{
+    console.log(store)
+    setEmail(store.emailSend || sessionStorage.getItem('confirmEmail'));
+  },[])
+
   const handleResendCode = () => {
     if (!isButtonActive) return;
-    console.log('Код повторно отправлен');
-    setTimer(60); // Сбрасываем таймер
-    setIsButtonActive(false); // Делаем кнопку неактивной
+    const data = {
+      email: email || localStorage.getItem('confirmEmail'),
+    };
+    apiSandReset(data).then(res => {
+      if (res?.status === 200) {
+        console.log('Код повторно отправлен');
+        setTimer(60); 
+        setIsButtonActive(false); 
+      } 
+    });
   };
 
   const handleChange = (index, value) => {
     if (!/^\d?$/.test(value)) return;
+    
     const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
+  
     const newErrors = [...errors];
     newErrors[index] = false;
     setErrors(newErrors);
+  
     if (value && index < inputsRef.current.length - 1) {
       inputsRef.current[index + 1].focus();
     }
   };
+  
 
   const handleKeyDown = (index, e) => {
     if (e.key === 'Backspace' && !code[index] && index > 0) {
@@ -173,7 +191,7 @@ function RecoverPassword() {
       apiPasswordRecovery(data).then(res => {
         if (res?.status === 200) {
           console.log('Форма отправлена', formData);
-          navigate('/authorization');
+          navigate('/login/authorization');
         }
       });
     } else {
@@ -196,6 +214,19 @@ function RecoverPassword() {
     setErrors({ ...errors, [name]: '' });
   };
 
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const paste = e.clipboardData.getData('text').trim(); 
+    if (!/^\d{6}$/.test(paste)) return; 
+  
+    const newCode = paste.split('');
+    setCode(newCode); 
+  
+    inputsRef.current[5]?.focus();
+  };
+  
+  
+
   return (
     <div className={styles.ConfirmLogin}>
       {!codeConfirmed ? (
@@ -214,7 +245,7 @@ function RecoverPassword() {
               {isRecoverType ? (
                 <p className={styles.ConfirmLoginGalcaText}>
                   На адрес вашей электронной почты{' '}
-                  <span className={styles.mail}>{context?.mailValue || email}</span> отправлено
+                  <span className={styles.mail}>{context?.mailValue || email || store.emailSend}</span> отправлено
                   письмо с проверочным кодом. Введите полученный код в поле ниже и нажмите
                   “Продолжить”.
                 </p>
@@ -239,18 +270,19 @@ function RecoverPassword() {
           </div>
           <div className={styles.codeInput}>
             <div className={styles.codeInputInner}>
-              {code.map((digit, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  value={digit}
-                  maxLength={1}
-                  onChange={e => handleChange(index, e.target.value)}
-                  onKeyDown={e => handleKeyDown(index, e)}
-                  ref={el => (inputsRef.current[index] = el)}
-                  className={errors[index] ? styles.error : ''}
-                />
-              ))}
+            {code.map((digit, index) => (
+              <input
+                key={index}
+                type="text"
+                value={digit} // Должно быть digit, а не code[0]
+                maxLength={1}
+                onChange={e => handleChange(index, e.target.value)}
+                onKeyDown={e => handleKeyDown(index, e)}
+                onPaste={handlePaste}
+                ref={el => (inputsRef.current[index] = el)}
+                className={errors[index] ? styles.error : ''}
+              />
+            ))}
             </div>
           </div>
           <div className={styles.CodeSubmit}>
@@ -273,7 +305,6 @@ function RecoverPassword() {
             {!codStatus && (
               <div className={styles.errorstatus}>
                 <img src={errorLogo} alt="" />
-
                 <p>Ошибка подтверждения</p>
               </div>
             )}

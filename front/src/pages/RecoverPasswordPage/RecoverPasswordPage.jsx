@@ -5,7 +5,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import { useState } from 'react';
 
 function RecoverPasswordPage() {
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(localStorage.getItem('confirmEmail') || '');
 
   return (
     <div className={styles.RecoverPasswordPage}>

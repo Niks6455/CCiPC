@@ -4,9 +4,6 @@
     display: flex;
     justify-content: center;
     margin-bottom: 140px;
-    @media (max-width: 768px) {
-        padding: 0px 20px;
-    }
     .Title{
         margin: 200px 0px 70px 0px;
         display: flex;
@@ -33,14 +30,22 @@
     }
     .NoteFoundPageText{
         display: flex;
+        padding: 0px 20px;
         .NoteFoundPageTextContainer{
             max-width: 656px;
+            padding: 0px 10px;
+            box-sizing: border-box;
             @media (max-width: 768px) {
                 max-width: 516px;
                 margin: 0 auto;
               }
               .NoteFoundPageTextContainerTitle{
-                text-align: center;
+                text-align: start;
+                color: #002D1B;
+                font-size: 190px;
+                @media (max-width: 1230px) {
+                    text-align: center;
+                }
               }
             p{
                 &:first-child{
@@ -85,6 +90,10 @@
                 border: none;
                 font-size: 20px;
                 cursor: pointer;
+                @media (max-width: 768px) {
+                    font-size: 16px;
+                    height: 50px;
+                }
                 &:hover{
                     background-color: var(--GreenColorHover);
                 }
@@ -93,13 +102,19 @@
                 }
             }
         }
-        img{
-            margin-left: 50px;
-            box-sizing: border-box;
-            width: 100%;
-            @media (max-width: 1426px) {
-              display: none;
+        .imgCont{
+            margin-left: 25px;
+            @media (max-width: 1230px) {
+                display: none;
+            }
+            img{
+                box-sizing: border-box;
+                width: 100%;
+                height: 430px;
+                object-fit: cover;
+                border-radius: 10px;
             }
         }
+       
     }
 }
