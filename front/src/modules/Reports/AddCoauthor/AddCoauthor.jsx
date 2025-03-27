@@ -291,7 +291,9 @@ function AddCoauthor({ edit, number }) {
           {(soauthtor.autocompletion === 'true' || soauthtor.autocompletion === 'readOnly') && (
             <>
               {inpustType.map(inp =>
-                inp.key === 'patronymic' && !soauthtor.data[inp.key] ? (
+                inp.key === 'patronymic' &&
+                !soauthtor.data[inp.key] &&
+                soauthtor.autocompletion === 'readOnly' ? (
                   <></>
                 ) : (
                   <div className={styles.inputbox} key={inp.id}>
