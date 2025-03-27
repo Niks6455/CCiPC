@@ -14,7 +14,6 @@ import { useState } from 'react';
 function HomePage() {
   const conference = useSelector(state => state.conferences.data[0]);
   const { topDiv, bottomDiv } = splitDirectionsEvenly(conference?.directions || []);
-  const textData = textDataHomePage;
   const getDescription = text => {
     let newText = text
       .split('\n')
@@ -46,23 +45,24 @@ function HomePage() {
     const formattedText = [];
 
     if (textMass.length === 1) {
-      return null;
-    } else if (textMass.length === 2 && textMass[1].length > 2) {
+      return text;
+    }
+    if (textMass.length === 2 && textMass[1].length > 2) {
       return textMass.map((el, index) => `<p key=${index}>${el}</p>`).join('');
-    } else if (textMass.length === 3) {
+    }
+    if (textMass.length === 3) {
       formattedText.push(`<p key=0>${textMass[0]} ${textMass[1]}</p>`);
       formattedText.push(`<p key=1>${textMass[2]}</p>`);
       return formattedText.join('');
-    } else {
-      const chunkedText = [];
-      const isShortText = textMass.length <= 6;
-      const wordsPerLine = isShortText ? 2 : 3;
-
-      for (let i = 0; i < textMass.length; i += wordsPerLine) {
-        chunkedText.push(textMass.slice(i, i + wordsPerLine).join(' '));
-      }
-      return chunkedText.map((line, index) => `<p key=${index}>${line}</p>`).join('');
     }
+    const chunkedText = [];
+    const isShortText = textMass.length <= 6;
+    const wordsPerLine = isShortText ? 2 : 3;
+
+    for (let i = 0; i < textMass.length; i += wordsPerLine) {
+      chunkedText.push(textMass.slice(i, i + wordsPerLine).join(' '));
+    }
+    return chunkedText.map((line, index) => `<p key=${index}>${line}</p>`).join('');
   };
 
   function splitDirectionsEvenly(directions) {
