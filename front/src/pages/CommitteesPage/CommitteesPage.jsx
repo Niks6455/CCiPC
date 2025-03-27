@@ -12,7 +12,7 @@ import { getOrgCommitet } from '../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useNavigate } from 'react-router-dom';
-export default function CommitteesPage() {
+export default function CommitteesPage({ userRole }) {
   const navigate = useNavigate();
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
@@ -84,7 +84,7 @@ export default function CommitteesPage() {
         className={styles.logo}
         onClick={() => navigate('/')}
       />
-      <NavBar />
+      <NavBar userRole={userRole} />
       <HeaderPhone />
       <div>
         <Layout>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
-function NavBar({ userRole }) {
+function NavBar() {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
@@ -108,7 +108,7 @@ function NavBar({ userRole }) {
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
-            {userRole === 1 && (
+            {context.userRole === 1 && (
               <li
                 onClick={() => {
                   navigate('/adminPage/news');

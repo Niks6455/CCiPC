@@ -14,7 +14,7 @@ import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests.js';
 import { decodeFileName } from '../../utils/functions/funcions.js';
-function Author() {
+function Author({ userRole }) {
   const [selectedButton, setSelectedButton] = useState('Registration');
   const [data, setData] = useState([]);
   const conference = useSelector(state => state?.conferences?.data[0]);
@@ -45,7 +45,7 @@ function Author() {
 
   return (
     <main>
-      <NavBar />
+      <NavBar userRole={userRole} />
       <HeaderPhone />
       <Layout>
         <div className={styles.author}>

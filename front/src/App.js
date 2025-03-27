@@ -100,6 +100,7 @@ function App() {
     activeMenu,
     setActiveMenu,
     funResetAllApi,
+    userRole,
   };
 
   const footerRef = useRef(null);
@@ -140,10 +141,7 @@ function App() {
                   ></Route>
                 </Route>
                 <Route path="/participants" element={<Participants />}></Route>
-                <Route
-                  path="/account"
-                  element={<ProtectedRoute element={<Lks userRole={userRole} />} />}
-                >
+                <Route path="/account" element={<ProtectedRoute element={<Lks />} />}>
                   <Route path="documents" element={<ProtectedRoute element={<DocumentsLk />} />} />
                   <Route
                     path="createreport"

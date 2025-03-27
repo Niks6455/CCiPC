@@ -36,7 +36,7 @@ $w3: 480px;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    justify-content: end;
+    justify-content: center;
     flex-direction: row;
     @media (max-width: $w2) {
       position: fixed;
@@ -51,9 +51,11 @@ $w3: 480px;
 
     .ProfileImg {
       display: flex;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
+      width: auto;
+      height: auto;
+      max-width: 60vw;
+      max-height: 100vh;
+      // border-radius: 50%;
       object-fit: cover;
     }
     .close {

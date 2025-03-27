@@ -10,7 +10,7 @@ import { getAllNews } from '../../apirequests/apirequests';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useNavigate } from 'react-router-dom';
 
-function NewsPage() {
+function NewsPage({ userRole }) {
   const navigate = useNavigate();
   const [dataSliderFirstColumn, setDataSliderFirstColumn] = useState([]);
   const [dataSliderTwoColumn, setDataSliderTwoColumn] = useState([]);
@@ -54,7 +54,7 @@ function NewsPage() {
         className={styles.logo}
         onClick={() => navigate('/')}
       />
-      <NavBar />
+      <NavBar userRole={userRole} />
       <HeaderPhone />
       <main className={styles.NewsPage}>
         <Layout>
