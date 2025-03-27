@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styles from './EditReport.module.scss';
-import { useNavigate, useSearchParams } from 'react-router-dom'; // Импортируем хук для работы с query params
+import { useSearchParams } from 'react-router-dom'; // Импортируем хук для работы с query params
 import { useDispatch, useSelector } from 'react-redux';
 import CreateReport from '../CreateReport/CreateReport';
 import AddCoauthor from '../AddCoauthor/AddCoauthor';

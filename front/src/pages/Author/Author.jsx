@@ -24,24 +24,24 @@ function Author() {
   }, [selectedButton]);
 
   console.log('conference', conference);
-    //! функция скачивания шаблока
-    const funDownloadShablon = async () => {
-      try {
-        const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
-        if (!response.ok) throw new Error('Ошибка загрузки файла');
-        const blob = await response.blob();
-        const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href); // Освобождаем память
-      } catch (error) {
-        console.error('Ошибка загрузки файла:', error);
-      }
-    };
+  //! функция скачивания шаблока
+  const funDownloadShablon = async () => {
+    try {
+      const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+      if (!response.ok) throw new Error('Ошибка загрузки файла');
+      const blob = await response.blob();
+      const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(link.href); // Освобождаем память
+    } catch (error) {
+      console.error('Ошибка загрузки файла:', error);
+    }
+  };
 
   return (
     <main>
@@ -83,8 +83,10 @@ function Author() {
                   {' '}
                   личном кабинете
                 </Link>
-                . В срок до {conference?.date[0]?.value || 'XXXX-XX-XX'} необходимо прислать заявку на доклад, заполнив обязательные
-                поля, а в срок до {conference?.deadline || 'XXXX-XX-XX'} загрузить статью и экспертное заключение.
+                . В срок до {conference?.dedlineReport1 || 'XXXX-XX-XX'} необходимо прислать заявку
+                на доклад, заполнив обязательные поля, а в срок до{' '}
+                {conference?.dedlineReport2 || 'XXXX-XX-XX'} загрузить статью и экспертное
+                заключение.
               </p>
               <p className={styles.registration_text_2}>
                 <span className={styles.bold}>При подаче заявки прикрепляются:</span>

@@ -17,7 +17,7 @@ function NotFullyFilled({ name }) {
       <p className={styles.title}>
         Вы успешно подали доклад “{name}”.
         <br />
-        Не забудьте внести оставшиеся данные в срок до {conference?.date[1]?.value}.
+        Не забудьте внести оставшиеся данные в срок до {conference?.dedlineReport2}.
       </p>
       <img className={styles.galka} src={circleGalka} alt="img" />
       <button onClick={funCloseModal} className={styles.btnred}>

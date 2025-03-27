@@ -250,9 +250,8 @@ function CreateReport({ edit }) {
           <div className={styles.text}>
             <img src={errorList} alt="img" />
             <span>
-              В срок до {convertDate(conference?.date?.[0]?.value)} необходимо прислать заявку на
-              доклад, а в срок до {convertDate(conference?.deadline)} загрузить статью и экспертное
-              заключение.
+              В срок до {conference?.dedlineReport1} необходимо прислать заявку на доклад, а в срок
+              до {conference?.dedlineReport2} загрузить статью и экспертное заключение.
             </span>
           </div>
           <button onClick={() => funNextStep()}>Следующий шаг</button>
