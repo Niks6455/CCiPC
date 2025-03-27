@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { apiGetUserData } from '../../apirequests/apirequests';
+import { formatPhoneNumber } from '../../utils/functions/Validations';
 
 // Асинхронный thunk для получения данных пользователя
 export const fetchUserData = createAsyncThunk(
@@ -29,7 +30,7 @@ const UserSlice = createSlice({
     editUser: {
       data: {},
     },
-    emailSend: "",
+    emailSend: '',
     status: 'idle', // idle | loading | succeeded | failed
     error: null,
   },
@@ -71,7 +72,10 @@ const UserSlice = createSlice({
       })
       .addCase(fetchUserData.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.user.data = action.payload.participant; // Обновляем данные
+        state.user.data = {
+          ...action.payload.participant,
+          phone: formatPhoneNumber(action.payload.participant.phone),
+        }; // Обновляем данные
       })
       .addCase(fetchUserData.rejected, (state, action) => {
         state.status = 'failed';
@@ -80,6 +84,7 @@ const UserSlice = createSlice({
   },
 });
 
-export const { disResetUser, setUserData, disEditUser, setEditUser, setEmailSand } = UserSlice.actions;
+export const { disResetUser, setUserData, disEditUser, setEditUser, setEmailSand } =
+  UserSlice.actions;
 
 export default UserSlice.reducer;
