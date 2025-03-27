@@ -21,7 +21,7 @@ function TopMainInfo() {
   const funClickRequest = () => {
     const assetsToken = localStorage.getItem('accessToken');
     if (assetsToken === null || !userData) {
-      navigate('/authorization');
+      navigate('/login/authorization');
     } else {
       navigate('/account/documents');
     }
