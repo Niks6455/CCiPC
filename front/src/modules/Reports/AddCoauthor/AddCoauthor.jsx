@@ -36,6 +36,7 @@ import { fetchUserData } from '../../../store/userSlice/user.Slice';
 import { fetchReports } from '../../../store/reportsSlice/reportsSlice';
 import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal';
 import { convertDate } from '../../../utils/functions/funcions';
+import { useEffect } from 'react';
 
 function AddCoauthor({ edit, number }) {
   const navigate = useNavigate();
@@ -44,15 +45,24 @@ function AddCoauthor({ edit, number }) {
   const conferenceId = useSelector(state => state.conferences?.data[0]?.id);
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
-  console.log('directions', directions);
+
+  useEffect(() => {
+    if (!report.data?.name) {
+      navigate('/account/createreport');
+    }
+  }, []);
 
   const funDeleteCoauthor = (index, id) => {
     console.log('id', id);
     dispatch(deleteCoauthor({ index, id }));
   };
 
-  const funNoEmail = index => {
-    dispatch(setCoauthorAutocompletion({ index, autocompletion: 'true' }));
+  const funNoEmail = (index, readOnly) => {
+    if (readOnly) {
+      dispatch(setCoauthorAutocompletion({ index, autocompletion: 'readOnly' }));
+    } else {
+      dispatch(setCoauthorAutocompletion({ index, autocompletion: 'true' }));
+    }
   };
 
   const funChangeInput = (index, key, value) => {
@@ -263,7 +273,7 @@ function AddCoauthor({ edit, number }) {
                     Пользователь с такой почтой не найден на платформе. Необходимо внести данные о
                     соавторе вручную.
                   </p>
-                  <button onClick={() => funNoEmail(index)}>Продолжить</button>
+                  <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
                 </div>
               )}
               {soauthtor.autocompletion === 'emailhave' && (
@@ -272,28 +282,33 @@ function AddCoauthor({ edit, number }) {
                     Пользователь с такой почтой найден на платформе. Данные о соавторе заполнятся
                     автоматически, кроме его формы участия.
                   </p>
-                  <button onClick={() => funNoEmail(index)}>Продолжить</button>
+                  <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
                 </div>
               )}
             </div>
           ))}
 
-          {soauthtor.autocompletion === 'true' && (
+          {(soauthtor.autocompletion === 'true' || soauthtor.autocompletion === 'readOnly') && (
             <>
-              {inpustType.map(inp => (
-                <div className={styles.inputbox} key={inp.id}>
-                  <InputLabel
-                    label={inp.label}
-                    type={inp.type}
-                    index={index}
-                    itemKey={inp.key}
-                    value={soauthtor.data[inp.key]}
-                    funChange={funChangeInput}
-                    placeholder={inp.placeholder}
-                    error={inp.error}
-                  />
-                </div>
-              ))}
+              {inpustType.map(inp =>
+                inp.key === 'patronymic' && !soauthtor.data[inp.key] ? (
+                  <></>
+                ) : (
+                  <div className={styles.inputbox} key={inp.id}>
+                    <InputLabel
+                      label={inp.label}
+                      type={inp.type}
+                      index={index}
+                      itemKey={inp.key}
+                      value={soauthtor.data[inp.key]}
+                      funChange={funChangeInput}
+                      placeholder={inp.placeholder}
+                      error={inp.error}
+                      readOnly={soauthtor.autocompletion === 'readOnly'}
+                    />
+                  </div>
+                ),
+              )}
             </>
           )}
         </div>

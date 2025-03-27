@@ -45,6 +45,7 @@ function InputLabel(props) {
         value={props.value}
         onChange={e => props.funChange(props.index, props.itemKey, e.target.value)}
         onBlur={handleBlur}
+        readOnly={props.readOnly}
       />
     </div>
   );
