@@ -14,3 +14,9 @@ export function funDigit(text) {
   const hasDigit = /\d/.test(text);
   return { id: '2', done: hasDigit };
 }
+
+//! не менее 1 спецсимвола
+export function funSpecialSymbol(text) {
+  const hasSpecialSymbol = /[^a-zA-Z0-9]/.test(text);
+  return { id: '3', done: hasSpecialSymbol };
+}

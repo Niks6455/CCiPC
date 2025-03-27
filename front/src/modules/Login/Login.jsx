@@ -9,7 +9,6 @@ import { LoginFunc } from '../../apirequests/apirequests';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 function Login(props) {
-  const context = useContext(DataContext);
   const [passActionFirst, setPassActionFirst] = useState('password');
   const navigate = useNavigate();
   const [formData, setFormData] = useState({

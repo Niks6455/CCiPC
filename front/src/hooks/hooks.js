@@ -38,3 +38,32 @@ export function useLocalStorage(key, initialValue) {
   // Возвращаем текущее значение и функцию для его обновления
   return [storedValue, setStoredValue];
 }
+
+//! хук для определения нажатий клавиш ctl+v
+export const useClipboardDigits = () => {
+  const [text, setText] = useState(''); // Для кода
+  useEffect(() => {
+    const handleKeyDown = event => {
+      if (
+        event.ctrlKey &&
+        (event.key === 'v' || event.key === 'V' || event.key === 'м' || event.key === 'М')
+      ) {
+        event.preventDefault(); // Предотвращаем стандартное поведение
+        navigator.clipboard
+          .readText()
+          .then(text => {
+            setText(text);
+          })
+          .catch(err => {
+            console.error('Failed to read clipboard contents:', err);
+          });
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  return text;
+};

@@ -7,6 +7,7 @@ import errorItem from '@assets/img/UI/error.svg';
 import { CheckEmail } from '../../apirequests/apirequests';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useClipboardDigits } from '../../hooks/hooks';
 function ConfirmLogin(props) {
   const context = useContext(DataContext);
   const navigete = useNavigate();
@@ -29,6 +30,14 @@ function ConfirmLogin(props) {
     }
     return () => clearInterval(interval); // Очищаем таймер при размонтировании
   }, [timer]);
+
+  const text = useClipboardDigits();
+  useEffect(() => {
+    const digits = text.match(/^\d{6}$/); // Проверяем, что текст состоит из 6 цифр
+    if (digits) {
+      setCode(digits[0].split('').map(digit => digit));
+    }
+  }, [text]);
 
   const handleResendCode = () => {
     if (!isButtonActive) return;

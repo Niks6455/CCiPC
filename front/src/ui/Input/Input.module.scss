@@ -32,7 +32,8 @@ $w3: 480px;
     position: absolute;
     background-color: #fff;
     z-index: 1000;
-    top: calc(-100%);
+    top: calc(-100% - torem(15px));
+
     right: 0;
     padding: torem(10px);
     border-radius: torem(6px);

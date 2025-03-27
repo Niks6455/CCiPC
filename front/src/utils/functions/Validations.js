@@ -48,3 +48,18 @@ export const validateEmail = value => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(value);
 };
+
+//! валидация на колличество символов кроме пробелов
+export const validateLength = (value, count, max) => {
+  if (value === '') {
+    return true;
+  }
+  console.log('value.trim().length', value.trim().length);
+  if (value.trim().length < count) {
+    return false;
+  }
+  if (max && value.trim().length > max) {
+    return false;
+  }
+  return true;
+};

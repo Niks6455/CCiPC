@@ -12,9 +12,15 @@ import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
+  funSpecialSymbol,
 } from '../../utils/functions/PasswordValidation';
 import { apiRegister } from '../../apirequests/apirequests';
-import { formatPhoneNumber } from '../../utils/functions/Validations';
+import {
+  capitalizeFirstLetter,
+  formatPhoneNumber,
+  validateFIO,
+  validateLength,
+} from '../../utils/functions/Validations';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 import { useNavigate } from 'react-router-dom';
@@ -68,6 +74,12 @@ function Register() {
       done: false,
       functionCheck: funDigit,
     },
+    {
+      id: '3',
+      text: 'Не менее 1 спецсимвола',
+      done: false,
+      functionCheck: funSpecialSymbol,
+    },
   ]);
 
   const funSelectedElement = (key, value) => {
@@ -81,14 +93,18 @@ function Register() {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    const formattedValue = name === 'phone' ? formatPhoneNumber(value) : value;
+    let formattedValue = name === 'phone' ? formatPhoneNumber(value) : value;
+    formattedValue =
+      name === 'name' || name === 'surname' || name === 'patronymic'
+        ? capitalizeFirstLetter(value)
+        : value;
     setFormData({ ...formData, [name]: formattedValue });
     setErrors({ ...errors, [name]: '' });
   };
 
   const validate = () => {
     let isValid = true;
-    const newErrors = {};
+    let newErrors = {};
 
     // Проверка обязательных полей
     [
@@ -100,32 +116,72 @@ function Register() {
       'phone',
       'password',
       'confirmPassword',
+      'academicTitle',
+      'degree',
     ].forEach(field => {
       if (!formData[field]) {
         newErrors[field] = 'Поле обязательно для заполнения';
         isValid = false;
       }
     });
-
     // Проверка корректности Email
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Некорректный Email';
       isValid = false;
     }
-
     // Проверка номера телефона
     if (formData.phone && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)) {
       newErrors.phone = 'Номер должен быть в формате +7 (XXX) XXX-XX-XX';
       isValid = false;
     }
-
     // Проверка совпадения паролей
     if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Пароли не совпадают';
       isValid = false;
     }
+    const paseerors = errorListPassword.find(el => !el.done);
+    console.log('paseerors', paseerors);
+    if (paseerors) {
+      newErrors.password = paseerors.text;
+      isValid = false;
+    }
+
+    if (!validateFIO(formData.organization)) {
+      newErrors.organization = 'Некорректное название';
+      isValid = false;
+    }
+
+    if (!validateFIO(formData.name)) {
+      newErrors.name = 'Некорректное имя';
+      isValid = false;
+    }
+
+    if (!validateFIO(formData.surname)) {
+      newErrors.surname = 'Некорректная фамилия';
+      isValid = false;
+    }
+
+    if (!validateFIO(formData.patronymic)) {
+      console.log('formData.patronymic', formData.patronymic);
+      newErrors.patronymic = 'Некорректное отчество';
+      isValid = false;
+    }
+
+    if (!validateLength(formData.surname, 2, 50)) {
+      newErrors.surname = 'Некорректная фамилия';
+      isValid = false;
+    }
+    if (!validateLength(formData.name, 2, 50)) {
+      newErrors.name = 'Некорректное имя';
+      isValid = false;
+    }
+    if (!validateLength(formData.patronymic, 5, 50)) {
+      newErrors.patronymic = 'Некорректное отчество';
+      isValid = false;
+    }
 
     setErrors(newErrors);
+
     return isValid;
   };
   const navigate = useNavigate();
@@ -143,7 +199,7 @@ function Register() {
         console.log('res', res);
 
         if (res?.status === 200) {
-          navigate("/login/confirmLogin");
+          navigate('/login/confirmLogin');
           context.setMailValue(formData.email);
           sessionStorage.setItem('confirmEmail', formData.email);
           console.log(res);
@@ -227,6 +283,7 @@ function Register() {
               onChange={handleChange}
               value={formData.patronymic}
               placeholder="Отчество"
+              error={errors.patronymic}
               autoComplete={'new-password'}
             />
             <InputList
@@ -238,6 +295,7 @@ function Register() {
               funOpen={funOpenList}
               divRef={refList[1]}
               list={zwanieList}
+              error={errors.academicTitle}
               funSelectElement={funSelectedElement}
             />
             <InputList
@@ -248,6 +306,7 @@ function Register() {
               open={openList === 'degree'}
               funOpen={funOpenList}
               divRef={refList[2]}
+              error={errors.degree}
               list={stepenList}
               funSelectElement={funSelectedElement}
             />

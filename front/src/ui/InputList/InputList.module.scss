@@ -46,6 +46,7 @@ $w3: 480px;
     font-size: torem(20px);
     color: #000;
     box-sizing: border-box;
+    cursor: pointer;
     &::placeholder {
       color: var(--InputTextColor);
     }
