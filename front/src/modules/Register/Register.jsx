@@ -93,11 +93,13 @@ function Register() {
 
   const handleChange = e => {
     const { name, value } = e.target;
-    let formattedValue = name === 'phone' ? formatPhoneNumber(value) : value;
-    formattedValue =
-      name === 'name' || name === 'surname' || name === 'patronymic'
-        ? capitalizeFirstLetter(value)
-        : value;
+    let formattedValue = value;
+    if (name === 'phone') {
+      formattedValue = formatPhoneNumber(value);
+    }
+    if (name === 'name' || name === 'surname' || name === 'patronymic') {
+      formattedValue = capitalizeFirstLetter(value);
+    }
     setFormData({ ...formData, [name]: formattedValue });
     setErrors({ ...errors, [name]: '' });
   };
