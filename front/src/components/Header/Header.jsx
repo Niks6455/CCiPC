@@ -7,7 +7,7 @@ import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
 
-function Header() {
+function Header({ userRole }) {
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const conference = useSelector(state => state.conferences.data[0]);
   const navigate = useNavigate();
@@ -31,6 +31,15 @@ function Header() {
       <div className={styles.HeaderMenuContainer}>
         <div className={styles.HeaderMenu}>
           <ul>
+            {userRole === 1 && (
+              <li onClick={() => navigate('/adminPage/news')}>
+                Админ панель{' '}
+                <span className={styles.arowLi}>
+                  <img src={ArrowMenu} alt="Arrow" />
+                </span>
+              </li>
+            )}
+
             <li onClick={() => navigate('/author')}>
               Автору{' '}
               <span className={styles.arowLi}>

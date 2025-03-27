@@ -3,7 +3,6 @@ import Layout from '../../ui/Layout/Layout';
 import styles from './HomePage.module.scss';
 import TopMainInfo from '../../modules/TopMainInfo/TopMainInfo';
 import SliderHomePageTop from '../../modules/SliderHomePageTop/SliderHomePageTop';
-import { textDataHomePage } from './date';
 import SliderHomePage from '../../components/SliderHomePage/SliderHomePage';
 import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHomePageMobile';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
@@ -11,7 +10,7 @@ import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
 import { useState } from 'react';
 
-function HomePage() {
+function HomePage({ userRole }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const { topDiv, bottomDiv } = splitDirectionsEvenly(conference?.directions || []);
   const getDescription = text => {
@@ -86,7 +85,7 @@ function HomePage() {
   return (
     <div className={styles.HomePage}>
       <HeaderPhone />
-      <Header />
+      <Header userRole={userRole} />
       <TopMainInfo />
       {conference && conference?.stages?.length > 0 && <SliderHomePageTop />}
       <Layout>

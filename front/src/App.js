@@ -123,7 +123,7 @@ function App() {
           <main>
             <div id="#main_inner">
               <Routes>
-                <Route path="/" element={<HomePage />}></Route>
+                <Route path="/" element={<HomePage userRole={userRole} />}></Route>
                 <Route path="*" element={<NoteFoundPage />} />{' '}
                 <Route path="/login/*" element={<AuthPage />}>
                   <Route
