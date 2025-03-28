@@ -12,7 +12,6 @@ export default class Archive extends Model {
                     allowNull: false,
                     validate: { isIn: [Object.values(type)] },
                 },
-                file: {type: DataTypes.STRING, allowNull: true },
                 url: {type: DataTypes.STRING, allowNull: true   },
             },
             {

@@ -10,8 +10,6 @@ export default class ParticipantInConference extends Model {
                 sum: {type: DataTypes.INTEGER, allowNull: true},
                 status : { type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false},
                 comment: { type: DataTypes.STRING, allowNull: true },
-                receipt: { type: DataTypes.STRING, allowNull: true },
-                accord: { type: DataTypes.STRING, allowNull: true }, // Явное указание имени поля
             },
             {
                 sequelize,

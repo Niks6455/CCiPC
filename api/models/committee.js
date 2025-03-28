@@ -7,7 +7,6 @@ export default class Committee extends Model {
             {
                 id: { type: DataTypes.UUID, primaryKey: true },
                 fio: {type: DataTypes.STRING, allowNull: false},
-                img: {type: DataTypes.STRING, allowNull: true},
                 organization: {type: DataTypes.STRING, allowNull: false},
             },
             {

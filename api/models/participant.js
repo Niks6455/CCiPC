@@ -25,7 +25,6 @@ export default class Participant extends Model {
                 organization: { type: DataTypes.STRING, allowNull: false },
                 phone: { type: DataTypes.STRING, allowNull: false },
                 password: { type: DataTypes.STRING, allowNull: false },
-                avatar: { type: DataTypes.STRING, allowNull: true  },
                 isMicrosoft: {type: DataTypes.BOOLEAN, defaultValue: false },
             },
             {

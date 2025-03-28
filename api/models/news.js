@@ -8,7 +8,6 @@ export default class News extends Model {
                 id: { type: DataTypes.UUID, primaryKey: true },
                 title: { type: DataTypes.STRING, allowNull: false, unique: 'title' },
                 description: { type: DataTypes.TEXT, allowNull: false },
-                img: { type: DataTypes.STRING, allowNull: true },
             },
             {
                 sequelize,
