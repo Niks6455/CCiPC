@@ -211,7 +211,11 @@ function FileComponent(props) {
           </button>
         </div>
       ) : (
-        <div className={styles.container} tabIndex="0" onClick={() => funFileHeaderClick()}>
+        <div
+          className={styles.container}
+          tabIndex="0"
+          onClick={() => (props.readOnly ? null : funFileHeaderClick())}
+        >
           <div
             className={`${styles.container_inner} ${
               isVisibleNoFileHeader
@@ -282,7 +286,8 @@ function FileComponent(props) {
         accept={props.accept}
         id={props.name}
         style={{ display: 'none' }}
-        onChange={event => funChangeLogoHeader(event.target.files[0])}
+        onChange={event => (props.readOnly ? null : funChangeLogoHeader(event.target.files[0]))}
+        readOnly={props.readOnly}
       />
     </div>
   );

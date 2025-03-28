@@ -33,13 +33,16 @@ function InputListForma(props) {
           placeholder="Не выбрано"
           value={props.value}
           className={listOpen ? styles.active : ''}
-          onClick={() => setListOpen(!listOpen)}
+          onClick={() => (!props.readOnly ? setListOpen(!listOpen) : null)}
           readOnly={true}
         />
-        <ArrowBottom
-          className={`${styles.ArrowBottom} ${listOpen ? styles.openArrow : ''}`}
-          onClick={() => setListOpen(!listOpen)}
-        />
+        {!props.readOnly && (
+          <ArrowBottom
+            className={`${styles.ArrowBottom} ${listOpen ? styles.openArrow : ''}`}
+            onClick={() => setListOpen(!listOpen)}
+          />
+        )}
+
         <AnimatePresence>
           {listOpen && (
             <ListInput

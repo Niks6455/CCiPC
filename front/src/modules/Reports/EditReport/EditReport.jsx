@@ -10,11 +10,13 @@ import { apiGetReportId } from '../../../apirequests/apirequests';
 
 function EditReport() {
   const dispatch = useDispatch();
+  const [soauthorEditing, setSoauthorEditing] = useState(null);
   const [searchParams] = useSearchParams(); // Получаем query параметры
   const report = useSelector(state => state.reportsSlice.data);
   const [reportData, setReportData] = useState(null);
   const [number, setNumber] = useState('');
   const [idReport, setIdReport] = useState(null);
+  const user = useSelector(state => state.user.user.data);
 
   const reportQery = useQuery({
     queryKey: [`${idReport}`, idReport],
@@ -23,7 +25,15 @@ function EditReport() {
   });
   useEffect(() => {
     setReportData(reportQery?.data?.data?.report);
+    const soauthor = reportQery?.data?.data?.report?.coAuthors?.find(
+      soauthor => soauthor?.email === user?.email,
+    );
+    if (soauthor) {
+      setSoauthorEditing(soauthor);
+    }
   }, [reportQery]);
+
+  console.log('soauthorEditing', soauthorEditing);
 
   useEffect(() => {
     const idReport = searchParams.get('idReport'); // Получаем idReport из query параметров
@@ -49,7 +59,7 @@ function EditReport() {
         comments: reportData.comment,
         organization: reportData?.author?.organization,
         coAuthorsIds: [],
-        originSoauthors: reportData.coAuthors,
+        originSoauthors: reportData.coAuthors.map(soauthor => soauthor?.id),
         soauthors: reportData.coAuthors?.map(soauthor => ({
           data: {
             id: soauthor?.id,
@@ -57,6 +67,8 @@ function EditReport() {
             surname: soauthor?.fio.split(' ')[0] || '',
             patronymic: soauthor?.fio.split(' ')[2] || '',
             organization: soauthor?.organization || '',
+            status: soauthor?.status || '',
+            form: soauthor?.form || '',
             email: soauthor?.email || '',
             phone: soauthor?.phone || '',
             formParticipation: soauthor?.form || '',
@@ -70,9 +82,15 @@ function EditReport() {
 
   return (
     <section className={styles.EditReport}>
-      <CreateReport edit={true} />
+      {soauthorEditing && <h2 className={styles.title}>Доклад №{number}</h2>}
+      {!soauthorEditing && <CreateReport edit={true} soauthorEditing={soauthorEditing} />}
       <div className={styles.otstup}></div>
-      <AddCoauthor edit={true} number={number} />
+      <AddCoauthor
+        edit={true}
+        number={number}
+        soauthorEditing={soauthorEditing}
+        setSoauthorEditing={setSoauthorEditing}
+      />
     </section>
   );
 }
