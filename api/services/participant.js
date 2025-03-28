@@ -4,42 +4,15 @@ import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
 import sendMail from "./email.js";
 import randomCode from "../utils/random-code.js";
 import Conference from "../models/conference.js";
-import {Op} from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
-import fs from "fs";
 import ParticipantInConference from "../models/participant-in-conference.js";
-
+import FileLink from "../models/file-link.js";
+import File from "../models/file.js";
+import typesFiles from "../config/typesFiles.js";
+import typesPhoto from "../config/typesPhoto.js";
 export default {
 
     async   self(participant){
-
-
-        /*const participantCheck1 = await Conference.findOne({
-            where: {
-                date: { [Op.gte]: new Date() } // Выбираем конференции с датой >= текущей
-            },
-            include: [
-                {
-                    model: ParticipantInConference,
-                    as: 'participantInConference',
-                    required: false, // Убедимся, что связь обязательна
-                    include: {
-                        model: Participant,
-                        as: 'participant',
-                        where: { id: participant.id }, // Фильтруем по ID участника
-                        required: true
-                    }
-                },
-                {
-                    model: Report,
-                    as: 'reports',
-                    required: false // Включаем связанные отчеты, если они есть
-                }
-            ],
-            order: [['date', 'ASC']] // Сортируем по дате (ближайшая конференция будет первой)
-        });*/
-
-
 
         participant.conference = await Conference.findOne({
                 include: [{
@@ -66,6 +39,22 @@ export default {
                 order: [['date', 'DESC']]
             });
 
+        const files = await FileLink.findAll({
+            where: {
+                participantId: participant.id
+            },
+            include: {
+                model: File,
+                as: 'file',
+                required: true
+            }
+        })
+
+        participant.avatar= files.filter(f=>f.type === typesPhoto.AVATAR)
+        participant.receipt= files.filter(f=>f.type === typesFiles.RECEIPT)
+        participant.accord= files.filter(f=>f.type === typesFiles.AGREEMENT)
+
+
         return participant
 
     },
@@ -81,24 +70,7 @@ export default {
         });
         if(!participant) throw new AppErrorNotExist('participant')
 
-        if(participant?.avatar && participantInfo.avatar === null){
-             fs.unlink(participant.avatar, (err=> {
-                    if (err) console.log(err);
-                }))
-        }
 
-        if(participant?.participantInConference?.receipt && participantInfo.receipt === null){
-            fs.unlink(participant.participantInConference.receipt, (err=> {
-                if (err) console.log(err);
-            }))
-        }
-
-
-        if(participant?.participantInConference?.accord && participantInfo.accord === null){
-            fs.unlink(participant.participantInConference.accord, (err=> {
-                if (err) console.log(err);
-            }))
-        }
 
         if(participantInfo?.formPay && participant?.participantInConference) await participant?.participantInConference[0].update({formPay : participantInfo.formPay })
 

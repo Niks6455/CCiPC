@@ -21,14 +21,14 @@ export function map(participant){
         position: participant.position,
         organization: participant.organization,
         phone: participant.phone,
-        avatar: participant?.avatar ?? null,
+        avatar: participant?.avatar[0].file.url ?? null,
         reports: participant?.conference?.reports?.map(report=>({
           name: report.name,
         })) ?? null,
         fee : participant?.conference?.participantInConference?.map(conf=>({
             sum: conf.sum,
-            receipt: conf.receipt,
-            accord: conf.accord,
+            receipt: participant.receipt[0].file.url ?? null,
+            accord: participant.accord[0].file.url ?? null,
             status: conf.status,
             formPay: conf.formPay,
         })) ?? null

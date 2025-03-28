@@ -11,6 +11,8 @@ import Archive from "./archive.js";
 import ParticipantOfReport from "./participant-of-report.js";
 import Direction from "./direction.js";
 import DirectionInConference from "./direction-in-conference.js";
+import File from "./file.js";
+import FileLink from "./file-link.js";
 import 'dotenv/config'
 
 
@@ -27,7 +29,9 @@ export const models = {
    Archive,
    ParticipantOfReport,
    Direction,
-   DirectionInConference
+   DirectionInConference,
+   File,
+   FileLink
 };
 
 // Подключение к БД с парамтрами из .env

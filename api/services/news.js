@@ -1,7 +1,8 @@
 import News from "../models/news.js";
 import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
 import {Op} from "sequelize";
-import fs from "fs";
+import FileLink from "../models/file-link.js";
+import File from "../models/file.js";
 
 export default {
     async create(title, description) {
@@ -32,7 +33,16 @@ export default {
             ...(pageSize && { limit: pageSize }), // Количество записей на страниц
             ...(page && { offset: (page - 1) * pageSize }), // Смещение для пагинации
             order: [['createdAt', 'DESC']],
-
+            include: {
+                model: FileLink,
+                as: 'newsFile',
+                required: false,
+                include: {
+                    model: File,
+                    as: 'file',
+                    required: true
+                }
+            }
         })
 
         return {
@@ -43,12 +53,24 @@ export default {
     },
 
     async findOne(id){
-        const news=await News.findByPk(id)
+        const news=await News.findByPk(id,
+            {
+                include: {
+                    model: FileLink,
+                    as: 'newsFile',
+                    required: false,
+                    include: {
+                        model: File,
+                        as: 'file',
+                        required: true
+                    }
+                }
+            })
         if(!news) throw new AppErrorNotExist('news')
         return news
     },
 
-    async update(id, title, description, img){
+    async update(id, title, description){
 
         const news= await News.findByPk(id)
         if(title)
@@ -63,17 +85,10 @@ export default {
 
         }
 
-        if(news?.img && img===null){
-                fs.unlink(news.img, (err=> {
-                    if (err) console.log(err);
-                }))
-        }
-
-
         if(!news) throw new AppErrorNotExist('news')
 
         return await news.update({
-            title , description, img
+            title , description
         })
     },
 

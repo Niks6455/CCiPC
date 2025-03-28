@@ -44,7 +44,20 @@ const router = Router();
  */
 
 router.route('/').post(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(uploadCtrl.uploader), asyncRoute(uploadCtrl.afterUpload));
-router.route('/multi').post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(uploadCtrl.multiUploader), asyncRoute(uploadCtrl.afterMultipleUpload));
+router.route('/delete').post(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(uploadCtrl.delete));
+router.route('/multi').post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(uploadCtrl.multiUploader.fields([
+        { name: 'PROGRAM', maxCount: 1 },
+        { name: 'LETTER', maxCount: 1 },
+        { name: 'COLLECTION', maxCount: 1 },
+        { name: 'SAMPLE', maxCount: 1 },
+        { name: 'INDIVIDUAL', maxCount: 1 },
+        { name: 'LEGAL', maxCount: 1 },
+        { name: 'HEADER', maxCount: 1 },
+        { name: 'FOOTER', maxCount: 1 },
+        { name: 'ORGANIZATION', maxCount: 10 },
+        { name: 'PARTNER', maxCount: 10 },
+    ])
+), asyncRoute(uploadCtrl.afterMultipleUpload));
 
 
 export default router;

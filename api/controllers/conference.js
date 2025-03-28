@@ -4,6 +4,7 @@ import { mapShort, map } from '../utils/mappers/tableParticipants.js'
 import { map as mapConf }  from '../utils/mappers/conference.js'
 import Ajv from 'ajv'
 import archiver from 'archiver'
+import typesFiles from "../config/typesFiles.js";
 import addFormats from 'ajv-formats';
 import path from "path";
 
@@ -81,6 +82,28 @@ export default {
     async findOne({params: { id }}, res) {
         if(!id) throw new AppErrorMissing('id')
         const conference = await conferenceService.findOne(id);
+
+
+        // Получаем файлы конференции и группируем их по типу
+        conference.files = Object.fromEntries(
+            Object.entries(
+                conference.filesInConference.reduce((acc, a) => {
+                    // Проверяем, существует ли уже тип в аккумуляторе
+                    const entry = Object.entries(typesFiles).find(([key, val]) => val === a.type);
+
+                    if (!acc[entry[0]]) {
+                        acc[entry[0]] = []; // Если нет, создаем новый массив
+                    }
+                    // Добавляем файл в соответствующий тип
+                    acc[entry[0]].push({
+                        id: a.fileLink.id,
+                        url: a.fileLink.url,
+                        name: a.fileLink.name
+                    });
+                    return acc; // Возвращаем аккумулятор для следующей итерации
+                }, {}) // Инициализируем аккумулятор как пустой объект
+            )
+        );
 
          conference.committee = Object.fromEntries(
             Object.entries(
@@ -176,7 +199,7 @@ export default {
         res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
-    async update({params: { id }, body: {number, date, address, description, stages, directions, deadline, logo, organization, documents, partner }}, res) {
+    async update({params: { id }, body: {number, date, address, description, stages, directions, deadline }}, res) {
 
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
@@ -187,7 +210,7 @@ export default {
 
         const rangeDate = date ? [ new Date(date[0]), new Date(date[1]) ] : [];
 
-        const conference= await conferenceService.update({number, date: rangeDate, address, description, stages, directions, deadline, logo, organization, documents, partner}, id)
+        const conference= await conferenceService.update({number, date: rangeDate, address, description, stages, directions, deadline}, id)
 
         res.json({ conference: conference })
 
@@ -214,14 +237,14 @@ export default {
                    status: p1.status,
                    sum: p1.sum,
                    comment: p1.comment,
-                   accord: p1.accord,
-                   receipt: p1.receipt,
                    formPay: p1.formPay,
                    id: p1.id
-                }))
+                })),
+                accord: p.participant.participantFile.filter(p2=>p2.type === 9),
+                receipt: p.participant.participantFile.filter(p2=>p2.type === 10)
+
             })),
         }));
-
 
         const flatArray = data.flatMap(item =>
             item.participants.map(participant => ({
@@ -236,11 +259,9 @@ export default {
                 sum: participant.participantInConf[0].sum,
                 formPay: participant.participantInConf[0].formPay,
                 status: participant.participantInConf[0].status,
-                accord: participant.participantInConf[0].accord,
-                receipt: participant.participantInConf[0].receipt,
+                accord: participant?.accord[0]?.file.url ?? null,
+                receipt: participant?.receipt[0]?.file.url ?? null,
                 id: participant.participantInConf[0].id,
-
-
             }))
         );
 

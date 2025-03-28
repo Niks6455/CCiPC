@@ -1,5 +1,5 @@
 import { models } from './index.js';
-const { Participant, Report, Conference, ParticipantInConference, Direction, DirectionInConference, Committee, CommitteeInConference, ParticipantOfReport } = models;
+const { Archive, Participant, Report, Conference, ParticipantInConference, Direction, DirectionInConference, News, Committee, CommitteeInConference, ParticipantOfReport, FileLink, File } = models;
 
 export default function () {
 
@@ -151,6 +151,76 @@ export default function () {
     Conference.hasMany(CommitteeInConference, {
         as: 'committeeInConference', // Название ассоциации
         foreignKey: 'conferenceId', // Внешний ключ в таблице CommitteeInConference
+    });
+
+
+    File.hasMany(FileLink, {
+        foreignKey: { name: 'fileId', allowNull: false }, // Обязательный внешний ключ
+        as: 'fileLinks' // Измените на 'fileLinks' для уникальности
+    });
+    FileLink.belongsTo(File, {
+        foreignKey: { name: 'fileId', allowNull: false },
+        as: 'file' // Измените на 'file' для уникальности
+    });
+
+// Одна конференция может иметь много ссылок
+    Conference.hasMany(FileLink, {
+        foreignKey: { name: 'conferenceId', allowNull: true }, // Необязательный внешний ключ
+        as: 'filesInConference'
+    });
+    FileLink.belongsTo(Conference, {
+        foreignKey: { name: 'conferenceId', allowNull: true },
+        as: 'conference'
+    });
+
+// Один отчет может иметь одну ссылку
+    Report.hasMany(FileLink, {
+        foreignKey: { name: 'reportId', allowNull: true }, // Необязательный внешний ключ
+        as: 'reportFileLink' // Измените на 'reportFile' для уникальности
+    });
+    FileLink.belongsTo(Report, {
+        foreignKey: { name: 'reportId', allowNull: true },
+        as: 'report'
+    });
+
+// Один участник может иметь одну ссылку
+    Participant.hasMany(FileLink, {
+        foreignKey: { name: 'participantId', allowNull: true }, // Необязательный внешний ключ
+        as: 'participantFile' // Измените на 'participantFile' для уникальности
+    });
+    FileLink.belongsTo(Participant, {
+        foreignKey: { name: 'participantId', allowNull: true },
+        as: 'participant'
+    });
+
+// Один комитет может иметь одну ссылку
+    Committee.hasOne(FileLink, {
+        foreignKey: { name: 'committeeId', allowNull: true }, // Необязательный внешний ключ
+        as: 'committeeFile' // Измените на 'committeeFile' для уникальности
+    });
+    FileLink.belongsTo(Committee, {
+        foreignKey: { name: 'committeeId', allowNull: true },
+        as: 'committee'
+    });
+
+// Один новостной элемент может иметь одну ссылку
+    News.hasOne(FileLink, {
+        foreignKey: { name: 'newsId', allowNull: true }, // Необязательный внешний ключ
+        as: 'newsFile' // Измените на 'newsFile' для уникальности
+    });
+    FileLink.belongsTo(News, {
+        foreignKey: { name: 'newsId', allowNull: true },
+        as: 'news'
+    });
+
+// Один архив может иметь одну ссылку
+    Archive.hasOne(FileLink, {
+        foreignKey: { name: 'archiveId', allowNull: true }, // Необязательный внешний ключ
+        as: 'archiveFile' // Измените на 'archiveFile' для уникальности
+    });
+    FileLink.belongsTo(Archive, {
+        foreignKey: { name: 'archiveId', allowNull: true },
+        as: 'archive'
     });
 
 

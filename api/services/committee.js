@@ -1,11 +1,10 @@
 import Committee from "../models/committee.js";
 import Conference from "../models/conference.js";
-import {Op} from "sequelize";
 import {AppErrorNotExist} from "../utils/errors.js";
 import CommitteeInConference from "../models/committee-in-conference.js";
 import {sequelize} from "../models/index.js";
-import fs from "fs";
-
+import FileLink from "../models/file-link.js";
+import File from "../models/file.js";
 export default {
     async find(conferenceId) {
         const subquery = await CommitteeInConference.findAll({
@@ -27,6 +26,16 @@ export default {
                             as: "committee",
                             required: true,
                             order: [['createdAt', 'ASC']],
+                            include: {
+                                model: FileLink,
+                                as: 'committeeFile',
+                                required: false,
+                                include: {
+                                    model: File,
+                                    as: 'file',
+                                    required: true
+                                }
+                            }
                         },
                         {
                             model: Conference,
@@ -75,11 +84,6 @@ export default {
 
         if(!committee) throw  new AppErrorNotExist('conference')
 
-        if(committee?.img && infoCommittee.img===null){
-            fs.unlink(committee.img, (err=> {
-                if (err) console.log(err);
-            }))
-        }
 
         return await committee.update({ ...infoCommittee })
     },

@@ -1,65 +1,25 @@
 import Conference from "../models/conference.js";
 import Committee from "../models/committee.js";
 import CommitteeInConference from "../models/committee-in-conference.js";
-import {AppErrorAlreadyExists, AppErrorInvalid, AppErrorMissing, AppErrorNotExist} from "../utils/errors.js";
+import {AppErrorAlreadyExists, AppErrorInvalid, AppErrorNotExist} from "../utils/errors.js";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
-import {Op, Sequelize} from "sequelize";
+import {Op } from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import ExcelJS from 'exceljs';
 import {sequelize} from "../models/index.js";
-import typesPhoto from "../config/typesPhoto.js";
-import fs from "fs";
-import typesFiles from "../config/typesFiles.js";
+
 import Direction from "../models/direction.js";
 import DirectionInConference from "../models/direction-in-conference.js";
+import File from "../models/file.js";
+import FileLink from "../models/file-link.js";
+import typesFiles from "../config/typesFiles.js";
 
-async function deleteFile(filePath) {
-    try {
-        await fs.promises.unlink(filePath);
-        console.log(`Файл удален: ${filePath}`);
-    } catch (err) {
-        console.error(`Ошибка при удалении файла: ${filePath}`, err);
-    }
-}
 
-// Функция для обработки JSON полей (logo, documents)
-async function processJsonField(conference, conferenceInfo, fieldName, types, validTypes) {
-    if (conference?.[fieldName] && conferenceInfo?.[fieldName]) {
-        for (const [key, value] of Object.entries(conferenceInfo[fieldName])) {
-            if (validTypes.includes(types[key]) && value === null) {
-                await deleteFile(conference[fieldName][key]);
-                delete conference[fieldName][key];
-                conference.changed(fieldName, true);
-            }
-        }
-        await conference.save();
-    }
-}
 
-// Функция для обработки массивов (organization, partner)
-async function processArrayField(conference, conferenceInfo, fieldName) {
-    if (conference?.[fieldName] && conferenceInfo?.[fieldName]) {
 
-        const filesToKeep = new Set(conferenceInfo[fieldName]);
 
-        for (const file of conference[fieldName]) {
-            if (filesToKeep.has(file)) {
-                await deleteFile(file);
-            }
-        }
-
-            const updatedFiles = conference[fieldName].filter(file => !filesToKeep.has(file));
-
-            await conference.update({[fieldName]: updatedFiles});
-            conference.changed(fieldName, true);
-            await conference.save();
-
-            delete conferenceInfo?.[fieldName];
-
-    }
-}
 
 export default {
 
@@ -101,6 +61,16 @@ export default {
                     model: Direction,
                     as: 'directions',
                     required: false,
+                },
+                {
+                    model: FileLink,
+                    as: 'filesInConference',
+                    required: false,
+                    include: {
+                        model: File,
+                        as: 'fileLink',
+                        required: true,
+                    }
                 }
             ],
         });
@@ -266,16 +236,6 @@ export default {
             }));
         }
 
-        await processJsonField(conference, conferenceInfo, 'logo', typesPhoto, [4, 5]);
-
-        // Обработка поля documents
-        await processJsonField(conference, conferenceInfo, 'documents', typesFiles, [5, 6, 7, 8]);
-
-        // Обработка поля organization
-        await processArrayField(conference, conferenceInfo, 'organization');
-
-        // Обработка поля partner
-        await processArrayField(conference, conferenceInfo, 'partner');
 
         if (conferenceInfo.deadline ) {
           if (conference?.stages?.length > 0 || conferenceInfo?.stages?.length > 0) {
@@ -301,7 +261,7 @@ export default {
         const [surname, name, patronymic] = parts ? parts?.length === 3 ? parts : [parts[1], parts[0], parts[2]] :
             [undefined, undefined, undefined];
 
-       return  await Report.findAll({
+        return await Report.findAll({
             where: {
                 conferenceId: conferenceId,
             },
@@ -318,11 +278,21 @@ export default {
                     model: Participant,
                     as: 'participant',
                     required: true,
-                    include: {
+                    include: [{
                         model: ParticipantInConference,
                         as: 'participantInConference',
                         required: false,
-                    }
+                            },
+                            {
+                                model: FileLink,
+                                as: 'participantFile', // Уникальный псевдоним для первого пути
+                                required: false,
+                                include: {
+                                    model: File,
+                                    as: 'file', // Уникальный псевдоним для первого пути
+                                    required: true
+                                }
+                            }]
                 }
             }]
         });
@@ -371,13 +341,23 @@ export default {
         const reports= await Report.findAll({
             where: {
                 conferenceId:conference.id,
-                reportFile: {
-                    [Op.not]: null
+            },
+            include: {
+                model: FileLink,
+                as: 'reportFileLink',
+                required: true,
+                where: {
+                    type: typesFiles.REPORT,
+                },
+                include: {
+                    model: File,
+                    as: 'file',
+                    required:  true,
                 }
             }
         })
 
-       return  reports.map(report=>({path:  report.reportFile, name : report.name,}))
+       return  reports.map(report=>({path:  report.reportFileLink.file.url, name : report.name}))
 
     },
 
@@ -404,7 +384,8 @@ export default {
                             as: 'participant',
                             required: true,
                         }
-                }
+                },
+
             ],
             group: ['direction.id', 'Report.id', 'participantOfReport.id','participantOfReport.participant.id'], // Группировка по directionId
             attributes: {

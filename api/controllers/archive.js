@@ -5,13 +5,24 @@ export default {
 
     async findPhoto(req, res){
         const archives = await archiveService.find(typeArchive.PHOTO)
-        res.json({ archives: archives })
+        res.json({archives: archives.map(archive=> ({
+                id: archive.id,
+                name: archive.name,
+                type: archive.type,
+                file: archive.archiveFile?.file.url ?? null,
+            }))})
     },
 
 
     async findReport(req,res){
         const archives = await archiveService.find(typeArchive.REPORT)
-        res.json({archives: archives})
+
+        res.json({archives: archives.map(archive=> ({
+                id: archive.id,
+                name: archive.name,
+                type: archive.type,
+                file: archive.archiveFile?.file.url ?? null,
+            }))})
     },
 
     async create({body: {name, type, url }}, res){
@@ -24,9 +35,9 @@ export default {
 
     },
 
-    async update({params: { id }, body: { name, type, url, file } }, res){
+    async update({params: { id }, body: { name, type, url } }, res){
         if(!id) throw new AppErrorMissing('id')
-        const archive = await archiveService.update({name, url, type, file }, id)
+        const archive = await archiveService.update({name, url, type }, id)
         res.json({archive: archive})
     },
 
