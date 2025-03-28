@@ -35,7 +35,6 @@ import {
 import { fetchUserData } from '../../../store/userSlice/user.Slice';
 import { fetchReports } from '../../../store/reportsSlice/reportsSlice';
 import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal';
-import { useEffect } from 'react';
 
 function AddCoauthor({ edit, number }) {
   const navigate = useNavigate();
@@ -45,14 +44,7 @@ function AddCoauthor({ edit, number }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
 
-  // useEffect(() => {
-  //   if (!report.data?.name) {
-  //     navigate('/account/createreport');
-  //   }
-  // }, []);
-
   const funDeleteCoauthor = (index, id) => {
-    console.log('id', id);
     dispatch(deleteCoauthor({ index, id }));
   };
 
@@ -68,7 +60,6 @@ function AddCoauthor({ edit, number }) {
     if (key === 'email') {
       if (validateEmail(value) && value) {
         getUserEmail(value).then(res => {
-          console.log('res', res);
           if (res?.status === 200) {
             if (res?.data?.participant?.name) {
               dispatch(
@@ -113,7 +104,6 @@ function AddCoauthor({ edit, number }) {
 
   //! сохранение данных
   const funSaveData = () => {
-    console.log('report', report);
     if (edit) {
       //! редактирование доклада
       const temp = {
@@ -136,7 +126,6 @@ function AddCoauthor({ edit, number }) {
         organization: report.data.organization || '',
       };
       apiEditReport(report.data.id, temp).then(res => {
-        console.log('res', res);
         if (res?.status === 200) {
           dispatch(fetchReports());
           const uploadPromises = [];
@@ -190,7 +179,6 @@ function AddCoauthor({ edit, number }) {
         conferenceId: conferenceId,
       };
       apiCreateReport(data).then(res => {
-        console.log('res', res);
         if (res?.status === 200) {
           // создаем формдату для файла
           const formDataReport = new FormData();

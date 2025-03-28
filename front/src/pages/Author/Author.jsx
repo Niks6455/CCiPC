@@ -5,7 +5,6 @@ import styles from './Author.module.scss';
 import AuthorCollection from '../../components/AuthorCollection/AuthorCollection';
 import { dataLink } from './data.js';
 import { Link } from 'react-router-dom';
-import HeaderSecond from '../../components/HeaderSecond/HeaderSecond';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import Book from '../../assets/img/Book.svg';
 import Cap from '../../assets/img/Cap.svg';
@@ -20,10 +19,8 @@ function Author({ userRole }) {
   const conference = useSelector(state => state?.conferences?.data[0]);
   useEffect(() => {
     getAllArchiveReport().then(res => setData(res?.data?.archives || []));
-    console.log('data', data);
   }, [selectedButton]);
 
-  console.log('conference', conference);
   //! функция скачивания шаблока
   const funDownloadShablon = async () => {
     try {

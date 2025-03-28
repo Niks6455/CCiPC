@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './RightMenuLk.module.scss';
 import NavBar from '../../components/NavBar/NavBar';
 function RightMenuLk(props) {

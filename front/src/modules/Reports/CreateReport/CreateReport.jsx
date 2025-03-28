@@ -9,7 +9,7 @@ import download from './../../../assets/img/UI/download.svg';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { server } from '../../../apirequests/apirequests';
-import { convertDate, decodeFileName } from '../../../utils/functions/funcions';
+import { decodeFileName } from '../../../utils/functions/funcions';
 import { funGetError, funValidateAll } from './functions';
 
 function CreateReport({ edit }) {
@@ -17,7 +17,6 @@ function CreateReport({ edit }) {
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
   const conference = useSelector(state => state.conferences.data[0]);
-  console.log('conference', conference);
   const [errors, setErrors] = useState([]);
 
   //! функция скачивания шаблока
@@ -40,15 +39,12 @@ function CreateReport({ edit }) {
   };
 
   const funChangeFile = (value, key) => {
-    console.log('value', value);
     dispatch(setValue({ key: key, value: value }));
   };
 
   //! функция onClange на InputListForm
   const handleChangeForm = (name, text) => {
     dispatch(setValue({ key: name, value: text }));
-    console.log('name', name);
-    console.log('errors', errors);
     setErrors(prev => prev.filter(item => item.key !== name));
   };
 

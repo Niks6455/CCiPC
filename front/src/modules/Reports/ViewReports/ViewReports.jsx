@@ -72,7 +72,6 @@ function ViewReports() {
     const id = idReport;
     apiDeleteReport(id).then(res => {
       if (res?.status === 200) {
-        console.log('reportData', id);
         dispatch(disDeleteReport({ id }));
         setIsModalDelete(false);
         navigate('/account/profile');

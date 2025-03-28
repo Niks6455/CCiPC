@@ -2,7 +2,6 @@ import styles from './TableModule.module.scss';
 import { motion } from 'framer-motion';
 
 function DirectionList({ listModalRef, posDirList, data, selected, funSetDirection, indexRow }) {
-  console.log('data', data);
   return (
     <motion.div
       ref={listModalRef}

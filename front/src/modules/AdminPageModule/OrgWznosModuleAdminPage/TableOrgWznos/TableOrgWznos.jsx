@@ -19,7 +19,6 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
   useEffect(() => {
     const handleClickOutside = event => {
       if (refContractList.current && !refContractList.current.contains(event.target)) {
-        console.log('ref');
         setContractListShow(null);
       }
     };

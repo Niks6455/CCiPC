@@ -180,7 +180,6 @@ const reportCreateSlice = createSlice({
     },
     setCoauthorDataApi(state, action) {
       const { index, data } = action.payload;
-      console.log('data', data);
       if (data) {
         state.data.soauthors[index].data = { ...state.data.soauthors[index].data, ...data };
       } else {

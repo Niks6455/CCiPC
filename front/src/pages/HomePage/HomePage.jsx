@@ -26,10 +26,7 @@ function HomePage({ userRole }) {
 
   //! обработка фото
   const handleImageLoad = (event, index, setStyle) => {
-    console.log('event', event);
     const { naturalWidth, naturalHeight } = event.target;
-    console.log('naturalWidth', naturalWidth);
-    console.log('naturalHeight', naturalHeight);
     if (naturalWidth > naturalHeight * 2) {
       setStyle(prevStyle => {
         const newStyle = [...prevStyle];

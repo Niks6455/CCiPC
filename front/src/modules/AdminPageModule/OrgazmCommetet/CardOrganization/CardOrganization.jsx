@@ -19,7 +19,6 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
   const cardRef = useRef(null);
   const imgRef = useRef(null);
   const refFile = useRef(null);
-  const [file, setFile] = useState(null);
   const [dataItem, setDataItem] = useState({
     img: item?.img || '',
     fio: item?.fio || '',
@@ -137,14 +136,12 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
 
   const changeFileData = e => {
     const file = e.target.files[0];
-    setFile(file);
     const formFile = new FormData();
     formFile.append('file', file);
     formFile.append('committeeId', item?.committeeId);
 
     uploadPhoto(formFile, 'COMMITTEE').then(res => {
       if (res?.status === 200) {
-        console.log('res', res);
         updateCardData(item.id, res.data.url);
       }
     });

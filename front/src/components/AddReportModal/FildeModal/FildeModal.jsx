@@ -1,15 +1,12 @@
 import { useDispatch } from 'react-redux';
 import styles from './FildeModal.module.scss';
-import { useNavigate } from 'react-router-dom';
 import {
-  disSetResetReport,
   setOpenPopUpName,
 } from '../../../store/reportCreateSlice/reportCreateSlice';
 import circleGalka from './../../../assets/img/UI/error.svg';
 
 function FildeModal({ name }) {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const funCloseModal = () => {
     dispatch(setOpenPopUpName({ name: '' }));
   };

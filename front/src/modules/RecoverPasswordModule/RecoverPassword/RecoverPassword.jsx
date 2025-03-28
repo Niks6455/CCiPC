@@ -3,7 +3,6 @@ import styles from './RecoverPassword.module.scss';
 import DataContext from '../../../context';
 import logo from '@assets/img/logo.png';
 import confirm from '@assets/img/confirm.svg';
-import Footer from '../../../components/Footer/Footer';
 import errorLogo from '@assets/img/UI/error.svg';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
@@ -11,7 +10,7 @@ import InputPassword from '../../../ui/InputPassword/InputPassword';
 import listErrorNoHover from '@assets/img/UI/listErrorNoActive.svg';
 import listErrorOnHover from '@assets/img/UI/listError.svg';
 import { funCapitalLetter, funDigit, funEightSymbols } from '@utils/functions/PasswordValidation';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { apiPasswordRecovery, apiSandReset, CheckEmail } from '../../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
 
@@ -82,7 +81,6 @@ function RecoverPassword() {
   }, [timer]);
 
   useEffect(()=>{
-    console.log(store)
     setEmail(store.emailSend || sessionStorage.getItem('confirmEmail'));
   },[])
 
@@ -93,7 +91,6 @@ function RecoverPassword() {
     };
     apiSandReset(data).then(res => {
       if (res?.status === 200) {
-        console.log('Код повторно отправлен');
         setTimer(60); 
         setIsButtonActive(false); 
       } 
@@ -127,11 +124,9 @@ function RecoverPassword() {
     const newErrors = code.map(digit => digit === '');
     setErrors(newErrors);
     if (newErrors.some(error => error)) {
-      console.log('Некоторые поля пустые');
       return;
     }
     const fullCode = code.join('');
-    console.log('Код отправлен на сервер:', fullCode);
     //! если код не совпал на сервере
     const data = {
       email: email,
@@ -190,12 +185,9 @@ function RecoverPassword() {
       };
       apiPasswordRecovery(data).then(res => {
         if (res?.status === 200) {
-          console.log('Форма отправлена', formData);
           navigate('/login/authorization');
         }
       });
-    } else {
-      console.log('Валидация не прошла');
     }
   };
 

@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { clearDataParticipants } from '../../store/participantsSlice/participantsSlice';
 
 function TableDataAll(props) {
-  console.log('data', props?.data);
   const refForm = useRef(null);
   const refBackdrop = useRef(null);
   const dispatch = useDispatch();

@@ -1,11 +1,11 @@
 import styles from './EnteringEmail.module.scss';
 import logoIcon from '@assets/img/logo.png';
 import { ReactComponent as Men } from '@assets/img/UI/men.svg';
-import { useNavigate, useOutletContext } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { validateEmail } from '../../../utils/functions/Validations';
 import { useState } from 'react';
 import { apiSandReset } from '../../../apirequests/apirequests';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setEmailSand } from '../../../store/userSlice/user.Slice';
 
 function EnteringEmail() {

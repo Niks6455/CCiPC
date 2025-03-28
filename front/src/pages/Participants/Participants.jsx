@@ -1,7 +1,5 @@
-import Footer from '../../components/Footer/Footer';
-import { tableData, tableHead } from './data.js';
+import { tableHead } from './data.js';
 import UniversalTable from '../../components/UniversalTable/UniversalTable';
-import Layout from '../../ui/Layout/Layout';
 import styles from './Participants.module.scss';
 import { useEffect, useState } from 'react';
 import NavBar from '../../components/NavBar/NavBar.jsx';
@@ -24,7 +22,6 @@ function Participants() {
       if (res.status === 200) {
         setDefaultData(res.data.participants);
         setFilteredTable(res.data.participants);
-        console.log('defaultData', res.data.participants);
       }
     });
   }, []);
@@ -41,9 +38,6 @@ function Participants() {
     setFilteredTable(searchInData(defaultData, filter));
   }, [filter]);
 
-  useEffect(() => {
-    console.log('store.selectParticipantsData', store.selectParticipantsData);
-  }, [store.selectParticipantsData]);
   return (
     <>
       <NavBar />

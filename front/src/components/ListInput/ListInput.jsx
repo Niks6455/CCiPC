@@ -1,10 +1,7 @@
-import { setValue } from '../../store/reportCreateSlice/reportCreateSlice';
 import styles from './ListInput.module.scss';
-import { useDispatch } from 'react-redux';
 import { motion } from 'framer-motion';
 
 function ListInput(props) {
-  console.log('props', props);
   // const dispatch = useDispatch();
 
   const funClickLi = text => {

@@ -1,8 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './Header.module.scss';
 import LogoHomePage from './../../assets/img/logo.png';
-// import arrow from './../../assets/img/arrow.svg';
-import footerLogo from './../../assets/img/Headernumber.png';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';

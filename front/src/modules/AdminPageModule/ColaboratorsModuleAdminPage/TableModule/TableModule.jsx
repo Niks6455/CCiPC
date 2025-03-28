@@ -3,7 +3,7 @@ import { tableHeader } from '../data';
 import styles from './TableModule.module.scss';
 import arrowIcon from '@assets/img/UI/arrowMini.svg';
 import DirectionList from './DirectionList';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 function TableModule({ prewData, tableData, setTableData, direction }) {
   const [openDirList, setOpenDirList] = useState(null);
@@ -50,7 +50,6 @@ function TableModule({ prewData, tableData, setTableData, direction }) {
   };
 
   const getTdData = (key, row) => {
-    console.log('tableData', tableData);
     if (key === 'fio') {
       return row[key].map((el, index) => <p key={index}>{el}</p>);
     }

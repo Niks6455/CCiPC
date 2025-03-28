@@ -34,7 +34,6 @@ function EditReport() {
   }, [searchParams, report]); // Запускаем useEffect при изменении query параметров или списка докладов
 
   useEffect(() => {
-    console.log('reportData', reportData);
     if (reportData) {
       const temp = {
         id: idReport,
