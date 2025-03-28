@@ -35,9 +35,10 @@ import {
 import { fetchUserData } from '../../../store/userSlice/user.Slice';
 import { fetchReports } from '../../../store/reportsSlice/reportsSlice';
 import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal';
-import { useEffect } from 'react';
+import InputListForma from '../../../components/InputListForma/InputListForma';
+import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 
-function AddCoauthor({ edit, number }) {
+function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
@@ -113,12 +114,27 @@ function AddCoauthor({ edit, number }) {
 
   //! сохранение данных
   const funSaveData = () => {
-    console.log('report', report);
+    if (soauthorEditing) {
+      const temp = {
+        organization: soauthorEditing.organization || '',
+        form: soauthorEditing.form || '',
+        status: soauthorEditing.status || '',
+      };
+      apiEditReport(report.data.id, temp).then(res => {
+        if (res?.status === 200) {
+          dispatch(fetchReports());
+          navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
+          dispatch(disSetResetReport());
+          setSoauthorEditing(null);
+        }
+      });
+      return;
+    }
     if (edit) {
       //! редактирование доклада
       const temp = {
         coAuthors: report.data?.soauthors
-          .filter(el => report.data.originSoauthors.map(soauthor => soauthor.id).includes(el.id))
+          .filter(el => !report.data.originSoauthors.some(e => e === el?.data?.id))
           ?.map(soauthor => ({
             name: soauthor?.data?.name || '',
             surname: soauthor?.data?.surname || '',
@@ -211,6 +227,12 @@ function AddCoauthor({ edit, number }) {
     }
   };
 
+  const handleChangeForm = (key, value) => {
+    console.log('index, key, value', key, value);
+    setSoauthorEditing({ ...soauthorEditing, [key]: value });
+    // dispatch(setCoauthorDataApi({ index, data: { [key]: value } }));
+  };
+
   return (
     <div className={styles.AddCoauthor}>
       {report?.openPopUpName && (
@@ -225,14 +247,16 @@ function AddCoauthor({ edit, number }) {
         </div>
       )}
 
-      <div className={styles.head}>
-        <h2 className={styles.title}>Соавторы</h2>
-        {!edit && (
-          <div className={styles.backImg}>
-            <img src={leftArrow} alt="назад" draggable="false" onClick={() => navigate(-1)} />
-          </div>
-        )}
-      </div>
+      {!soauthorEditing && (
+        <div className={styles.head}>
+          <h2 className={styles.title}>Соавторы</h2>
+          {!edit && (
+            <div className={styles.backImg}>
+              <img src={leftArrow} alt="назад" draggable="false" onClick={() => navigate(-1)} />
+            </div>
+          )}
+        </div>
+      )}
 
       {!edit && (
         <div className={styles.slider}>
@@ -246,78 +270,149 @@ function AddCoauthor({ edit, number }) {
         </div>
       )}
 
-      {report?.data.soauthors?.map((soauthtor, index) => (
-        <div key={index} className={styles.inputContainer}>
-          <div className={styles.deletecoauthor}>
-            <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
-              <span>Удалить соавтора №{index + 1}</span>
-              <img src={trash} alt="удалить" />
-            </button>
+      {soauthorEditing ? (
+        <div className={styles.soauthorEditing}>
+          <div className={styles.inputbox}>
+            <InputLabel
+              label={'Имя соавтора*'}
+              type={'text'}
+              value={soauthorEditing.fio.split(' ')[1]}
+              readOnly={true}
+            />
           </div>
-          {inpustTypeEmail.map(inp => (
-            <div className={styles.inputbox} key={inp.id}>
+          <div className={styles.inputbox}>
+            <InputLabel
+              label={'Фамилия соавтора*'}
+              type={'text'}
+              value={soauthorEditing.fio.split(' ')[0]}
+              readOnly={true}
+            />
+          </div>
+
+          {soauthorEditing.fio.split(' ')[2] && (
+            <div className={styles.inputbox}>
               <InputLabel
-                label={inp.label}
-                type={inp.type}
-                index={index}
-                itemKey={inp.key}
-                value={soauthtor.data?.[inp.key]}
-                funChange={funChangeInput}
-                placeholder={inp.placeholder}
-                error={inp.error}
+                label={'Отчество соавтора'}
+                type={'text'}
+                value={soauthorEditing.fio.split(' ')[2]}
+                readOnly={true}
               />
-              {soauthtor.autocompletion === 'noemail' && (
-                <div className={styles.modalEmail}>
-                  <p>
-                    Пользователь с такой почтой не найден на платформе. Необходимо внести данные о
-                    соавторе вручную.
-                  </p>
-                  <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
+            </div>
+          )}
+          <div className={styles.inputbox}>
+            <InputListForma
+              name={'Форма участия'}
+              list={formParticipationList}
+              itemKey={'form'}
+              value={soauthorEditing?.form}
+              handleChangeForm={handleChangeForm}
+            />
+          </div>
+          <div className={styles.inputbox}>
+            <InputListForma
+              name={'Статус участия'}
+              list={participationStatus}
+              itemKey={'status'}
+              value={soauthorEditing.status}
+              handleChangeForm={handleChangeForm}
+              // error={funGetError(errors, 'participationStatus')}
+            />
+          </div>
+          <div className={`${styles.input_organization}`}>
+            <span>Организация</span>
+            <input
+              type="text"
+              value={soauthorEditing.organization}
+              onChange={e => handleChangeForm('organization', e.target.value)}
+              placeholder="Ваша организация"
+              onFocus={e => (e.target.placeholder = '')}
+              onBlur={e => (e.target.placeholder = 'Ваша организация')}
+            />
+          </div>
+        </div>
+      ) : (
+        <>
+          {report?.data.soauthors?.map((soauthtor, index) => (
+            <div key={index} className={styles.inputContainer}>
+              <div className={styles.deletecoauthor}>
+                {!soauthorEditing && (
+                  <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
+                    <span>Удалить соавтора №{index + 1}</span>
+                    <img src={trash} alt="удалить" />
+                  </button>
+                )}
+              </div>
+
+              {inpustTypeEmail.map(inp => (
+                <div className={styles.inputbox} key={inp.id}>
+                  <InputLabel
+                    label={inp.label}
+                    type={inp.type}
+                    index={index}
+                    itemKey={inp.key}
+                    value={soauthtor.data?.[inp.key]}
+                    funChange={funChangeInput}
+                    placeholder={inp.placeholder}
+                    error={inp.error}
+                    readOnly={soauthorEditing}
+                  />
+                  {soauthtor.autocompletion === 'noemail' && (
+                    <div className={styles.modalEmail}>
+                      <p>
+                        Пользователь с такой почтой не найден на платформе. Необходимо внести данные
+                        о соавторе вручную.
+                      </p>
+                      <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
+                    </div>
+                  )}
+                  {soauthtor.autocompletion === 'emailhave' && (
+                    <div className={styles.modalEmail}>
+                      <p>
+                        Пользователь с такой почтой найден на платформе. Данные о соавторе
+                        заполнятся автоматически, кроме его формы участия.
+                      </p>
+                      <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
+                    </div>
+                  )}
                 </div>
-              )}
-              {soauthtor.autocompletion === 'emailhave' && (
-                <div className={styles.modalEmail}>
-                  <p>
-                    Пользователь с такой почтой найден на платформе. Данные о соавторе заполнятся
-                    автоматически, кроме его формы участия.
-                  </p>
-                  <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
-                </div>
+              ))}
+
+              {(soauthtor.autocompletion === 'true' || soauthtor.autocompletion === 'readOnly') && (
+                <>
+                  {inpustType.map(inp =>
+                    inp.key === 'patronymic' &&
+                    !soauthtor.data[inp.key] &&
+                    soauthtor.autocompletion === 'readOnly' ? (
+                      <></>
+                    ) : (
+                      <div className={styles.inputbox} key={inp.id}>
+                        <InputLabel
+                          label={inp.label}
+                          type={inp.type}
+                          index={index}
+                          itemKey={inp.key}
+                          value={soauthtor.data[inp.key]}
+                          funChange={funChangeInput}
+                          placeholder={inp.placeholder}
+                          error={inp.error}
+                          readOnly={soauthtor.autocompletion === 'readOnly'}
+                        />
+                      </div>
+                    ),
+                  )}
+                </>
               )}
             </div>
           ))}
+        </>
+      )}
 
-          {(soauthtor.autocompletion === 'true' || soauthtor.autocompletion === 'readOnly') && (
-            <>
-              {inpustType.map(inp =>
-                inp.key === 'patronymic' &&
-                !soauthtor.data[inp.key] &&
-                soauthtor.autocompletion === 'readOnly' ? (
-                  <></>
-                ) : (
-                  <div className={styles.inputbox} key={inp.id}>
-                    <InputLabel
-                      label={inp.label}
-                      type={inp.type}
-                      index={index}
-                      itemKey={inp.key}
-                      value={soauthtor.data[inp.key]}
-                      funChange={funChangeInput}
-                      placeholder={inp.placeholder}
-                      error={inp.error}
-                      readOnly={soauthtor.autocompletion === 'readOnly'}
-                    />
-                  </div>
-                ),
-              )}
-            </>
-          )}
-        </div>
-      ))}
-      <button className={styles.addsoaftor} onClick={() => dispatch(addSoauthors())}>
-        <span>Добавить соавтора</span>
-        <img src={plus} alt="+" />
-      </button>
+      {!soauthorEditing && (
+        <button className={styles.addsoaftor} onClick={() => dispatch(addSoauthors())}>
+          <span>Добавить соавтора</span>
+          <img src={plus} alt="+" />
+        </button>
+      )}
 
       <div className={styles.srokContainer}>
         <div className={styles.text}>

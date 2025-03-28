@@ -181,6 +181,71 @@ $w3: 480px;
       width: torem(340px);
     }
   }
+
+  .input_organization {
+    display: flex;
+    flex-direction: column;
+    width: torem(350px);
+    @media (max-width: $w2) {
+      width: torem(340px);
+    }
+    span {
+      @include InputTitle();
+      margin-bottom: torem(10px);
+    }
+    input {
+      width: torem(350px);
+      height: torem(54px);
+      border-radius: torem(10px);
+      font-family: Overpass, sans-serif;
+      font-size: torem(18px);
+      font-weight: 500;
+      line-height: torem(21px);
+      text-align: left;
+      color: #333333;
+      padding: torem(16px) torem(20px);
+      padding-right: torem(45px);
+      box-sizing: border-box;
+      outline: none;
+      border: torem(1px) solid #c8d0ce;
+      background-color: inherit;
+      cursor: pointer;
+      transition: all 0.5s linear;
+      @media (max-width: $w3) {
+        font-size: torem(14px);
+      }
+    }
+  }
+
+  .soauthorEditing {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    input {
+      width: torem(350px);
+      height: torem(54px);
+      @media (max-width: $w3) {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+    div {
+      @media (max-width: $w3) {
+        width: 100%;
+      }
+    }
+    .input_organization {
+      width: torem(350px);
+    }
+    .inputbox {
+      width: torem(350px);
+
+      @media (max-width: $w3) {
+        width: 100%;
+      }
+    }
+  }
+
   .modalEmail {
     width: torem(555px);
     height: auto;
