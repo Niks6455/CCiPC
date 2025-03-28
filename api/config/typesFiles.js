@@ -1,14 +1,24 @@
 export default {
-    PROGRAM: 0,
-    LETTER: 1,
-    COLLECTION: 2,
-    SAMPLE: 3,
-    REPORT: 4,
-    CONCLUSION: 5,
-    COLLECTION_ARCHIVE: 6,
-    INDIVIDUAL: 7,
-    LEGAL: 8,
-    AGREEMENT: 9,
-    RECEIPT: 10
+    PROGRAM: 0,   //Программа конференции
+    LETTER: 1,    // Информационное письмо
+    COLLECTION: 2, // Cборник научных трудов
+    SAMPLE: 3, // Шаблон статьи
+    REPORT: 4, // Доклад участника
+    CONCLUSION: 5, // Заключение
+    COLLECTION_ARCHIVE: 6, // Файл для архива
+    INDIVIDUAL: 7, // Договор оплаты безналичным расчётом для физического лица
+    LEGAL: 8, //Договор оплаты безналичным расчётом для юридического лица
+    AGREEMENT: 9,  // Скан договора участника
+    RECEIPT: 10, // Скан квитанции участника
+    AVATAR: 11, // Фото участника в профиле
+    NEWS: 12, // Фото новости
+    COMMITTEE: 13, // Фото орг. комитета
+    HEADER: 14, // Header конфиренции
+    FOOTER: 15, // Footer конфиренции
+    ORGANIZATION: 16, // Фото организаторов
+    PARTNER: 17, // Фото партнеров
+    PHOTO_ARCHIVE: 18, // Фото архива
+    ARCHIVE_PHOTO : 19, // Фото
+    ARCHIVE_REPORT: 20, // Файл для архива докладов
 };
 

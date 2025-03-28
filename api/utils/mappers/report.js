@@ -1,9 +1,11 @@
+import typesFiles from "../../config/typesFiles.js";
+
 export function map(report){
     return {
         name: report.name,
         comment: report.comment,
-        reportFile : report.reportFile ?? null,
-        conclusion: report.conclusion ?? null,
+        reportFile : report.reportFileLink.filter(f=>f.type === typesFiles.REPORT)[0]?.file.url ?? null,
+        conclusion: report.reportFileLink.filter(f=>f.type === typesFiles.CONCLUSION)[0]?.file.url ?? null,
         direction: report.direction ?? null,
         cacheCoAuthors: report.cacheCoAuthors ?? 0,
         author: report?.participantOfReport.filter(p=> p.who === 'Автор').map(p=>({

@@ -1,5 +1,5 @@
 import Participant from "../models/participant.js";
-import {AppErrorAlreadyExists, AppErrorInvalid, AppErrorNotExist} from "../utils/errors.js";
+import {AppErrorAlreadyExists, AppErrorForbiddenAction, AppErrorInvalid, AppErrorNotExist} from "../utils/errors.js";
 import jwt from "../utils/jwt.js";
 import sendMail from '../services/email.js';
 import bcrypt from "bcrypt";
@@ -98,6 +98,7 @@ export default {
 
         if (!participant || !participant.validatePassword(password)) throw new AppErrorInvalid('Login or password', 403);
 
+        if(!participant.activate) throw new AppErrorForbiddenAction('no activate');
         const { jwt: token } = jwt.generate({ id: participant.id });
 
         return {participant, token};

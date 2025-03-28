@@ -1,12 +1,23 @@
 import Archive from "../models/archive.js";
 import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
-import fs from "fs";
+import FileLink from "../models/file-link.js";
+import File from "../models/file.js";
 
 export default {
     async find(type){
         return await Archive.findAll({
             where: {
                 type: type
+            },
+            include: {
+              model: FileLink,
+              as: 'archiveFile',
+              required: false,
+              include:{
+                  model: File,
+                  as: 'file',
+                  required: true
+              }
             },
             order: [['createdAt', 'DESC']]
 
@@ -30,13 +41,6 @@ export default {
 
         const archive=await Archive.findByPk(id)
         if(!archive) throw new AppErrorNotExist('archive');
-
-        if(archive?.file && archiveInfo?.file===null){
-            fs.unlink(archive.file, (err=> {
-                if (err) console.log(err);
-            }))
-        }
-
         return await archive.update({...archiveInfo})
     },
 

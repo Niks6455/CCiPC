@@ -11,7 +11,6 @@ import {
     AppErrorInvalid,
     AppErrorMissing,
     AppErrorNotExist,
-    MultipleError,
 } from '../utils/errors.js';
 import errorCodes from '../config/error-codes.js';
 import * as fs from "fs";
@@ -24,8 +23,21 @@ import Archive from "../models/archive.js";
 import { v4 as uuidv4 } from 'uuid';
 import ParticipantInConference from "../models/participant-in-conference.js";
 import {Op} from "sequelize";
+import FileLink from "../models/file-link.js";
+import File from "../models/file.js";
 const dir= './uploads'
+const photo = ['HEADER', 'FOOTER', 'ORGANIZATION', 'PARTNER']
+const document = ['PROGRAM', 'LETTER', 'COLLECTION', 'SAMPLE', 'INDIVIDUAL', 'LEGAL']
 
+const updateUrl = async (infoFiles, file) => {
+    console.log(infoFiles)
+    for (const infoFile of infoFiles) {
+        fs.unlink(file.url, (err => {
+            if (err) console.log(err);
+        }))
+        await file.update({url: infoFile.path, name: infoFile.originalname})
+    }
+}
 
 // Проверка расширения файла
 const fileFilter = (req, file, cb) => {
@@ -48,18 +60,10 @@ const fileFilter = (req, file, cb) => {
 };
 
 const multiFileFilter = (req, file, cb) => {
-    const { type } = req.query; // Get the type from the query parameters
-
-
-    if (!type) {
-        return cb(new AppError(errorCodes.Missing)); // If type is missing
-    }
 
     const extension = path.extname(file.originalname).toLowerCase();
-    if (type in typesPhoto && acceptedTypesPhoto.test(extension)) {
-        return cb(null, true); // Accept the file
-    }
-
+    if (photo.includes(file.fieldname) && acceptedTypesPhoto.test(extension)) return cb(null, true); // Accept the file
+    if(document.includes(file.fieldname) && acceptedTypesFiles.test(extension)) return cb(null, true); // Accept the file
     return cb(new AppError(errorCodes.FileExtensionNotAllowed)); // Reject the file
 };
 
@@ -67,21 +71,8 @@ const multiFileFilter = (req, file, cb) => {
 const multiStorage = multer.diskStorage({
     destination: (req, file, cb) => {
 
-        const { type } = req.query;
-
-        // Validate the type
-        if (!type || !(type in typesPhoto)) {
-            return cb(new AppError(errorCodes.Invalid));
-        }
-
-        // Check admin permissions for specific types
-        if ((typesPhoto[type] === 6 || typesPhoto[type] === 7) && !req.admin) {
-            return cb(new AppErrorForbiddenAction('file'));
-        }
-
         // Define the upload path
-        const uploadPath = path.join(dir, type.toLowerCase());
-
+        const uploadPath = path.join(dir, file.fieldname.toLowerCase());
         try {
             // Ensure the directory exists
             if (!fs.existsSync(uploadPath)) {
@@ -94,7 +85,8 @@ const multiStorage = multer.diskStorage({
     },
     filename: (req, file, cb) => {
         // Use the original file name
-        cb(null, uuidv4());
+        if(file.fieldname === 'ORGANIZATION' || file.fieldname === 'PARTNER') return cb(null, uuidv4()+ path.extname(file.originalname).toLowerCase());
+        cb(null, file.originalname);
     },
 });
 
@@ -154,7 +146,7 @@ const storage = multer.diskStorage({
 });
 
 const uploader = multer({ storage, fileFilter, limits: { fileSize: 51145728 } }).single('file');
-const multiUploader = multer({ storage: multiStorage, fileFilter: multiFileFilter, limits: { fileSize: 51457280 } }).array('files', 10);
+const multiUploader = multer({ storage: multiStorage, fileFilter: multiFileFilter, limits: { fileSize: 51457280 } })
 
 export default {
     uploader,
@@ -166,19 +158,118 @@ export default {
         const conference =await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference');
 
+        const program = files['PROGRAM'] || [];
+        const letter = files['LETTER'] || [];
+        const collection = files['COLLECTION'] || [];
+        const individual = files['INDIVIDUAL'] || [];
+        const legal = files['LEGAL'] || [];
+        const sample = files['SAMPLE'] || [];
+        const header = files['HEADER'] || [];
+        const footer = files['FOOTER'] || [];
+        const organization = files['ORGANIZATION'] || [];
+        const partner = files['PARTNER'] || [];
 
-        const urls= files.map(file=>file.path)
-        if (typesPhoto[type] === 6) {
-            const org = [...(conference?.organization ?? []), ...urls].filter(Boolean); // Убираем возможные undefined значения
-            await conference.update({ organization: org });
+
+        const infoFiles = {
+            PROGRAM: program,
+            LETTER: letter,
+            COLLECTION: collection,
+            INDIVIDUAL: individual,
+            LEGAL: legal,
+            SAMPLE: sample,
+            HEADER: header,
+            FOOTER: footer,
+            ORGANIZATION: organization,
+            PARTNER: partner,
+        };
+
+        const helpTypes = {
+            0: 'PROGRAM',
+            1: 'LETTER',
+            2: 'COLLECTION',
+            3: 'SAMPLE',
+            14: 'HEADER',
+            15: 'FOOTER',
+            16: 'ORGANIZATION',
+            17: 'PARTNER',
+            7: 'INDIVIDUAL',
+            8: 'LEGAL'
+        }
+        const fileTypes = [];
+
+
+        if (program.length > 0) fileTypes.push(0); // Предположим, что 1 - это тип для PROGRAM
+        if (letter.length > 0) fileTypes.push(1); // Предположим, что 2 - это тип для LETTER
+        if (collection.length > 0) fileTypes.push(2); // Предположим, что 3 - это тип для COLLECTION
+        if (individual.length > 0) fileTypes.push(7); // Предположим, что 4 - это тип для INDIVIDUAL
+        if (legal.length > 0) fileTypes.push(8); // Предположим, что 5 - это тип для LEGAL
+        if (sample.length > 0) fileTypes.push(3); // Предположим, что 6 - это тип для SAMPLE
+        if (header.length > 0) fileTypes.push(14); // Предположим, что 6 - это тип для SAMPLE
+        if (footer.length > 0) fileTypes.push(15); // Предположим, что 6 - это тип для SAMPLE
+        if (organization.length > 0) fileTypes.push(16); // Предположим, что 7 - это тип для ORGANIZATION
+        if (partner.length > 0) fileTypes.push(17); // Предположим, что 8 - это тип для PARTNER
+
+        const filesLink = await File.findAll({
+            include: {
+                model: FileLink,
+                as: 'file',
+                required: true,
+                where: {
+                    conferenceId: conferenceId,
+                    type: { [Op.in]: fileTypes } // Используем массив fileTypes
+                }
             }
-        if (typesPhoto[type] === 7) {
-            const partner = [...(conference?.partner ?? []), ...urls].filter(Boolean); // Убираем возможные undefined значения            console.log(partner)
-            await conference.update({ partner: partner });
+        });
+
+        if(filesLink.length > 0) {
+            for (const fileLink of filesLink) {
+                if(fileLink.file.type !== 16 && fileLink.file.type !== 17) {
+                    await updateUrl(infoFiles[helpTypes[fileLink.file.type]], fileLink);
+                    delete infoFiles[helpTypes[fileLink.file.type]];
+                }
+            }
+        }
+
+
+        try {
+            // Создаем массив для хранения промисов
+            const fileIds = []; // Массив для хранения ID загруженных файлов
+
+            // Проходим по каждому типу файла в infoFiles
+            for (const [key, files] of Object.entries(infoFiles)) {
+                for (const file of files) {
+                    // Создаем запись для каждого файла
+                    const fileRecord = {
+                        name: file.originalname, // Сохраняем оригинальное имя файла
+                        url: file.path, // Путь к файлу
+                        type: typesFiles[key], // Тип файла (например, PROGRAM, LETTER и т.д.)
+                        conferenceId: conferenceId, // ID конференции или другой идентификатор
+                    };
+
+                    // Добавляем промис для создания записи в базу данных
+                    const createdFile = await File.create(fileRecord);
+                    fileIds.push({fileId: createdFile.id, type: fileRecord.type}); // Сохраняем ID созданного файла
+                }
             }
 
+            // Создаем записи в таблице files_links
+            const linkPromises = fileIds.map(fileId => {
+                return FileLink.create({
+                    fileId: fileId.fileId, // ID файла
+                    conferenceId: conferenceId, // ID конференции
+                    type: fileId.type,
+                });
+            });
 
-        res.json({url: urls });
+            // Ожидаем завершения всех промисов для links
+            await Promise.all(linkPromises);
+            console.log('Files and links saved successfully to the database.');
+        } catch (error) {
+            console.error('Error saving files and links to the database:', error);
+        }
+
+        res.json({status: 'Ok'})
+
 
     },
     async afterUpload({body : { reportId, newsId, committeeId, conferenceId, archiveId }, query: { type }, file, user, admin }, res) {
@@ -187,12 +278,37 @@ export default {
         if(typesPhoto[type] === 0) {
             const participant= await Participant.findByPk(user.id);
             if(!participant) throw new AppErrorNotExist('participant');
-            await participant.update({avatar: file.path })
-            return res.json({url: file.path});
+
+            const avatar=await File.findOne({
+                include:{
+                    model: FileLink,
+                    as: 'fileLinks',
+                    required: true,
+                    where: {
+                        type: typesPhoto[type],
+                        participantId: participant.id
+                    }
+                }
+            })
+
+            if(avatar) {
+                await avatar.update({url: file.path, name: file.originalname})
+                return res.json({file: avatar});
+            }
+
+
+            const fileParticipant = await File.create({name: file.originalname, url: file.path  });
+
+            await FileLink.create({
+                fileId: fileParticipant.id, // ID файла
+                participantId: participant.id,
+                type: typesPhoto[type]
+            });
+
+            return res.json({file:fileParticipant });
 
         }
 
-        if((typesFile[type] === 9 || typesFile[type] === 10) && !conferenceId) throw new AppErrorMissing('conferenceId');
 
         if(typesPhoto[type]=== 1 && !newsId) throw new AppErrorMissing('newsId')
 
@@ -200,8 +316,35 @@ export default {
         {
             const news =await News.findByPk(newsId)
             if(!news) throw new AppErrorNotExist('news')
-            await news.update({ img: file.path })
-            return res.json({url: file.path});
+
+
+            const newsFile = await File.findOne({
+                include:{
+                    model: FileLink,
+                    as: 'fileLinks',
+                    required: true,
+                    where: {
+                        type: typesPhoto[type],
+                        newsId: news.id
+                    }
+                }
+            })
+
+            if(newsFile) {
+                await newsFile.update({url: file.path,  name: file.originalname })
+                return res.json({file: newsFile});
+            }
+
+
+            const fileNews = await File.create({name: file.originalname, url: file.path  });
+
+            await FileLink.create({
+                fileId: fileNews.id, // ID файла
+                newsId: news.id,
+                type: typesPhoto[type]
+            });
+
+            return res.json({file: fileNews});
 
         }
 
@@ -211,8 +354,36 @@ export default {
         {
             const committee=await Committee.findByPk(committeeId)
             if(!committee) throw new AppErrorNotExist('committeeId');
-            await committee.update({ img: file.path })
-            return res.json({url: file.path});
+
+
+            const committeeFile = await File.findOne({
+                include:{
+                    model: FileLink,
+                    as: 'fileLinks',
+                    required: true,
+                    where: {
+                        type: typesPhoto[type],
+                        committeeId: committee.id
+                    }
+                }
+            })
+
+            if(committeeFile) {
+                await committeeFile.update({url: file.path,  name: file.originalname})
+                return res.json({file: committeeFile});
+            }
+
+
+            const fileCommittee = await File.create({name: file.originalname, url: file.path  });
+
+            await FileLink.create({
+                fileId: fileCommittee.id, // ID файла
+                committeeId: committee.id,
+                type: typesPhoto[type]
+            });
+
+
+            return res.json({file: fileCommittee});
         }
 
         if((typesFile[type] === 4 || typesFile[type] === 5) && !reportId) throw new AppErrorMissing('reportId');
@@ -231,8 +402,33 @@ export default {
             });
 
             if(!report) throw new AppErrorNotExist('report')
-            typesFile[type]===4 ? await report.update({ reportFile: file.path }) : await report.update({ conclusion : file.path })
-            return res.json({url: file.path});
+
+            const reportFile = await File.findOne({
+                include:{
+                    model: FileLink,
+                    as: 'fileLinks',
+                    required: true,
+                    where: {
+                        type: typesFile[type],
+                        reportId: report.id
+                    }
+                }
+            })
+
+            if(reportFile) {
+                await reportFile.update({url: file.path,  name: file.originalname})
+                return res.json({file: reportFile});
+            }
+
+
+            const fileReport = await File.create({name: file.originalname, url: file.path  });
+
+            await FileLink.create({
+                fileId: fileReport.id, // ID файла
+                reportId: report.id,
+                type: typesFile[type]
+            });
+            return res.json({file: fileReport});
         }
 
 
@@ -240,8 +436,37 @@ export default {
         if(archiveId) {
             const archive = await Archive.findByPk(archiveId);
             if(!archive) throw new AppErrorNotExist('archiveId')
-            await archive.update({ file: file.path })
-            return res.json({url: file.path});
+
+
+
+            const archiveFile = await File.findOne({
+                include:{
+                    model: FileLink,
+                    as: 'fileLinks',
+                    required: true,
+                    where: {
+                       ...(typesFile[type] === 6 &&  { type: typesFile[type] }),
+                       ...(typesPhoto[type] === 8 &&  { type: typesPhoto[type] }),
+                        archiveId: archive.id
+                    }
+                }
+            })
+
+            if(archiveFile) {
+                await archiveFile.update({url: file.path,  name: file.originalname})
+                return res.json({file: archiveFile});
+            }
+
+
+            const fileArchive = await File.create({name: file.originalname, url: file.path  });
+
+            await FileLink.create({
+                fileId: fileArchive.id, // ID файла
+                archiveId: archive.id,
+                type: typesFiles[type] === 6 ? typesFiles[type] : typesPhoto[type]
+            });
+
+            return res.json({file: fileArchive});
 
         }
 
@@ -252,26 +477,6 @@ export default {
 
         if(!conference) throw new AppErrorNotExist('conference');
 
-        if(typesPhoto[type] === 4 || typesPhoto[type] === 5) {
-            const logo = conference.logo ?? {}
-            logo[type] = file.path
-            await conference.update({logo: logo })
-            conference.changed('logo', true)
-            await conference.save();
-        }
-
-        if (typesFile[type] === 0 || typesFile[type] === 1
-            || typesFile[type] === 2 || typesFile[type] === 3
-            || typesFile[type] === 7 || typesFile[type] === 8
-        ) {
-            const doc = conference.documents ?? {};
-
-            doc[type] = file.path;
-            await conference.update({ documents : doc});
-            conference.changed('documents', true);
-            await conference.save();
-
-        }
 
         if(typesFile[type] === 9 || typesFile[type] === 10) {
              const participantInConference = await ParticipantInConference.findOne({
@@ -289,50 +494,65 @@ export default {
             if(!participantInConference) throw new AppErrorNotExist('participantInConference')
 
             if(conference?.deadline && conference?.deadline < new Date()) throw new AppErrorInvalid('deadline')
-            if(typesFile[type] === 9) await participantInConference.update({accord: file.path})
-            else await participantInConference.update({receipt: file.path})
+
+            const participantInConferenceFile = await File.findOne({
+                include:{
+                    model: FileLink,
+                    as: 'fileLinks',
+                    required: true,
+                    where: {
+                        ...(typesFile[type] === 9 &&  { type: typesFile[type] }),
+                        ...(typesFile[type] === 10 &&  { type: typesFile[type] }),
+                        participantId: user.id
+                    }
+                }
+            })
+
+            if(participantInConferenceFile) {
+                await participantInConferenceFile.update({url: file.path,  name: file.originalname})
+                return res.json({file: participantInConferenceFile});
+            }
+
+
+            const fileParticipantInConference = await File.create({name: file.originalname, url: file.path  });
+
+            await FileLink.create({
+                fileId: fileParticipantInConference.id, // ID файла
+                participantId: user.id,
+                type: typesFiles[type]
+            });
+
+            res.json({file: fileParticipantInConference});
         }
 
-
-
-
-
-        /*сonst extension = path.extname(file.originalname).toLowerCase();
-
-        if(type === typesPhoto.AVATAR) await participant.update({avatar: path.join(dir, type.toLowerCase(), file.originalname) });
-
-        if(type === typesPhoto.NEWS)  {
-            if(!newsId) throw new AppErrorMissing('newsId');
-            const news=await News.findByPk(newsId)
-            if(!news) throw new AppErrorNotExist('news');
-            await participant.update({img: path.join(dir, type.toLowerCase(), file.originalname) });
-        }
-
-        if(type === typesPhoto.COMMITTEE) {
-            if(!committeeId) throw  new AppErrorMissing('committeeId')
-            const committee =await Committee.findByPk(committeeId)
-            if(!committee) throw new AppErrorNotExist('committee');
-            await committee.update({img: path.join(dir, type.toLowerCase(), file.originalname) });
-        }
-
-        const report =await Report.findOne({
-            id: reportId,
-            participantId: participant.id
-        })
-        if(!report) throw new AppErrorInvalid('report');
-
-        if(type === typesFiles.REPORT || type === typesFiles.CONCLUSION ) await report.update({
-            ...(type === typesFiles.REPORT ? {reportFile: path.join(dir, type.toLowerCase(), file.originalname)} :
-                {conclusionFile: path.join(dir, type.toLowerCase(), file.originalname)}),
-        })*/
-        res.json({url: file.path});
     },
 
-    async delete({student}, res) {
-        /*fs.unlink(`./uploads/summary/${student.id}.pdf`, () => {
+    async delete({ body: { ids }},  res) {
+
+        if (ids.length < 1) throw new AppErrorMissing('id');
+
+        const files = await File.findAll({
+            where: {
+                id: ids
+            }
         });
 
-        await student.update({summary: false});
-        res.json({status: 'OK'});*/
+        if (files.length < 1) throw new AppErrorNotExist('file');
+
+
+        for (const file of files) {
+            try {
+                //Удаляем физический файл
+                await fs.promises.unlink(file.url);
+                console.log(`File deleted: ${file.url}`);
+            } catch (err) {
+                console.error(`Error deleting file ${file.url}:`, err);
+            }
+
+            // Удаляем запись из базы данных
+            await file.destroy();
+        }
+
+        res.json({status: 'Ok'});
     },
 }

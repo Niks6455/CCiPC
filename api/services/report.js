@@ -9,6 +9,8 @@ import Participant from "../models/participant.js";
 import sendMail from "./email.js";
 import Direction from "../models/direction.js";
 import DirectionInConference from "../models/direction-in-conference.js";
+import FileLink from "../models/file-link.js";
+import File from "../models/file.js";
 export default {
     async create( reportInfo, conferenceId, participant) {
 
@@ -150,8 +152,6 @@ export default {
             foundObject.name=r.name
             foundObject.conferenceId = r.conferenceId
             foundObject.comment=r.comment
-            foundObject.reportFile=r.reportFile
-            foundObject.conclusion=r.conclusion
         })
         return await Report.bulkCreate(
             reportsInfo,
@@ -191,10 +191,22 @@ export default {
                     required: true,
                     attributes: ['email', 'name', 'surname', 'patronymic', 'phone'],
                 }
-            }]
+            },
+                {
+                    model: FileLink,
+                    as: 'reportFileLink',
+                    required: false,
+                    where: {
+                        reportId: reportId,
+                    },
+                    include: {
+                        model: File,
+                        as: 'file',
+                        required: true
+                    }
+                }]
 
         })
-
 
         if(!report) throw new AppErrorInvalid('report')
 
