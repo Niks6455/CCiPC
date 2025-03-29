@@ -30,7 +30,6 @@ const photo = ['HEADER', 'FOOTER', 'ORGANIZATION', 'PARTNER']
 const document = ['PROGRAM', 'LETTER', 'COLLECTION', 'SAMPLE', 'INDIVIDUAL', 'LEGAL']
 
 const updateUrl = async (infoFiles, file) => {
-    console.log(infoFiles)
     for (const infoFile of infoFiles) {
         fs.unlink(file.url, (err => {
             if (err) console.log(err);
@@ -212,7 +211,7 @@ export default {
         const filesLink = await File.findAll({
             include: {
                 model: FileLink,
-                as: 'file',
+                as: 'fileLinks',
                 required: true,
                 where: {
                     conferenceId: conferenceId,
@@ -221,11 +220,12 @@ export default {
             }
         });
 
+
         if(filesLink.length > 0) {
             for (const fileLink of filesLink) {
-                if(fileLink.file.type !== 16 && fileLink.file.type !== 17) {
-                    await updateUrl(infoFiles[helpTypes[fileLink.file.type]], fileLink);
-                    delete infoFiles[helpTypes[fileLink.file.type]];
+                if(fileLink.fileLinks[0].type !== 16 && fileLink.fileLinks[0].type !== 17) {
+                    await updateUrl(infoFiles[helpTypes[fileLink.fileLinks[0].type]], fileLink);
+                    delete infoFiles[helpTypes[fileLink.fileLinks[0].type]];
                 }
             }
         }
