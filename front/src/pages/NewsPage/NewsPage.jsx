@@ -1,7 +1,6 @@
 import NewsCard from '../../components/NewsCard/NewsCard';
 import styles from './NewsPage.module.scss';
 import Layout from '../../ui/Layout/Layout';
-import Footer from '../../components/Footer/Footer';
 import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 import NavBar from '../../components/NavBar/NavBar';
 import logoHeader from './../../assets/img/logo.png';
@@ -20,7 +19,6 @@ function NewsPage({ userRole }) {
   useEffect(() => {
     getAllNews().then(res => {
       if (res?.status === 200) {
-        console.log('res?.data?.news', res?.data?.news);
         setAllDataSliders(res?.data?.news);
       }
     });

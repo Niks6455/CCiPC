@@ -7,7 +7,6 @@ export const fetchUserData = createAsyncThunk(
   'user/fetchUserData',
   async (_, { rejectWithValue }) => {
     try {
-      console.log('accessToken', localStorage.getItem('accessToken'));
       const response = await apiGetUserData();
       if (response.status === 200) {
         return response.data; // Возвращаем данные пользователя

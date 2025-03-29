@@ -1,5 +1,4 @@
 export const funValidateAll = data => {
-  console.log('report', data);
   //! проверяем что все поля заполнены
   let errors = [];
   [

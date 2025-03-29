@@ -1,7 +1,5 @@
 import styles from './AddNews.module.scss';
 import goBackImg from '@assets/img/AdminPanel/goBack.svg';
-import { ReactComponent as FileImport } from '@assets/img/AdminPanel/addFile.svg';
-import trashBeliy from '@assets/img/UI/trashBeliy.svg';
 import { useEffect, useRef, useState } from 'react';
 import {
   createNews,
@@ -14,7 +12,6 @@ import {
 import FileComponent from '@components/AdminModuleComponents/FileComponent/FileComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import trashRed from '@assets/img/AdminPanel/delete.svg';
-import borderIcon from '@assets/img/AdminPanel/borderFile.svg';
 import { setSelectNewsData } from '../../../../store/newsSlice/newsSlice';
 
 function AddNews(props) {
@@ -23,7 +20,6 @@ function AddNews(props) {
   const [file, setFile] = useState(null);
   const [logoHeader, setLogoHeader] = useState(null);
   const [error, setError] = useState({ title: '', text: '', file: '' }); // Ошибки
-  const fileInputRef = useRef(null);
   const store = useSelector(state => state.news);
   const dispatch = useDispatch();
 

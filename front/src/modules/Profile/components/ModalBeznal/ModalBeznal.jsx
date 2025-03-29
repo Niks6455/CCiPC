@@ -18,7 +18,6 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
     });
   };
   const conference = useSelector(state => state?.conferences?.data[0]);
-  console.log('conference', conference);
   const funDownloadShablon = async (docName) => {
     try {
       const response = await fetch(`${server}/${conference?.documents?.[docName]}`);

@@ -1,8 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './NoteFoundPage.module.scss';
-import Layout from '../../ui/Layout/Layout';
-import Footer from '../../components/Footer/Footer';
-import HeaderSecond from '../../components/HeaderSecond/HeaderSecond';
 import NoteFound from './../../assets/img/NoteFound.png';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import NavBar from '../../components/NavBar/NavBar';

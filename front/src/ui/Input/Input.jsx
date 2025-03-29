@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styles from './Input.module.scss';
 import galka from './../../assets/img/UI/galka.svg';
 import krest from './../../assets/img/UI/krest.svg';
@@ -18,7 +18,6 @@ function Input(props) {
     if (props.errorList) {
       const value = e.target.value;
       const updatedLists = props.errorList?.map(fun => fun.functionCheck(value)); // Получаем массив обновленных списков
-      console.log('updatedLists', updatedLists);
       const combinedList = [...props.errorList].map(el => {
         return {
           ...el,
@@ -28,10 +27,6 @@ function Input(props) {
       props.setErrorList(combinedList); // Обновляем состояние с новым объединенным списком
     }
   };
-
-  useEffect(() => {
-    console.log('props.errorList', props.errorList);
-  }, [props.errorList]);
 
   const getListErrorContainer = () => {
     return (

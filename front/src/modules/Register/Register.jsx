@@ -142,7 +142,6 @@ function Register() {
       isValid = false;
     }
     const paseerors = errorListPassword.find(el => !el.done);
-    console.log('paseerors', paseerors);
     if (paseerors) {
       newErrors.password = paseerors.text;
       isValid = false;
@@ -164,7 +163,6 @@ function Register() {
     }
 
     if (!validateFIO(formData.patronymic)) {
-      console.log('formData.patronymic', formData.patronymic);
       newErrors.patronymic = 'Некорректное отчество';
       isValid = false;
     }
@@ -189,22 +187,17 @@ function Register() {
   const navigate = useNavigate();
   const handleSubmit = () => {
     if (validate()) {
-      console.log('Форма отправлена', formData);
       // type 0 это подтверждение
       // сброс пароля type 1
       const data = {
         ...formData,
         phone: `+${formData.phone.replace(/\D/g, '')}`,
       };
-      console.log('data', data);
       apiRegister(data).then(res => {
-        console.log('res', res);
-
         if (res?.status === 200) {
           navigate('/login/confirmLogin');
           context.setMailValue(formData.email);
           sessionStorage.setItem('confirmEmail', formData.email);
-          console.log(res);
         }
       });
     }

@@ -1,6 +1,5 @@
 import Layout from '../../ui/Layout/Layout';
 import styles from './Footer.module.scss';
-import footerLogo from '../../assets/img/FooterText.svg';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
 import { formatDateRangePrimereact } from '../../utils/functions/funcions';

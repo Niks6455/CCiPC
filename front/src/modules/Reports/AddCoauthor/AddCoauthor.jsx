@@ -46,14 +46,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
 
-  // useEffect(() => {
-  //   if (!report.data?.name) {
-  //     navigate('/account/createreport');
-  //   }
-  // }, []);
-
   const funDeleteCoauthor = (index, id) => {
-    console.log('id', id);
     dispatch(deleteCoauthor({ index, id }));
   };
 
@@ -69,7 +62,6 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     if (key === 'email') {
       if (validateEmail(value) && value) {
         getUserEmail(value).then(res => {
-          console.log('res', res);
           if (res?.status === 200) {
             if (res?.data?.participant?.name) {
               dispatch(
@@ -152,7 +144,6 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
         organization: report.data.organization || '',
       };
       apiEditReport(report.data.id, temp).then(res => {
-        console.log('res', res);
         if (res?.status === 200) {
           dispatch(fetchReports());
           const uploadPromises = [];
@@ -206,7 +197,6 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
         conferenceId: conferenceId,
       };
       apiCreateReport(data).then(res => {
-        console.log('res', res);
         if (res?.status === 200) {
           // создаем формдату для файла
           const formDataReport = new FormData();

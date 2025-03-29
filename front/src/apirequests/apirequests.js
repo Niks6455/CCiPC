@@ -1,13 +1,11 @@
 import api from './axios';
 const URL = window.location.origin;
-console.log(URL);
 export let server = '';
 URL.includes('localhost') ? (server = 'http://localhost:3000') : (server = `${URL}/api`);
 
 //! Запрос на Выход
 export const logout = async () => {
   const data = { refreshToken: localStorage.getItem('refreshToken') };
-  console.log(data);
   try {
     const response = await api.post(`${server}/auth/logout`, data);
     return response;

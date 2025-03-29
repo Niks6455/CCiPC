@@ -1,5 +1,3 @@
-import { useContext } from 'react';
-import DataContext from '../../context';
 import Layout from '../../ui/Layout/Layout';
 import styles from './AuthPage.module.scss';
 import NavBar from '../../components/NavBar/NavBar';

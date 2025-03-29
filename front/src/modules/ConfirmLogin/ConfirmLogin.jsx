@@ -41,8 +41,6 @@ function ConfirmLogin(props) {
 
   const handleResendCode = () => {
     if (!isButtonActive) return;
-
-    console.log('Код повторно отправлен');
     setTimer(60); // Сбрасываем таймер
     setIsButtonActive(false); // Делаем кнопку неактивной
   };
@@ -72,7 +70,6 @@ function ConfirmLogin(props) {
     const newErrors = code.map(digit => digit === '');
     setErrors(newErrors);
     if (newErrors.some(error => error)) {
-      console.log('Некоторые поля пустые');
       return;
     }
     const fullCode = code.join('');
@@ -90,7 +87,6 @@ function ConfirmLogin(props) {
         setErrorAuth(true);
       }
     });
-    console.log('Код отправлен на сервер:', fullCode);
   };
 
   return (

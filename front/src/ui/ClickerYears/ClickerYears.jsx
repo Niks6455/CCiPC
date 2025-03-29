@@ -3,7 +3,6 @@ import styles from './ClickerYears.module.scss';
 import Calendar from './../../assets/img/Calendar.svg';
 function ClickerYears(props) {
   const [activeYears, setActiveYears] = useState(2024);
-  console.log(props.data);
   const [dateArray, setDateArray] = useState([]);
   useEffect(() => {
     const dateArray = props.data.map((item) => {
@@ -11,10 +10,6 @@ function ClickerYears(props) {
     });
     setDateArray([...new Set(dateArray)]);
   }, [props.data]);
-
-  useEffect(() => {
-    console.log("dateArray", dateArray)
-  }, [dateArray]);
         
   return (
     <div className={styles.ClickerYears}>

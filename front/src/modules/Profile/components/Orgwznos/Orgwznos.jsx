@@ -21,7 +21,6 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
         `Скан квитанции ${user.name} ${user.surname} ${user.patronymic}`,
         { type: value.type },
       );
-      console.log('renamedFile', renamedFile);
       if (name === 'AGREEMENT') {
         setFileAccord(renamedFile);
       }
@@ -47,7 +46,6 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
 
   const funGetOrgwznos = () => {
     const fee = user?.fee;
-    console.log('fee', fee);
     if (fee?.length > 0) {
       if (!fee[0]?.sum || fee[0]?.sum === 0) {
         return (

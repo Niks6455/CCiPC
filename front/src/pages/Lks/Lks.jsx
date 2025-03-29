@@ -1,7 +1,7 @@
 import RightMenuLk from '../../modules/RightMenuLk/RightMenuLk';
 import styles from './Lks.module.scss';
 import LeftMenuLk from '../../modules/LeftMenuLK/LeftMenuLK';
-import { Outlet, useNavigate } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 function Lks(props) {
   return (

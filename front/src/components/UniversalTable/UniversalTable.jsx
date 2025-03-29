@@ -10,10 +10,8 @@ function UniversalTable(props) {
   const [tableHeaderData, setTableHeaderData] = useState([]);
   const [tableBodyData, setTableBodyData] = useState([]);
   const [initialTableHeaderData, setInitialTableHeaderData] = useState([]);
-  const [initialTableBodyData, setInitialTableBodyData] = useState([]);
   const tableRef = useRef(null);
   const windowWidth = useWindowWidth();
-  const store = useSelector(state => state?.participants);
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(2); // Стартовый индекс для 'Направление'
 
@@ -26,7 +24,6 @@ function UniversalTable(props) {
 
   useEffect(() => {
     setInitialTableHeaderData(props?.tableHeader);
-    setInitialTableBodyData(props?.tableBody);
     setTableHeaderData(props?.tableHeader);
     setTableBodyData(props?.tableBody);
     checkWidth();

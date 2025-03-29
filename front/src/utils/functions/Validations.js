@@ -54,7 +54,6 @@ export const validateLength = (value, count, max) => {
   if (value === '') {
     return true;
   }
-  console.log('value.trim().length', value.trim().length);
   if (value.trim().length < count) {
     return false;
   }

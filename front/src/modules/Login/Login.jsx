@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Input from '../../ui/Input/Input';
 import styles from './Login.module.scss';
-import DataContext from '../../context';
 import { useNavigate } from 'react-router-dom';
 import logo from './../../assets/img/logo.png';
 import sfeduLogo from './../../assets/img/SfeduLogo.svg';

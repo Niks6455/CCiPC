@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import styles from './AddCollectioonsCard.module.scss';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import { createArchive, uploadPhoto } from '../../../../apirequests/apirequests';

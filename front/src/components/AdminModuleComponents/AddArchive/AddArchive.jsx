@@ -67,7 +67,6 @@ function AddArchive(props) {
       type: 0,
       conferenceId: conferenceid,
     };
-    console.log('data', data);
 
     try {
       const resp = await createArchive(data);

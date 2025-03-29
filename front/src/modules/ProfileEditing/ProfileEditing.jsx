@@ -147,7 +147,6 @@ function ProfileEditing() {
     if (validate()) {
       apiUpdateUser(formData).then(res => {
         if (res?.status === 200) {
-          console.log('Форма отправлена', formData);
           setModalSucces(true);
         }
         const file = new FormData();
@@ -156,8 +155,6 @@ function ProfileEditing() {
           uploadPhoto(file, 'AVATAR');
         }
       });
-    } else {
-      console.log('Валидация не прошла');
     }
   };
 

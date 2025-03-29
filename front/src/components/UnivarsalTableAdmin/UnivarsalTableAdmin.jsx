@@ -1,9 +1,9 @@
 import styles from './UnivarsalTableAdmin.module.scss';
 import trashAdmin from '@assets/img/AdminPanel/trashAdmin.svg';
 import editAdmin from '@assets/img/AdminPanel/editAdmin.svg';
-import { deleteNews, getNewsId } from '../../apirequests/apirequests';
+import { deleteNews } from '../../apirequests/apirequests';
 import { useDispatch } from 'react-redux';
-import { setDataNews, setSelectNewsData } from '../../store/newsSlice/newsSlice';
+import { setSelectNewsData } from '../../store/newsSlice/newsSlice';
 function UnivarsalTableAdmin({ tableHeader, tableData, updateNewsData, editClicker }) {
   const getValue = (value, key, rowIndex, row) => {
     switch (key) {

@@ -79,7 +79,6 @@ function App() {
 
   useEffect(() => {
     const userData = localStorage.getItem('userData');
-    console.log('userData', userData);
     const userRole = userData && userData !== 'undefined' ? JSON.parse(userData)?.role : null;
     setUserRole(userRole);
   }, [useLocalStorage('userData'), user]);
@@ -114,8 +113,6 @@ function App() {
       }
     }
   }, [footerRef, useWindowWidth()]);
-
-  console.log('user.email', user.email);
 
   return (
     <DataContext.Provider value={context}>

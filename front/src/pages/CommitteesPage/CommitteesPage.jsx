@@ -1,5 +1,4 @@
 import Layout from '../../ui/Layout/Layout';
-import Footer from '../../components/Footer/Footer';
 import styles from './CommitteesPage.module.scss';
 import ChangeButtons from '../../ui/ChangeButtons/ChangeButtons';
 import { useContext, useEffect, useState } from 'react';

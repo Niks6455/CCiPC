@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import styles from './OrgWznosModuleAdminPage.module.scss';
 import lupa from '@assets/img/UI/lupa.svg';
 import TableOrgWznos from './TableOrgWznos/TableOrgWznos';
-import { testData } from './data';
 import { apiUpdateOrgWznos, getOrgWznos } from '../../../apirequests/apirequests';
 import { useQuery } from '@tanstack/react-query';
 import { useSelector } from 'react-redux';
@@ -22,15 +21,7 @@ function OrgWznosModuleAdminPage() {
     staleTime: Infinity, // Запрос не будет обновляться автоматически
   });
 
-  console.log('qery', qery?.data?.data?.participants);
-
   useEffect(() => {
-    console.log('tableData', tableData);
-    console.log('originalData', originalData);
-  }, [tableData]);
-
-  useEffect(() => {
-    console.log('qery?.data?.data?.participants', qery?.data?.data?.participants);
     const data = qery?.data?.data?.participants?.map(item => ({
       id: item.id,
       fio: item.fio || '',
@@ -67,7 +58,6 @@ function OrgWznosModuleAdminPage() {
   }, [shearchParam, originalData]);
 
   const funSaveData = () => {
-    console.log('originalData', originalData);
     const data = originalData.reduce((acc, item) => {
       if (!acc.some(existingItem => existingItem.id === item.id)) {
         acc.push({
@@ -78,7 +68,6 @@ function OrgWznosModuleAdminPage() {
       }
       return acc;
     }, []);
-    console.log('data', data);
     apiUpdateOrgWznos(conferenceid, { feeInfo: data }).then(res => {
       if (res?.status === 200) {
         setModalSucces(true);

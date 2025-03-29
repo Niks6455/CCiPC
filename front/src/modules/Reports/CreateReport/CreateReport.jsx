@@ -17,7 +17,6 @@ function CreateReport({ edit, soauthorEditing }) {
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
   const conference = useSelector(state => state.conferences.data[0]);
-  console.log('conference', conference);
   const [errors, setErrors] = useState([]);
 
   //! функция скачивания шаблока
@@ -40,15 +39,12 @@ function CreateReport({ edit, soauthorEditing }) {
   };
 
   const funChangeFile = (value, key) => {
-    console.log('value', value);
     dispatch(setValue({ key: key, value: value }));
   };
 
   //! функция onClange на InputListForm
   const handleChangeForm = (name, text) => {
     dispatch(setValue({ key: name, value: text }));
-    console.log('name', name);
-    console.log('errors', errors);
     setErrors(prev => prev.filter(item => item.key !== name));
   };
 
