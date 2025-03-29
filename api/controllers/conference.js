@@ -96,9 +96,9 @@ export default {
                     }
                     // Добавляем файл в соответствующий тип
                     acc[entry[0]].push({
-                        id: a.fileLink.id,
-                        url: a.fileLink.url,
-                        name: a.fileLink.name
+                        id: a.file.id,
+                        url: a.file.url,
+                        name: a.file.name
                     });
                     return acc; // Возвращаем аккумулятор для следующей итерации
                 }, {}) // Инициализируем аккумулятор как пустой объект

@@ -68,7 +68,7 @@ export default {
                     required: false,
                     include: {
                         model: File,
-                        as: 'fileLink',
+                        as: 'file',
                         required: true,
                     }
                 }
