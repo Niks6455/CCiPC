@@ -13,7 +13,7 @@ $w3: 480px;
 
   .ProfilePhotoShow {
     z-index: 10003;
-    width: calc(torem(550px) + torem(81px));
+    width: auto;
     height: torem(550px);
     position: absolute;
     top: 50%;
@@ -25,15 +25,18 @@ $w3: 480px;
 
     .ProfileImg {
       display: flex;
-      width: auto;
-      height: auto;
-      max-width: 60vw;
-      max-height: 100vh;
-      // border-radius: 50%;
+      width: 45vw;
+      height: 45vw;
+      border-radius: 50%;
       object-fit: cover;
+      object-position: top;
+      @media (max-width: $w2) {
+        width: 75vw;
+        height: 75vw;
+      }
     }
     .close {
-      transform: translate(torem(23px), torem(-23px));
+      transform: translate(torem(0px), torem(-23px));
       width: torem(81px);
       height: torem(81px);
       display: flex;

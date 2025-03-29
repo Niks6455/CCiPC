@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
 import { formatPhoneNumber } from '../../utils/functions/Validations';
 import SuccessModal from '../../components/SuccessModal/SuccessModal';
+import ModalPhoto from '../Profile/components/ModalPhoto/ModalPhoto';
 
 function ProfileEditing() {
   const navigate = useNavigate();
@@ -208,42 +209,8 @@ function ProfileEditing() {
           </>
         )}
       </AnimatePresence>
-      <AnimatePresence>
-        {openPhoto && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className={styles.bacgraund}
-            ></motion.div>
-            <motion.div
-              initial={{
-                opacity: 0,
-                transform: 'translate(-50%, -50%) scale(0)',
-              }}
-              animate={{
-                opacity: 1,
-                transform: 'translate(-50%, -50%) scale(1)',
-              }}
-              exit={{
-                opacity: 0,
-                transform: 'translate(-50%, -50%) scale(0)',
-              }}
-              className={styles.ProfilePhotoShow}
-            >
-              <img
-                className={styles.ProfileImg}
-                src={urlPhoto || profilePhoto}
-                alt="img"
-                onError={e => (e.target.src = profilePhoto)}
-              />
 
-              <Close onClick={funOpenPhoto} className={styles.close} />
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
+      <ModalPhoto funOpenPhotoProfile={funOpenPhoto} showProfilePhoto={openPhoto} user={user} />
 
       <div className={styles.head}>
         <div className={styles.profilePhoto}>

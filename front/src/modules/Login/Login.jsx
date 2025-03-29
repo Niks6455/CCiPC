@@ -4,7 +4,7 @@ import styles from './Login.module.scss';
 import { useNavigate } from 'react-router-dom';
 import logo from './../../assets/img/logo.png';
 import sfeduLogo from './../../assets/img/SfeduLogo.svg';
-import { LoginFunc } from '../../apirequests/apirequests';
+import { apiSendConfirm, LoginFunc } from '../../apirequests/apirequests';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 function Login(props) {
@@ -55,6 +55,15 @@ function Login(props) {
         if (data?.status === 200) {
           navigate('/');
           props.funGetAllApi();
+          return;
+        }
+        if (data?.status === 500) {
+          apiSendConfirm({ email: formData.email }).then(res => {
+            if (res?.status === 200) {
+              navigate('/login/confirmLogin');
+            }
+          });
+          console.log('data', data);
         }
       });
     }

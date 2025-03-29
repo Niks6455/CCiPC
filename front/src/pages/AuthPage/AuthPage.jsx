@@ -3,14 +3,14 @@ import styles from './AuthPage.module.scss';
 import NavBar from '../../components/NavBar/NavBar';
 import { Outlet } from 'react-router-dom';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
-function AuthPage(props) {
+function AuthPage() {
   return (
     <>
       <main className={styles.AuthPage}>
         <NavBar />
-        <HeaderPhone/>
+        <HeaderPhone />
         <Layout>
-         <Outlet />
+          <Outlet />
         </Layout>
       </main>
     </>

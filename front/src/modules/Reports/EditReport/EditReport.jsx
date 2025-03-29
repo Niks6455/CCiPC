@@ -24,16 +24,13 @@ function EditReport() {
     enabled: !!idReport,
   });
   useEffect(() => {
-    setReportData(reportQery?.data?.data?.report);
-    const soauthor = reportQery?.data?.data?.report?.coAuthors?.find(
-      soauthor => soauthor?.email === user?.email,
-    );
-    if (soauthor) {
+    const data = reportQery?.data?.data?.report;
+    setReportData(data);
+    const soauthor = data?.coAuthors?.find(soauthor => soauthor?.email === user?.email);
+    if (soauthor && data?.author?.email !== user?.email) {
       setSoauthorEditing(soauthor);
     }
   }, [reportQery]);
-
-  console.log('soauthorEditing', soauthorEditing);
 
   useEffect(() => {
     const idReport = searchParams.get('idReport'); // Получаем idReport из query параметров

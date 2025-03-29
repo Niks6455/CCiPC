@@ -53,7 +53,8 @@ export const LoginFunc = async UserData => {
     localStorage.setItem('userData', JSON.stringify(participant));
     return response;
   } catch (error) {
-    alert('Пользователь не найден!');
+    // alert('Пользователь не найден!');
+    return error;
   }
 };
 
@@ -472,5 +473,14 @@ export const apiDeleteAccount = async () => {
   } catch (error) {
     localStorage.removeItem('accessToken');
     console.log('apiDeleteAccount ', error);
+  }
+};
+
+export const apiSendConfirm = async email => {
+  try {
+    const response = await api.post(`${server}/auth/sandConfirm`, email);
+    return response;
+  } catch (error) {
+    console.log('apiSendConfirm ', error);
   }
 };
