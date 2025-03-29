@@ -220,11 +220,10 @@ export default {
             }
         });
 
-
         if(filesLink.length > 0) {
             for (const fileLink of filesLink) {
                 if(fileLink.fileLinks[0].type !== 16 && fileLink.fileLinks[0].type !== 17) {
-                    await updateUrl(infoFiles[helpTypes[fileLink.fileLinks[0].type]], fileLink);
+                    if(infoFiles[helpTypes[fileLink.fileLinks[0].type]][0].path !== fileLink.url)  await updateUrl(infoFiles[helpTypes[fileLink.fileLinks[0].type]], fileLink);
                     delete infoFiles[helpTypes[fileLink.fileLinks[0].type]];
                 }
             }
@@ -263,7 +262,6 @@ export default {
 
             // Ожидаем завершения всех промисов для links
             await Promise.all(linkPromises);
-            console.log('Files and links saved successfully to the database.');
         } catch (error) {
             console.error('Error saving files and links to the database:', error);
         }
