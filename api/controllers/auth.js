@@ -116,7 +116,15 @@ export default {
         if(!email) throw new AppErrorMissing('email')
         if(!validateEmail(email)) throw new AppErrorInvalid('email')
         const code = randomCode(6, '0123456789');
-        await authService.sandCodeChangePassword(email, code)
+        await authService.sandCodeChangePassword(email, code, 0)
+        res.json({status: 'Ok'})
+    },
+
+    async sandConfirm({body: { email }},res){
+        if(!email) throw new AppErrorMissing('email')
+        if(!validateEmail(email)) throw new AppErrorInvalid('email')
+        const code = randomCode(6, '0123456789');
+        await authService.sandCodeChangePassword(email, code, 1)
         res.json({status: 'Ok'})
     },
 
