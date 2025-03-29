@@ -109,6 +109,7 @@ const reportCreateSlice = createSlice({
       };
       state.sliderState = 0;
       state.openPopUpName = '';
+      state.popUpText = '';
     },
 
     addSoauthors(state) {
@@ -156,7 +157,9 @@ const reportCreateSlice = createSlice({
         return;
       }
       const hasEmptyCoauthor = state.data.soauthors.some(coauthor =>
-        keysCoauthors.some(key => coauthor.data[key] === '' || coauthor.data[key] === null),
+        keysCoauthors.some(
+          key => (key !== 'patronymic' && coauthor.data[key] === '') || coauthor.data[key] === null,
+        ),
       );
       if (hasEmptyCoauthor) {
         state.openPopUpName = 'NotFullyFilledCoauthors';
@@ -170,8 +173,11 @@ const reportCreateSlice = createSlice({
     },
 
     setOpenPopUpName(state, action) {
-      const { name } = action.payload;
+      const { name, text } = action.payload;
       state.openPopUpName = name;
+      if (text) {
+        state.popUpText = text;
+      }
     },
 
     setCoauthorAutocompletion(state, action) {

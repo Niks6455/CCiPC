@@ -97,6 +97,7 @@ export const apiCreateReport = async data => {
     const response = await api.post(`${server}/reports`, data);
     return response;
   } catch (error) {
+    return error;
     console.log('apiCreateReport ', error);
   }
 };

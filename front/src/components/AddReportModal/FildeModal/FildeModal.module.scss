@@ -20,6 +20,17 @@ $w3: 480px;
     text-decoration-skip-ink: none;
     margin-bottom: torem(40px);
   }
+  .text {
+    font-family: Overpass, sans-serif;
+    font-size: torem(20px);
+    font-weight: 500;
+    line-height: torem(26px);
+    text-align: center;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+    margin-bottom: torem(40px);
+    margin-top: -20px;
+  }
   .btnred {
     @include ButtonGreen;
     width: torem(310px);

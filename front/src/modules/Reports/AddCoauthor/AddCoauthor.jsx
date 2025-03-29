@@ -199,19 +199,33 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
       apiCreateReport(data).then(res => {
         if (res?.status === 200) {
           // создаем формдату для файла
-          const formDataReport = new FormData();
-          formDataReport.append('file', report.data.fileArticle);
-          formDataReport.append('reportId', res?.data?.report?.id);
-          const formDataConcl = new FormData();
-          formDataConcl.append('file', report.data.fileExpertOpinion);
-          formDataConcl.append('reportId', res?.data?.report?.id);
-          uploadPhoto(formDataReport, 'REPORT'); // файл с докладом
-          uploadPhoto(formDataConcl, 'CONCLUSION'); // файл с заключением
+          if (report.data.fileArticle) {
+            const formDataReport = new FormData();
+            formDataReport.append('file', report.data.fileArticle);
+            formDataReport.append('reportId', res?.data?.report?.id);
+            uploadPhoto(formDataReport, 'REPORT'); // файл с докладом
+          }
+          if (report.data.fileExpertOpinion) {
+            const formDataConcl = new FormData();
+            formDataConcl.append('file', report.data.fileExpertOpinion);
+            formDataConcl.append('reportId', res?.data?.report?.id);
+            uploadPhoto(formDataConcl, 'CONCLUSION'); // файл с заключением
+          }
+
           dispatch(fetchUserData());
           dispatch(fetchReports());
           dispatch(funSaveDataState());
         } else {
-          dispatch(setOpenPopUpName({ name: 'FildeModal' }));
+          if (res?.status === 409) {
+            dispatch(
+              setOpenPopUpName({
+                name: 'FildeModal',
+                text: 'Доклад с таким названием уже существует!',
+              }),
+            );
+          } else {
+            dispatch(setOpenPopUpName({ name: 'FildeModal' }));
+          }
         }
       });
     }
@@ -229,7 +243,9 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
         <div className={styles.popups}>
           {report?.openPopUpName === 'SameEmail' && <SameEmail />}
           {report?.openPopUpName === 'SuccessModal' && <SuccessModal name={report?.data?.name} />}
-          {report?.openPopUpName === 'FildeModal' && <FildeModal name={report?.data?.name} />}
+          {report?.openPopUpName === 'FildeModal' && (
+            <FildeModal name={report?.data?.name} text={report?.popUpText} />
+          )}
           {report?.openPopUpName === 'NotFullyFilled' && (
             <NotFullyFilled name={report?.data?.name} />
           )}
