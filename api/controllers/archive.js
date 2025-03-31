@@ -9,7 +9,7 @@ export default {
                 id: archive.id,
                 name: archive.name,
                 type: archive.type,
-                file: archive.archiveFile?.file.url ?? null,
+                file: archive.archiveFile?.file ?? null,
             }))})
     },
 
