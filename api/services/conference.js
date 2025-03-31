@@ -40,7 +40,17 @@ export default {
                 model: Direction,
                 as: 'directions',
                 required: false,
-            }],
+            },
+                {
+                    model: FileLink,
+                    as: 'filesInConference',
+                    required: false,
+                    include: {
+                        model: File,
+                        as: 'file',
+                        required: true,
+                    }
+                }],
         })
     },
 

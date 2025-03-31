@@ -76,7 +76,30 @@ function checkValidateFee(objects){
 export default {
     async find(req, res) {
         const conferences = await conferenceService.find();
-        res.json(conferences);
+
+        for(const conference of conferences){
+            conference.files = Object.fromEntries(
+                Object.entries(
+                    conference.filesInConference.reduce((acc, a) => {
+                        // Проверяем, существует ли уже тип в аккумуляторе
+                        const entry = Object.entries(typesFiles).find(([key, val]) => val === a.type);
+
+                        if (!acc[entry[0]]) {
+                            acc[entry[0]] = []; // Если нет, создаем новый массив
+                        }
+                        // Добавляем файл в соответствующий тип
+                        acc[entry[0]].push({
+                            id: a.file.id,
+                            url: a.file.url,
+                            name: a.file.name
+                        });
+                        return acc; // Возвращаем аккумулятор для следующей итерации
+                    }, {}) // Инициализируем аккумулятор как пустой объект
+                )
+            );
+        }
+
+        res.json({ conference: conferences.map(conference=>mapConf(conference))});
     },
 
     async findOne({params: { id }}, res) {

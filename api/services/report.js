@@ -74,6 +74,9 @@ export default {
 
             const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
 
+            const checkCoAuthors = report.coAuthors.find(coAuthor => coAuthor?.email === participant.email)
+
+            if(checkCoAuthors) throw new AppErrorInvalid('coAuthors')
 
             const participantsExist = await Participant.findAll({
             where: {
@@ -272,6 +275,11 @@ export default {
             if(reportInfo?.coAuthors?.length > 0){
 
                 const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
+
+                const checkCoAuthors = report.coAuthors.find(coAuthor => coAuthor?.email === participant.email)
+
+                if(checkCoAuthors) throw new AppErrorInvalid('coAuthors')
+
 
                 const participantsExist = await Participant.findAll({
                     where: {
