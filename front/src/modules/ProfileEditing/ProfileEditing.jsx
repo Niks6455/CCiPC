@@ -6,8 +6,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import { useDispatch, useSelector } from 'react-redux';
-import { ReactComponent as Close } from './../../assets/img/UI/bigX.svg';
-import { apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
+import { apiDeleteMulti, apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
 import { disEditUser, setEditUser } from '../../store/userSlice/user.Slice';
 import { inputsData } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
@@ -33,9 +32,9 @@ function ProfileEditing() {
   const [urlPhoto, setUrlPhoto] = useState(null);
   const [popUpSize, setPopUpSize] = useState(false);
   const [modalSucces, setModalSucces] = useState(null);
-
+  const [deleteIdsPhoto, setDeleteIdsPhoto] = useState([]);
   useEffect(() => {
-    setUrlPhoto(`${server}/${user?.avatar}`);
+    setUrlPhoto(`${server}/${user?.avatar?.url}`);
   }, [user?.avatar]);
 
   useEffect(() => {
@@ -75,6 +74,7 @@ function ProfileEditing() {
     setUrlPhoto(null);
     setUserPhoto(null);
     dispatch(setEditUser({ key: 'avatar', value: null }));
+    setDeleteIdsPhoto([user?.avatar?.id]);
   };
 
   const funSelectedElement = (key, value) => {
@@ -150,10 +150,13 @@ function ProfileEditing() {
         if (res?.status === 200) {
           setModalSucces(true);
         }
-        const file = new FormData();
-        file.append('file', userPhoto);
         if (userPhoto) {
+          const file = new FormData();
+          file.append('file', userPhoto);
           uploadPhoto(file, 'AVATAR');
+        }
+        if (deleteIdsPhoto.length > 0) {
+          apiDeleteMulti({ ids: deleteIdsPhoto });
         }
       });
     }

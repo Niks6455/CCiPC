@@ -33,7 +33,7 @@ function ModalPhoto({ funOpenPhotoProfile, showProfilePhoto, user }) {
             >
               <img
                 className={styles.ProfileImg}
-                src={`${server}/${user?.avatar}`}
+                src={`${server}/${user?.avatar?.url}`}
                 alt="img"
                 onError={e => (e.target.src = noPhotoLk)}
               />

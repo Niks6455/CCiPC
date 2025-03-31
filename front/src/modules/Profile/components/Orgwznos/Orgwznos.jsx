@@ -2,7 +2,7 @@ import styles from './Orgwznos.module.scss';
 import vitalIcon from '@assets/img/UI/vitalIcon.svg';
 import FileComponent from './../../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { useState } from 'react';
-import { server, uploadPhoto } from '../../../../apirequests/apirequests';
+import { apiDeleteMulti, server, uploadPhoto } from '../../../../apirequests/apirequests';
 import loadIcon from '@assets/img/AdminPanel/greenLoad.svg';
 import { useSelector } from 'react-redux';
 import ReqError from '../../../../components/ReqError/ReqError';
@@ -12,6 +12,10 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
   const [fileReceipt, setFileReceipt] = useState(null);
   const conferenseId = useSelector(state => state.conferences?.data[0]?.id);
   const [errors, setErrors] = useState([]);
+
+  const funDeleteFile = id => {
+    apiDeleteMulti({ ids: [id] });
+  };
 
   const funChangeAccord = (value, name) => {
     setErrors(prev => prev.filter(item => item.key !== name));
@@ -99,10 +103,11 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                 <div className={styles.file_box}>
                   <FileComponent
                     logoHeader={
-                      typeof user?.fee[0]?.accord === 'string' && `${server}/${user?.fee[0].accord}`
+                      typeof user?.fee[0]?.accord?.url === 'string' &&
+                      `${server}/${user?.fee[0].accord?.url}`
                     }
                     fileSize={50}
-                    data={fileAccord}
+                    data={fileAccord?.url}
                     setData={funChangeAccord}
                     typeFile={['application/pdf']}
                     itemKey={'AGREEMENT'}
@@ -111,6 +116,8 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     fileName={`Скан договора ${user.surname} ${user.name} ${user.patronymic}`}
                     icon={'pdf'}
                     text={'Загрузите скан договора<br/>в формате PDF'}
+                    idFile={user?.fee[0].accord?.id}
+                    funDeleteFile={funDeleteFile}
                   />
                 </div>
                 <div className={styles.shablon}>
@@ -124,11 +131,11 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                 <div className={styles.file_box}>
                   <FileComponent
                     logoHeader={
-                      typeof user?.fee[0]?.receipt === 'string' &&
-                      `${server}/${user?.fee[0].receipt}`
+                      typeof user?.fee[0]?.receipt?.url === 'string' &&
+                      `${server}/${user?.fee[0].receipt?.url}`
                     }
                     fileSize={50}
-                    data={fileReceipt}
+                    data={fileReceipt?.url}
                     setData={funChangeAccord}
                     typeFile={['application/pdf']}
                     accept={'.pdf'}
@@ -137,6 +144,8 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     name={'fileReceipt'}
                     icon={'pdf'}
                     text={'Загрузите скан квитанции<br/>в формате PDF'}
+                    idFile={user?.fee[0].receipt?.id}
+                    funDeleteFile={funDeleteFile}
                   />
                 </div>
                 <div className={styles.shablon}>
