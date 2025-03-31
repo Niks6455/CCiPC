@@ -248,7 +248,7 @@ function Register() {
   return (
     <section className={styles.Login}>
       <div className={styles.LoginLogo}>
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>
       <div className={styles.LoginTitle}>
         <p>Добро пожаловать</p>

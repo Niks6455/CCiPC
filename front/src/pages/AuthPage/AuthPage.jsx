@@ -7,8 +7,8 @@ function AuthPage() {
   return (
     <>
       <main className={styles.AuthPage}>
-        <NavBar />
-        <HeaderPhone />
+        <NavBar login={true} />
+        <HeaderPhone login={true} />
         <Layout>
           <Outlet />
         </Layout>
