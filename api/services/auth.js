@@ -16,6 +16,18 @@ import {Op} from "sequelize";
 const verificationCodes= {};
 const resetCodes= {};
 
+function saveVerificationCode(email, code, expirationTime) {
+    this.verificationCodes[email] = {
+        code: code,
+        expiresAt: Date.now() + expirationTime // Устанавливаем время истечения
+    };
+
+    // Устанавливаем таймер для удаления кода после истечения времени
+    setTimeout(() => {
+        delete this.verificationCodes[email];
+    }, expirationTime);
+
+}
 export default {
     async register(participant, code){
 
@@ -30,7 +42,8 @@ export default {
 
         if(checkParticipant) throw new AppErrorAlreadyExists('email or phone')
 
-        verificationCodes[participant.email] = code
+
+        saveVerificationCode(participant.email, code, 300000)
 
         sendMail(participant.email, 'registration', code);
 
@@ -183,7 +196,7 @@ export default {
         }
 
         if(type === 1){
-            verificationCodes[participant.email] = code
+            saveVerificationCode(participant.email, code, 300000)
             sendMail(participant.email, 'registration', code);
         }
 
