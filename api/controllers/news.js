@@ -11,14 +11,14 @@ export default {
 
     async find({query : { year, limit, page }}, res){
         const { currentPage, newsLimit, news }= await newsService.find(year, page, limit)
-        res.json({ currentPage: currentPage,  limit: newsLimit, news: news.map(n=>({id: n.id, title: n.title, description: n.description, img: n?.newsFile?.file.url })) ?? null });
+        res.json({ currentPage: currentPage,  limit: newsLimit, news: news.map(n=>({id: n.id, title: n.title, description: n.description, img: n?.newsFile?.file })) ?? null });
     },
 
 
     async findOne({params: { id }}, res){
         if(!id) throw new AppErrorMissing('id')
         const news= await newsService.findOne(id)
-        res.json({ news: {id: news.id, title: news.title, description: news.description, img: news?.newsFile?.file.url},  } );
+        res.json({ news: {id: news.id, title: news.title, description: news.description, img: news?.newsFile?.file},  } );
     },
 
     async update({params: {id}, body:{ title, description }}, res){

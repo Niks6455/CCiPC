@@ -5,7 +5,7 @@ export function map(data){
           id: r?.id,
           committeeId: r?.committee.id,
           fio: r?.committee.fio,
-          img: r?.committee?.committeeFile?.file.url ?? null,
+          img: r?.committee?.committeeFile?.file ?? null,
           organization: r?.committee.organization,
         })) ?? null
     }
