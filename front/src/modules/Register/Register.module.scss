@@ -14,6 +14,8 @@ $w3: 480px;
     img {
       width: torem(169px);
       height: torem(169px);
+      cursor: pointer;
+      @include HoverActiveOpacity;
     }
   }
   .LoginTitle {
