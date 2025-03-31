@@ -21,25 +21,31 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
   //! Update or delete a file
   const funChangeData = (value, id) => {
     if (value === null) {
-      // Remove the organizer with the matching ID
+      const dat = data[itemKey].filter(organizer => organizer.id !== id);
+      console.log(' id', id);
+      console.log('set', dat);
+
       setDeleteMass([...deleteMass, id]);
-      setData({
-        ...data,
-        [itemKey]: data[itemKey].filter(organizer => organizer !== id),
-      });
+      if (Number(id)) {
+        setData({
+          ...data,
+          [itemKey]: dat,
+        });
+      } else {
+        setData({
+          ...data,
+          [itemKey]: dat,
+          deleteIds: [...data.deleteIds, id],
+        });
+      }
     } else {
-      // Update the value of the organizer with the matching ID
       setData({
         ...data,
         [itemKey]: data[itemKey].map(organizer =>
-          organizer === id ? { ...organizer, value } : organizer,
+          organizer.id === id ? { ...organizer, value } : organizer,
         ),
       });
     }
-  };
-
-  const funDeleteFile = id => {
-    setData({ ...data, deleteIds: [...data.deleteIds, id] });
   };
 
   return (
@@ -51,7 +57,7 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
             <div className={styles.org_container} key={index}>
               <img src={borderFile} className={styles.border} />
               <div className={styles.border_inner}>
-                {!item && (
+                {!item?.id && (
                   <button className={styles.delete} onClick={() => funChangeData(null, item)}>
                     <img src={trashIcon} alt="Удалить файл" />
                   </button>
@@ -61,7 +67,7 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
                   logoHeader={typeof item?.url === 'string' && `${server}/${item?.url}`}
                   fileSize={50}
                   data={item?.url}
-                  setData={value => funChangeData(value, item?.url)}
+                  setData={value => funChangeData(value, item?.id)}
                   typeFile={['image/png']}
                   accept={'.png'}
                   name={`${itemKey}-${index}`}
@@ -69,7 +75,7 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
                   itemKey={item?.url}
                   text={'Загрузите или перетащите<br/>фотографию в формате PNG'}
                   idFile={item?.id}
-                  funDeleteFile={funDeleteFile}
+                  // funDeleteFile={funDeleteFile}
                 />
               </div>
             </div>

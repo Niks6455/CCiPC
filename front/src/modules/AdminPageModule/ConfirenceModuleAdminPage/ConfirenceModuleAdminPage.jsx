@@ -103,17 +103,16 @@ function ConfirenceModuleAdminPage() {
       console.log('keys', keys);
       keys.map(key => {
         if (files[key.key]) {
-          if (typeof files[key.key] !== 'string') {
+          if (!files[key.key].url) {
             const file = files[key.key]?.value || files[key.key];
-            if (typeof files[key.key] === 'object') {
-              console.log('file', file);
-
-              formData.append(key.name, file);
+            console.log('file', file, file.length);
+            if (file.length > 0) {
+              console.log('file', file[0].value);
+              file.map(el => {
+                formData.append(key.name, el.value);
+              });
             } else {
-              formData.append(
-                key.name,
-                file.map(item => item?.value),
-              );
+              formData.append(key.name, file);
             }
           }
         } else {
