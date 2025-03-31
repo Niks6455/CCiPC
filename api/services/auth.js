@@ -17,7 +17,7 @@ const verificationCodes= {};
 const resetCodes= {};
 
 function saveVerificationCode(email, code, expirationTime) {
-    this.verificationCodes[email] = {
+    verificationCodes[email] = {
         code: code,
         expiresAt: Date.now() + expirationTime // Устанавливаем время истечения
     };
