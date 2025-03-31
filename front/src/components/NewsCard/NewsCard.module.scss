@@ -5,76 +5,76 @@ $w2: 480px;
   position: relative;
   width: 100%; /* Задаётся ширина карточки через grid */
   overflow: hidden;
-  border-radius: 10px;
+  border-radius: torem(10px);
   box-sizing: border-box;
-  padding-top: 40px;
-  margin: 16px;
-  width: 412px;
+  padding-top: torem(40px);
+  margin: torem(16px);
+  width: torem(412px);
   height: max-content;
-  @media (max-width: 990px) {
-    width: 412px;
-    margin: 20px 20px;
+  @media (max-width: torem(990px)) {
+    width: torem(412px);
+    margin: torem(20px) torem(20px);
   }
-  @media (max-width: 460px) {
-    width: 350px;
+  @media (max-width: torem(460px)) {
+    width: torem(350px);
   }
-  @media (max-width: 380px) {
-    width: 300px;
+  @media (max-width: torem(380px)) {
+    width: torem(300px);
   }
   .newsCardContent {
     position: relative;
     z-index: 2;
-    padding: 40px 20px;
+    padding: torem(40px) torem(20px);
     transition: all 0.3s ease-out; /* Добавляем плавный переход для padding */
     background-color: #fff;
-    border-radius: 10px;
-    @media (max-width: 990px) {
-      padding: 20px;
+    border-radius: torem(10px);
+    @media (max-width: torem(990px)) {
+      padding: torem(20px);
     }
     span {
-      font-size: 18px;
+      font-size: torem(18px);
       color: #858b89;
       margin: 0;
-      @media (max-width: 990px) {
-        font-size: 16px;
+      @media (max-width: torem(990px)) {
+        font-size: torem(16px);
       }
-      @media (max-width: 770px) {
-        font-size: 14px;
+      @media (max-width: torem(770px)) {
+        font-size: torem(14px);
       }
     }
     .newsCardDate {
       color: var(--GrayOne);
-      font-size: 18px;
-      line-height: 21px;
+      font-size: torem(18px);
+      line-height: torem(21px);
     }
     .newsCardTitle {
-      font-size: 32px;
+      font-size: torem(32px);
       font-weight: 500;
-      line-height: 44px;
+      line-height: torem(44px);
       padding: 0;
       margin: 0;
-      padding-top: 20px;
-      padding-bottom: 10px;
+      padding-top: torem(20px);
+      padding-bottom: torem(10px);
       @media (max-width: $w1) {
-        font-size: 18px;
+        font-size: torem(18px);
         padding: 0;
         margin: 0;
       }
     }
     .newsCardText {
       color: var(--GraySecond);
-      font-size: 20px;
+      font-size: torem(20px);
       font-weight: 400;
-      line-height: 26px;
+      line-height: torem(26px);
       @media (max-width: $w1) {
-        font-size: 16px;
+        font-size: torem(16px);
       }
     }
   }
-  @media (min-width: 990px) {
+  @media (min-width: torem(990px)) {
     &:hover {
-      // box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-      transform: translateY(-5px);
+      // box-shadow: 0 torem(8px) torem(16px) rgba(0, 0, 0, 0.2);
+      transform: translateY(-torem(5px));
       cursor: pointer;
       img {
         top: 0; /* При наведении картинка становится видимой полностью */
@@ -82,12 +82,12 @@ $w2: 480px;
         z-index: 10;
       }
       .newsCardContent {
-        padding-top: 280px; /* Изменение отступа только для текущей карточки */
+        padding-top: torem(280px); /* Изменение отступа только для текущей карточки */
       }
     }
   }
-  @media (max-width: 990px) {
-    padding-top: 290px;
+  @media (max-width: torem(990px)) {
+    padding-top: torem(290px);
   }
 
   img {
@@ -100,9 +100,9 @@ $w2: 480px;
     transition:
       top 0.3s ease,
       transform 0.3s ease;
-    border-radius: 10px 10px 0 0;
-    @media (max-width: 990px) {
-      height: 300px;
+    border-radius: torem(10px) torem(10px) 0 0;
+    @media (max-width: torem(990px)) {
+      height: torem(300px);
       object-fit: cover;
     }
   }

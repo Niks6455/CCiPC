@@ -27,6 +27,7 @@ function OrgazmCommetet() {
   const getDataOrg = async () => {
     if (conferenceid) {
       const res = await getOrgCommitet(conferenceid);
+      console.log('res', res)
       if (res?.status === 200) {
         setDataOrgAll(res.data.committee);
         filterCommittees();
@@ -45,11 +46,12 @@ function OrgazmCommetet() {
     setDataCommitetTwo(committeeTwo);
   };
 
-  const updateCardData = (id, newUrl) => {
+  const updateCardData = (id, newImg) => {
+    console.log('newImg', newImg)
     const updateData = dataOrgAll.map(confirensis => {
         return {...confirensis, committees: confirensis.committees.map(item => {
           if (item.id === id) {
-            return { ...item, img: newUrl }
+            return { ...item, img: newImg }
           }
           return item
         })

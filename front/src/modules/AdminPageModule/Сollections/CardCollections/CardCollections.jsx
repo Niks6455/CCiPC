@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import styles from './CardCollections.module.scss';
-import { updateArchive, deleteArchive, uploadPhoto } from '../../../../apirequests/apirequests';
+import { updateArchive, deleteArchive, uploadPhoto, apiDeleteMulti } from '../../../../apirequests/apirequests';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import closeIcon from '@assets/img/closeBack.svg';
 import { decodeFileName } from '../../../../utils/functions/funcions';
@@ -14,17 +14,18 @@ function CardCollections(props) {
   const [dataItem, setDataItem] = useState(null);
   const [isChanged, setIsChanged] = useState(false);
   const [errorText, setErrorText] = useState('');
+  const [deleteIds, setDeleteIds] = useState([]);
   // Убедитесь, что данные обновляются при изменении props.item
   useEffect(() => {
     setDefaultValue({
       name: props?.item?.name || '',
       file: props?.item?.file,
-      fileName: props?.item?.file ? decodeFileName(props?.item?.file.split('/').pop()) : '',
+      fileName: props?.item?.file ? decodeFileName(props?.item?.file?.name?.split('/').pop()) : '',
     });
     setDataItem({
       name: props?.item?.name || '',
       file: props?.item?.file,
-      fileName: props?.item?.file ? decodeFileName(props?.item?.file.split('/').pop()) : '',
+      fileName: props?.item?.file ? decodeFileName(props?.item?.file?.name?.split('/').pop()) : '',
     });
     setErrorText('');
   }, [props.item]);
@@ -70,7 +71,11 @@ function CardCollections(props) {
   };
 
   const handleDeleteFile = () => {
-    setDataItem(prev => ({ ...prev, file: null, fileName: '' }));
+    apiDeleteMulti({ids: [dataItem?.file?.id]}).then(res => {
+      if(res?.status === 200) {
+        props.updateData();
+      }
+    })
   };
 
   const handleCancel = () => {
@@ -95,6 +100,9 @@ function CardCollections(props) {
           formData.append('archiveId', props.item.id);
           await uploadPhoto(formData, 'COLLECTION_ARCHIVE');
         }
+        if(deleteIds.length > 0) {
+          apiDeleteMulti({ids: deleteIds})
+        }
         props.updateData();
       }
     } catch (error) {
@@ -103,11 +111,8 @@ function CardCollections(props) {
   };
 
   const handleDelete = () => {
-    deleteArchive(props.item.id).then(res => {
-      if (res?.status === 200) {
-        props?.updateData();
-      }
-    });
+    setDeleteIds([props.item.id]);
+    setIsChanged(true);
   };
 
   const spliseFileName = () => {

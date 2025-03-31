@@ -59,9 +59,9 @@ function NewsPage({ userRole }) {
           <div className={styles.Title}>
             <h2>НОВОСТИ</h2>
           </div>
-          <div className={styles.ClickerYears}>
+          {/* <div className={styles.ClickerYears}>
             <ClickerYears data={allDataSliders} />
-          </div>
+          </div> */}
           <div className={styles.NewsPageContainer}>
             <div className={styles.NewsPageContainerInner}>
               {dataSliderFirstColumn.map((el, index) => (
