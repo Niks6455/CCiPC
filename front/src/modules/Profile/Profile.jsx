@@ -63,7 +63,7 @@ function Profile() {
           <img src={ProfilePictureBackground} className={styles.ProfileImg} />
           <div className={styles.photo_lk}>
             <img
-              src={`${server}/${user?.avatar}`}
+              src={`${server}/${user?.avatar?.url}`}
               className={styles.noPhotoLk}
               onClick={funOpenPhotoProfile}
               alt="img"
