@@ -11,7 +11,7 @@ import documents from '@assets/img/headPhoneIcon/documents.svg';
 import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 
-function HeaderPhone() {
+function HeaderPhone(props) {
   const [activeMenu, setActiveMenu] = useState(false);
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const navigate = useNavigate();
@@ -28,7 +28,8 @@ function HeaderPhone() {
 
   const updateVisibility = () => {
     const url = window.location.href;
-    const shouldShow = (url.includes('/account') && window.innerWidth < 770) || window.innerWidth < 480;
+    const shouldShow =
+      (url.includes('/account') && window.innerWidth < 770) || window.innerWidth < 480;
     setIsVisible(shouldShow);
   };
 
@@ -38,14 +39,16 @@ function HeaderPhone() {
     return () => window.removeEventListener('resize', updateVisibility); // Cleanup on unmount
   }, []);
 
-
   return (
     <div>
-      <div className={styles.HeaderPhoneContainer} style={{
+      <div
+        className={styles.HeaderPhoneContainer}
+        style={{
           display: isVisible ? 'flex' : 'none',
           position: isVisible ? 'fixed' : 'absolute',
           zIndex: isVisible ? 10000 : -1,
-        }} >
+        }}
+      >
         <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(!activeMenu)}>
           <div className={styles.NavBarMenu}>
             <span></span>
@@ -94,7 +97,7 @@ function HeaderPhone() {
                       />
                     </div>
                   </li>
-               
+
                   <motion.div className={styles.NavBarMenuListOpener}>
                     <AnimatePresence>
                       {activeMenuListFirst && (
@@ -103,20 +106,23 @@ function HeaderPhone() {
                           animate={{ height: 'auto', opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
                         >
-                          <li
-                            onClick={() =>
-                              autorisation
-                                ? navigate('/account/profile')
-                                : navigate('/login/authorization')
-                            }
-                          >
-                            <div className={styles.NavBarMenuListInnerLiImg}>
-                              <span>
-                                <img src={profile} />
-                              </span>
-                              <p>{autorisation ? 'Профиль' : 'Вход/Регистрация'}</p>
-                            </div>
-                          </li>
+                          {!props.login && (
+                            <li
+                              onClick={() =>
+                                autorisation
+                                  ? navigate('/account/profile')
+                                  : navigate('/login/authorization')
+                              }
+                            >
+                              <div className={styles.NavBarMenuListInnerLiImg}>
+                                <span>
+                                  <img src={profile} />
+                                </span>
+                                <p>{autorisation ? 'Профиль' : 'Вход/Регистрация'}</p>
+                              </div>
+                            </li>
+                          )}
+
                           <li onClick={() => navigateTo('/account/documents')}>
                             <div className={styles.NavBarMenuListInnerLiImg}>
                               <span>

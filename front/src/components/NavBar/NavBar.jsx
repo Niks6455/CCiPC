@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
-function NavBar() {
+function NavBar(props) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
@@ -42,17 +42,20 @@ function NavBar() {
             Скрыть <img src={closeImg} alt="Close" />
           </button>
           <ul>
-            <li
-              onClick={() => {
-                navigate(autorisation ? '/account/profile' : '/login/authorization');
-                context.setActiveMenu(false);
-              }}
-            >
-              {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
-              <span className={styles.arowLi}>
-                <img src={ArrowMenu} alt="Arrow" />
-              </span>
-            </li>
+            {!props.login && (
+              <li
+                onClick={() => {
+                  navigate(autorisation ? '/account/profile' : '/login/authorization');
+                  context.setActiveMenu(false);
+                }}
+              >
+                {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
+                <span className={styles.arowLi}>
+                  <img src={ArrowMenu} alt="Arrow" />
+                </span>
+              </li>
+            )}
+
             <li
               onClick={() => {
                 navigate('/');
