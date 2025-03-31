@@ -103,6 +103,10 @@ function FileComponent(props) {
       setLogoHeader(null);
       setIsVisibleHeader(null);
       props.setData(null, props.itemKey);
+      if (props.funDeleteFile && props.idFile) {
+        props.funDeleteFile(props.idFile);
+      }
+
       if (document.getElementById(props.name)) {
         document.getElementById(props.name).value = '';
       }

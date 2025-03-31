@@ -8,7 +8,7 @@ export const fetchConferences = createAsyncThunk(
     try {
       const response = await apiGetConferences();
       if (response.status === 200) {
-        return response.data;
+        return response.data.conference;
       } else {
         return rejectWithValue('Ошибка получения данных');
       }

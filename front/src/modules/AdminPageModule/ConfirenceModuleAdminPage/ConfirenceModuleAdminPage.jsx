@@ -9,6 +9,7 @@ import DateAdsess from './DateAdsess/DateAdsess';
 import Organizers from './Organizers/Organizers';
 import {
   apiCreateConferences,
+  apiDeleteMulti,
   apiGetConferencesById,
   apiPutConferencesById,
   uploadMulti,
@@ -64,74 +65,70 @@ function ConfirenceModuleAdminPage() {
           date: convertDate(item.date),
           name: item.name,
         })),
-        logoHeader: qery.logo?.HEADER,
-        logoFooter: qery.logo?.FOOTER,
-        programConference: qery.documents?.PROGRAM,
-        informationLetter: qery.documents?.LETTER,
-        worksCollection: qery.documents?.COLLECTION,
-        аrticleTemplate: qery.documents?.SAMPLE,
-        cashlessIndividual: qery.documents?.INDIVIDUAL,
-        cashlessEntities: qery.documents?.LEGAL,
+        logoHeader: qery.files?.HEADER?.[0],
+        logoFooter: qery.files?.FOOTER?.[0],
+        programConference: qery.files?.PROGRAM?.[0],
+        informationLetter: qery.files?.LETTER?.[0],
+        worksCollection: qery.files?.COLLECTION?.[0],
+        аrticleTemplate: qery.files?.SAMPLE?.[0],
+        cashlessIndividual: qery.files?.INDIVIDUAL?.[0],
+        cashlessEntities: qery.files?.LEGAL?.[0],
         aboutConference: qery.description,
         directions: qery.directions.map(el => el.name),
         dateFirst: qery.date?.[0]?.value,
         dateSecond: qery.date?.[1]?.value,
         address: qery.address,
-        organizers: qery.organization || [],
-        partners: qery.partner || [],
+        organizers: qery.files?.ORGANIZATION || [],
+        partners: qery.files?.PARTNER || [],
         deadlineUploadingReports: convertDate(qery.deadline),
+        deleteIds: [],
       };
       setData(data);
     }
     setDeleteOrganizer([]);
     setDeletePartners([]);
   };
-
   //! получение конференции
   useEffect(() => {
     funUpdData();
   }, [conferensetQery?.data?.data?.conference]);
 
-  //! для отправки файла
-  const funApiEditFile = (file, key, conferenseId) => {
-    if (file && typeof file === 'object') {
+  //! отправка файлов массивом организаторы и партнеры
+  const funApiEditFileMulti = (files, keys, conferenseId) => {
+    if (files) {
       const formData = new FormData();
-      formData.append('file', file);
       formData.append('conferenceId', conferenseId);
-      uploadPhoto(formData, key).then(res => {
-        if (res?.status !== 200) {
-          funSetErrors(key, false);
+
+      console.log('data', data);
+      console.log('keys', keys);
+      keys.map(key => {
+        if (files[key.key]) {
+          if (typeof files[key.key] !== 'string') {
+            const file = files[key.key]?.value || files[key.key];
+            if (typeof files[key.key] === 'object') {
+              console.log('file', file);
+
+              formData.append(key.name, file);
+            } else {
+              formData.append(
+                key.name,
+                file.map(item => item?.value),
+              );
+            }
+          }
         } else {
-          funSetErrors(key, true);
+          funSetErrors(key.name, true);
         }
       });
-    } else {
-      funSetErrors(key, true);
-    }
-  };
-
-  //! отправка файлов массивом организаторы и партнеры
-  const funApiEditFileMulti = (files, key, conferenseId) => {
-    if (files) {
-      const data = files.map(item => item.value).filter(item => item && typeof item !== 'string');
-      const formData = new FormData();
-      if (data.length > 0) {
-        data.forEach(file => {
-          formData.append('files', file);
-        });
-        formData.append('conferenceId', conferenseId);
-        uploadMulti(formData, key).then(res => {
+      if (formData) {
+        uploadMulti(formData).then(res => {
           if (res?.status !== 200) {
-            funSetErrors(key, false);
+            funSetErrors('main', false);
           } else {
-            funSetErrors(key, true);
+            funSetErrors('main', true);
           }
         });
-      } else {
-        funSetErrors(key, true);
       }
-    } else {
-      funSetErrors(key, true);
     }
   };
 
@@ -161,14 +158,11 @@ function ConfirenceModuleAdminPage() {
           setModalSucces(true);
           dispatch(fetchConferences());
           //! загрузка файлов
-          fileKeys.map(item => {
-            if (item.fun === 'funApiEditFile') {
-              funApiEditFile(data[item.key], item.name, conferenseId);
-            }
-            if (item.fun === 'funApiEditFileMulti') {
-              funApiEditFileMulti(data[item.key], item.name, conferenseId);
-            }
-          });
+          funApiEditFileMulti(data, fileKeys, conferenseId);
+          //! удаление файлов
+          if (data.deleteIds.length > 0) {
+            apiDeleteMulti({ ids: data.deleteIds });
+          }
         } else {
           funSetErrors('main', false);
           setModalSucces(false);
@@ -184,14 +178,7 @@ function ConfirenceModuleAdminPage() {
           setModalSucces(true);
           dispatch(fetchConferences());
           //! загрузка файлов
-          fileKeys.map(item => {
-            if (item.fun === 'funApiEditFile') {
-              funApiEditFile(data[item.key], item.name, res.data.conference.id);
-            }
-            if (item.fun === 'funApiEditFileMulti') {
-              funApiEditFileMulti(data[item.key], item.name, res.data.conference.id);
-            }
-          });
+          funApiEditFileMulti(data, fileKeys, conferenseId);
         } else {
           funSetErrors('main', false);
           setModalSucces(false);
@@ -206,6 +193,8 @@ function ConfirenceModuleAdminPage() {
     setDeletePartners([]);
     funUpdData();
   };
+
+  console.log('data', data);
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>

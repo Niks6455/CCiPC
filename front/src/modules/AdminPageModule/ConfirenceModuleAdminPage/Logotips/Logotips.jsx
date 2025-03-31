@@ -14,6 +14,10 @@ function Logotips({ data, setData }) {
     setData({ ...data, logoFooter: value });
   };
 
+  const funDeleteFile = id => {
+    setData({ ...data, deleteIds: [...data.deleteIds, id] });
+  };
+
   return (
     <div className={styles.Logotips}>
       {/* Логотип хедера */}
@@ -23,15 +27,19 @@ function Logotips({ data, setData }) {
           <img src={borderIcon} alt="img" className={styles.border} />
           <div className={styles.border_inner}>
             <FileComponent
-              logoHeader={typeof data.logoHeader === 'string' && `${server}/${data.logoHeader}`}
+              logoHeader={
+                typeof data.logoHeader?.url === 'string' && `${server}/${data.logoHeader?.url}`
+              }
               fileSize={50}
-              data={data.logoHeader}
+              data={data.logoHeader?.url}
               setData={funChangeDataHeader}
               typeFile={['image/png']}
               accept={'.png'}
               name={'logoHeader'}
               icon={'png'}
               text={'Загрузите или перетащите<br/>фотографию в формате PNG'}
+              idFile={data.logoHeader?.id}
+              funDeleteFile={funDeleteFile}
             />
           </div>
         </div>
@@ -44,15 +52,19 @@ function Logotips({ data, setData }) {
           <img src={borderIcon} alt="img" className={styles.border} />
           <div className={styles.border_inner}>
             <FileComponent
-              logoHeader={typeof data.logoFooter === 'string' && `${server}/${data.logoFooter}`}
+              logoHeader={
+                typeof data.logoFooter?.url === 'string' && `${server}/${data.logoFooter?.url}`
+              }
               fileSize={50}
-              data={data.logoFooter}
+              data={data.logoFooter?.url}
               setData={funChangeDataFooter}
               typeFile={['image/png']}
               accept={'.png'}
               name={'logoFooter'}
               icon={'png'}
               text={'Загрузите или перетащите<br/>фотографию в формате PNG'}
+              idFile={data.logoFooter?.id}
+              funDeleteFile={funDeleteFile}
             />
           </div>
         </div>

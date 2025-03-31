@@ -380,13 +380,27 @@ export const uploadPhoto = async (file, type) => {
 };
 
 //! загрузка файлов массивом
-export const uploadMulti = async (file, type) => {
+export const uploadMulti = async file => {
   try {
-    const response = await api.post(`${server}/uploads/multi?type=${type}`, file, {
+    const response = await api.post(`${server}/uploads/multi`, file, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+    return response;
+  } catch (error) {
+    console.error('uploadPhoto ', error);
+  }
+};
+
+// {
+//   ids : [id, id]
+// }
+
+//! удаление файлов
+export const apiDeleteMulti = async file => {
+  try {
+    const response = await api.post(`${server}/uploads/delete`, file);
     return response;
   } catch (error) {
     console.error('uploadPhoto ', error);

@@ -38,6 +38,10 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
     }
   };
 
+  const funDeleteFile = id => {
+    setData({ ...data, deleteIds: [...data.deleteIds, id] });
+  };
+
   return (
     <div className={styles.Organizers}>
       <h3>{name}</h3>
@@ -54,16 +58,18 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
                 )}
 
                 <FileComponent
-                  logoHeader={typeof item === 'string' && `${server}/${item}`}
+                  logoHeader={typeof item?.url === 'string' && `${server}/${item?.url}`}
                   fileSize={50}
-                  data={item}
-                  setData={value => funChangeData(value, item)}
+                  data={item?.url}
+                  setData={value => funChangeData(value, item?.url)}
                   typeFile={['image/png']}
                   accept={'.png'}
                   name={`${itemKey}-${index}`}
                   icon={'png'}
-                  itemKey={item}
+                  itemKey={item?.url}
                   text={'Загрузите или перетащите<br/>фотографию в формате PNG'}
+                  idFile={item?.id}
+                  funDeleteFile={funDeleteFile}
                 />
               </div>
             </div>

@@ -74,6 +74,10 @@ function DocumentsModule({ data, setData }) {
     setData({ ...data, [key]: value });
   };
 
+  const funDeleteFile = id => {
+    setData({ ...data, deleteIds: [...data.deleteIds, id] });
+  };
+
   return (
     <div className={styles.DocumentsModule}>
       <div className={styles.container}>
@@ -85,9 +89,11 @@ function DocumentsModule({ data, setData }) {
               <img src={borderIcon} alt="img" className={styles.border} />
               <div className={styles.border_inner}>
                 <FileComponent
-                  logoHeader={typeof data[item.key] === 'string' && `${server}/${data[item.key]}`}
+                  logoHeader={
+                    typeof data[item.key]?.url === 'string' && `${server}/${data[item.key]?.url}`
+                  }
                   fileSize={50}
-                  data={data[item.key]}
+                  data={data[item.key]?.url}
                   itemKey={item.key}
                   setData={funChangeData}
                   typeFile={item.typeFile}
@@ -95,6 +101,8 @@ function DocumentsModule({ data, setData }) {
                   name={item.name}
                   icon={item.icon}
                   text={item.text}
+                  idFile={data[item.key]?.id}
+                  funDeleteFile={funDeleteFile}
                 />
               </div>
             </div>
