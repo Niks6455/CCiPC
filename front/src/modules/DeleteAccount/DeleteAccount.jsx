@@ -10,7 +10,7 @@ function DeleteAccount() {
   const funDeleteAccaunt = () => {
     apiDeleteAccount().then(res => {
       if (res?.status === 200) {
-        navigate('/authorization');
+        navigate('/login/authorization');
         localStorage.removeItem('accessToken');
         localStorage.removeItem('userData');
       }

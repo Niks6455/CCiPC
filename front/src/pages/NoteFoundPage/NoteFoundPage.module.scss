@@ -1,120 +1,121 @@
-@import "../../styles/colors.scss";
+@import '../../styles/colors.scss';
 
-.NoteFoundPage{
+.NoteFoundPage {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 140px;
+  .Title {
+    margin: 200px 0px 70px 0px;
     display: flex;
     justify-content: center;
-    margin-bottom: 140px;
-    .Title{
-        margin: 200px 0px 70px 0px;
-        display: flex;
-        justify-content: center;
+    @media (max-width: 768px) {
+      margin: 94px 0px 50px 0px;
+      text-align: center;
+    }
+    @media (max-width: 460px) {
+      margin: 50px 0px 50px 0px;
+    }
+    p {
+      font-size: 54px;
+      font-weight: 500;
+      line-height: 64px;
+      @media (max-width: 768px) {
+        font-size: 22px;
+        line-height: 130%;
+      }
+      @media (max-width: 460px) {
+        font-size: 20px;
+      }
+    }
+  }
+  .NoteFoundPageText {
+    display: flex;
+    padding: 0px 20px;
+    .NoteFoundPageTextContainer {
+      max-width: 656px;
+      padding: 0px 10px;
+      box-sizing: border-box;
+      @media (max-width: 768px) {
+        max-width: 516px;
+        margin: 0 auto;
+      }
+      .NoteFoundPageTextContainerTitle {
+        text-align: start;
+        color: #002d1b;
+        font-size: 190px;
+        @media (max-width: 1230px) {
+          text-align: center;
+        }
+      }
+      p {
+        &:first-child {
+          font-size: 190px;
+          line-height: 228px;
+          color: var(--GreenColorHover);
+          margin-top: -30px;
+
+          @media (max-width: 768px) {
+            font-size: 140px;
+            line-height: 120%;
+          }
+          @media (max-width: 460px) {
+            font-size: 110px;
+          }
+        }
+        &:nth-child(2) {
+          font-size: 20px;
+          line-height: 32px;
+          font-weight: 400;
+          color: #333;
+          @media (max-width: 768px) {
+            font-size: 16px;
+            line-height: 130%;
+          }
+          span {
+            color: #58b191;
+            cursor: pointer;
+            font-weight: 600;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+      }
+      button {
+        margin-top: 40px;
+        width: 100%;
+        height: 64px;
+        color: #fff;
+        background-color: var(--GreenColorDefault);
+        border-radius: 10px;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
         @media (max-width: 768px) {
-            margin: 94px 0px 50px 0px;
-            text-align: center;
+          font-size: 16px;
+          height: 50px;
         }
-        @media (max-width: 460px) {
-            margin: 50px 0px 50px 0px;
+        &:hover {
+          background-color: var(--GreenColorHover);
         }
-        p{
-            font-size: 54px;
-            font-weight: 500; 
-            line-height: 64px;
-            @media (max-width: 768px) {
-                font-size: 22px;
-                line-height: 130%;
-            }
-            @media (max-width: 460px) {
-                font-size: 20px;
-            }
+        &:active {
+          background-color: var(--GreenColorActive);
         }
+      }
     }
-    .NoteFoundPageText{
-        display: flex;
-        padding: 0px 20px;
-        .NoteFoundPageTextContainer{
-            max-width: 656px;
-            padding: 0px 10px;
-            box-sizing: border-box;
-            @media (max-width: 768px) {
-                max-width: 516px;
-                margin: 0 auto;
-              }
-              .NoteFoundPageTextContainerTitle{
-                text-align: start;
-                color: #002D1B;
-                font-size: 190px;
-                @media (max-width: 1230px) {
-                    text-align: center;
-                }
-              }
-            p{
-                &:first-child{
-                    font-size: 190px;
-                    line-height: 228px;
-                    color: var(--GreenColorHover);
-                    margin-top: -30px;
-                    @media (max-width: 768px) {
-                      font-size: 140px;
-                      line-height: 120%;
-                    }
-                    @media (max-width: 460px) {
-                        font-size: 110px;
-                    }
-                }
-                &:nth-child(2){
-                    font-size: 20px;
-                    line-height: 32px;
-                    font-weight: 300;
-                    color: #333;
-                    @media (max-width: 768px) {
-                        font-size: 16px;
-                        line-height: 130%;
-                    }
-                    span{
-                        color: var(--ColorLink);
-                        cursor: pointer;
-                        &:hover{
-                            text-decoration: underline;
-                        }
-                    }
-                   
-                }
-            }
-            button{
-                margin-top: 40px;
-                width: 100%;
-                height: 64px;
-                color: #fff;
-                background-color: var(--GreenColorDefault);
-                border-radius: 10px;
-                border: none;
-                font-size: 20px;
-                cursor: pointer;
-                @media (max-width: 768px) {
-                    font-size: 16px;
-                    height: 50px;
-                }
-                &:hover{
-                    background-color: var(--GreenColorHover);
-                }
-                &:active{
-                    background-color: var(--GreenColorActive);
-                }
-            }
-        }
-        .imgCont{
-            margin-left: 25px;
-            @media (max-width: 1230px) {
-                display: none;
-            }
-            img{
-                box-sizing: border-box;
-                width: 100%;
-                height: 430px;
-                object-fit: cover;
-                border-radius: 10px;
-            }
-        }
-       
+    .imgCont {
+      margin-left: 25px;
+      @media (max-width: 1230px) {
+        display: none;
+      }
+      img {
+        box-sizing: border-box;
+        width: 100%;
+        height: 430px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
     }
+  }
 }

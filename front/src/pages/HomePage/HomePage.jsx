@@ -12,7 +12,6 @@ import { useState } from 'react';
 
 function HomePage({ userRole }) {
   const conference = useSelector(state => state.conferences.data[0]);
-  console.log('conference', conference);
   const { topDiv, bottomDiv } = splitDirectionsEvenly(conference?.directions || []);
   const getDescription = text => {
     let newText = text

@@ -7,6 +7,7 @@ import sfeduLogo from './../../assets/img/SfeduLogo.svg';
 import { apiSendConfirm, LoginFunc } from '../../apirequests/apirequests';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
+import ErrorModal from '../../components/ErrorModal/ErrorModal';
 function Login(props) {
   const [passActionFirst, setPassActionFirst] = useState('password');
   const navigate = useNavigate();
@@ -14,6 +15,8 @@ function Login(props) {
     email: '',
     password: '',
   });
+
+  const [openModal, setOpenModal] = useState(false);
 
   const [errors, setErrors] = useState({
     email: '',
@@ -56,14 +59,17 @@ function Login(props) {
           navigate('/');
           props.funGetAllApi();
           return;
-        }
-        if (data?.status === 500) {
-          apiSendConfirm({ email: formData.email }).then(res => {
-            if (res?.status === 200) {
-              navigate('/login/confirmLogin');
-            }
-          });
-          console.log('data', data);
+        } else {
+          if (data?.status === 500) {
+            apiSendConfirm({ email: formData.email }).then(res => {
+              if (res?.status === 200) {
+                navigate('/login/confirmLogin');
+              }
+            });
+            console.log('data', data);
+          } else {
+            setOpenModal(true);
+          }
         }
       });
     }
@@ -79,6 +85,11 @@ function Login(props) {
 
   return (
     <section className={styles.Login}>
+      <ErrorModal
+        title={'Ошибка авторизации, неверный логин или пароль!'}
+        open={openModal}
+        close={setOpenModal}
+      />
       <div className={styles.LoginLogo}>
         <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>
