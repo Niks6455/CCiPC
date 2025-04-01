@@ -1,9 +1,9 @@
 .NewsModuleAdminPage {
   .NewsModuleAdminPageInner {
     .title {
-      font-size: 32px;
+      font-size: torem(32px);
       font-weight: 500;
-      margin-bottom: 40px;
+      margin-bottom: torem(40px);
       color: #333;
     }
     .NewsTopMenu {
@@ -14,22 +14,22 @@
         position: relative;
         img {
           position: absolute;
-          top: 14px;
-          left: 15px;
+          top: torem(14px);
+          left: torem(15px);
         }
         input {
-          width: 412px;
-          height: 52px;
-          border: 1px solid #c8d0ce;
+          width: torem(412px);
+          height: torem(52px);
+          border: torem(1px) solid #c8d0ce;
           background-color: inherit;
           box-sizing: border-box;
-          border-radius: 10px;
-          padding: 0px 20px 0px 50px;
-          font-size: 18px;
+          border-radius: torem(10px);
+          padding: torem(0px) torem(20px) torem(0px) torem(50px);
+          font-size: torem(18px);
           font-weight: 400;
           color: #333;
           &::placeholder {
-            font-size: 18px;
+            font-size: torem(18px);
             color: #858b89;
           }
         }
@@ -40,8 +40,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 52px;
-        width: 280px;
+        height: torem(52px);
+        width: torem(280px);
       }
     }
   }
@@ -49,12 +49,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 22px;
+    font-size: torem(22px);
     color: #333;
-    margin-top: 100px;
+    margin-top: torem(100px);
   }
   .UnivarsalTableAdmin {
-    margin-top: 25px;
+    margin-top: torem(25px);
     width: 100%;
   }
 }

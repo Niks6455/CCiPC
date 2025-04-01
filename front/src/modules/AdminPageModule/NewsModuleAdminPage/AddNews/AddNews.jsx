@@ -28,7 +28,7 @@ function AddNews(props) {
       if (response?.status === 200) {
         setTitle(response?.data?.news?.title);
         setText(response?.data?.news?.description);
-        setLogoHeader(`${server}/${response?.data?.news?.img}`);
+        setLogoHeader(`${server}/${response?.data?.news?.img.url}`);
       }
     });
   }, []);

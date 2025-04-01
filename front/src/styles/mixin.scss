@@ -170,7 +170,6 @@ $w3: 480px;
   font-weight: 400;
   text-align: center;
   color: #b32020;
-
   cursor: pointer;
   &:hover {
     background-color: #efe1e1;
@@ -295,42 +294,42 @@ $w3: 480px;
   letter-spacing: 0%;
   text-align: center;
 }
-@mixin ButtonOrgComActive($fs: 18px) {
+@mixin ButtonOrgComActive($fs: torem(18px)) {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--MenuHover);
   border: none;
-  border-radius: 10px;
+  border-radius: torem(10px);
   font-family: Overpass, sans-serif;
   font-size: $fs;
   font-weight: 400;
   text-align: center;
   color: #333;
   border: 1px solid #00452940;
-  margin-right: 25px;
-  padding: 4px 5px;
+  margin-right: torem(25px);
+  padding: torem(4px) torem(5px);
   cursor: pointer;
   &:hover {
     background-color: var(--MenuHoverActive);
     transition: all 0.15s linear;
   }
 }
-@mixin ButtonOrgComDisable($fs: 18px) {
+@mixin ButtonOrgComDisable($fs: torem(18px)) {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--MenuHover);
   border: none;
-  border-radius: 10px;
+  border-radius: torem(10px);
   font-family: Overpass, sans-serif;
   font-size: $fs;
   font-weight: 400;
   text-align: center;
   color: #333;
   border: 1px solid #00452940;
-  margin-right: 25px;
-  padding: 4px 5px;
+  margin-right: torem(25px);
+  padding: torem(4px) torem(5px);
   cursor: pointer;
   opacity: 0.5;
   &:hover {

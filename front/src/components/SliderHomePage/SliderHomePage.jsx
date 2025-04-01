@@ -60,7 +60,7 @@ const SliderHomePage = () => {
               <div className={styles.Sliderimage}>
                 <img
                   src={
-                    slides[currentSlide].img ? ` ${server}/${slides[currentSlide].img}` : noPhoto
+                    slides[currentSlide].img?.url ? ` ${server}/${slides[currentSlide].img?.url}` : noPhoto
                   }
                   alt={slide.title}
                 />

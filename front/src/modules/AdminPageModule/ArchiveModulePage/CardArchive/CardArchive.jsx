@@ -5,7 +5,7 @@ import notPhoto from '@assets/img/noPhotoNews.svg';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import deletePhoto2Img from '@assets/img/AdminPanel/deletePhoto.svg';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
-import { deleteArchive, updateArchive, uploadPhoto } from '../../../../apirequests/apirequests';
+import { apiDeleteMulti, deleteArchive, updateArchive, uploadPhoto } from '../../../../apirequests/apirequests';
 import { server } from '../../../../apirequests/apirequests';
 
 function CardArchive({ item, updateData }) {
@@ -34,10 +34,11 @@ function CardArchive({ item, updateData }) {
   }, [item]);
   
   useEffect(() => {
+    console.log('dataItem', dataItem);
     setIsChanged(
       dataItem.name !== item?.name ||
         dataItem.url !== item?.url ||
-        dataItem.file !== item?.file ||
+        dataItem.file.id !== item?.file.id ||
         '',
     );
   }, [dataItem, item]);
@@ -130,10 +131,10 @@ function CardArchive({ item, updateData }) {
     });
   };
 
-  const handleDeleteImg = () => {
-    const data = {...item, file: ''};
-    updateArchive(data, item.id).then(res => {
-      if (res?.status === 200) updateData();
+  const handleDeleteImg = (item) => {
+    console.log("data?.file?.id", item?.file?.id)
+    apiDeleteMulti({ids: [item?.file?.id]}).then(res => {
+        if (res?.status === 200) updateData();
     });
   };
   
@@ -143,11 +144,11 @@ function CardArchive({ item, updateData }) {
         <div className={styles.CardOrganizationInnerImg}>
           <img
             className={styles.Img}
-            src={dataItem.file ? `${server}/${dataItem.file}` : notPhoto}
+            src={dataItem?.file?.url ? `${server}/${dataItem?.file?.url}` : notPhoto}
             alt="Фото"
           />
           <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} onClick={() => handleDeleteImg()} alt="Удалить" />
+            <img src={deletePhoto2Img} onClick={() => handleDeleteImg(item)} alt="Удалить" />
             <img src={editPhoto2Img} alt="Редактировать" onClick={() => refFile.current.click()} />
           </div>
           <input

@@ -4,6 +4,7 @@ import styles from './CardOrganization.module.scss';
 import notPhoto from '@assets/img/notPhoto.svg';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import {
+  apiDeleteMulti,
   deleteOrgCommitet,
   server,
   updateOrgCommitet,
@@ -42,7 +43,7 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
     setIsChanged(
       dataItem.fio !== item?.fio ||
       dataItem.organization !== item?.organization ||
-      dataItem.img !== item?.img
+      dataItem?.img?.id !== item?.img?.id
     );
   }, [dataItem, item]);
 
@@ -142,22 +143,23 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
 
     uploadPhoto(formFile, 'COMMITTEE').then(res => {
       if (res?.status === 200) {
-        updateCardData(item.id, res.data.url);
+        updateCardData(item.id, res.data.file);
       }
     });
   };
 
   const handleDeleteImg = () => {
-   const data = {...item, img: ''};
-   updateOrgCommitet(data, item.id).then(res => {
+    console.log("item", item)
+   apiDeleteMulti({ids: [item.img.id]}).then(res => {
     if (res?.status === 200) {
       updateCardData(item.id, dataItem);
-      setIsChanged(false);
       getDataOrg();
+      setIsChanged(false);
     }
   });
+  
   };
-
+  console.log("dataItem?.img.url", dataItem?.img.url)
   return (
     <div ref={cardRef} className={styles.CardOrganization}>
       <div className={styles.CardOrganizationInner}>
@@ -165,7 +167,7 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
           <img
             ref={imgRef}
             className={styles.Img}
-            src={dataItem?.img ? `${server}/${dataItem?.img}` : notPhoto}
+            src={dataItem?.img.url ? `${server}/${dataItem?.img.url}` : notPhoto}
             alt={dataItem?.fio}
           />
           <div className={styles.CardOrganizationInnerImgInput}>
