@@ -16,8 +16,8 @@ function Header({ userRole }) {
           <img src={LogoHomePage} alt="logo" onClick={() => navigate('/')} />
         </div>
         <div className={styles.logoInner}>
-          {conference?.logo?.HEADER && (
-            <img src={`${server}/${conference?.logo?.HEADER}`} alt="logo" />
+          {conference?.files?.HEADER?.[0]?.url && (
+            <img src={`${server}/${conference?.files?.HEADER?.[0]?.url}`} alt="logo" />
           )}
 
           <p>

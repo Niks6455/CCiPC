@@ -12,6 +12,7 @@ import { useState } from 'react';
 
 function HomePage({ userRole }) {
   const conference = useSelector(state => state.conferences.data[0]);
+  console.log('conference', conference);
   const { topDiv, bottomDiv } = splitDirectionsEvenly(conference?.directions || []);
   const getDescription = text => {
     let newText = text
@@ -142,18 +143,18 @@ function HomePage({ userRole }) {
       <SliderHomePage />
       <SliderHomePageMobile />
       <Layout>
-        {conference && conference?.organization?.length > 0 && (
+        {conference && conference?.files?.ORGANIZATION?.length > 0 && (
           <section className={`${styles.imgSection}`}>
             <div className={styles.Title}>
               <p>Организаторы</p>
             </div>
             <div
-              className={`${styles.imgSectionInner} ${conference?.organization?.length === 2 ? styles.two : ''}`}
+              className={`${styles.imgSectionInner} ${conference?.files?.ORGANIZATION?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.organization?.map((el, index) => (
+              {conference?.files?.ORGANIZATION?.map((el, index) => (
                 <img
                   style={style2[index]}
-                  src={`${server}/${el}`}
+                  src={`${server}/${el.url}`}
                   alt="Organization1"
                   key={index}
                   onLoad={e => handleImageLoad(e, index, setStyle2)}
@@ -162,18 +163,18 @@ function HomePage({ userRole }) {
             </div>
           </section>
         )}
-        {conference && conference?.partner?.length > 0 && (
+        {conference && conference?.files?.PARTNER?.length > 0 && (
           <section className={styles.imgSection}>
             <div className={styles.Title}>
               <p>Партнёры</p>
             </div>
             <div
-              className={`${styles.imgSectionInner}  ${conference?.partner?.length === 2 ? styles.two : ''}`}
+              className={`${styles.imgSectionInner}  ${conference?.files?.PARTNER?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.partner?.map((el, index) => (
+              {conference?.files?.PARTNER?.map((el, index) => (
                 <img
                   style={style[index]}
-                  src={`${server}/${el}`}
+                  src={`${server}/${el.url}`}
                   alt="Organization1"
                   key={index}
                   onLoad={e => handleImageLoad(e, index, setStyle)}

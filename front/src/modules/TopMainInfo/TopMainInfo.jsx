@@ -3,7 +3,7 @@ import Layout from '../../ui/Layout/Layout';
 import styles from './TopMainInfo.module.scss';
 import Bg from '../../assets/img/Bg.jpeg';
 import rect from '../../assets/img/rect.svg';
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import DataContext from '../../context';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -59,14 +59,14 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.documents?.PROGRAM}`}
+                        href={`${server}/${conference?.files?.PROGRAM[0]?.url}`}
                         rel="noreferrer"
                       >
                         Программа <br /> конференции
                       </a>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.documents?.PROGRAM}`}
+                        href={`${server}/${conference?.files?.PROGRAM[0]?.url}`}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
@@ -74,14 +74,14 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.documents?.LETTER}`}
+                        href={`${server}/${conference?.files?.LETTER[0]?.url}`}
                         rel="noreferrer"
                       >
                         Информационное <br /> письмо
                       </a>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.documents?.LETTER}`}
+                        href={`${server}/${conference?.files?.LETTER[0]?.url}`}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
@@ -89,14 +89,14 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.documents?.COLLECTION}`}
+                        href={`${server}/${conference?.files?.COLLECTION[0]?.url}`}
                         rel="noreferrer"
                       >
                         Сборник <br /> научных трудов
                       </a>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.documents?.COLLECTION}`}
+                        href={`${server}/${conference?.files?.COLLECTION[0]?.url}`}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>

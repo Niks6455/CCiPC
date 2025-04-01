@@ -12,14 +12,14 @@ function Footer({ footerRef }) {
         <div className={styles.footerContainer}>
           <div className={styles.footerContainerLeft}>
             <div className={styles.logo}>
-              {conferense?.logo?.FOOTER && (
-                <img src={`${server}/${conferense?.logo?.FOOTER}`} alt="logo" />
+              {conferense?.files?.FOOTER?.[0].url && (
+                <img src={`${server}/${conferense?.files?.FOOTER?.[0].url}`} alt="logo" />
               )}
             </div>
             <div className={styles.footerText}>
               <p>
-                {conferense?.logo?.FOOTER && (
-                  <img src={`${server}/${conferense?.logo?.FOOTER}`} alt="logo" />
+                {conferense?.files?.FOOTER?.[0].url && (
+                  <img src={`${server}/${conferense?.files?.FOOTER?.[0].url}`} alt="logo" />
                 )}
                 Всероссийская научная конференция "Системный синтез и прикладная синергетика"
               </p>
