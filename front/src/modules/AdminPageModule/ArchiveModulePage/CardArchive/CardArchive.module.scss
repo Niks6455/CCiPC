@@ -127,10 +127,10 @@
       position: absolute;
       bottom: torem(20px);
       width: calc(100% - torem(40px));
+      height: torem(54px)!important;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: torem(52px);
       @include ButtonRedBorder();
       img {
         width: torem(24px) !important;

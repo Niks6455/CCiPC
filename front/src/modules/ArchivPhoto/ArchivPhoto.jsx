@@ -46,7 +46,7 @@ const ArchivPhoto = () => {
         >
           <div className={styles.photoItem}>
             <img
-              src={photo.file && server ? `${server}/${photo.file}` : noPhoto}
+              src={photo?.file?.url && server ? `${server}/${photo?.file?.url}` : noPhoto}
               alt={photo.name}
               className={styles.photo}
             />

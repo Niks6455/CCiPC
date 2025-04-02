@@ -11,7 +11,8 @@ import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 import { server } from '../../apirequests/apirequests';
 
 function TopMainInfo() {
-  const conference = useSelector(state => state.conferences.data[0]);
+  const conference = useSelector(state => state?.conferences?.data[0]);
+  console.log("conference", conference);
   const userData = useSelector(state => state.user.user.data);
   const arrowRef = useRef(null); // Реф для стрелки
   const navigate = useNavigate();
@@ -59,14 +60,14 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.files?.PROGRAM[0]?.url}`}
+                        href={conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : "#"}
                         rel="noreferrer"
                       >
                         Программа <br /> конференции
                       </a>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.files?.PROGRAM[0]?.url}`}
+                        href={conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : "#"}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
@@ -74,14 +75,14 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.files?.LETTER[0]?.url}`}
+                        href={conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : "#"}
                         rel="noreferrer"
                       >
                         Информационное <br /> письмо
                       </a>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.files?.LETTER[0]?.url}`}
+                        href={conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : "#"}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
@@ -89,14 +90,14 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.files?.COLLECTION[0]?.url}`}
+                        href={conference?.files?.COLLECTION ? `${server}/${conference?.files?.COLLECTION[0]?.url}` : "#"}
                         rel="noreferrer"
                       >
                         Сборник <br /> научных трудов
                       </a>
                       <a
                         target="_blank"
-                        href={`${server}/${conference?.files?.COLLECTION[0]?.url}`}
+                        href={conference?.files?.COLLECTION ? `${server}/${conference?.files?.COLLECTION[0]?.url}` : "#"}
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>

@@ -7,6 +7,7 @@ import deletePhoto2Img from '@assets/img/AdminPanel/deletePhoto.svg';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
 import { apiDeleteMulti, deleteArchive, updateArchive, uploadPhoto } from '../../../../apirequests/apirequests';
 import { server } from '../../../../apirequests/apirequests';
+import { m } from 'framer-motion';
 
 function CardArchive({ item, updateData }) {
   const textareasRef = useRef(null);
@@ -38,7 +39,7 @@ function CardArchive({ item, updateData }) {
     setIsChanged(
       dataItem.name !== item?.name ||
         dataItem.url !== item?.url ||
-        dataItem.file.id !== item?.file.id ||
+        dataItem?.file?.id !== item?.file?.id ||
         '',
     );
   }, [dataItem, item]);
