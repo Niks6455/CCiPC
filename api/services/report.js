@@ -18,7 +18,14 @@ export default {
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
-        if(conference?.deadline && conference?.deadline < new Date().toISOString().split('T')[0]) throw new AppErrorInvalid('deadline')
+        console.log(conference.date[0].value)
+        const conferenceDate = new Date(conference.date[0].value);
+
+        if(conferenceDate<= new Date()){
+            console.log('date invalid')
+        }
+
+        if(conference?.deadline && new Date(conference.date[0].value) < new Date()) throw new AppErrorInvalid('date')
 
         const direction = await Direction.findByPk(reportInfo.directionId, {
             include: {
