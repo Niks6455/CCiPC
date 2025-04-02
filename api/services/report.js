@@ -18,13 +18,6 @@ export default {
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
-        console.log(conference.date[0].value)
-        const conferenceDate = new Date(conference.date[0].value);
-
-        if(conferenceDate<= new Date()){
-            console.log('date invalid')
-        }
-
         if(conference?.deadline && new Date(conference.date[0].value) < new Date()) throw new AppErrorInvalid('date')
 
         const direction = await Direction.findByPk(reportInfo.directionId, {
