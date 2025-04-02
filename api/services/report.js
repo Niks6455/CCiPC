@@ -18,7 +18,9 @@ export default {
 
         if(!conference) throw  new AppErrorNotExist('conference')
 
-        if(conference?.deadline && new Date(conference.date[0].value) < new Date()) throw new AppErrorInvalid('date')
+        const sevenDaysBefore = new Date(conference.date[0].value);
+        sevenDaysBefore.setDate(sevenDaysBefore.getDate() - 7);
+        if (new Date() > sevenDaysBefore) { throw new AppErrorInvalid('date') }
 
         const direction = await Direction.findByPk(reportInfo.directionId, {
             include: {
