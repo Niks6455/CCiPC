@@ -37,6 +37,7 @@ $w3: 480px;
     display: flex;
     justify-content: center;
     margin-top: torem(57px);
+    margin-bottom: 50px;
     @media (max-width: $w2) {
       margin-top: torem(40px);
     }
