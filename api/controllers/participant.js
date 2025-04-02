@@ -2,6 +2,11 @@ import participantService from "../services/participant.js";
 import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import { mapShort, map } from "../utils/mappers/participant.js";
 
+function validateName(name) {
+    const nameRegex = /^([a-zA-Zа-яА-ЯёЁ-]+( [a-zA-Zа-яА-ЯёЁ-]+)?)?$/;
+    return name.length > 0 && name.length <= 50 && nameRegex.test(name);
+}
+
 export default {
 
     async self({ user }, res){
@@ -14,6 +19,10 @@ export default {
         if(user.isMicrosoft) {
             if(name || surname || patronymic || organization || email) throw  new AppErrorInvalid('isMicrosoft')
         }
+
+        if(name && !validateName(name)) throw new AppErrorInvalid('name')
+        if(surname && !validateName(surname)) throw new AppErrorInvalid('surname')
+        if(patronymic && !validateName(patronymic)) throw new AppErrorInvalid('patronymic')
 
         if(formPay &&  !['Безналичный', 'Наличный', 'Не выбран'].includes(formPay)) throw  new AppErrorInvalid('formPay')
 
