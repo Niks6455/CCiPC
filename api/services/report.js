@@ -76,7 +76,7 @@ export default {
 
             const emails =  reportInfo.coAuthors.map(coAuthor => coAuthor?.email)
 
-            const checkCoAuthors = report.coAuthors.find(coAuthor => coAuthor?.email === participant.email)
+            const checkCoAuthors = reportInfo.coAuthors.find(coAuthor => coAuthor?.email === participant.email)
 
             if(checkCoAuthors) throw new AppErrorInvalid('coAuthors')
 
