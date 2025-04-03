@@ -67,10 +67,17 @@ export default {
         return direction
     },
 
-    async delete(id){
+    async deleteOne(id){
         const direction = await Direction.findByPk(id);
         if(!direction) throw new AppErrorNotExist('direction')
         return await direction.destroy()
+    },
 
+    async delete(ids){
+        return await DirectionInConference.destroy({
+            where: {
+                directionId: ids
+            }
+        })
     }
 }

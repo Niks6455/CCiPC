@@ -10,9 +10,13 @@ router.route('/')
     .post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.create))
     .get(asyncRoute(directionCtrl.find))
 
+
+router.route('/')
+    .post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.delete))
+
 router.route('/:id')
     .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.update))
     .get(asyncRoute(directionCtrl.findOne))
-    .delete(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.delete))
+    .delete(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.deleteOne))
 
 export default router

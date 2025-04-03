@@ -26,9 +26,14 @@ export default {
         res.json({direction: direction});
     },
 
-    async delete({params: { id }}, res){
+    async delete({ body: { ids }}, res){
+        if(ids.length < 1) throw new AppErrorMissing('ids')
+        await directionService.delete(ids)
+    },
+
+    async deleteOne({params: { id }}, res){
         if(!id) throw new AppErrorMissing('id')
-        await directionService.delete(id)
+        await directionService.deleteOne(id)
         res.json({status: 'Ok'});
     }
 }
