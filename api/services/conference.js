@@ -15,6 +15,7 @@ import DirectionInConference from "../models/direction-in-conference.js";
 import File from "../models/file.js";
 import FileLink from "../models/file-link.js";
 import typesFiles from "../config/typesFiles.js";
+import sendMail from "./email.js";
 
 
 
@@ -320,13 +321,20 @@ export default {
                 id: {
                     [Op.in]: ids
                 }
+            },
+            include: {
+                model: Participant,
+                as: 'participant',
+                required:true
             }
         })
 
         if(ids.length !== participantInConference.length) AppErrorNotExist('participantInConference')
-
         participantInConference.forEach(p=>{
             const foundObject = feeInfo.find(obj => obj.id === p.id);
+            if(foundObject.sum >0 ){
+                sendMail(p.participant.email, 'assignFee',  `${p.participant?.surname} ${p.participant?.name} ${p.participant?.patronymic ? p.participant?.patronymic : ''}`.trim(), foundObject.sum);
+            }
             foundObject.conferenceId=p.conferenceId
             foundObject.participantId=p.participantId
             foundObject.formPay=p.formPay
@@ -337,6 +345,7 @@ export default {
             if (foundObject.status == null) foundObject.status = p.status;
 
         })
+
         return await ParticipantInConference.bulkCreate(
             feeInfo,
             {
