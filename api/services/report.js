@@ -35,6 +35,7 @@ export default {
 
         if(!direction) throw new AppErrorNotExist('direction')
 
+
         const checkReport= await Report.findOne({
             where: {
                 name: reportInfo.name,
@@ -49,6 +50,12 @@ export default {
         });
 
         if(checkReport) throw new AppErrorAlreadyExists('name')
+
+        if(reportInfo?.coAuthors?.length > 0) {
+            const checkCoAuthors = reportInfo?.coAuthors?.find(coAuthor => coAuthor?.email === participant.email)
+
+            if (checkCoAuthors) throw new AppErrorInvalid('coAuthors')
+        }
 
         await ParticipantInConference.findOrCreate({
             where: {participantId: participant.id, conferenceId: conference.id},
