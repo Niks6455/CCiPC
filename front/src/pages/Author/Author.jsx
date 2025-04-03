@@ -27,7 +27,8 @@ function Author({ userRole }) {
       const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
+      console.log('conference?.documents', conference?.documents)
+      const name = decodeFileName(conference?.documents?.SAMPLE?.name?.split('\\').pop());
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
@@ -90,7 +91,7 @@ function Author({ userRole }) {
               </p>
               <p className={styles.registration_text_3}>
                 1) доклад, оформленный по{' '}
-                <a onClick={funDownloadShablon} target="_blank" className={styles.green_link}>
+                <a onClick={() => funDownloadShablon} target="_blank" className={styles.green_link}>
                   шаблону
                 </a>{' '}
                 в Word;
