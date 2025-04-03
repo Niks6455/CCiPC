@@ -15,7 +15,7 @@ function AdminPage() {
         <div className={styles.AdminPageContainer}>
           <Outlet />
         </div>
-        <RightMenuLk />
+        <RightMenuLk admine={true} />
       </main>
     </>
   );

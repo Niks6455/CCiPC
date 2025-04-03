@@ -27,7 +27,6 @@ function Author({ userRole }) {
       const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      console.log('conference?.documents', conference?.documents)
       const name = decodeFileName(conference?.documents?.SAMPLE?.name?.split('\\').pop());
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);

@@ -26,12 +26,17 @@ function Participants() {
     });
   }, []);
   const searchInData = (data, searchText) => {
-    return data.filter(item =>
-      Object.values(item).some(
-        value =>
-          typeof value === 'string' && value.toLowerCase().includes(searchText.toLowerCase()),
-      ),
-    );
+    console.log('data', data);
+    if (searchText.trim() !== '') {
+      const filteredData = data.filter(item =>
+        Object.values(item).some(value =>
+          value.toString().toLowerCase().includes(searchText.toLowerCase()),
+        ),
+      );
+      return filteredData;
+    } else {
+      return [...data]; // Сбрасываем фильтр
+    }
   };
 
   useEffect(() => {

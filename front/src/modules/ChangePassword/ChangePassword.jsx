@@ -9,6 +9,7 @@ import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
+  funSpecialSymbol,
 } from '../../utils/functions/PasswordValidation';
 import { apiChangePassword } from '../../apirequests/apirequests';
 import confitmIcon from '@assets/img/confirm.svg';
@@ -56,6 +57,12 @@ function ChangePassword() {
       done: false,
       functionCheck: funDigit,
     },
+    {
+      id: '3',
+      text: 'Не менее 1 спецсимвола',
+      done: false,
+      functionCheck: funSpecialSymbol,
+    },
   ]);
 
   const clickRigthImg = name => {
@@ -84,15 +91,17 @@ function ChangePassword() {
         isValid = false;
       }
     });
+
+    console.log('errorListPassword', errorListPassword);
+    if (errorListPassword.find(el => !el.done)) {
+      newErrors.newpassword = 'Некорректный пароль';
+      newErrors.rewnewpassword = 'Некорректный пароль';
+      isValid = false;
+    }
     // Проверка совпадения паролей
     if (formData.newpassword !== formData.rewnewpassword) {
       newErrors.newpassword = 'Пароли не совпадают';
       newErrors.rewnewpassword = 'Пароли не совпадают';
-      isValid = false;
-    }
-    if (errorListPassword.find(el => !el.done)) {
-      newErrors.newpassword = 'Некорректный пароль';
-      newErrors.rewnewpassword = 'Некорректный пароль';
       isValid = false;
     }
 
@@ -111,6 +120,13 @@ function ChangePassword() {
       apiChangePassword(data).then(res => {
         if (res?.status === 200) {
           setIsModalOpen(true);
+        } else {
+          console.log('res', res?.response?.data?.errNum);
+          if (res?.response?.data?.errNum === 204) {
+            setErrors({
+              currentPassword: 'Неверный пароль',
+            });
+          }
         }
       });
     }
@@ -155,6 +171,10 @@ function ChangePassword() {
           autoComplete={'off'}
         />
         <Input
+          errorList={errorListPassword}
+          setErrorList={setErrorListPassword}
+          errorListImgHover={listErrorOnHover}
+          errorListImgNoHover={listErrorNoHover}
           name={'newpassword'}
           onChange={handleChange}
           value={formData.newpassword}
@@ -169,10 +189,6 @@ function ChangePassword() {
           autoComplete={'off'}
         />
         <Input
-          errorList={errorListPassword}
-          setErrorList={setErrorListPassword}
-          errorListImgHover={listErrorOnHover}
-          errorListImgNoHover={listErrorNoHover}
           name={'rewnewpassword'}
           onChange={handleChange}
           value={formData.rewnewpassword}
