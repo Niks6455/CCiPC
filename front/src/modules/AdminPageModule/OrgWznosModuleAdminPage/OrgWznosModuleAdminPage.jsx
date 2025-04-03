@@ -68,9 +68,26 @@ function OrgWznosModuleAdminPage() {
       }
       return acc;
     }, []);
-    apiUpdateOrgWznos(conferenceid, { feeInfo: data }).then(res => {
+    //! отправка только тех данных которые изменились
+    const qeryData = qery?.data?.data?.participants;
+    const newData = data
+      .map(item => {
+        const qd = qeryData.find(i => i.id === item.id);
+        const par = {};
+        if (qd.sum !== item.sum) {
+          par.sum = item.sum;
+        }
+        if (qd.status !== item.status) {
+          par.status = item.status;
+        }
+        return { id: item.id, ...par };
+      })
+      .filter(item => Object.keys(item).length > 1);
+    if (newData.length === 0) return;
+    apiUpdateOrgWznos(conferenceid, { feeInfo: newData }).then(res => {
       if (res?.status === 200) {
         setModalSucces(true);
+        qery.refetch();
       } else {
         setModalSucces(false);
       }
