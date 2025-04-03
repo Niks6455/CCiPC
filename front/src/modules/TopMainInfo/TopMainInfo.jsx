@@ -3,21 +3,23 @@ import Layout from '../../ui/Layout/Layout';
 import styles from './TopMainInfo.module.scss';
 import Bg from '../../assets/img/Bg.jpeg';
 import rect from '../../assets/img/rect.svg';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import DataContext from '../../context';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 import { server } from '../../apirequests/apirequests';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function TopMainInfo() {
   const conference = useSelector(state => state?.conferences?.data[0]);
-  console.log("conference", conference);
+  console.log('conference', conference);
   const userData = useSelector(state => state.user.user.data);
   const arrowRef = useRef(null); // Реф для стрелки
   const navigate = useNavigate();
   const [arrowColor, setArrowColor] = useState(styles.greenArrow); // Начальный стиль стрелки
   const context = useContext(DataContext);
+  const [isVisible, setIsVisible] = useState(false);
 
   const funClickRequest = () => {
     const assetsToken = localStorage.getItem('accessToken');
@@ -27,6 +29,20 @@ function TopMainInfo() {
       navigate('/account/documents');
     }
   };
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>
@@ -60,14 +76,22 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : "#"}
+                        href={
+                          conference?.files?.PROGRAM
+                            ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
+                            : '#'
+                        }
                         rel="noreferrer"
                       >
                         Программа <br /> конференции
                       </a>
                       <a
                         target="_blank"
-                        href={conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : "#"}
+                        href={
+                          conference?.files?.PROGRAM
+                            ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
+                            : '#'
+                        }
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
@@ -75,14 +99,22 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : "#"}
+                        href={
+                          conference?.files?.LETTER
+                            ? `${server}/${conference?.files?.LETTER[0]?.url}`
+                            : '#'
+                        }
                         rel="noreferrer"
                       >
                         Информационное <br /> письмо
                       </a>
                       <a
                         target="_blank"
-                        href={conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : "#"}
+                        href={
+                          conference?.files?.LETTER
+                            ? `${server}/${conference?.files?.LETTER[0]?.url}`
+                            : '#'
+                        }
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
@@ -90,14 +122,22 @@ function TopMainInfo() {
                     <li>
                       <a
                         target="_blank"
-                        href={conference?.files?.COLLECTION ? `${server}/${conference?.files?.COLLECTION[0]?.url}` : "#"}
+                        href={
+                          conference?.files?.COLLECTION
+                            ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                            : '#'
+                        }
                         rel="noreferrer"
                       >
                         Сборник <br /> научных трудов
                       </a>
                       <a
                         target="_blank"
-                        href={conference?.files?.COLLECTION ? `${server}/${conference?.files?.COLLECTION[0]?.url}` : "#"}
+                        href={
+                          conference?.files?.COLLECTION
+                            ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                            : '#'
+                        }
                         className={styles.clicker}
                         rel="noreferrer"
                       ></a>
@@ -117,9 +157,18 @@ function TopMainInfo() {
         </main>
         {!context.activeMenu && (
           <div className={styles.arrowTop}>
-            <a href="#top">
-              <div ref={arrowRef} className={`${styles.imgArrowTop} ${arrowColor}`}></div>
-            </a>
+            <AnimatePresence>
+              {isVisible && (
+                <motion.a
+                  href="#top"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                >
+                  <div ref={arrowRef} className={`${styles.imgArrowTop} ${arrowColor}`}></div>
+                </motion.a>
+              )}
+            </AnimatePresence>
           </div>
         )}
       </div>
