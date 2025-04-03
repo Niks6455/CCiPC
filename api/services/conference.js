@@ -372,11 +372,14 @@ export default {
                     model: File,
                     as: 'file',
                     required:  true,
+                    where : {
+                        url: { [Op.not]: null }
+                    }
                 }
             }
         })
 
-       return  reports.map(report=>({path:  report.reportFileLink.file.url, name : report.name}))
+       return  reports.map(report=>({path:  report.reportFileLink?.file.url, name : report.name}))
 
     },
 
