@@ -11,7 +11,7 @@ router.route('/')
     .get(asyncRoute(directionCtrl.find))
 
 
-router.route('/')
+router.route('/delete')
     .post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(directionCtrl.delete))
 
 router.route('/:id')
