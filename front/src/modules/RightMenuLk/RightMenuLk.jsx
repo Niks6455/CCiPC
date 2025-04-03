@@ -9,7 +9,7 @@ function RightMenuLk(props) {
   return (
     <section className={`${styles.RightMenuLk} ${checkPathName() ? styles.RightMenuLkhide : ''}`}>
       <div className={styles.RightMenuLkContainer}>
-        <NavBar userRole={props.userRole} />
+        <NavBar userRole={props.userRole} admine={props.admine} />
       </div>
     </section>
   );

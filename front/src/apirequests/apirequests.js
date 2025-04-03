@@ -288,6 +288,7 @@ export const apiChangePassword = async data => {
     return response;
   } catch (error) {
     console.log('apiChangePassword ', error);
+    return error;
   }
 };
 

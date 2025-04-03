@@ -19,6 +19,7 @@ export default function CommitteesPage({ userRole }) {
   const [datePeopleOne, setDatePeopleOne] = useState(null);
   const [datePeopleSecond, setDatePeopleSecond] = useState(null);
   const context = useContext(DataContext);
+  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
 
   const ButtonOneDats = [
     {
@@ -52,13 +53,14 @@ export default function CommitteesPage({ userRole }) {
 
   useEffect(() => {
     getDataOrg();
-  }, []);
-  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
+  }, [conferenceid]);
 
   const getDataOrg = async () => {
-    const res = await getOrgCommitet(conferenceid);
-    if (res?.status === 200) {
-      setDataOrgAll(res.data.committee);
+    if (conferenceid) {
+      const res = await getOrgCommitet(conferenceid);
+      if (res?.status === 200) {
+        setDataOrgAll(res.data.committee);
+      }
     }
   };
 

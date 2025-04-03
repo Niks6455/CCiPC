@@ -38,9 +38,7 @@ function ProfileEditing() {
   }, [user?.avatar]);
 
   useEffect(() => {
-    if (!formData.name) {
-      dispatch(disEditUser());
-    }
+    dispatch(disEditUser());
   }, [user]);
 
   const [errors, setErrors] = useState({
@@ -146,7 +144,7 @@ function ProfileEditing() {
 
   const handleSubmit = () => {
     if (validate()) {
-      apiUpdateUser(formData).then(res => {
+      apiUpdateUser({ formData, phone: `+${formData.phone.replace(/\D/g, '')}` }).then(res => {
         if (res?.status === 200) {
           setModalSucces(true);
         }

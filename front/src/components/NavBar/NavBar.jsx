@@ -111,7 +111,7 @@ function NavBar(props) {
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
-            {context.userRole === 1 && (
+            {context.userRole === 1 && !props.admine && (
               <li
                 onClick={() => {
                   navigate('/adminPage/news');

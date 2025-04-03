@@ -1,4 +1,4 @@
-import { stepenList, zwanieList } from '../../utils/Lists/List';
+import { doljnostList, stepenList, zwanieList } from '../../utils/Lists/List';
 
 export const inputsData = [
   {
@@ -46,7 +46,7 @@ export const inputsData = [
     name: 'Должность*',
     title: 'position',
     required: true,
-    list: null,
+    list: doljnostList,
     type: 'text',
   },
   {

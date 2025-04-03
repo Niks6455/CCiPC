@@ -1,8 +1,14 @@
 import styles from './SuccessModal.module.scss';
 import circleGalka from '@assets/img/UI/circleGalka.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 function SuccessModal({ open, close }) {
+  const navigate = useNavigate();
+  const funCloce = () => {
+    close(false);
+    navigate('/account/profile');
+  };
   return (
     <>
       <AnimatePresence>
@@ -21,7 +27,7 @@ function SuccessModal({ open, close }) {
             >
               <p className={styles.title}>Данные успешно сохранены!</p>
               <img className={styles.galka} src={circleGalka} alt="img" />
-              <button onClick={() => close(false)} className={styles.btnred}>
+              <button onClick={() => funCloce()} className={styles.btnred}>
                 Закрыть
               </button>
             </motion.div>
