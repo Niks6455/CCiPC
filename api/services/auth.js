@@ -126,7 +126,7 @@ export default {
 
 
         if(type === typeCheckEmail.CONFIRM)  {
-            if(verificationCodes[email].code !== code || code === undefined ) throw new AppErrorInvalid('code')
+            if(verificationCodes[email]?.code !== code || code === undefined ) throw new AppErrorInvalid('code')
             if(cache[email] !== undefined) {
                 const participantOfReports = await ParticipantOfReport.bulkCreate(
                     cache[email]?.map(reportId => ({
