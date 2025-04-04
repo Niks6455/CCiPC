@@ -91,7 +91,7 @@ function HomePage({ userRole }) {
 
   return (
     <div className={styles.HomePage}>
-      {loading && <LoadingComponent setLoading={setLoading} />}
+      {loading && <LoadingComponent setLoading={setLoading} status={conferencesStatus} />}
       <HeaderPhone />
       <Header userRole={userRole} />
       <TopMainInfo />

@@ -1,7 +1,7 @@
 import Button from '../../ui/Button/Button';
 import Layout from '../../ui/Layout/Layout';
 import styles from './TopMainInfo.module.scss';
-import Bg from '../../assets/img/Bg.jpeg';
+import Bg from '@assets/img/Bg.png';
 import rect from '../../assets/img/rect.svg';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import DataContext from '../../context';
