@@ -169,10 +169,16 @@ export const formatDateRangePrimereact = (startDate, endDate) => {
 
 //! декодирование base64
 export const decodeFileName = file => {
-  console.log("file", file)
   if (!file) return 'Документ.pdf';
   const fileName = file?.name?.split('\\').pop();
   const decoder = new TextDecoder('utf-8'); // Если файл в CP1251
   const bytes = new Uint8Array(fileName?.split('').map(c => c.charCodeAt(0)));
+  return decoder.decode(bytes);
+};
+
+export const decodeText = text => {
+  if (!text) return 'Файл';
+  const decoder = new TextDecoder('utf-8'); // Если файл в CP1251
+  const bytes = new Uint8Array(text?.split('').map(c => c.charCodeAt(0)));
   return decoder.decode(bytes);
 };

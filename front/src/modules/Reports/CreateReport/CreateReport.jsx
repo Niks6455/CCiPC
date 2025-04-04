@@ -9,7 +9,7 @@ import download from './../../../assets/img/UI/download.svg';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { server } from '../../../apirequests/apirequests';
-import { decodeFileName } from '../../../utils/functions/funcions';
+import { decodeFileName, decodeText } from '../../../utils/functions/funcions';
 import { funGetError, funValidateAll } from './functions';
 
 function CreateReport({ edit, soauthorEditing }) {
@@ -22,10 +22,10 @@ function CreateReport({ edit, soauthorEditing }) {
   //! функция скачивания шаблока
   const funDownloadShablon = async () => {
     try {
-      const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+      const response = await fetch(`${server}/${conference?.files?.SAMPLE?.[0].url}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      const name = decodeFileName(conference?.documents?.SAMPLE?.split('\\').pop());
+      const name = decodeText(conference?.files?.SAMPLE?.[0].name);
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем

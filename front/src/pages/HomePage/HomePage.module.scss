@@ -256,8 +256,10 @@ $w3: 480px;
         padding: torem(20px);
         max-height: torem(222px);
         max-width: 40%;
-        width: auto;
-        height: auto;
+        width: max-content;
+        height: min-content;
+        box-sizing: border-box;
+        margin: auto;
         @media (max-width: $w2) {
           max-width: 100%;
           height: torem(120px);
@@ -291,7 +293,7 @@ $w3: 480px;
     }
     .two {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       @media (max-width: $w2) {
         display: flex;
         justify-content: space-between;
@@ -304,6 +306,7 @@ $w3: 480px;
         img {
           margin-bottom: 0;
           max-width: 100%;
+          margin: auto;
         }
       }
     }

@@ -64,6 +64,7 @@ export const useClipboardDigits = () => {
       window.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
+  setTimeout(() => setText(''), 300);
 
   return text;
 };

@@ -5,18 +5,23 @@ import plusIcon from '@assets/img/UI/plus.svg';
 function Directions({ data, setData }) {
   const funChangeDirection = (e, index) => {
     const directions = [...data.directions];
-    directions[index] = e.target.value;
+    directions[index] = { ...directions[index], name: e.target.value };
     setData({ ...data, directions: directions });
   };
 
-  const funDeleteItem = index => {
+  const funDeleteItem = (el, index) => {
     const directions = [...data.directions];
     directions.splice(index, 1);
-    setData({ ...data, directions: directions });
+    if (el.new) return setData({ ...data, directions: directions });
+    const directionsIds = [...data.directionsIds, el.id];
+    setData({ ...data, directions: directions, directionsIds });
   };
 
   const funAddDirection = () => {
-    setData({ ...data, directions: [...data.directions, ''] });
+    setData({
+      ...data,
+      directions: [...data.directions, { name: '', id: new Date().getTime(), new: true }],
+    });
     setTimeout(() => {
       document.getElementById(`directions-textarea-${data.directions.length}`).focus();
     }, 300);
@@ -28,12 +33,12 @@ function Directions({ data, setData }) {
       <div className={styles.container}>
         {data.directions?.map((el, index) => (
           <div key={index} className={styles.directon_box}>
-            <button className={styles.delete} onClick={() => funDeleteItem(index)}>
+            <button className={styles.delete} onClick={() => funDeleteItem(el, index)}>
               <img src={deleteIcon} alt="Удалить" />
             </button>
             <textarea
               id={`directions-textarea-${index}`}
-              value={el}
+              value={el?.name}
               onChange={e => funChangeDirection(e, index)}
             />
           </div>

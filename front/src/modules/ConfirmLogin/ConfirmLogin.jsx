@@ -92,7 +92,7 @@ function ConfirmLogin(props) {
   return (
     <section className={styles.ConfirmLogin}>
       <div className={styles.ConfirmLoginLogo}>
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt="Logo" onClick={() => navigete('/')} />
       </div>
       <div className={styles.ConfirmLoginTitle}>
         <p>Подтвердите адрес электронной почты</p>
