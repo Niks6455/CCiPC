@@ -103,6 +103,7 @@ export const conferenceDataNull = {
   cashlessEntities: null,
   aboutConference: '',
   directions: [],
+  directionsIds: [],
   dateFirst: null,
   dateSecond: null,
   address: '',
