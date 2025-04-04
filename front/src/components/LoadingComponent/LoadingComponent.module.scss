@@ -1,0 +1,33 @@
+.LoadingComponent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--BodyBgColor);
+
+  .loadingBar {
+    width: 200px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 40px;
+  }
+
+  .progress {
+    height: 10px;
+    background-color: #76c7c0; /* Change to your desired color */
+  }
+
+  .percentage {
+    margin-top: 5px;
+    font-weight: bold;
+    font-size: 24px;
+  }
+}

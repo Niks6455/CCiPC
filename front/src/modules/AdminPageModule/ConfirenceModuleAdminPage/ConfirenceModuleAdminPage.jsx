@@ -74,7 +74,7 @@ function ConfirenceModuleAdminPage() {
         cashlessIndividual: qery.files?.INDIVIDUAL?.[0],
         cashlessEntities: qery.files?.LEGAL?.[0],
         aboutConference: qery.description,
-        directions: qery.directions.map(el => el.name),
+        directions: qery.directions,
         dateFirst: qery.date?.[0]?.value,
         dateSecond: qery.date?.[1]?.value,
         address: qery.address,
@@ -82,6 +82,7 @@ function ConfirenceModuleAdminPage() {
         partners: qery.files?.PARTNER || [],
         deadlineUploadingReports: convertDate(qery.deadline),
         deleteIds: [],
+        directionsIds: [],
       };
       setData(data);
     }
@@ -139,7 +140,8 @@ function ConfirenceModuleAdminPage() {
         name: item.name,
       })),
       description: data.aboutConference,
-      directions: data.directions,
+      directions: data.directions.map(item => item.name),
+      directionsIds: data.directionsIds, //! удаление направлений
       date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,

@@ -8,9 +8,13 @@ import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHo
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
+import LoadingComponent from '../../components/LoadingComponent/LoadingComponent';
 
 function HomePage({ userRole }) {
+  const conferencesStatus = useSelector(state => state.conferences.status);
+  const [loading, setLoading] = useState(true);
   const conference = useSelector(state => state.conferences.data[0]);
   const { topDiv, bottomDiv } = splitDirectionsEvenly(conference?.directions || []);
   const getDescription = text => {
@@ -20,6 +24,12 @@ function HomePage({ userRole }) {
       .join('');
     return newText;
   };
+
+  useEffect(() => {
+    if (conferencesStatus === 'loading') {
+      setLoading(true);
+    }
+  }, [conferencesStatus]);
 
   const [style, setStyle] = useState([]);
   const [style2, setStyle2] = useState([]);
@@ -81,6 +91,7 @@ function HomePage({ userRole }) {
 
   return (
     <div className={styles.HomePage}>
+      {loading && <LoadingComponent setLoading={setLoading} />}
       <HeaderPhone />
       <Header userRole={userRole} />
       <TopMainInfo />

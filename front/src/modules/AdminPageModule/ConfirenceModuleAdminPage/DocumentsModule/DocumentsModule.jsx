@@ -1,5 +1,6 @@
 import { server } from '../../../../apirequests/apirequests';
 import FileComponent from '../../../../components/AdminModuleComponents/FileComponent/FileComponent';
+import { decodeFileName, decodeText } from '../../../../utils/functions/funcions';
 import styles from './DocumentsModule.module.scss';
 import borderIcon from '@assets/img/AdminPanel/border3.svg';
 
@@ -98,6 +99,7 @@ function DocumentsModule({ data, setData }) {
                   setData={funChangeData}
                   typeFile={item.typeFile}
                   accept={item.accept}
+                  fileName={decodeText(data[item.key]?.name)}
                   name={item.name}
                   icon={item.icon}
                   text={item.text}

@@ -17,7 +17,7 @@ import { useSelector } from 'react-redux';
 function RecoverPassword() {
   //! востановление по почте true по телефону false
   const [isRecoverType, setIsRecoverType] = useState(true);
-  const [email, setEmail ] = useState();
+  const [email, setEmail] = useState();
   const store = useSelector(store => store.user);
 
   const context = useContext(DataContext);
@@ -80,9 +80,9 @@ function RecoverPassword() {
     return () => clearInterval(interval); // Очищаем таймер при размонтировании
   }, [timer]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setEmail(store.emailSend || sessionStorage.getItem('confirmEmail'));
-  },[])
+  }, []);
 
   const handleResendCode = () => {
     if (!isButtonActive) return;
@@ -91,28 +91,27 @@ function RecoverPassword() {
     };
     apiSandReset(data).then(res => {
       if (res?.status === 200) {
-        setTimer(60); 
-        setIsButtonActive(false); 
-      } 
+        setTimer(60);
+        setIsButtonActive(false);
+      }
     });
   };
 
   const handleChange = (index, value) => {
     if (!/^\d?$/.test(value)) return;
-    
+
     const newCode = [...code];
     newCode[index] = value;
     setCode(newCode);
-  
+
     const newErrors = [...errors];
     newErrors[index] = false;
     setErrors(newErrors);
-  
+
     if (value && index < inputsRef.current.length - 1) {
       inputsRef.current[index + 1].focus();
     }
   };
-  
 
   const handleKeyDown = (index, e) => {
     if (e.key === 'Backspace' && !code[index] && index > 0) {
@@ -206,25 +205,23 @@ function RecoverPassword() {
     setErrors({ ...errors, [name]: '' });
   };
 
-  const handlePaste = (e) => {
+  const handlePaste = e => {
     e.preventDefault();
-    const paste = e.clipboardData.getData('text').trim(); 
-    if (!/^\d{6}$/.test(paste)) return; 
-  
+    const paste = e.clipboardData.getData('text').trim();
+    if (!/^\d{6}$/.test(paste)) return;
+
     const newCode = paste.split('');
-    setCode(newCode); 
-  
+    setCode(newCode);
+
     inputsRef.current[5]?.focus();
   };
-  
-  
 
   return (
     <div className={styles.ConfirmLogin}>
       {!codeConfirmed ? (
         <>
           <div className={styles.ConfirmLoginLogo}>
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" onClick={() => navigate('/')} />
           </div>
           <div className={styles.ConfirmLoginTitle}>
             <p>Введите код для восстановления пароля</p>
@@ -237,9 +234,11 @@ function RecoverPassword() {
               {isRecoverType ? (
                 <p className={styles.ConfirmLoginGalcaText}>
                   На адрес вашей электронной почты{' '}
-                  <span className={styles.mail}>{context?.mailValue || email || store.emailSend}</span> отправлено
-                  письмо с проверочным кодом. Введите полученный код в поле ниже и нажмите
-                  “Продолжить”.
+                  <span className={styles.mail}>
+                    {context?.mailValue || email || store.emailSend}
+                  </span>{' '}
+                  отправлено письмо с проверочным кодом. Введите полученный код в поле ниже и
+                  нажмите “Продолжить”.
                 </p>
               ) : (
                 <p className={styles.ConfirmLoginGalcaText}>
@@ -262,19 +261,19 @@ function RecoverPassword() {
           </div>
           <div className={styles.codeInput}>
             <div className={styles.codeInputInner}>
-            {code.map((digit, index) => (
-              <input
-                key={index}
-                type="text"
-                value={digit} // Должно быть digit, а не code[0]
-                maxLength={1}
-                onChange={e => handleChange(index, e.target.value)}
-                onKeyDown={e => handleKeyDown(index, e)}
-                onPaste={handlePaste}
-                ref={el => (inputsRef.current[index] = el)}
-                className={errors[index] ? styles.error : ''}
-              />
-            ))}
+              {code.map((digit, index) => (
+                <input
+                  key={index}
+                  type="text"
+                  value={digit} // Должно быть digit, а не code[0]
+                  maxLength={1}
+                  onChange={e => handleChange(index, e.target.value)}
+                  onKeyDown={e => handleKeyDown(index, e)}
+                  onPaste={handlePaste}
+                  ref={el => (inputsRef.current[index] = el)}
+                  className={errors[index] ? styles.error : ''}
+                />
+              ))}
             </div>
           </div>
           <div className={styles.CodeSubmit}>
