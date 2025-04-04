@@ -3,40 +3,52 @@ import LogoHomePage from '@assets/img/logo.png';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-function LoadingComponent({ setLoading }) {
+function LoadingComponent({ setLoading, status }) {
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setLoadingProgress(prev => {
-        if (prev >= 10) {
+        if (prev >= 100) {
           clearInterval(interval);
-          setLoading(false);
-          return 10;
+          setTimeout(() => {
+            if (status === 'succeeded') setLoading(false);
+          }, 500);
+          return 100;
         }
         return prev + 1;
       });
-    }, 30);
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, []);
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, [status]);
+
   return (
     <div className={styles.LoadingComponent}>
       <div className={styles.container}>
         <motion.div
           className={styles.logo}
-          animate={{ scaleX: [1, -1, 1] }} // Анимация от 1 к -1 и обратно к 1
-          transition={{ duration: 3, repeat: Infinity, ease: 'linear' }} // Плавное повторение
+          animate={{ scaleX: [1, -1, 1] }}
+          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
         >
-          <img src={LogoHomePage} alt="LogoHomePage" />
+          <div
+            className={styles.imageWrapper}
+            style={{
+              filter: `grayscale(${100 - loadingProgress}%)`,
+              maskImage: `linear-gradient(to top, #000 ${loadingProgress}%, transparent ${loadingProgress}%)`,
+              WebkitMaskImage: `linear-gradient(to top, #000 ${loadingProgress}%, transparent ${loadingProgress}%)`,
+              transition:
+                'filter 0.3s ease-in-out, mask-image 0.3s ease-in-out, -webkit-mask-image 0.3s ease-in-out',
+            }}
+          >
+            <img src={LogoHomePage} alt="LogoHomePage" />
+          </div>
         </motion.div>
       </div>
       <div className={styles.loadingBar}>
-        <div
-          className={styles.progress}
-          style={{ width: `${loadingProgress * 10}%` }} // Dynamic width based on loading progress
-        />
+        <div className={styles.progress} style={{ width: `${loadingProgress}%` }} />
       </div>
-      <div className={styles.percentage}>{loadingProgress * 10}%</div>
+      <div className={styles.percentage}>{loadingProgress}%</div>
     </div>
   );
 }

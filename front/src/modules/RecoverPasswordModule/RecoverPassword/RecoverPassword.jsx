@@ -83,7 +83,6 @@ function RecoverPassword() {
   useEffect(() => {
     setEmail(store.emailSend || sessionStorage.getItem('confirmEmail'));
   }, []);
-
   const handleResendCode = () => {
     if (!isButtonActive) return;
     const data = {

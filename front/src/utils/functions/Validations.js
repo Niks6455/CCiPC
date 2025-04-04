@@ -51,7 +51,7 @@ export const validateEmail = value => {
 
 //! валидация на колличество символов кроме пробелов
 export const validateLength = (value, count, max) => {
-  if (value === '') {
+  if (!value) {
     return true;
   }
   if (value.trim().length < count) {

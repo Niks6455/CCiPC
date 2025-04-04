@@ -4,32 +4,36 @@ import DataContext from '../../context';
 import logo from './../../assets/img/logo.png';
 import confirm from './../../assets/img/confirm.svg';
 import errorItem from '@assets/img/UI/error.svg';
-import { CheckEmail } from '../../apirequests/apirequests';
+import { apiSendConfirm, CheckEmail } from '../../apirequests/apirequests';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useClipboardDigits } from '../../hooks/hooks';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTimer } from '../../store/registrationSlice/registrationSlice';
 function ConfirmLogin(props) {
+  const dispach = useDispatch();
+  const registration = useSelector(state => state.registration);
   const context = useContext(DataContext);
   const navigete = useNavigate();
   const [code, setCode] = useState(['', '', '', '', '', '']); // Для кода
   const [errorAuth, setErrorAuth] = useState(false);
   const [errors, setErrors] = useState([false, false, false, false, false, false]); // Для ошибок
-  const [timer, setTimer] = useState(59); // Таймер в секундах
   const [isButtonActive, setIsButtonActive] = useState(false); // Состояние кнопки
   const inputsRef = useRef([]);
 
   // Таймер запускается при загрузке компонента
   useEffect(() => {
     let interval;
-    if (timer > 0) {
+    if (registration?.timer > 0) {
       interval = setInterval(() => {
-        setTimer(prev => prev - 1);
+        // setTimer(prev => prev - 1);
+        dispach(setTimer(registration?.timer - 1));
       }, 1000);
     } else {
       setIsButtonActive(true); // Делаем кнопку активной
     }
     return () => clearInterval(interval); // Очищаем таймер при размонтировании
-  }, [timer]);
+  }, [registration?.timer]);
 
   const text = useClipboardDigits();
   useEffect(() => {
@@ -38,11 +42,18 @@ function ConfirmLogin(props) {
       setCode(digits[0].split('').map(digit => digit));
     }
   }, [text]);
+  // apiSendConfirm
 
   const handleResendCode = () => {
     if (!isButtonActive) return;
-    setTimer(60); // Сбрасываем таймер
-    setIsButtonActive(false); // Делаем кнопку неактивной
+    apiSendConfirm({
+      email: registration?.data?.email || sessionStorage.getItem('confirmEmail'),
+    }).then(res => {
+      if (res?.status === 200) {
+        dispach(setTimer(60)); // Сбрасываем таймер
+        setIsButtonActive(false); // Делаем кнопку неактивной
+      }
+    });
   };
 
   const handleChange = (index, value) => {
@@ -92,7 +103,7 @@ function ConfirmLogin(props) {
   return (
     <section className={styles.ConfirmLogin}>
       <div className={styles.ConfirmLoginLogo}>
-        <img src={logo} alt="Logo" onClick={() => navigete('/')} />
+        <img src={logo} alt="Logo" />
       </div>
       <div className={styles.ConfirmLoginTitle}>
         <p>Подтвердите адрес электронной почты</p>
@@ -104,7 +115,7 @@ function ConfirmLogin(props) {
           </div>
           <p>
             На адрес вашей электронной почты{' '}
-            <span className={styles.mail}>{context?.mailValue}</span> отправлено письмо с
+            <span className={styles.mail}>{registration?.data?.email}</span> отправлено письмо с
             проверочным кодом. Введите полученный код в поле ниже и нажмите "Продолжить".
           </p>
         </div>
@@ -140,7 +151,9 @@ function ConfirmLogin(props) {
           >
             Повторно выслать код
           </button>
-          <p className={styles.CodeTimer}>{timer > 0 ? `0:${timer}` : ''}</p>
+          <p className={styles.CodeTimer}>
+            {registration?.timer > 0 ? `0:${registration?.timer}` : ''}
+          </p>
         </div>
       </div>
       <div className={styles.submitButton}>

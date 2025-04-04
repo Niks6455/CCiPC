@@ -24,26 +24,21 @@ import {
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetData, setDataKey } from '../../store/registrationSlice/registrationSlice';
 
 function Register() {
+  const dispach = useDispatch();
+  const registration = useSelector(state => state.registration);
   const context = useContext(DataContext);
   const [openList, setOpenList] = useState('');
   const [passActionFirst, setPassActionFirst] = useState('password');
   const [passActionSecond, setPassActionSecond] = useState('password');
-  const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    patronymic: '',
-    academicTitle: '',
-    degree: '',
-    position: '',
-    organization: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-    napravlenieKonferencii: '',
-  });
+
+  //! При первом рендере сбрасываем данные
+  useEffect(() => {
+    dispach(resetData());
+  }, []);
 
   const [errors, setErrors] = useState({
     name: '',
@@ -83,12 +78,9 @@ function Register() {
   ]);
 
   const funSelectedElement = (key, value) => {
-    //! проверка что такой ключь есть в formData
-    if (!formData.hasOwnProperty(key)) {
-      return;
-    }
     setErrors({ ...errors, [key]: '' });
-    setFormData({ ...formData, [key]: value });
+    // setFormData({ ...formData, [key]: value });
+    dispach(setDataKey({ key, value }));
   };
 
   const handleChange = e => {
@@ -100,7 +92,7 @@ function Register() {
     if (name === 'name' || name === 'surname' || name === 'patronymic') {
       formattedValue = capitalizeFirstLetter(value);
     }
-    setFormData({ ...formData, [name]: formattedValue });
+    dispach(setDataKey({ key: name, value: formattedValue }));
     setErrors({ ...errors, [name]: '' });
   };
 
@@ -121,23 +113,26 @@ function Register() {
       'academicTitle',
       'degree',
     ].forEach(field => {
-      if (!formData[field]) {
+      if (!registration?.data?.[field]) {
         newErrors[field] = 'Поле обязательно для заполнения';
         isValid = false;
       }
     });
     // Проверка корректности Email
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
+    if (registration?.data?.email && !/\S+@\S+\.\S+/.test(registration?.data?.email)) {
       newErrors.email = 'Некорректный Email';
       isValid = false;
     }
     // Проверка номера телефона
-    if (formData.phone && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)) {
+    if (
+      registration?.data?.phone &&
+      !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(registration?.data?.phone)
+    ) {
       newErrors.phone = 'Номер должен быть в формате +7 (XXX) XXX-XX-XX';
       isValid = false;
     }
     // Проверка совпадения паролей
-    if (formData.password !== formData.confirmPassword) {
+    if (registration?.data?.password !== registration?.data?.confirmPassword) {
       newErrors.confirmPassword = 'Пароли не совпадают';
       isValid = false;
     }
@@ -147,35 +142,35 @@ function Register() {
       isValid = false;
     }
 
-    if (!validateFIO(formData.organization)) {
+    if (!validateFIO(registration?.data?.organization)) {
       newErrors.organization = 'Некорректное название';
       isValid = false;
     }
 
-    if (!validateFIO(formData.name)) {
+    if (!validateFIO(registration?.data?.name)) {
       newErrors.name = 'Некорректное имя';
       isValid = false;
     }
 
-    if (!validateFIO(formData.surname)) {
+    if (!validateFIO(registration?.data?.surname)) {
       newErrors.surname = 'Некорректная фамилия';
       isValid = false;
     }
 
-    if (!validateFIO(formData.patronymic)) {
+    if (!validateFIO(registration?.data?.patronymic)) {
       newErrors.patronymic = 'Некорректное отчество';
       isValid = false;
     }
 
-    if (!validateLength(formData.surname, 2, 50)) {
+    if (!validateLength(registration?.data?.surname, 2, 50)) {
       newErrors.surname = 'Некорректная фамилия';
       isValid = false;
     }
-    if (!validateLength(formData.name, 2, 50)) {
+    if (!validateLength(registration?.data?.name, 2, 50)) {
       newErrors.name = 'Некорректное имя';
       isValid = false;
     }
-    if (!validateLength(formData.patronymic, 5, 50)) {
+    if (!validateLength(registration?.data?.patronymic, 5, 50)) {
       newErrors.patronymic = 'Некорректное отчество';
       isValid = false;
     }
@@ -190,14 +185,14 @@ function Register() {
       // type 0 это подтверждение
       // сброс пароля type 1
       const data = {
-        ...formData,
-        phone: `+${formData.phone.replace(/\D/g, '')}`,
+        ...registration?.data,
+        phone: `+${registration?.data?.phone.replace(/\D/g, '')}`,
       };
       apiRegister(data).then(res => {
         if (res?.status === 200) {
           navigate('/login/confirmLogin');
-          context.setMailValue(formData.email);
-          sessionStorage.setItem('confirmEmail', formData.email);
+          context.setMailValue(registration?.data?.email);
+          sessionStorage.setItem('confirmEmail', registration?.data?.email);
         }
       });
     }
@@ -260,7 +255,7 @@ function Register() {
             <Input
               name="name"
               onChange={handleChange}
-              value={formData.name}
+              value={registration?.data?.name}
               placeholder="Имя*"
               error={errors.name}
               autoComplete={'new-password'}
@@ -268,7 +263,7 @@ function Register() {
             <Input
               name="surname"
               onChange={handleChange}
-              value={formData.surname}
+              value={registration?.data?.surname}
               placeholder="Фамилия*"
               error={errors.surname}
               autoComplete={'new-password'}
@@ -276,7 +271,7 @@ function Register() {
             <Input
               name="patronymic"
               onChange={handleChange}
-              value={formData.patronymic}
+              value={registration?.data?.patronymic}
               placeholder="Отчество"
               error={errors.patronymic}
               autoComplete={'new-password'}
@@ -284,7 +279,7 @@ function Register() {
             <InputList
               name="academicTitle"
               onChange={handleChange}
-              value={formData.academicTitle}
+              value={registration?.data?.academicTitle}
               placeholder="Ученое звание"
               open={openList === 'academicTitle'}
               funOpen={funOpenList}
@@ -296,7 +291,7 @@ function Register() {
             <InputList
               name="degree"
               onChange={handleChange}
-              value={formData.degree}
+              value={registration?.data?.degree}
               placeholder="Степень"
               open={openList === 'degree'}
               funOpen={funOpenList}
@@ -309,7 +304,7 @@ function Register() {
             <InputList
               name="position"
               onChange={handleChange}
-              value={formData.position}
+              value={registration?.data?.position}
               placeholder="Должность*"
               open={openList === 'position'}
               funOpen={funOpenList}
@@ -323,7 +318,7 @@ function Register() {
             <Input
               name="organization"
               onChange={handleChange}
-              value={formData.organization}
+              value={registration?.data?.organization}
               placeholder="Организация*"
               error={errors.organization}
               autoComplete={'new-password'}
@@ -331,7 +326,7 @@ function Register() {
             <Input
               name="email"
               onChange={handleChange}
-              value={formData.email}
+              value={registration?.data?.email}
               placeholder="Email (логин)*"
               error={errors.email}
               autoComplete={'new-password'}
@@ -339,7 +334,7 @@ function Register() {
             <Input
               name="phone"
               onChange={handleChange}
-              value={formData.phone}
+              value={registration?.data?.phone}
               placeholder="Номер телефона*"
               error={errors.phone}
               autoComplete={'new-password'}
@@ -347,7 +342,7 @@ function Register() {
             <Input
               name="password"
               onChange={handleChange}
-              value={formData.password}
+              value={registration?.data?.password}
               placeholder="Придумайте пароль*"
               error={errors.password}
               errorList={errorListPassword}
@@ -365,7 +360,7 @@ function Register() {
             <Input
               name="confirmPassword"
               onChange={handleChange}
-              value={formData.confirmPassword}
+              value={registration?.data?.confirmPassword}
               placeholder="Повторите пароль*"
               error={errors.confirmPassword}
               type={passActionSecond}
