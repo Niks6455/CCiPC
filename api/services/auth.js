@@ -10,7 +10,6 @@ import ParticipantInConference from "../models/participant-in-conference.js";
 import Conference from "../models/conference.js";
 import Report from "../models/report.js";
 import qs from "querystring";
-import sync from '../utils/sync.js'
 import axios from "axios";
 import {Op} from "sequelize";
 const verificationCodes= {};
@@ -24,7 +23,7 @@ function saveVerificationCode(email, code, expirationTime) {
 
     // Устанавливаем таймер для удаления кода после истечения времени
     setTimeout(() => {
-        delete this.verificationCodes[email];
+        delete verificationCodes[email];
     }, expirationTime);
 
 }
@@ -125,8 +124,9 @@ export default {
 
         if(!participant) throw new AppErrorInvalid('email')
 
+
         if(type === typeCheckEmail.CONFIRM)  {
-            if(verificationCodes[email] !== code || code === undefined ) throw new AppErrorInvalid('code')
+            if(verificationCodes[email].code !== code || code === undefined ) throw new AppErrorInvalid('code')
             if(cache[email] !== undefined) {
                 const participantOfReports = await ParticipantOfReport.bulkCreate(
                     cache[email]?.map(reportId => ({

@@ -2,6 +2,10 @@ import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import authService from "../services/auth.js";
 import bcrypt from "bcrypt";
 import randomCode from "../utils/random-code.js";
+import validateEmail from "../utils/validate/email.js";
+import validateName from "../utils/validate/name.js";
+import validatePhoneNumber from "../utils/validate/phone.js";
+import validateOrganization from "../utils/validate/organization.js";
 
 const atLeastOneDigit = /\d/,
     atLeastOneLowerLetter = /[a-z]/,
@@ -9,36 +13,6 @@ const atLeastOneDigit = /\d/,
     atLeastOneSpecial = /[!@_#$%^&*]/,
     otherChars = /[^0-9a-zA-Z!@_#$%^&*]/g;
 
-function validateEmail(email) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    return emailRegex.test(email);
-}
-
-function validateName(name) {
-    const nameRegex = /^([a-zA-Zа-яА-ЯёЁ-]+( [a-zA-Zа-яА-ЯёЁ-]+)?)?$/;
-    return name.length > 0 && name.length <= 50 && nameRegex.test(name);
-}
-
-function validatePhoneNumber(phone) {
-    // Удаляем пробелы и дефисы
-    const cleanedPhone = phone.replace(/[\s-]+/g, '');
-
-    // Проверяем, соответствует ли номер формату +7 и 10 цифрам
-    const phoneRegex = /^\+7\d{10}$/;
-
-    return phoneRegex.test(cleanedPhone);
-}
-
-
-function validateOrganization(name) {
-    // Удаляем пробелы по краям и проверяем, что строка не пустая
-    const trimmedName = name.trim();
-
-    // Проверяем, соответствует ли название требованиям
-    const nameRegex = /^[a-zA-Zа-яА-ЯёЁ0-9.,'"() -]{3,200}$/;
-
-    return trimmedName.length > 0 && nameRegex.test(trimmedName);
-}
 export default {
 
     async login({body: {email, password}}, res) {
@@ -75,6 +49,7 @@ export default {
         if(!validateName(surname)) throw new AppErrorInvalid('surname')
 
         if(patronymic && (!validateName(patronymic) || (patronymic.length < 5))) throw new AppErrorInvalid('patronymic')
+
         if(!academicTitle) throw new AppErrorMissing('academicTitle')
         if(!degree) throw new AppErrorMissing('degree')
         if(!position) throw new AppErrorMissing('position')

@@ -2,76 +2,11 @@ import conferenceService from '../services/conference.js';
 import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import { mapShort, map } from '../utils/mappers/tableParticipants.js'
 import { map as mapConf }  from '../utils/mappers/conference.js'
-import Ajv from 'ajv'
 import archiver from 'archiver'
 import typesFiles from "../config/typesFiles.js";
-import addFormats from 'ajv-formats';
 import path from "path";
-
-const ajv = new Ajv();
-
-addFormats(ajv);
-
-// Схема для проверки
-const schemaStage = {
-    type: "object",
-    properties: {
-        name: { type: "string" },
-        date: {
-            type: "string",
-            format: "date"  // Проверка формата даты (YYYY-MM-DD)
-        },
-        type: { type: "number" }
-    },
-    required: ["name", "date"],
-    additionalProperties: false
-};
-
-const schemaFee = {
-    type: "object",
-    properties: {
-        sum: { type: "number" },
-        status: { type: "boolean" },
-        id: { type: "string" },
-    },
-    required: ["id"],
-    additionalProperties: false
-
-}
-
-
-const validate = ajv.compile(schemaStage)
-
-const validateFee = ajv.compile(schemaFee)
-
-function checkValidate(objects) {
-    const seenName = new Set();
-
-    for (const obj of objects) {
-
-        const name = obj.name;
-
-        const valid = validate(obj);
-
-        if(!valid) throw new AppErrorInvalid('stages')
-
-        if (seenName.has(name))
-            return false;
-
-        seenName.add(name);
-    }
-    return true; // Дубликатов нет
-}
-
-function checkValidateFee(objects){
-    for (const obj of objects) {
-
-        const valid = validateFee(obj);
-
-        if(!valid) throw new AppErrorInvalid('fee')
-    }
-    return true; // Дубликатов нет
-}
+import {checkValidateFee} from "../utils/validate/conference.js";
+import {checkValidate} from "../utils/validate/conference.js";
 
 export default {
     async find(req, res) {
@@ -222,7 +157,7 @@ export default {
         res.json({participants: admin ? information.map(p=>map(p)) : information.map(p=>mapShort(p))});
     },
 
-    async update({params: { id }, body: {number, date, address, description, stages, directions, deadline }}, res) {
+    async update({params: { id }, body: {number, date, address, description, stages, directions, directionsIds, deadline }}, res) {
 
         if(stages?.length > 0 && !checkValidate(stages)) throw new AppErrorInvalid('stages')
         if(directions?.length > 0  && new Set(directions).size !== directions.length) throw new AppErrorInvalid('directions')
@@ -233,7 +168,7 @@ export default {
 
         const rangeDate = date ? [ new Date(date[0]), new Date(date[1]) ] : [];
 
-        const conference= await conferenceService.update({number, date: rangeDate, address, description, stages, directions, deadline}, id)
+        const conference= await conferenceService.update({number, date: rangeDate, address, description, stages, directions, directionsIds, deadline}, id)
 
         res.json({ conference: conference })
 

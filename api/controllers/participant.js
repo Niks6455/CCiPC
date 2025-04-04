@@ -1,32 +1,9 @@
 import participantService from "../services/participant.js";
 import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import { mapShort, map } from "../utils/mappers/participant.js";
-
-function validateName(name) {
-    const nameRegex = /^([a-zA-Zа-яА-ЯёЁ-]+( [a-zA-Zа-яА-ЯёЁ-]+)?)?$/;
-    return name.length > 0 && name.length <= 50 && nameRegex.test(name);
-}
-
-function validatePhoneNumber(phone) {
-    // Удаляем пробелы и дефисы
-    const cleanedPhone = phone.replace(/[\s-]+/g, '');
-
-    // Проверяем, соответствует ли номер формату +7 и 10 цифрам
-    const phoneRegex = /^\+7\d{10}$/;
-
-    return phoneRegex.test(cleanedPhone);
-}
-
-
-function validateOrganization(name) {
-    // Удаляем пробелы по краям и проверяем, что строка не пустая
-    const trimmedName = name.trim();
-
-    // Проверяем, соответствует ли название требованиям
-    const nameRegex = /^[a-zA-Zа-яА-ЯёЁ0-9.,'"() -]{3,200}$/;
-
-    return trimmedName.length > 0 && nameRegex.test(trimmedName);
-}
+import validateName from "../utils/validate/name.js";
+import validatePhoneNumber from "../utils/validate/phone.js";
+import validateOrganization from "../utils/validate/organization.js";
 
 export default {
 

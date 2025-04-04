@@ -248,6 +248,15 @@ export default {
         }
 
 
+        if(conferenceInfo?.directionsIds.length > 0) {
+            await DirectionInConference.destroy({
+                where: {
+                    directionId: conferenceInfo.directionsIds,
+                    conferenceId: conference.id,
+                }
+            })
+        }
+
         if (conferenceInfo.deadline ) {
           if (conference?.stages?.length > 0 || conferenceInfo?.stages?.length > 0) {
               const isDeadlineInStages = conference.stages?.some(item => item.date === conferenceInfo.deadline);
