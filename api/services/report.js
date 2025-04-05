@@ -257,7 +257,7 @@ export default {
             })
 
 
-        if(!report) throw new AppErrorInvalid('report')
+        if(!report) throw new AppErrorInvalid('deadline')
 
         if(report.participantOfReport[0].who === 'Автор'){
 
