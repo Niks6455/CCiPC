@@ -46,6 +46,11 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
 
+  const funSetSoauthorEditing = (key, value) => {
+    console.log('key, value', key, value);
+    setSoauthorEditing({ ...soauthorEditing, [key]: value });
+  };
+
   const funDeleteCoauthor = (index, id) => {
     dispatch(deleteCoauthor({ index, id }));
   };
@@ -237,6 +242,8 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     // dispatch(setCoauthorDataApi({ index, data: { [key]: value } }));
   };
 
+  console.log('soauthorEditing', soauthorEditing);
+
   return (
     <div className={styles.AddCoauthor}>
       {report?.openPopUpName && (
@@ -311,7 +318,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
               list={formParticipationList}
               itemKey={'form'}
               value={soauthorEditing?.form}
-              handleChangeForm={handleChangeForm}
+              handleChangeForm={funSetSoauthorEditing}
             />
           </div>
           <div className={styles.inputbox}>

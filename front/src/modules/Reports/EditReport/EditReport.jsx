@@ -21,6 +21,7 @@ function EditReport() {
   const reportQery = useQuery({
     queryKey: [`${idReport}`, idReport],
     queryFn: () => apiGetReportId(idReport),
+    staleTime: Infinity,
     enabled: !!idReport,
   });
   useEffect(() => {
@@ -30,7 +31,7 @@ function EditReport() {
     if (soauthor && data?.author?.email !== user?.email) {
       setSoauthorEditing(soauthor);
     }
-  }, [reportQery]);
+  }, [reportQery?.data?.data?.report?.coAuthors]);
 
   useEffect(() => {
     const idReport = searchParams.get('idReport'); // Получаем idReport из query параметров
@@ -79,7 +80,7 @@ function EditReport() {
   return (
     <section className={styles.EditReport}>
       {soauthorEditing && <h2 className={styles.title}>Доклад №{number}</h2>}
-      {!soauthorEditing && <CreateReport edit={true} soauthorEditing={soauthorEditing} />}
+      {!soauthorEditing && <CreateReport edit={true} />}
       <div className={styles.otstup}></div>
       <AddCoauthor
         edit={true}

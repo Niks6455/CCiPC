@@ -144,7 +144,7 @@ function ProfileEditing() {
 
   const handleSubmit = () => {
     if (validate()) {
-      apiUpdateUser({ formData, phone: `+${formData.phone.replace(/\D/g, '')}` }).then(res => {
+      apiUpdateUser({ ...formData, phone: `+${formData.phone.replace(/\D/g, '')}` }).then(res => {
         if (res?.status === 200) {
           setModalSucces(true);
         }

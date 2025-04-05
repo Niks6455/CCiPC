@@ -5,14 +5,13 @@ import errorList from './../../../assets/img/UI/errorZnak.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { setValue } from '../../../store/reportCreateSlice/reportCreateSlice';
 import InputListForma from '../../../components/InputListForma/InputListForma';
-import download from './../../../assets/img/UI/download.svg';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { server } from '../../../apirequests/apirequests';
-import { decodeFileName, decodeText } from '../../../utils/functions/funcions';
+import { decodeText } from '../../../utils/functions/funcions';
 import { funGetError, funValidateAll } from './functions';
 
-function CreateReport({ edit, soauthorEditing }) {
+function CreateReport({ edit }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
@@ -113,7 +112,6 @@ function CreateReport({ edit, soauthorEditing }) {
           className={`${funGetError(errors, 'name') ? styles.error_input_name : ''} ${styles.nameReportInput}`}
           value={report.data.name}
           onChange={event => funChangeNameReport(event.target.value)}
-          readOnly={soauthorEditing}
         />
       </div>
 
@@ -125,7 +123,6 @@ function CreateReport({ edit, soauthorEditing }) {
           value={report.data.directionConference}
           handleChangeForm={handleChangeForm}
           error={funGetError(errors, 'directionConference')}
-          readOnly={soauthorEditing}
         />
         <InputListForma
           name={'Форма участия'}
@@ -134,7 +131,6 @@ function CreateReport({ edit, soauthorEditing }) {
           value={report.data.formParticipation}
           handleChangeForm={handleChangeForm}
           error={funGetError(errors, 'formParticipation')}
-          readOnly={soauthorEditing}
         />
         <div className={`${styles.input_organization} ${styles.organization_mobile}`}>
           <span>Организация</span>
@@ -145,7 +141,6 @@ function CreateReport({ edit, soauthorEditing }) {
             placeholder="Ваша организация"
             onFocus={e => (e.target.placeholder = '')}
             onBlur={e => (e.target.placeholder = 'Ваша организация')}
-            readOnly={soauthorEditing}
           />
         </div>
         <InputListForma
@@ -155,7 +150,6 @@ function CreateReport({ edit, soauthorEditing }) {
           value={report.data.participationStatus}
           handleChangeForm={handleChangeForm}
           error={funGetError(errors, 'participationStatus')}
-          readOnly={soauthorEditing}
         />
       </div>
       <div className={styles.inputsContainer}>
@@ -173,7 +167,6 @@ function CreateReport({ edit, soauthorEditing }) {
               placeholder="Ваша организация"
               onFocus={e => (e.target.placeholder = '')}
               onBlur={e => (e.target.placeholder = 'Ваша организация')}
-              readOnly={soauthorEditing}
             />
           </div>
         </div>
@@ -187,7 +180,7 @@ function CreateReport({ edit, soauthorEditing }) {
               <FileComponent
                 logoHeader={file1Url}
                 data={report.data.fileArticle}
-                setData={value => (!soauthorEditing ? funChangeFile(value, 'fileArticle') : null)}
+                setData={value => funChangeFile(value, 'fileArticle')}
                 typeFile={['application/pdf']}
                 accept={'.pdf'}
                 name={'fileArticle'}
@@ -195,17 +188,8 @@ function CreateReport({ edit, soauthorEditing }) {
                 itemKey={'fileArticle'}
                 fileSize={20} // размер файла
                 text={'Необходимо загрузить<br/>файл в формате PDF'}
-                readOnly={soauthorEditing}
               />
             </div>
-            {!soauthorEditing && (
-              <div className={styles.downloadShablon}>
-                <div className={styles.shablon} onClick={funDownloadShablon}>
-                  <span>Шаблон</span>
-                  <img src={download} alt="img" />
-                </div>
-              </div>
-            )}
           </div>
         </div>
         <div className={styles.box}>
@@ -223,7 +207,6 @@ function CreateReport({ edit, soauthorEditing }) {
                 itemKey={'fileExpertOpinion'}
                 fileSize={20} // размер файла
                 text={'Необходимо загрузить<br/>файл в формате PDF'}
-                readOnly={soauthorEditing}
               />
             </div>
           </div>
@@ -246,7 +229,6 @@ function CreateReport({ edit, soauthorEditing }) {
               dispatch(setValue({ key: 'comments', value: event.target.value }));
               setErrors(prev => prev.filter(item => item.key !== 'comments'));
             }}
-            readOnly={soauthorEditing}
           />
         </div>
       </div>
