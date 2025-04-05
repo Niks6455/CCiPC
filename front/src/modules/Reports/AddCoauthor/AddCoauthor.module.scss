@@ -218,8 +218,10 @@ $w3: 480px;
   }
 
   .soauthorEditing {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+
+    grid-template-columns: auto minmax(auto, 33%) auto;
+    // flex-wrap: wrap;
     justify-content: space-between;
     input {
       width: torem(350px);

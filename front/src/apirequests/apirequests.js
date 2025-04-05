@@ -97,8 +97,9 @@ export const apiCreateReport = async data => {
     const response = await api.post(`${server}/reports`, data);
     return response;
   } catch (error) {
-    return error;
     console.log('apiCreateReport ', error);
+
+    return error;
   }
 };
 
@@ -139,6 +140,7 @@ export const apiEditReport = async (id, data) => {
     return response;
   } catch (error) {
     console.log('apiEditReport ', error);
+    return error;
   }
 };
 

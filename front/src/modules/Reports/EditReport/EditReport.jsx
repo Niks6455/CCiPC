@@ -7,6 +7,7 @@ import AddCoauthor from '../AddCoauthor/AddCoauthor';
 import { disEditReport } from '../../../store/reportCreateSlice/reportCreateSlice';
 import { useQuery } from '@tanstack/react-query';
 import { apiGetReportId } from '../../../apirequests/apirequests';
+import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 
 function EditReport() {
   const dispatch = useDispatch();
@@ -18,20 +19,22 @@ function EditReport() {
   const [idReport, setIdReport] = useState(null);
   const user = useSelector(state => state.user.user.data);
 
-  const reportQery = useQuery({
+  console.log('soauthorEditing', soauthorEditing);
+
+  const { data: reportQery, isPending: isLoading } = useQuery({
     queryKey: [`${idReport}`, idReport],
     queryFn: () => apiGetReportId(idReport),
     staleTime: Infinity,
     enabled: !!idReport,
   });
   useEffect(() => {
-    const data = reportQery?.data?.data?.report;
+    const data = reportQery?.data?.report;
     setReportData(data);
     const soauthor = data?.coAuthors?.find(soauthor => soauthor?.email === user?.email);
     if (soauthor && data?.author?.email !== user?.email) {
       setSoauthorEditing(soauthor);
     }
-  }, [reportQery?.data?.data?.report?.coAuthors]);
+  }, [reportQery?.data?.report?.coAuthors]);
 
   useEffect(() => {
     const idReport = searchParams.get('idReport'); // Получаем idReport из query параметров
@@ -76,6 +79,10 @@ function EditReport() {
       dispatch(disEditReport({ data: temp }));
     }
   }, [reportData]);
+
+  if (isLoading || !reportData?.author?.email || !user?.email) {
+    return <CircleLoader />;
+  }
 
   return (
     <section className={styles.EditReport}>

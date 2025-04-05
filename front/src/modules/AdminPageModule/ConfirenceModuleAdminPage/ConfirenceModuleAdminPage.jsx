@@ -13,7 +13,6 @@ import {
   apiGetConferencesById,
   apiPutConferencesById,
   uploadMulti,
-  uploadPhoto,
 } from '../../../apirequests/apirequests';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
@@ -22,6 +21,7 @@ import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSucces
 import { conferenceDataNull, fileKeys } from './data';
 import ReqError from '../../../components/ReqError/ReqError';
 import { fetchConferences } from '../../../store/conferencesSlice/conferences.Slice';
+import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 
 function ConfirenceModuleAdminPage() {
   const dispatch = useDispatch();
@@ -33,7 +33,11 @@ function ConfirenceModuleAdminPage() {
   const [modalSucces, setModalSucces] = useState(null);
   const [errors, setErrors] = useState([]);
 
-  const conferensetQery = useQuery({
+  const {
+    data: conferensetQery,
+    isPending: isLoading,
+    refetch: refetchConferense,
+  } = useQuery({
     queryKey: [`${conferenseId}`, conferenseId],
     queryFn: () => apiGetConferencesById(conferenseId),
     enabled: !!conferenseId,
@@ -58,7 +62,7 @@ function ConfirenceModuleAdminPage() {
   }, [conferenses]);
 
   const funUpdData = () => {
-    const qery = conferensetQery?.data?.data?.conference;
+    const qery = conferensetQery?.data?.conference;
     if (qery) {
       let data = {
         stages: qery.stages.map(item => ({
@@ -92,7 +96,7 @@ function ConfirenceModuleAdminPage() {
   //! получение конференции
   useEffect(() => {
     funUpdData();
-  }, [conferensetQery?.data?.data?.conference]);
+  }, [conferensetQery?.data?.conference]);
 
   //! отправка файлов массивом организаторы и партнеры
   const funApiEditFileMulti = (files, keys, conferenseId) => {
@@ -164,6 +168,7 @@ function ConfirenceModuleAdminPage() {
           if (data.deleteIds.length > 0) {
             apiDeleteMulti({ ids: data.deleteIds });
           }
+          refetchConferense();
         } else {
           funSetErrors('main', false);
           setModalSucces(false);
@@ -180,6 +185,7 @@ function ConfirenceModuleAdminPage() {
           dispatch(fetchConferences());
           //! загрузка файлов
           funApiEditFileMulti(data, fileKeys, conferenseId);
+          refetchConferense();
         } else {
           funSetErrors('main', false);
           setModalSucces(false);
@@ -193,9 +199,18 @@ function ConfirenceModuleAdminPage() {
     setDeleteOrganizer([]);
     setDeletePartners([]);
     funUpdData();
+    window.location.reload();
   };
 
   console.log('data', data);
+
+  if (isLoading) {
+    return (
+      <>
+        <CircleLoader />
+      </>
+    );
+  }
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>

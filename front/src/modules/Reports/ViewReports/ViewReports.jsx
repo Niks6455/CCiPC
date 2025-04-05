@@ -10,10 +10,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
 import { decodeFileName } from '../../../utils/functions/funcions';
 import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
+import LoadingComponent from '../../../components/LoadingComponent/LoadingComponent';
+import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 
 function ViewReports() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector(state => state.user.user.data);
+
   const report = useSelector(state => state.reportsSlice.data);
   const [searchParams] = useSearchParams(); // Получаем query параметры
   const [reportData, setReportData] = useState(null);
@@ -24,14 +28,15 @@ function ViewReports() {
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [idReport, setIdReport] = useState(null);
 
-  const reportQery = useQuery({
+  const { isPending: isLoading, data: reportQery } = useQuery({
     queryKey: [`${idReport}`, idReport],
     queryFn: () => apiGetReportId(idReport),
+    staleTime: Infinity,
     enabled: !!idReport,
   });
 
   useEffect(() => {
-    setReportData(reportQery?.data?.data?.report);
+    setReportData(reportQery?.data?.report);
   }, [reportQery]);
 
   const handleMouseEnter = index => {
@@ -81,7 +86,9 @@ function ViewReports() {
 
   const funOpenFile = file => {
     //открытие файла по ссылке
-    window.open(`${server}/${file}`, '_blank');
+    if (file) {
+      window.open(`${server}/${file}`, '_blank');
+    }
   };
 
   const getFileName = file => {
@@ -89,175 +96,191 @@ function ViewReports() {
     return decodeFileName(file);
   };
 
+  console.log('reportData', reportData);
+
+  if (isLoading) {
+    return (
+      <>
+        <CircleLoader />
+      </>
+    );
+  }
+
   return (
     <section className={styles.ViewReports}>
-      <AnimatePresence>
-        {isModalDelete && (
-          <div className={styles.modal_container}>
-            <motion.div
-              className={styles.modal_delete_report}
-              initial={{ opacity: 0, scale: 0.6 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.6 }}
-            >
-              <h2>
-                Вы действительно хотите удалить доклад
-                <br /> "{reportData?.name}”? <br />
-                Отменить это действие будет невозможно.
-              </h2>
-              <div className={styles.button_container}>
-                <button className={styles.cancle} onClick={() => setIsModalDelete(false)}>
-                  Назад
-                </button>
-                <button className={styles.delete} onClick={funDeleteReport}>
-                  Удалить
-                </button>
+      {isLoading === false && (
+        <>
+          <AnimatePresence>
+            {isModalDelete && (
+              <div className={styles.modal_container}>
+                <motion.div
+                  className={styles.modal_delete_report}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.6 }}
+                >
+                  <h2>
+                    Вы действительно хотите удалить доклад
+                    <br /> "{reportData?.name}”? <br />
+                    Отменить это действие будет невозможно.
+                  </h2>
+                  <div className={styles.button_container}>
+                    <button className={styles.cancle} onClick={() => setIsModalDelete(false)}>
+                      Назад
+                    </button>
+                    <button className={styles.delete} onClick={funDeleteReport}>
+                      Удалить
+                    </button>
+                  </div>
+                </motion.div>
               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+            )}
+          </AnimatePresence>
 
-      <div className={styles.ViewReportsInner}>
-        <div className={styles.ViewReportsInnerFirst}>
-          <div className={styles.ViewReportsBlock}>
-            <p className={styles.ViewReportsTitle}>Автор:</p>
-            <p>{reportData?.author?.fio}</p>
-          </div>
-          <div className={styles.ViewReportsBlock}>
-            <p className={styles.ViewReportsTitle}>Название доклада № {number}:</p>
-            <p>{reportData?.name}</p>
-          </div>
-          <div className={styles.ViewReportsBlock}>
-            <p className={styles.ViewReportsTitle}>Направление конференции:</p>
-            <p>{reportData?.direction?.name}</p>
-          </div>
-          <div className={styles.ViewReportsBlock}>
-            <p className={styles.ViewReportsTitle}>Форма участия:</p>
-            <p>{reportData?.author?.form}</p>
-          </div>
-          <div className={styles.ViewReportsBlock}>
-            <p className={styles.ViewReportsTitle}>Статус участия:</p>
-            <p>{reportData?.author?.status}</p>
-          </div>
-          <div className={styles.ViewReportsBlock}>
-            <p className={styles.ViewReportsTitle}>Комментарий:</p>
-            <p>{reportData?.comment}</p>
-          </div>
-        </div>
-        <div className={styles.ViewReportsInnerSecond}>
-          <div className={styles.ViewReportsSoauthors}>
-            <p className={styles.ViewReportsTitle}>Соавторы:</p>
-            {Array.from(
-              { length: reportData?.cacheCoAuthors },
-              (_, index) => index + reportData?.cacheCoAuthors,
-            ).map((_, index) => (
-              <div key={index}>
-                <p className={styles.name}>{`${
-                  index + 1
-                }. Данный соавтор еще не зарегистрировался на платформе`}</p>
+          <div className={styles.ViewReportsInner}>
+            <div className={styles.ViewReportsInnerFirst}>
+              <div className={styles.ViewReportsBlock}>
+                <p className={styles.ViewReportsTitle}>Автор:</p>
+                <p>{reportData?.author?.fio}</p>
               </div>
-            ))}
-            {reportData?.coAuthors?.map((item, index) => (
-              <div key={index + 'coAuthors'}>
-                <p className={styles.name}>{`${
-                  index + 1 + reportData?.cacheCoAuthors
-                }. ${item.fio}`}</p>
-                <ul>
-                  <li>
-                    <p>{item?.organization || 'Отсутствует'}</p>
-                  </li>
-                  <li>
-                    <p>{item?.email || 'Отсутствует'}</p>
-                  </li>
-                  <li>
-                    <p>{item?.phone || 'Отсутствует'}</p>
-                  </li>
-                  <li>
-                    <p>{item?.status || 'Отсутствует'}</p>
-                  </li>
-                  <li>
-                    <p>{item?.form || 'Отсутствует'}</p>
-                  </li>
-                </ul>
+              <div className={styles.ViewReportsBlock}>
+                <p className={styles.ViewReportsTitle}>Название доклада № {number}:</p>
+                <p>{reportData?.name}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </div>
-      <div className={styles.fileLouders}>
-        <div
-          className={styles.fileContur}
-          onMouseEnter={() => handleMouseEnter(1)}
-          onMouseLeave={() => handleMouseLeave()}
-          onMouseMove={handleMouseMove}
-        >
-          <p className={styles.fileLoudersTitle}>Доклад:</p>
-          <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.reportFile)}>
-            <img src={BlockFile} alt="img" />
-            <div className={styles.fileName}>
-              <span>{getFileName(reportData?.reportFile) || 'Документ.pdf'}</span>
+              <div className={styles.ViewReportsBlock}>
+                <p className={styles.ViewReportsTitle}>Направление конференции:</p>
+                <p>{reportData?.direction?.name}</p>
+              </div>
+              <div className={styles.ViewReportsBlock}>
+                <p className={styles.ViewReportsTitle}>Форма участия:</p>
+                <p>{reportData?.author?.form}</p>
+              </div>
+              <div className={styles.ViewReportsBlock}>
+                <p className={styles.ViewReportsTitle}>Статус участия:</p>
+                <p>{reportData?.author?.status}</p>
+              </div>
+              <div className={styles.ViewReportsBlock}>
+                <p className={styles.ViewReportsTitle}>Комментарий:</p>
+                <p>{reportData?.comment}</p>
+              </div>
             </div>
-            {/* <BlockFile /> */}
+            <div className={styles.ViewReportsInnerSecond}>
+              <div className={styles.ViewReportsSoauthors}>
+                <p className={styles.ViewReportsTitle}>Соавторы:</p>
+                {Array.from(
+                  { length: reportData?.cacheCoAuthors },
+                  (_, index) => index + reportData?.cacheCoAuthors,
+                ).map((_, index) => (
+                  <div key={index}>
+                    <p className={styles.name}>{`${
+                      index + 1
+                    }. Данный соавтор еще не зарегистрировался на платформе`}</p>
+                  </div>
+                ))}
+                {reportData?.coAuthors?.map((item, index) => (
+                  <div key={index + 'coAuthors'}>
+                    <p className={styles.name}>{`${
+                      index + 1 + reportData?.cacheCoAuthors
+                    }. ${item.fio}`}</p>
+                    <ul>
+                      <li>
+                        <p>{item?.organization || 'Отсутствует'}</p>
+                      </li>
+                      <li>
+                        <p>{item?.email || 'Отсутствует'}</p>
+                      </li>
+                      <li>
+                        <p>{item?.phone || 'Отсутствует'}</p>
+                      </li>
+                      <li>
+                        <p>{item?.status || 'Отсутствует'}</p>
+                      </li>
+                      <li>
+                        <p>{item?.form || 'Отсутствует'}</p>
+                      </li>
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          {showTooltip === 1 && (
+          <div className={styles.fileLouders}>
             <div
-              style={{
-                left: coordinates.x - 380,
-                top: coordinates.y - 530,
-              }}
-              className={styles.repName}
+              className={styles.fileContur}
+              onMouseEnter={() => handleMouseEnter(1)}
+              onMouseLeave={() => handleMouseLeave()}
+              onMouseMove={handleMouseMove}
             >
-              Просмотреть
+              <p className={styles.fileLoudersTitle}>Доклад:</p>
+              <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.reportFile)}>
+                <img src={BlockFile} alt="img" />
+                <div className={styles.fileName}>
+                  <span>{getFileName(reportData?.reportFile) || 'Документ.pdf'}</span>
+                </div>
+                {/* <BlockFile /> */}
+              </div>
+              {showTooltip === 1 && (
+                <div
+                  style={{
+                    left: coordinates.x - 380,
+                    top: coordinates.y - 500,
+                  }}
+                  className={styles.repName}
+                >
+                  {reportData?.conclusion ? 'Открыть' : 'Документ отсутствует'}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <div
-          className={styles.fileContur}
-          onMouseEnter={() => handleMouseEnter(2)}
-          onMouseLeave={() => handleMouseLeave()}
-          onMouseMove={handleMouseMove}
-        >
-          <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
-          <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.conclusion)}>
-            <img src={BlockFile} alt="img" />
+            <div
+              className={styles.fileContur}
+              onMouseEnter={() => handleMouseEnter(2)}
+              onMouseLeave={() => handleMouseLeave()}
+              onMouseMove={handleMouseMove}
+            >
+              <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
+              <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.conclusion)}>
+                <img src={BlockFile} alt="img" />
 
-            <div className={styles.fileName}>
-              <span>{getFileName(reportData?.conclusion) || 'Документ.pdf'}</span>
-            </div>
-            {/* <BlockFile
+                <div className={styles.fileName}>
+                  <span>{getFileName(reportData?.conclusion) || 'Документ.pdf'}</span>
+                </div>
+                {/* <BlockFile
               className={styles.blockFile}
               onClick={() => funOpenFile(reportData?.conclusion)}
             /> */}
-          </div>
-          {showTooltip === 2 && (
-            <div
-              style={{
-                left: coordinates.x - 1060,
-                top: coordinates.y - 465,
-              }}
-              className={styles.repName}
-            >
-              Открыть
+              </div>
+              {showTooltip === 2 && (
+                <div
+                  style={{
+                    left: coordinates.x - 1060,
+                    top: coordinates.y - 500,
+                  }}
+                  className={styles.repName}
+                >
+                  {reportData?.conclusion ? 'Открыть' : 'Документ отсутствует'}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
-      <div className={styles.EditDataReport}>
-        <button
-          className={styles.button_edit}
-          onClick={() => {
-            dispatch(disSetResetReport());
-            navigate(`/account/editreport?idReport=${idReport}&number=${number}`);
-          }}
-        >
-          Редактировать данные
-        </button>
-        <button className={styles.button_delete} onClick={deleteReportOpenModal}>
-          <span>Удалить доклад</span>
-          <Trash />
-        </button>
-      </div>
+          </div>
+          <div className={styles.EditDataReport}>
+            <button
+              className={styles.button_edit}
+              onClick={() => {
+                dispatch(disSetResetReport());
+                navigate(`/account/editreport?idReport=${idReport}&number=${number}`);
+              }}
+            >
+              Редактировать данные
+            </button>
+            {reportData?.author?.id === user?.id && (
+              <button className={styles.button_delete} onClick={deleteReportOpenModal}>
+                <span>Удалить доклад</span>
+                <Trash />
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </section>
   );
 }

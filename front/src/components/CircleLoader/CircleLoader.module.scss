@@ -1,0 +1,32 @@
+.CircleLoader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 70vh;
+}
+.CircleLoader__circle {
+  width: 100px;
+  height: 100px;
+  background-color: #004529;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(0.5);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

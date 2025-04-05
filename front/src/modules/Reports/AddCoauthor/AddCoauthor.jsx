@@ -37,6 +37,8 @@ import { fetchReports } from '../../../store/reportsSlice/reportsSlice';
 import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal';
 import InputListForma from '../../../components/InputListForma/InputListForma';
 import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
+import ErrorModal from '../../../components/ErrorModal/ErrorModal';
+import { useState } from 'react';
 
 function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const navigate = useNavigate();
@@ -45,6 +47,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const conferenceId = useSelector(state => state.conferences?.data[0]?.id);
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
+  const [errorModal, setErrorModal] = useState(false);
 
   const funSetSoauthorEditing = (key, value) => {
     console.log('key, value', key, value);
@@ -123,6 +126,10 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
           dispatch(disSetResetReport());
           setSoauthorEditing(null);
+        } else {
+          if (res?.response?.data?.errNum === 204) {
+            setErrorModal(true);
+          }
         }
       });
       return;
@@ -229,7 +236,11 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
               }),
             );
           } else {
-            dispatch(setOpenPopUpName({ name: 'FildeModal' }));
+            if (res?.response?.data?.errNum === 204) {
+              setErrorModal(true);
+            } else {
+              dispatch(setOpenPopUpName({ name: 'FildeModal' }));
+            }
           }
         }
       });
@@ -242,10 +253,9 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     // dispatch(setCoauthorDataApi({ index, data: { [key]: value } }));
   };
 
-  console.log('soauthorEditing', soauthorEditing);
-
   return (
     <div className={styles.AddCoauthor}>
+      <ErrorModal title="Срок подачи докладов истек!" open={errorModal} close={setErrorModal} />
       {report?.openPopUpName && (
         <div className={styles.popups}>
           {report?.openPopUpName === 'SameEmail' && <SameEmail />}

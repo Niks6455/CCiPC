@@ -146,8 +146,8 @@ function FileComponent(props) {
   };
 
   const funOpenFile = () => {
-    if (typeof props.logoHeader === 'string') {
-      window.open(`${server}/${props.logoHeader}`, '_blank');
+    if (props.logoHeader && typeof props.logoHeader === 'string') {
+      window.open(props.logoHeader, '_blank');
     }
   };
 
