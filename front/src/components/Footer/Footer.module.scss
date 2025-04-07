@@ -46,7 +46,7 @@ $w3: 480px;
         display: flex;
         width: torem(270px);
         height: torem(195px);
-        overflow: hidden;
+        overflow: visible;
         @media (max-width: $w2) {
           width: torem(159px);
           height: torem(128px);
@@ -56,7 +56,7 @@ $w3: 480px;
         }
 
         img {
-          object-fit: cover;
+          // object-fit: cover;
           width: 100%;
           height: 100%;
         }

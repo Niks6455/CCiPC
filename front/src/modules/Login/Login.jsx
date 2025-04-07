@@ -66,9 +66,17 @@ function Login(props) {
                 navigate('/login/confirmLogin');
               }
             });
-            console.log('data', data);
           } else {
-            setOpenModal(true);
+            if (data?.response?.data?.errNum === 201) {
+              setErrors({ email: 'Неверный логин' });
+              return;
+            }
+            if (data?.response?.data?.errNum === 204) {
+              setErrors({ password: 'Неверный пароль' });
+              return;
+            } else {
+              setOpenModal(true);
+            }
           }
         }
       });
@@ -85,11 +93,7 @@ function Login(props) {
 
   return (
     <section className={styles.Login}>
-      <ErrorModal
-        title={'Ошибка авторизации, неверный логин или пароль!'}
-        open={openModal}
-        close={setOpenModal}
-      />
+      <ErrorModal title={'Ошибка авторизации!'} open={openModal} close={setOpenModal} />
       <div className={styles.LoginLogo}>
         <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>

@@ -30,6 +30,8 @@ $w3: 480px;
       img {
         height: torem(170px);
         width: torem(170px);
+        cursor: pointer;
+        @include HoverActiveOpacity;
         @media (max-width: $w3) {
           height: torem(100px);
           width: torem(100px);
@@ -130,7 +132,7 @@ $w3: 480px;
         font-size: torem(20px);
         @media (max-width: $w3) {
           font-size: torem(16px);
-          height: torem(52px);
+          height: torem(40px);
         }
       }
     }

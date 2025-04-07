@@ -9,13 +9,20 @@ $w3: 480px;
     margin-bottom: torem(40px);
     width: 100%;
     @media (max-width: $w2) {
-      display: none;
+      position: fixed;
+      left: torem(25px);
+      top: torem(10px);
+      width: max-content;
     }
     img {
       width: torem(169px);
       height: torem(169px);
       cursor: pointer;
       @include HoverActiveOpacity;
+      @media (max-width: $w2) {
+        width: torem(60px);
+        height: torem(60px);
+      }
     }
   }
   .LoginTitle {

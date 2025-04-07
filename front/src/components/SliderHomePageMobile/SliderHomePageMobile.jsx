@@ -11,7 +11,6 @@ function SliderHomePageMobile() {
   const [slides, setSlides] = useState([]);
   const containerRef = useRef(null); // Reference to the scrollable container
   const itemsRef = useRef([]); // References to all team_item elements
-
   useEffect(() => {
     getAllNews().then(res => {
       if (res?.status === 200) {
@@ -72,7 +71,7 @@ function SliderHomePageMobile() {
                   <SlideArrowIcon />
                 </button>
               </div>
-              <img className={styles.main_img} src={`${server}/${item?.img}`} alt="img" />
+              <img className={styles.main_img} src={`${server}/${item.img?.url}`} alt="img" />
               <button className={styles.allNews} onClick={() => navigate('/news')}>
                 <span>Все новости</span>
                 <img src={newsArrIcon} alt="img" />

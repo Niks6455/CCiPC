@@ -10,7 +10,7 @@ import { setEmailSand } from '../../../store/userSlice/user.Slice';
 
 function EnteringEmail() {
   const navigate = useNavigate();
-  const [email, setEmail ] = useState();
+  const [email, setEmail] = useState();
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
   const funChangeEmail = e => {
@@ -27,7 +27,7 @@ function EnteringEmail() {
       };
       apiSandReset(data).then(res => {
         if (res?.status === 200) {
-          dispatch(setEmailSand({ email: email}));
+          dispatch(setEmailSand({ email: email }));
           sessionStorage.setItem('confirmEmail', email);
           setError(false);
           navigate('checkemail');
@@ -44,7 +44,7 @@ function EnteringEmail() {
     <div className={styles.EnteringEmail}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <img src={logoIcon} alt="Логотип" />
+          <img src={logoIcon} alt="Логотип" onClick={() => navigate('/')} />
         </div>
         <h2>Забыли пароль?</h2>
         <p>Чтобы задать новый пароль, введите электронную почту своего аккаунта</p>

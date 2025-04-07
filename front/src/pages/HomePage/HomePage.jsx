@@ -26,6 +26,10 @@ function HomePage({ userRole }) {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     if (conferencesStatus === 'loading') {
       setLoading(true);
     }

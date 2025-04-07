@@ -11,6 +11,7 @@ const SliderHomePage = () => {
     getAllNews().then(res => {
       if (res?.status === 200) {
         setSlides(res?.data?.news?.splice(0, 5));
+        console.log('res', res);
       }
     });
   }, []);
@@ -60,7 +61,9 @@ const SliderHomePage = () => {
               <div className={styles.Sliderimage}>
                 <img
                   src={
-                    slides[currentSlide].img?.url ? ` ${server}/${slides[currentSlide].img?.url}` : noPhoto
+                    slides[currentSlide].img?.url
+                      ? ` ${server}/${slides[currentSlide].img?.url}`
+                      : noPhoto
                   }
                   alt={slide.title}
                 />
