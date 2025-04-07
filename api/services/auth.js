@@ -108,6 +108,7 @@ export default {
             where: { email: email }
         });
 
+        if(!participant) throw new AppErrorNotExist('email')
         if (!participant || !participant.validatePassword(password)) throw new AppErrorInvalid('Login or password', 403);
 
         if(!participant.activate) throw new AppErrorForbiddenAction('no activate');
