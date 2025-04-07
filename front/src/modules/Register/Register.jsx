@@ -394,7 +394,9 @@ function Register() {
       </div>
       <div className={styles.noAccount}>
         <p>Уже есть аккаунт?</p>
-        <p onClick={() => navigate('/login/authorization')}>Авторизируйтесь</p>
+        <p onClick={() => navigate('/login/authorization')} className={styles.link}>
+          Авторизируйтесь
+        </p>
       </div>
     </section>
   );

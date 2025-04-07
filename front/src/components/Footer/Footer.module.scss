@@ -169,7 +169,9 @@ $w3: 480px;
         }
 
         a {
-          text-decoration: none;
+          text-decoration: underline;
+          text-decoration-style: solid;
+          text-decoration-thickness: 0%;
           color: var(--ColorLink);
           margin-left: torem(5px);
           cursor: pointer;

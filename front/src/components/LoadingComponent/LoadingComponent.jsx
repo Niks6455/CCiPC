@@ -28,8 +28,8 @@ function LoadingComponent({ setLoading, status }) {
       <div className={styles.container}>
         <motion.div
           className={styles.logo}
-          animate={{ scaleX: [1, -1, 1] }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+          // animate={{ scaleX: [1, -1, 1] }}
+          // transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
         >
           <div
             className={styles.imageWrapper}

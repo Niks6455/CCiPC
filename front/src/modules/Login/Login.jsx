@@ -153,7 +153,9 @@ function Login(props) {
       </div>
       <div className={styles.noAccount}>
         <p>Еще нет аккаунта?</p>
-        <p onClick={() => navigate('/login/registration')}>Зарегистрируйтесь</p>
+        <p onClick={() => navigate('/login/registration')} className={styles.link}>
+          Зарегистрируйтесь
+        </p>
       </div>
     </section>
   );

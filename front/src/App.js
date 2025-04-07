@@ -73,8 +73,6 @@ function App() {
     dispatch(disResetUser());
     //! чистим данные докладов
     dispatch(disResetReports());
-    //! чистим данные конференций
-    dispatch(disResetConferences());
   };
 
   useEffect(() => {
