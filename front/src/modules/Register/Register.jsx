@@ -280,7 +280,7 @@ function Register() {
               name="academicTitle"
               onChange={handleChange}
               value={registration?.data?.academicTitle}
-              placeholder="Ученое звание"
+              placeholder="Ученое звание*"
               open={openList === 'academicTitle'}
               funOpen={funOpenList}
               divRef={refList[1]}
@@ -292,7 +292,7 @@ function Register() {
               name="degree"
               onChange={handleChange}
               value={registration?.data?.degree}
-              placeholder="Степень"
+              placeholder="Степень*"
               open={openList === 'degree'}
               funOpen={funOpenList}
               divRef={refList[2]}

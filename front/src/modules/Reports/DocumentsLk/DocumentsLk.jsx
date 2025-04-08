@@ -5,8 +5,10 @@ import document from './../../../assets/img/document.svg';
 import plus from './../../../assets/img/UI/plusLigth.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
+import { convertDateTire } from '../../../utils/functions/funcions';
 
 function DocumentsLk() {
+  const conferense = useSelector(state => state.conferences?.data[0]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const reports = useSelector(state => state.reportsSlice.data);
@@ -20,6 +22,8 @@ function DocumentsLk() {
     navigate('/account/createreport');
     dispatch(disSetResetReport());
   };
+
+  console.log('new', new Date(convertDateTire(conferense?.dedlineReport2)) > new Date());
 
   return (
     <section className={styles.DocumentsLk}>
@@ -36,9 +40,17 @@ function DocumentsLk() {
           </div>
 
           <div className={styles.notDocumentButton}>
-            <button onClick={creatReaport}>
-              <img src={plus} alt="+" /> <span>Создать</span>
-            </button>
+            {new Date(convertDateTire(conferense?.dedlineReport2)) > new Date() ? (
+              <button onClick={creatReaport}>
+                <img src={plus} alt="+" /> <span>Создать</span>
+              </button>
+            ) : (
+              <span className={styles.dedline}>
+                В данный период доступ для подачи
+                <br />
+                докладов на конференцию закрыт
+              </span>
+            )}
           </div>
         </div>
       </div>

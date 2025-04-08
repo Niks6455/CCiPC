@@ -8,7 +8,7 @@ import { apiDeleteReport, apiGetReportId, server } from '../../../apirequests/ap
 import { disDeleteReport } from '../../../store/reportsSlice/reportsSlice';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { decodeFileName } from '../../../utils/functions/funcions';
+import { convertDateTire, decodeFileName } from '../../../utils/functions/funcions';
 import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
 import LoadingComponent from '../../../components/LoadingComponent/LoadingComponent';
 import CircleLoader from '../../../components/CircleLoader/CircleLoader';
@@ -27,6 +27,7 @@ function ViewReports() {
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [idReport, setIdReport] = useState(null);
+  const conferense = useSelector(state => state.conferences?.data[0]);
 
   const { isPending: isLoading, data: reportQery } = useQuery({
     queryKey: [`${idReport}`, idReport],
@@ -184,19 +185,20 @@ function ViewReports() {
                     }. ${item.fio}`}</p>
                     <ul>
                       <li>
+                        <span>Организация:</span>
                         <p>{item?.organization || 'Отсутствует'}</p>
                       </li>
                       <li>
-                        <p>{item?.email || 'Отсутствует'}</p>
+                        <span>Email:</span> <p>{item?.email || 'Отсутствует'}</p>
                       </li>
                       <li>
-                        <p>{item?.phone || 'Отсутствует'}</p>
+                        <span>Телефон:</span> <p>{item?.phone || 'Отсутствует'}</p>
                       </li>
                       <li>
-                        <p>{item?.status || 'Отсутствует'}</p>
+                        <span>Статус участия:</span> <p>{item?.status || 'Отсутствует'}</p>
                       </li>
                       <li>
-                        <p>{item?.form || 'Отсутствует'}</p>
+                        <span>Форма участия:</span> <p>{item?.form || 'Отсутствует'}</p>
                       </li>
                     </ul>
                   </div>
@@ -262,23 +264,25 @@ function ViewReports() {
               )}
             </div>
           </div>
-          <div className={styles.EditDataReport}>
-            <button
-              className={styles.button_edit}
-              onClick={() => {
-                dispatch(disSetResetReport());
-                navigate(`/account/editreport?idReport=${idReport}&number=${number}`);
-              }}
-            >
-              Редактировать данные
-            </button>
-            {reportData?.author?.id === user?.id && (
-              <button className={styles.button_delete} onClick={deleteReportOpenModal}>
-                <span>Удалить доклад</span>
-                <Trash />
+          {new Date(convertDateTire(conferense?.dedlineReport2)) > new Date() && (
+            <div className={styles.EditDataReport}>
+              <button
+                className={styles.button_edit}
+                onClick={() => {
+                  dispatch(disSetResetReport());
+                  navigate(`/account/editreport?idReport=${idReport}&number=${number}`);
+                }}
+              >
+                Редактировать данные
               </button>
-            )}
-          </div>
+              {reportData?.author?.id === user?.id && (
+                <button className={styles.button_delete} onClick={deleteReportOpenModal}>
+                  <span>Удалить доклад</span>
+                  <Trash />
+                </button>
+              )}
+            </div>
+          )}
         </>
       )}
     </section>

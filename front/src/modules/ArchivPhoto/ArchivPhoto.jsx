@@ -59,7 +59,7 @@ const ArchivPhoto = () => {
           {index === showTooltip && (
             <div
               style={{
-                left: coordinates.x - 150,
+                left: coordinates.x - 250,
                 top: coordinates.y + 10,
               }}
               className={styles.repName}
