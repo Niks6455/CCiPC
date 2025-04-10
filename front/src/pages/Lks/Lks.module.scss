@@ -6,6 +6,7 @@ $w3: 480px;
   display: flex;
   width: 100%;
   justify-content: space-between;
+  min-height: 100vh;
   .LksContainer {
     width: calc(100vw - torem(620px));
     @include maxMinContent();
