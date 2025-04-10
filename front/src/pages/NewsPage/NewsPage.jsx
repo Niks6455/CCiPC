@@ -1,7 +1,6 @@
 import NewsCard from '../../components/NewsCard/NewsCard';
 import styles from './NewsPage.module.scss';
 import Layout from '../../ui/Layout/Layout';
-import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 import NavBar from '../../components/NavBar/NavBar';
 import logoHeader from './../../assets/img/logo.png';
 import { useEffect, useState } from 'react';

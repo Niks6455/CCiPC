@@ -7,7 +7,7 @@ $w3: 480px;
   width: 100%;
   justify-content: space-between;
   .LksContainer {
-    width: 100%;
+    width: calc(100vw - torem(620px));
     @include maxMinContent();
     padding: torem(50px) torem(80px);
     @media (max-width: $w2) {

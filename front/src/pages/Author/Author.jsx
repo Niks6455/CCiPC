@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../ui/Layout/Layout';
-import Footer from '../../components/Footer/Footer';
 import styles from './Author.module.scss';
 import AuthorCollection from '../../components/AuthorCollection/AuthorCollection';
-import { dataLink } from './data.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import Book from '../../assets/img/Book.svg';
 import Cap from '../../assets/img/Cap.svg';
@@ -13,7 +11,10 @@ import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests.js';
 import { decodeFileName } from '../../utils/functions/funcions.js';
+import logoHeader from './../../assets/img/logo.png';
+
 function Author({ userRole }) {
+  const navigate = useNavigate();
   const [selectedButton, setSelectedButton] = useState('Registration');
   const [data, setData] = useState([]);
   const conference = useSelector(state => state?.conferences?.data[0]);
@@ -42,6 +43,12 @@ function Author({ userRole }) {
 
   return (
     <main>
+      <img
+        style={{ cursor: 'pointer' }}
+        src={logoHeader}
+        className={styles.logo}
+        onClick={() => navigate('/')}
+      />
       <NavBar userRole={userRole} />
       <HeaderPhone />
       <Layout>

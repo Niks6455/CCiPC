@@ -21,7 +21,8 @@ function ProfileEditing() {
   const dispatch = useDispatch();
   const ref1 = useRef(null);
   const ref2 = useRef(null);
-  const refList = [ref1, ref2];
+  const ref3 = useRef(null);
+  const refList = [ref1, ref2, ref3];
   const fileInputRef = useRef(null);
   const [openPhoto, setOpenPhoto] = useState(false);
   const [openList, setOpenList] = useState('');
@@ -211,7 +212,12 @@ function ProfileEditing() {
         )}
       </AnimatePresence>
 
-      <ModalPhoto funOpenPhotoProfile={funOpenPhoto} showProfilePhoto={openPhoto} user={user} />
+      <ModalPhoto
+        funOpenPhotoProfile={funOpenPhoto}
+        showProfilePhoto={openPhoto}
+        user={user}
+        urlPhoto={urlPhoto}
+      />
 
       <div className={styles.head}>
         <div className={styles.profilePhoto}>
@@ -247,34 +253,14 @@ function ProfileEditing() {
             (item, index) =>
               index <= 5 && (
                 <div className={styles.item}>
-                  {item.list ? (
-                    <InputList
-                      name={item.title}
-                      onChange={handleChange}
-                      value={formData[item.title]}
-                      placeholder=""
-                      open={openList === item.title}
-                      funOpen={funOpenList}
-                      divRef={refList[index - 3]}
-                      list={item.list}
-                      labelText={item.name}
-                      styleArrow={{ height: '54px', bottom: '25px' }}
-                      listStyle={{ transform: 'translateY(calc(100% - 26px))' }}
-                      inputerrorStyle={{ top: '25px' }}
-                      funSelectElement={funSelectedElement}
-                      error={errors[item.title]}
-                    />
-                  ) : (
-                    <Input
-                      name={item.title}
-                      onChange={handleChange}
-                      value={formData[item.title]}
-                      placeholder=""
-                      error={errors[item.title]}
-                      labelText={item.name}
-                      inputerrorStyle={{ top: '25px' }}
-                    />
-                  )}
+                  <Input
+                    name={item.title}
+                    onChange={handleChange}
+                    value={formData[item.title]}
+                    placeholder=""
+                    error={errors[item.title]}
+                    labelText={item.name}
+                  />
                 </div>
               ),
           )}
@@ -284,15 +270,18 @@ function ProfileEditing() {
             (item, index) =>
               index > 5 && (
                 <div className={styles.item}>
-                  <Input
-                    disabled={item.disabled}
+                  <InputList
                     name={item.title}
                     onChange={handleChange}
                     value={formData[item.title]}
-                    placeholder={''}
+                    placeholder=""
+                    open={openList === item.title}
+                    funOpen={funOpenList}
+                    divRef={refList[index - 6]}
+                    list={item.list}
                     labelText={item.name}
+                    funSelectElement={funSelectedElement}
                     error={errors[item.title]}
-                    inputerrorStyle={{ top: '25px' }}
                   />
                 </div>
               ),

@@ -1,10 +1,36 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .NavBar {
+  width: 100vw;
+  box-sizing: border-box;
+  padding-top: 25px;
+  padding-right: 25px;
   position: fixed;
-  right: torem(25px);
-  top: torem(25px);
-  z-index: 1000;
-  @media (max-width: 480px) {
+  display: flex;
+  justify-content: end;
+  // right: torem(25px);
+  // top: torem(25px);
+  top: 0;
+  left: 0;
+  z-index: 10005;
+  @media (max-width: $w3) {
     display: none;
+  }
+  .logo {
+    display: none;
+    @media (max-width: $w2) {
+      display: flex;
+      position: absolute;
+      left: torem(25px);
+      top: torem(10px);
+
+      img {
+        width: torem(60px);
+        height: torem(60px);
+      }
+    }
   }
   .NavBarButton {
     display: flex;

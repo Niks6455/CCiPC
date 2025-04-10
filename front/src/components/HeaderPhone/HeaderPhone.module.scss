@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .HeaderPhoneContainer {
   align-items: center;
   justify-content: end;
@@ -9,11 +13,22 @@
   right: 0;
   display: none;
   z-index: -1;
-  @media (max-width: 480px) {
-    display: flex;
+  @media (max-width: $w3) {
+    display: flex !important;
     z-index: 10000;
-    position: fixed;
+    position: fixed !important;
   }
+
+  .logo {
+    position: absolute;
+    left: torem(25px);
+    top: torem(10px);
+    img {
+      width: torem(60px);
+      height: torem(60px);
+    }
+  }
+
   .NavBarMenu {
     span {
       display: flex;
@@ -34,24 +49,25 @@
       }
     }
   }
-  &:hover {
-    cursor: pointer;
-    .NavBarMenu {
-      span {
-        &:nth-child(1) {
-          width: 37px;
-        }
-        &:nth-child(2) {
-          width: 27px;
-          margin-left: 0px;
-        }
-        &:nth-child(3) {
-          width: 22px;
-        }
-      }
-    }
-  }
-  @media (max-width: 480px) {
+
+  // &:hover {
+  //   cursor: pointer;
+  //   .NavBarMenu {
+  //     span {
+  //       &:nth-child(1) {
+  //         width: 37px;
+  //       }
+  //       &:nth-child(2) {
+  //         width: 27px;
+  //         margin-left: 0px;
+  //       }
+  //       &:nth-child(3) {
+  //         width: 22px;
+  //       }
+  //     }
+  //   }
+  // }
+  @media (max-width: $w3) {
     display: flex;
   }
   .NavBarMenuContainer {
@@ -89,23 +105,23 @@
         }
       }
     }
-    &:hover {
-      cursor: pointer;
-      .NavBarMenu {
-        span {
-          &:nth-child(1) {
-            width: 37px;
-          }
-          &:nth-child(2) {
-            width: 27px;
-            margin-left: 0px;
-          }
-          &:nth-child(3) {
-            width: 22px;
-          }
-        }
-      }
-    }
+    // &:hover {
+    //   cursor: pointer;
+    //   .NavBarMenu {
+    //     span {
+    //       &:nth-child(1) {
+    //         width: 37px;
+    //       }
+    //       &:nth-child(2) {
+    //         width: 27px;
+    //         margin-left: 0px;
+    //       }
+    //       &:nth-child(3) {
+    //         width: 22px;
+    //       }
+    //     }
+    //   }
+    // }
     .NavBarMenuContainerInner {
       background-color: var(--GreenColorDefault);
       border-radius: 0px 0px 10px 10px;

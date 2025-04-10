@@ -6,19 +6,28 @@ $w3: 480px;
   @media (max-width: $w2) {
     display: none;
   }
-  padding: torem(10px) 0px 0px torem(20px);
   display: block;
-  border-right: torem(1px) solid var(--InputColors);
   width: torem(310px);
   min-width: torem(310px);
+  max-width: torem(310px);
   @include maxMinContent();
   height: auto;
   box-sizing: border-box;
+  background-color: var(--BodyBgColor);
+  border-right: torem(1px) solid var(--InputColors);
+  min-height: 90vh;
+
   .LeftMenuLkInner {
-    position: fixed;
+    position: absolute;
     width: torem(310px);
     min-width: torem(310px);
+    max-width: torem(310px);
+    padding: torem(10px) 0px 0px torem(20px);
+    border-right: torem(1px) solid var(--InputColors);
+
     z-index: 10000;
+    box-sizing: border-box;
+    background-color: var(--BodyBgColor);
   }
   .LogoImg {
     width: torem(110px);

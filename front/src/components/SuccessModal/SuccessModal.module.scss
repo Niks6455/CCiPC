@@ -14,7 +14,7 @@ $w3: 480px;
     width: 60vw;
   }
   @media (max-width: $w3) {
-    width: 100vw;
+    width: calc(100vw - torem(40px));
   }
   .title {
     font-family: Overpass, sans-serif;
@@ -33,7 +33,7 @@ $w3: 480px;
     margin: 0 auto;
     @media (max-width: $w3) {
       font-size: torem(16px);
-      width: auto;
+      width: 100%;
       padding: 0 torem(40px);
     }
   }

@@ -5,11 +5,15 @@ import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
+import logo from '@assets/img/logo.png';
+import { convertDate } from '../../utils/functions/funcions';
+
 function NavBar(props) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const refMenu = useRef(null);
+  const stages = useSelector(state => state.conferences.data[0]?.stages);
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -25,6 +29,9 @@ function NavBar(props) {
 
   return (
     <section className={styles.NavBar}>
+      <div className={styles.logo}>
+        <img src={logo} alt="logo" />
+      </div>
       <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
         <p>Меню</p>
         <div className={styles.NavBarMenu}>
@@ -126,22 +133,13 @@ function NavBar(props) {
             )}
           </ul>
           <div className={styles.RightMenuText}>
-            <div className={styles.RightMenuTextCont}>
-              <p className={styles.RightMenuTextGroup}>01.09.2024</p>
-              <p>Представление текстов докладов и регистрационных форм</p>
-            </div>
-            <div className={styles.RightMenuTextCont}>
-              <p className={styles.RightMenuTextGroup}>08.09.2024</p>
-              <p>Информирование авторов о результатах экспертизы докладов</p>
-            </div>
-            <div className={styles.RightMenuTextCont}>
-              <p className={styles.RightMenuTextGroup}>15.09.2024</p>
-              <p>Оплата оргвзноса за опубликование принятых докладов</p>
-            </div>
-            <div className={styles.RightMenuTextCont}>
-              <p className={styles.RightMenuTextGroup}>23.09.2024</p>
-              <p>Начало работы конференции</p>
-            </div>
+            {stages?.length > 0 &&
+              stages.map((item, index) => (
+                <div key={index} className={styles.RightMenuTextCont}>
+                  <p className={styles.RightMenuTextGroup}>{convertDate(item.date)}</p>
+                  <p>{item.name}</p>
+                </div>
+              ))}
           </div>
         </div>
       </div>

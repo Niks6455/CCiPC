@@ -10,6 +10,7 @@ import profile from '@assets/img/headPhoneIcon/profile.svg';
 import documents from '@assets/img/headPhoneIcon/documents.svg';
 import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import logo from '@assets/img/logo.png';
 
 function HeaderPhone(props) {
   const [activeMenu, setActiveMenu] = useState(false);
@@ -26,12 +27,7 @@ function HeaderPhone(props) {
     setActiveMenuListSecond(false);
   };
 
-  const updateVisibility = () => {
-    const url = window.location.href;
-    const shouldShow =
-      (url.includes('/account') && window.innerWidth < 770) || window.innerWidth < 480;
-    setIsVisible(shouldShow);
-  };
+  const updateVisibility = () => {};
 
   useEffect(() => {
     updateVisibility(); // Initial check
@@ -46,12 +42,14 @@ function HeaderPhone(props) {
         style={{
           display: isVisible ? 'flex' : 'none',
           position: isVisible ? 'fixed' : 'absolute',
-          zIndex: isVisible ? 10000 : -1,
+          // zIndex: isVisible ? 10000 : -1,
         }}
       >
+        {/* <div className={styles.logo}>
+          <img src={logo} alt="logo" />
+        </div> */}
         <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(!activeMenu)}>
           <div className={styles.NavBarMenu}>
-            <span></span>
             <span></span>
             <span></span>
           </div>
