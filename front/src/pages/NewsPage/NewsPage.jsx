@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { getAllNews } from '../../apirequests/apirequests';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useNavigate } from 'react-router-dom';
+import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 
 function NewsPage({ userRole }) {
   const navigate = useNavigate();
@@ -58,9 +59,9 @@ function NewsPage({ userRole }) {
           <div className={styles.Title}>
             <h2>НОВОСТИ</h2>
           </div>
-          {/* <div className={styles.ClickerYears}>
+          <div className={styles.ClickerYears}>
             <ClickerYears data={allDataSliders} />
-          </div> */}
+          </div>
           <div className={styles.NewsPageContainer}>
             {allDataSliders.length === 0 && (
               <div className={styles.NoNews}>Новости отсутствуют :(</div>

@@ -37,6 +37,7 @@ $w4: 480px;
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     box-sizing: border-box;
+    margin-top: torem(90px);
 
     @media (max-width: 1390px) {
       grid-template-columns: repeat(2, 1fr);
@@ -52,7 +53,6 @@ $w4: 480px;
       text-align: center;
       margin: 0 auto;
       width: 100vw;
-      margin-top: torem(90px);
       font-family: Overpass;
       font-weight: 300;
       font-size: torem(22px);

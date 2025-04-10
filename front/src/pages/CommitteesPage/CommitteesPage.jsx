@@ -97,12 +97,12 @@ export default function CommitteesPage({ userRole }) {
 
   return (
     <>
-      <img
+      {/* <img
         style={{ cursor: 'pointer' }}
         src={logoHeader}
         className={styles.logo}
         onClick={() => navigate('/')}
-      />
+      /> */}
       <NavBar userRole={userRole} />
       <HeaderPhone />
       <div>

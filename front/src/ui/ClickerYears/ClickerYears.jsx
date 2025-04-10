@@ -5,15 +5,14 @@ function ClickerYears(props) {
   const [activeYears, setActiveYears] = useState(2024);
   const [dateArray, setDateArray] = useState([]);
   useEffect(() => {
-    const dateArray = props.data.map((item) => {
-      return  item.createdAt.split('T')[0].split('-')[0];
+    const dateArray = props.data.map(item => {
+      return item.createdAt.split('T')[0].split('-')[0];
     });
     setDateArray([...new Set(dateArray)]);
   }, [props.data]);
-        
+
   return (
     <div className={styles.ClickerYears}>
-      
       {/* <div
         className={`${styles.ClickerYearsEl} ${activeYears === 2025 ? styles.Active : ''}`}
         onClick={() => setActiveYears(2025)}
@@ -21,7 +20,7 @@ function ClickerYears(props) {
         2025
         <img src={Calendar} alt="Calendar" />
       </div> */}
-      {dateArray.map((item) => (
+      {dateArray.map(item => (
         <div
           className={`${styles.ClickerYearsEl} ${activeYears === item ? styles.Active : ''}`}
           onClick={() => setActiveYears(item)}
