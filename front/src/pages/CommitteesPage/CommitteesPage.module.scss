@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .organizationComiteMain {
   display: flex;
   flex-direction: column;
@@ -28,7 +32,7 @@
 h2 {
   font-size: torem(30px);
   font-weight: 600;
-  @media (max-width: 1376px) {
+  @media (max-width: $w2) {
     font-size: torem(20px);
     font-weight: 500;
   }
@@ -41,11 +45,14 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .organizationComiteImages {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: torem(30px);
-    @media (max-width: 1376px) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: torem(32px);
+    justify-content: center;
+    max-width: torem(1300px);
+    @media (max-width: $w2) {
       grid-template-columns: repeat(2, 1fr);
       gap: torem(10px);
     }
@@ -89,7 +96,7 @@ h2 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: torem(30px);
-    @media (max-width: 1376px) {
+    @media (max-width: $w2) {
       grid-template-columns: repeat(2, 1fr);
       gap: torem(10px);
     }

@@ -62,6 +62,9 @@ function NewsPage({ userRole }) {
             <ClickerYears data={allDataSliders} />
           </div> */}
           <div className={styles.NewsPageContainer}>
+            {allDataSliders.length === 0 && (
+              <div className={styles.NoNews}>Новости отсутствуют :(</div>
+            )}
             <div className={styles.NewsPageContainerInner}>
               {dataSliderFirstColumn.map((el, index) => (
                 <div key={index}>

@@ -22,11 +22,11 @@ $w4: 480px;
 
 .NewsPage {
   overflow: hidden;
-  margin-top: torem(170px);
   width: 100vw;
   margin-bottom: torem(100px);
   max-width: torem(1420px);
-  margin: 170px auto 0px auto;
+  margin: torem(170px) auto 0px auto;
+  margin-top: torem(50px);
   @include maxMinContent(146px);
   @media (max-width: 990px) {
     margin-top: torem(70px);
@@ -46,6 +46,22 @@ $w4: 480px;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+    }
+
+    .NoNews {
+      text-align: center;
+      margin: 0 auto;
+      width: 100vw;
+      margin-top: torem(90px);
+      font-family: Overpass;
+      font-weight: 300;
+      font-size: torem(22px);
+      line-height: 120%;
+      letter-spacing: 0%;
+      color: #333333;
+      @media (max-width: $w2) {
+        font-size: torem(16px);
+      }
     }
   }
   .Title {

@@ -10,7 +10,7 @@ import { getAllArchiveReport } from '../../apirequests/apirequests.js';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests.js';
-import { decodeFileName } from '../../utils/functions/funcions.js';
+import { decodeFileName, decodeText } from '../../utils/functions/funcions.js';
 import logoHeader from './../../assets/img/logo.png';
 
 function Author({ userRole }) {
@@ -21,17 +21,16 @@ function Author({ userRole }) {
   useEffect(() => {
     getAllArchiveReport().then(res => setData(res?.data?.archives || []));
   }, [selectedButton]);
-
   //! функция скачивания шаблока
   const funDownloadShablon = async () => {
     try {
-      const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+      const response = await fetch(`${server}/${conference?.files?.SAMPLE[0]?.url}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      const name = decodeFileName(conference?.documents?.SAMPLE?.name?.split('\\').pop());
+      const name = decodeText(conference?.files?.SAMPLE[0]?.name);
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+      link.download = name || 'default_filename.docx'; // Файл точно сохранится с этим именем
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -97,7 +96,7 @@ function Author({ userRole }) {
               </p>
               <p className={styles.registration_text_3}>
                 1) доклад, оформленный по{' '}
-                <a onClick={() => funDownloadShablon} target="_blank" className={styles.green_link}>
+                <a onClick={funDownloadShablon} target="_blank" className={styles.green_link}>
                   шаблону
                 </a>{' '}
                 в Word;

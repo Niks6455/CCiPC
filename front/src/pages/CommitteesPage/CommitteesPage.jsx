@@ -11,6 +11,8 @@ import { getOrgCommitet } from '../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useNavigate } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
+
 export default function CommitteesPage({ userRole }) {
   const navigate = useNavigate();
   const [organizationComite, setOrganizationComite] = useState(0);
@@ -20,6 +22,7 @@ export default function CommitteesPage({ userRole }) {
   const [datePeopleSecond, setDatePeopleSecond] = useState(null);
   const context = useContext(DataContext);
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
+  const [isVisible, setIsVisible] = useState(false);
 
   const ButtonOneDats = [
     {
@@ -77,6 +80,21 @@ export default function CommitteesPage({ userRole }) {
     setDatePeopleOne(committeeOne);
     setDatePeopleSecond(committeeTwo);
   };
+
+  const handleScroll = () => {
+    if (window.scrollY > 300) {
+      setIsVisible(true);
+    } else {
+      setIsVisible(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
       <img
@@ -117,7 +135,7 @@ export default function CommitteesPage({ userRole }) {
                 <ChangeButtons buttonArray={ButtonSecondDats} setIndex={setProgrammingComite} />
               </div>
               {/* images */}
-              <div className={styles.programmingComiteImages}>
+              <div className={styles.organizationComiteImages}>
                 {datePeopleSecond?.map((el, index) => (
                   <ProfileCard data={el} key={index} />
                 ))}
@@ -133,9 +151,18 @@ export default function CommitteesPage({ userRole }) {
       </div>{' '}
       {!context.activeMenu && (
         <div className={styles.greenArrowContainer}>
-          <a href="#top">
-            <div className={styles.greenArrow}></div>
-          </a>
+          <AnimatePresence>
+            {isVisible && (
+              <motion.a
+                href="#top"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <div className={`${styles.greenArrow}`}></div>
+              </motion.a>
+            )}
+          </AnimatePresence>
         </div>
       )}
     </>
