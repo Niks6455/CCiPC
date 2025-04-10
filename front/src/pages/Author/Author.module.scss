@@ -21,9 +21,11 @@ $w4: 480px;
 .logo {
   width: torem(110px);
   height: torem(110px);
-  position: absolute;
+  position: fixed;
   top: torem(25px);
   left: torem(25px);
+  z-index: 10020;
+  @include HoverActiveOpacity;
   @media (max-width: 990px) {
     width: torem(60px);
     height: torem(60px);

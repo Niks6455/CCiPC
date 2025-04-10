@@ -1,6 +1,6 @@
 export const tableHead = [
   { key: 'number', value: '№', isActive: true },
-  { key: 'fio', value: 'Ф.И.О', isActive: true },
+  { key: 'fio', value: 'ФИО', isActive: true },
   { key: 'organization', value: 'Организация', isActive: true },
   { key: 'status', value: 'Участие', isActive: true },
   { key: 'direction', value: 'Направление', isActive: true },

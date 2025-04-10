@@ -45,12 +45,12 @@ function NewsPage({ userRole }) {
 
   return (
     <>
-      <img
+      {/* <img
         style={{ cursor: 'pointer' }}
         src={logoHeader}
         className={styles.logo}
         onClick={() => navigate('/')}
-      />
+      /> */}
       <NavBar userRole={userRole} />
       <HeaderPhone />
       <main className={styles.NewsPage}>

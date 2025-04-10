@@ -19,17 +19,19 @@ $w3: 480px;
     display: none;
   }
   .logo {
-    display: none;
-    @media (max-width: $w2) {
-      display: flex;
-      position: absolute;
-      left: torem(25px);
-      top: torem(10px);
+    width: torem(110px);
+    height: torem(110px);
+    display: flex;
+    position: fixed;
+    left: torem(25px);
+    top: torem(10px);
+    z-index: 10010;
+    @include HoverActiveOpacity;
+    cursor: pointer;
 
-      img {
-        width: torem(60px);
-        height: torem(60px);
-      }
+    @media (max-width: $w2) {
+      width: torem(60px);
+      height: torem(60px);
     }
   }
   .NavBarButton {

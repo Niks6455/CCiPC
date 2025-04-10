@@ -30,7 +30,7 @@ function NavBar(props) {
   return (
     <section className={styles.NavBar}>
       <div className={styles.logo}>
-        <img src={logo} alt="logo" />
+        <img src={logo} alt="logo" onClick={() => navigate('/')} />
       </div>
       <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
         <p>Меню</p>

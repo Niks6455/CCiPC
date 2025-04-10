@@ -3,6 +3,12 @@
   flex-direction: column;
   align-items: center;
   gap: torem(10px);
+  @media (max-width: 1376px) {
+    width: torem(350px);
+  }
+  @media (max-width: 768px) {
+    width: torem(300px);
+  }
   img {
     width: torem(412px);
     height: torem(412px);
@@ -22,6 +28,7 @@
     font-weight: 700;
     font-size: torem(22px);
     text-align: center;
+    max-width: 100%;
     @media (max-width: 1376px) {
       font-size: torem(18px);
     }
