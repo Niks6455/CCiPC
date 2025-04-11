@@ -8,7 +8,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 function ScrollHeader({ userRole }) {
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const navigate = useNavigate();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const navi = [

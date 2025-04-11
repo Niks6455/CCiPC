@@ -25,12 +25,6 @@ function RightMenuLk(props) {
     };
   }, []);
 
-  const location = useLocation();
-
-  useEffect(() => {
-    context.setActiveMenu(false);
-  }, [location.pathname]);
-
   return (
     <section className={`${styles.RightMenuLk} ${checkPathName() ? styles.RightMenuLkhide : ''}`}>
       <div className={styles.RightMenuLkContainer} ref={refMenu}>

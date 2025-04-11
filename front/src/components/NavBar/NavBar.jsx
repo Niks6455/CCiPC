@@ -14,6 +14,11 @@ function NavBar(props) {
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const stages = useSelector(state => state.conferences.data[0]?.stages);
   
+  const location = useLocation();
+
+  useEffect(() => {
+    context.setActiveMenu(false);
+  }, [location.pathname]);
   return (
     <section className={styles.NavBar}>
       <div className={styles.logo}>
