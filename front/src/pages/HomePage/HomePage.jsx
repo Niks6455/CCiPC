@@ -11,6 +11,7 @@ import { server } from '../../apirequests/apirequests';
 import { useEffect, useState } from 'react';
 
 import LoadingComponent from '../../components/LoadingComponent/LoadingComponent';
+import ScrollHeader from '../../components/ScrollHeader/ScrollHeader';
 
 function HomePage({ userRole }) {
   const conferencesStatus = useSelector(state => state.conferences.status);
@@ -96,6 +97,7 @@ function HomePage({ userRole }) {
   return (
     <div className={styles.HomePage}>
       {loading && <LoadingComponent setLoading={setLoading} status={conferencesStatus} />}
+      <ScrollHeader userRole={userRole} />
       <HeaderPhone />
       <Header userRole={userRole} />
       <TopMainInfo />

@@ -1,0 +1,35 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
+.ScrollHeader {
+  position: fixed;
+  width: 100vw;
+  display: flex;
+  justify-content: flex-end;
+  z-index: 10100;
+  background-color: #0045290a;
+  backdrop-filter: blur(6px);
+  padding: torem(10px) torem(100px);
+
+  ul {
+    @include listNoStyle;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: end;
+    li {
+      width: max-content;
+      text-align: end;
+      color: #004529;
+      padding: torem(5px) torem(10px);
+      cursor: pointer;
+      @include HoverActive;
+      border-radius: torem(10px);
+      font-weight: 700;
+      font-size: torem(18px);
+      line-height: 120%;
+      letter-spacing: 0%;
+    }
+  }
+}
