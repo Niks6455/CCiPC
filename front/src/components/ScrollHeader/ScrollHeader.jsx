@@ -42,17 +42,13 @@ function ScrollHeader({ userRole }) {
   const handleScroll = () => {
     const currentScrollY = window.scrollY;
 
-    // Show header only if scrolled down more than 500 pixels
     if (currentScrollY > 500) {
       if (currentScrollY > lastScrollY) {
-        // Scrolling down
         setShow(false);
       } else {
-        // Scrolling up
         setShow(true);
       }
     } else {
-      // Hide header if less than 500 pixels
       setShow(false);
     }
 
