@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import styles from './NavBar.module.scss';
 import closeImg from './../../assets/img/closeImg.png';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
@@ -12,24 +12,10 @@ function NavBar(props) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
-  const refMenu = useRef(null);
   const stages = useSelector(state => state.conferences.data[0]?.stages);
-
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (refMenu.current && !refMenu.current.contains(event.target)) {
-        context.setActiveMenu(false);
-        console.log('event.target', event.target);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
+  
   return (
-    <section className={styles.NavBar} ref={refMenu}>
+    <section className={styles.NavBar}>
       <div className={styles.logo}>
         <img src={logo} alt="logo" onClick={() => navigate('/')} />
       </div>
@@ -51,7 +37,6 @@ function NavBar(props) {
               <li
                 onClick={() => {
                   navigate(autorisation ? '/account/profile' : '/login/authorization');
-                  context.setActiveMenu(false);
                 }}
               >
                 {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
@@ -64,7 +49,6 @@ function NavBar(props) {
             <li
               onClick={() => {
                 navigate('/');
-                context.setActiveMenu(false);
               }}
             >
               Главная
@@ -75,7 +59,6 @@ function NavBar(props) {
             <li
               onClick={() => {
                 navigate('/author');
-                context.setActiveMenu(false);
               }}
             >
               Автору{' '}
@@ -86,7 +69,6 @@ function NavBar(props) {
             <li
               onClick={() => {
                 navigate('/news');
-                context.setActiveMenu(false);
               }}
             >
               Новости{' '}
@@ -97,7 +79,6 @@ function NavBar(props) {
             <li
               onClick={() => {
                 navigate('/participants');
-                context.setActiveMenu(false);
               }}
             >
               Участники{' '}
@@ -108,7 +89,6 @@ function NavBar(props) {
             <li
               onClick={() => {
                 navigate('/organizationcomite');
-                context.setActiveMenu(false);
               }}
             >
               Оргкомитет{' '}
@@ -120,7 +100,6 @@ function NavBar(props) {
               <li
                 onClick={() => {
                   navigate('/adminPage/news');
-                  context.setActiveMenu(false);
                 }}
               >
                 Админ панель{' '}
