@@ -68,7 +68,7 @@ function NewsPage({ userRole }) {
             )}
             <div className={styles.NewsPageContainerInner}>
               {dataSliderFirstColumn.map((el, index) => (
-                <div key={index}>
+                <div className={styles.item} key={index}>
                   <NewsCard data={el} />
                 </div>
               ))}
@@ -76,14 +76,23 @@ function NewsPage({ userRole }) {
 
             <div className={styles.NewsPageContainerInner}>
               {dataSliderTwoColumn.map((el, index) => (
-                <div key={index}>
+                <div key={index} className={styles.item}>
                   <NewsCard data={el} />
                 </div>
               ))}
             </div>
             <div className={styles.NewsPageContainerInner}>
               {dataSliderThreeColumn.map((el, index) => (
-                <div key={index}>
+                <div key={index} className={styles.item}>
+                  <NewsCard data={el} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={`${styles.NewsPageContainer} ${styles.phone}`}>
+            <div className={styles.NewsPageContainerInner}>
+              {allDataSliders.map((el, index) => (
+                <div key={index} className={styles.item}>
                   <NewsCard data={el} />
                 </div>
               ))}

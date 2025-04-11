@@ -21,6 +21,8 @@ $w3: 480px;
   box-sizing: border-box;
   position: relative;
   .RightMenuLkContainer {
+    height: 100%;
+    width: 100%;
     .RightMenuLkList {
       display: flex;
       justify-content: center;

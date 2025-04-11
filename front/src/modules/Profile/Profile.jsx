@@ -17,6 +17,7 @@ function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user.data);
+
   const [showProfilePhoto, setShowProfilePhoto] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [openModalBeznal, setOpenModalBeznal] = useState(false);

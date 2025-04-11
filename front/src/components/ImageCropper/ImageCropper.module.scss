@@ -1,0 +1,30 @@
+.ImageCropper {
+  .editPhoto {
+    @include PopupBlur;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10005;
+
+    .container {
+      @include PopupContainer;
+      display: flex;
+      padding: 40px 70px;
+      width: 600px;
+      height: max-content;
+
+      button {
+        @include ButtonGreen;
+        width: 310px;
+        height: 54px;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 21px;
+        text-align: center;
+        margin-top: 40px;
+      }
+    }
+  }
+}

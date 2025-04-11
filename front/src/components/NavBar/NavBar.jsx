@@ -19,16 +19,17 @@ function NavBar(props) {
     const handleClickOutside = event => {
       if (refMenu.current && !refMenu.current.contains(event.target)) {
         context.setActiveMenu(false);
+        console.log('event.target', event.target);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [context]);
+  }, []);
 
   return (
-    <section className={styles.NavBar}>
+    <section className={styles.NavBar} ref={refMenu}>
       <div className={styles.logo}>
         <img src={logo} alt="logo" onClick={() => navigate('/')} />
       </div>
@@ -40,10 +41,7 @@ function NavBar(props) {
           <span></span>
         </div>
       </button>
-      <div
-        className={`${styles.menu} ${context.activeMenu ? styles.active : styles.disable}`}
-        ref={refMenu}
-      >
+      <div className={`${styles.menu} ${context.activeMenu ? styles.active : styles.disable}`}>
         <div className={styles.menuInner}>
           <button onClick={() => context.setActiveMenu(false)}>
             Скрыть <img src={closeImg} alt="Close" />

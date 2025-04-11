@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiDeleteMulti, apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
-import { disEditUser, setEditUser } from '../../store/userSlice/user.Slice';
+import { disEditUser, fetchUserData, setEditUser } from '../../store/userSlice/user.Slice';
 import { inputsData } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -15,6 +15,8 @@ import redxIcon from '@assets/img/UI/redX.svg';
 import { formatPhoneNumber } from '../../utils/functions/Validations';
 import SuccessModal from '../../components/SuccessModal/SuccessModal';
 import ModalPhoto from '../Profile/components/ModalPhoto/ModalPhoto';
+import 'react-image-crop/dist/ReactCrop.css';
+import ImageCropper from '../../components/ImageCropper/ImageCropper';
 
 function ProfileEditing() {
   const navigate = useNavigate();
@@ -34,6 +36,9 @@ function ProfileEditing() {
   const [popUpSize, setPopUpSize] = useState(false);
   const [modalSucces, setModalSucces] = useState(null);
   const [deleteIdsPhoto, setDeleteIdsPhoto] = useState([]);
+  const [origPhoto, setOrigPhoto] = useState(null);
+  const [editPhoto, setEditPhoto] = useState(false);
+
   useEffect(() => {
     setUrlPhoto(`${server}/${user?.avatar?.url}`);
   }, [user?.avatar]);
@@ -59,11 +64,13 @@ function ProfileEditing() {
   };
 
   const handleFileUpload = file => {
-    if (file.size > 10 * 1024 * 1024) {
+    if (file?.size > 10 * 1024 * 1024) {
       setPopUpSize(true);
     } else {
-      setUserPhoto(file);
       if (file) {
+        setOrigPhoto(file);
+        setUserPhoto(file);
+        setEditPhoto(true);
         setUrlPhoto(URL.createObjectURL(file));
       }
     }
@@ -174,11 +181,29 @@ function ProfileEditing() {
   }, []);
 
   const funOpenPhoto = () => {
-    setOpenPhoto(!openPhoto);
+    if (origPhoto) {
+      setEditPhoto(!editPhoto);
+    } else {
+      setOpenPhoto(!openPhoto);
+    }
+  };
+
+  const funEditPhoto = file => {
+    if (file) {
+      setUserPhoto(file);
+      setUrlPhoto(URL.createObjectURL(file));
+      setEditPhoto(false);
+    }
   };
 
   return (
     <div className={styles.ProfileEditing}>
+      <ImageCropper
+        editPhoto={editPhoto}
+        setEditPhoto={setEditPhoto}
+        urlPhoto={origPhoto ? URL.createObjectURL(origPhoto) : urlPhoto}
+        funEditPhoto={funEditPhoto}
+      />
       <SuccessModal open={modalSucces} close={setModalSucces} />
       <AnimatePresence>
         {popUpSize && (

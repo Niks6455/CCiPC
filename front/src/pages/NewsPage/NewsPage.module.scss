@@ -9,7 +9,7 @@ $w4: 480px;
   position: absolute;
   top: torem(25px);
   left: torem(25px);
-  @media (max-width: 990px) {
+  @media (max-width: $w2) {
     width: torem(60px);
     height: torem(60px);
     top: torem(15px);
@@ -28,7 +28,7 @@ $w4: 480px;
   margin: torem(170px) auto 0px auto;
   margin-top: torem(50px);
   @include maxMinContent(146px);
-  @media (max-width: 990px) {
+  @media (max-width: $w2) {
     margin-top: torem(70px);
   }
 
@@ -37,18 +37,27 @@ $w4: 480px;
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     box-sizing: border-box;
+    width: torem(1300px);
+    margin: 0 auto;
     margin-top: torem(90px);
 
-    @media (max-width: 1390px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 920px) {
+    // @media (max-width: $w2) {
+    //   grid-template-columns: repeat(2, 1fr);
+    // }
+    @media (max-width: $w2) {
+      width: torem(718px);
       display: flex;
-      flex-direction: column;
+      display: none;
+      flex-direction: row;
+      flex-wrap: wrap;
       justify-content: center;
       align-items: center;
     }
 
+    .item {
+      display: flex;
+      justify-content: center;
+    }
     .NoNews {
       text-align: center;
       margin: 0 auto;
@@ -64,13 +73,20 @@ $w4: 480px;
       }
     }
   }
+  .phone {
+    display: none;
+    @media (max-width: $w2) {
+      display: flex !important;
+      width: torem(349px);
+    }
+  }
   .Title {
     display: flex;
     justify-content: center;
     h2 {
       font-size: torem(30px);
       font-weight: 600;
-      @media (max-width: 990px) {
+      @media (max-width: $w2) {
         font-size: torem(18px);
         font-weight: 500;
       }

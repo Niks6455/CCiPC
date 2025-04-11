@@ -11,8 +11,8 @@ $w2: 480px;
   margin: torem(16px);
   width: torem(412px);
   height: max-content;
-  @media (max-width: torem(990px)) {
-    width: torem(412px);
+  @media (max-width: $w1) {
+    width: torem(349px);
     margin: torem(20px) torem(20px);
   }
   @media (max-width: torem(460px)) {
@@ -35,7 +35,7 @@ $w2: 480px;
       font-size: torem(18px);
       color: #858b89;
       margin: 0;
-      @media (max-width: torem(990px)) {
+      @media (max-width: $w1) {
         font-size: torem(16px);
       }
       @media (max-width: torem(770px)) {
@@ -71,7 +71,7 @@ $w2: 480px;
       }
     }
   }
-  @media (min-width: torem(990px)) {
+  @media (min-width: $w1) {
     &:hover {
       // box-shadow: 0 torem(8px) torem(16px) rgba(0, 0, 0, 0.2);
       transform: translateY(-torem(5px));
@@ -86,7 +86,7 @@ $w2: 480px;
       }
     }
   }
-  @media (max-width: torem(990px)) {
+  @media (max-width: $w1) {
     padding-top: torem(290px);
   }
 
