@@ -4,7 +4,7 @@ import styles from './CardCollections.module.scss';
 import { updateArchive, deleteArchive, uploadPhoto, apiDeleteMulti } from '../../../../apirequests/apirequests';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import closeIcon from '@assets/img/closeBack.svg';
-import { decodeFileName } from '../../../../utils/functions/funcions';
+import { decodeName } from '../../../../utils/functions/funcions';
 
 function CardCollections(props) {
   const fileInputRef = useRef(null);
@@ -20,12 +20,12 @@ function CardCollections(props) {
     setDefaultValue({
       name: props?.item?.name || '',
       file: props?.item?.file,
-      fileName: props?.item?.file ? decodeFileName(props?.item?.file?.name?.split('/').pop()) : '',
+      fileName: props?.item?.file ? decodeName(props?.item?.file?.name) : '',
     });
     setDataItem({
       name: props?.item?.name || '',
       file: props?.item?.file,
-      fileName: props?.item?.file ? decodeFileName(props?.item?.file?.name?.split('/').pop()) : '',
+      fileName: props?.item?.file ? decodeName(props?.item?.file?.name) : '',
     });
     setErrorText('');
   }, [props.item]);
@@ -65,6 +65,7 @@ function CardCollections(props) {
 
   const handleFileUpload = event => {
     const file = event?.target?.files[0];
+    console.log('file', file);
     if (file) {
       setDataItem(prev => ({ ...prev, file: file, fileName: file?.name }));
     }
@@ -73,6 +74,8 @@ function CardCollections(props) {
   const handleDeleteFile = () => {
     apiDeleteMulti({ids: [dataItem?.file?.id]}).then(res => {
       if(res?.status === 200) {
+        setDataItem(prev => ({ ...prev, file: null, fileName: '' }));
+        fileInputRef.current.value = null;
         props.updateData();
       }
     })
@@ -111,7 +114,11 @@ function CardCollections(props) {
   };
 
   const handleDelete = () => {
-    setDeleteIds([props.item.id]);
+    deleteArchive(props.item.id).then(res => {
+      if (res?.status === 200) {
+        props.updateData();
+      }
+    })
     setIsChanged(true);
   };
 
@@ -125,7 +132,7 @@ function CardCollections(props) {
   };
 
   return (
-    <div className={styles.CardCollections}>
+    <div className={styles.CardCollections} key={props.item.id}>
       <div className={styles.boxContainer}>
         <label>Название</label>
         <textarea

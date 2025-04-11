@@ -1,17 +1,39 @@
-import React from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styles from './RightMenuLk.module.scss';
 import NavBar from '../../components/NavBar/NavBar';
 import { useSelector } from 'react-redux';
 import { convertDate } from '../../utils/functions/funcions';
+import DataContext from '../../context';
+import { useLocation } from 'react-router-dom';
 function RightMenuLk(props) {
   const stages = useSelector(state => state.conferences.data[0]?.stages);
   const checkPathName = () => {
     return window.location.pathname.includes('/adminPage');
   };
+  const refMenu = useRef(null);
+  const context = useContext(DataContext);
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (refMenu.current && !refMenu.current.contains(event.target)) {
+        context.setActiveMenu(false);
+        console.log('event.target', event.target);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    context.setActiveMenu(false);
+  }, [location.pathname]);
 
   return (
     <section className={`${styles.RightMenuLk} ${checkPathName() ? styles.RightMenuLkhide : ''}`}>
-      <div className={styles.RightMenuLkContainer}>
+      <div className={styles.RightMenuLkContainer} ref={refMenu}>
         <NavBar userRole={props.userRole} admine={props.admine} />
       </div>
       {!checkPathName() && (
