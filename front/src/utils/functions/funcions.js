@@ -174,7 +174,13 @@ export const decodeFileName = file => {
   const decoder = new TextDecoder('utf-8'); // Если файл в CP1251
   const bytes = new Uint8Array(fileName?.split('').map(c => c.charCodeAt(0)));
   return decoder.decode(bytes);
-};
+}
+
+export const decodeName = name => {
+  const decoder = new TextDecoder('utf-8'); // Если файл в CP1251
+  const bytes = new Uint8Array(name?.split('').map(c => c.charCodeAt(0)));
+  return decoder.decode(bytes);
+}
 
 export const decodeText = text => {
   if (!text) return 'Файл';

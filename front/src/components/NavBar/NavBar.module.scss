@@ -178,6 +178,8 @@ $w3: 480px;
         position: relative;
         left: 0.3125rem; /* 5px в rem */
         top: 0.125rem; /* 2px в rem */
+        width: torem(17px);
+        height: torem(14px);
       }
       &:hover {
         padding-left: 2.1875rem; /* 35px в rem */
