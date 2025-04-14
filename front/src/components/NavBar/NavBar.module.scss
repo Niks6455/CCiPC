@@ -14,7 +14,7 @@ $w3: 480px;
   // top: torem(25px);
   top: 0;
   left: 0;
-  z-index: 10010;
+  z-index: 9000;
   @media (max-width: $w3) {
     display: none;
   }
@@ -25,7 +25,7 @@ $w3: 480px;
     position: fixed;
     left: torem(25px);
     top: torem(10px);
-    z-index: 10010;
+    z-index: 9000;
     @include HoverActiveOpacity;
     cursor: pointer;
 

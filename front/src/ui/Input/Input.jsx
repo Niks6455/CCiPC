@@ -2,14 +2,31 @@ import { useState } from 'react';
 import styles from './Input.module.scss';
 import galka from './../../assets/img/UI/galka.svg';
 import krest from './../../assets/img/UI/krest.svg';
+import MobileDetect from 'mobile-detect';
 
 function Input(props) {
+  const md = new MobileDetect(window.navigator.userAgent);
+  const isMobile = md.mobile() !== null;
+  const isTablet = md.tablet() !== null;
+
   const [errorListShow, setErrorListShow] = useState(false);
+
   //! при наведении на img множественных ошибок
+
+  const funClickListErrors = () => {
+    console.log('3');
+
+    if (isMobile || isTablet) {
+      setErrorListShow(!errorListShow);
+    }
+  };
   const funOpenListErrors = () => {
+    if (isMobile || isTablet) return;
+
     setErrorListShow(true);
   };
   const funClouseListErrors = () => {
+    if (isMobile || isTablet) return;
     setErrorListShow(false);
   };
 
@@ -73,6 +90,7 @@ function Input(props) {
             <img
               onMouseEnter={funOpenListErrors}
               onMouseLeave={funClouseListErrors}
+              onClick={funClickListErrors}
               className={styles.errorListLabel}
               src={errorListShow ? props?.errorListImgHover : props?.errorListImgNoHover}
               alt="!"

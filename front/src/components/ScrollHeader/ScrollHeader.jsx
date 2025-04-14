@@ -1,6 +1,5 @@
 import styles from './ScrollHeader.module.scss';
 import { useNavigate } from 'react-router-dom';
-import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -8,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 function ScrollHeader({ userRole }) {
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const navigate = useNavigate();
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const navi = [

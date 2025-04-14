@@ -42,12 +42,8 @@ function HeaderPhone(props) {
         style={{
           display: isVisible ? 'flex' : 'none',
           position: isVisible ? 'fixed' : 'absolute',
-          // zIndex: isVisible ? 10000 : -1,
         }}
       >
-        {/* <div className={styles.logo}>
-          <img src={logo} alt="logo" />
-        </div> */}
         <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(!activeMenu)}>
           <div className={styles.NavBarMenu}>
             <span></span>
@@ -165,30 +161,43 @@ function HeaderPhone(props) {
                                 animate={{ height: 'auto', opacity: 1 }}
                                 exit={{ height: 0, opacity: 0 }}
                               >
-                                <li onClick={() => navigateTo('/account/exitaccount')}>
+                                <li onClick={() => navigateTo('/account/settings/profile')}>
                                   <div className={styles.NavBarMenuListInnerLiImg}>
-                                    <span>
-                                      <img src={logout} />
-                                    </span>
-                                    <p>Выйти из аккаунта</p>
+                                    <span>{/* <img src={deleteImg} /> */}</span>
+                                    <p>Изменить профиль</p>
                                   </div>
                                 </li>
-
-                                <li onClick={() => navigateTo('/account/deleteaccount')}>
+                                <li onClick={() => navigateTo('/account/settings/changepassword')}>
                                   <div className={styles.NavBarMenuListInnerLiImg}>
-                                    <span>
-                                      <img src={deleteImg} />
-                                    </span>
-                                    <p>Удалить аккаунт</p>
+                                    <span>{/* <img src={deleteImg} /> */}</span>
+                                    <p>Сменить пароль</p>
                                   </div>
                                 </li>
                               </motion.div>
                             )}
+                            <li onClick={() => navigateTo('/account/exitaccount')}>
+                              <div className={styles.NavBarMenuListInnerLiImg}>
+                                <span>
+                                  <img src={logout} />
+                                </span>
+                                <p>Выйти из аккаунта</p>
+                              </div>
+                            </li>
+
+                            <li onClick={() => navigateTo('/account/deleteaccount')}>
+                              <div className={styles.NavBarMenuListInnerLiImg}>
+                                <span>
+                                  <img src={deleteImg} />
+                                </span>
+                                <p>Удалить аккаунт</p>
+                              </div>
+                            </li>
                           </AnimatePresence>
                         </motion.div>
                       )}
                     </AnimatePresence>
                   </motion.div>
+
                   <li onClick={() => navigateTo('/')}>Главная</li>
                   <li onClick={() => navigateTo('/author')}>Автору</li>
                   <li onClick={() => navigateTo('/news')}>Новости</li>

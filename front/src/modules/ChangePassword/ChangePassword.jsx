@@ -148,7 +148,7 @@ function ChangePassword() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.6 }}
             >
-              <h2 className={styles.modalText}>Пароль успешно изменен</h2>
+              <h2 className={styles.modalText}>Пароль успешно изменен!</h2>
               <img src={confitmIcon} alt="✅" />
               <button onClick={funClickCloseModal}>Перейти в профиль</button>
             </motion.div>

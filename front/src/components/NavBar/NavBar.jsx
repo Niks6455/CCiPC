@@ -19,7 +19,6 @@ function NavBar(props) {
     const handleClickOutside = event => {
       if (refMenu.current && !refMenu.current.contains(event.target)) {
         context.setActiveMenu(false);
-        console.log('event.target', event.target);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
