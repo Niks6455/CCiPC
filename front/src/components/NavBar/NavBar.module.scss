@@ -2,6 +2,30 @@ $w1: 1366px;
 $w2: 769px;
 $w3: 480px;
 
+.absluteLogo {
+  display: none !important;
+  @media (min-width: 1600px) {
+    position: absolute !important;
+  }
+}
+
+.logo {
+  width: torem(110px);
+  height: torem(110px);
+  display: flex;
+  position: fixed;
+  left: torem(25px);
+  top: torem(10px);
+  z-index: 9000;
+  @include HoverActiveOpacity;
+  cursor: pointer;
+
+  @media (max-width: $w2) {
+    width: torem(60px);
+    height: torem(60px);
+  }
+}
+
 .NavBar {
   width: 100vw;
   box-sizing: border-box;
@@ -14,26 +38,11 @@ $w3: 480px;
   // top: torem(25px);
   top: 0;
   left: 0;
-  z-index: 9000;
+  z-index: 8000;
   @media (max-width: $w3) {
     display: none;
   }
-  .logo {
-    width: torem(110px);
-    height: torem(110px);
-    display: flex;
-    position: fixed;
-    left: torem(25px);
-    top: torem(10px);
-    z-index: 9000;
-    @include HoverActiveOpacity;
-    cursor: pointer;
 
-    @media (max-width: $w2) {
-      width: torem(60px);
-      height: torem(60px);
-    }
-  }
   .NavBarButton {
     display: flex;
     align-items: center;

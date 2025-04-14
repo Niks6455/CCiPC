@@ -11,29 +11,29 @@ $w3: 480px;
   min-width: torem(310px);
   max-width: torem(310px);
   @include maxMinContent();
-  height: auto;
+  height: 100vh;
   box-sizing: border-box;
   background-color: var(--BodyBgColor);
   border-right: torem(1px) solid var(--InputColors);
-  min-height: 90vh;
 
   .LeftMenuLkInner {
-    position: absolute;
+    position: fixed;
     width: torem(310px);
     min-width: torem(310px);
     max-width: torem(310px);
     padding: torem(10px) 0px 0px torem(20px);
     border-right: torem(1px) solid var(--InputColors);
-
-    z-index: 8000;
+    z-index: 9000;
     box-sizing: border-box;
     background-color: var(--BodyBgColor);
+    @media (min-width: 1600px) {
+      position: absolute;
+    }
   }
   .LogoImg {
     width: torem(110px);
     height: torem(110px);
     cursor: pointer;
-    opacity: 0;
   }
   .LeftMenuLkTitle {
     margin: torem(48px) 0px torem(40px) 0px;
@@ -103,7 +103,7 @@ $w3: 480px;
     }
     .setingOpen {
       height: auto;
-      max-height: torem(258px);
+      max-height: torem(150px);
       overflow: auto;
       overflow-x: hidden;
       transition: max-height 0.3s linear;

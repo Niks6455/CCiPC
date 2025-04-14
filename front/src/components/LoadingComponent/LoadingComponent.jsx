@@ -2,8 +2,10 @@ import styles from './LoadingComponent.module.scss';
 import LogoHomePage from '@assets/img/logo.png';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 function LoadingComponent({ setLoading, status }) {
+  const conferences = useSelector(state => state.conferences.data);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
   useEffect(() => {
@@ -13,6 +15,7 @@ function LoadingComponent({ setLoading, status }) {
           clearInterval(interval);
           setTimeout(() => {
             if (status === 'succeeded') setLoading(false);
+            if (conferences?.data?.[0]?.id) setLoading(false);
           }, 500);
           return 100;
         }

@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './LeftMenuLK.module.scss';
 import DataContext from '../../context';
 import logo from './../../assets/img/logo.png';
@@ -11,8 +11,9 @@ import ArchiveiMG from './../../assets/img/UI/archive.png';
 import Lk from './../../assets/img/UI/lk.png';
 import { ReactComponent as BlackArrowBottom } from './../../assets/img/UI/blackArrowBottom.svg';
 import { useSelector } from 'react-redux';
+import { useWindowWidth } from '../../hooks/hooks';
 
-function LeftMenuLk() {
+function LeftMenuLk({ footerRef }) {
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
   const [dokladOpen, setDokladOpen] = useState(false);
@@ -42,9 +43,20 @@ function LeftMenuLk() {
   const handleMouseMove = event => {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
+
+  // useEffect(() => {
+  //   if (footerRef?.current) {
+  //     const footerHeight = footerRef.current.offsetHeight;
+  //     const leftMenu = document.getElementById('leftMenu');
+  //     if (leftMenu) {
+  //       leftMenu.style.bottom = footerHeight + 'px';
+  //     }
+  //   }
+  // }, [footerRef, useWindowWidth()]);
+
   return (
     <section className={styles.LeftMenuLk}>
-      <div className={styles.LeftMenuLkInner}>
+      <div className={styles.LeftMenuLkInner} id="leftMenu">
         <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
         <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
         <ul className={styles.LeftMenuLkList}>

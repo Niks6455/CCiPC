@@ -15,7 +15,7 @@ import ScrollHeader from '../../components/ScrollHeader/ScrollHeader';
 
 function HomePage({ userRole }) {
   const conferencesStatus = useSelector(state => state.conferences.status);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const conference = useSelector(state => state.conferences.data[0]);
   const { topDiv, bottomDiv } = splitDirectionsEvenly(conference?.directions || []);
   const getDescription = text => {
@@ -31,8 +31,12 @@ function HomePage({ userRole }) {
   }, []);
 
   useEffect(() => {
-    if (conferencesStatus === 'loading') {
-      setLoading(true);
+    if (!conference?.data?.[0]?.id) {
+      setLoading(false);
+    } else {
+      if (conferencesStatus === 'loading') {
+        setLoading(true);
+      }
     }
   }, [conferencesStatus]);
 
