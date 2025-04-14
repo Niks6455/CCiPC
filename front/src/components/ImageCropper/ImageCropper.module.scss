@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .ImageCropper {
   .editPhoto {
     @include PopupBlur;
@@ -7,23 +11,42 @@
     top: 0;
     left: 0;
     z-index: 10005;
+    @media (max-width: $w2) {
+      padding-top: torem(50px);
+    }
 
     .container {
       @include PopupContainer;
       display: flex;
-      padding: 40px 70px;
-      width: 600px;
+      padding: torem(40px) torem(70px);
+      width: torem(600px);
       height: max-content;
+      @media (max-width: $w2) {
+        width: max-content;
+      }
+      @media (max-width: $w3) {
+        width: calc(100vw - torem(40px));
+      }
+
+      img {
+        max-height: 50vh;
+      }
 
       button {
         @include ButtonGreen;
-        width: 310px;
-        height: 54px;
-        font-size: 18px;
+        width: torem(310px);
+        height: torem(54px);
+        font-size: torem(18px);
         font-weight: 400;
-        line-height: 21px;
         text-align: center;
-        margin-top: 40px;
+        margin-top: torem(40px);
+
+        @media (max-width: $w2) {
+          font-size: torem(16px);
+          width: max-content;
+          padding: 0 torem(40px);
+          height: torem(54px);
+        }
       }
     }
   }
