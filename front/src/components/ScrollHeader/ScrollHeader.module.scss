@@ -11,6 +11,9 @@ $w3: 480px;
   background-color: #0045290a;
   backdrop-filter: blur(6px);
   padding: torem(10px) torem(100px);
+  @media (max-width: $w3) {
+    display: none;
+  }
 
   ul {
     @include listNoStyle;

@@ -107,6 +107,11 @@ $w3: 480px;
         font-size: torem(16px);
         width: torem(244px);
         height: torem(44px);
+        text-wrap: nowrap;
+        @media (max-width: $w2) {
+          font-size: torem(14px);
+          margin-bottom: torem(20px);
+        }
         &:first-child {
           margin-right: torem(12px);
         }
