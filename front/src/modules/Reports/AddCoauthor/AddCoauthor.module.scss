@@ -3,13 +3,13 @@ $w2: 769px;
 $w3: 480px;
 
 .AddCoauthor {
-  width: calc(100vw - torem(700px));
+  width: 100%;
   position: relative;
   margin: 0 auto;
 
   @media (max-width: $w2) {
     width: 100vw;
-    margin-top: torem(24px);
+    margin-top: torem(124px);
     padding: 0 torem(30px);
   }
   @media (max-width: $w3) {
