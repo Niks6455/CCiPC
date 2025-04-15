@@ -1,5 +1,5 @@
 import styles from './HeaderPhone.module.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import arrow from '@assets/img/arrow.svg';
@@ -19,6 +19,19 @@ function HeaderPhone(props) {
   const [activeMenuListFirst, setActiveMenuListFirst] = useState(false);
   const [activeMenuListSecond, setActiveMenuListSecond] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setActiveMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const navigateTo = path => {
     navigate(path);
@@ -64,6 +77,7 @@ function HeaderPhone(props) {
                 initial={{ height: 0 }}
                 animate={{ height: 'auto' }}
                 exit={{ height: 0 }}
+                ref={menuRef}
               >
                 <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(false)}>
                   <div className={styles.NavBarMenu}>

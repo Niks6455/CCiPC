@@ -54,6 +54,22 @@ function DocumentsLk() {
           </div>
         </div>
       </div>
+      <div className={styles.phone_repots}>
+        <h2>Мои доклады</h2>
+        <div className={styles.reports}>
+          {reports.map((item, index) => (
+            <div
+              key={index}
+              className={styles.report_item}
+              onClick={() =>
+                navigate(`/account/viewreports?idReport=${item.id}&number=${index + 1}`)
+              }
+            >
+              {index + 1}. {item.name}
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
