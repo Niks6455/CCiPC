@@ -39,6 +39,18 @@ function TableDataAll(props) {
     };
   }, []);
 
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (refForm.current && !refForm.current.contains(event.target)) {
+        dispatch(clearDataParticipants());
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <section className={styles.TableDataAll} ref={refBackdrop}>
       <div className={styles.TableDataAllInner} ref={refForm}>

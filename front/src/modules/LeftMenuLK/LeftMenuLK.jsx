@@ -11,7 +11,8 @@ import ArchiveiMG from './../../assets/img/UI/archive.png';
 import Lk from './../../assets/img/UI/lk.png';
 import { ReactComponent as BlackArrowBottom } from './../../assets/img/UI/blackArrowBottom.svg';
 import { useSelector } from 'react-redux';
-import { useWindowWidth } from '../../hooks/hooks';
+
+import plus from '@assets/img/UI/plus.svg';
 
 function LeftMenuLk({ footerRef }) {
   const context = useContext(DataContext);
@@ -44,16 +45,6 @@ function LeftMenuLk({ footerRef }) {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
 
-  // useEffect(() => {
-  //   if (footerRef?.current) {
-  //     const footerHeight = footerRef.current.offsetHeight;
-  //     const leftMenu = document.getElementById('leftMenu');
-  //     if (leftMenu) {
-  //       leftMenu.style.bottom = footerHeight + 'px';
-  //     }
-  //   }
-  // }, [footerRef, useWindowWidth()]);
-
   return (
     <section className={styles.LeftMenuLk}>
       <div className={styles.LeftMenuLkInner} id="leftMenu">
@@ -72,9 +63,7 @@ function LeftMenuLk({ footerRef }) {
           <li
             className={context.selectFrameLks === 'documents' ? styles.Active : ''}
             onClick={() => {
-              navigate('documents');
               setDokladOpen(!dokladOpen);
-              context.setSelectFrameLks('documents');
             }}
           >
             <img src={documentImg} />
@@ -82,6 +71,18 @@ function LeftMenuLk({ footerRef }) {
             <BlackArrowBottom className={`${styles.arrow} ${dokladOpen ? styles.open : ''}`} />
           </li>
           <div className={`${styles.listSetings} ${dokladOpen && styles.setingOpen}`}>
+            <li
+              className={styles.addDocl}
+              onClick={() => {
+                navigate('documents');
+                context.setSelectFrameLks('documents');
+              }}
+            >
+              <div>
+                <img src={plus} alt="plus" />
+              </div>
+              <span>Добавить доклад</span>
+            </li>
             {reports.data.map((rep, index) => (
               <li
                 key={index}

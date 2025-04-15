@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .UniversalTable {
   max-height: 75vh;
   overflow: auto; /* Обеспечивает скроллинг при необходимости */
@@ -6,13 +10,19 @@
   max-width: 100%; /* Делаем таблицу гибкой по ширине */
   box-sizing: border-box;
   overflow-x: auto; /* Горизонтальный скролл */
-  width: 90%;
+  width: calc(100% - 40px);
+  @media (max-width: $w2) {
+    width: 100%;
+  }
+  @media (max-width: 340px) {
+    width: calc(100% - 40px);
+  }
 
   /* Добавляем для больших экранов, где может понадобиться фиксированная ширина */
   @media (min-width: 1600px) {
     max-width: 1635px;
   }
-  
+
   table {
     padding: 0px 20px;
     margin: 0 auto;
@@ -29,12 +39,12 @@
       top: 0;
       z-index: 1;
       background-color: #e7eae9;
-      
+
       th {
         padding: 15px;
         z-index: 10;
         border-bottom: 2px solid #ccc;
-        
+
         &:nth-child(1) {
           border-radius: 8px 0 0 0;
         }
@@ -49,12 +59,12 @@
         transition: background-color 0.3s;
         border-bottom: 1px solid #e0e0e0;
       }
-      
+
       tr:hover td {
         background-color: var(--TableColorMouse) !important;
         cursor: pointer;
       }
-      
+
       td {
         padding: 10px;
         background-color: #f7f7f7;
@@ -63,29 +73,25 @@
         font-size: 16px;
         line-height: 21px;
       }
-      
+
       td[name='number'] {
         text-align: center;
       }
 
       .buttonTable {
-        
         width: 48px;
         height: 52px;
         display: flex;
         justify-content: center;
         align-items: center;
         &:hover {
-        background-color: #0045290A;
+          background-color: #0045290a;
         }
-        img{
-          left: 0!important;
-          top: 0!important;
+        img {
+          left: 0 !important;
+          top: 0 !important;
         }
-      
       }
-     
-      
     }
 
     .imgTable {
@@ -133,20 +139,19 @@
   width: 100%;
 }
 
-
-.arrowTableCont{
+.arrowTableCont {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 180px;
-  img{
-    left: 0px!important;
-    top: 2px!important;
+  img {
+    left: 0px !important;
+    top: 2px !important;
     margin: 0px 10px;
     cursor: pointer;
     transition: 0.1s linear all;
     &:hover {
-      background-color: #0045290A;
+      background-color: #0045290a;
     }
   }
 }

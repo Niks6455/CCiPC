@@ -101,6 +101,17 @@ $w3: 480px;
         position: static;
       }
     }
+
+    .addDocl {
+      display: flex;
+      flex-direction: row;
+      img {
+        padding-top: torem(4px);
+        width: torem(24px);
+        height: torem(24px);
+        margin-right: torem(5px);
+      }
+    }
     .setingOpen {
       height: auto;
       max-height: torem(150px);
