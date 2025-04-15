@@ -90,13 +90,13 @@ $w3: 480px;
       box-sizing: border-box;
     }
     .listSetings {
-      padding-left: torem(34px);
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s linear;
       width: 100% !important;
       border-radius: torem(5px);
       li {
+        padding-left: torem(60px);
         margin-right: 0;
         position: static;
       }
@@ -105,6 +105,8 @@ $w3: 480px;
     .addDocl {
       display: flex;
       flex-direction: row;
+      padding-left: torem(20px) !important;
+
       img {
         padding-top: torem(4px);
         width: torem(24px);
@@ -114,7 +116,7 @@ $w3: 480px;
     }
     .setingOpen {
       height: auto;
-      max-height: torem(150px);
+      max-height: torem(250px);
       overflow: auto;
       overflow-x: hidden;
       transition: max-height 0.3s linear;

@@ -7,6 +7,13 @@ import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
 import logo from '@assets/img/logo.png';
 import { convertDate } from '../../utils/functions/funcions';
+import profile from '@assets/img/headPhoneIcon/profile.svg';
+import documents from '@assets/img/headPhoneIcon/documents.svg';
+import archive from '@assets/img/headPhoneIcon/archive.svg';
+import setting from '@assets/img/headPhoneIcon/setting.svg';
+import logout from '@assets/img/headPhoneIcon/logout.svg';
+import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
+import arrow from '@assets/img/arrow.svg';
 
 function NavBar(props) {
   const context = useContext(DataContext);
@@ -21,6 +28,73 @@ function NavBar(props) {
     context.setActiveMenu(false);
     setIslks(location.pathname.includes('/account'));
   }, [location.pathname]);
+
+  const naviList = [
+    {
+      name: 'Личный кабинет',
+      list: [
+        {
+          name: autorisation ? 'Профиль' : 'Вход/Регистрация',
+          icon: profile,
+          link: autorisation ? '/account/profile' : '/login/authorization',
+        },
+        {
+          name: 'Мои доклады',
+          icon: documents,
+        },
+        {
+          name: 'Архив фото',
+          icon: archive,
+          link: '/account/archivephoto',
+        },
+      ],
+    },
+    {
+      name: 'Настройки',
+      icon: setting,
+      list: [
+        {
+          name: 'Изменить профиль',
+          link: '/account/settings/profile',
+        },
+        {
+          name: 'Сменить пароль',
+          link: '/account/settings/changepassword',
+        },
+      ],
+    },
+    {
+      name: 'Выйти из аккаунта',
+      link: '/account/exitaccount',
+      icon: logout,
+    },
+    {
+      name: 'Удалить аккаунт',
+      icon: deleteImg,
+      link: '/account/deleteaccount',
+    },
+    {
+      name: 'Главная',
+      link: '/',
+    },
+    {
+      name: 'Автору',
+      link: '/author',
+    },
+    {
+      name: 'Новости',
+      link: '/news',
+    },
+    {
+      name: 'Участники',
+      link: '/participants',
+    },
+    {
+      name: 'Оргкомитет',
+      link: '/organizationcomite',
+    },
+  ];
+
   return (
     <>
       <>
@@ -45,69 +119,29 @@ function NavBar(props) {
               Скрыть <img src={closeImg} alt="Close" />
             </button>
             <ul>
-              {!props.login && (
+              {naviList.map((item, index) => (
                 <li
+                  key={index}
                   onClick={() => {
-                    navigate(autorisation ? '/account/profile' : '/login/authorization');
+                    if (item.link) {
+                      navigate(item.link);
+                    }
                   }}
                 >
-                  {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
-                  <span className={styles.arowLi}>
-                    <img src={ArrowMenu} alt="Arrow" />
-                  </span>
+                  {item.icon && (
+                    <div className={styles.leftImg}>
+                      <img src={item.icon} alt="item.icon" />
+                    </div>
+                  )}
+                  <span>{item.name}</span>
+                  {item.list && (
+                    <div className={styles.rigthImg}>
+                      <img src={arrow} alt="arrow" />
+                    </div>
+                  )}
                 </li>
-              )}
+              ))}
 
-              <li
-                onClick={() => {
-                  navigate('/');
-                }}
-              >
-                Главная
-                <span className={styles.arowLi}>
-                  <img src={ArrowMenu} alt="Arrow" />
-                </span>
-              </li>
-              <li
-                onClick={() => {
-                  navigate('/author');
-                }}
-              >
-                Автору{' '}
-                <span className={styles.arowLi}>
-                  <img src={ArrowMenu} alt="Arrow" />
-                </span>
-              </li>
-              <li
-                onClick={() => {
-                  navigate('/news');
-                }}
-              >
-                Новости{' '}
-                <span className={styles.arowLi}>
-                  <img src={ArrowMenu} alt="Arrow" />
-                </span>
-              </li>
-              <li
-                onClick={() => {
-                  navigate('/participants');
-                }}
-              >
-                Участники{' '}
-                <span className={styles.arowLi}>
-                  <img src={ArrowMenu} alt="Arrow" />
-                </span>
-              </li>
-              <li
-                onClick={() => {
-                  navigate('/organizationcomite');
-                }}
-              >
-                Оргкомитет{' '}
-                <span className={styles.arowLi}>
-                  <img src={ArrowMenu} alt="Arrow" />
-                </span>
-              </li>
               {context.userRole === 1 && !props.admine && (
                 <li
                   onClick={() => {

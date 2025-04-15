@@ -10,7 +10,6 @@ import profile from '@assets/img/headPhoneIcon/profile.svg';
 import documents from '@assets/img/headPhoneIcon/documents.svg';
 import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
 import { AnimatePresence, motion } from 'framer-motion';
-import logo from '@assets/img/logo.png';
 
 function HeaderPhone(props) {
   const [activeMenu, setActiveMenu] = useState(false);
