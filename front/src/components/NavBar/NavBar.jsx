@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from './NavBar.module.scss';
 import closeImg from './../../assets/img/closeImg.png';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -14,29 +14,28 @@ import setting from '@assets/img/headPhoneIcon/setting.svg';
 import logout from '@assets/img/headPhoneIcon/logout.svg';
 import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
 import arrow from '@assets/img/arrow.svg';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function NavBar(props) {
   const context = useContext(DataContext);
   const navigate = useNavigate();
-  const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const stages = useSelector(state => state.conferences.data[0]?.stages);
   const location = useLocation();
-
   const [islks, setIslks] = useState(false);
-
-  useEffect(() => {
-    context.setActiveMenu(false);
-    setIslks(location.pathname.includes('/account'));
-  }, [location.pathname]);
-
+  const [isSattings, setIsSattings] = useState(false);
+  const [isReports, setIsReports] = useState(false);
+  const reports = useSelector(state => state.reportsSlice.data);
+  const user = useSelector(state => state.user.user.data);
   const naviList = [
     {
       name: 'Личный кабинет',
+      action: () => setIslks(!islks),
+      state: islks,
       list: [
         {
-          name: autorisation ? 'Профиль' : 'Вход/Регистрация',
+          name: user.email ? 'Профиль' : 'Вход/Регистрация',
           icon: profile,
-          link: autorisation ? '/account/profile' : '/login/authorization',
+          link: user.email ? '/account/profile' : '/login/authorization',
         },
         {
           name: 'Мои доклады',
@@ -52,6 +51,8 @@ function NavBar(props) {
     {
       name: 'Настройки',
       icon: setting,
+      action: () => setIsSattings(!isSattings),
+      state: isSattings,
       list: [
         {
           name: 'Изменить профиль',
@@ -72,6 +73,11 @@ function NavBar(props) {
       name: 'Удалить аккаунт',
       icon: deleteImg,
       link: '/account/deleteaccount',
+    },
+    {
+      name: user.email ? 'Личный кабинет' : 'Вход/Регистрация',
+      link: user.email ? '/account/profile' : '/login/authorization',
+      pk: true,
     },
     {
       name: 'Главная',
@@ -98,11 +104,11 @@ function NavBar(props) {
   return (
     <>
       <>
-        <div
-          className={`${styles.logo} ${islks ? styles.absluteLogo : ''} ${props.login ? styles.loginLogo : ''}`}
-        >
-          <img src={logo} alt="logo" onClick={() => navigate('/')} />
-        </div>
+        {!location.pathname.includes('/account') && (
+          <div className={`${styles.logo} ${props.login ? styles.loginLogo : ''}`}>
+            <img src={logo} alt="logo" onClick={() => navigate('/')} />
+          </div>
+        )}
       </>
       <section className={styles.NavBar}>
         <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
@@ -120,26 +126,114 @@ function NavBar(props) {
             </button>
             <ul>
               {naviList.map((item, index) => (
-                <li
-                  key={index}
-                  onClick={() => {
-                    if (item.link) {
-                      navigate(item.link);
-                    }
-                  }}
-                >
-                  {item.icon && (
-                    <div className={styles.leftImg}>
-                      <img src={item.icon} alt="item.icon" />
-                    </div>
-                  )}
-                  <span>{item.name}</span>
-                  {item.list && (
-                    <div className={styles.rigthImg}>
-                      <img src={arrow} alt="arrow" />
-                    </div>
-                  )}
-                </li>
+                <>
+                  <li
+                    className={item.pk ? styles.pk : ''}
+                    key={index}
+                    onClick={() => {
+                      if (item.link) {
+                        navigate(item.link);
+                        context.setActiveMenu(false);
+                      }
+                      if (item.action) {
+                        item.action();
+                      }
+                    }}
+                  >
+                    {/* фото слева */}
+                    {item.icon && (
+                      <div className={styles.leftImg}>
+                        <img src={item.icon} alt="item.icon" />
+                      </div>
+                    )}
+                    {/* текст ли */}
+                    <span>{item.name}</span>
+                    {/* фото справа */}
+                    {item.list && (
+                      <div className={styles.rigthImg}>
+                        <img src={arrow} alt="arrow" className={item.state ? styles.rotate : ''} />
+                      </div>
+                    )}
+                  </li>
+                  {/* списки */}
+                  <AnimatePresence>
+                    {item.state && (
+                      <motion.div
+                        className={styles.list}
+                        initial={{ height: 0 }}
+                        animate={{ height: 'auto' }}
+                        exit={{ height: 0 }}
+                      >
+                        {item.list?.map((item, index) => (
+                          <>
+                            <li
+                              key={index}
+                              onClick={() => {
+                                if (item.link) {
+                                  navigate(item.link);
+                                  context.setActiveMenu(false);
+                                }
+                                if (item.name === 'Мои доклады') {
+                                  setIsReports(!isReports);
+                                }
+                              }}
+                            >
+                              {item.icon && (
+                                <div className={styles.leftImg}>
+                                  <img src={item.icon} alt="item.icon" />
+                                </div>
+                              )}
+
+                              <span>{item.name}</span>
+                              {item.name === 'Мои доклады' && (
+                                <div className={styles.rigthImg}>
+                                  <img
+                                    src={arrow}
+                                    alt="arrow"
+                                    className={isReports ? styles.rotate : ''}
+                                  />
+                                </div>
+                              )}
+                            </li>
+                            {/* лист докладов */}
+                            <AnimatePresence>
+                              {item.name === 'Мои доклады' && isReports && (
+                                <motion.ul
+                                  initial={{ height: 0 }}
+                                  animate={{ height: 'auto' }}
+                                  exit={{ height: 0 }}
+                                  className={styles.reports}
+                                >
+                                  <li
+                                    onClick={() => {
+                                      navigate('/account/documents');
+                                      context.setActiveMenu(false);
+                                    }}
+                                  >
+                                    <span>+ Добавить доклад</span>
+                                  </li>
+                                  {reports.map((item, index) => (
+                                    <li
+                                      key={index}
+                                      onClick={() => {
+                                        navigate(
+                                          `/account/viewreports?idReport=${item.id}&number=${index + 1}`,
+                                        );
+                                        context.setActiveMenu(false);
+                                      }}
+                                    >
+                                      <span>{item.name}</span>
+                                    </li>
+                                  ))}
+                                </motion.ul>
+                              )}
+                            </AnimatePresence>
+                          </>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </>
               ))}
 
               {context.userRole === 1 && !props.admine && (

@@ -71,7 +71,8 @@ $w3: 480px;
         top: 50%;
         transform: translateY(-50%);
         transition: transform 0.15s linear;
-
+        width: torem(34px);
+        height: torem(34px);
         &:hover {
           * {
             fill: var(--GreenColorDefault);

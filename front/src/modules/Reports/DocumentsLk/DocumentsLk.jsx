@@ -54,7 +54,7 @@ function DocumentsLk() {
           </div>
         </div>
       </div>
-      <div className={styles.phone_repots}>
+      {/* <div className={styles.phone_repots}>
         <h2>Мои доклады</h2>
         <div className={styles.reports}>
           {reports.map((item, index) => (
@@ -69,7 +69,7 @@ function DocumentsLk() {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </section>
   );
 }

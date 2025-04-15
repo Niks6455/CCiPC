@@ -119,6 +119,9 @@ $w3: 480px;
       position: relative;
       height: 100vh;
       .RightMenuText {
+        @media (max-width: $w2) {
+          display: none;
+        }
         position: absolute;
         bottom: torem(50px);
         right: 0;
@@ -152,6 +155,8 @@ $w3: 480px;
         }
       }
       img {
+        width: torem(20px);
+        height: torem(20px);
         margin-left: torem(10px);
         position: relative;
         top: torem(4px);
@@ -176,7 +181,19 @@ $w3: 480px;
       opacity 0.3s ease-in-out;
   }
   ul {
+    .pk {
+      display: none;
+    }
     list-style: none;
+    @media (min-width: $w2) {
+      //! первые 4 li  скрое
+      li:nth-child(-n + 4) {
+        display: none;
+      }
+      .pk {
+        display: flex;
+      }
+    }
     li {
       margin: 1.25rem 0; /* 20px в rem */
       color: #fff;
@@ -190,13 +207,36 @@ $w3: 480px;
       .arowLi {
         display: none;
       }
-      img {
-        position: relative;
-        left: 0.3125rem; /* 5px в rem */
-        top: 0.125rem; /* 2px в rem */
-        width: torem(17px);
-        height: torem(14px);
+      .leftImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: torem(3px);
+        img {
+          margin-right: torem(4px);
+        }
       }
+      .rigthImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: torem(3px);
+        padding-left: torem(4px);
+        img {
+          padding: torem(4px);
+        }
+      }
+      img {
+        width: torem(20px);
+        height: torem(20px);
+        transition: all 0.2s linear;
+      }
+
+      .rotate {
+        transform: scaleY(-1);
+        transition: all 0.2s linear;
+      }
+
       &:hover {
         padding-left: 2.1875rem; /* 35px в rem */
         cursor: pointer;
@@ -206,5 +246,26 @@ $w3: 480px;
         }
       }
     }
+    .list {
+      overflow: hidden;
+      li:first-child {
+        margin: 0;
+      }
+      li:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .reports {
+    max-height: torem(250px);
+    overflow-y: auto;
+    @include ScrollBar;
+    width: 100%;
+    &::-webkit-scrollbar {
+      width: torem(4px);
+      background-color: transparent;
+    }
+    padding-right: torem(10px);
   }
 }

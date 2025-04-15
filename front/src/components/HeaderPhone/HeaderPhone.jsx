@@ -13,12 +13,14 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 function HeaderPhone(props) {
   const [activeMenu, setActiveMenu] = useState(false);
-  const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const navigate = useNavigate();
   const [activeMenuListFirst, setActiveMenuListFirst] = useState(false);
   const [activeMenuListSecond, setActiveMenuListSecond] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const menuRef = useRef(null);
+  const user = useSelector(state => state.user.user.data);
+  const reports = useSelector(state => state.reportsSlice.data);
+  const [isReports, setIsReports] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -86,28 +88,44 @@ function HeaderPhone(props) {
                   </div>
                 </button>
                 <ul className={styles.NavBarMenuList}>
-                  <li
-                    onClick={() => {
-                      setActiveMenuListFirst(!activeMenuListFirst);
-                      setActiveMenuListSecond(false);
-                    }}
-                  >
-                    <div
-                      className={styles.NavBarMenuListInnerLi}
-                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}
+                  {user?.email ? (
+                    <li
+                      onClick={() => {
+                        setActiveMenuListFirst(!activeMenuListFirst);
+                        setActiveMenuListSecond(false);
+                      }}
                     >
-                      <span> Личный кабинет</span>
-                      <img
-                        style={activeMenuListFirst ? { transform: 'rotate(180deg)' } : {}}
-                        src={arrow}
-                        alt="arrow"
-                      />
-                    </div>
-                  </li>
+                      <div
+                        className={styles.NavBarMenuListInnerLi}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}
+                      >
+                        <span> Личный кабинет</span>
+                        <img
+                          style={activeMenuListFirst ? { transform: 'rotate(180deg)' } : {}}
+                          src={arrow}
+                          alt="arrow"
+                        />
+                      </div>
+                    </li>
+                  ) : (
+                    <li
+                      onClick={() => {
+                        navigate('/login/authorization');
+                        setActiveMenu(false);
+                      }}
+                    >
+                      <div
+                        className={styles.NavBarMenuListInnerLi}
+                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'end' }}
+                      >
+                        <span>Вход/Регистрация</span>
+                      </div>
+                    </li>
+                  )}
 
                   <motion.div className={styles.NavBarMenuListOpener}>
                     <AnimatePresence>
-                      {activeMenuListFirst && (
+                      {activeMenuListFirst && user?.email && (
                         <motion.div
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: 'auto', opacity: 1 }}
@@ -116,7 +134,7 @@ function HeaderPhone(props) {
                           {!props.login && (
                             <li
                               onClick={() =>
-                                autorisation
+                                user?.email
                                   ? navigate('/account/profile')
                                   : navigate('/login/authorization')
                               }
@@ -125,19 +143,58 @@ function HeaderPhone(props) {
                                 <span>
                                   <img src={profile} />
                                 </span>
-                                <p>{autorisation ? 'Профиль' : 'Вход/Регистрация'}</p>
+                                <p>{user?.email ? 'Профиль' : 'Вход/Регистрация'}</p>
                               </div>
                             </li>
                           )}
 
-                          <li onClick={() => navigateTo('/account/documents')}>
+                          <li onClick={() => setIsReports(!isReports)}>
                             <div className={styles.NavBarMenuListInnerLiImg}>
                               <span>
                                 <img src={documents} />
                               </span>
                               <p>Мои доклады</p>
+                              <img
+                                className={styles.arrow_rep}
+                                style={isReports ? { transform: 'rotate(180deg)' } : {}}
+                                src={arrow}
+                                alt="arrow"
+                              />
                             </div>
                           </li>
+                          {/* лист докладов */}
+                          <AnimatePresence>
+                            {isReports && (
+                              <motion.ul
+                                initial={{ height: 0 }}
+                                animate={{ height: 'auto' }}
+                                exit={{ height: 0 }}
+                                className={styles.reports}
+                              >
+                                <li
+                                  onClick={() => {
+                                    navigate('/account/documents');
+                                    setActiveMenu(false);
+                                  }}
+                                >
+                                  + Добавить доклад
+                                </li>
+                                {reports.map((item, index) => (
+                                  <li
+                                    key={index}
+                                    onClick={() => {
+                                      navigate(
+                                        `/account/viewreports?idReport=${item.id}&number=${index + 1}`,
+                                      );
+                                      setActiveMenu(false);
+                                    }}
+                                  >
+                                    <span>{item.name}</span>
+                                  </li>
+                                ))}
+                              </motion.ul>
+                            )}
+                          </AnimatePresence>
                           <li onClick={() => navigateTo('/account/archivephoto')}>
                             <div className={styles.NavBarMenuListInnerLiImg}>
                               <span>

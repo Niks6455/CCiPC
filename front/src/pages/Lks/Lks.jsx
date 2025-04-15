@@ -13,7 +13,7 @@ function Lks(props) {
         <div className={styles.LksContainer}>
           <Outlet />
         </div>
-        <RightMenuLk userRole={props.userRole} />
+        {/* <RightMenuLk userRole={props.userRole} /> */}
         <HeaderPhone />
       </main>
     </>
