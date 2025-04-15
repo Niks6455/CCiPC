@@ -13,15 +13,22 @@ $w3: 480px;
     transform: translateY(-50%);
     width: torem(24px);
     height: torem(24px);
+    @media (max-width: $w3) {
+      width: torem(18px);
+      height: torem(18px);
+      left: torem(15px);
+    }
   }
   .errorListImg {
     position: absolute;
     right: torem(25px);
-    top: torem(4px);
+    top: torem(0px);
     background-color: var(--BodyBgColor);
     border-radius: 50%;
-    padding: 0 torem(7px);
+    margin: 0 torem(7px);
     cursor: pointer;
+    width: torem(31px);
+    height: torem(31px);
   }
   .errorListLabelImg {
     display: flex;
@@ -39,6 +46,7 @@ $w3: 480px;
 
     @media (max-width: $w3) {
       right: torem(50px) !important;
+      top: calc(-100% - torem(30px));
     }
 
     ul {
@@ -149,6 +157,9 @@ $w3: 480px;
 
   .padding_left {
     padding-left: torem(60px);
+    @media (max-width: $w3) {
+      padding-left: torem(45px);
+    }
   }
 
   .errorInput {

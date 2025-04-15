@@ -159,6 +159,24 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
             directions.find(el => el.name === report.editData?.directionConference)?.id || '',
         };
       }
+      if (report.editData?.comments) {
+        temp = {
+          ...temp,
+          comment: report.editData?.comments,
+        };
+      }
+      if (report.editData?.formParticipation) {
+        temp = {
+          ...temp,
+          form: report.editData?.formParticipation,
+        };
+      }
+      if (report.editData?.participationStatus) {
+        temp = {
+          ...temp,
+          status: report.editData?.participationStatus,
+        };
+      }
       apiEditReport(report.data.id, temp).then(res => {
         if (res?.status === 200) {
           dispatch(fetchReports());
@@ -375,7 +393,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                     funChange={funChangeInput}
                     placeholder={inp.placeholder}
                     error={inp.error}
-                    readOnly={soauthorEditing}
+                    readOnly={soauthorEditing || edit}
                   />
                   {soauthtor.autocompletion === 'noemail' && (
                     <div className={styles.modalEmail}>
@@ -416,7 +434,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                           funChange={funChangeInput}
                           placeholder={inp.placeholder}
                           error={inp.error}
-                          readOnly={soauthtor.autocompletion === 'readOnly'}
+                          readOnly={soauthtor.autocompletion === 'readOnly' || edit}
                         />
                       </div>
                     ),

@@ -160,7 +160,10 @@ function TopMainInfo() {
             <AnimatePresence>
               {isVisible && (
                 <motion.a
-                  href="#top"
+                  // href="#top"
+                  onClick={() => {
+                    window.scrollTo(0, 0);
+                  }}
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}

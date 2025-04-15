@@ -185,7 +185,7 @@ function CreateReport({ edit }) {
             <div className={styles.file_block}>
               <FileComponent
                 logoHeader={
-                  edit && report.data.fileArticle?.url
+                  edit && report.data.fileArticle?.url && !file1Url
                     ? `${server}/${report.data.fileArticle?.url}`
                     : file1Url
                 }
@@ -213,7 +213,7 @@ function CreateReport({ edit }) {
             <div className={styles.file_block}>
               <FileComponent
                 logoHeader={
-                  edit && report.data.fileExpertOpinion
+                  edit && report.data.fileExpertOpinion && !file2Url
                     ? `${server}/${report.data.fileExpertOpinion?.url}`
                     : file2Url
                 }

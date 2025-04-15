@@ -24,7 +24,9 @@ function NavBar(props) {
   return (
     <>
       <>
-        <div className={`${styles.logo} ${islks ? styles.absluteLogo : ''}`}>
+        <div
+          className={`${styles.logo} ${islks ? styles.absluteLogo : ''} ${props.login ? styles.loginLogo : ''}`}
+        >
           <img src={logo} alt="logo" onClick={() => navigate('/')} />
         </div>
       </>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './Input.module.scss';
 import galka from './../../assets/img/UI/galka.svg';
 import krest from './../../assets/img/UI/krest.svg';
@@ -8,8 +8,20 @@ function Input(props) {
   const md = new MobileDetect(window.navigator.userAgent);
   const isMobile = md.mobile() !== null;
   const isTablet = md.tablet() !== null;
-
+  const errorImgRef = useRef(null);
   const [errorListShow, setErrorListShow] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (errorImgRef.current && !errorImgRef.current.contains(event.target)) {
+        setErrorListShow(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   //! при наведении на img множественных ошибок
 
@@ -73,8 +85,10 @@ function Input(props) {
       {/* //! при множественных ошибках выводим лист */}
       {props.errorList && !props.labelText && (
         <img
+          ref={errorImgRef}
           onMouseEnter={funOpenListErrors}
           onMouseLeave={funClouseListErrors}
+          onClick={funClickListErrors}
           className={styles.errorListImg}
           src={errorListShow ? props?.errorListImgHover : props?.errorListImgNoHover}
           alt="!"
@@ -88,6 +102,7 @@ function Input(props) {
           <span>{props.labelText}</span>
           {props.errorList && props.labelText && (
             <img
+              ref={errorImgRef}
               onMouseEnter={funOpenListErrors}
               onMouseLeave={funClouseListErrors}
               onClick={funClickListErrors}

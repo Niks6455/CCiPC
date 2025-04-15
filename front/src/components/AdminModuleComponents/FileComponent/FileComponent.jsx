@@ -6,8 +6,6 @@ import pdfIcon from '@assets/img/AdminPanel/pdf.svg';
 import pdfIconImport from '@assets/img/AdminPanel/pdfImport.svg';
 import docIcon from '@assets/img/AdminPanel/doc.svg';
 import dragingIcon from '@assets/img/AdminPanel/dragging.svg';
-import { AnimatePresence } from 'framer-motion';
-import { server } from '../../../apirequests/apirequests';
 import { decodeFileName } from '../../../utils/functions/funcions';
 
 function FileComponent(props) {

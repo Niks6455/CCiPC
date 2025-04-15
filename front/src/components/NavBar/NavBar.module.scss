@@ -9,6 +9,10 @@ $w3: 480px;
   }
 }
 
+.loginLogo {
+  display: none !important;
+}
+
 .logo {
   width: torem(110px);
   height: torem(110px);
@@ -23,6 +27,9 @@ $w3: 480px;
   @media (max-width: $w2) {
     width: torem(60px);
     height: torem(60px);
+  }
+  @media (max-width: $w3) {
+    display: none !important;
   }
 }
 
