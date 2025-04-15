@@ -222,7 +222,11 @@ function NavBar(props) {
                                         context.setActiveMenu(false);
                                       }}
                                     >
-                                      <span>{item.name}</span>
+                                      <span>
+                                        {item.name.length < 20
+                                          ? item.name
+                                          : item.name.slice(0, 20) + '...'}
+                                      </span>
                                     </li>
                                   ))}
                                 </motion.ul>
