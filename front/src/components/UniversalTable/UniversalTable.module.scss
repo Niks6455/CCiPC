@@ -7,12 +7,12 @@ $w3: 480px;
   overflow: auto; /* Обеспечивает скроллинг при необходимости */
   border-radius: 8px;
   margin: 0 auto;
-  max-width: 100%; /* Делаем таблицу гибкой по ширине */
+  max-width: 90%; /* Делаем таблицу гибкой по ширине */
   box-sizing: border-box;
   overflow-x: auto; /* Горизонтальный скролл */
-  width: calc(100% - 40px);
+  width: calc(100% - 240px);
   @media (max-width: $w2) {
-    width: 100%;
+    width: 90%;
   }
   @media (max-width: 340px) {
     width: calc(100% - 40px);

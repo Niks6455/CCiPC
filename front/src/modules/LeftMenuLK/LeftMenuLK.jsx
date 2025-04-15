@@ -3,12 +3,12 @@ import styles from './LeftMenuLK.module.scss';
 import DataContext from '../../context';
 import logo from './../../assets/img/logo.png';
 import { useNavigate } from 'react-router-dom';
-import documentImg from './../../assets/img/UI/document.png';
-import exitImg from './../../assets/img/UI/exit.png';
-import deleteImg from './../../assets/img/UI/delete.png';
-import SettingsImg from './../../assets/img/UI/settings.png';
-import ArchiveiMG from './../../assets/img/UI/archive.png';
-import Lk from './../../assets/img/UI/lk.png';
+import documentImg from './../../assets/img/headPhoneIcon/documentsBlack.svg';
+import exitImg from './../../assets/img/headPhoneIcon/logoutBlack.svg';
+import deleteImg from './../../assets/img/headPhoneIcon/deleteBlack.svg';
+import SettingsImg from './../../assets/img/headPhoneIcon/settingBlack.svg';
+import ArchiveiMG from './../../assets/img/headPhoneIcon/archiveBlack.svg';
+import Lk from './../../assets/img/headPhoneIcon/profileBlack.svg';
 import { ReactComponent as BlackArrowBottom } from './../../assets/img/UI/blackArrowBottom.svg';
 import { useSelector } from 'react-redux';
 

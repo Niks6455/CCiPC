@@ -46,6 +46,7 @@ $w4: 480px;
     // }
     @media (max-width: $w2) {
       width: torem(718px);
+      margin-top: torem(40px);
       display: flex;
       display: none;
       flex-direction: row;
@@ -97,4 +98,7 @@ $w4: 480px;
   display: flex;
   justify-content: center;
   margin-top: torem(48px);
+  @media (max-width: $w2) {
+    margin-top: torem(20px);
+  }
 }

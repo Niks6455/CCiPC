@@ -106,8 +106,8 @@ $w3: 480px;
 
         .clicker {
           background-image: url('./../../assets/img/UI/ArrDefault.svg');
-          width: 48px; /* 48px в rem */
-          height: 48px;
+          width: torem(48px); /* 48px в rem */
+          height: torem(48px);
           background-size: contain;
           background-repeat: no-repeat;
           margin-left: 1.5rem;
@@ -115,26 +115,26 @@ $w3: 480px;
           cursor: pointer;
           &:hover {
             background-image: url('./../../assets/img/UI/ArrHover.svg');
-            width: 48px; /* 48px в rem */
-            height: 48px;
+            width: torem(48px); /* 48px в rem */
+            height: torem(48px);
             @media (max-width: $w2) {
-              width: 24px;
-              height: 24px;
+              width: torem(24px)torem(24px);
+              height: torem(24px);
             }
           }
           &:active {
             background-image: url('./../../assets/img/UI/ArrClick.svg');
-            width: 48px; /* 48px в rem */
-            height: 48px;
+            width: torem(48px); /* 48px в rem */
+            height: torem(48px);
             @media (max-width: $w2) {
-              width: 24px;
-              height: 24px;
+              width: torem(24px);
+              height: torem(24px);
             }
           }
           @media (max-width: $w2) {
             margin-left: torem(10px);
-            width: 24px;
-            height: 24px;
+            width: torem(24px);
+            height: torem(24px);
           }
         }
       }

@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: torem(10px);
+  width: torem(412px);
   @media (max-width: 1376px) {
     width: torem(350px);
   }
