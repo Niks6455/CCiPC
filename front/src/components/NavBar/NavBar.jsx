@@ -85,8 +85,9 @@ function NavBar(props) {
       name: user.email ? 'Личный кабинет' : 'Вход/Регистрация',
       link: user.email ? '/account/profile' : '/login/authorization',
       // pk: true,
-      display: !user.email,
+      display: !user.email || location.pathname.includes('/adminPage'),
     },
+
     {
       name: 'Главная',
       link: '/',
