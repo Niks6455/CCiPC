@@ -177,7 +177,6 @@ $w3: 480px;
       }
       .hover_bg {
         opacity: 0;
-
         transition: all 0.2s linear;
         display: flex;
         width: 100%;
@@ -187,7 +186,7 @@ $w3: 480px;
         top: 0;
         justify-content: center;
         align-items: center;
-        backdrop-filter: blur(3.299999952316284px);
+        backdrop-filter: blur(3px);
         img {
           width: torem(64px);
           height: torem(64px);

@@ -45,20 +45,20 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  .organizationComiteImages {
-    display: flex;
-    flex-wrap: wrap;
-    gap: torem(32px);
-    justify-content: center;
-    max-width: torem(1300px);
-    @media (max-width: $w2) {
-      grid-template-columns: repeat(2, 1fr);
-      gap: torem(10px);
-    }
-    @media (max-width: 770px) {
-      grid-template-columns: repeat(1, 1fr);
-    }
+}
+.organizationComiteImages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: torem(32px);
+  justify-content: center !important;
+  max-width: torem(1300px);
+  @media (max-width: $w2) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: torem(10px);
+  }
+  @media (max-width: 770px) {
+    grid-template-columns: repeat(1, 1fr);
+    width: 100vw;
   }
 }
 
@@ -83,6 +83,7 @@ h2 {
   align-items: center;
   margin-top: torem(150px);
   margin-bottom: torem(150px);
+
   div {
     justify-content: center;
     @media (max-width: 770px) {

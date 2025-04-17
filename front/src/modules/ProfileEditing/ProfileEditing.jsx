@@ -79,6 +79,10 @@ function ProfileEditing() {
   const funDeletePhoto = () => {
     setUrlPhoto(null);
     setUserPhoto(null);
+    setEditPhoto(false);
+    setOrigPhoto(null);
+    fileInputRef.current.value = null;
+
     dispatch(setEditUser({ key: 'avatar', value: null }));
     setDeleteIdsPhoto([user?.avatar?.id]);
   };
@@ -246,9 +250,12 @@ function ProfileEditing() {
 
       <div className={styles.head}>
         <div className={styles.profilePhoto}>
-          <div className={styles.hover_bg} onClick={funOpenPhoto}>
-            <img src={cameraIcon} alt="Открыть" />
-          </div>
+          {urlPhoto && origPhoto && (
+            <div className={styles.hover_bg} onClick={funOpenPhoto}>
+              <img src={cameraIcon} alt="Открыть" />
+            </div>
+          )}
+
           <img
             className={styles.photo_heve}
             src={urlPhoto || profilePhoto}

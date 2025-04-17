@@ -74,6 +74,7 @@ $w3: 480px;
     }
     @media (max-width: $w3) {
       transform: translateX(torem(-10px));
+      z-index: 10001;
     }
 
     img {
