@@ -451,11 +451,15 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
       )}
 
       {!soauthorEditing && (
-        <button className={styles.addsoaftor} onClick={() => dispatch(addSoauthors())}>
+        <button
+          className={`${styles.addsoaftor} ${report?.data.soauthors.length === 0 ? styles.addsoaftorNone : ''}`}
+          onClick={() => dispatch(addSoauthors())}
+        >
           <span>Добавить соавтора</span>
           <img src={plus} alt="+" />
         </button>
       )}
+
 
       <div className={styles.srokContainer}>
         <div className={styles.text}>

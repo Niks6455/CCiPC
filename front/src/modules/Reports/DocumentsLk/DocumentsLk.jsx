@@ -37,7 +37,7 @@ function DocumentsLk() {
             <img src={document} alt="Документ" />
           </div>
           <div className={styles.notDocumentTitle}>
-            <p>{length > 0 ? 'Добавить доклад' : 'Создайте доклад'}</p>
+            <p>{length > 0 ? 'Добавьте доклад' : 'Создайте доклад'}</p>
           </div>
           <div className={styles.notDocumentSubTitle}>
             {length === 0 && <p>У Вас пока нет зарегистрированных докладов</p>}

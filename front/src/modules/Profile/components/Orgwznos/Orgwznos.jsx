@@ -120,12 +120,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     funDeleteFile={funDeleteFile}
                   />
                 </div>
-                <div className={styles.shablon}>
-                  <button>
-                    <span>Шаблон</span>
-                    <img src={loadIcon} alt="Скачать" />
-                  </button>
-                </div>
+               
               </div>
               <div className={styles.file_container}>
                 <div className={styles.file_box}>
@@ -148,12 +143,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     funDeleteFile={funDeleteFile}
                   />
                 </div>
-                <div className={styles.shablon}>
-                  <button>
-                    <span>Шаблон</span>
-                    <img src={loadIcon} alt="Скачать" />
-                  </button>
-                </div>
+               
               </div>
             </div>
             <button className={styles.btn_change} onClick={funChangeFormPay}>
