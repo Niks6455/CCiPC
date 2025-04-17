@@ -112,7 +112,13 @@ $w2: 540px;
     }
   }
   input {
-    -webkit-appearance: none;
+    -moz-appearance: textfield;
+    -webkit-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
     width: 79px;
     border: none;
     border-bottom: 3px solid var(--GrayTextDefault);
