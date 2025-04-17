@@ -97,10 +97,10 @@ $w2: 540px;
   }
 }
 .codeInput {
-  // display: flex;
+  display: flex;
   justify-content: center;
   .codeInputInner {
-    // display: flex;
+    display: flex;
     justify-content: space-between;
     width: 634px;
     @media (max-width: $w1) {
@@ -128,10 +128,14 @@ $w2: 540px;
       font-size: 67.84px;
     }
     @media (max-width: $w2) {
-      width: 50px;
+      width: calc((80vw - 40px) / 6);
       height: 50px;
       font-weight: 200;
       font-size: 46.37px;
+      width: 40px !important;
+      height: 50px !important;
+      font-size: 30px;
+      font-weight: 500;
     }
   }
   .error {
