@@ -176,6 +176,10 @@ $w3: 480px;
     padding: 0px torem(5px);
     background-color: #f0f3f2;
     transform: translateY(torem(25px));
+    @media (max-width: $w2) {
+      right: torem(15px);
+      top: torem(-30px);
+    }
   }
   .placeholderClose {
     color: #858b89;
@@ -186,5 +190,8 @@ $w3: 480px;
     top: 0px;
     padding: 0px torem(5px);
     background-color: #f0f3f2;
+    @media (max-width: $w2) {
+      top: torem(-6px);
+    }
   }
 }

@@ -273,6 +273,7 @@ $w3: 480px;
         height: min-content;
         box-sizing: border-box;
         margin: auto;
+        object-fit: contain;
         @media (max-width: $w2) {
           max-width: 100%;
           height: torem(120px);
