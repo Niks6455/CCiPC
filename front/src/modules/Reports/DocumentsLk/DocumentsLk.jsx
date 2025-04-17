@@ -17,6 +17,10 @@ function DocumentsLk() {
     setLength(reports.length);
   }, [reports]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   //! при клике на создать доклад
   const creatReaport = () => {
     navigate('/account/createreport');

@@ -128,7 +128,7 @@ function Register() {
       registration?.data?.phone &&
       !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(registration?.data?.phone)
     ) {
-      newErrors.phone = 'Номер должен быть в формате +7 (XXX) XXX-XX-XX';
+      newErrors.phone = 'Некорректный номер';
       isValid = false;
     }
     // Проверка совпадения паролей
@@ -142,10 +142,19 @@ function Register() {
       isValid = false;
     }
 
-    if (!validateFIO(registration?.data?.organization)) {
-      newErrors.organization = 'Некорректное название';
+    if (registration?.data?.password?.length > 16) {
+      newErrors.password = 'Пароль превышает 16 символов';
       isValid = false;
     }
+    if (registration?.data?.confirmPassword?.length > 16) {
+      newErrors.confirmPassword = 'Пароль превышает 16 символов';
+      isValid = false;
+    }
+
+    // if (registration?.data?.organization?.length < 1) {
+    //   newErrors.organization = 'Некорректное название';
+    //   isValid = false;
+    // }
 
     if (!validateFIO(registration?.data?.name)) {
       newErrors.name = 'Некорректное имя';

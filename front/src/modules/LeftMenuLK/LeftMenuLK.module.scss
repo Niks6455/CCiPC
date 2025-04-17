@@ -17,7 +17,7 @@ $w3: 480px;
   border-right: torem(1px) solid var(--InputColors);
 
   .LeftMenuLkInner {
-    position: fixed;
+    position: absolute;
     width: torem(310px);
     min-width: torem(310px);
     max-width: torem(310px);

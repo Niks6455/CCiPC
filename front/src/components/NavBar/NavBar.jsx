@@ -29,13 +29,17 @@ function NavBar(props) {
   const naviList = [
     {
       name: 'Личный кабинет',
-      action: () => setIslks(!islks),
+      action: () => {
+        setIslks(!islks);
+      },
       state: islks,
+      display: user.email,
+
       list: [
         {
-          name: user.email ? 'Профиль' : 'Вход/Регистрация',
+          name: 'Профиль',
           icon: profile,
-          link: user.email ? '/account/profile' : '/login/authorization',
+          link: '/account/profile',
         },
         {
           name: 'Мои доклады',
@@ -53,6 +57,7 @@ function NavBar(props) {
       icon: setting,
       action: () => setIsSattings(!isSattings),
       state: isSattings,
+      display: user.email,
       list: [
         {
           name: 'Изменить профиль',
@@ -68,47 +73,55 @@ function NavBar(props) {
       name: 'Выйти из аккаунта',
       link: '/account/exitaccount',
       icon: logout,
+      display: user.email,
     },
     {
       name: 'Удалить аккаунт',
       icon: deleteImg,
       link: '/account/deleteaccount',
+      display: user.email,
     },
     {
       name: user.email ? 'Личный кабинет' : 'Вход/Регистрация',
       link: user.email ? '/account/profile' : '/login/authorization',
-      pk: true,
+      // pk: true,
+      display: !user.email,
     },
     {
       name: 'Главная',
       link: '/',
+      display: true,
     },
     {
       name: 'Автору',
       link: '/author',
+      display: true,
     },
     {
       name: 'Новости',
       link: '/news',
+      display: true,
     },
     {
       name: 'Участники',
       link: '/participants',
+      display: true,
     },
     {
       name: 'Оргкомитет',
       link: '/organizationcomite',
+      display: true,
     },
   ];
 
   return (
     <>
       <>
-        {!location.pathname.includes('/account') && (
-          <div className={`${styles.logo} ${props.login ? styles.loginLogo : ''}`}>
-            <img src={logo} alt="logo" onClick={() => navigate('/')} />
-          </div>
-        )}
+        <div
+          className={`${styles.logo} ${props.login ? styles.loginLogo : ''} ${location.pathname.includes('/account') ? styles.visibleLogo : ''}`}
+        >
+          <img src={logo} alt="logo" onClick={() => navigate('/')} />
+        </div>
       </>
       <section className={styles.NavBar}>
         <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
@@ -130,6 +143,7 @@ function NavBar(props) {
                   <li
                     className={item.pk ? styles.pk : ''}
                     key={index}
+                    style={item.display ? {} : { display: 'none' }}
                     onClick={() => {
                       if (item.link) {
                         navigate(item.link);
@@ -148,6 +162,13 @@ function NavBar(props) {
                     )}
                     {/* текст ли */}
                     <span>{item.name}</span>
+                    {/* стрелка при ховере */}
+                    {!item.list && (
+                      <span className={styles.arowLi}>
+                        <img src={ArrowMenu} alt="Arrow" />
+                      </span>
+                    )}
+
                     {/* фото справа */}
                     {item.list && (
                       <div className={styles.rigthImg}>
@@ -244,6 +265,7 @@ function NavBar(props) {
                 <li
                   onClick={() => {
                     navigate('/adminPage/news');
+                    context.setActiveMenu(false);
                   }}
                 >
                   Админ панель{' '}

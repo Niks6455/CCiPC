@@ -23,6 +23,9 @@ $w3: 480px;
   .RightMenuLkContainer {
     height: 100%;
     width: 100%;
+    @media (max-width: $w2) {
+      display: none;
+    }
     .RightMenuLkList {
       display: flex;
       justify-content: center;

@@ -12,18 +12,18 @@ function RightMenuLk(props) {
   };
   const refMenu = useRef(null);
   const context = useContext(DataContext);
-  useEffect(() => {
-    const handleClickOutside = event => {
-      if (refMenu.current && !refMenu.current.contains(event.target)) {
-        context.setActiveMenu(false);
-        console.log('event.target', event.target);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  // useEffect(() => {
+  //   const handleClickOutside = event => {
+  //     if (refMenu.current && !refMenu.current.contains(event.target)) {
+  //       context.setActiveMenu(false);
+  //       console.log('event.target', event.target);
+  //     }
+  //   };
+  //   document.addEventListener('mousedown', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, []);
 
   return (
     <section className={`${styles.RightMenuLk} ${checkPathName() ? styles.RightMenuLkhide : ''}`}>

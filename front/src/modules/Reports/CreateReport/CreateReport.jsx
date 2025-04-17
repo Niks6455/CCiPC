@@ -37,6 +37,10 @@ function CreateReport({ edit }) {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const funChangeFile = (value, key) => {
     dispatch(setValue({ key: key, value: value }));
   };

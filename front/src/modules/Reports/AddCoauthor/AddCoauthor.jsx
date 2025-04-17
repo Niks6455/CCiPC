@@ -39,7 +39,7 @@ import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal
 import InputListForma from '../../../components/InputListForma/InputListForma';
 import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 import ErrorModal from '../../../components/ErrorModal/ErrorModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const navigate = useNavigate();
@@ -49,6 +49,10 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
   const [errorModal, setErrorModal] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const funSetSoauthorEditing = (key, value) => {
     console.log('key, value', key, value);

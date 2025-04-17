@@ -29,6 +29,10 @@ function ViewReports() {
   const [idReport, setIdReport] = useState(null);
   const conferense = useSelector(state => state.conferences?.data[0]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const {
     isPending: isLoading,
     data: reportQery,

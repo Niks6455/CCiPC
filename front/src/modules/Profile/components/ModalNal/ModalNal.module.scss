@@ -5,6 +5,9 @@ $w3: 480px;
 .ModalNal {
   .bacgraund {
     @include PopupBlur;
+    @media (max-width: $w3) {
+      padding-top: 20%;
+    }
 
     .container {
       @include PopupContainer;
@@ -15,7 +18,7 @@ $w3: 480px;
       }
       @media (max-width: $w3) {
         width: calc(100vw - torem(40px));
-        padding: torem(70px) torem(20px);
+        padding: torem(40px) torem(20px);
       }
       h2 {
         font-family: Overpass, sans-serif;
@@ -26,6 +29,9 @@ $w3: 480px;
         text-align: center;
         margin-bottom: torem(40px);
         max-width: torem(716px);
+        @media (max-width: $w3) {
+          font-size: torem(16px);
+        }
       }
       img {
         width: torem(80px);
@@ -42,6 +48,7 @@ $w3: 480px;
         height: torem(54px);
         font-size: torem(20px);
         @media (max-width: $w3) {
+          height: torem(44px);
           font-size: torem(16px);
         }
       }

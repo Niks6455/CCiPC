@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import arrow from '@assets/img/arrow.svg';
-import archive from '@assets/img/headPhoneIcon/archive.svg';
+import archive from '@assets/img/headPhoneIcon/archive2.svg';
 import setting from '@assets/img/headPhoneIcon/setting.svg';
 import logout from '@assets/img/headPhoneIcon/logout.svg';
 import profile from '@assets/img/headPhoneIcon/profile.svg';

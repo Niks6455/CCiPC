@@ -13,6 +13,13 @@ $w3: 480px;
   display: none !important;
 }
 
+.visibleLogo {
+  display: none !important;
+  @media (max-width: $w2) {
+    display: flex !important;
+  }
+}
+
 .logo {
   width: torem(110px);
   height: torem(110px);
@@ -205,7 +212,14 @@ $w3: 480px;
       font-weight: 400;
       text-wrap: nowrap;
       .arowLi {
-        display: none;
+        transition: all 0.15s linear;
+        width: 0;
+        overflow: hidden;
+        img {
+          width: torem(16px);
+          height: torem(16px);
+          transform: translateY(torem(2px));
+        }
       }
       .leftImg {
         display: flex;
@@ -243,6 +257,8 @@ $w3: 480px;
         .arowLi {
           display: block;
           margin-left: torem(10px);
+          width: auto;
+          min-width: torem(15px);
         }
       }
     }
