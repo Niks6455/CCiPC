@@ -112,6 +112,7 @@ $w2: 540px;
     }
   }
   input {
+    -webkit-appearance: none;
     width: 79px;
     border: none;
     border-bottom: 3px solid var(--GrayTextDefault);
