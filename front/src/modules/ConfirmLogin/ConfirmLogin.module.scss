@@ -118,16 +118,16 @@ $w2: 540px;
       -webkit-appearance: none;
       margin: 0;
     }
-    border: none;
+    // border: none;
     border-bottom: 3px solid var(--GrayTextDefault);
     color: #000 !important;
     height: 100px;
     width: 79px;
     font-size: 84px;
     text-align: center;
-    background-color: var(--BodyBgColor);
-    outline: none;
-    overflow: visible;
+    // background-color: var(--BodyBgColor);
+    // outline: none;
+    // overflow: visible;
     @media (max-width: $w1) {
       width: 64px;
       font-weight: 200;
