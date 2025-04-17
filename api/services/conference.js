@@ -392,7 +392,7 @@ export default {
 
     },
 
-    async exportReports(conferenceId){
+    async exportReports(conferenceId) {
 
 
         const reports = await Report.findAll({
@@ -410,26 +410,19 @@ export default {
                     as: 'participantOfReport',
                     required: true,
                     include:
-                        {
-                            model: Participant,
-                            as: 'participant',
-                            required: true,
-                        }
+                      {
+                          model: Participant,
+                          as: 'participant',
+                          required: true,
+                      }
                 },
 
             ],
-            group: ['direction.id', 'Report.id', 'participantOfReport.id','participantOfReport.participant.id'], // Группировка по directionId
-            attributes: {
-                include: [
-                    [sequelize.fn('COUNT', sequelize.col('participantOfReport.participant_id')), 'participantCount'], // Подсчет участников
-                    [sequelize.fn('COUNT', sequelize.col('Report.id')), 'reportCount'] // Подсчет докладов
-                ]
-            }
         });
 
 
 // Группировка отчетов по направлению
-     /*   const groupedReports = reports.reduce((acc, report) => {
+        const groupedReports = Object.values(reports.reduce((acc, report) => {
             const direction = report.direction.name;
 
             if (!acc[direction]) {
@@ -444,14 +437,32 @@ export default {
             acc[direction].participantCount += report.participantOfReport.length;
 
             return acc;
-        }, {});*/
+        }, {}));
 
 // Преобразуем объект в массив
 
         const workbook = new ExcelJS.Workbook();
 
-        reports.forEach(report => {
-            let sheetName = report.direction.name;
+        const data = groupedReports.map(d=>{
+            const reports= d.reports.map(d1=>({
+               name: d1.name,
+               persons: d1.participantOfReport.map(p=>({
+                   who: p.who,
+                   org: p.organization,
+                   email: p.participant.email,
+                   status: p.status,
+                   form: p.form,
+                   fio: `${p.participant.surname} ${p.participant.name} ${p.participant?.patronymic ?? ''}`.trim(),
+              })),
+            }))
+            return { reports: reports,direction: d.direction }
+        })
+
+
+
+
+        data.forEach(data1 => {
+            let sheetName = data1.direction;
 
             // Проверка на существование листа и создание уникального имени
             let existingSheet = workbook.getWorksheet(sheetName);
@@ -475,23 +486,28 @@ export default {
             ];
 
 
-            // Подготовка строк для участников
-            const rows = report.participantOfReport.map(data => [
-                data.who,
-                `${data.participant.surname} ${data.participant.name} ${data.participant?.patronymic ?? ''}`.trim(),
-                data.organization,
-                data.participant.email,
-                data.status,
-                data.form,
-                report.name
-            ]);
+            for (const report of data1.reports) {
+                const name = report.name
+                const rows=report.persons.map(person=>[
+                  person.who,
+                  person.fio,
+                  person.org,
+                  person.email,
+                  person.status,
+                  person.form,
+                  name,
+                ])
 
-            worksheet.addRows(rows);
+                worksheet.addRows(rows);
+                worksheet.addRow([]);
+
+            }
 
             // Объединение ячеек для колонки "Доклад"
-            worksheet.mergeCells(`G2:G${report.participantOfReport.length + 1}`);
+            worksheet.mergeCells(`G2:G${data1.reports.length + 1}`);
         });
 
         return workbook;
-        }
+
+    }
 }
