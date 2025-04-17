@@ -118,15 +118,12 @@ $w2: 540px;
     color: #000;
     height: 100px;
     font-size: 84px;
-    line-height: 100px;
+    // line-height: 100px;
     text-align: center;
     background-color: inherit;
-    &:focus {
-      outline: none;
-    }
+    outline: none;
     @media (max-width: $w1) {
       width: 64px;
-      font-family: Overpass, sans-serif;
       font-weight: 200;
       font-size: 67.84px;
     }

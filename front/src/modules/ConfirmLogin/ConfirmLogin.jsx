@@ -138,7 +138,10 @@ function ConfirmLogin(props) {
             />
           ))}
         </div>
+        <input key={0} type="text" maxLength={1} />
       </div>
+      <input key={0} type="text" maxLength={1} />
+
       <div className={styles.CodeSubmit}>
         <div className={styles.CodeSubmitCode}>
           <button
