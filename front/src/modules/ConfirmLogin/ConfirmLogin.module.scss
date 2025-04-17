@@ -99,7 +99,6 @@ $w2: 540px;
 .codeInput {
   display: flex;
   justify-content: center;
-  // color: var(--GrayTextDefault);
   .codeInputInner {
     display: flex;
     justify-content: space-between;
@@ -119,15 +118,14 @@ $w2: 540px;
       -webkit-appearance: none;
       margin: 0;
     }
-    width: 79px;
     border: none;
     border-bottom: 3px solid var(--GrayTextDefault);
     color: #000 !important;
     height: 100px;
+    width: 79px;
     font-size: 84px;
-    // line-height: 100px;
     text-align: center;
-    background-color: inherit;
+    background-color: var(--BodyBgColor);
     outline: none;
     overflow: visible;
     @media (max-width: $w1) {
