@@ -67,7 +67,7 @@ const router = Router();
  *               position:
  *                 type: string
  *                 example: "Преподаватель"
- *               organization:
+ *               organization.prisma:
  *                 type: string
  *                 example: "Университет"
  *               phone:

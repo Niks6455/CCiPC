@@ -28,7 +28,7 @@ export const tableHeader = [
 // export const testData = [
 //   {
 //     fio: ["Тоноян Артур Арменович", "Иванов Иван Иванович"],
-//     organization:
+//     organization.prisma:
 //       "Санкт-Петербургский государственный электротехнический университет «ЛЭТИ»",
 //     participation: "Аспирант",
 //     direction:
@@ -38,7 +38,7 @@ export const tableHeader = [
 //   },
 //   {
 //     fio: ["Тоноян Артур Арменович", "Иванов Иван Иванович"],
-//     organization:
+//     organization.prisma:
 //       "Санкт-Петербургский государственный электротехнический университет «ЛЭТИ»",
 //     participation: "Аспирант",
 //     direction:
@@ -48,7 +48,7 @@ export const tableHeader = [
 //   },
 //   {
 //     fio: ["Тоноян Артур Арменович", "Иванов Иван Иванович"],
-//     organization:
+//     organization.prisma:
 //       "Санкт-Петербургский государственный электротехнический университет «ЛЭТИ»",
 //     participation: "Аспирант",
 //     direction:
@@ -58,7 +58,7 @@ export const tableHeader = [
 //   },
 //   {
 //     fio: ["Тоноян Артур Арменович", "Иванов Иван Иванович"],
-//     organization:
+//     organization.prisma:
 //       "Санкт-Петербургский государственный электротехнический университет «ЛЭТИ»",
 //     participation: "Аспирант",
 //     direction:
@@ -68,7 +68,7 @@ export const tableHeader = [
 //   },
 //   {
 //     fio: ["Тоноян Артур Арменович", "Иванов Иван Иванович"],
-//     organization:
+//     organization.prisma:
 //       "Санкт-Петербургский государственный электротехнический университет «ЛЭТИ»",
 //     participation: "Аспирант",
 //     direction:
@@ -78,7 +78,7 @@ export const tableHeader = [
 //   },
 //   {
 //     fio: ["Тоноян Артур Арменович", "Иванов Иван Иванович"],
-//     organization:
+//     organization.prisma:
 //       "Санкт-Петербургский государственный электротехнический университет «ЛЭТИ»",
 //     participation: "Аспирант",
 //     direction:
@@ -88,7 +88,7 @@ export const tableHeader = [
 //   },
 //   {
 //     fio: ["Тоноян Артур Арменович", "Иванов Иван Иванович"],
-//     organization:
+//     organization.prisma:
 //       "Санкт-Петербургский государственный электротехнический университет «ЛЭТИ»",
 //     participation: "Аспирант",
 //     direction:

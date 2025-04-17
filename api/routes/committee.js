@@ -25,12 +25,12 @@ const router = Router();
  *                 format: uuid
  *               fio:
  *                 type: string
- *               organization:
+ *               organization.prisma:
  *                 type: string
  *               type:
  *                 type: number
  *             required:
- *               - organization
+ *               - organization.prisma
  *               - fio
  *               - type
  *               - conferenceId
@@ -86,7 +86,7 @@ const router = Router();
  *             properties:
  *               fio:
  *                 type: string
- *               organization:
+ *               organization.prisma:
  *                 type: string
  *     responses:
  *       200:

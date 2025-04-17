@@ -90,7 +90,7 @@ export default function CommitteesPage({ userRole }) {
       <div>
         <Layout>
           <main className={styles.organizationComiteMain}>
-            {/* organization commite */}
+            {/* organization.prisma commite */}
             <div className={styles.organizationComite}>
               <h2>ОРГАНИЗАЦИОННЫЙ КОМИТЕТ</h2>
               {/* buttons */}

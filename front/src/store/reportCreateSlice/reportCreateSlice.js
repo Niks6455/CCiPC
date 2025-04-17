@@ -8,7 +8,7 @@ import { createSlice } from '@reduxjs/toolkit';
     fileExpertOpinion - файл с экспертным заключением
     comments - комментарии
     soauthors - сооавторы
-    organization - Организация
+    organization.prisma - Организация
 
 */
 
@@ -28,7 +28,7 @@ const keysCoauthors = [
   'name',
   'surname',
   'patronymic',
-  // "organization",
+  // "organization.prisma",
   'email',
   // "phone",
   // "formParticipation",

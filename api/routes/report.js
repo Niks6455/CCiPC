@@ -48,7 +48,7 @@ const router = Router();
  *                 type: string
  *               conferenceId:
  *                  type: string
- *               organization:
+ *               organization.prisma:
  *                  type: string
  *               status:
  *                  type: string
@@ -61,7 +61,7 @@ const router = Router();
  *               - form
  *               - directionId
  *               - comment
- *               - organization
+ *               - organization.prisma
  *               - status
  *               - conferenceId
  *     responses:
@@ -160,7 +160,7 @@ const router = Router();
  *                 type: string
  *               conferenceId:
  *                 type: string
- *               organization:
+ *               organization.prisma:
  *                 type: string
  *               status:
  *                 type: string

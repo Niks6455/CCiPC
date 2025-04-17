@@ -80,7 +80,7 @@ const router = Router();
  *               position:
  *                 type: string
  *                 example: Профессор
- *               organization:
+ *               organization.prisma:
  *                 type: string
  *                 example: МГУ
  *               phone:
@@ -95,7 +95,7 @@ const router = Router();
  *               - academicTitle
  *               - degree
  *               - position
- *               - organization
+ *               - organization.prisma
  *               - phone
  *     responses:
  *       200:
