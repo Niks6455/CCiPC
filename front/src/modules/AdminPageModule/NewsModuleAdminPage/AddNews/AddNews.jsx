@@ -13,6 +13,7 @@ import FileComponent from '@components/AdminModuleComponents/FileComponent/FileC
 import { useDispatch, useSelector } from 'react-redux';
 import trashRed from '@assets/img/AdminPanel/delete.svg';
 import { setSelectNewsData } from '../../../../store/newsSlice/newsSlice';
+import ImageCropper from '../../../../components/ImageCropper/ImageCropper';
 
 function AddNews(props) {
   const [title, setTitle] = useState('');
@@ -22,6 +23,9 @@ function AddNews(props) {
   const [error, setError] = useState({ title: '', text: '', file: '' }); // Ошибки
   const store = useSelector(state => state.news);
   const dispatch = useDispatch();
+
+  const [origPhoto, setOrigPhoto] = useState(null);
+  const [editPhoto, setEditPhoto] = useState(false);
 
   useEffect(() => {
     getNewsId(store?.selectNewsData).then(response => {
@@ -36,8 +40,10 @@ function AddNews(props) {
   //! Обработчик выбора файла
   const handleFileChange = file => {
     if (file) {
-      setFile(file); // Создаем URL для отображения изображения
-      setError(prevError => ({ ...prevError, file: '' })); // Сбрасываем ошибку файла
+      setFile(file);
+      setLogoHeader(URL.createObjectURL(file));
+      setEditPhoto(true);
+      setError(prevError => ({ ...prevError, file: '' }));
     } else {
       setFile(null);
       setLogoHeader(null);
@@ -141,8 +147,26 @@ function AddNews(props) {
     }
   };
 
+  const funEditPhoto = file => {
+    if (file) {
+      setFile(file);
+      setLogoHeader(URL.createObjectURL(file));
+      setEditPhoto(false);
+    }
+  };
+
   return (
     <section className={styles.AddNews}>
+      <ImageCropper
+        editPhoto={editPhoto}
+        setEditPhoto={setEditPhoto}
+        urlPhoto={origPhoto ? URL.createObjectURL(origPhoto) : logoHeader}
+        funEditPhoto={funEditPhoto}
+        aspect={16 / 9}
+        circularCrop={false}
+        width={160}
+        height={90}
+      />
       <button
         className={styles.buttonBack}
         onClick={() => {

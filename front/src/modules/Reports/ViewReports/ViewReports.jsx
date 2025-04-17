@@ -29,12 +29,23 @@ function ViewReports() {
   const [idReport, setIdReport] = useState(null);
   const conferense = useSelector(state => state.conferences?.data[0]);
 
-  const { isPending: isLoading, data: reportQery } = useQuery({
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const {
+    isPending: isLoading,
+    data: reportQery,
+    refetch,
+  } = useQuery({
     queryKey: [`${idReport}`, idReport],
     queryFn: () => apiGetReportId(idReport),
-    staleTime: Infinity,
     enabled: !!idReport,
   });
+
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
     setReportData(reportQery?.data?.report);
@@ -87,8 +98,9 @@ function ViewReports() {
 
   const funOpenFile = file => {
     //открытие файла по ссылке
+    console.log('file', file);
     if (file) {
-      window.open(`${server}/${file}`, '_blank');
+      window.open(`${server}/${file?.url}`, '_blank');
     }
   };
 

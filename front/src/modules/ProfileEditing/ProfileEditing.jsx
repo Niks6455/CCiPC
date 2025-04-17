@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiDeleteMulti, apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
-import { disEditUser, setEditUser } from '../../store/userSlice/user.Slice';
+import { disEditUser, fetchUserData, setEditUser } from '../../store/userSlice/user.Slice';
 import { inputsData } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -15,13 +15,16 @@ import redxIcon from '@assets/img/UI/redX.svg';
 import { formatPhoneNumber } from '../../utils/functions/Validations';
 import SuccessModal from '../../components/SuccessModal/SuccessModal';
 import ModalPhoto from '../Profile/components/ModalPhoto/ModalPhoto';
+import 'react-image-crop/dist/ReactCrop.css';
+import ImageCropper from '../../components/ImageCropper/ImageCropper';
 
 function ProfileEditing() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const ref1 = useRef(null);
   const ref2 = useRef(null);
-  const refList = [ref1, ref2];
+  const ref3 = useRef(null);
+  const refList = [ref1, ref2, ref3];
   const fileInputRef = useRef(null);
   const [openPhoto, setOpenPhoto] = useState(false);
   const [openList, setOpenList] = useState('');
@@ -33,6 +36,9 @@ function ProfileEditing() {
   const [popUpSize, setPopUpSize] = useState(false);
   const [modalSucces, setModalSucces] = useState(null);
   const [deleteIdsPhoto, setDeleteIdsPhoto] = useState([]);
+  const [origPhoto, setOrigPhoto] = useState(null);
+  const [editPhoto, setEditPhoto] = useState(false);
+
   useEffect(() => {
     setUrlPhoto(`${server}/${user?.avatar?.url}`);
   }, [user?.avatar]);
@@ -58,11 +64,13 @@ function ProfileEditing() {
   };
 
   const handleFileUpload = file => {
-    if (file.size > 10 * 1024 * 1024) {
+    if (file?.size > 10 * 1024 * 1024) {
       setPopUpSize(true);
     } else {
-      setUserPhoto(file);
       if (file) {
+        setOrigPhoto(file);
+        setUserPhoto(file);
+        setEditPhoto(true);
         setUrlPhoto(URL.createObjectURL(file));
       }
     }
@@ -71,6 +79,10 @@ function ProfileEditing() {
   const funDeletePhoto = () => {
     setUrlPhoto(null);
     setUserPhoto(null);
+    setEditPhoto(false);
+    setOrigPhoto(null);
+    fileInputRef.current.value = null;
+
     dispatch(setEditUser({ key: 'avatar', value: null }));
     setDeleteIdsPhoto([user?.avatar?.id]);
   };
@@ -173,11 +185,29 @@ function ProfileEditing() {
   }, []);
 
   const funOpenPhoto = () => {
-    setOpenPhoto(!openPhoto);
+    if (origPhoto) {
+      setEditPhoto(!editPhoto);
+    } else {
+      setOpenPhoto(!openPhoto);
+    }
+  };
+
+  const funEditPhoto = file => {
+    if (file) {
+      setUserPhoto(file);
+      setUrlPhoto(URL.createObjectURL(file));
+      setEditPhoto(false);
+    }
   };
 
   return (
     <div className={styles.ProfileEditing}>
+      <ImageCropper
+        editPhoto={editPhoto}
+        setEditPhoto={setEditPhoto}
+        urlPhoto={origPhoto ? URL.createObjectURL(origPhoto) : urlPhoto}
+        funEditPhoto={funEditPhoto}
+      />
       <SuccessModal open={modalSucces} close={setModalSucces} />
       <AnimatePresence>
         {popUpSize && (
@@ -211,13 +241,21 @@ function ProfileEditing() {
         )}
       </AnimatePresence>
 
-      <ModalPhoto funOpenPhotoProfile={funOpenPhoto} showProfilePhoto={openPhoto} user={user} />
+      <ModalPhoto
+        funOpenPhotoProfile={funOpenPhoto}
+        showProfilePhoto={openPhoto}
+        user={user}
+        urlPhoto={urlPhoto}
+      />
 
       <div className={styles.head}>
         <div className={styles.profilePhoto}>
-          <div className={styles.hover_bg} onClick={funOpenPhoto}>
-            <img src={cameraIcon} alt="Открыть" />
-          </div>
+          {urlPhoto && origPhoto && (
+            <div className={styles.hover_bg} onClick={funOpenPhoto}>
+              <img src={cameraIcon} alt="Открыть" />
+            </div>
+          )}
+
           <img
             className={styles.photo_heve}
             src={urlPhoto || profilePhoto}
@@ -247,34 +285,14 @@ function ProfileEditing() {
             (item, index) =>
               index <= 5 && (
                 <div className={styles.item}>
-                  {item.list ? (
-                    <InputList
-                      name={item.title}
-                      onChange={handleChange}
-                      value={formData[item.title]}
-                      placeholder=""
-                      open={openList === item.title}
-                      funOpen={funOpenList}
-                      divRef={refList[index - 3]}
-                      list={item.list}
-                      labelText={item.name}
-                      styleArrow={{ height: '54px', bottom: '25px' }}
-                      listStyle={{ transform: 'translateY(calc(100% - 26px))' }}
-                      inputerrorStyle={{ top: '25px' }}
-                      funSelectElement={funSelectedElement}
-                      error={errors[item.title]}
-                    />
-                  ) : (
-                    <Input
-                      name={item.title}
-                      onChange={handleChange}
-                      value={formData[item.title]}
-                      placeholder=""
-                      error={errors[item.title]}
-                      labelText={item.name}
-                      inputerrorStyle={{ top: '25px' }}
-                    />
-                  )}
+                  <Input
+                    name={item.title}
+                    onChange={handleChange}
+                    value={formData[item.title]}
+                    placeholder=""
+                    error={errors[item.title]}
+                    labelText={item.name}
+                  />
                 </div>
               ),
           )}
@@ -284,15 +302,18 @@ function ProfileEditing() {
             (item, index) =>
               index > 5 && (
                 <div className={styles.item}>
-                  <Input
-                    disabled={item.disabled}
+                  <InputList
                     name={item.title}
                     onChange={handleChange}
                     value={formData[item.title]}
-                    placeholder={''}
+                    placeholder=""
+                    open={openList === item.title}
+                    funOpen={funOpenList}
+                    divRef={refList[index - 6]}
+                    list={item.list}
                     labelText={item.name}
+                    funSelectElement={funSelectedElement}
                     error={errors[item.title]}
-                    inputerrorStyle={{ top: '25px' }}
                   />
                 </div>
               ),

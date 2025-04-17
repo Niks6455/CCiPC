@@ -9,26 +9,26 @@ $w4: 480px;
   position: absolute;
   top: torem(25px);
   left: torem(25px);
-  @media (max-width: 990px) {
+  @media (max-width: $w2) {
     width: torem(60px);
     height: torem(60px);
     top: torem(15px);
     left: torem(15px);
   }
-  @media (max-width: 520px) {
+  @media (max-width: 769px) {
     display: none;
   }
 }
 
 .NewsPage {
   overflow: hidden;
-  margin-top: torem(170px);
   width: 100vw;
   margin-bottom: torem(100px);
   max-width: torem(1420px);
-  margin: 170px auto 0px auto;
+  margin: torem(170px) auto 0px auto;
+  margin-top: torem(50px);
   @include maxMinContent(146px);
-  @media (max-width: 990px) {
+  @media (max-width: $w2) {
     margin-top: torem(70px);
   }
 
@@ -37,15 +37,48 @@ $w4: 480px;
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     box-sizing: border-box;
+    width: torem(1300px);
+    margin: 0 auto;
+    margin-top: torem(90px);
 
-    @media (max-width: 1390px) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @media (max-width: 920px) {
+    // @media (max-width: $w2) {
+    //   grid-template-columns: repeat(2, 1fr);
+    // }
+    @media (max-width: $w2) {
+      width: torem(718px);
+      margin-top: torem(40px);
       display: flex;
-      flex-direction: column;
+      display: none;
+      flex-direction: row;
+      flex-wrap: wrap;
       justify-content: center;
       align-items: center;
+    }
+
+    .item {
+      display: flex;
+      justify-content: center;
+    }
+    .NoNews {
+      text-align: center;
+      margin: 0 auto;
+      width: 100vw;
+      font-family: Overpass;
+      font-weight: 300;
+      font-size: torem(22px);
+      line-height: 120%;
+      letter-spacing: 0%;
+      color: #333333;
+      @media (max-width: $w2) {
+        font-size: torem(16px);
+      }
+    }
+  }
+  .phone {
+    display: none;
+    @media (max-width: $w2) {
+      display: flex !important;
+      width: torem(349px);
     }
   }
   .Title {
@@ -54,7 +87,7 @@ $w4: 480px;
     h2 {
       font-size: torem(30px);
       font-weight: 600;
-      @media (max-width: 990px) {
+      @media (max-width: $w2) {
         font-size: torem(18px);
         font-weight: 500;
       }
@@ -65,4 +98,7 @@ $w4: 480px;
   display: flex;
   justify-content: center;
   margin-top: torem(48px);
+  @media (max-width: $w2) {
+    margin-top: torem(20px);
+  }
 }

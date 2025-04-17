@@ -2,37 +2,46 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  img{
-    width: 412px;
-    height: 412px;
-    border-radius: 10px;
+  gap: torem(10px);
+  width: torem(412px);
+  @media (max-width: 1376px) {
+    width: torem(350px);
+  }
+  @media (max-width: 768px) {
+    width: torem(300px);
+    margin-bottom: torem(30px);
+  }
+  img {
+    width: torem(412px);
+    height: torem(412px);
+    border-radius: torem(10px);
     background-color: #fff;
     object-fit: cover;
     @media (max-width: 1376px) {
-      width: 350px;
-      height: 350px;
+      width: torem(350px);
+      height: torem(350px);
     }
     @media (max-width: 768px) {
-      width: 300px;
-      height: 300px;
+      width: torem(300px);
+      height: torem(300px);
     }
   }
   .name {
     font-weight: 700;
-    font-size: 22px;
+    font-size: torem(22px);
     text-align: center;
+    max-width: 100%;
     @media (max-width: 1376px) {
-      font-size: 18px;
+      font-size: torem(18px);
     }
   }
 
   .university {
     font-weight: 400;
-    font-size: 20px;
+    font-size: torem(20px);
     text-align: center;
     @media (max-width: 1376px) {
-      font-size: 16px;
+      font-size: torem(16px);
     }
   }
 }

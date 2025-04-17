@@ -14,6 +14,9 @@ $w3: 480px;
       top: torem(10px);
       width: max-content;
     }
+    @media (max-width: $w3) {
+      display: none;
+    }
     img {
       width: torem(169px);
       height: torem(169px);

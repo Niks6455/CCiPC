@@ -21,6 +21,11 @@ $w3: 480px;
   box-sizing: border-box;
   position: relative;
   .RightMenuLkContainer {
+    height: 100%;
+    width: 100%;
+    @media (max-width: $w2) {
+      display: none;
+    }
     .RightMenuLkList {
       display: flex;
       justify-content: center;
@@ -105,6 +110,27 @@ $w3: 480px;
     }
     P {
       font-weight: 500;
+    }
+  }
+
+  .stages {
+    position: absolute;
+    bottom: torem(20px);
+    right: torem(20px);
+    width: calc(100% - torem(40px));
+    text-align: end;
+    color: var(--InputTextColor);
+    line-height: torem(19px);
+    font-size: torem(16px);
+    max-width: torem(230px);
+    .date {
+      color: #858b89 !important;
+      margin-bottom: torem(5px);
+      font-weight: 700;
+    }
+    .name {
+      margin-bottom: torem(20px);
+      color: #858b89;
     }
   }
 }

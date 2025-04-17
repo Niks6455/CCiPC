@@ -1,5 +1,6 @@
 import styles from './InputList.module.scss';
 import arrowMini from './../../assets/img/UI/arrowMini.svg';
+import { AnimatePresence, motion } from 'framer-motion';
 
 function InputList(props) {
   const liClick = item => {
@@ -31,11 +32,7 @@ function InputList(props) {
         onClick={() => props.funOpen(props?.name)}
         readOnly={props.readOnly || true}
       />
-      <div
-        className={styles.arrow}
-        // onClick={() => props.funOpen(props?.name)}
-        style={props.styleArrow ? props.styleArrow : {}}
-      >
+      <div className={styles.arrow} style={props.styleArrow ? props.styleArrow : {}}>
         <img
           src={arrowMini}
           alt="img"
@@ -46,22 +43,28 @@ function InputList(props) {
           }
         />
       </div>
-      <div
-        className={`${styles.List} ${props?.open && styles.open}`}
-        style={props.listStyle ? props.listStyle : {}}
-      >
-        <ul>
-          {props.list?.map((item, index) => (
-            <li
-              key={index}
-              onClick={() => liClick(item)}
-              className={`${props?.value === item.text && styles.active}`}
-            >
-              {item.text}
-            </li>
-          ))}
-        </ul>
-      </div>
+      <AnimatePresence>
+        {props?.open && (
+          <motion.div
+            className={`${styles.List}`}
+            initial={{ height: 0 }}
+            animate={{ height: 'auto' }}
+            exit={{ height: 0 }}
+          >
+            <ul>
+              {props.list?.map((item, index) => (
+                <li
+                  key={index}
+                  onClick={() => liClick(item)}
+                  className={`${props?.value === item.text && styles.active}`}
+                >
+                  {item.text}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {props?.value && !props?.error && (
         <div className={styles.placeholderClose}>{props?.placeholder}</div>

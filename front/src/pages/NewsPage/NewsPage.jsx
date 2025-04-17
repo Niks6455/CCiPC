@@ -1,13 +1,13 @@
 import NewsCard from '../../components/NewsCard/NewsCard';
 import styles from './NewsPage.module.scss';
 import Layout from '../../ui/Layout/Layout';
-import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 import NavBar from '../../components/NavBar/NavBar';
 import logoHeader from './../../assets/img/logo.png';
 import { useEffect, useState } from 'react';
 import { getAllNews } from '../../apirequests/apirequests';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useNavigate } from 'react-router-dom';
+import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 
 function NewsPage({ userRole }) {
   const navigate = useNavigate();
@@ -46,12 +46,12 @@ function NewsPage({ userRole }) {
 
   return (
     <>
-      <img
+      {/* <img
         style={{ cursor: 'pointer' }}
         src={logoHeader}
         className={styles.logo}
         onClick={() => navigate('/')}
-      />
+      /> */}
       <NavBar userRole={userRole} />
       <HeaderPhone />
       <main className={styles.NewsPage}>
@@ -59,13 +59,16 @@ function NewsPage({ userRole }) {
           <div className={styles.Title}>
             <h2>НОВОСТИ</h2>
           </div>
-          {/* <div className={styles.ClickerYears}>
+          <div className={styles.ClickerYears}>
             <ClickerYears data={allDataSliders} />
-          </div> */}
+          </div>
           <div className={styles.NewsPageContainer}>
+            {allDataSliders.length === 0 && (
+              <div className={styles.NoNews}>Новости отсутствуют :(</div>
+            )}
             <div className={styles.NewsPageContainerInner}>
               {dataSliderFirstColumn.map((el, index) => (
-                <div key={index}>
+                <div className={styles.item} key={index}>
                   <NewsCard data={el} />
                 </div>
               ))}
@@ -73,14 +76,23 @@ function NewsPage({ userRole }) {
 
             <div className={styles.NewsPageContainerInner}>
               {dataSliderTwoColumn.map((el, index) => (
-                <div key={index}>
+                <div key={index} className={styles.item}>
                   <NewsCard data={el} />
                 </div>
               ))}
             </div>
             <div className={styles.NewsPageContainerInner}>
               {dataSliderThreeColumn.map((el, index) => (
-                <div key={index}>
+                <div key={index} className={styles.item}>
+                  <NewsCard data={el} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={`${styles.NewsPageContainer} ${styles.phone}`}>
+            <div className={styles.NewsPageContainerInner}>
+              {allDataSliders.map((el, index) => (
+                <div key={index} className={styles.item}>
                   <NewsCard data={el} />
                 </div>
               ))}

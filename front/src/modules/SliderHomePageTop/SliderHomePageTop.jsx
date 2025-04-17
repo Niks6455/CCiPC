@@ -4,6 +4,7 @@ import LineSlider from '../../assets/img/LineSlider.svg';
 import { useSelector } from 'react-redux';
 import { useWindowWidth } from '../../hooks/hooks';
 import { useEffect, useState } from 'react';
+import { convertDate } from '../../utils/functions/funcions';
 function SliderHomePageTop() {
   const [mobile, setMobile] = useState(false);
   // Дублируем массив данных для бесконечного скролла
@@ -28,7 +29,7 @@ function SliderHomePageTop() {
                 .map((el, index) => (
                   <li key={index}>
                     <div className={styles.sliderItem}>
-                      <div className={styles.date}>{el.date}</div>
+                      <div className={styles.date}>{convertDate(el.date)}</div>
                       <div>{el.name}</div>
                     </div>
                     <div className={styles.sliderLine}>

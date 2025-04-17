@@ -106,8 +106,8 @@ $w3: 480px;
 
         .clicker {
           background-image: url('./../../assets/img/UI/ArrDefault.svg');
-          width: 3rem; /* 48px в rem */
-          height: 3rem;
+          width: torem(48px); /* 48px в rem */
+          height: torem(48px);
           background-size: contain;
           background-repeat: no-repeat;
           margin-left: 1.5rem;
@@ -115,9 +115,21 @@ $w3: 480px;
           cursor: pointer;
           &:hover {
             background-image: url('./../../assets/img/UI/ArrHover.svg');
+            width: torem(48px); /* 48px в rem */
+            height: torem(48px);
+            @media (max-width: $w2) {
+              width: torem(24px)torem(24px);
+              height: torem(24px);
+            }
           }
           &:active {
             background-image: url('./../../assets/img/UI/ArrClick.svg');
+            width: torem(48px); /* 48px в rem */
+            height: torem(48px);
+            @media (max-width: $w2) {
+              width: torem(24px);
+              height: torem(24px);
+            }
           }
           @media (max-width: $w2) {
             margin-left: torem(10px);
@@ -179,8 +191,8 @@ $w3: 480px;
 
 .greenArrow {
   background-image: url('./../../assets/img/UI/ArrTopDefault.svg');
-  width: torem(80px);
-  height: torem(80px);
+  width: 80px;
+  height: 80px;
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -197,8 +209,8 @@ $w3: 480px;
   }
 
   @media (max-width: $w2) {
-    width: torem(50px);
-    height: torem(50px);
+    width: 50px;
+    height: 50px;
     right: torem(25px);
     bottom: torem(25px);
   }

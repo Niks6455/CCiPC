@@ -6,19 +6,29 @@ $w3: 480px;
   @media (max-width: $w2) {
     display: none;
   }
-  padding: torem(10px) 0px 0px torem(20px);
   display: block;
-  border-right: torem(1px) solid var(--InputColors);
   width: torem(310px);
   min-width: torem(310px);
+  max-width: torem(310px);
   @include maxMinContent();
-  height: auto;
+  height: 100vh;
   box-sizing: border-box;
+  background-color: var(--BodyBgColor);
+  border-right: torem(1px) solid var(--InputColors);
+
   .LeftMenuLkInner {
-    position: fixed;
+    position: absolute;
     width: torem(310px);
     min-width: torem(310px);
-    z-index: 10000;
+    max-width: torem(310px);
+    padding: torem(10px) 0px 0px torem(20px);
+    border-right: torem(1px) solid var(--InputColors);
+    z-index: 9000;
+    box-sizing: border-box;
+    background-color: var(--BodyBgColor);
+    @media (min-width: 1600px) {
+      position: absolute;
+    }
   }
   .LogoImg {
     width: torem(110px);
@@ -61,7 +71,8 @@ $w3: 480px;
         top: 50%;
         transform: translateY(-50%);
         transition: transform 0.15s linear;
-
+        width: torem(34px);
+        height: torem(34px);
         &:hover {
           * {
             fill: var(--GreenColorDefault);
@@ -80,20 +91,33 @@ $w3: 480px;
       box-sizing: border-box;
     }
     .listSetings {
-      padding-left: torem(34px);
       max-height: 0;
       overflow: hidden;
       transition: max-height 0.3s linear;
       width: 100% !important;
       border-radius: torem(5px);
       li {
+        padding-left: torem(60px);
         margin-right: 0;
         position: static;
       }
     }
+
+    .addDocl {
+      display: flex;
+      flex-direction: row;
+      padding-left: torem(20px) !important;
+
+      img {
+        padding-top: torem(4px);
+        width: torem(24px);
+        height: torem(24px);
+        margin-right: torem(5px);
+      }
+    }
     .setingOpen {
       height: auto;
-      max-height: torem(258px);
+      max-height: torem(250px);
       overflow: auto;
       overflow-x: hidden;
       transition: max-height 0.3s linear;

@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .Participants {
   margin: 100px 0px 70px 0px;
   @media (max-width: 990px) {
@@ -15,7 +19,7 @@
       @media (max-width: 580px) {
         font-size: 18px;
         font-weight: 500;
-     }
+      }
     }
   }
   .ParticipantsInner {
@@ -31,25 +35,34 @@
         padding: 0;
         margin: 0;
         width: 100%;
-        .inputComponentInnerContainerInner{
+        margin-bottom: 40px;
+
+        .inputComponentInnerContainerInner {
+          overflow: hidden;
           display: flex;
-          width: 100%;
-          margin: 0 auto;
-          justify-content: center;
+          flex-direction: row;
+          height: 50px;
+          width: 412px;
+          border: 1px solid var(--InputColors);
+          border-radius: 10px;
+          @media (max-width: $w2) {
+            width: 90%;
+          }
         }
+      }
+      .img {
+        width: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
       img {
         width: 19px;
         height: 19px;
-        position: relative;
-        left: 30px;
-        top: 16px;
       }
       .inputComponent {
-        height: 50px;
-        width: 412px;
-        border: 1px solid var(--InputColors);
-        border-radius: 10px;
+        width: calc(100% - 40px);
+        height: 100%;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -58,12 +71,9 @@
         font-size: 20px;
         color: var(--GrayTextDefault);
         font-weight: 400;
-        padding-left: 40px;
         box-sizing: border-box;
-        @media (max-width: 580px) {
-           width: 90%;
-           
-        }
+        border: none;
+
         &::placeholder {
           color: var(--InputTextColor);
         }

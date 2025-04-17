@@ -4,7 +4,7 @@ import { ReactComponent as Close } from '@assets/img/UI/bigX.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import noPhotoLk from '@assets/img/noPhotoLk.svg';
 
-function ModalPhoto({ funOpenPhotoProfile, showProfilePhoto, user }) {
+function ModalPhoto({ funOpenPhotoProfile, showProfilePhoto, user, urlPhoto }) {
   return (
     <div className={styles.ModalPhoto}>
       <AnimatePresence>
@@ -33,7 +33,7 @@ function ModalPhoto({ funOpenPhotoProfile, showProfilePhoto, user }) {
             >
               <img
                 className={styles.ProfileImg}
-                src={`${server}/${user?.avatar?.url}`}
+                src={urlPhoto || `${server}/${user?.avatar?.url}`}
                 alt="img"
                 onError={e => (e.target.src = noPhotoLk)}
               />

@@ -99,7 +99,6 @@ $w2: 540px;
 .codeInput {
   display: flex;
   justify-content: center;
-  color: var(--GrayTextDefault);
   .codeInputInner {
     display: flex;
     justify-content: space-between;
@@ -109,23 +108,23 @@ $w2: 540px;
     }
     @media (max-width: $w2) {
       width: calc(100vw - 40px);
+      max-width: 300px;
     }
   }
   input {
-    width: 79px;
     border: none;
     border-bottom: 3px solid var(--GrayTextDefault);
+    color: #000 !important;
     height: 100px;
+    width: 79px;
     font-size: 84px;
-    line-height: 100px;
     text-align: center;
-    background-color: inherit;
-    &:focus {
-      outline: none;
-    }
+    display: flex;
+    background-color: var(--BodyBgColor);
+    outline: none;
+    overflow: visible;
     @media (max-width: $w1) {
       width: 64px;
-      font-family: Overpass, sans-serif;
       font-weight: 200;
       font-size: 67.84px;
     }
@@ -134,6 +133,12 @@ $w2: 540px;
       height: 50px;
       font-weight: 200;
       font-size: 46.37px;
+      width: 40px !important;
+      height: 40px !important;
+      font-size: 20px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      font-weight: 300;
     }
   }
   .error {

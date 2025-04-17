@@ -3,7 +3,7 @@ import styles from './CreateReport.module.scss';
 import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 import errorList from './../../../assets/img/UI/errorZnak.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { setValue } from '../../../store/reportCreateSlice/reportCreateSlice';
+import { disSeteEditData, setValue } from '../../../store/reportCreateSlice/reportCreateSlice';
 import InputListForma from '../../../components/InputListForma/InputListForma';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
@@ -37,6 +37,10 @@ function CreateReport({ edit }) {
     }
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const funChangeFile = (value, key) => {
     dispatch(setValue({ key: key, value: value }));
   };
@@ -45,12 +49,18 @@ function CreateReport({ edit }) {
   const handleChangeForm = (name, text) => {
     dispatch(setValue({ key: name, value: text }));
     setErrors(prev => prev.filter(item => item.key !== name));
+    if (edit) {
+      dispatch(disSeteEditData({ key: name, value: text }));
+    }
   };
 
   //! изменение названия доклада с валидацией
   const funChangeNameReport = value => {
     setErrors(prev => prev.filter(item => item.key !== 'name'));
     dispatch(setValue({ key: 'name', value: value }));
+    if (edit) {
+      dispatch(disSeteEditData({ key: 'name', value: value }));
+    }
   };
 
   const funNextStep = () => {
@@ -178,7 +188,11 @@ function CreateReport({ edit }) {
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
               <FileComponent
-                logoHeader={file1Url}
+                logoHeader={
+                  edit && report.data.fileArticle?.url && !file1Url
+                    ? `${server}/${report.data.fileArticle?.url}`
+                    : file1Url
+                }
                 data={report.data.fileArticle}
                 setData={value => funChangeFile(value, 'fileArticle')}
                 typeFile={['application/pdf']}
@@ -188,6 +202,11 @@ function CreateReport({ edit }) {
                 itemKey={'fileArticle'}
                 fileSize={20} // размер файла
                 text={'Необходимо загрузить<br/>файл в формате PDF'}
+                fileName={
+                  edit && report.data.fileArticle?.name
+                    ? decodeText(report.data.fileArticle?.name)
+                    : null
+                }
               />
             </div>
           </div>
@@ -197,7 +216,11 @@ function CreateReport({ edit }) {
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
               <FileComponent
-                logoHeader={file2Url}
+                logoHeader={
+                  edit && report.data.fileExpertOpinion && !file2Url
+                    ? `${server}/${report.data.fileExpertOpinion?.url}`
+                    : file2Url
+                }
                 data={report.data.fileExpertOpinion}
                 setData={value => funChangeFile(value, 'fileExpertOpinion')}
                 typeFile={['application/pdf']}
@@ -207,6 +230,11 @@ function CreateReport({ edit }) {
                 itemKey={'fileExpertOpinion'}
                 fileSize={20} // размер файла
                 text={'Необходимо загрузить<br/>файл в формате PDF'}
+                fileName={
+                  edit && report.data.fileExpertOpinion?.name
+                    ? decodeText(report.data.fileExpertOpinion?.name)
+                    : null
+                }
               />
             </div>
           </div>
@@ -228,6 +256,9 @@ function CreateReport({ edit }) {
             onChange={event => {
               dispatch(setValue({ key: 'comments', value: event.target.value }));
               setErrors(prev => prev.filter(item => item.key !== 'comments'));
+              if (edit) {
+                dispatch(disSeteEditData({ key: 'comments', value: event.target.value }));
+              }
             }}
           />
         </div>

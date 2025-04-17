@@ -136,7 +136,10 @@ function App() {
                   ></Route>
                 </Route>
                 <Route path="/participants" element={<Participants />}></Route>
-                <Route path="/account" element={<ProtectedRoute element={<Lks />} />}>
+                <Route
+                  path="/account"
+                  element={<ProtectedRoute element={<Lks footerRef={footerRef} />} />}
+                >
                   <Route path="documents" element={<ProtectedRoute element={<DocumentsLk />} />} />
                   <Route
                     path="createreport"

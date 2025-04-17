@@ -1,18 +1,20 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './LeftMenuLK.module.scss';
 import DataContext from '../../context';
 import logo from './../../assets/img/logo.png';
 import { useNavigate } from 'react-router-dom';
-import documentImg from './../../assets/img/UI/document.png';
-import exitImg from './../../assets/img/UI/exit.png';
-import deleteImg from './../../assets/img/UI/delete.png';
-import SettingsImg from './../../assets/img/UI/settings.png';
-import ArchiveiMG from './../../assets/img/UI/archive.png';
-import Lk from './../../assets/img/UI/lk.png';
+import documentImg from './../../assets/img/headPhoneIcon/documentsBlack.svg';
+import exitImg from './../../assets/img/headPhoneIcon/logoutBlack.svg';
+import deleteImg from './../../assets/img/headPhoneIcon/deleteBlack.svg';
+import SettingsImg from './../../assets/img/headPhoneIcon/settingBlack.svg';
+import ArchiveiMG from './../../assets/img/headPhoneIcon/archiveBlack.svg';
+import Lk from './../../assets/img/headPhoneIcon/profileBlack.svg';
 import { ReactComponent as BlackArrowBottom } from './../../assets/img/UI/blackArrowBottom.svg';
 import { useSelector } from 'react-redux';
 
-function LeftMenuLk() {
+import plus from '@assets/img/UI/plus.svg';
+
+function LeftMenuLk({ footerRef }) {
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
   const [dokladOpen, setDokladOpen] = useState(false);
@@ -42,9 +44,10 @@ function LeftMenuLk() {
   const handleMouseMove = event => {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
+
   return (
     <section className={styles.LeftMenuLk}>
-      <div className={styles.LeftMenuLkInner}>
+      <div className={styles.LeftMenuLkInner} id="leftMenu">
         <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
         <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
         <ul className={styles.LeftMenuLkList}>
@@ -60,9 +63,7 @@ function LeftMenuLk() {
           <li
             className={context.selectFrameLks === 'documents' ? styles.Active : ''}
             onClick={() => {
-              navigate('documents');
               setDokladOpen(!dokladOpen);
-              context.setSelectFrameLks('documents');
             }}
           >
             <img src={documentImg} />
@@ -70,6 +71,18 @@ function LeftMenuLk() {
             <BlackArrowBottom className={`${styles.arrow} ${dokladOpen ? styles.open : ''}`} />
           </li>
           <div className={`${styles.listSetings} ${dokladOpen && styles.setingOpen}`}>
+            <li
+              className={styles.addDocl}
+              onClick={() => {
+                navigate('documents');
+                context.setSelectFrameLks('documents');
+              }}
+            >
+              <div>
+                <img src={plus} alt="plus" />
+              </div>
+              <span>Добавить доклад</span>
+            </li>
             {reports.data.map((rep, index) => (
               <li
                 key={index}

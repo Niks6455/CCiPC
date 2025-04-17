@@ -46,6 +46,7 @@ $w3: 480px;
     font-size: torem(20px);
     color: #000;
     box-sizing: border-box;
+    transition: all 0.5s linear;
     cursor: pointer;
     &::placeholder {
       color: var(--InputTextColor);
@@ -76,17 +77,18 @@ $w3: 480px;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
-    transition: all 0.3s linear;
     position: absolute;
     background-color: #f0f3f2;
     z-index: 100;
-    bottom: 0;
+    bottom: torem(0px);
     width: 100%;
     border: torem(1px) solid #c8d0ce;
     border-radius: torem(10px);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     transform: translateY(calc(100% - torem(16px)));
+    max-height: torem(560px);
+    opacity: 1;
 
     ul {
       outline: none;
@@ -130,6 +132,7 @@ $w3: 480px;
       box-sizing: border-box;
       font-weight: 400;
       font-size: torem(20px);
+      cursor: pointer;
       @media (max-width: $w2) {
         font-size: torem(18px);
       }
@@ -139,11 +142,6 @@ $w3: 480px;
         padding: torem(15px) torem(20px);
       }
     }
-  }
-  .open {
-    max-height: torem(560px);
-    opacity: 1;
-    transition: max-height 0.3s linear;
   }
 
   .errorText {

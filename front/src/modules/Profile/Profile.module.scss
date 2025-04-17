@@ -110,7 +110,7 @@ $w3: 480px;
       padding-top: torem(20px);
     }
     .mainSectionInfoPeople {
-      margin-left: torem(360px);
+      margin-left: calc(torem(230px) + torem(50px));
       @media (max-width: $w2) {
         margin: 0;
       }
@@ -209,6 +209,9 @@ $w3: 480px;
     }
     .containerMoreInfoSecond {
       width: torem(419px);
+      @media (max-width: $w2) {
+        width: auto;
+      }
       .containerMoreInfoSecondText {
         margin-bottom: torem(20px);
         @media (max-width: $w3) {

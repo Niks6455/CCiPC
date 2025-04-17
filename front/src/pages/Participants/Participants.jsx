@@ -55,7 +55,10 @@ function Participants() {
           <div className={styles.inputComponentInner}>
             <div className={styles.inputComponentInnerContainer}>
               <div className={styles.inputComponentInnerContainerInner}>
-                <img src={Search} />
+                <div className={styles.img}>
+                  <img src={Search} />
+                </div>
+
                 <input
                   className={styles.inputComponent}
                   placeholder="Поиск"

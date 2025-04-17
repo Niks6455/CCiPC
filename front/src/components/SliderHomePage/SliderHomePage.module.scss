@@ -31,7 +31,7 @@ $w2: 769px;
     background-color: var(--GreenColorDefault); /* Зеленый фон */
     background-position: 0 0; /* Начальная позиция фона */
     width: 100%;
-    height: torem(600px)!important;
+    height: torem(600px) !important;
     z-index: 1;
     position: relative;
     display: flex;
@@ -39,18 +39,20 @@ $w2: 769px;
     padding-left: torem(50px);
     box-sizing: border-box;
     color: #fff;
-    transition: clip-path 0.5s ease-in-out, background-position 0.5s ease-in-out; /* Плавное изменение фона и clip-path */
-    
-    .SliderTitle{
+    transition:
+      clip-path 0.5s ease-in-out,
+      background-position 0.5s ease-in-out; /* Плавное изменение фона и clip-path */
+
+    .SliderTitle {
       font-size: torem(32px);
-      margin-bottom:torem(30px) ;
+      margin-bottom: torem(30px);
       font-weight: 700;
     }
-    .SliderText{
+    .SliderText {
       font-size: torem(20px);
       line-height: torem(26px);
       font-weight: 400;
-      p{
+      p {
         margin: torem(15px) 0px;
       }
     }
@@ -75,9 +77,8 @@ $w2: 769px;
     border-radius: torem(20px);
     img {
       height: torem(600px);
-      width: torem(900px)!important;
-      border-radius: torem(20px)!important;
-      
+      width: torem(900px) !important;
+      border-radius: torem(20px) !important;
     }
   }
 }
@@ -107,7 +108,11 @@ $w2: 769px;
     img {
       border-radius: 0 torem(20px) torem(20px) 0;
       height: torem(600px);
-      transition: transform 0.6s ease, border-radius 0.5s ease;
+      transition:
+        transform 0.6s ease,
+        border-radius 0.5s ease;
+      object-fit: cover;
+      object-position: center;
     }
   }
 }
@@ -139,7 +144,11 @@ $w2: 769px;
     img {
       height: torem(600px);
       border-radius: 0 torem(20px) torem(20px) 0;
-      transition: transform 0.6s ease, border-radius 0.5s ease;
+      transition:
+        transform 0.6s ease,
+        border-radius 0.5s ease;
+      object-fit: cover;
+      object-position: center;
     }
   }
 }
@@ -149,11 +158,11 @@ $w2: 769px;
     transform: translateX(0);
     opacity: 1;
   }
-  50%{
+  50% {
     transform: translateX(-100%);
     opacity: 0;
   }
-  51%{
+  51% {
     transform: translateX(100%);
     opacity: 0;
   }
@@ -161,7 +170,6 @@ $w2: 769px;
     transform: translateX(100%);
     clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0% 100%);
     opacity: 1;
-
   }
 }
 @keyframes slideBack {
@@ -169,11 +177,11 @@ $w2: 769px;
     transform: translateX(100%);
     opacity: 1;
   }
-  50%{
+  50% {
     transform: translateX(200%);
     opacity: 0;
   }
-  51%{
+  51% {
     transform: translateX(0);
     opacity: 0;
   }
@@ -182,8 +190,6 @@ $w2: 769px;
     transform: translateX(0);
     clip-path: polygon(80% 0, 0 0, 0 100%, 100% 100%);
     opacity: 1;
-
-    
   }
 }
 
@@ -196,7 +202,7 @@ $w2: 769px;
     transform: translateX(-50%) scale(1);
     opacity: 0;
   }
-  
+
   100% {
     transform: translateX(0) scale(1);
     opacity: 1;
@@ -218,12 +224,11 @@ $w2: 769px;
   }
 }
 
-
 .controls {
   bottom: torem(100px);
   position: relative;
 
-  .controlsInner{
+  .controlsInner {
     position: absolute;
     left: 50%;
     transform: translateX(-58%);
@@ -236,21 +241,20 @@ $w2: 769px;
     color: #fff;
     font-size: torem(60px);
   }
-  button{
+  button {
     display: flex;
     align-items: center;
     width: torem(100px);
     height: torem(100px);
-    span{
+    span {
       width: torem(100px);
       height: torem(100px);
     }
   }
-  .arrowLeft{
+  .arrowLeft {
     transform: rotate(180deg);
     position: relative;
     top: torem(-12px);
-
   }
 }
 
@@ -267,24 +271,24 @@ $w2: 769px;
   justify-content: center;
   font-size: 1.5rem;
   margin: 0px torem(10px);
-  span{
-    background-image: url("./../../assets/img/UI/SliderDefault.svg");
+  span {
+    background-image: url('./../../assets/img/UI/SliderDefault.svg');
     width: torem(50px);
     height: torem(50px);
     background-size: contain;
     background-repeat: no-repeat;
     transition: 0.08s linear all;
-    &:hover{
-      background-image: url("./../../assets/img/UI/SliderHover.svg");
+    &:hover {
+      background-image: url('./../../assets/img/UI/SliderHover.svg');
     }
-    &:active{
-      background-image: url("./../../assets/img/UI/SliderActive.svg");
+    &:active {
+      background-image: url('./../../assets/img/UI/SliderActive.svg');
     }
   }
 }
 
 .allNews {
-  background-image: url("./../../assets/img/UI/newsDefault.svg");
+  background-image: url('./../../assets/img/UI/newsDefault.svg');
   width: torem(185px);
   height: torem(46px);
   background-size: contain;
@@ -297,11 +301,10 @@ $w2: 769px;
   cursor: pointer;
 
   &:hover {
-    background-image: url("./../../assets/img/UI/newsHover.svg");
+    background-image: url('./../../assets/img/UI/newsHover.svg');
   }
 
   &:active {
-    background-image: url("./../../assets/img/UI/newsActive.svg");
+    background-image: url('./../../assets/img/UI/newsActive.svg');
   }
 }
-

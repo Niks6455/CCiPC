@@ -16,7 +16,7 @@ $w3: 360px;
       width: max-content;
     }
     @media (max-width: $w2) {
-      display: none;
+      display: none !important;
     }
     img {
       width: torem(169px);

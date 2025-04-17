@@ -1,11 +1,62 @@
-.NavBar {
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
+.absluteLogo {
+  display: none !important;
+  @media (min-width: 1600px) {
+    position: absolute !important;
+  }
+}
+
+.loginLogo {
+  display: none !important;
+}
+
+.visibleLogo {
+  display: none !important;
+  @media (max-width: $w2) {
+    display: flex !important;
+  }
+}
+
+.logo {
+  width: torem(110px);
+  height: torem(110px);
+  display: flex;
   position: fixed;
-  right: torem(25px);
-  top: torem(25px);
-  z-index: 1000;
-  @media (max-width: 480px) {
+  left: torem(25px);
+  top: torem(10px);
+  z-index: 9000;
+  @include HoverActiveOpacity;
+  cursor: pointer;
+
+  @media (max-width: $w2) {
+    width: torem(60px);
+    height: torem(60px);
+  }
+  @media (max-width: $w3) {
+    display: none !important;
+  }
+}
+
+.NavBar {
+  width: 100vw;
+  box-sizing: border-box;
+  padding-top: 25px;
+  padding-right: 25px;
+  position: fixed;
+  display: flex;
+  justify-content: end;
+  // right: torem(25px);
+  // top: torem(25px);
+  top: 0;
+  left: 0;
+  z-index: 8000;
+  @media (max-width: $w3) {
     display: none;
   }
+
   .NavBarButton {
     display: flex;
     align-items: center;
@@ -75,6 +126,9 @@
       position: relative;
       height: 100vh;
       .RightMenuText {
+        @media (max-width: $w2) {
+          display: none;
+        }
         position: absolute;
         bottom: torem(50px);
         right: 0;
@@ -108,6 +162,8 @@
         }
       }
       img {
+        width: torem(20px);
+        height: torem(20px);
         margin-left: torem(10px);
         position: relative;
         top: torem(4px);
@@ -132,7 +188,19 @@
       opacity 0.3s ease-in-out;
   }
   ul {
+    .pk {
+      display: none;
+    }
     list-style: none;
+    @media (min-width: $w2) {
+      //! первые 4 li  скрое
+      li:nth-child(-n + 4) {
+        display: none;
+      }
+      .pk {
+        display: flex;
+      }
+    }
     li {
       margin: 1.25rem 0; /* 20px в rem */
       color: #fff;
@@ -144,21 +212,76 @@
       font-weight: 400;
       text-wrap: nowrap;
       .arowLi {
-        display: none;
+        transition: all 0.15s linear;
+        width: 0;
+        overflow: hidden;
+        img {
+          width: torem(16px);
+          height: torem(16px);
+          transform: translateY(torem(2px));
+        }
+      }
+      .leftImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: torem(3px);
+        img {
+          margin-right: torem(4px);
+        }
+      }
+      .rigthImg {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: torem(3px);
+        padding-left: torem(4px);
+        img {
+          padding: torem(4px);
+        }
       }
       img {
-        position: relative;
-        left: 0.3125rem; /* 5px в rem */
-        top: 0.125rem; /* 2px в rem */
+        width: torem(20px);
+        height: torem(20px);
+        transition: all 0.2s linear;
       }
+
+      .rotate {
+        transform: scaleY(-1);
+        transition: all 0.2s linear;
+      }
+
       &:hover {
         padding-left: 2.1875rem; /* 35px в rem */
         cursor: pointer;
         .arowLi {
           display: block;
           margin-left: torem(10px);
+          width: auto;
+          min-width: torem(15px);
         }
       }
     }
+    .list {
+      overflow: hidden;
+      li:first-child {
+        margin: 0;
+      }
+      li:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .reports {
+    max-height: torem(250px);
+    overflow-y: auto;
+    @include ScrollBar;
+    width: 100%;
+    &::-webkit-scrollbar {
+      width: torem(4px);
+      background-color: transparent;
+    }
+    padding-right: torem(10px);
   }
 }

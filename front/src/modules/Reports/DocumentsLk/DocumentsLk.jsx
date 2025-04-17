@@ -17,6 +17,10 @@ function DocumentsLk() {
     setLength(reports.length);
   }, [reports]);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   //! при клике на создать доклад
   const creatReaport = () => {
     navigate('/account/createreport');
@@ -33,7 +37,7 @@ function DocumentsLk() {
             <img src={document} alt="Документ" />
           </div>
           <div className={styles.notDocumentTitle}>
-            <p>{length > 0 ? 'Добавить доклад' : 'Создайте доклад'}</p>
+            <p>{length > 0 ? 'Добавьте доклад' : 'Создайте доклад'}</p>
           </div>
           <div className={styles.notDocumentSubTitle}>
             {length === 0 && <p>У Вас пока нет зарегистрированных докладов</p>}
@@ -54,6 +58,22 @@ function DocumentsLk() {
           </div>
         </div>
       </div>
+      {/* <div className={styles.phone_repots}>
+        <h2>Мои доклады</h2>
+        <div className={styles.reports}>
+          {reports.map((item, index) => (
+            <div
+              key={index}
+              className={styles.report_item}
+              onClick={() =>
+                navigate(`/account/viewreports?idReport=${item.id}&number=${index + 1}`)
+              }
+            >
+              {index + 1}. {item.name}
+            </div>
+          ))}
+        </div>
+      </div> */}
     </section>
   );
 }

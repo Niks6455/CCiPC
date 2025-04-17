@@ -128,7 +128,7 @@ function ConfirmLogin(props) {
           {code.map((digit, index) => (
             <input
               key={index}
-              type="text"
+              type="number"
               value={digit}
               maxLength={1}
               onChange={e => handleChange(index, e.target.value)}
@@ -139,6 +139,7 @@ function ConfirmLogin(props) {
           ))}
         </div>
       </div>
+
       <div className={styles.CodeSubmit}>
         <div className={styles.CodeSubmitCode}>
           <button

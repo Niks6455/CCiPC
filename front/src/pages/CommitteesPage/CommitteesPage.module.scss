@@ -1,3 +1,7 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .organizationComiteMain {
   display: flex;
   flex-direction: column;
@@ -20,7 +24,7 @@
     top: torem(15px);
     left: torem(15px);
   }
-  @media (max-width: 520px) {
+  @media (max-width: 769px) {
     display: none;
   }
 }
@@ -28,7 +32,7 @@
 h2 {
   font-size: torem(30px);
   font-weight: 600;
-  @media (max-width: 1376px) {
+  @media (max-width: $w2) {
     font-size: torem(20px);
     font-weight: 500;
   }
@@ -41,17 +45,20 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .organizationComiteImages {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: torem(30px);
-    @media (max-width: 1376px) {
-      grid-template-columns: repeat(2, 1fr);
-      gap: torem(10px);
-    }
-    @media (max-width: 770px) {
-      grid-template-columns: repeat(1, 1fr);
-    }
+}
+.organizationComiteImages {
+  display: flex;
+  flex-wrap: wrap;
+  gap: torem(32px);
+  justify-content: center !important;
+  max-width: torem(1300px);
+  @media (max-width: $w2) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: torem(10px);
+  }
+  @media (max-width: 770px) {
+    grid-template-columns: repeat(1, 1fr);
+    width: 100vw;
   }
 }
 
@@ -76,6 +83,7 @@ h2 {
   align-items: center;
   margin-top: torem(150px);
   margin-bottom: torem(150px);
+
   div {
     justify-content: center;
     @media (max-width: 770px) {
@@ -89,7 +97,7 @@ h2 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: torem(30px);
-    @media (max-width: 1376px) {
+    @media (max-width: $w2) {
       grid-template-columns: repeat(2, 1fr);
       gap: torem(10px);
     }
@@ -106,8 +114,8 @@ h2 {
   }
   .greenArrow {
     background-image: url('./../../assets/img/UI/ArrTopDefault.svg');
-    width: torem(80px);
-    height: torem(80px);
+    width: 80px;
+    height: 80px;
     background-size: contain;
     background-repeat: no-repeat;
     cursor: pointer;

@@ -1,17 +1,20 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
 .photoGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px; /* Убираем отступы между элементами */
-  max-width: 1300px;
+  gap: torem(10px); /* Убираем отступы между элементами */
+  max-width: torem(1300px);
   margin: 0 auto;
-  @media (max-width: 930px) {
+  @media (max-width: $w2) {
+    width: 100vw;
+    padding: torem(90px) torem(30px);
     grid-template-columns: repeat(2, 1fr);
-    max-width: 700px;
-    padding: 20px;
   }
-  @media (max-width: 460px) {
+  @media (max-width: $w3) {
     grid-template-columns: repeat(1, 1fr);
-    max-width: 350px;
   }
 
   .photoItem {
@@ -20,7 +23,7 @@
     overflow: hidden; /* Обрезаем лишнее */
     position: relative;
     transition: 0.1s linear all;
-    border-radius: 10px;
+    border-radius: torem(10px);
     cursor: pointer;
     @media (max-width: 1260px) {
       height: torem(250px);
@@ -28,7 +31,7 @@
     @media (max-width: 460px) {
       height: torem(300px);
     }
- 
+
     &:hover {
       .photo {
         scale: 1.1;
@@ -41,7 +44,7 @@
       width: 100%; /* Растягиваем изображение по контейнеру */
       height: 100%; /* Заполняем контейнер полностью */
       object-fit: cover; /* Обрезаем изображение, чтобы оно полностью заполняло контейнер */
-      border-radius: 10px;
+      border-radius: torem(10px);
       object-position: top;
       transition: 0.2s linear all;
     }
@@ -64,11 +67,11 @@
       background: rgba(0, 28, 20, 0.25);
       backdrop-filter: blur(10px);
       z-index: 5;
-      border-radius: 0px 0px 10px 10px;
+      border-radius: 0px 0px torem(10px) torem(10px);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 5px 10px;
+      padding: torem(5px) torem(10px);
       box-sizing: border-box;
       text-align: center;
       @media (max-width: 1260px) {
@@ -85,21 +88,21 @@
   }
   .repName {
     position: absolute;
-    max-width: 340px;
+    max-width: torem(340px);
     z-index: 100;
     left: 0;
     top: 0;
     background-color: #fff;
-    padding: 10px;
+    padding: torem(10px);
     font-family: Overpass, sans-serif;
     font-size: torem(16px);
     font-weight: 400;
-    line-height: 19.2px;
+    line-height: torem(19px);
     text-align: left;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
     color: #5b605e;
-    border-radius: 6px;
-    border: 1px solid #e7eae9;
+    border-radius: torem(6px);
+    border: torem(1px) solid #e7eae9;
   }
 }

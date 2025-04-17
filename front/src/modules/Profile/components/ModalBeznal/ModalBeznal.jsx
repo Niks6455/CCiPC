@@ -18,7 +18,7 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
     });
   };
   const conference = useSelector(state => state?.conferences?.data[0]);
-  const funDownloadShablon = async (docName) => {
+  const funDownloadShablon = async docName => {
     try {
       const response = await fetch(`${server}/${conference?.documents?.[docName]}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
@@ -62,12 +62,12 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
               }}
             >
               <h2 className={styles.title}>
-                Просим вас скачать шаблон договора, заполнить поля и
+                Просим вас скачать шаблон договора, заполнить поля и{' '}
                 <span>загрузить подписанный скан договора и скан квитанции</span> об оплате в личный
                 кабинет
               </h2>
               <div className={styles.file_container}>
-                <button className={styles.inner} onClick={() => funDownloadShablon("INDIVIDUAL")}>
+                <button className={styles.inner} onClick={() => funDownloadShablon('INDIVIDUAL')}>
                   <img src={docIcon} alt="doc" />
                   <div className={styles.doc_name}>
                     <span>Для ФИЗИЧЕСКОГО лица</span>
@@ -76,7 +76,7 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
                     </button>
                   </div>
                 </button>
-                <button className={styles.inner} onClick={() => funDownloadShablon("LEGAL")}>
+                <button className={styles.inner} onClick={() => funDownloadShablon('LEGAL')}>
                   <img src={docIcon} alt="doc" />
                   <div className={styles.doc_name}>
                     <span>Для ЮРИДИЧЕСКОГО лица</span>

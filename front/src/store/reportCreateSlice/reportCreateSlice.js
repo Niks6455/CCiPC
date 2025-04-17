@@ -79,6 +79,8 @@ const reportCreateSlice = createSlice({
       coAuthorsIds: [],
       organization: '',
     },
+    editData: {},
+    prevData: {},
     sliderState: 0,
     openPopUpName: '',
   },
@@ -202,8 +204,19 @@ const reportCreateSlice = createSlice({
     disEditReport(state, action) {
       const { data } = action.payload;
       state.data = data;
+      state.prevData = data;
+      state.editData = {};
       state.sliderState = 0;
       state.openPopUpName = '';
+    },
+
+    disSeteEditData(state, action) {
+      const { key, value } = action.payload;
+      if (state.prevData[key] !== value) {
+        state.editData[key] = value;
+      } else {
+        delete state.editData[key];
+      }
     },
   },
 });
@@ -218,6 +231,7 @@ export const {
   setCoauthorDataApi,
   setCoauthorAutocompletion,
   disEditReport,
+  disSeteEditData,
   disSetResetReport,
 } = reportCreateSlice.actions;
 

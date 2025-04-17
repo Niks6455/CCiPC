@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Layout from '../../ui/Layout/Layout';
-import Footer from '../../components/Footer/Footer';
 import styles from './Author.module.scss';
 import AuthorCollection from '../../components/AuthorCollection/AuthorCollection';
-import { dataLink } from './data.js';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import Book from '../../assets/img/Book.svg';
 import Cap from '../../assets/img/Cap.svg';
@@ -12,25 +10,27 @@ import { getAllArchiveReport } from '../../apirequests/apirequests.js';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests.js';
-import { decodeFileName } from '../../utils/functions/funcions.js';
+import { decodeFileName, decodeText } from '../../utils/functions/funcions.js';
+import logoHeader from './../../assets/img/logo.png';
+
 function Author({ userRole }) {
+  const navigate = useNavigate();
   const [selectedButton, setSelectedButton] = useState('Registration');
   const [data, setData] = useState([]);
   const conference = useSelector(state => state?.conferences?.data[0]);
   useEffect(() => {
     getAllArchiveReport().then(res => setData(res?.data?.archives || []));
   }, [selectedButton]);
-
   //! функция скачивания шаблока
   const funDownloadShablon = async () => {
     try {
-      const response = await fetch(`${server}/${conference?.documents?.SAMPLE}`);
+      const response = await fetch(`${server}/${conference?.files?.SAMPLE[0]?.url}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      const name = decodeFileName(conference?.documents?.SAMPLE?.name?.split('\\').pop());
+      const name = decodeText(conference?.files?.SAMPLE[0]?.name);
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
-      link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем
+      link.download = name || 'default_filename.docx'; // Файл точно сохранится с этим именем
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -42,6 +42,12 @@ function Author({ userRole }) {
 
   return (
     <main>
+      {/* <img
+        style={{ cursor: 'pointer' }}
+        src={logoHeader}
+        className={styles.logo}
+        onClick={() => navigate('/')}
+      /> */}
       <NavBar userRole={userRole} />
       <HeaderPhone />
       <Layout>
@@ -90,7 +96,7 @@ function Author({ userRole }) {
               </p>
               <p className={styles.registration_text_3}>
                 1) доклад, оформленный по{' '}
-                <a onClick={() => funDownloadShablon} target="_blank" className={styles.green_link}>
+                <a onClick={funDownloadShablon} target="_blank" className={styles.green_link}>
                   шаблону
                 </a>{' '}
                 в Word;

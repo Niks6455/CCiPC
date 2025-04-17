@@ -3,11 +3,13 @@ import styles from './Lks.module.scss';
 import LeftMenuLk from '../../modules/LeftMenuLK/LeftMenuLK';
 import { Outlet } from 'react-router-dom';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
+import NavBar from '../../components/NavBar/NavBar';
 function Lks(props) {
   return (
     <>
       <main className={styles.Lks}>
-        <LeftMenuLk />
+        <NavBar userRole={props.userRole} />
+        <LeftMenuLk footerRef={props.footerRef} />
         <div className={styles.LksContainer}>
           <Outlet />
         </div>

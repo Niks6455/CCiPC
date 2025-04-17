@@ -5,7 +5,6 @@ import { server } from '../../apirequests/apirequests';
 import { decodeFileName } from '../../utils/functions/funcions';
 export default function AuthorCollection({ children, link }) {
   const [isActive, setActive] = useState(false);
-
   return (
     <div
       className={styles.collection_element}
@@ -14,7 +13,7 @@ export default function AuthorCollection({ children, link }) {
     >
       <img src={FolderIcon} alt="FolderIcon" />
       <a
-        href={`${server}/${decodeFileName(link)}`}
+        href={`${server}/${link?.url}`}
         target="_blank"
         rel="noreferrer"
         className={`${styles.collection_element_text} ${isActive && styles.active_text}`}

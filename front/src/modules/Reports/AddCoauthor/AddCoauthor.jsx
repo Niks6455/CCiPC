@@ -7,6 +7,7 @@ import errorList from './../../../assets/img/UI/errorZnak.svg';
 import {
   addSoauthors,
   deleteCoauthor,
+  disSeteEditData,
   disSetResetReport,
   funSaveDataState,
   setCoauthorAutocompletion,
@@ -38,7 +39,7 @@ import FildeModal from '../../../components/AddReportModal/FildeModal/FildeModal
 import InputListForma from '../../../components/InputListForma/InputListForma';
 import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 import ErrorModal from '../../../components/ErrorModal/ErrorModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const navigate = useNavigate();
@@ -48,6 +49,10 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
   const [errorModal, setErrorModal] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const funSetSoauthorEditing = (key, value) => {
     console.log('key, value', key, value);
@@ -136,7 +141,12 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     }
     if (edit) {
       //! редактирование доклада
-      const temp = {
+      console.log('report.data', report.data);
+      let temp = {
+        ...report.editData,
+        coAuthorsIds: report.data?.coAuthorsIds,
+        conclusion: report.data.fileExpertOpinion || '',
+        reportFile: report.data.fileArticle || '',
         coAuthors: report.data?.soauthors
           .filter(el => !report.data.originSoauthors.some(e => e === el?.data?.id))
           ?.map(soauthor => ({
@@ -145,16 +155,32 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
             patronymic: soauthor?.data?.patronymic || '',
             email: soauthor?.data?.email || '',
           })),
-        coAuthorsIds: report.data?.coAuthorsIds,
-        comment: report.data.comments || '',
-        conclusion: report.data.fileExpertOpinion || '',
-        directionId: directions.find(el => el.name === report.data.directionConference).id || '',
-        form: report.data.formParticipation || '',
-        status: report.data.participationStatus || '',
-        name: report.data.name || '',
-        reportFile: report.data.fileArticle || '',
-        organization: report.data.organization || '',
       };
+      if (report.editData?.directionConference) {
+        temp = {
+          ...temp,
+          directionId:
+            directions.find(el => el.name === report.editData?.directionConference)?.id || '',
+        };
+      }
+      if (report.editData?.comments) {
+        temp = {
+          ...temp,
+          comment: report.editData?.comments,
+        };
+      }
+      if (report.editData?.formParticipation) {
+        temp = {
+          ...temp,
+          form: report.editData?.formParticipation,
+        };
+      }
+      if (report.editData?.participationStatus) {
+        temp = {
+          ...temp,
+          status: report.editData?.participationStatus,
+        };
+      }
       apiEditReport(report.data.id, temp).then(res => {
         if (res?.status === 200) {
           dispatch(fetchReports());
@@ -174,18 +200,12 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
             uploadPromises.push(uploadPhoto(formDataConcl, 'CONCLUSION'));
           }
           // Ждем выполнения всех загрузок
-          Promise.all(uploadPromises)
-            .then(results => {
-              // Проверяем, что все запросы успешны
-              if (results.every(res => res?.status === 200)) {
-                dispatch(fetchReports());
-              }
-            })
-            .finally(() => {
-              // Навигация после всех запросов (даже если что-то не загрузилось)
-              navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
-              dispatch(disSetResetReport());
-            });
+          Promise.all(uploadPromises).finally(() => {
+            // Навигация после всех запросов (даже если что-то не загрузилось)
+            navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
+            dispatch(disSetResetReport());
+            dispatch(fetchReports());
+          });
         }
       });
 
@@ -377,7 +397,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                     funChange={funChangeInput}
                     placeholder={inp.placeholder}
                     error={inp.error}
-                    readOnly={soauthorEditing}
+                    readOnly={soauthorEditing || edit}
                   />
                   {soauthtor.autocompletion === 'noemail' && (
                     <div className={styles.modalEmail}>
@@ -418,7 +438,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                           funChange={funChangeInput}
                           placeholder={inp.placeholder}
                           error={inp.error}
-                          readOnly={soauthtor.autocompletion === 'readOnly'}
+                          readOnly={soauthtor.autocompletion === 'readOnly' || edit}
                         />
                       </div>
                     ),
@@ -431,11 +451,15 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
       )}
 
       {!soauthorEditing && (
-        <button className={styles.addsoaftor} onClick={() => dispatch(addSoauthors())}>
+        <button
+          className={`${styles.addsoaftor} ${report?.data.soauthors.length === 0 ? styles.addsoaftorNone : ''}`}
+          onClick={() => dispatch(addSoauthors())}
+        >
           <span>Добавить соавтора</span>
           <img src={plus} alt="+" />
         </button>
       )}
+
 
       <div className={styles.srokContainer}>
         <div className={styles.text}>

@@ -9,7 +9,7 @@ $w3: 480px;
   }
   width: 100%;
   .mobile_navigate {
-    display: none;
+    display: none !important;
     @media (max-width: $w3) {
       display: flex !important;
       position: absolute;
