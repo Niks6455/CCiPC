@@ -41,11 +41,11 @@ export default {
         res.json({reports: reports})
     },
 
-    async delete({params : {  id }, user}, res) {
+    async delete({params : {  id }, user, admin}, res) {
 
         if(!id) throw new AppErrorMissing('id')
 
-        await reportService.delete(id, user)
+        await reportService.delete(id, user ?? admin)
 
         res.json({status: 'ok'})
     },

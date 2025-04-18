@@ -369,14 +369,17 @@ export default {
     },
 
     async delete(reportId, participant) {
-        const report=await Report.findByPk(reportId, {
+
+        const report = await Report.findByPk(reportId, {
             include: {
                 model: ParticipantOfReport,
                 as: 'participantOfReport',
                 required: true,
-                where : { participantId: participant.id, who: 'Автор' },
+                where: participant?.role === 1
+                  ? {}
+                  : { participantId: participant.id, who: 'Автор' },
             }
-        })
+        });
 
         if(!report) throw new AppErrorInvalid('report')
 

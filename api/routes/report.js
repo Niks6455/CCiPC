@@ -218,7 +218,7 @@ router.route('/directions')
 
 router.route('/:id')
     .put(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(reportCtrl.update))
-    .delete(asyncRoute(verify.general), asyncRoute(reportCtrl.delete))
+    .delete(verify.combine(asyncRoute(verify.general), asyncRoute(verify.admin([roles.ADMIN]))), asyncRoute(reportCtrl.delete))
     .get(asyncRoute(verify.general), asyncRoute(reportCtrl.findOne));
 
 

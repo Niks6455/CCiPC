@@ -450,6 +450,10 @@ export default {
                    who: p.who,
                    org: p.organization,
                    email: p.participant.email,
+                   academicTitle: p.participant.academicTitle,
+                   degree: p.participant.degree,
+                   position: p.participant.position,
+                   phone: p.participant.phone,
                    status: p.status,
                    form: p.form,
                    fio: `${p.participant.surname} ${p.participant.name} ${p.participant?.patronymic ?? ''}`.trim(),
@@ -480,6 +484,10 @@ export default {
                 { header: 'ФИО' },
                 { header: 'Организация' },
                 { header: 'Почта' },
+                { header: 'Телефон' },
+                { header: 'Звание' },
+                { header: 'Степень' },
+                { header: 'Должность' },
                 { header: 'Участие' },
                 { header: 'Форма' },
                 { header: 'Доклад' }
@@ -493,6 +501,10 @@ export default {
                   person.fio,
                   person.org,
                   person.email,
+                  person.phone,
+                  person.academicTitle,
+                  person.degree,
+                  person.position,
                   person.status,
                   person.form,
                   name,
@@ -504,7 +516,7 @@ export default {
             }
 
             // Объединение ячеек для колонки "Доклад"
-            worksheet.mergeCells(`G2:G${data1.reports.length + 1}`);
+            worksheet.mergeCells(`K2:K${data1.reports.length + 1}`);
         });
 
         return workbook;
