@@ -86,10 +86,16 @@ function Author({ userRole }) {
                   {' '}
                   личном кабинете
                 </Link>
-                . В срок до {conference?.dedlineReport1 || 'XXXX-XX-XX'} необходимо прислать заявку
+                {/* . В срок до {conference?.dedlineReport1 || 'XXXX-XX-XX'} необходимо прислать заявку
                 на доклад, заполнив обязательные поля, а в срок до{' '}
                 {conference?.dedlineReport2 || 'XXXX-XX-XX'} загрузить статью и экспертное
-                заключение.
+                заключение. */}
+                {conference?.dedlineReport2 && (
+                  <>
+                    . В срок до {conference?.dedlineReport2} необходимо прислать заявку на доклад,
+                    заполнив обязательные поля, а также загрузить статью и экспертное заключение.
+                  </>
+                )}
               </p>
               <p className={styles.registration_text_2}>
                 <span className={styles.bold}>При подаче заявки прикрепляются:</span>

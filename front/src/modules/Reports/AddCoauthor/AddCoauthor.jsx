@@ -460,13 +460,16 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
         </button>
       )}
 
-
       <div className={styles.srokContainer}>
         <div className={styles.text}>
           <img src={errorList} alt="img" />
-          <span>
+          {/* <span>
             В срок до {conference?.dedlineReport1} необходимо прислать заявку на доклад, а в срок до{' '}
             {conference?.dedlineReport2} загрузить статью и экспертное заключение.
+          </span> */}
+          <span>
+            В срок до {conference?.dedlineReport2} необходимо прислать заявку на доклад, загрузить
+            статью и экспертное заключение.
           </span>
         </div>
         <button onClick={funSaveData}>{edit ? 'Сохранить изменения' : 'Сохранить'}</button>

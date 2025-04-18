@@ -195,13 +195,16 @@ function CreateReport({ edit }) {
                 }
                 data={report.data.fileArticle}
                 setData={value => funChangeFile(value, 'fileArticle')}
-                typeFile={['application/pdf']}
-                accept={'.pdf'}
+                typeFile={[
+                  'application/msword',
+                  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                ]}
+                accept={'.doc,.docx'}
                 name={'fileArticle'}
-                icon={'pdf'}
+                icon={'doc'}
                 itemKey={'fileArticle'}
                 fileSize={20} // размер файла
-                text={'Необходимо загрузить<br/>файл в формате PDF'}
+                text={'Необходимо загрузить<br/>файл в формате DOC или DOCX'}
                 fileName={
                   edit && report.data.fileArticle?.name
                     ? decodeText(report.data.fileArticle?.name)
@@ -267,9 +270,13 @@ function CreateReport({ edit }) {
         <div className={styles.srokContainer}>
           <div className={styles.text}>
             <img src={errorList} alt="img" />
-            <span>
+            {/* <span>
               В срок до {conference?.dedlineReport1} необходимо прислать заявку на доклад, а в срок
               до {conference?.dedlineReport2} загрузить статью и экспертное заключение.
+            </span> */}
+            <span>
+              В срок до {conference?.dedlineReport2} необходимо прислать заявку на доклад, загрузить
+              статью и экспертное заключение.
             </span>
           </div>
           <button onClick={() => funNextStep()}>Следующий шаг</button>
