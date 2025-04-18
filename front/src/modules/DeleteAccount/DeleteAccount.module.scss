@@ -87,4 +87,26 @@ $w3: 480px;
       }
     }
   }
+
+  .nodelete {
+    margin-bottom: torem(40px);
+  }
+  .nodeleteImg {
+    display: flex;
+    justify-content: center;
+    margin-bottom: torem(40px);
+    img {
+      width: torem(80px);
+      height: torem(80px);
+    }
+  }
+  .goProfile {
+    display: flex;
+    justify-content: center;
+    button {
+      @include ButtonGreen;
+      width: torem(280px);
+      height: torem(54px);
+    }
+  }
 }
