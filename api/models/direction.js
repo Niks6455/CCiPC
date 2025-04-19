@@ -11,7 +11,7 @@ export default class Direction extends Model {
             {
                 sequelize,
                 schema: process.env.NODE_ENV,
-                paranoid: true,
+                paranoid: false,
                 modelName: 'Direction',
                 tableName: 'directions',
                 timestamps: true,

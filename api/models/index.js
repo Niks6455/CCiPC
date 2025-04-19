@@ -20,17 +20,17 @@ const { DB_NAME,DB_USER, DB_PWD, DB_HOST, DB_PORT } = process.env;
 
 export const models = {
    Participant,
-   Report,
    Conference,
-   ParticipantInConference,
    News,
    Committee,
-   CommitteeInConference,
    Archive,
-   ParticipantOfReport,
    Direction,
-   DirectionInConference,
+   Report,
    File,
+   CommitteeInConference,
+   ParticipantInConference,
+   ParticipantOfReport,
+   DirectionInConference,
    FileLink
 };
 
