@@ -13,6 +13,7 @@ import {
   funDigit,
   funEightSymbols,
   funSpecialSymbol,
+  validatePassword,
 } from '../../utils/functions/PasswordValidation';
 import { apiRegister } from '../../apirequests/apirequests';
 import {
@@ -146,8 +147,12 @@ function Register() {
       newErrors.password = 'Пароль превышает 16 символов';
       isValid = false;
     }
-    if (registration?.data?.confirmPassword?.length > 16) {
-      newErrors.confirmPassword = 'Пароль превышает 16 символов';
+    if (!validatePassword(registration?.data?.password)) {
+      newErrors.password = 'Некорректный пароль';
+      isValid = false;
+    }
+    if (!validatePassword(registration?.data?.confirmPassword)) {
+      newErrors.confirmPassword = 'Некорректный пароль';
       isValid = false;
     }
 

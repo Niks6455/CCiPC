@@ -10,6 +10,7 @@ import {
   funDigit,
   funEightSymbols,
   funSpecialSymbol,
+  validatePassword,
 } from '../../utils/functions/PasswordValidation';
 import { apiChangePassword } from '../../apirequests/apirequests';
 import confitmIcon from '@assets/img/confirm.svg';
@@ -102,6 +103,15 @@ function ChangePassword() {
     if (formData.newpassword !== formData.rewnewpassword) {
       newErrors.newpassword = 'Пароли не совпадают';
       newErrors.rewnewpassword = 'Пароли не совпадают';
+      isValid = false;
+    }
+
+    if (!validatePassword(formData?.newpassword)) {
+      newErrors.newpassword = 'Некорректный пароль';
+      isValid = false;
+    }
+    if (!validatePassword(formData?.rewnewpassword)) {
+      newErrors.rewnewpassword = 'Некорректный пароль';
       isValid = false;
     }
 
