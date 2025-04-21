@@ -12,7 +12,9 @@ import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
+  funSixteenSymbols,
   funSpecialSymbol,
+  validateLatinSymbols,
   validatePassword,
 } from '../../utils/functions/PasswordValidation';
 import { apiRegister } from '../../apirequests/apirequests';
@@ -59,6 +61,12 @@ function Register() {
       functionCheck: funEightSymbols,
     },
     {
+      id: '4',
+      text: 'Не более 16 символов',
+      done: true,
+      functionCheck: funSixteenSymbols,
+    },
+    {
       id: '1',
       text: 'Не менее 1 заглавной буквы',
       done: false,
@@ -72,9 +80,15 @@ function Register() {
     },
     {
       id: '3',
-      text: 'Не менее 1 спецсимвола',
+      text: 'Не менее 1 спецсимвола: !@#$%&?',
       done: false,
       functionCheck: funSpecialSymbol,
+    },
+    {
+      id: '5',
+      text: 'Только латинские буквы',
+      done: false,
+      functionCheck: validateLatinSymbols,
     },
   ]);
 
@@ -143,18 +157,18 @@ function Register() {
       isValid = false;
     }
 
-    if (registration?.data?.password?.length > 16) {
-      newErrors.password = 'Пароль превышает 16 символов';
-      isValid = false;
-    }
-    if (!validatePassword(registration?.data?.password)) {
-      newErrors.password = 'Некорректный пароль';
-      isValid = false;
-    }
-    if (!validatePassword(registration?.data?.confirmPassword)) {
-      newErrors.confirmPassword = 'Некорректный пароль';
-      isValid = false;
-    }
+    // if (registration?.data?.password?.length > 16) {
+    //   newErrors.password = 'Пароль превышает 16 символов';
+    //   isValid = false;
+    // }
+    // if (!validatePassword(registration?.data?.password)) {
+    //   newErrors.password = 'Некорректный пароль';
+    //   isValid = false;
+    // }
+    // if (!validatePassword(registration?.data?.confirmPassword)) {
+    //   newErrors.confirmPassword = 'Некорректный пароль';
+    //   isValid = false;
+    // }
 
     // if (registration?.data?.organization?.length < 1) {
     //   newErrors.organization = 'Некорректное название';
