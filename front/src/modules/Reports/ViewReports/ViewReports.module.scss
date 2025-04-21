@@ -196,6 +196,11 @@ $w3: 480px;
           height: torem(63px);
         }
       }
+
+      .blockFileNoFile {
+        background-color: var(--BodyBgColor);
+      }
+
       .trash {
         cursor: pointer;
         position: absolute;
@@ -292,6 +297,7 @@ $w3: 480px;
   .repName {
     position: absolute;
     max-width: torem(340px);
+    min-width: max-content;
     z-index: 100;
     left: 0;
     top: 0;
