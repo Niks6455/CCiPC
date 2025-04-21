@@ -34,14 +34,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: [
-    'BasicSlice',
-    'UserSlice',
-    'news',
-    'reportCreateSlice',
-    'registration',
-    'conferences',
-  ],
+  whitelist: ['BasicSlice', 'user', 'news', 'reportCreateSlice', 'registration', 'conferences'],
   blacklist: ['reportsSlice', 'participants'],
 };
 const persistedReducer = persistReducer(persistConfig, rootReducer);

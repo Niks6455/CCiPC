@@ -79,6 +79,8 @@ function DocumentsModule({ data, setData }) {
     setData({ ...data, deleteIds: [...data.deleteIds, id] });
   };
 
+  console.log('data', data);
+
   return (
     <div className={styles.DocumentsModule}>
       <div className={styles.container}>
@@ -99,7 +101,7 @@ function DocumentsModule({ data, setData }) {
                   setData={funChangeData}
                   typeFile={item.typeFile}
                   accept={item.accept}
-                  fileName={decodeText(data[item.key]?.name)}
+                  fileName={data[item.key]?.name}
                   name={item.name}
                   icon={item.icon}
                   text={item.text}
