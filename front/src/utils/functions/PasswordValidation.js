@@ -4,6 +4,12 @@ export function funEightSymbols(text) {
   return { id: '0', done: isValid };
 }
 
+//! не более 16 символов
+export function funSixteenSymbols(text) {
+  const isValid = [...text].length <= 16; // Проверяем, что длина текста не более 16 символов
+  return { id: '4', done: isValid };
+}
+
 //! проверка не меенее 1 заглавной буквы
 export function funCapitalLetter(text) {
   const hasCapitalLetter = /[A-ZА-ЯЁ]/.test(text);
@@ -17,9 +23,16 @@ export function funDigit(text) {
 
 //! не менее 1 спецсимвола
 export function funSpecialSymbol(text) {
-  const hasSpecialSymbol = /[^a-zA-Z0-9]/.test(text);
+  const hasSpecialSymbol = /[!@#$%&?]/.test(text);
   return { id: '3', done: hasSpecialSymbol };
 }
+
+//! только латинские буквы
+export const validateLatinSymbols = value => {
+  const regex = /^(?=.*[A-Za-z])[A-Za-z0-9!@#$№%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+  return { id: '5', done: regex.test(value) };
+};
+
 //! валидация только английские буквы
 export const validatePassword = value => {
   const regex = /^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/;
