@@ -226,7 +226,10 @@ function ViewReports() {
               onMouseMove={handleMouseMove}
             >
               <p className={styles.fileLoudersTitle}>Доклад:</p>
-              <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.reportFile)}>
+              <div
+                className={`${styles.blockFile} ${reportData?.reportFile ? '' : styles.blockFileNoFile}`}
+                onClick={() => funOpenFile(reportData?.reportFile)}
+              >
                 <img src={BlockFile} alt="img" />
                 <div className={styles.fileName}>
                   <span>{getFileName(reportData?.reportFile) || 'Документ.pdf'}</span>
@@ -241,7 +244,7 @@ function ViewReports() {
                   }}
                   className={styles.repName}
                 >
-                  {reportData?.conclusion ? 'Открыть' : 'Документ отсутствует'}
+                  {reportData?.reportFile ? 'Открыть' : 'Документ отсутствует'}
                 </div>
               )}
             </div>
@@ -252,7 +255,10 @@ function ViewReports() {
               onMouseMove={handleMouseMove}
             >
               <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
-              <div className={styles.blockFile} onClick={() => funOpenFile(reportData?.conclusion)}>
+              <div
+                className={`${styles.blockFile} ${reportData?.conclusion ? '' : styles.blockFileNoFile}`}
+                onClick={() => funOpenFile(reportData?.conclusion)}
+              >
                 <img src={BlockFile} alt="img" />
 
                 <div className={styles.fileName}>
