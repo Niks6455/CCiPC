@@ -1,7 +1,7 @@
 import express from 'express';
 import logger from 'morgan';
 import { MulterError } from 'multer';
-import { initializeDbModels } from './utils/db.js';
+import { createTestAdmin, initializeDbModels } from './utils/db.js';
 import { AppError, MultipleError, SystemError } from './utils/errors.js';
 import uploadsRoute from './routes/upload.js';
 import authRoute from './routes/auth.js';
@@ -90,6 +90,8 @@ app.use(cookieParser());
     try {
 
         await initializeDbModels();
+
+        await createTestAdmin();
 
     } catch (e) {
         if (app.get('env') !== 'test') {
