@@ -67,18 +67,18 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
       loading: loadingDoc,
       buttonClass: styles.export_doklad,
     },
-    {
-      name: 'Экспорт экспертных заключений',
-      fun: funExportRepots,
-      loading: loadingDoc,
-      buttonClass: styles.export_doklad,
-    },
-    {
-      name: 'Экспорт фотографий пользователей',
-      fun: funExportRepots,
-      loading: loadingDoc,
-      buttonClass: styles.export_doklad,
-    },
+    // {
+    //   name: 'Экспорт экспертных заключений',
+    //   fun: funExportRepots,
+    //   loading: loadingDoc,
+    //   buttonClass: styles.export_doklad,
+    // },
+    // {
+    //   name: 'Экспорт фотографий пользователей',
+    //   fun: funExportRepots,
+    //   loading: loadingDoc,
+    //   buttonClass: styles.export_doklad,
+    // },
   ];
 
   return (

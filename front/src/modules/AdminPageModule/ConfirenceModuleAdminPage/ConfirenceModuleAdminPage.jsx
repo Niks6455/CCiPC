@@ -210,13 +210,13 @@ function ConfirenceModuleAdminPage() {
     alert('Мера кунем');
   };
 
-  if (isLoading) {
-    return (
-      <>
-        <CircleLoader />
-      </>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <>
+  //       <CircleLoader />
+  //     </>
+  //   );
+  // }
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>
@@ -254,7 +254,7 @@ function ConfirenceModuleAdminPage() {
       />
       <div className={styles.buttons}>
         <div className={styles.left}>
-          <button onClick={() => setComplate(true)}>Завершить конференцию</button>
+          {/* <button onClick={() => setComplate(true)}>Завершить конференцию</button> */}
         </div>
         <div className={styles.buttons_inner}>
           <button onClick={funCancelData}>Отмена</button>
