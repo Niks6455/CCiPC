@@ -17,9 +17,17 @@ function Header({ userRole }) {
         </div>
         <div className={styles.logoInner}>
           {conference?.files?.HEADER?.[0]?.url ? (
-            <img src={`${server}/${conference?.files?.HEADER?.[0]?.url}`} alt="logo" />
+            <img
+              src={`${server}/${conference?.files?.HEADER?.[0]?.url}`}
+              alt="logo"
+              onError={e => (e.target.style.display = 'none')}
+            />
           ) : (
-            <img src={`${server}/${conference?.files?.FOOTER?.[0]?.url}`} alt="logo" />
+            <img
+              src={`${server}/${conference?.files?.FOOTER?.[0]?.url}`}
+              alt="logo"
+              onError={e => (e.target.style.display = 'none')}
+            />
           )}
 
           <p>

@@ -46,11 +46,12 @@ function ColaboratorsModuleAdminPage() {
   const funSaveTableData = () => {
     if (originalData?.length > 0) {
       const reqData = originalData.map(item => ({
-        id: item.id,
-        directionId: direction.find(dir => dir.name === item.direction).id,
+        id: item?.id,
+        directionId: direction.find(dir => dir.name === item.direction)?.id,
       }));
+
       if (reqData && reqData.length > 0) {
-        apiEditMassReports({ reportsInfo: reqData }).then(res => {
+        apiEditMassReports({ reportsInfo: reqData.filter(item => item.directionId) }).then(res => {
           if (res?.status === 200) {
             qery.refetch();
           } else {

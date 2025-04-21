@@ -13,6 +13,7 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
     setLoadingArchive(true);
     try {
       const response = await apiExportArchiveState(conferenceid);
+      console.log('response', response);
       const blob = new Blob([response.data], { type: 'application/zip' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
