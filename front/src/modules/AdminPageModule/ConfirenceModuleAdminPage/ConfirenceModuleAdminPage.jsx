@@ -242,6 +242,9 @@ function ConfirenceModuleAdminPage() {
         setDeleteMass={setDeletePartners}
       />
       <div className={styles.buttons}>
+        <div className={styles.left}>
+          <button>Завершить конференцию</button>
+        </div>
         <div className={styles.buttons_inner}>
           <button onClick={funCancelData}>Отмена</button>
           <button onClick={funEditDataApi}>
