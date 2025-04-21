@@ -128,7 +128,7 @@ function ConfirmLogin(props) {
           {code.map((digit, index) => (
             <input
               key={index}
-              type="number"
+              type="text"
               value={digit}
               maxLength={1}
               onChange={e => handleChange(index, e.target.value)}
