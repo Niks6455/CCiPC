@@ -20,3 +20,8 @@ export function funSpecialSymbol(text) {
   const hasSpecialSymbol = /[^a-zA-Z0-9]/.test(text);
   return { id: '3', done: hasSpecialSymbol };
 }
+//! валидация только английские буквы
+export const validatePassword = value => {
+  const regex = /^[A-Za-z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+$/;
+  return regex.test(value);
+};
