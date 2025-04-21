@@ -1,5 +1,6 @@
 import { models, sequelize } from "../models/index.js";
 import setupAssociations from "../models/setup-associations.js";
+import bcrypt from 'bcrypt';
 
 export async function initializeDbModels() {
   for (const model of Object.values(models))
@@ -17,7 +18,7 @@ export async function createTestAdmin() {
   const user = await models.Participant.findOne({ where: { email: 'admin@sfedu.ru', role: 1 } });
   if (user) return;
 
-  await models.Participant.create({ email: 'admin@sfedu.ru', password: 'dfDk1oQQ6YGV@', role: 1, activate: true,
+  await models.Participant.create({ email: 'admin@sfedu.ru', password: bcrypt.hashSync('dfDk1oQQ6YGV@', 10), role: 1, activate: true,
     name: 'admin',
     surname: 'admin',
     academicTitle: 'Не выбрано',
