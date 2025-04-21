@@ -9,7 +9,9 @@ import {
   funCapitalLetter,
   funDigit,
   funEightSymbols,
+  funSixteenSymbols,
   funSpecialSymbol,
+  validateLatinSymbols,
   validatePassword,
 } from '../../utils/functions/PasswordValidation';
 import { apiChangePassword } from '../../apirequests/apirequests';
@@ -47,6 +49,12 @@ function ChangePassword() {
       functionCheck: funEightSymbols,
     },
     {
+      id: '4',
+      text: 'Не более 16 символов',
+      done: true,
+      functionCheck: funSixteenSymbols,
+    },
+    {
       id: '1',
       text: 'Не менее 1 заглавной буквы',
       done: false,
@@ -60,9 +68,15 @@ function ChangePassword() {
     },
     {
       id: '3',
-      text: 'Не менее 1 спецсимвола',
+      text: 'Не менее 1 спецсимвола: !@#$%&?',
       done: false,
       functionCheck: funSpecialSymbol,
+    },
+    {
+      id: '5',
+      text: 'Только латинские буквы',
+      done: false,
+      functionCheck: validateLatinSymbols,
     },
   ]);
 
@@ -106,14 +120,14 @@ function ChangePassword() {
       isValid = false;
     }
 
-    if (!validatePassword(formData?.newpassword)) {
-      newErrors.newpassword = 'Некорректный пароль';
-      isValid = false;
-    }
-    if (!validatePassword(formData?.rewnewpassword)) {
-      newErrors.rewnewpassword = 'Некорректный пароль';
-      isValid = false;
-    }
+    // if (!validatePassword(formData?.newpassword)) {
+    //   newErrors.newpassword = 'Некорректный пароль';
+    //   isValid = false;
+    // }
+    // if (!validatePassword(formData?.rewnewpassword)) {
+    //   newErrors.rewnewpassword = 'Некорректный пароль';
+    //   isValid = false;
+    // }
 
     setErrors(newErrors);
     return isValid;
