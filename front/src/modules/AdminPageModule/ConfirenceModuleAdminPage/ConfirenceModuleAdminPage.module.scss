@@ -5,8 +5,17 @@
   }
   .buttons {
     display: flex;
-    justify-content: end;
+    justify-content: space-between;
     margin-top: torem(25px);
+
+    .left {
+      button {
+        @include ButtonRedBorder;
+        width: torem(262px);
+        height: torem(52px);
+        font-size: torem(18px);
+      }
+    }
     .buttons_inner {
       display: flex;
       flex-direction: row;

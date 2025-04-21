@@ -8,6 +8,14 @@ export const tableHeader = [
     key: 'fio',
   },
   {
+    name: 'Телефон',
+    key: 'phone',
+  },
+  {
+    name: 'Почта',
+    key: 'email',
+  },
+  {
     name: 'Доклад',
     key: 'report',
   },

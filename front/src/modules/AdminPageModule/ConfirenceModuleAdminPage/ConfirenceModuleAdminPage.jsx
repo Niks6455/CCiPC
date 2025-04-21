@@ -22,6 +22,7 @@ import { conferenceDataNull, fileKeys } from './data';
 import ReqError from '../../../components/ReqError/ReqError';
 import { fetchConferences } from '../../../store/conferencesSlice/conferences.Slice';
 import CircleLoader from '../../../components/CircleLoader/CircleLoader';
+import ModalCompleteConference from '../../../components/ModalCompleteConference/ModalCompleteConference';
 
 function ConfirenceModuleAdminPage() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function ConfirenceModuleAdminPage() {
   const [deletePartners, setDeletePartners] = useState([]);
   const [modalSucces, setModalSucces] = useState(null);
   const [errors, setErrors] = useState([]);
+  const [complate, setComplate] = useState(false);
 
   const {
     data: conferensetQery,
@@ -202,18 +204,27 @@ function ConfirenceModuleAdminPage() {
     window.location.reload();
   };
 
-  console.log('data', data);
+  //! функция завершения конференции
+  const funСompleteConference = () => {
+    setComplate(false);
+    alert('Мера кунем');
+  };
 
-  if (isLoading) {
-    return (
-      <>
-        <CircleLoader />
-      </>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <>
+  //       <CircleLoader />
+  //     </>
+  //   );
+  // }
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>
+      <ModalCompleteConference
+        open={complate}
+        close={setComplate}
+        funSave={funСompleteConference}
+      />
       <ReqError errors={errors.filter(item => !item.succes)} setErrors={setErrors} />
       <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
       <h2 className={styles.title}>Конференция</h2>
@@ -242,6 +253,9 @@ function ConfirenceModuleAdminPage() {
         setDeleteMass={setDeletePartners}
       />
       <div className={styles.buttons}>
+        <div className={styles.left}>
+          {/* <button onClick={() => setComplate(true)}>Завершить конференцию</button> */}
+        </div>
         <div className={styles.buttons_inner}>
           <button onClick={funCancelData}>Отмена</button>
           <button onClick={funEditDataApi}>

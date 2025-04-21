@@ -35,6 +35,8 @@ function OrgWznosModuleAdminPage() {
       author: item.who || '',
       contract: item.accord || null,
       receipt: item.receipt || null,
+      phone: item.phone || '',
+      email: item.email || '',
     }));
     if (data && data.length > 0) {
       const deepCopy = JSON.parse(JSON.stringify(data));
