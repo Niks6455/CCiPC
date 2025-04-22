@@ -29,7 +29,12 @@ export default function ProfileCard({ data }) {
 
   return (
     <div ref={cardRef} className={styles.profileCard} key={data?.id}>
-      <img ref={imgRef} src={data?.img ? `${server}/${data.img?.url}` : imgHuman} alt="photo" />
+      <img
+        ref={imgRef}
+        onError={e => (e.target.src = imgHuman)}
+        src={data?.img ? `${server}/${data.img?.url}` : imgHuman}
+        alt="photo"
+      />
       <p className={styles.name}>{data?.fio}</p>
       <p className={styles.university}>{data?.organization}</p>
     </div>

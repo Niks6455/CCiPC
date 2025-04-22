@@ -130,12 +130,14 @@ $w3: 480px;
           margin: torem(3px) 0px;
           display: flex;
           flex-direction: row;
+          align-items: top;
           span {
             margin-right: torem(10px);
             font-weight: 700;
-            font-size: torem(18px);
-            line-height: 120%;
-            letter-spacing: 0%;
+            font-size: torem(20px);
+          }
+          p {
+            font-size: torem(20px);
           }
         }
       }

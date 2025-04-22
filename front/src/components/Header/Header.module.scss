@@ -34,8 +34,10 @@ header {
     display: flex;
     align-items: center;
     z-index: 0;
+    min-width: torem(1070px);
     @media (max-width: $w2) {
       margin-left: torem(30px);
+      min-width: torem(300px);
     }
     @media (max-width: $w3) {
       margin-left: torem(20px);
@@ -133,6 +135,10 @@ header {
         display: flex;
         align-items: center;
         font-size: torem(18px);
+        font-weight: 700;
+        line-height: 120%;
+        letter-spacing: 0%;
+
         @media (max-width: $w1) {
           font-size: torem(22px);
           margin: torem(18px) 0;
