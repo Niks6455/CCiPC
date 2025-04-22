@@ -99,13 +99,14 @@ function ViewReports() {
   const funOpenFile = file => {
     //открытие файла по ссылке
     console.log('file', file);
+    console.log('`${server}/${file?.url}`', `${server}/${file?.url}`);
     if (file) {
       window.open(`${server}/${file?.url}`, '_blank');
     }
   };
 
   const getFileName = file => {
-    if (!file) return 'Документ.pdf';
+    if (!file) return '';
     return decodeFileName(file);
   };
 
@@ -232,7 +233,7 @@ function ViewReports() {
               >
                 <img src={BlockFile} alt="img" />
                 <div className={styles.fileName}>
-                  <span>{getFileName(reportData?.reportFile) || 'Документ.pdf'}</span>
+                  <span>{getFileName(reportData?.reportFile) || 'Документ.docx'}</span>
                 </div>
                 {/* <BlockFile /> */}
               </div>

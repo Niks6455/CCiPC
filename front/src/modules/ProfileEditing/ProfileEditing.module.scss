@@ -295,6 +295,16 @@ $w3: 480px;
       display: flex;
       flex-direction: column;
 
+      div[name='List'] {
+        transform: translateY(calc(100% - torem(27px)));
+        @media (max-width: 1000px) {
+          transform: translateY(calc(100% - torem(30px)));
+        }
+        @media (max-width: $w2) {
+          transform: translateY(calc(100% - torem(23px)));
+        }
+      }
+
       .SaveButton {
         border-radius: torem(10px);
         padding: torem(16px) torem(25px);

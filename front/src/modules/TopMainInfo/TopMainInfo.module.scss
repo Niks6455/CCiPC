@@ -20,6 +20,11 @@ $w3: 480px;
     -o-object-fit: cover;
     object-fit: cover;
     pointer-events: none;
+    object-position: top;
+    @media (max-width: $w2) {
+      //затемнение фото
+      filter: brightness(0.8);
+    }
   }
 }
 
@@ -154,7 +159,7 @@ $w3: 480px;
   width: torem(475px);
   height: torem(150px);
   padding: torem(15px) 0px torem(15px) torem(15px);
-  border-radius: torem(50px) 0px 0px 0px;
+  border-radius: torem(40px) 0px 0px 0px;
   margin-right: torem(50px);
   @media (max-width: $w2) {
     margin-right: torem(30px);

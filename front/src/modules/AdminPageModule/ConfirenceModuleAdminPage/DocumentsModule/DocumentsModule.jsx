@@ -101,7 +101,11 @@ function DocumentsModule({ data, setData }) {
                   setData={funChangeData}
                   typeFile={item.typeFile}
                   accept={item.accept}
-                  fileName={data[item.key]?.name}
+                  fileName={
+                    typeof data[item.key]?.url === 'string'
+                      ? decodeText(data[item.key]?.name)
+                      : data[item.key]?.name
+                  }
                   name={item.name}
                   icon={item.icon}
                   text={item.text}
