@@ -31,6 +31,7 @@ $w3: 480px;
     line-height: torem(21px);
     text-align: left;
     text-underline-position: from-font;
+    -webkit-text-decoration-skip-ink: none;
     text-decoration-skip-ink: none;
     transform: translateY(torem(5px));
   }
@@ -48,6 +49,18 @@ $w3: 480px;
     box-sizing: border-box;
     transition: all 0.5s linear;
     cursor: pointer;
+    &::-webkit-input-placeholder {
+      color: var(--InputTextColor);
+    }
+    &::-moz-placeholder {
+      color: var(--InputTextColor);
+    }
+    &:-ms-input-placeholder {
+      color: var(--InputTextColor);
+    }
+    &::-ms-input-placeholder {
+      color: var(--InputTextColor);
+    }
     &::placeholder {
       color: var(--InputTextColor);
     }

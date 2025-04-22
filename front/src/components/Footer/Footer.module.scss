@@ -108,6 +108,7 @@ $w3: 480px;
                 width: torem(20px);
                 height: torem(14px);
                 margin-top: torem(3px);
+                -webkit-filter: brightness(0) invert(1);
                 filter: brightness(0) invert(1);
                 margin-right: torem(8px);
               }
@@ -170,6 +171,7 @@ $w3: 480px;
 
         a {
           text-decoration: underline;
+          -webkit-text-decoration-style: solid;
           text-decoration-style: solid;
           text-decoration-thickness: 0%;
           color: var(--ColorLink);

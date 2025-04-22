@@ -43,8 +43,10 @@ $w3: 480px;
     .photo {
       width: 100%; /* Растягиваем изображение по контейнеру */
       height: 100%; /* Заполняем контейнер полностью */
+      -o-object-fit: cover;
       object-fit: cover; /* Обрезаем изображение, чтобы оно полностью заполняло контейнер */
       border-radius: torem(10px);
+      -o-object-position: top;
       object-position: top;
       transition: 0.2s linear all;
     }
@@ -65,6 +67,7 @@ $w3: 480px;
       width: 100%;
       height: torem(60px);
       background: rgba(0, 28, 20, 0.25);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       z-index: 5;
       border-radius: 0px 0px torem(10px) torem(10px);
@@ -100,6 +103,7 @@ $w3: 480px;
     line-height: torem(19px);
     text-align: left;
     text-underline-position: from-font;
+    -webkit-text-decoration-skip-ink: none;
     text-decoration-skip-ink: none;
     color: #5b605e;
     border-radius: torem(6px);

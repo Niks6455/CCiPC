@@ -38,7 +38,9 @@ $w3: 480px;
       width: 550px;
       height: 550px;
       border-radius: 50%;
+      -o-object-fit: cover;
       object-fit: cover;
+      -o-object-position: top;
       object-position: top;
       @media (max-width: 1024px) {
         width: 450px;

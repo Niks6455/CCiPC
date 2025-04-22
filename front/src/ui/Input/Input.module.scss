@@ -62,6 +62,7 @@ $w3: 480px;
       font-weight: 400;
       text-align: left;
       text-underline-position: from-font;
+      -webkit-text-decoration-skip-ink: none;
       text-decoration-skip-ink: none;
       height: torem(24px);
       display: flex;
@@ -101,6 +102,7 @@ $w3: 480px;
     line-height: torem(21px);
     text-align: left;
     text-underline-position: from-font;
+    -webkit-text-decoration-skip-ink: none;
     text-decoration-skip-ink: none;
     transform: translateY(torem(5px));
     display: flex;
@@ -141,6 +143,18 @@ $w3: 480px;
     color: #000;
     box-sizing: border-box;
     padding-left: torem(25px);
+    &::-webkit-input-placeholder {
+      color: var(--InputTextColor);
+    }
+    &::-moz-placeholder {
+      color: var(--InputTextColor);
+    }
+    &:-ms-input-placeholder {
+      color: var(--InputTextColor);
+    }
+    &::-ms-input-placeholder {
+      color: var(--InputTextColor);
+    }
     &::placeholder {
       color: var(--InputTextColor);
     }

@@ -3,6 +3,8 @@
 
   .container {
     @include PopupContainer;
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     padding: torem(70px);
     h2 {

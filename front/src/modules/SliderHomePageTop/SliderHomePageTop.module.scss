@@ -45,9 +45,11 @@ $w3: 480px;
   }
   .Slider {
     display: flex;
+    -webkit-animation: scroll 40s linear infinite;
     animation: scroll 40s linear infinite; /* Анимация для бесконечного скролла */
     font-size: torem(18px);
     @media (max-width: $w3) {
+      -webkit-animation: none;
       animation: none;
       width: 100%;
       padding: 0 torem(20px);
@@ -72,6 +74,8 @@ $w3: 480px;
       .sliderItem {
         display: flex;
         flex-direction: column;
+        width: -webkit-max-content;
+        width: -moz-max-content;
         width: max-content;
       }
       @media (max-width: $w1) {
@@ -129,6 +133,14 @@ $w3: 480px;
   }
 
   /* Анимация для бесконечного скролла */
+  @-webkit-keyframes scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-100%);
+    }
+  }
   @keyframes scroll {
     from {
       transform: translateX(0);
@@ -140,6 +152,7 @@ $w3: 480px;
 
   /* Остановка анимации при наведении */
   .Slider:hover {
+    -webkit-animation-play-state: paused;
     animation-play-state: paused;
   }
 }
