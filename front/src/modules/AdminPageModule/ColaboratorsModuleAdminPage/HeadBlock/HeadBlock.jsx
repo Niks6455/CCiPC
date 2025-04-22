@@ -18,10 +18,11 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
       const response = await apiExportArchiveState(conferenceid);
       console.log('response', response);
       const blob = new Blob([response.data], { type: 'application/zip' });
+      const name = response?.headers?.['content-disposition'].slice('attachment; filename='.length);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `archive_${conferenceid}.zip`;
+      a.download = name || `archive_${conferenceid}.zip`;
       document.body.appendChild(a);
       a.click();
       URL.revokeObjectURL(url);
@@ -38,11 +39,12 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
     setLoadingDoc(true);
     try {
       const response = await apiExportReports(conferenceid);
+      const name = response?.headers?.['content-disposition'].slice('attachment; filename='.length);
       const blob = new Blob([response.data]);
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `archive_${conferenceid}.xlsx`;
+      a.download = name || `archive_${conferenceid}.xlsx`;
       document.body.appendChild(a);
       a.click();
       URL.revokeObjectURL(url);
