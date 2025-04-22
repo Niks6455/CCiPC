@@ -4,6 +4,8 @@ $w3: 480px;
 
 .SuccessModal {
   @include PopupContainer;
+  height: -webkit-max-content;
+  height: -moz-max-content;
   height: max-content;
   padding: torem(70px);
   @media (max-width: $w3) {
@@ -17,6 +19,7 @@ $w3: 480px;
     line-height: torem(26px);
     text-align: center;
     text-underline-position: from-font;
+    -webkit-text-decoration-skip-ink: none;
     text-decoration-skip-ink: none;
     margin-bottom: torem(40px);
   }
@@ -26,6 +29,8 @@ $w3: 480px;
     height: torem(54px);
     margin: 0 auto;
     @media (max-width: $w3) {
+      width: -webkit-max-content;
+      width: -moz-max-content;
       width: max-content;
       font-size: torem(16px);
       padding: 0 torem(20px);

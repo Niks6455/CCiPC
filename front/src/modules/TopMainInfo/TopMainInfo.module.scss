@@ -17,8 +17,15 @@ $w3: 480px;
   img {
     width: 100%;
     height: 100%;
+    -o-object-fit: cover;
     object-fit: cover;
     pointer-events: none;
+    object-position: top;
+
+    @media (max-width: $w2) {
+      //затемнение фото
+      filter: brightness(0.8);
+    }
   }
 }
 
@@ -118,7 +125,7 @@ $w3: 480px;
             width: torem(48px); /* 48px в rem */
             height: torem(48px);
             @media (max-width: $w2) {
-              width: torem(24px)torem(24px);
+              width: torem(24px) torem(24px);
               height: torem(24px);
             }
           }
@@ -153,7 +160,7 @@ $w3: 480px;
   width: torem(475px);
   height: torem(150px);
   padding: torem(15px) 0px torem(15px) torem(15px);
-  border-radius: torem(50px) 0px 0px 0px;
+  border-radius: torem(40px) 0px 0px 0px;
   margin-right: torem(50px);
   @media (max-width: $w2) {
     margin-right: torem(30px);
@@ -191,8 +198,8 @@ $w3: 480px;
 
 .greenArrow {
   background-image: url('./../../assets/img/UI/ArrTopDefault.svg');
-  width: 80px;
-  height: 80px;
+  width: torem(80px);
+  height: torem(80px);
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -209,8 +216,8 @@ $w3: 480px;
   }
 
   @media (max-width: $w2) {
-    width: 50px;
-    height: 50px;
+    width: torem(50px);
+    height: torem(50px);
     right: torem(25px);
     bottom: torem(25px);
   }

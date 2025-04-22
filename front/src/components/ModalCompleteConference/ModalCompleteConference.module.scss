@@ -9,6 +9,8 @@ $w3: 480px;
 .ModalCompleteConference {
   @include PopupContainer;
   padding: torem(70px);
+  height: -webkit-max-content;
+  height: -moz-max-content;
   height: max-content;
   @media (max-width: $w2) {
     width: 60vw;
@@ -24,6 +26,7 @@ $w3: 480px;
     line-height: torem(26px);
     text-align: center;
     text-underline-position: from-font;
+    -webkit-text-decoration-skip-ink: none;
     text-decoration-skip-ink: none;
     margin-bottom: torem(40px);
     text-wrap: nowrap;

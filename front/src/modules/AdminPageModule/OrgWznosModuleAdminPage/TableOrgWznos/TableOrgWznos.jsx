@@ -98,7 +98,7 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
                     id="contractList"
                   >
                     <a
-                      href={`${server}/${row.contract}`}
+                      href={row.contract && `${server}/${row.contract}`}
                       target="_blank"
                       className={styles.box}
                       id="contractList"
@@ -114,7 +114,7 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
                       </span>
                     </a>
                     <a
-                      href={`${server}/${row.receipt}`}
+                      href={row.receipt && `${server}/${row.receipt}`}
                       target="_blank"
                       className={styles.box}
                       id="contractList"

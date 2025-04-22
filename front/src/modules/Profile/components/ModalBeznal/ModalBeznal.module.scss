@@ -13,6 +13,8 @@ $w3: 480px;
   .container {
     @include PopupContainer;
     padding: torem(60px);
+    height: -webkit-max-content;
+    height: -moz-max-content;
     height: max-content;
     @media (max-width: $w2) {
       width: calc(100vw - torem(140px));
@@ -43,6 +45,7 @@ $w3: 480px;
       letter-spacing: 0%;
       text-align: center;
       text-decoration: underline;
+      -webkit-text-decoration-style: solid;
       text-decoration-style: solid;
       text-decoration-thickness: 0%;
       color: #005935;

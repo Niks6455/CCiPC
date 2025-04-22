@@ -130,12 +130,14 @@ $w3: 480px;
           margin: torem(3px) 0px;
           display: flex;
           flex-direction: row;
+          align-items: top;
           span {
             margin-right: torem(10px);
             font-weight: 700;
-            font-size: torem(18px);
-            line-height: 120%;
-            letter-spacing: 0%;
+            font-size: torem(20px);
+          }
+          p {
+            font-size: torem(20px);
           }
         }
       }
@@ -164,6 +166,8 @@ $w3: 480px;
     .fileContur {
       margin-top: torem(10px);
       position: relative;
+      height: -webkit-max-content;
+      height: -moz-max-content;
       height: max-content;
       @media (max-width: $w3) {
         &:last-child {
@@ -232,6 +236,7 @@ $w3: 480px;
           line-height: torem(19px);
           text-align: center;
           text-underline-position: from-font;
+          -webkit-text-decoration-skip-ink: none;
           text-decoration-skip-ink: none;
           color: #858b89;
         }
@@ -297,6 +302,8 @@ $w3: 480px;
   .repName {
     position: absolute;
     max-width: torem(340px);
+    min-width: -webkit-max-content;
+    min-width: -moz-max-content;
     min-width: max-content;
     z-index: 100;
     left: 0;
@@ -309,6 +316,7 @@ $w3: 480px;
     line-height: torem(19px);
     text-align: left;
     text-underline-position: from-font;
+    -webkit-text-decoration-skip-ink: none;
     text-decoration-skip-ink: none;
     color: #5b605e;
     border-radius: torem(6px);

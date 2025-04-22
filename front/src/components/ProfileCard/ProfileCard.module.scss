@@ -16,6 +16,7 @@
     height: torem(412px);
     border-radius: torem(10px);
     background-color: #fff;
+    -o-object-fit: cover;
     object-fit: cover;
     @media (max-width: 1376px) {
       width: torem(350px);

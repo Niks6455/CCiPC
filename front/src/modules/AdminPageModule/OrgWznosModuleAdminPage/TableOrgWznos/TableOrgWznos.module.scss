@@ -18,6 +18,7 @@
 
     thead {
       background-color: #e7eae9;
+      position: -webkit-sticky;
       position: sticky;
       top: 0;
       z-index: 10;
@@ -125,6 +126,8 @@
       background-color: #e7eae9;
       border-radius: torem(4px);
       padding: torem(4px) torem(8px);
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
       width: fit-content;
       margin: 0 auto;
       img {
@@ -165,6 +168,7 @@
             text-align: center;
             text-decoration: underline;
             text-underline-position: from-font;
+            -webkit-text-decoration-skip-ink: none;
             text-decoration-skip-ink: none;
             color: #333333;
           }

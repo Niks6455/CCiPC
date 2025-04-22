@@ -13,6 +13,8 @@ $w3: 360px;
       position: fixed;
       left: torem(25px);
       top: torem(10px);
+      width: -webkit-max-content;
+      width: -moz-max-content;
       width: max-content;
     }
     @media (max-width: $w2) {
@@ -154,6 +156,8 @@ $w3: 360px;
         width: calc(100vw - torem(40px));
       }
       p {
+        width: -webkit-max-content;
+        width: -moz-max-content;
         width: max-content;
         text-align: center;
         @media (max-width: $w1) {

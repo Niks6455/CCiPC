@@ -9,14 +9,28 @@
   height: 100px;
   background-color: #004529;
   border-radius: 50%;
+  -webkit-animation: pulse 1.5s ease-in-out infinite;
   animation: pulse 1.5s ease-in-out infinite;
 
   &:nth-child(2) {
+    -webkit-animation-delay: 0.2s;
     animation-delay: 0.2s;
   }
 
   &:nth-child(3) {
+    -webkit-animation-delay: 0.4s;
     animation-delay: 0.4s;
+  }
+  @-webkit-keyframes pulse {
+    0%,
+    100% {
+      transform: scale(0.5);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
   @keyframes pulse {
     0%,

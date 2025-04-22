@@ -27,6 +27,7 @@
         transition: 0.1s linear all;
         &:hover {
           opacity: 1;
+          -webkit-backdrop-filter: blur(torem(5px));
           backdrop-filter: blur(torem(5px));
         }
         img {
@@ -44,6 +45,7 @@
     .Img {
       width: torem(322px) !important;
       height: torem(230px) !important;
+      -o-object-fit: contain;
       object-fit: contain;
       border-radius: torem(10px);
     }
@@ -75,6 +77,18 @@
         border: torem(1px) solid var(--InputColors);
         color: #333;
         border-radius: torem(10px);
+        &::-webkit-input-placeholder {
+          color: var(--InputTextColor);
+        }
+        &::-moz-placeholder {
+          color: var(--InputTextColor);
+        }
+        &:-ms-input-placeholder {
+          color: var(--InputTextColor);
+        }
+        &::-ms-input-placeholder {
+          color: var(--InputTextColor);
+        }
         &::placeholder {
           color: var(--InputTextColor);
         }
@@ -127,7 +141,7 @@
       position: absolute;
       bottom: torem(20px);
       width: calc(100% - torem(40px));
-      height: torem(54px)!important;
+      height: torem(54px) !important;
       display: flex;
       justify-content: center;
       align-items: center;

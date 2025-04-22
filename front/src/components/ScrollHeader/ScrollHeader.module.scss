@@ -9,6 +9,7 @@ $w3: 480px;
   justify-content: flex-end;
   z-index: 10100;
   background-color: #0045290a;
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   padding: torem(10px) torem(100px);
   @media (max-width: $w3) {
@@ -22,6 +23,8 @@ $w3: 480px;
     justify-content: end;
     align-items: end;
     li {
+      width: -webkit-max-content;
+      width: -moz-max-content;
       width: max-content;
       text-align: end;
       color: #004529;

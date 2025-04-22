@@ -12,6 +12,7 @@ function InputList(props) {
       className={`${styles.InputList}`}
       ref={props?.divRef}
       onClick={() => props.funOpen(props?.name)}
+      name="InputList"
     >
       {!props?.value && props?.imgSrc && <img src={props?.imgSrc} alt={props?.name} />}
       {props.labelText && (
@@ -50,6 +51,7 @@ function InputList(props) {
             initial={{ height: 0 }}
             animate={{ height: 'auto' }}
             exit={{ height: 0 }}
+            name="List"
           >
             <ul>
               {props.list?.map((item, index) => (

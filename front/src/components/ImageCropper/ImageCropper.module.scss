@@ -20,8 +20,12 @@ $w3: 480px;
       display: flex;
       padding: torem(40px) torem(70px);
       width: torem(600px);
+      height: -webkit-max-content;
+      height: -moz-max-content;
       height: max-content;
       @media (max-width: $w2) {
+        width: -webkit-max-content;
+        width: -moz-max-content;
         width: max-content;
       }
       @media (max-width: $w3) {
@@ -43,6 +47,8 @@ $w3: 480px;
 
         @media (max-width: $w2) {
           font-size: torem(16px);
+          width: -webkit-max-content;
+          width: -moz-max-content;
           width: max-content;
           padding: 0 torem(40px);
           height: torem(54px);

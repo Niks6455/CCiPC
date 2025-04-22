@@ -54,7 +54,9 @@ const ImageCropper = ({
     canvas.toBlob(blob => {
       if (blob) {
         console.log('blob', blob);
-        const file = new File([blob], `${new Date().getTime()}cropped.png`, { type: 'image/png' });
+        const file = new File([blob], `${new Date().getTime()}cropped.png`, {
+          type: 'image/png',
+        });
         funEditPhoto(file); // передаём обрезанный файл в родительский компонент
         setEditPhoto(false); // закрыть редактор
       }

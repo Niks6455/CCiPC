@@ -28,6 +28,22 @@
           font-size: torem(18px);
           font-weight: 400;
           color: #333;
+          &::-webkit-input-placeholder {
+            font-size: torem(18px);
+            color: #858b89;
+          }
+          &::-moz-placeholder {
+            font-size: torem(18px);
+            color: #858b89;
+          }
+          &:-ms-input-placeholder {
+            font-size: torem(18px);
+            color: #858b89;
+          }
+          &::-ms-input-placeholder {
+            font-size: torem(18px);
+            color: #858b89;
+          }
           &::placeholder {
             font-size: torem(18px);
             color: #858b89;

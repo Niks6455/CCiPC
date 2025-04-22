@@ -47,6 +47,8 @@
       text-decoration: underline;
       cursor: pointer;
       transition: 0.1s linear all;
+      width: -webkit-fit-content;
+      width: -moz-fit-content;
       width: fit-content;
       &:hover {
         opacity: 0.7;
@@ -115,7 +117,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: torem(54px)!important;
+    height: torem(54px) !important;
     @include ButtonRedBorder();
     img {
       width: torem(24px) !important;

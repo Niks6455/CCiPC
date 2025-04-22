@@ -20,10 +20,11 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
   const conference = useSelector(state => state?.conferences?.data[0]);
   const funDownloadShablon = async docName => {
     try {
-      const response = await fetch(`${server}/${conference?.documents?.[docName]}`);
+      const response = await fetch(`${server}/${conference?.files?.[docName]?.[0]?.url}`);
+      console.log('response', response);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      const name = decodeFileName(conference?.documents?.[docName]?.split('\\').pop());
+      const name = conference?.files?.[docName]?.[0]?.name;
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем

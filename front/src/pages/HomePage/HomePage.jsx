@@ -1,4 +1,3 @@
-import Header from '@components/Header/Header';
 import Layout from '../../ui/Layout/Layout';
 import styles from './HomePage.module.scss';
 import TopMainInfo from '../../modules/TopMainInfo/TopMainInfo';
@@ -12,6 +11,7 @@ import { useEffect, useState } from 'react';
 
 import LoadingComponent from '../../components/LoadingComponent/LoadingComponent';
 import ScrollHeader from '../../components/ScrollHeader/ScrollHeader';
+import Header from '../../components/Header/Header';
 
 function HomePage({ userRole }) {
   const conferencesStatus = useSelector(state => state.conferences.status);

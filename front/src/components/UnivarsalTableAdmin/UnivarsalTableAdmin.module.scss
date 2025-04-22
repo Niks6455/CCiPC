@@ -1,112 +1,108 @@
 .UnivarsalTableAdmin {
-    width: 100%;
-    overflow-x: auto;
-    max-height: calc(100vh - torem(525px));
+  width: 100%;
+  overflow-x: auto;
+  max-height: calc(100vh - torem(525px));
 
-    table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
-      border: torem(1px) solid #e0e0e0;
-      border-radius: torem(8px);
-      font-family: 'Arial', sans-serif;
-  
-      thead {
-        background-color: #E7EAE9;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-        th {
-          padding: torem(12px);
-          text-align: center;
-          font-weight: 700;
-          font-size: torem(18px);
-          color: #333;
-          border-bottom: torem(2px) solid #d0d7de;
-  
-          &:first-child {
-            border-top-left-radius: torem(8px);
-          }
-  
-          &:last-child {
-            border-top-right-radius: torem(8px);
-          }
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: torem(1px) solid #e0e0e0;
+    border-radius: torem(8px);
+    font-family: 'Arial', sans-serif;
+
+    thead {
+      background-color: #e7eae9;
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      th {
+        padding: torem(12px);
+        text-align: center;
+        font-weight: 700;
+        font-size: torem(18px);
+        color: #333;
+        border-bottom: torem(2px) solid #d0d7de;
+
+        &:first-child {
+          border-top-left-radius: torem(8px);
+        }
+
+        &:last-child {
+          border-top-right-radius: torem(8px);
         }
       }
-  
-      tbody {
-        
-        tr {
-          &:hover {
-            background-color: #f0f4f8;
+    }
+
+    tbody {
+      tr {
+        &:hover {
+          background-color: #f0f4f8;
+        }
+        height: torem(81px);
+        td {
+          padding: torem(10px) torem(12px);
+          border: torem(1px) solid #e0e0e0;
+          vertical-align: middle;
+          color: #444;
+          &:nth-child(3) {
+            width: torem(210px);
+            text-align: center;
           }
-          height: torem(81px);
-          td {
-            padding: torem(10px) torem(12px);
-            border: torem(1px) solid #e0e0e0;
-            vertical-align: middle;
-            color: #444;
-            &:nth-child(3){
-              width: torem(210px);
-              text-align: center;
-             }
-            &:nth-child(4){
-               width: torem(430px);
-              }
-            &.title {
-              font-weight: 500;
-              color: #222;
-            }
-  
-            &.createdAt {
-              color: #555;
-              white-space: nowrap;
-            }
-  
-           
-  
-            &:first-child {
-              text-align: center;
-              width: torem(40px);
-              
-              input[type="checkbox"] {
-                width: torem(16px);
-                height: torem(16px);
-                cursor: pointer;
-              }
+          &:nth-child(4) {
+            width: torem(430px);
+          }
+          &.title {
+            font-weight: 500;
+            color: #222;
+          }
+
+          &.createdAt {
+            color: #555;
+            white-space: nowrap;
+          }
+
+          &:first-child {
+            text-align: center;
+            width: torem(40px);
+
+            input[type='checkbox'] {
+              width: torem(16px);
+              height: torem(16px);
+              cursor: pointer;
             }
           }
-  
-          &:last-child td {
-            border-bottom: none;
+        }
+
+        &:last-child td {
+          border-bottom: none;
+        }
+        .actions {
+          display: grid;
+          gap: torem(10px);
+          grid-template-columns: repeat(2, torem(200px));
+          .button {
+            color: #333;
+            background-color: #d9d9d9;
+            padding: torem(10px) torem(16px);
+            border: none;
+            border-radius: torem(10px);
+            font-size: torem(16px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.1s linear all;
+            &:hover {
+              background-color: #e7eae9;
+            }
+            img {
+              margin-left: torem(10px);
+            }
           }
-          .actions{
-            display: grid;
-            gap: torem(10px);
-            grid-template-columns: repeat(2, torem(200px));
-            .button{
-                color: #333;
-                background-color: #D9D9D9;
-                padding: torem(10px) torem(16px);
-                border: none;
-                border-radius: torem(10px);
-                font-size: torem(16px);
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: 0.1s linear all;
-                &:hover{
-                    background-color: #E7EAE9;
-                }
-                img{
-                    margin-left: torem(10px);
-                }
-              }
-          }
-          
         }
       }
     }
   }
-  
+}

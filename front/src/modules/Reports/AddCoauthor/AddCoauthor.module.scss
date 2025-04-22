@@ -276,6 +276,7 @@ $w3: 480px;
       line-height: torem(21px);
       text-align: center;
       text-underline-position: from-font;
+      -webkit-text-decoration-skip-ink: none;
       text-decoration-skip-ink: none;
       margin-bottom: torem(22px);
       @media (max-width: $w2) {
@@ -346,7 +347,7 @@ $w3: 480px;
     position: fixed;
   }
 }
-.addsoaftorNone{
-  margin-top: torem(150px)!important;
-  margin-bottom: torem(125px)!important;
+.addsoaftorNone {
+  margin-top: torem(150px) !important;
+  margin-bottom: torem(125px) !important;
 }

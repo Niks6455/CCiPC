@@ -42,8 +42,8 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
   useEffect(() => {
     setIsChanged(
       dataItem.fio !== item?.fio ||
-      dataItem.organization !== item?.organization ||
-      dataItem?.img?.id !== item?.img?.id
+        dataItem.organization !== item?.organization ||
+        dataItem?.img?.id !== item?.img?.id,
     );
   }, [dataItem, item]);
 
@@ -149,17 +149,16 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
   };
 
   const handleDeleteImg = () => {
-    console.log("item", item)
-   apiDeleteMulti({ids: [item.img.id]}).then(res => {
-    if (res?.status === 200) {
-      updateCardData(item.id, dataItem);
-      getDataOrg();
-      setIsChanged(false);
-    }
-  });
-  
+    console.log('item', item);
+    apiDeleteMulti({ ids: [item?.img?.id] }).then(res => {
+      if (res?.status === 200) {
+        updateCardData(item.id, dataItem);
+        getDataOrg();
+        setIsChanged(false);
+      }
+    });
   };
-  console.log("dataItem?.img.url", dataItem?.img.url)
+  console.log('dataItem?.img.url', dataItem?.img.url);
   return (
     <div ref={cardRef} className={styles.CardOrganization}>
       <div className={styles.CardOrganizationInner}>
@@ -171,7 +170,7 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
             alt={dataItem?.fio}
           />
           <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} alt="Удалить" onClick={() => handleDeleteImg()}/>
+            <img src={deletePhoto2Img} alt="Удалить" onClick={() => handleDeleteImg()} />
             <img src={editPhoto2Img} alt="Редактирование" onClick={() => refFile.current.click()} />
           </div>
           <input
@@ -184,7 +183,11 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
 
         <div className={styles.CardOrganizationInnerInfo}>
           <label>ФИО</label>
-          <input value={dataItem.fio} onChange={e => handleEditData(e.target.value, 'fio')} style={{ borderColor: errorFio ? '#B32020' : '' }}/>
+          <input
+            value={dataItem.fio}
+            onChange={e => handleEditData(e.target.value, 'fio')}
+            style={{ borderColor: errorFio ? '#B32020' : '' }}
+          />
           {errorFio && <span className={styles.error}>{errorFio}</span>}
         </div>
 
@@ -196,7 +199,7 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
             onChange={e => handleEditData(e.target.value, 'organization')}
             style={{ borderColor: errorOrganization ? '#B32020' : '' }}
           />
-           {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
+          {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
         </div>
 
         {isChanged ? (
