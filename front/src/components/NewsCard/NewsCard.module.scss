@@ -10,6 +10,8 @@ $w2: 480px;
   padding-top: torem(40px);
   margin: torem(16px);
   width: torem(412px);
+  height: -webkit-max-content;
+  height: -moz-max-content;
   height: max-content;
   @media (max-width: $w1) {
     width: torem(349px);
@@ -103,6 +105,7 @@ $w2: 480px;
     border-radius: torem(10px) torem(10px) 0 0;
     @media (max-width: torem(990px)) {
       height: torem(300px);
+      -o-object-fit: cover;
       object-fit: cover;
     }
   }

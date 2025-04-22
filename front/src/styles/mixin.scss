@@ -265,6 +265,7 @@ $w3: 480px;
   left: 0;
   top: 0;
   background: #f4f4f466;
+  -webkit-backdrop-filter: blur(3px);
   backdrop-filter: blur(3px);
   display: flex;
   justify-content: center;
@@ -397,6 +398,7 @@ $w3: 480px;
 }
 
 @mixin InputCheckBox() {
+  -moz-appearance: none;
   appearance: none; /* Убираем стандартный вид */
   -webkit-appearance: none; /* Для Safari */
 

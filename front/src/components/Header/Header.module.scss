@@ -26,6 +26,7 @@ header {
     img {
       width: torem(110px);
       height: torem(110px);
+      -o-object-fit: cover;
       object-fit: cover;
     }
   }
@@ -50,6 +51,7 @@ header {
       @media (max-width: $w3) {
         width: torem(72px);
         height: torem(72px);
+        -webkit-filter: brightness(0) invert(1);
         filter: brightness(0) invert(1);
       }
     }

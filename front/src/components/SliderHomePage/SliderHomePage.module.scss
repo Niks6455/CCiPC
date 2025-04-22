@@ -40,8 +40,15 @@ $w2: 769px;
     box-sizing: border-box;
     color: #fff;
     transition:
+      background-position 0.5s ease-in-out,
+      -webkit-clip-path 0.5s ease-in-out;
+    transition:
       clip-path 0.5s ease-in-out,
-      background-position 0.5s ease-in-out; /* Плавное изменение фона и clip-path */
+      background-position 0.5s ease-in-out;
+    transition:
+      clip-path 0.5s ease-in-out,
+      background-position 0.5s ease-in-out,
+      -webkit-clip-path 0.5s ease-in-out; /* Плавное изменение фона и clip-path */
 
     .SliderTitle {
       font-size: torem(32px);
@@ -88,6 +95,7 @@ $w2: 769px;
     background-position: -100% 0; /* Фон будет начинаться слева */
     z-index: 2;
     position: relative;
+    -webkit-animation: slideBack 0.6s ease-in-out forwards;
     animation: slideBack 0.6s ease-in-out forwards;
   }
   .textContent {
@@ -104,6 +112,7 @@ $w2: 769px;
     z-index: 1;
     left: torem(-280px);
     height: torem(600px);
+    -webkit-animation: slideIgTo 0.6s ease-in-out forwards;
     animation: slideIgTo 0.6s ease-in-out forwards;
     img {
       border-radius: 0 torem(20px) torem(20px) 0;
@@ -111,7 +120,9 @@ $w2: 769px;
       transition:
         transform 0.6s ease,
         border-radius 0.5s ease;
+      -o-object-fit: cover;
       object-fit: cover;
+      -o-object-position: center;
       object-position: center;
     }
   }
@@ -133,12 +144,14 @@ $w2: 769px;
     position: relative;
     z-index: 2;
     background-position: 100% 0; /* Фон будет начинаться справа */
+    -webkit-animation: slide 0.6s ease-in-out forwards;
     animation: slide 0.6s ease-in-out forwards;
   }
   .Sliderimage {
     position: relative;
     z-index: 1;
     height: torem(600px);
+    -webkit-animation: slideIgBack 0.6s ease-in-out forwards;
     animation: slideIgBack 0.6s ease-in-out forwards;
     transform: translateX(-75%);
     img {
@@ -147,9 +160,32 @@ $w2: 769px;
       transition:
         transform 0.6s ease,
         border-radius 0.5s ease;
+      -o-object-fit: cover;
       object-fit: cover;
+      -o-object-position: center;
       object-position: center;
     }
+  }
+}
+
+@-webkit-keyframes slide {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  51% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(100%);
+    -webkit-clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0% 100%);
+    clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0% 100%);
+    opacity: 1;
   }
 }
 
@@ -168,7 +204,29 @@ $w2: 769px;
   }
   100% {
     transform: translateX(100%);
+    -webkit-clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0% 100%);
     clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0% 100%);
+    opacity: 1;
+  }
+}
+@-webkit-keyframes slideBack {
+  0% {
+    transform: translateX(100%);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(200%);
+    opacity: 0;
+  }
+  51% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0);
+    -webkit-clip-path: polygon(80% 0, 0 0, 0 100%, 100% 100%);
+    clip-path: polygon(80% 0, 0 0, 0 100%, 100% 100%);
     opacity: 1;
   }
 }
@@ -188,7 +246,24 @@ $w2: 769px;
 
   100% {
     transform: translateX(0);
+    -webkit-clip-path: polygon(80% 0, 0 0, 0 100%, 100% 100%);
     clip-path: polygon(80% 0, 0 0, 0 100%, 100% 100%);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slideIgTo {
+  0% {
+    transform: translateX(-100%) scale(0.95);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateX(0) scale(1);
     opacity: 1;
   }
 }
@@ -205,6 +280,21 @@ $w2: 769px;
 
   100% {
     transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes slideIgBack {
+  0% {
+    transform: translateX(100%) scale(0.95);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(50%) scale(1);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(-75%) scale(1);
     opacity: 1;
   }
 }

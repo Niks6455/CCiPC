@@ -130,6 +130,8 @@ $w3: 480px;
     .repName {
       position: absolute;
       max-width: torem(340px);
+      width: -webkit-max-content;
+      width: -moz-max-content;
       width: max-content;
       z-index: 10000;
       right: -400;
@@ -142,6 +144,7 @@ $w3: 480px;
       line-height: torem(19px);
       text-align: left;
       text-underline-position: from-font;
+      -webkit-text-decoration-skip-ink: none;
       text-decoration-skip-ink: none;
       color: #5b605e;
       border-radius: torem(6px);

@@ -74,6 +74,22 @@ $w3: 480px;
         box-sizing: border-box;
         border: none;
 
+        &::-webkit-input-placeholder {
+          color: var(--InputTextColor);
+        }
+
+        &::-moz-placeholder {
+          color: var(--InputTextColor);
+        }
+
+        &:-ms-input-placeholder {
+          color: var(--InputTextColor);
+        }
+
+        &::-ms-input-placeholder {
+          color: var(--InputTextColor);
+        }
+
         &::placeholder {
           color: var(--InputTextColor);
         }

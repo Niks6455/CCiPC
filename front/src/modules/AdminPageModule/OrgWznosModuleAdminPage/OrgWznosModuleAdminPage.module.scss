@@ -38,6 +38,18 @@
       color: #333333;
       background: none;
       outline: none;
+      &:focus::-webkit-input-placeholder {
+        color: transparent;
+      }
+      &:focus::-moz-placeholder {
+        color: transparent;
+      }
+      &:focus:-ms-input-placeholder {
+        color: transparent;
+      }
+      &:focus::-ms-input-placeholder {
+        color: transparent;
+      }
       &:focus::placeholder {
         color: transparent;
       }
