@@ -132,6 +132,7 @@ function ConfirenceModuleAdminPage() {
             funSetErrors('main', false);
           } else {
             funSetErrors('main', true);
+            dispatch(fetchConferences());
           }
         });
       }

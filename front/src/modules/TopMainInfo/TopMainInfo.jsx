@@ -183,31 +183,60 @@ function TopMainInfo() {
           <div className={styles.item}>
             <a
               target="_blank"
-              href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
+              href={
+                conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : '#'
+              }
               rel="noreferrer"
             >
               Программа конференции
             </a>
             <a
               target="_blank"
-              href="https://webictis.sfedu.ru/ssas/Program2024.pdf"
+              href={
+                conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : '#'
+              }
               className={styles.clicker}
               rel="noreferrer"
             ></a>
           </div>
           <div className={styles.item}>
-            <a target="_blank" href="#" rel="noreferrer">
+            <a
+              target="_blank"
+              href={
+                conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : '#'
+              }
+              rel="noreferrer"
+            >
               Информационное письмо
             </a>
-            <a target="_blank" href="#" className={styles.clicker} rel="noreferrer"></a>
+            <a
+              target="_blank"
+              href={
+                conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : '#'
+              }
+              className={styles.clicker}
+              rel="noreferrer"
+            ></a>
           </div>
           <div className={styles.item}>
-            <a target="_blank" href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf" rel="noreferrer">
+            <a
+              target="_blank"
+              href={
+                conference?.files?.COLLECTION
+                  ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                  : '#'
+              }
+              rel="noreferrer"
+            >
               Сборник научных трудов
             </a>
             <a
               target="_blank"
-              href="https://webictis.sfedu.ru/ssas/SSAS_2022.pdf"
+              href={
+                conference?.files?.COLLECTION
+                  ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                  : '#'
+              }
               className={styles.clicker}
               rel="noreferrer"
             ></a>

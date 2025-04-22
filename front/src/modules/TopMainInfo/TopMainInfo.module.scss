@@ -21,6 +21,7 @@ $w3: 480px;
     object-fit: cover;
     pointer-events: none;
     object-position: top;
+
     @media (max-width: $w2) {
       //затемнение фото
       filter: brightness(0.8);
@@ -197,8 +198,8 @@ $w3: 480px;
 
 .greenArrow {
   background-image: url('./../../assets/img/UI/ArrTopDefault.svg');
-  width: 80px;
-  height: 80px;
+  width: torem(80px);
+  height: torem(80px);
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -215,8 +216,8 @@ $w3: 480px;
   }
 
   @media (max-width: $w2) {
-    width: 50px;
-    height: 50px;
+    width: torem(50px);
+    height: torem(50px);
     right: torem(25px);
     bottom: torem(25px);
   }
