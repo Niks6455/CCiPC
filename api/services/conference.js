@@ -16,6 +16,7 @@ import File from "../models/file.js";
 import FileLink from "../models/file-link.js";
 import typesFiles from "../config/typesFiles.js";
 import sendMail from "./email.js";
+import typesPhoto from '../config/typesPhoto.js';
 
 
 
@@ -362,7 +363,7 @@ export default {
             })
     },
 
-    async save(conferenceId){
+    async save(conferenceId, type){
         const conference =await Conference.findByPk(conferenceId);
         if(!conference) throw new AppErrorNotExist('conference')
 
@@ -375,7 +376,7 @@ export default {
                 as: 'reportFileLink',
                 required: true,
                 where: {
-                    type: typesFiles.REPORT,
+                    type: typesFiles[type],
                 },
                 include: {
                     model: File,
@@ -391,6 +392,50 @@ export default {
        return  reports.map(report=>({path:  report.reportFileLink[0]?.file.url, name : report.name}))
 
     },
+
+    async savePhotoParticipants(conferenceId){
+
+
+        const conference =await Conference.findByPk(conferenceId);
+        if(!conference) throw new AppErrorNotExist('conference')
+
+        const participants = await ParticipantInConference.findAll({
+            where: {
+                conferenceId:conferenceId,
+            },
+
+            include:{
+
+                    model: Participant,
+                    as: 'participant',
+                    required: true,
+                    include: {
+                        model: FileLink,
+                        as: 'participantFile',
+                        required: true,
+                        where: {
+                            type: typesPhoto.AVATAR,
+                        },
+                        include: {
+                            model: File,
+                            as: 'file',
+                            required: true,
+                            where: {
+                                url: { [Op.not]: null }
+                            }
+                        }
+                    }
+            }
+        })
+
+        return  participants.map(user=>({
+            path:  user.participant.participantFile[0]?.file.url,
+            name :  `${user.participant?.surname} ${user.participant?.name} ${user.participant?.patronymic ? user.participant?.patronymic : ''}`.trim() +
+              `.${user.participant.participantFile[0]?.file.name.split('.')[1]}`
+        }))
+    },
+
+
 
     async exportReports(conferenceId) {
 

@@ -165,7 +165,7 @@ export default {
     res
   ) {
     if (files?.length < 1) throw new AppErrorMissing("files");
-    if (!conferenceId) throw new AppErrorMissing("conferenceId");
+    if (!conferenceId || conferenceId === "null") throw new AppErrorMissing("conferenceId");
     const conference = await Conference.findByPk(conferenceId);
     if (!conference) throw new AppErrorNotExist("conference");
 

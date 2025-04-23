@@ -183,7 +183,10 @@ router.route('/:id/fee')
     .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.assignFee))
 
 router.route('/:id/saveArchive').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.saveArchive))
-router.route('/:id/exportReports').get( asyncRoute(conferenceCtrl.exportReports))
+router.route('/:id/exportReports').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.exportReports))
+router.route('/:id/saveConclusion').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.saveConclusion))
+router.route('/:id/savePhotoParticipants').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.savePhoto))
+
 
 router.route('/:id')
     .get(asyncRoute(conferenceCtrl.findOne))

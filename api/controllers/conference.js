@@ -2,12 +2,10 @@ import conferenceService from '../services/conference.js';
 import {AppErrorInvalid, AppErrorMissing} from "../utils/errors.js";
 import { mapShort, map } from '../utils/mappers/tableParticipants.js'
 import { map as mapConf }  from '../utils/mappers/conference.js'
-import archiver from 'archiver'
 import typesFiles from "../config/typesFiles.js";
-import path from "path";
 import {checkValidateFee} from "../utils/validate/conference.js";
 import {checkValidate} from "../utils/validate/conference.js";
-
+import { saveArchive } from '../utils/createArchive.js';
 export default {
     async find(req, res) {
         const conferences = await conferenceService.find();
@@ -238,37 +236,26 @@ export default {
 
     async saveArchive({params: { id }}, res) {
         if(!id) throw new AppErrorMissing('conferenceId')
-
-        const files=await conferenceService.save(id)
-
-        res.attachment('archive.zip');
-
-        // Создаем архив
-        const archive = archiver('zip', {
-            zlib: { level: 9 } // Уровень сжатия
-        });
-        // Обрабатываем события
-        archive.on('error', (err) => {
-            throw err;
-        });
-
-        // Указываем поток для записи архива в ответ
-        archive.pipe(res);
-
-        // Добавляем файлы в архив
-        files.forEach(file => {
-            archive.file(file.path, { name: path.basename(file.name) +`.pdf` }); // Добавляем файл с его именем
-        });
-
-        res.setHeader('Content-Type', 'application/zip');
-        res.setHeader('Content-Disposition', 'attachment; filename=archive.zip');
-        // Завершаем архивирование
-        await archive.finalize();
-
+        const files=await conferenceService.save(id, 'REPORT')
+        await saveArchive(files, 'archive', res)
         res.end();
+    },
+
+    async saveConclusion({params: { id }}, res) {
+
+      if(!id) throw new AppErrorMissing('conferenceId')
+      const files=await conferenceService.save(id, 'CONCLUSION')
+      await saveArchive(files, 'conclusion', res)
+      res.end();
 
     },
 
+    async savePhoto({params: { id }}, res) {
+      if(!id) throw new AppErrorMissing('conferenceId')
+      const files=await conferenceService.savePhotoParticipants(id)
+      await saveArchive(files, 'users', res)
+      res.end();
+    },
 
     async exportReports({params: { id }}, res){
 
