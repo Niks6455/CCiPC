@@ -24,7 +24,7 @@ function DocumentsLk() {
   //! при клике на создать доклад
   const creatReaport = () => {
     navigate('/account/createreport');
-    dispatch(disSetResetReport());
+    dispatch(disSetResetReport(length + 1));
   };
 
   console.log('new', new Date(convertDateTire(conferense?.dedlineReport2)) > new Date());

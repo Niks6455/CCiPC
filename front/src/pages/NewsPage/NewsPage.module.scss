@@ -45,14 +45,8 @@ $w4: 480px;
     //   grid-template-columns: repeat(2, 1fr);
     // }
     @media (max-width: $w2) {
-      width: torem(718px);
       margin-top: torem(40px);
-      display: flex;
       display: none;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
     }
 
     .item {
@@ -78,7 +72,20 @@ $w4: 480px;
     display: none;
     @media (max-width: $w2) {
       display: flex !important;
-      width: torem(349px);
+      flex-wrap: wrap;
+      justify-content: center;
+      width: calc(100vw - torem(50px));
+
+      .NewsPageContainerInner {
+        justify-content: center;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+      .item {
+        width: torem(349px);
+      }
     }
   }
   .Title {

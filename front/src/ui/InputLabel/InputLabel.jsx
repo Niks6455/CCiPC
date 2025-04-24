@@ -4,6 +4,7 @@ import { validateEmail } from '../../utils/functions/Validations';
 
 function InputLabel(props) {
   const [errorShow, setErrorShow] = useState(false);
+
   useEffect(() => {
     if (props.itemKey === 'email') {
       if (validateEmail(props.value)) {
@@ -37,7 +38,9 @@ function InputLabel(props) {
   return (
     <div className={styles.InputLabel}>
       <snan className={styles.label}>{props.label}</snan>
-      {errorShow && <span className={styles.error}>{props.error}</span>}
+      {((props.errorShow && props.error) || errorShow) && (
+        <span className={styles.error}>{props.error}</span>
+      )}
       <input
         className={styles.maininput}
         type={props.type}

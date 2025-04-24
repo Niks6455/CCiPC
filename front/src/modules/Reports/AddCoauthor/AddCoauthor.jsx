@@ -49,6 +49,8 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
   const [errorModal, setErrorModal] = useState(false);
+  const [errorsCoauthor, setErrorsCoauthor] = useState([]);
+  const [errorNameReport, setErrorNameReport] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -64,6 +66,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   };
 
   const funNoEmail = (index, readOnly) => {
+    setErrorsCoauthor([]);
     if (readOnly) {
       dispatch(setCoauthorAutocompletion({ index, autocompletion: 'readOnly' }));
     } else {
@@ -72,6 +75,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   };
 
   const funChangeInput = (index, key, value) => {
+    setErrorsCoauthor(prev => prev.filter(item => item.key !== key));
     if (key === 'email') {
       if (validateEmail(value) && value) {
         getUserEmail(value).then(res => {
@@ -141,7 +145,6 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     }
     if (edit) {
       //! редактирование доклада
-      console.log('report.data', report.data);
       let temp = {
         ...report.editData,
         coAuthorsIds: report.data?.coAuthorsIds,
@@ -156,58 +159,93 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
             email: soauthor?.data?.email || '',
           })),
       };
-      if (report.editData?.directionConference) {
-        temp = {
-          ...temp,
-          directionId:
-            directions.find(el => el.name === report.editData?.directionConference)?.id || '',
-        };
-      }
-      if (report.editData?.comments) {
-        temp = {
-          ...temp,
-          comment: report.editData?.comments,
-        };
-      }
-      if (report.editData?.formParticipation) {
-        temp = {
-          ...temp,
-          form: report.editData?.formParticipation,
-        };
-      }
-      if (report.editData?.participationStatus) {
-        temp = {
-          ...temp,
-          status: report.editData?.participationStatus,
-        };
-      }
-      apiEditReport(report.data.id, temp).then(res => {
-        if (res?.status === 200) {
-          dispatch(fetchReports());
-          const uploadPromises = [];
-          // Если fileArticle — файл, добавляем загрузку в массив промисов
-          if (typeof report.data.fileArticle !== 'string') {
-            const formDataReport = new FormData();
-            formDataReport.append('file', report.data.fileArticle);
-            formDataReport.append('reportId', res?.data?.report?.id);
-            uploadPromises.push(uploadPhoto(formDataReport, 'REPORT'));
-          }
-          // Если fileExpertOpinion — файл, добавляем загрузку в массив промисов
-          if (typeof report.data.fileExpertOpinion !== 'string') {
-            const formDataConcl = new FormData();
-            formDataConcl.append('file', report.data.fileExpertOpinion);
-            formDataConcl.append('reportId', res?.data?.report?.id);
-            uploadPromises.push(uploadPhoto(formDataConcl, 'CONCLUSION'));
-          }
-          // Ждем выполнения всех загрузок
-          Promise.all(uploadPromises).finally(() => {
-            // Навигация после всех запросов (даже если что-то не загрузилось)
-            navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
-            dispatch(disSetResetReport());
-            dispatch(fetchReports());
+      let erroes = [];
+      temp.coAuthors.map((el, index) => {
+        if (!el.name) {
+          erroes.push({
+            index: index,
+            key: 'name',
+            error: 'Поле обязательно для заполнения!',
+          });
+        }
+        if (!el.surname) {
+          erroes.push({
+            index: index,
+            key: 'surname',
+            error: 'Поле обязательно для заполнения!',
+          });
+        }
+        if (!el.email) {
+          erroes.push({
+            index: index,
+            key: 'email',
+            error: 'Поле обязательно для заполнения!',
+          });
+        }
+        if (!validateEmail(el.email)) {
+          erroes.push({
+            index: index,
+            key: 'email',
+            error: 'Некорректная почта',
           });
         }
       });
+      if (erroes.length > 0) {
+        setErrorsCoauthor(erroes);
+      } else {
+        if (report.editData?.directionConference) {
+          temp = {
+            ...temp,
+            directionId:
+              directions.find(el => el.name === report.editData?.directionConference)?.id || '',
+          };
+        }
+        if (report.editData?.comments) {
+          temp = {
+            ...temp,
+            comment: report.editData?.comments,
+          };
+        }
+        if (report.editData?.formParticipation) {
+          temp = {
+            ...temp,
+            form: report.editData?.formParticipation,
+          };
+        }
+        if (report.editData?.participationStatus) {
+          temp = {
+            ...temp,
+            status: report.editData?.participationStatus,
+          };
+        }
+        apiEditReport(report.data.id, temp).then(res => {
+          if (res?.status === 200) {
+            dispatch(fetchReports());
+            const uploadPromises = [];
+            // Если fileArticle — файл, добавляем загрузку в массив промисов
+            if (typeof report.data.fileArticle !== 'string') {
+              const formDataReport = new FormData();
+              formDataReport.append('file', report.data.fileArticle);
+              formDataReport.append('reportId', res?.data?.report?.id);
+              uploadPromises.push(uploadPhoto(formDataReport, 'REPORT'));
+            }
+            // Если fileExpertOpinion — файл, добавляем загрузку в массив промисов
+            if (typeof report.data.fileExpertOpinion !== 'string') {
+              const formDataConcl = new FormData();
+              formDataConcl.append('file', report.data.fileExpertOpinion);
+              formDataConcl.append('reportId', res?.data?.report?.id);
+              uploadPromises.push(uploadPhoto(formDataConcl, 'CONCLUSION'));
+            }
+            // Ждем выполнения всех загрузок
+            Promise.all(uploadPromises).finally(() => {
+              // Навигация после всех запросов (даже если что-то не загрузилось)
+              navigate(`./../viewreports?idReport=${report.data.id}&number=${number}`);
+              dispatch(disSetResetReport());
+              dispatch(fetchReports());
+            });
+          }
+        });
+      }
 
       return;
     } else {
@@ -228,42 +266,85 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
         })),
         conferenceId: conferenceId,
       };
-      apiCreateReport(data).then(res => {
-        if (res?.status === 200) {
-          // создаем формдату для файла
-          if (report.data.fileArticle) {
-            const formDataReport = new FormData();
-            formDataReport.append('file', report.data.fileArticle);
-            formDataReport.append('reportId', res?.data?.report?.id);
-            uploadPhoto(formDataReport, 'REPORT'); // файл с докладом
-          }
-          if (report.data.fileExpertOpinion) {
-            const formDataConcl = new FormData();
-            formDataConcl.append('file', report.data.fileExpertOpinion);
-            formDataConcl.append('reportId', res?.data?.report?.id);
-            uploadPhoto(formDataConcl, 'CONCLUSION'); // файл с заключением
-          }
-
-          dispatch(fetchUserData());
-          dispatch(fetchReports());
-          dispatch(funSaveDataState());
-        } else {
-          if (res?.status === 409) {
-            dispatch(
-              setOpenPopUpName({
-                name: 'FildeModal',
-                text: 'Доклад с таким названием уже существует!',
-              }),
-            );
-          } else {
-            if (res?.response?.data?.errNum === 204) {
-              setErrorModal(true);
-            } else {
-              dispatch(setOpenPopUpName({ name: 'FildeModal' }));
-            }
-          }
+      let erroes = [];
+      data.coAuthors.map((el, index) => {
+        if (!el.name) {
+          erroes.push({
+            index: index,
+            key: 'name',
+            error: 'Поле обязательно для заполнения!',
+          });
+        }
+        if (!el.surname) {
+          erroes.push({
+            index: index,
+            key: 'surname',
+            error: 'Поле обязательно для заполнения!',
+          });
+        }
+        if (!el.email) {
+          erroes.push({
+            index: index,
+            key: 'email',
+            error: 'Поле обязательно для заполнения!',
+          });
+        }
+        if (!validateEmail(el.email)) {
+          erroes.push({
+            index: index,
+            key: 'email',
+            error: 'Некорректная почта',
+          });
         }
       });
+      if (erroes.length > 0) {
+        setErrorsCoauthor(erroes);
+      } else {
+        apiCreateReport(data).then(res => {
+          if (res?.status === 200) {
+            // создаем формдату для файла
+            if (report.data.fileArticle) {
+              const formDataReport = new FormData();
+              formDataReport.append('file', report.data.fileArticle);
+              formDataReport.append('reportId', res?.data?.report?.id);
+              uploadPhoto(formDataReport, 'REPORT'); // файл с докладом
+            }
+            if (report.data.fileExpertOpinion) {
+              const formDataConcl = new FormData();
+              formDataConcl.append('file', report.data.fileExpertOpinion);
+              formDataConcl.append('reportId', res?.data?.report?.id);
+              uploadPhoto(formDataConcl, 'CONCLUSION'); // файл с заключением
+            }
+
+            dispatch(fetchUserData());
+            dispatch(fetchReports());
+            dispatch(funSaveDataState());
+          } else {
+            if (res?.status === 409) {
+              dispatch(
+                setOpenPopUpName({
+                  name: 'FildeModal',
+                  text: 'Доклад с таким названием уже существует!',
+                }),
+              );
+            } else {
+              if (
+                res?.response?.data?.message ===
+                'повторяющееся значение ключа нарушает ограничение уникальности "reports_name_key"'
+              ) {
+                dispatch(
+                  setOpenPopUpName({
+                    name: 'FildeModal',
+                    text: 'Доклад с таким названием уже существует!',
+                  }),
+                );
+              } else {
+                dispatch(setOpenPopUpName({ name: 'FildeModal' }));
+              }
+            }
+          }
+        });
+      }
     }
   };
 
@@ -396,7 +477,11 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                     value={soauthtor.data?.[inp.key]}
                     funChange={funChangeInput}
                     placeholder={inp.placeholder}
-                    error={inp.error}
+                    error={
+                      errorsCoauthor.find(item => item.key === inp.key && item.index === index)
+                        ?.error
+                    }
+                    errorShow={true}
                     readOnly={soauthorEditing || false}
                   />
                   {soauthtor.autocompletion === 'noemail' && (
@@ -437,7 +522,12 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                           value={soauthtor.data[inp.key]}
                           funChange={funChangeInput}
                           placeholder={inp.placeholder}
-                          error={inp.error}
+                          error={
+                            errorsCoauthor.find(
+                              item => item.key === inp.key && item.index === index,
+                            )?.error
+                          }
+                          errorShow={true}
                           readOnly={soauthtor.autocompletion === 'readOnly' || false}
                         />
                       </div>

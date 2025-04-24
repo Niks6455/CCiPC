@@ -89,7 +89,7 @@ $w2: 480px;
     }
   }
   @media (max-width: $w1) {
-    padding-top: torem(290px);
+    padding-top: torem(218px);
   }
 
   img {
@@ -107,6 +107,9 @@ $w2: 480px;
       height: torem(300px);
       -o-object-fit: cover;
       object-fit: cover;
+    }
+    @media (max-width: $w1) {
+      height: torem(218px);
     }
   }
 }

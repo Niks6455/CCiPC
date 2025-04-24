@@ -93,11 +93,11 @@ const reportCreateSlice = createSlice({
       state.sliderState = calculateSliderState(state);
     },
 
-    disSetResetReport(state) {
+    disSetResetReport(state, action) {
       state.data = {
         id: 'id1',
         status: 'save',
-        number: 1,
+        number: action.payload,
         name: '',
         directionConference: '',
         formParticipation: '',
