@@ -10,6 +10,7 @@ import Organizers from './Organizers/Organizers';
 import {
   apiCreateConferences,
   apiDeleteMulti,
+  apiFinishConfirm,
   apiGetConferencesById,
   apiPutConferencesById,
   uploadMulti,
@@ -20,7 +21,10 @@ import { convertDate, convertDateTire } from '../../../utils/functions/funcions'
 import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSuccessfully';
 import { conferenceDataNull, fileKeys } from './data';
 import ReqError from '../../../components/ReqError/ReqError';
-import { fetchConferences } from '../../../store/conferencesSlice/conferences.Slice';
+import {
+  disResetConferences,
+  fetchConferences,
+} from '../../../store/conferencesSlice/conferences.Slice';
 import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 import ModalCompleteConference from '../../../components/ModalCompleteConference/ModalCompleteConference';
 
@@ -207,8 +211,18 @@ function ConfirenceModuleAdminPage() {
 
   //! функция завершения конференции
   const funСompleteConference = () => {
-    setComplate(false);
-    alert('Мера кунем');
+    apiFinishConfirm(conferenseId).then(res => {
+      if (res?.status === 200) {
+        dispatch(disResetConferences());
+        setComplate(false);
+        setData({});
+        setDeleteOrganizer([]);
+        setDeletePartners([]);
+        funUpdData();
+        window.location.reload();
+        // refetchConferense();
+      }
+    });
   };
 
   // if (isLoading) {
@@ -255,7 +269,7 @@ function ConfirenceModuleAdminPage() {
       />
       <div className={styles.buttons}>
         <div className={styles.left}>
-          {/* <button onClick={() => setComplate(true)}>Завершить конференцию</button> */}
+          <button onClick={() => setComplate(true)}>Завершить конференцию</button>
         </div>
         <div className={styles.buttons_inner}>
           <button onClick={funCancelData}>Отмена</button>

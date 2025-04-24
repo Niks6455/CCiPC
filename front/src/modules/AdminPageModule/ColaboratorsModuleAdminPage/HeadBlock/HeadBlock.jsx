@@ -1,8 +1,13 @@
 import styles from './HeadBlock.module.scss';
 import exportIcon from '@assets/img/AdminPanel/export.svg';
 import lupa from '@assets/img/UI/lupa.svg';
-import { apiExportArchiveState, apiExportReports } from '../../../../apirequests/apirequests';
-import { useState } from 'react';
+import {
+  apiExportArchiveState,
+  apiExportConclusion,
+  apiExportPhotoParticipant,
+  apiExportReports,
+} from '../../../../apirequests/apirequests';
+import { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import arrow from '@assets/img/ArrowBotGreen.svg';
 
@@ -10,12 +15,25 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
   const [loadingArhive, setLoadingArchive] = useState(false);
   const [loadingDoc, setLoadingDoc] = useState(false);
   const [openlist, setOpenList] = useState(false);
+  const listRef = useRef(null);
 
-  const funExportArchive = async () => {
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (listRef.current && !listRef.current.contains(event.target)) {
+        setOpenList(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const exportZip = async api => {
     if (!conferenceid) return;
     setLoadingArchive(true);
     try {
-      const response = await apiExportArchiveState(conferenceid);
+      const response = await api(conferenceid);
       console.log('response', response);
       const blob = new Blob([response.data], { type: 'application/zip' });
       const name = response?.headers?.['content-disposition'].slice('attachment; filename='.length);
@@ -59,7 +77,7 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
   const buttons = [
     {
       name: 'Экспорт архива статей',
-      fun: funExportArchive,
+      fun: () => exportZip(apiExportArchiveState),
       loading: loadingArhive,
       buttonClass: styles.export_staty,
     },
@@ -69,18 +87,18 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
       loading: loadingDoc,
       buttonClass: styles.export_doklad,
     },
-    // {
-    //   name: 'Экспорт экспертных заключений',
-    //   fun: funExportRepots,
-    //   loading: loadingDoc,
-    //   buttonClass: styles.export_doklad,
-    // },
-    // {
-    //   name: 'Экспорт фотографий пользователей',
-    //   fun: funExportRepots,
-    //   loading: loadingDoc,
-    //   buttonClass: styles.export_doklad,
-    // },
+    {
+      name: 'Экспорт экспертных заключений',
+      fun: () => exportZip(apiExportConclusion),
+      loading: loadingDoc,
+      buttonClass: styles.export_doklad,
+    },
+    {
+      name: 'Экспорт фотографий пользователей',
+      fun: () => exportZip(apiExportPhotoParticipant),
+      loading: loadingDoc,
+      buttonClass: styles.export_doklad,
+    },
   ];
 
   return (
@@ -98,7 +116,7 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
         <button className={styles.save} onClick={funSaveTableData}>
           Сохранить
         </button>
-        <div className={styles.container_list}>
+        <div className={styles.container_list} ref={listRef}>
           <button
             className={`${styles.open_list} ${openlist ? styles.open_list_open : ''}`}
             onClick={() => setOpenList(!openlist)}

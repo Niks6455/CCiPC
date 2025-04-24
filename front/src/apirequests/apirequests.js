@@ -368,6 +368,30 @@ export const apiExportReports = async id => {
   }
 };
 
+//! Экспорт экспертных заключений
+export const apiExportConclusion = async id => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/saveConclusion`, {
+      responseType: 'blob', // Ожидаем бинарные данные (архив)
+    });
+    return response;
+  } catch (error) {
+    console.log('apiExportConclusion ', error);
+  }
+};
+
+//! Экспорт фотографий пользователей
+export const apiExportPhotoParticipant = async id => {
+  try {
+    const response = await api.get(`${server}/conferences/${id}/savePhotoParticipants`, {
+      responseType: 'blob', // Ожидаем бинарные данные (архив)
+    });
+    return response;
+  } catch (error) {
+    console.log('apiExportPhotoParticipant ', error);
+  }
+};
+
 //! загрузка файлов
 export const uploadPhoto = async (file, type) => {
   try {
@@ -500,5 +524,15 @@ export const apiSendConfirm = async email => {
     return response;
   } catch (error) {
     console.log('apiSendConfirm ', error);
+  }
+};
+
+//! завершить конференцию
+export const apiFinishConfirm = async id => {
+  try {
+    const response = await api.put(`${server}/conferences/${id}/finish`);
+    return response;
+  } catch (error) {
+    console.log('apiFinishConfirm ', error);
   }
 };
