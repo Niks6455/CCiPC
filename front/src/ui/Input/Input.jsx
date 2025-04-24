@@ -26,8 +26,6 @@ function Input(props) {
   //! при наведении на img множественных ошибок
 
   const funClickListErrors = () => {
-    console.log('3');
-
     if (isMobile || isTablet) {
       setErrorListShow(!errorListShow);
     }

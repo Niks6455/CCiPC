@@ -397,7 +397,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                     funChange={funChangeInput}
                     placeholder={inp.placeholder}
                     error={inp.error}
-                    readOnly={soauthorEditing || edit}
+                    readOnly={soauthorEditing || false}
                   />
                   {soauthtor.autocompletion === 'noemail' && (
                     <div className={styles.modalEmail}>
@@ -438,7 +438,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                           funChange={funChangeInput}
                           placeholder={inp.placeholder}
                           error={inp.error}
-                          readOnly={soauthtor.autocompletion === 'readOnly' || edit}
+                          readOnly={soauthtor.autocompletion === 'readOnly' || false}
                         />
                       </div>
                     ),

@@ -321,8 +321,11 @@ $w3: 480px;
         color: #004529;
         img {
           margin-left: torem(5px);
+          width: torem(20px);
+          height: torem(20px);
         }
         .shablon {
+          @include HoverActiveOpacity;
           cursor: pointer;
           display: flex;
           flex-direction: row;

@@ -13,6 +13,11 @@ import { funCapitalLetter, funDigit, funEightSymbols } from '@utils/functions/Pa
 import { useNavigate } from 'react-router-dom';
 import { apiPasswordRecovery, apiSandReset, CheckEmail } from '../../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
+import {
+  funSixteenSymbols,
+  funSpecialSymbol,
+  validateLatinSymbols,
+} from '../../../utils/functions/PasswordValidation';
 
 function RecoverPassword() {
   //! востановление по почте true по телефону false
@@ -45,13 +50,18 @@ function RecoverPassword() {
   });
 
   const navigate = useNavigate();
-
   const [errorListPassword, setErrorListPassword] = useState([
     {
       id: '0',
       text: 'Не менее 8 символов',
       done: false,
       functionCheck: funEightSymbols,
+    },
+    {
+      id: '4',
+      text: 'Не более 16 символов',
+      done: true,
+      functionCheck: funSixteenSymbols,
     },
     {
       id: '1',
@@ -64,6 +74,18 @@ function RecoverPassword() {
       text: 'Не менее 1 цифры',
       done: false,
       functionCheck: funDigit,
+    },
+    {
+      id: '3',
+      text: 'Не менее 1 спецсимвола: !@#$%&?',
+      done: false,
+      functionCheck: funSpecialSymbol,
+    },
+    {
+      id: '5',
+      text: 'Только латинские буквы',
+      done: false,
+      functionCheck: validateLatinSymbols,
     },
   ]);
 
@@ -303,7 +325,7 @@ function RecoverPassword() {
       ) : (
         <div className={styles.passwordContainer}>
           <div className={styles.ConfirmLoginLogo}>
-            <img src={logo} alt="Logo" />
+            <img src={logo} alt="Logo" onClick={() => navigate('/')} />
           </div>
           <div className={styles.ConfirmLoginTitle}>
             <p>Восстановление пароля</p>

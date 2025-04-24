@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setTimer } from '../../store/registrationSlice/registrationSlice';
 function ConfirmLogin(props) {
   const dispach = useDispatch();
+  const navigate = useNavigate();
   const registration = useSelector(state => state.registration);
   const context = useContext(DataContext);
   const navigete = useNavigate();
@@ -103,7 +104,7 @@ function ConfirmLogin(props) {
   return (
     <section className={styles.ConfirmLogin}>
       <div className={styles.ConfirmLoginLogo}>
-        <img src={logo} alt="Logo" />
+        <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>
       <div className={styles.ConfirmLoginTitle}>
         <p>Подтвердите адрес электронной почты</p>

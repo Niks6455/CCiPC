@@ -294,7 +294,7 @@ function ViewReports() {
               >
                 Редактировать данные
               </button>
-              {reportData?.author?.id === user?.id && (
+              {reportData?.author?.email === user?.email && (
                 <button className={styles.button_delete} onClick={deleteReportOpenModal}>
                   <span>Удалить доклад</span>
                   <Trash />

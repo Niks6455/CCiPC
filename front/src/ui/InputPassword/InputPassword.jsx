@@ -1,18 +1,48 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './InputPassword.module.scss';
 import galka from './../../assets/img/UI/galka.svg';
 import krest from './../../assets/img/UI/krest.svg';
 import lock from './../../assets/img/UI/lock.svg';
+import MobileDetect from 'mobile-detect';
 
 function InputPassword(props) {
+  const md = new MobileDetect(window.navigator.userAgent);
+  const isMobile = md.mobile() !== null;
+  const isTablet = md.tablet() !== null;
   const [errorListShow, setErrorListShow] = useState(false);
+  const errorImgRef = useRef(null);
+
   //! при наведении на img множественных ошибок
   const funOpenListErrors = () => {
+    if (isMobile || isTablet) {
+      return;
+    }
     setErrorListShow(true);
   };
   const funClouseListErrors = () => {
+    if (isMobile || isTablet) {
+      return;
+    }
     setErrorListShow(false);
   };
+
+  const funClickListErrors = () => {
+    if (isMobile || isTablet) {
+      setErrorListShow(!errorListShow);
+    }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (errorImgRef.current && !errorImgRef.current.contains(event.target)) {
+        setErrorListShow(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   //! функция проверки по множеству ошибок
   const selectErrors = e => {
@@ -35,8 +65,10 @@ function InputPassword(props) {
       {/* //! при множественных ошибках выводим лист */}
       {props.errorList && (
         <img
+          ref={errorImgRef}
           onMouseEnter={funOpenListErrors}
           onMouseLeave={funClouseListErrors}
+          onClick={funClickListErrors}
           className={styles.errorListImg}
           src={errorListShow ? props?.errorListImgHover : props?.errorListImgNoHover}
           alt="!"

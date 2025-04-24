@@ -10,6 +10,7 @@ import FileComponent from '../../../components/AdminModuleComponents/FileCompone
 import { server } from '../../../apirequests/apirequests';
 import { decodeText } from '../../../utils/functions/funcions';
 import { funGetError, funValidateAll } from './functions';
+import arrow from '@assets/img/UI/download.svg';
 
 function CreateReport({ edit }) {
   const navigate = useNavigate();
@@ -212,6 +213,11 @@ function CreateReport({ edit }) {
                 }
               />
             </div>
+            <div className={styles.downloadShablon}>
+              <span className={styles.shablon} onClick={funDownloadShablon}>
+                Шаблон <img src={arrow} alt="arrow" />
+              </span>
+            </div>
           </div>
         </div>
         <div className={styles.box}>
@@ -270,10 +276,6 @@ function CreateReport({ edit }) {
         <div className={styles.srokContainer}>
           <div className={styles.text}>
             <img src={errorList} alt="img" />
-            {/* <span>
-              В срок до {conference?.dedlineReport1} необходимо прислать заявку на доклад, а в срок
-              до {conference?.dedlineReport2} загрузить статью и экспертное заключение.
-            </span> */}
             <span>
               В срок до {conference?.dedlineReport2} необходимо прислать заявку на доклад, загрузить
               статью и экспертное заключение.
