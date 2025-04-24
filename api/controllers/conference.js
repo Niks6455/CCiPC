@@ -175,7 +175,6 @@ export default {
     async findFee({ params: { id }, query: {limit = 20 , offset = 0, sort, fio }, admin }, res ){
 
         const participants =await conferenceService.findFee(id, fio);
-
         const data = participants.map(participant => ({
             name: participant.name,
             id:participant.id,
@@ -258,12 +257,18 @@ export default {
     },
 
     async exportReports({params: { id }}, res){
-
-        const workbook =await conferenceService.exportReports(id)
+      if(!id) throw new AppErrorMissing('conferenceId')
+      const workbook =await conferenceService.exportReports(id)
         res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         res.setHeader('Content-Disposition', `attachment; filename=reports.xlsx`);
         await workbook.xlsx.write(res);
         res.end();
+    },
+
+    async finish({params: { id }}, res){
+      if(!id) throw new AppErrorMissing('conferenceId')
+      await conferenceService.finish(id)
+      res.json({status: 'Ok'});
     }
 
 

@@ -138,6 +138,7 @@ export default {
 
         const parts = fio?.split(' ');
 
+        if(conference.isFinished) return []
         const [surname, name, patronymic] = parts ? parts?.length === 3 ? parts : [parts[1], parts[0], parts[2]] :
             [undefined, undefined, undefined];
 
@@ -276,6 +277,8 @@ export default {
     async findFee(conferenceId, fio){
         const conference = await Conference.findByPk(conferenceId)
         if(!conference) throw new AppErrorNotExist('conference');
+
+        if(conference.isFinished) return []
 
         const parts = fio?.split(' ');
 
@@ -438,8 +441,6 @@ export default {
 
 
     async exportReports(conferenceId) {
-
-
         const reports = await Report.findAll({
             where: {
                 conferenceId: conferenceId, // Фильтр по conferenceId
@@ -565,6 +566,17 @@ export default {
         });
 
         return workbook;
+
+    },
+
+    async finish(conferenceId) {
+
+        const conference = await Conference.findByPk(conferenceId)
+        if(!conference) throw new AppErrorNotExist('conference')
+
+        return await conference.update({
+            isFinished: true
+        })
 
     }
 }
