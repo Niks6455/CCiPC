@@ -311,6 +311,7 @@ export default {
             type: typesPhoto[type],
             participantId: participant.id,
           },
+
         },
       });
 
@@ -547,6 +548,7 @@ export default {
       await FileLink.create({
         fileId: fileParticipantInConference.id, // ID файла
         participantId: user.id,
+        conferenceId: conference.id,
         type: typesFiles[type],
       });
 

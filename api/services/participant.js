@@ -1,6 +1,6 @@
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
-import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
+import { AppError, AppErrorAlreadyExists, AppErrorInvalid, AppErrorNotExist } from '../utils/errors.js';
 import sendMail from "./email.js";
 import randomCode from "../utils/random-code.js";
 import Conference from "../models/conference.js";
@@ -15,19 +15,19 @@ export default {
     async   self(participant){
 
         participant.conference = await Conference.findOne({
+            where: {  isFinished: false },
                 include: [{
                     model: ParticipantInConference,
                     as: 'participantInConference',
                     required: false,
                     where: {
-                        participantId: participant.id
+                        participantId: participant.id,
                     }
                 },{
                     model: Report,
                     as: 'reports',
                     required: false,
                     include: {
-
                         model: ParticipantOfReport,
                         as: 'participantOfReport',
                         required: true,
@@ -43,16 +43,24 @@ export default {
             where: {
                 participantId: participant.id
             },
-            include: {
+            include: [{
                 model: File,
                 as: 'file',
                 required: true
-            }
+            },
+                {
+                    model:Conference,
+                    as: 'conference',
+                    required: false,
+                    where: {
+                        isFinished: false
+                    }
+                }]
         })
 
         participant.avatar= files.filter(f=>f.type === typesPhoto.AVATAR)
-        participant.receipt= files.filter(f=>f.type === typesFiles.RECEIPT)
-        participant.accord= files.filter(f=>f.type === typesFiles.AGREEMENT)
+        participant.receipt= files.filter(f=>f.type === typesFiles.RECEIPT && !f.conference)
+        participant.accord= files.filter(f=>f.type === typesFiles.AGREEMENT && !f.conference)
 
 
         return participant
@@ -99,6 +107,22 @@ export default {
     },
 
     async delete(participantId){
+
+        const participantInConference = await ParticipantInConference.findAll({
+            where: {
+                participantId: participantId
+            },
+            include:{
+                model: Conference,
+                as: 'conference',
+                required: true,
+                where: {
+                    isFinished: false
+                }
+            }
+        })
+        if(participantInConference.length > 0)  throw new AppErrorInvalid('participant in conference not finished')
+
         return await Participant.destroy({
             where: {id : participantId}
         })

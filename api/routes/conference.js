@@ -188,6 +188,8 @@ router.route('/:id/saveConclusion').get(asyncRoute(verify.admin([roles.ADMIN])),
 router.route('/:id/savePhotoParticipants').get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.savePhoto))
 
 
+router.route('/:id/finish').put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.finish))
+
 router.route('/:id')
     .get(asyncRoute(conferenceCtrl.findOne))
     .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(conferenceCtrl.update))

@@ -14,6 +14,7 @@ export default class Conference extends Model {
                 },
                 description: {type: DataTypes.TEXT, allowNull: true},
                 deadline: { type: DataTypes.DATEONLY, allowNull: true },
+                isFinished: { type: DataTypes.BOOLEAN, defaultValue: false },
 
     },
             {
