@@ -5,6 +5,7 @@ import { ReactComponent as ArrowIcon } from '@assets/img/UI/SliderDefault.svg';
 import { useNavigate } from 'react-router-dom';
 import newsArrIcon from '@assets/img/UI/newsArr.svg';
 import { ReactComponent as SlideArrowIcon } from '@assets/img/UI/slideArrow.svg';
+import noPhoto from '@assets/img/noPhoto.png';
 
 function SliderHomePageMobile() {
   const navigate = useNavigate();
@@ -37,14 +38,30 @@ function SliderHomePageMobile() {
     }
   };
 
+  const getTitle = (title) => {
+    if(title.length > 100) {
+      return title.substring(0, 100) + '...';
+    }else{
+      return title
+    }
+  }
+
+  const getDescriptions = (desc) => {
+    if(desc.length > 200) {
+      return desc.substring(0, 200) + '...';
+    }else{
+      return desc
+    }
+  }
+
   return (
     <div className={styles.SliderHomePageMobile} ref={containerRef}>
       <div className={styles.slider}>
         {slides?.map((item, index) => (
           <div key={index} className={styles.slide} ref={el => (itemsRef.current[index] = el)}>
-            <h2>{item?.title}</h2>
+            <h2>{item?.title && getTitle(item?.title)}</h2>
             <div
-              dangerouslySetInnerHTML={{ __html: item?.description }}
+              dangerouslySetInnerHTML={{ __html: item?.description && getDescriptions(item?.description) }}
               className={styles.description}
             ></div>
             <div className={styles.image}>
@@ -71,7 +88,8 @@ function SliderHomePageMobile() {
                   <SlideArrowIcon />
                 </button>
               </div>
-              <img className={styles.main_img} src={`${server}/${item.img?.url}`} alt="img" />
+              
+              <img className={styles.main_img} src={item.img?.url ? `${server}/${item.img?.url}` : noPhoto} alt="img" />
               <button className={styles.allNews} onClick={() => navigate('/news')}>
                 <span>Все новости</span>
                 <img src={newsArrIcon} alt="img" />
