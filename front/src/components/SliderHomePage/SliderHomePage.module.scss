@@ -321,7 +321,7 @@ $w2: 769px;
   .controlsInner {
     position: absolute;
     left: 50%;
-    transform: translateX(-58%);
+    transform: translateX(-58%) translateY(torem(-15px));
     display: flex;
     justify-content: center;
     padding: 0 torem(50px);
@@ -342,9 +342,9 @@ $w2: 769px;
     }
   }
   .arrowLeft {
-    transform: rotate(180deg);
+    transform: scaleX(-1);
     position: relative;
-    top: torem(-12px);
+    top: 0;
   }
 }
 
@@ -361,6 +361,9 @@ $w2: 769px;
   justify-content: center;
   font-size: 1.5rem;
   margin: 0px torem(10px);
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
   span {
     background-image: url('./../../assets/img/UI/SliderDefault.svg');
     width: torem(50px);
@@ -369,10 +372,10 @@ $w2: 769px;
     background-repeat: no-repeat;
     transition: 0.08s linear all;
     &:hover {
-      background-image: url('./../../assets/img/UI/SliderHover.svg');
+      background-color: #ffffff58;
     }
     &:active {
-      background-image: url('./../../assets/img/UI/SliderActive.svg');
+      background-color: #ffffffab;
     }
   }
 }
@@ -389,12 +392,12 @@ $w2: 769px;
   bottom: torem(15px);
   z-index: 1000;
   cursor: pointer;
+  border-radius: torem(20px);
 
   &:hover {
-    background-image: url('./../../assets/img/UI/newsHover.svg');
+    background-color: #ffffff58;
   }
-
   &:active {
-    background-image: url('./../../assets/img/UI/newsActive.svg');
+    background-color: #ffffffab;
   }
 }
