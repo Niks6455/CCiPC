@@ -274,12 +274,6 @@ export default {
                 })
                 if(!direction)  throw  new AppErrorNotExist('direction')
             }
-            await report.update({
-                name: reportInfo?.name,
-                directionId: reportInfo?.directionId,
-                comment: reportInfo?.comment,
-            })
-
 
             if(reportInfo?.coAuthors?.length > 0){
 
@@ -289,7 +283,6 @@ export default {
 
                 if(checkCoAuthors) throw new AppErrorInvalid('coAuthors')
 
-
                 const participantsExist = await Participant.findAll({
                     where: {
                         email: {
@@ -298,8 +291,16 @@ export default {
                     }
                 })
 
-
                 const participantsExistIds = participantsExist.map(participantExist=> participantExist.id)
+
+                const checkParticipantOfReport = await ParticipantOfReport.findAll({
+                    where: {
+                        reportId: report.id,
+                        participantId: participantsExistIds,
+                    }
+                })
+
+                if(checkParticipantOfReport.length > 0) throw new AppErrorAlreadyExists('coAuthor')
 
                 if (participantsExistIds?.length > 0) {
                     // Create new ParticipantOfReport records for the existing participants
@@ -363,6 +364,12 @@ export default {
         })
 
         console.log(cache)
+
+        await report.update({
+            name: reportInfo?.name,
+            directionId: reportInfo?.directionId,
+            comment: reportInfo?.comment,
+        })
 
         return report
 
