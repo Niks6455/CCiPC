@@ -52,11 +52,7 @@ function HeaderPhone(props) {
   return (
     <div>
       <div
-        className={styles.HeaderPhoneContainer}
-        style={{
-          display: isVisible ? 'flex' : 'none',
-          position: isVisible ? 'fixed' : 'absolute',
-        }}
+        className={`${styles.HeaderPhoneContainer} ${isVisible ? styles.fixedPosition : ''}`}
       >
         <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(!activeMenu)}>
           <div className={styles.NavBarMenu}>
@@ -75,9 +71,9 @@ function HeaderPhone(props) {
             >
               <motion.div
                 className={styles.NavBarMenuContainerInner}
-                initial={{ height: 0 }}
-                animate={{ height: 'auto' }}
-                exit={{ height: 0 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 ref={menuRef}
               >
                 <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(false)}>
@@ -127,9 +123,9 @@ function HeaderPhone(props) {
                     <AnimatePresence>
                       {activeMenuListFirst && user?.email && (
                         <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: 'auto', opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
                         >
                           {!props.login && (
                             <li
@@ -162,13 +158,12 @@ function HeaderPhone(props) {
                               />
                             </div>
                           </li>
-                          {/* лист докладов */}
                           <AnimatePresence>
                             {isReports && (
                               <motion.ul
-                                initial={{ height: 0 }}
-                                animate={{ height: 'auto' }}
-                                exit={{ height: 0 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
                                 className={styles.reports}
                               >
                                 <li
@@ -231,9 +226,9 @@ function HeaderPhone(props) {
                             {activeMenuListSecond && (
                               <motion.div
                                 className={styles.NavBarMenuListOpener}
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
                               >
                                 <li onClick={() => navigateTo('/account/settings/profile')}>
                                   <div className={styles.NavBarMenuListInnerLiImg}>
