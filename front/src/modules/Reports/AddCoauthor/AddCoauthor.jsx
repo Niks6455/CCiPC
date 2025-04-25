@@ -50,14 +50,12 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const directions = useSelector(state => state.conferences.data[0]?.directions);
   const [errorModal, setErrorModal] = useState(false);
   const [errorsCoauthor, setErrorsCoauthor] = useState([]);
-  const [errorNameReport, setErrorNameReport] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   const funSetSoauthorEditing = (key, value) => {
-    console.log('key, value', key, value);
     setSoauthorEditing({ ...soauthorEditing, [key]: value });
   };
 
@@ -160,29 +158,30 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           })),
       };
       let erroes = [];
-      temp.coAuthors.map((el, index) => {
-        if (!el.name) {
+      console.log('report.data?.soauthors', report.data?.soauthors);
+      report.data?.soauthors.map((el, index) => {
+        if (!el.data.name) {
           erroes.push({
             index: index,
             key: 'name',
             error: 'Поле обязательно для заполнения!',
           });
         }
-        if (!el.surname) {
+        if (!el.data.surname) {
           erroes.push({
             index: index,
             key: 'surname',
             error: 'Поле обязательно для заполнения!',
           });
         }
-        if (!el.email) {
+        if (!el.data.email) {
           erroes.push({
             index: index,
             key: 'email',
             error: 'Поле обязательно для заполнения!',
           });
         }
-        if (!validateEmail(el.email)) {
+        if (!validateEmail(el.data.email)) {
           erroes.push({
             index: index,
             key: 'email',
@@ -349,7 +348,6 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   };
 
   const handleChangeForm = (key, value) => {
-    console.log('index, key, value', key, value);
     setSoauthorEditing({ ...soauthorEditing, [key]: value });
     // dispatch(setCoauthorDataApi({ index, data: { [key]: value } }));
   };
@@ -459,12 +457,10 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           {report?.data.soauthors?.map((soauthtor, index) => (
             <div key={index} className={styles.inputContainer}>
               <div className={styles.deletecoauthor}>
-                {!soauthorEditing && (
-                  <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
-                    <span>Удалить соавтора №{index + 1}</span>
-                    <img src={trash} alt="удалить" />
-                  </button>
-                )}
+                <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
+                  <span>Удалить соавтора №{index + 1}</span>
+                  <img src={trash} alt="удалить" />
+                </button>
               </div>
 
               {inpustTypeEmail.map(inp => (
@@ -482,25 +478,38 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                         ?.error
                     }
                     errorShow={true}
-                    readOnly={soauthorEditing || false}
+                    readOnly={!!soauthtor?.data?.id}
                   />
-                  {soauthtor.autocompletion === 'noemail' && (
+                  {!soauthtor.data?.id &&
+                  report?.data?.soauthors?.filter(it => it.data.email === soauthtor.data?.email)
+                    ?.length > 1 ? (
                     <div className={styles.modalEmail}>
-                      <p>
-                        Пользователь с такой почтой не найден на платформе. Необходимо внести данные
-                        о соавторе вручную.
-                      </p>
-                      <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
+                      <p>Данный пользователь уже является соавтором этого доклада.</p>
+                      <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
+                        <span>Удалить</span>
+                      </button>
                     </div>
-                  )}
-                  {soauthtor.autocompletion === 'emailhave' && (
-                    <div className={styles.modalEmail}>
-                      <p>
-                        Пользователь с такой почтой найден на платформе. Данные о соавторе
-                        заполнятся автоматически, кроме его формы участия.
-                      </p>
-                      <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
-                    </div>
+                  ) : (
+                    <>
+                      {soauthtor.autocompletion === 'noemail' && (
+                        <div className={styles.modalEmail}>
+                          <p>
+                            Пользователь с такой почтой не найден на платформе. Необходимо внести
+                            данные о соавторе вручную.
+                          </p>
+                          <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
+                        </div>
+                      )}
+                      {soauthtor.autocompletion === 'emailhave' && (
+                        <div className={styles.modalEmail}>
+                          <p>
+                            Пользователь с такой почтой найден на платформе. Данные о соавторе
+                            заполнятся автоматически, кроме его формы участия.
+                          </p>
+                          <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
+                        </div>
+                      )}
+                    </>
                   )}
                 </div>
               ))}
@@ -528,7 +537,9 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                             )?.error
                           }
                           errorShow={true}
-                          readOnly={soauthtor.autocompletion === 'readOnly' || false}
+                          readOnly={
+                            soauthtor.autocompletion === 'readOnly' || !!soauthtor?.data?.id
+                          }
                         />
                       </div>
                     ),

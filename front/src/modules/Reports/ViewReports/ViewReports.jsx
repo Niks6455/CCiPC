@@ -3,14 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom'; // Импортируем хук для работы с query params
 import styles from './ViewReports.module.scss';
 import BlockFile from './../../../assets/img/UI/blackFile.svg';
+import DOC from './../../../assets/img/UI/DOC.svg';
 import { ReactComponent as Trash } from './../../../assets/img/UI/trash.svg';
 import { apiDeleteReport, apiGetReportId, server } from '../../../apirequests/apirequests';
 import { disDeleteReport } from '../../../store/reportsSlice/reportsSlice';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { convertDateTire, decodeFileName } from '../../../utils/functions/funcions';
+import { convertDateTire } from '../../../utils/functions/funcions';
 import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
-import LoadingComponent from '../../../components/LoadingComponent/LoadingComponent';
 import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 
 function ViewReports() {
@@ -101,11 +101,6 @@ function ViewReports() {
     if (file) {
       window.open(`${server}/${file?.url}`, '_blank');
     }
-  };
-
-  const getFileName = file => {
-    if (!file) return '';
-    return decodeFileName(file);
   };
 
   if (isLoading) {
@@ -227,11 +222,10 @@ function ViewReports() {
                 className={`${styles.blockFile} ${reportData?.reportFile ? '' : styles.blockFileNoFile}`}
                 onClick={() => funOpenFile(reportData?.reportFile)}
               >
-                <img src={BlockFile} alt="img" />
+                <img src={DOC} alt="img" />
                 <div className={styles.fileName}>
-                  <span>{getFileName(reportData?.reportFile) || 'Документ.docx'}</span>
+                  <span>{reportData?.reportFile?.name || 'Документ.docx'}</span>
                 </div>
-                {/* <BlockFile /> */}
               </div>
               {showTooltip === 1 && (
                 <div
@@ -259,7 +253,7 @@ function ViewReports() {
                 <img src={BlockFile} alt="img" />
 
                 <div className={styles.fileName}>
-                  <span>{getFileName(reportData?.conclusion) || 'Документ.pdf'}</span>
+                  <span>{reportData?.conclusion?.name || 'Документ.pdf'}</span>
                 </div>
                 {/* <BlockFile
               className={styles.blockFile}
