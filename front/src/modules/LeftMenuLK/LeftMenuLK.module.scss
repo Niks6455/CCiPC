@@ -11,7 +11,7 @@ $w3: 480px;
   min-width: torem(310px);
   max-width: torem(310px);
   @include maxMinContent();
-  height: 100vh;
+  min-height: 100vh;
   box-sizing: border-box;
   background-color: var(--BodyBgColor);
   border-right: torem(1px) solid var(--InputColors);

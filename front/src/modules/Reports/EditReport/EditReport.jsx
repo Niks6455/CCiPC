@@ -19,8 +19,6 @@ function EditReport() {
   const [idReport, setIdReport] = useState(null);
   const user = useSelector(state => state.user.user.data);
 
-  console.log('soauthorEditing', soauthorEditing);
-
   const { data: reportQery, isPending: isLoading } = useQuery({
     queryKey: [`${idReport}`, idReport],
     queryFn: () => apiGetReportId(idReport),
