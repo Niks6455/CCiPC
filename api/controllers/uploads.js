@@ -315,7 +315,7 @@ export default {
       });
 
       if (avatar) {
-        await avatar.update({ url: file.path, name: file.originalname });
+        await avatar.update({ url: file.path, name: Buffer.from(file.originalname, 'latin1').toString('utf8') });
         return res.json({ file: avatar });
       }
 
@@ -352,7 +352,7 @@ export default {
       });
 
       if (newsFile) {
-        await newsFile.update({ url: file.path, name: file.originalname });
+        await newsFile.update({ url: file.path, name: Buffer.from(file.originalname, 'latin1').toString('utf8') });
         return res.json({ file: newsFile });
       }
 
@@ -390,7 +390,7 @@ export default {
       });
 
       if (committeeFile) {
-        await committeeFile.update({ url: file.path, name: file.originalname });
+        await committeeFile.update({ url: file.path, name: Buffer.from(file.originalname, 'latin1').toString('utf8') });
         return res.json({ file: committeeFile });
       }
 
@@ -438,7 +438,7 @@ export default {
       });
 
       if (reportFile) {
-        await reportFile.update({ url: file.path, name: file.originalname });
+        await reportFile.update({ url: file.path, name: Buffer.from(file.originalname, 'latin1').toString('utf8') });
         return res.json({ file: reportFile });
       }
 
@@ -475,7 +475,7 @@ export default {
       });
 
       if (archiveFile) {
-        await archiveFile.update({ url: file.path, name: file.originalname });
+        await archiveFile.update({ url: file.path, name: Buffer.from(file.originalname, 'latin1').toString('utf8') });
         return res.json({ file: archiveFile });
       }
 
@@ -534,7 +534,7 @@ export default {
       if (participantInConferenceFile) {
         await participantInConferenceFile.update({
           url: file.path,
-          name: file.originalname,
+          name: Buffer.from(file.originalname, 'latin1').toString('utf8'),
         });
         return res.json({ file: participantInConferenceFile });
       }
