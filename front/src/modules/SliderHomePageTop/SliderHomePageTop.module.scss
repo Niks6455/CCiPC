@@ -74,6 +74,9 @@ $w3: 480px;
       .sliderItem {
         display: flex;
         flex-direction: column;
+        width: -webkit-max-content;
+        width: -moz-max-content;
+        width: max-content;
       }
       @media (max-width: $w1) {
         font-size: torem(20px);

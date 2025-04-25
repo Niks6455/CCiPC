@@ -61,8 +61,8 @@ function HeaderPhone(props) {
         </button>
 
         {activeMenu && (
-          <div className={`${styles.NavBarMenuContainer} ${styles.open}`} ref={menuRef}>
-            <div className={styles.NavBarMenuContainerInner}>
+          <div className={`${styles.NavBarMenuContainer} ${styles.open}`} >
+            <div className={styles.NavBarMenuContainerInner} ref={menuRef}>
               <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(false)}>
                 <div className={styles.NavBarMenu}>
                   <span></span>
