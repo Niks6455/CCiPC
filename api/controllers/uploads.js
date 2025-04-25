@@ -154,7 +154,7 @@ const uploader = multer({
 const multiUploader = multer({
   storage: multiStorage,
   fileFilter: multiFileFilter,
-  limits: { fileSize: 51457280 },
+  limits: { fileSize: 262144000 },
 });
 
 export default {
