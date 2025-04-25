@@ -331,6 +331,10 @@ $w2: 769px;
     color: #fff;
     font-size: torem(60px);
   }
+  p {
+    min-width: torem(100px);
+    text-align: center;
+  }
   button {
     display: flex;
     align-items: center;

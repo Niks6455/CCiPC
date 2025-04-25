@@ -101,7 +101,7 @@ function DocumentsModule({ data, setData }) {
                   accept={item.accept}
                   fileName={
                     typeof data[item.key]?.url === 'string'
-                      ? decodeText(data[item.key]?.name)
+                      ? data[item.key]?.name
                       : data[item.key]?.name
                   }
                   name={item.name}

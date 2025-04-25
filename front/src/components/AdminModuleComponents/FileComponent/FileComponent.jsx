@@ -44,8 +44,8 @@ function FileComponent(props) {
       setIsVisibleHeader(true);
       const inputElement = document.querySelector('#' + props.name);
       setFileFromPath(props.logoHeader, inputElement);
-      const fileName = decodeName(props.logoHeader.split('\\').pop());
-      setFileName(decodeName(fileName));
+      const fileName = props.logoHeader.split('\\').pop();
+      setFileName(fileName);
       console.log('fileName', fileName);
       setFileName(fileName);
     }
@@ -201,7 +201,7 @@ function FileComponent(props) {
                   alt="Файл загружен"
                 />
                 <span name="file_name" onClick={funOpenFile}>
-                  {decodeName(props.fileName) || props.data?.name || decodeFileName(fileName)}
+                  {props.fileName || props.data?.name || fileName}
                 </span>
               </div>
             </div>

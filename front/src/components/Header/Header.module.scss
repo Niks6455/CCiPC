@@ -28,6 +28,7 @@ header {
       height: torem(110px);
       -o-object-fit: cover;
       object-fit: cover;
+      transform: translateY(torem(-21px)) translateX(torem(4px));
     }
   }
   .logoInner {

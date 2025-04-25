@@ -72,17 +72,19 @@ const SliderHomePage = () => {
             </div>
           ))}
         </div>
-        <div className={styles.controls}>
-          <div className={styles.controlsInner}>
-            <button onClick={prevSlide} className={`${styles.arrow} ${styles.arrowLeft}`}>
-              <span></span>
-            </button>
-            <p>0{currentSlide + 1}</p>
-            <button onClick={nextSlide} className={styles.arrow}>
-              <span></span>
-            </button>
+        {slides?.length > 1 && (
+          <div className={styles.controls}>
+            <div className={styles.controlsInner}>
+              <button onClick={prevSlide} className={`${styles.arrow} ${styles.arrowLeft}`}>
+                <span></span>
+              </button>
+              <p>0{currentSlide + 1}</p>
+              <button onClick={nextSlide} className={styles.arrow}>
+                <span></span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

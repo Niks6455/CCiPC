@@ -98,8 +98,6 @@ function ViewReports() {
 
   const funOpenFile = file => {
     //открытие файла по ссылке
-    console.log('file', file);
-    console.log('`${server}/${file?.url}`', `${server}/${file?.url}`);
     if (file) {
       window.open(`${server}/${file?.url}`, '_blank');
     }
@@ -109,8 +107,6 @@ function ViewReports() {
     if (!file) return '';
     return decodeFileName(file);
   };
-
-  console.log('reportData', reportData);
 
   if (isLoading) {
     return (

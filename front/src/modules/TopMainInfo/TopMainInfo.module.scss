@@ -201,11 +201,12 @@ $w3: 480px;
   bottom: torem(50px);
   z-index: 500;
   transition: 0.08s linear all;
+  border-radius: 50%;
   &:hover {
-    background-image: url('./../../assets/img/UI/ArrTopHover.svg');
+    background-color: #5c5b5b0f;
   }
   &:active {
-    background-image: url('./../../assets/img/UI/ArrTopActive.svg');
+    background-color: #22222220;
   }
 
   @media (max-width: $w2) {
