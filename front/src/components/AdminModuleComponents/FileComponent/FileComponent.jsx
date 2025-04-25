@@ -6,7 +6,7 @@ import pdfIcon from '@assets/img/AdminPanel/pdf.svg';
 import pdfIconImport from '@assets/img/AdminPanel/pdfImport.svg';
 import docIcon from '@assets/img/AdminPanel/doc.svg';
 import dragingIcon from '@assets/img/AdminPanel/dragging.svg';
-import { decodeFileName } from '../../../utils/functions/funcions';
+import { decodeFileName, decodeName } from '../../../utils/functions/funcions';
 
 function FileComponent(props) {
   const [logoHeader, setLogoHeader] = useState(null);
@@ -16,6 +16,7 @@ function FileComponent(props) {
   const [isDragging, setIsDragging] = useState(null);
   const [errorSize, setErrorSize] = useState(false);
   const [fileName, setFileName] = useState(null);
+  console.log('props.fileName', props.fileName);
 
   async function setFileFromPath(filePath, inputElement) {
     try {
@@ -43,7 +44,9 @@ function FileComponent(props) {
       setIsVisibleHeader(true);
       const inputElement = document.querySelector('#' + props.name);
       setFileFromPath(props.logoHeader, inputElement);
-      setFileName(props.logoHeader.split('\\').pop());
+      const fileName = decodeName(props.logoHeader.split('\\').pop());
+      console.log('fileName', fileName);
+      setFileName(fileName);
     }
   }, [props.logoHeader]);
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла
