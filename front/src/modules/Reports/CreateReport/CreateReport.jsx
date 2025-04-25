@@ -207,9 +207,7 @@ function CreateReport({ edit }) {
                 fileSize={20} // размер файла
                 text={'Необходимо загрузить<br/>файл в формате DOC или DOCX'}
                 fileName={
-                  edit && report.data.fileArticle?.name
-                    ? decodeText(report.data.fileArticle?.name)
-                    : null
+                  edit && report.data.fileArticle?.name ? report.data.fileArticle?.name : null
                 }
               />
             </div>
@@ -241,7 +239,7 @@ function CreateReport({ edit }) {
                 text={'Необходимо загрузить<br/>файл в формате PDF'}
                 fileName={
                   edit && report.data.fileExpertOpinion?.name
-                    ? decodeText(report.data.fileExpertOpinion?.name)
+                    ? report.data.fileExpertOpinion?.name
                     : null
                 }
               />
