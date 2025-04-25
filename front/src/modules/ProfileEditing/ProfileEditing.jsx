@@ -259,6 +259,7 @@ function ProfileEditing() {
           <img
             className={styles.photo_heve}
             src={urlPhoto || profilePhoto}
+            onClick={funOpenPhoto}
             onError={e => (e.target.src = profilePhoto)}
             alt="img"
           />

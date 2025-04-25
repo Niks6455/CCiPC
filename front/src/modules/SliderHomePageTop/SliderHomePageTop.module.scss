@@ -92,29 +92,7 @@ $w3: 480px;
         align-items: start;
         max-width: 100%;
       }
-      .sliderLine {
-        margin: 0 torem(33px);
-        display: flex;
-        align-items: center;
-        height: 100%;
-        @media (max-width: $w2) {
-          margin: 0 torem(18px);
-        }
-        @media (max-width: $w3) {
-          width: 100%;
-          margin: 0;
-          border-bottom: torem(2px) dashed var(--GreenColorText);
-          margin-bottom: torem(20px);
-          padding-bottom: torem(20px);
-        }
-        img {
-          width: torem(3px);
-          height: torem(42px);
-          @media (max-width: $w3) {
-            display: none;
-          }
-        }
-      }
+     
       .date {
         font-weight: 900;
         margin-bottom: 5px;
@@ -127,6 +105,29 @@ $w3: 480px;
           font-size: torem(16px);
           line-height: 120%;
           letter-spacing: 0%;
+        }
+      }
+    }
+    .sliderLine {
+      margin: 0 torem(33px);
+      display: flex;
+      align-items: center;
+      height: 100%;
+      @media (max-width: $w2) {
+        margin: 0 torem(18px);
+      }
+      @media (max-width: $w3) {
+        width: 100%;
+        margin: 0;
+        border-bottom: torem(2px) dashed var(--GreenColorText);
+        margin-bottom: torem(20px);
+        padding-bottom: torem(20px);
+      }
+      img {
+        width: torem(3px);
+        height: torem(42px);
+        @media (max-width: $w3) {
+          display: none;
         }
       }
     }

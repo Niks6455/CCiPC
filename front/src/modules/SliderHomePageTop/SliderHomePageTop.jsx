@@ -27,15 +27,17 @@ function SliderHomePageTop() {
                 .fill(conferenceStages)
                 .flat()
                 .map((el, index) => (
-                  <li key={index}>
-                    <div className={styles.sliderItem}>
-                      <div className={styles.date}>{convertDate(el.date)}</div>
-                      <div>{el.name}</div>
-                    </div>
+                  <>
+                    <li key={index}>
+                      <div className={styles.sliderItem}>
+                        <div className={styles.date}>{convertDate(el.date)}</div>
+                        <div>{el.name}</div>
+                      </div>
+                    </li>
                     <div className={styles.sliderLine}>
-                      <img src={LineSlider} />
+                        <img src={LineSlider} />
                     </div>
-                  </li>
+                  </>
                 ))}
             </ul>
           </div>
