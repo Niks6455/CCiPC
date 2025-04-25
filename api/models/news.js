@@ -12,7 +12,7 @@ export default class News extends Model {
             {
                 sequelize,
                 schema: process.env.NODE_ENV,
-                paranoid: true,
+                paranoid: false,
                 modelName: 'News',
                 tableName: 'news',
                 timestamps: true,

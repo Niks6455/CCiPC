@@ -12,7 +12,7 @@ export default class Committee extends Model {
             {
                 sequelize,
                 schema: process.env.NODE_ENV,
-                paranoid: true,
+                paranoid: false,
                 modelName: 'Committee',
                 tableName: 'committees',
                 timestamps: true,
