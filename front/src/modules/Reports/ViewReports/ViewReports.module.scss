@@ -228,6 +228,7 @@ $w3: 480px;
         padding-top: torem(5px);
         box-sizing: border-box;
         pointer-events: none;
+        overflow: hidden;
 
         span {
           font-family: Overpass, sans-serif;
