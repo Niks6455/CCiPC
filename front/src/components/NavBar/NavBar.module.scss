@@ -114,8 +114,9 @@ $w3: 480px;
 
   .menu {
     background-color: var(--GreenColorDefault);
-    width: torem(310px); /* Меню занимает всю ширину экрана */
-    height: 100vh; /* Высота меню */
+    width: torem(295px);
+    max-width: torem(295px);
+    height: 100vh;
     position: fixed;
     right: 0;
     top: 0;
