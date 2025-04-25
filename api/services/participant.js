@@ -58,9 +58,10 @@ export default {
                 }]
         })
 
+
         participant.avatar= files.filter(f=>f.type === typesPhoto.AVATAR)
-        participant.receipt= files.filter(f=>f.type === typesFiles.RECEIPT && !f.conference)
-        participant.accord= files.filter(f=>f.type === typesFiles.AGREEMENT && !f.conference)
+        participant.receipt= files.filter(f=>f.type === typesFiles.RECEIPT && f.conference)
+        participant.accord= files.filter(f=>f.type === typesFiles.AGREEMENT && f.conference)
 
 
         return participant

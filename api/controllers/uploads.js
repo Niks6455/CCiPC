@@ -79,7 +79,6 @@ const multiStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     // Define the upload path
     const uploadPath = path.join(dir, file.fieldname.toLowerCase());
-    console.log(uploadPath);
     try {
       // Ensure the directory exists
       if (!fs.existsSync(uploadPath)) {
@@ -94,7 +93,7 @@ const multiStorage = multer.diskStorage({
     // Use the original file name
     if (file.fieldname === "ORGANIZATION" || file.fieldname === "PARTNER")
       return cb(null, uuidv4() + path.extname(file.originalname).toLowerCase());
-    cb(null, file.originalname);
+      cb(null,  Buffer.from(file.originalname, 'latin1').toString('utf8'));
   },
 });
 
@@ -142,7 +141,7 @@ const storage = multer.diskStorage({
     }
   },
   filename: (req, file, cb) => {
-    cb(null, file.originalname);
+    cb(null,  Buffer.from(file.originalname, 'latin1').toString('utf8'));
   },
 });
 
@@ -258,7 +257,7 @@ export default {
         for (const file of files) {
           // Создаем запись для каждого файла
           const fileRecord = {
-            name: file.originalname, // Сохраняем оригинальное имя файла
+            name:  Buffer.from(file.originalname, 'latin1').toString('utf8'), // Сохраняем оригинальное имя файла
             url: file.path, // Путь к файлу
             type: typesFiles[key], // Тип файла (например, PROGRAM, LETTER и т.д.)
             conferenceId: conferenceId, // ID конференции или другой идентификатор
@@ -321,7 +320,7 @@ export default {
       }
 
       const fileParticipant = await File.create({
-        name: file.originalname,
+        name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
         url: file.path,
       });
 
@@ -358,7 +357,7 @@ export default {
       }
 
       const fileNews = await File.create({
-        name: file.originalname,
+        name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
         url: file.path,
       });
 
@@ -396,7 +395,7 @@ export default {
       }
 
       const fileCommittee = await File.create({
-        name: file.originalname,
+        name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
         url: file.path,
       });
 
@@ -444,7 +443,7 @@ export default {
       }
 
       const fileReport = await File.create({
-        name: file.originalname,
+        name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
         url: file.path,
       });
 
@@ -481,7 +480,7 @@ export default {
       }
 
       const fileArchive = await File.create({
-        name: file.originalname,
+        name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
         url: file.path,
       });
 
@@ -541,7 +540,7 @@ export default {
       }
 
       const fileParticipantInConference = await File.create({
-        name: file.originalname,
+        name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
         url: file.path,
       });
 

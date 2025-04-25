@@ -395,7 +395,9 @@ export default {
             }
         })
 
-       return  reports.map(report=>({path:  report.reportFileLink[0]?.file.url, name : report.name}))
+
+
+       return  reports.map(report=>({path:  report.reportFileLink[0]?.file.url, name : report.name + `.${report.reportFileLink[0]?.file.name.split('.')[1]}`}))
 
     },
 
