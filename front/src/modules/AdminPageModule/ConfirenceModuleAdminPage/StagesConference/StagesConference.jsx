@@ -68,6 +68,8 @@ function StagesConference({ data, setData }) {
     };
   }, []);
 
+  console.log('isEditing', isEditing);
+
   return (
     <div className={styles.StagesConference}>
       <h3 className={styles.stages_conference_title}>Этапы конференции</h3>
@@ -82,7 +84,15 @@ function StagesConference({ data, setData }) {
                 if (!a.name && !b.name) return 0;
                 if (!a.name) return 1;
                 if (!b.name) return -1;
-                return a?.date?.localeCompare(b.date); // Сравнение по дате
+                const parseDate = dateString => {
+                  const [day, month, year] = dateString.split('.').map(Number);
+                  return new Date(year, month - 1, day); // Month is 0-indexed
+                };
+
+                const dateA = parseDate(a.date);
+                const dateB = parseDate(b.date);
+                return dateA - dateB; // Compare dates
+                // return a?.date?.localeCompare(b.date); // Сравнение по дате
               })
           )?.map((item, index) => (
             <li key={index}>
