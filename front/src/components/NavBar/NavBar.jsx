@@ -26,6 +26,7 @@ function NavBar(props) {
   const [isReports, setIsReports] = useState(false);
   const reports = useSelector(state => state.reportsSlice.data);
   const user = useSelector(state => state.user.user.data);
+
   const naviList = [
     {
       name: 'Личный кабинет',
@@ -116,7 +117,7 @@ function NavBar(props) {
   ];
 
   return (
-    <>
+    <div>
       <>
         <div
           className={`${styles.logo} ${props.login ? styles.loginLogo : ''} ${location.pathname.includes('/account') ? styles.visibleLogo : ''}`}
@@ -288,7 +289,7 @@ function NavBar(props) {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

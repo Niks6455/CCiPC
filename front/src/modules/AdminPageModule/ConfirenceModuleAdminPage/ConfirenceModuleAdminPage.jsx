@@ -25,7 +25,7 @@ import {
   disResetConferences,
   fetchConferences,
 } from '../../../store/conferencesSlice/conferences.Slice';
-import CircleLoader from '../../../components/CircleLoader/CircleLoader';
+// import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 import ModalCompleteConference from '../../../components/ModalCompleteConference/ModalCompleteConference';
 
 function ConfirenceModuleAdminPage() {
@@ -190,9 +190,10 @@ function ConfirenceModuleAdminPage() {
           funSetErrors('main', true);
           setModalSucces(true);
           dispatch(fetchConferences());
+          console.log('res', res);
           //! загрузка файлов
-          funApiEditFileMulti(data, fileKeys, conferenseId);
-          refetchConferense();
+          funApiEditFileMulti(data, fileKeys, res?.data?.conference?.id);
+          // refetchConferense();
         } else {
           funSetErrors('main', false);
           setModalSucces(false);
@@ -269,7 +270,7 @@ function ConfirenceModuleAdminPage() {
       />
       <div className={styles.buttons}>
         <div className={styles.left}>
-          <button onClick={() => setComplate(true)}>Завершить конференцию</button>
+          {conferenseId && <button onClick={() => setComplate(true)}>Завершить конференцию</button>}
         </div>
         <div className={styles.buttons_inner}>
           <button onClick={funCancelData}>Отмена</button>

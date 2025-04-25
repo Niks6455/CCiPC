@@ -79,8 +79,6 @@ function DocumentsModule({ data, setData }) {
     setData({ ...data, deleteIds: [...data.deleteIds, id] });
   };
 
-  console.log('data', data);
-
   return (
     <div className={styles.DocumentsModule}>
       <div className={styles.container}>
