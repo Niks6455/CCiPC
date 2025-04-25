@@ -1,10 +1,11 @@
-import {AppErrorMissing} from "../utils/errors.js";
+import { AppErrorInvalid, AppErrorMissing } from '../utils/errors.js';
 import newsService from "../services/news.js";
-
+import checkValidate from '../utils/validate/news.js'
 export default {
     async create({body: {title, description}}, res){
         if(!title) throw new AppErrorMissing('title')
         if(!description) throw new AppErrorMissing('description')
+        checkValidate({ title, description })
         const news= await newsService.create(title, description)
         res.json({ news: news });
     },
