@@ -15,7 +15,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 function TopMainInfo() {
   const conference = useSelector(state => state?.conferences?.data[0]);
-  console.log('conference', conference);
   const userData = useSelector(state => state.user.user.data);
   const arrowRef = useRef(null); // Реф для стрелки
   const navigate = useNavigate();
