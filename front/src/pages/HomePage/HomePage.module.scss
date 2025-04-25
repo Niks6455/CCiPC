@@ -168,6 +168,7 @@ $w3: 480px;
         padding: 0 torem(20px);
         transform: translateX(torem(-8px));
       }
+
       .row_items {
         display: flex;
         flex-direction: row;
@@ -189,11 +190,12 @@ $w3: 480px;
         font-size: torem(20px);
         line-height: torem(26px);
         overflow: hidden;
+
         p:first-child {
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
         }
 

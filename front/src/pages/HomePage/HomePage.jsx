@@ -71,8 +71,8 @@ function HomePage({ userRole }) {
       return formattedText.join('');
     }
     const chunkedText = [];
-    const isShortText = textMass.length <= 6;
-    const wordsPerLine = isShortText ? 2 : 3;
+    const isShortText = textMass.length <= 5;
+    const wordsPerLine = isShortText ? 2 : 100;
 
     for (let i = 0; i < textMass.length; i += wordsPerLine) {
       chunkedText.push(textMass.slice(i, i + wordsPerLine).join(' '));
