@@ -6,7 +6,7 @@ export default class ParticipantOfReport extends Model {
         ParticipantOfReport.init(
             {
                 id: { type: DataTypes.UUID, primaryKey: true },
-                organization: { type: DataTypes.STRING, allowNull: true },
+                organization: { type: DataTypes.STRING(200), allowNull: true },
                 status: { type: DataTypes.ENUM('Участник', 'Студент', 'Аспирант', 'Не выбрано'), allowNull: false, defaultValue: 'Не выбрано' },
                 form: { type: DataTypes.ENUM('Очно', 'Заочно', 'Не выбрано'), allowNull: false, defaultValue: 'Не выбрано' },
                 who: {type: DataTypes.ENUM('Автор', 'Соавтор'), allowNull: false, defaultValue: 'Автор' },

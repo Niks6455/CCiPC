@@ -6,8 +6,8 @@ export default class Report extends Model {
         Report.init(
             {
                 id: { type: DataTypes.UUID, primaryKey: true },
-                name: { type: DataTypes.STRING, allowNull: false, unique: 'name' },
-                comment: { type: DataTypes.STRING, allowNull: false },
+                name: { type: DataTypes.STRING(300), allowNull: false, unique: 'name' },
+                comment: { type: DataTypes.TEXT, allowNull: false },
             },
             {
                 sequelize,

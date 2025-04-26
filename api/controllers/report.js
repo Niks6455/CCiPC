@@ -17,6 +17,10 @@ export default {
         if(!comment) throw new AppErrorMissing('comment')
         if(!conferenceId) throw new AppErrorMissing('conferenceId')
 
+        if(comment.length > 300) throw new AppErrorInvalid('comment')
+        if(organization.length > 200) throw new AppErrorInvalid('organization')
+        if(name.length > 300) throw new AppErrorInvalid('name')
+
         if(!statusReport.includes(status)) throw new AppErrorInvalid('status')
         if(!formReport.includes(form)) throw new AppErrorInvalid('form')
         if(coAuthors?.length > 0 && !checkValidate(coAuthors)) throw new AppErrorInvalid('coAuthors')
@@ -28,6 +32,10 @@ export default {
 
     async update({body: { name, organization, form, status,  comment, coAuthors, coAuthorsIds,directionId }, params: { id }, user }, res) {
         if(!id) throw new AppErrorMissing('id')
+
+        if(comment && comment.length > 300) throw new AppErrorInvalid('comment')
+        if(organization && organization.length > 200) throw new AppErrorInvalid('organization')
+        if(name && name.length > 300) throw new AppErrorInvalid('name')
 
         if(status && !statusReport.includes(status)) throw new AppErrorInvalid('status')
         if(form && !formReport.includes(form)) throw new AppErrorInvalid('form')

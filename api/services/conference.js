@@ -544,6 +544,7 @@ export default {
                 { header: 'Доклад' }
             ];
 
+            let cell=2
 
             for (const report of data1.reports) {
                 const name = report.name
@@ -562,12 +563,11 @@ export default {
                 ])
 
                 worksheet.addRows(rows);
+                worksheet.mergeCells(`K${cell}:K${cell+report.persons.length-1}`);
                 worksheet.addRow([]);
-
+                cell=cell + report.persons.length+1
             }
 
-            // Объединение ячеек для колонки "Доклад"
-            worksheet.mergeCells(`K2:K${data1.reports.length + 1}`);
         });
 
         return workbook;
