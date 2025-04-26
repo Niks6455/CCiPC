@@ -8,6 +8,7 @@ $w3: 480px;
   gap: torem(10px); /* Убираем отступы между элементами */
   max-width: torem(1300px);
   margin: 0 auto;
+
   @media (max-width: $w2) {
     width: 100vw;
     padding: torem(90px) torem(30px);
