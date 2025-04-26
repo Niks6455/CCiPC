@@ -83,7 +83,7 @@ $w3: 480px;
     ul {
       display: flex;
       list-style: none;
-      justify-content: space-between;
+      // justify-content: space-between;
       margin: 3rem 0; /* Отступы сверху и снизу */
       padding: 0;
       width: torem(900px);
@@ -94,6 +94,13 @@ $w3: 480px;
         margin-top: torem(30px);
         margin-bottom: torem(20px);
         margin-left: torem(30px);
+      }
+      li:nth-child(1),
+      li:nth-child(2) {
+        margin-right: torem(60px);
+        @media (max-width: $w2) {
+          margin-right: torem(10px);
+        }
       }
       li {
         display: flex;

@@ -74,75 +74,81 @@ function TopMainInfo() {
                 </div>
                 <div className={styles.mainTopList}>
                   <ul>
-                    <li>
-                      <a
-                        target="_blank"
-                        href={
-                          conference?.files?.PROGRAM
-                            ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
-                            : '#'
-                        }
-                        rel="noreferrer"
-                      >
-                        Программа <br /> конференции
-                      </a>
-                      <a
-                        target="_blank"
-                        href={
-                          conference?.files?.PROGRAM
-                            ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
-                            : '#'
-                        }
-                        className={styles.clicker}
-                        rel="noreferrer"
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        target="_blank"
-                        href={
-                          conference?.files?.LETTER
-                            ? `${server}/${conference?.files?.LETTER[0]?.url}`
-                            : '#'
-                        }
-                        rel="noreferrer"
-                      >
-                        Информационное <br /> письмо
-                      </a>
-                      <a
-                        target="_blank"
-                        href={
-                          conference?.files?.LETTER
-                            ? `${server}/${conference?.files?.LETTER[0]?.url}`
-                            : '#'
-                        }
-                        className={styles.clicker}
-                        rel="noreferrer"
-                      ></a>
-                    </li>
-                    <li>
-                      <a
-                        target="_blank"
-                        href={
-                          conference?.files?.COLLECTION
-                            ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
-                            : '#'
-                        }
-                        rel="noreferrer"
-                      >
-                        Сборник <br /> научных трудов
-                      </a>
-                      <a
-                        target="_blank"
-                        href={
-                          conference?.files?.COLLECTION
-                            ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
-                            : '#'
-                        }
-                        className={styles.clicker}
-                        rel="noreferrer"
-                      ></a>
-                    </li>
+                    {conference?.files?.PROGRAM?.[0]?.url && (
+                      <li>
+                        <a
+                          target="_blank"
+                          href={
+                            conference?.files?.PROGRAM
+                              ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
+                              : '#'
+                          }
+                          rel="noreferrer"
+                        >
+                          Программа <br /> конференции
+                        </a>
+                        <a
+                          target="_blank"
+                          href={
+                            conference?.files?.PROGRAM
+                              ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
+                              : '#'
+                          }
+                          className={styles.clicker}
+                          rel="noreferrer"
+                        ></a>
+                      </li>
+                    )}
+                    {conference?.files?.LETTER?.[0]?.url && (
+                      <li>
+                        <a
+                          target="_blank"
+                          href={
+                            conference?.files?.LETTER
+                              ? `${server}/${conference?.files?.LETTER[0]?.url}`
+                              : '#'
+                          }
+                          rel="noreferrer"
+                        >
+                          Информационное <br /> письмо
+                        </a>
+                        <a
+                          target="_blank"
+                          href={
+                            conference?.files?.LETTER
+                              ? `${server}/${conference?.files?.LETTER[0]?.url}`
+                              : '#'
+                          }
+                          className={styles.clicker}
+                          rel="noreferrer"
+                        ></a>
+                      </li>
+                    )}
+                    {conference?.files?.COLLECTION?.[0]?.url && (
+                      <li>
+                        <a
+                          target="_blank"
+                          href={
+                            conference?.files?.COLLECTION
+                              ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                              : '#'
+                          }
+                          rel="noreferrer"
+                        >
+                          Сборник <br /> научных трудов
+                        </a>
+                        <a
+                          target="_blank"
+                          href={
+                            conference?.files?.COLLECTION
+                              ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                              : '#'
+                          }
+                          className={styles.clicker}
+                          rel="noreferrer"
+                        ></a>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </Layout>

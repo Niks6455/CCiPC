@@ -120,6 +120,7 @@ header {
     z-index: 10000;
     @media (max-width: $w2) {
       top: 0;
+      left: torem(15px);
     }
     @media (max-width: $w3) {
       display: none;

@@ -93,7 +93,7 @@ function DocumentsModule({ data, setData }) {
                   logoHeader={
                     typeof data[item.key]?.url === 'string' && `${server}/${data[item.key]?.url}`
                   }
-                  fileSize={50}
+                  fileSize={250}
                   data={data[item.key]?.url}
                   itemKey={item.key}
                   setData={funChangeData}

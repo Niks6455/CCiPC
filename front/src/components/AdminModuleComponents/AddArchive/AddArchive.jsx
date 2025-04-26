@@ -1,8 +1,6 @@
 import styles from './AddArchive.module.scss';
-import addPhoto from '@assets/img/AdminPanel/addPhoto.svg';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import FileComponent from '../FileComponent/FileComponent';
-import borderIcon from '@assets/img/AdminPanel/borderFile.svg';
 import { useEffect, useRef, useState } from 'react';
 import { createArchive, uploadPhoto } from '../../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
