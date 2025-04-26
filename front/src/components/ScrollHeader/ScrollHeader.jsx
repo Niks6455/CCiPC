@@ -12,7 +12,7 @@ function ScrollHeader({ userRole }) {
 
   const navi = [
     {
-      name: 'Админ панель',
+      name: 'Панель администратора',
       path: '/adminPage/news',
       active: userRole === 1,
     },

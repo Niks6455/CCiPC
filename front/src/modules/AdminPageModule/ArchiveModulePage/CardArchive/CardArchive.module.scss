@@ -1,12 +1,11 @@
 .CardOrganization {
-  width: torem(362px);
+  width: torem(354px);
   height: torem(579px);
   background-color: #fff;
   border-radius: torem(30px);
   position: relative;
   padding: torem(20px);
   box-sizing: border-box;
-
   .CardOrganizationInner {
     display: flex;
     flex-direction: column;
