@@ -17,11 +17,11 @@ const schemaNews = {
 
 
 function validateTitle(title) {
-  return title.length >= 2 && title.length <= 255
+  return title.length >= 2 && title.length <= 100
 }
 
 function validateDescription(description) {
-  return description.length >= 2 && description.length <= 1200
+  return description.length >= 2 && description.length <= 750
 }
 
 const validate = ajv.compile(schemaNews)
