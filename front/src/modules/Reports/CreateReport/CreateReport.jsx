@@ -8,7 +8,6 @@ import InputListForma from '../../../components/InputListForma/InputListForma';
 import { useNavigate } from 'react-router-dom';
 import FileComponent from '../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { server } from '../../../apirequests/apirequests';
-import { decodeText } from '../../../utils/functions/funcions';
 import { funGetError, funValidateAll } from './functions';
 import arrow from '@assets/img/UI/download.svg';
 

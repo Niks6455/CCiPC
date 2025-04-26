@@ -1,10 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import styles from './CardCollections.module.scss';
-import { updateArchive, deleteArchive, uploadPhoto, apiDeleteMulti } from '../../../../apirequests/apirequests';
+import {
+  updateArchive,
+  deleteArchive,
+  uploadPhoto,
+  apiDeleteMulti,
+} from '../../../../apirequests/apirequests';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import closeIcon from '@assets/img/closeBack.svg';
-import { decodeName } from '../../../../utils/functions/funcions';
 
 function CardCollections(props) {
   const fileInputRef = useRef(null);
@@ -20,12 +24,12 @@ function CardCollections(props) {
     setDefaultValue({
       name: props?.item?.name || '',
       file: props?.item?.file,
-      fileName: props?.item?.file ? decodeName(props?.item?.file?.name) : '',
+      fileName: props?.item?.file ? props?.item?.file?.name : '',
     });
     setDataItem({
       name: props?.item?.name || '',
       file: props?.item?.file,
-      fileName: props?.item?.file ? decodeName(props?.item?.file?.name) : '',
+      fileName: props?.item?.file ? props?.item?.file?.name : '',
     });
     setErrorText('');
   }, [props.item]);
@@ -72,13 +76,13 @@ function CardCollections(props) {
   };
 
   const handleDeleteFile = () => {
-    apiDeleteMulti({ids: [dataItem?.file?.id]}).then(res => {
-      if(res?.status === 200) {
+    apiDeleteMulti({ ids: [dataItem?.file?.id] }).then(res => {
+      if (res?.status === 200) {
         setDataItem(prev => ({ ...prev, file: null, fileName: '' }));
         fileInputRef.current.value = null;
         props.updateData();
       }
-    })
+    });
   };
 
   const handleCancel = () => {
@@ -103,8 +107,8 @@ function CardCollections(props) {
           formData.append('archiveId', props.item.id);
           await uploadPhoto(formData, 'COLLECTION_ARCHIVE');
         }
-        if(deleteIds.length > 0) {
-          apiDeleteMulti({ids: deleteIds})
+        if (deleteIds.length > 0) {
+          apiDeleteMulti({ ids: deleteIds });
         }
         props.updateData();
       }
@@ -118,7 +122,7 @@ function CardCollections(props) {
       if (res?.status === 200) {
         props.updateData();
       }
-    })
+    });
     setIsChanged(true);
   };
 
