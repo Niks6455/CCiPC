@@ -1,5 +1,9 @@
 .OrgWznosModuleAdminPage {
   width: calc(100vw - torem(470px));
+  img {
+    width: torem(24px);
+    height: torem(24px);
+  }
   h1 {
     font-family: Overpass, sans-serif;
     font-weight: 500;

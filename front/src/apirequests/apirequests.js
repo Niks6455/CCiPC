@@ -199,6 +199,7 @@ export const createNews = async data => {
     return response;
   } catch (error) {
     console.log('apiCreateReport ', error);
+    return error;
   }
 };
 

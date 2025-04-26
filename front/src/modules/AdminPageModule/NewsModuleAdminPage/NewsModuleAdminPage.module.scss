@@ -9,6 +9,10 @@
     .NewsTopMenu {
       display: flex;
       justify-content: space-between;
+      img {
+        width: torem(24px);
+        height: torem(24px);
+      }
       .NewsTopMenuinput {
         display: flex;
         position: relative;
@@ -16,6 +20,8 @@
           position: absolute;
           top: torem(14px);
           left: torem(15px);
+          width: torem(24px);
+          height: torem(24px);
         }
         input {
           width: torem(412px);

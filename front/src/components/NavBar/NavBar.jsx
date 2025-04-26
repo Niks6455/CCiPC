@@ -276,7 +276,7 @@ function NavBar(props) {
                 </li>
               )}
             </ul>
-            <div className={styles.RightMenuText}>
+            {/* <div className={styles.RightMenuText}>
               {stages?.length > 0 &&
                 stages.map((item, index) => (
                   <div key={index} className={styles.RightMenuTextCont}>
@@ -284,7 +284,7 @@ function NavBar(props) {
                     <p>{item.name}</p>
                   </div>
                 ))}
-            </div>
+            </div> */}
           </div>
         </div>
       </section>

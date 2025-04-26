@@ -2,7 +2,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
+  img {
+    width: torem(24px);
+    height: torem(24px);
+  }
   .left_block {
     display: flex;
     width: torem(412px);

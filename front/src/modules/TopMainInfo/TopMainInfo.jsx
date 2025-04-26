@@ -185,67 +185,79 @@ function TopMainInfo() {
       <div className={styles.TopMainInfoMobile_comtainer}>
         <Button text={'Подать заявку'} funClick={funClickRequest} />
         <div className={styles.programm_container}>
-          <div className={styles.item}>
-            <a
-              target="_blank"
-              href={
-                conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : '#'
-              }
-              rel="noreferrer"
-            >
-              Программа конференции
-            </a>
-            <a
-              target="_blank"
-              href={
-                conference?.files?.PROGRAM ? `${server}/${conference?.files?.PROGRAM[0]?.url}` : '#'
-              }
-              className={styles.clicker}
-              rel="noreferrer"
-            ></a>
-          </div>
-          <div className={styles.item}>
-            <a
-              target="_blank"
-              href={
-                conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : '#'
-              }
-              rel="noreferrer"
-            >
-              Информационное письмо
-            </a>
-            <a
-              target="_blank"
-              href={
-                conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : '#'
-              }
-              className={styles.clicker}
-              rel="noreferrer"
-            ></a>
-          </div>
-          <div className={styles.item}>
-            <a
-              target="_blank"
-              href={
-                conference?.files?.COLLECTION
-                  ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
-                  : '#'
-              }
-              rel="noreferrer"
-            >
-              Сборник научных трудов
-            </a>
-            <a
-              target="_blank"
-              href={
-                conference?.files?.COLLECTION
-                  ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
-                  : '#'
-              }
-              className={styles.clicker}
-              rel="noreferrer"
-            ></a>
-          </div>
+          {conference?.files?.PROGRAM?.[0]?.url && (
+            <div className={styles.item}>
+              <a
+                target="_blank"
+                href={
+                  conference?.files?.PROGRAM
+                    ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
+                    : '#'
+                }
+                rel="noreferrer"
+              >
+                Программа конференции
+              </a>
+              <a
+                target="_blank"
+                href={
+                  conference?.files?.PROGRAM
+                    ? `${server}/${conference?.files?.PROGRAM[0]?.url}`
+                    : '#'
+                }
+                className={styles.clicker}
+                rel="noreferrer"
+              ></a>
+            </div>
+          )}
+
+          {conference?.files?.LETTER?.[0]?.url && (
+            <div className={styles.item}>
+              <a
+                target="_blank"
+                href={
+                  conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : '#'
+                }
+                rel="noreferrer"
+              >
+                Информационное письмо
+              </a>
+              <a
+                target="_blank"
+                href={
+                  conference?.files?.LETTER ? `${server}/${conference?.files?.LETTER[0]?.url}` : '#'
+                }
+                className={styles.clicker}
+                rel="noreferrer"
+              ></a>
+            </div>
+          )}
+
+          {conference?.files?.COLLECTION?.[0]?.url && (
+            <div className={styles.item}>
+              <a
+                target="_blank"
+                href={
+                  conference?.files?.COLLECTION
+                    ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                    : '#'
+                }
+                rel="noreferrer"
+              >
+                Сборник научных трудов
+              </a>
+              <a
+                target="_blank"
+                href={
+                  conference?.files?.COLLECTION
+                    ? `${server}/${conference?.files?.COLLECTION[0]?.url}`
+                    : '#'
+                }
+                className={styles.clicker}
+                rel="noreferrer"
+              ></a>
+            </div>
+          )}
         </div>
       </div>
     </>

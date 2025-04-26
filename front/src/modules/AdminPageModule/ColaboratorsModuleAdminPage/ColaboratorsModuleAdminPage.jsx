@@ -31,14 +31,18 @@ function ColaboratorsModuleAdminPage() {
   //! поиск по всем полям
   useEffect(() => {
     if (shearchParam.trim() !== '') {
-      const filteredData = originalData.filter(item =>
-        Object.values(item).some(value =>
-          value.toString().toLowerCase().includes(shearchParam.toLowerCase()),
-        ),
-      );
-      setTableData(filteredData);
+      const filteredData = originalData.filter(item => {
+        // Create a copy of the item without the id for searching
+        const { id, ...searchableItem } = item;
+        const flattenedValues = Object.values(searchableItem).flat();
+        console.log('flattenedValues', flattenedValues);
+        return Object.values(flattenedValues).some(value => {
+          return value.trim().toString().toLowerCase().includes(shearchParam.toLowerCase().trim());
+        });
+      });
+      setTableData(filteredData); // Set the filtered data with id
     } else {
-      setTableData([...originalData]); // Сбрасываем фильтр
+      setTableData(originalData); // Reset to original data with id
     }
   }, [shearchParam, originalData]);
 

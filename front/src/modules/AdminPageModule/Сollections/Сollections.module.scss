@@ -5,6 +5,10 @@
     margin-bottom: torem(40px);
     color: #333;
   }
+  img {
+    width: torem(24px);
+    height: torem(24px);
+  }
   .ButtonAddContainer {
     display: flex;
     justify-content: end;
@@ -17,7 +21,7 @@
       height: torem(52px);
       width: torem(280px);
       position: relative;
-      left:  torem(-52px);
+      left: torem(-52px);
     }
   }
   .orgCargCont {

@@ -93,7 +93,7 @@
     .border_inner {
       width: 100%;
       height: torem(420px);
-      border: torem(2px) dashed var(--InputTextColor);
+      border: torem(2px) dashed var(--InputTextColor) !important;
       border-radius: torem(10px);
       box-sizing: border-box;
     }
@@ -120,6 +120,8 @@
         border: torem(1px) solid var(--ErrorColor);
         img {
           margin-left: torem(10px);
+          width: torem(24px);
+          height: torem(24px);
         }
       }
     }

@@ -5,6 +5,10 @@
     margin-bottom: torem(40px);
     color: #333;
   }
+  img {
+    width: torem(24px);
+    height: torem(24px);
+  }
   .ArchiveModuleTitle {
     display: flex;
     justify-content: space-between;
@@ -24,7 +28,7 @@
       width: torem(280px);
       margin-bottom: torem(25px);
       position: relative;
-      left:  torem(-52px);
+      left: torem(-52px);
     }
   }
   .orgCargCont {
