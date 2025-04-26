@@ -91,9 +91,7 @@ const multiStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     // Use the original file name
-    if (file.fieldname === "ORGANIZATION" || file.fieldname === "PARTNER")
-      return cb(null, uuidv4() + path.extname(file.originalname).toLowerCase());
-      cb(null,  Buffer.from(file.originalname, 'latin1').toString('utf8'));
+    cb(null, uuidv4() + path.extname(file.originalname).toLowerCase());
   },
 });
 
@@ -141,8 +139,7 @@ const storage = multer.diskStorage({
     }
   },
   filename: (req, file, cb) => {
-    if(req.query.type === 'COMMITTEE') return cb(null, uuidv4() + path.extname(file.originalname).toLowerCase());
-    cb(null,  Buffer.from(file.originalname, 'latin1').toString('utf8'));
+    cb(null, uuidv4() + path.extname(file.originalname).toLowerCase());
   },
 });
 
