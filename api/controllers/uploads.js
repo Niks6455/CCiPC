@@ -141,6 +141,7 @@ const storage = multer.diskStorage({
     }
   },
   filename: (req, file, cb) => {
+    if(req.query.type === 'COMMITTEE') return cb(null, uuidv4() + path.extname(file.originalname).toLowerCase());
     cb(null,  Buffer.from(file.originalname, 'latin1').toString('utf8'));
   },
 });
