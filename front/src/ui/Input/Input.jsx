@@ -132,6 +132,7 @@ function Input(props) {
         className={`${props?.error ? styles.errorInput : ''} ${props?.imgSrc && !props?.value ? styles.padding_left : ''}`}
         type={props.type || 'text'}
         autoComplete={props.autoComplete ? props.autoComplete : 'on'}
+        readOnly={props.readOnly || false}
       />
       {props?.value && !props?.error && (
         <div className={styles.placeholderClose}>{props?.placeholder}</div>

@@ -66,6 +66,20 @@
           background-color: #1ce99633;
           transition: all 0.2s linear;
         }
+        .trash {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: none;
+          border: none;
+          margin: auto;
+          cursor: pointer;
+          @include HoverActiveOpasity;
+          img {
+            width: torem(24px);
+            height: torem(24px);
+          }
+        }
       }
     }
 

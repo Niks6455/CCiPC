@@ -293,6 +293,7 @@ function ProfileEditing() {
                     placeholder=""
                     error={errors[item.title]}
                     labelText={item.name}
+                    readOnly={item.readOnly}
                   />
                 </div>
               ),

@@ -8,6 +8,8 @@ $w3: 480px;
   justify-content: space-between;
   min-height: 100vh;
   .LksContainer {
+    display: flex;
+    justify-content: center;
     width: calc(100vw - torem(620px));
     @include maxMinContent();
     padding: torem(50px) torem(80px);

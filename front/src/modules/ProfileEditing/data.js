@@ -42,6 +42,7 @@ export const inputsData = [
     list: null,
     type: 'email',
     disabled: true,
+    readOnly: true,
   },
   {
     id: '8',

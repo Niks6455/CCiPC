@@ -21,12 +21,12 @@ function ColaboratorsModuleAdminPage() {
   });
 
   useEffect(() => {
-    if (qery.data?.data) {
+    if (qery?.data?.data) {
       const deepCopy = JSON.parse(JSON.stringify(qery.data.data.participants));
       setTableData([...deepCopy]);
       setOriginalData([...deepCopy]);
     }
-  }, [qery.data]);
+  }, [qery?.data]);
 
   //! поиск по всем полям
   useEffect(() => {
@@ -76,6 +76,8 @@ function ColaboratorsModuleAdminPage() {
         tableData={tableData}
         setTableData={setTableData}
         direction={direction}
+        setOriginalData={setOriginalData}
+        originalData={originalData}
       />
     </section>
   );

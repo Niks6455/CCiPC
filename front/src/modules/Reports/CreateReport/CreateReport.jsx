@@ -25,7 +25,7 @@ function CreateReport({ edit }) {
       const response = await fetch(`${server}/${conference?.files?.SAMPLE?.[0].url}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      const name = decodeText(conference?.files?.SAMPLE?.[0].name);
+      const name = conference?.files?.SAMPLE?.[0].name;
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = name || 'default_filename.ext'; // Файл точно сохранится с этим именем

@@ -23,6 +23,10 @@ export const tableHeader = [
     name: 'Доклад',
     key: 'name',
   },
+  {
+    name: '',
+    key: 'action',
+  },
 ];
 
 // export const testData = [

@@ -1,0 +1,62 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
+.ModalDeleteReportAdmin_blur {
+  @include PopupBlur;
+}
+
+.ModalDeleteReportAdmin {
+  @include PopupContainer;
+  padding: torem(70px);
+  height: -webkit-max-content;
+  height: -moz-max-content;
+  height: max-content;
+  @media (max-width: $w2) {
+    width: 60vw;
+  }
+  @media (max-width: $w3) {
+    width: calc(100vw - torem(40px));
+    padding: torem(70px) torem(30px);
+  }
+  .title {
+    font-family: Overpass, sans-serif;
+    font-size: torem(20px);
+    font-weight: 500;
+    line-height: torem(26px);
+    text-align: center;
+    text-underline-position: from-font;
+    -webkit-text-decoration-skip-ink: none;
+    text-decoration-skip-ink: none;
+    margin-bottom: torem(40px);
+  }
+  .btnred {
+    @include ButtonGreen;
+    width: torem(310px);
+    height: torem(54px);
+    margin: 0 auto;
+    @media (max-width: $w3) {
+      font-size: torem(16px);
+      width: auto;
+      padding: 0 torem(40px);
+    }
+  }
+  .galka {
+    width: torem(80px);
+    height: torem(80px);
+    margin: 0 auto;
+    margin-bottom: torem(40px);
+  }
+
+  .btns {
+    display: flex;
+    button:first-child {
+      @include ButtonCancel;
+      margin-right: torem(20px);
+    }
+    button {
+      width: max-content;
+      padding: 0 torem(60px);
+    }
+  }
+}

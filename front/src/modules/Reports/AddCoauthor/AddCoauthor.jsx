@@ -48,6 +48,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const conferenceId = useSelector(state => state.conferences?.data[0]?.id);
   const conference = useSelector(state => state.conferences.data[0]);
   const directions = useSelector(state => state.conferences.data[0]?.directions);
+  const user = useSelector(state => state.user.user.data);
   const [errorModal, setErrorModal] = useState(false);
   const [errorsCoauthor, setErrorsCoauthor] = useState([]);
 
@@ -352,6 +353,65 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     // dispatch(setCoauthorDataApi({ index, data: { [key]: value } }));
   };
 
+  const funGetErrorModal = (soauthtor, index, inp) => {
+    const coAuthorEmail = soauthtor.data?.email;
+    const coAuthorsWithSameEmail = report?.data?.soauthors?.filter(
+      it => it.data.email === coAuthorEmail,
+    );
+    const firstCoAuthorIndex =
+      coAuthorsWithSameEmail.length > 0
+        ? report.data.soauthors.findIndex(it => it.data.email === coAuthorEmail)
+        : -1;
+
+    if (
+      !soauthtor.data?.id &&
+      coAuthorEmail &&
+      coAuthorsWithSameEmail.length > 1 &&
+      index > firstCoAuthorIndex // Check if the current index is greater than the first found index
+    ) {
+      return (
+        <div className={styles.modalEmail}>
+          <p>Данный пользователь уже является соавтором этого доклада.</p>
+          <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
+            <span>Удалить</span>
+          </button>
+        </div>
+      );
+    }
+    if (!soauthtor.data?.id && soauthtor?.data?.email === user?.email) {
+      return (
+        <div className={styles.modalEmail}>
+          <p>Вы уже являетесь автором данного доклада.</p>
+          <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
+            <span>Удалить</span>
+          </button>
+        </div>
+      );
+    }
+    if (soauthtor.autocompletion === 'noemail') {
+      return (
+        <div className={styles.modalEmail}>
+          <p>
+            Пользователь с такой почтой не найден на платформе. Необходимо внести данные о соавторе
+            вручную.
+          </p>
+          <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
+        </div>
+      );
+    }
+    if (soauthtor.autocompletion === 'emailhave') {
+      return (
+        <div className={styles.modalEmail}>
+          <p>
+            Пользователь с такой почтой найден на платформе. Данные о соавторе заполнятся
+            автоматически, кроме его формы участия.
+          </p>
+          <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
+        </div>
+      );
+    }
+  };
+
   return (
     <div className={styles.AddCoauthor}>
       <ErrorModal title="Срок подачи докладов истек!" open={errorModal} close={setErrorModal} />
@@ -480,37 +540,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                     errorShow={true}
                     readOnly={!!soauthtor?.data?.id}
                   />
-                  {!soauthtor.data?.id &&
-                  report?.data?.soauthors?.filter(it => it.data.email === soauthtor.data?.email)
-                    ?.length > 1 ? (
-                    <div className={styles.modalEmail}>
-                      <p>Данный пользователь уже является соавтором этого доклада.</p>
-                      <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
-                        <span>Удалить</span>
-                      </button>
-                    </div>
-                  ) : (
-                    <>
-                      {soauthtor.autocompletion === 'noemail' && (
-                        <div className={styles.modalEmail}>
-                          <p>
-                            Пользователь с такой почтой не найден на платформе. Необходимо внести
-                            данные о соавторе вручную.
-                          </p>
-                          <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
-                        </div>
-                      )}
-                      {soauthtor.autocompletion === 'emailhave' && (
-                        <div className={styles.modalEmail}>
-                          <p>
-                            Пользователь с такой почтой найден на платформе. Данные о соавторе
-                            заполнятся автоматически, кроме его формы участия.
-                          </p>
-                          <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
-                        </div>
-                      )}
-                    </>
-                  )}
+                  {funGetErrorModal(soauthtor, index, inp)}
                 </div>
               ))}
 

@@ -48,7 +48,7 @@ function DeleteAccount() {
       ) : (
         <div>
           <p className={style.nodelete}>
-            Удалить акаунт можно после <br /> завершения конференции!
+            Удалить аккаунт можно после <br /> завершения конференции!
           </p>
           <div className={style.nodeleteImg}>
             <img src={circleRed} alt=":(" />
