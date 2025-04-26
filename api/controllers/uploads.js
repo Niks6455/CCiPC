@@ -146,7 +146,7 @@ const storage = multer.diskStorage({
 const uploader = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 51145728 },
+  limits: { fileSize: 262144000 },
 }).single("file");
 const multiUploader = multer({
   storage: multiStorage,
