@@ -1,4 +1,4 @@
-import { tableHead } from './data.js';
+import { tableHead, tableHeadAdmin } from './data.js';
 import UniversalTable from '../../components/UniversalTable/UniversalTable';
 import styles from './Participants.module.scss';
 import { useEffect, useState } from 'react';
@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux';
 import TableDataAll from '../../components/TableDataAll/TableDataAll.jsx';
 import { getConferencesParticipants } from '../../apirequests/apirequests.js';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone.jsx';
-function Participants() {
+function Participants({ userRole }) {
+  const thead = userRole === 1 ? tableHeadAdmin : tableHead;
   const [filter, setFilter] = useState('');
   const [filteredTable, setFilteredTable] = useState([]);
   const store = useSelector(state => state.participants);
@@ -67,7 +68,7 @@ function Participants() {
                 />
               </div>
             </div>
-            <UniversalTable tableHeader={tableHead} tableBody={filteredTable} />
+            <UniversalTable tableHeader={thead} tableBody={filteredTable} />
           </div>
         </div>
       </main>
