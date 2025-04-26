@@ -46,7 +46,7 @@ export default {
     // Получаем файлы конференции и группируем их по типу
     conference.files = Object.fromEntries(
       Object.entries(
-        conference.filesInConference.reduce((acc, a) => {
+        conference?.filesInConference.reduce((acc, a) => {
           // Проверяем, существует ли уже тип в аккумуляторе
           const entry = Object.entries(typesFiles).find(
             ([key, val]) => val === a.type
