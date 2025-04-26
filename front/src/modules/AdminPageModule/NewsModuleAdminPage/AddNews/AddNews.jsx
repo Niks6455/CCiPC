@@ -57,6 +57,16 @@ function AddNews(props) {
     let isValid = true;
     const newError = { title: '', text: '', file: '' };
 
+    if (title.length < 2) {
+      newError.title = 'Не менее двух символов.';
+      isValid = false;
+    }
+
+    if (text.length < 10) {
+      newError.text = 'Не менее десяти символов.';
+      isValid = false;
+    }
+
     if (!title) {
       newError.title = 'Заголовок новости не может быть пустым.';
       isValid = false;
@@ -64,16 +74,6 @@ function AddNews(props) {
 
     if (!text) {
       newError.text = 'Текст новости не может быть пустым.';
-      isValid = false;
-    }
-
-    if (title.length < 2) {
-      newError.title = 'Не менее двух символов.';
-      isValid = false;
-    }
-
-    if (text.length < 2) {
-      newError.text = 'Не менее двух символов.';
       isValid = false;
     }
 

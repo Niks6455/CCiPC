@@ -32,7 +32,7 @@ import OrgazmCommetet from './modules/AdminPageModule/OrgazmCommetet/OrgazmComme
 import NewsModuleAdminPage from './modules/AdminPageModule/NewsModuleAdminPage/NewsModuleAdminPage';
 import ConfirenceModuleAdminPage from './modules/AdminPageModule/ConfirenceModuleAdminPage/ConfirenceModuleAdminPage';
 import OrgWznosModuleAdminPage from './modules/AdminPageModule/OrgWznosModuleAdminPage/OrgWznosModuleAdminPage';
-import { disResetConferences, fetchConferences } from './store/conferencesSlice/conferences.Slice';
+import { fetchConferences } from './store/conferencesSlice/conferences.Slice';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import EnteringEmail from './modules/RecoverPasswordModule/EnteringEmail/EnteringEmail';
 import RecoverPassword from './modules/RecoverPasswordModule/RecoverPassword/RecoverPassword';
@@ -135,7 +135,7 @@ function App() {
                     element={<ConfirmLogin funGetAllApi={funGetAllApi} />}
                   ></Route>
                 </Route>
-                <Route path="/participants" element={<Participants />}></Route>
+                <Route path="/participants" element={<Participants userRole={userRole} />}></Route>
                 <Route
                   path="/account"
                   element={<ProtectedRoute element={<Lks footerRef={footerRef} />} />}
