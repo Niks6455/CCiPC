@@ -41,7 +41,7 @@ function Header({ userRole }) {
           <ul>
             {userRole === 1 && (
               <li onClick={() => navigate('/adminPage/news')}>
-                Админ панель{' '}
+                Панель администратора{' '}
                 <span className={styles.arowLi}>
                   <img src={ArrowMenu} alt="Arrow" />
                 </span>

@@ -1,6 +1,6 @@
 .AddCollectioonsCard {
   background-color: #fff;
-  width: torem(494px);
+  width: torem(478px);
   height: torem(320px);
   padding: torem(20px);
   box-sizing: border-box;
@@ -63,8 +63,7 @@
     position: absolute;
     bottom: torem(20px);
     display: grid;
-
-    grid-template-columns: torem(375px) torem(80px);
+    grid-template-columns: torem(345px) torem(80px);
     .save {
       @include ButtonGreen();
       height: torem(54px);

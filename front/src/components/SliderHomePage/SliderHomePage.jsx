@@ -29,6 +29,22 @@ const SliderHomePage = () => {
     return currentSlide % 2 === 0 ? 'chet' : 'nechet';
   };
 
+  const getTitle = (title) => {
+    if(title.length > 50) {
+      return title.substring(0, 50) + '...';
+    }else{
+      return title
+    }
+  }
+
+  const getDescriptions = (desc) => {
+    if(desc.length > 550) {
+      return desc.substring(0, 550) + '...';
+    }else{
+      return desc
+    }
+  }
+
   const navigate = useNavigate();
   return (
     <div className={styles.SliderHomePage}>
@@ -47,13 +63,13 @@ const SliderHomePage = () => {
                   <p
                     className={styles.SliderTitle}
                     dangerouslySetInnerHTML={{
-                      __html: slides[currentSlide].title,
+                      __html: getTitle(slides[currentSlide].title),
                     }}
                   ></p>
                   <p
                     className={styles.SliderText}
                     dangerouslySetInnerHTML={{
-                      __html: slides[currentSlide].description,
+                      __html: getDescriptions(slides[currentSlide].description),
                     }}
                   ></p>
                 </div>

@@ -27,6 +27,7 @@ export default {
                     model: Report,
                     as: 'reports',
                     required: false,
+                    order: [['createdAt', 'ASC']],
                     include: {
                         model: ParticipantOfReport,
                         as: 'participantOfReport',

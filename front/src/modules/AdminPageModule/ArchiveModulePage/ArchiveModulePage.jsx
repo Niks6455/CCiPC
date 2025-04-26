@@ -29,7 +29,7 @@ function ArchiveModulePage() {
         <div>
           <button onClick={() => setAddAlbom(true)} className={styles.ButtonAdd}>
             <img src={plusLigthImg} alt="Добавить" />
-            Добавить Альбом
+            Добавить альбом
           </button>
         </div>
       </div>

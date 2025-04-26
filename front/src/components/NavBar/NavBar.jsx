@@ -127,7 +127,6 @@ function NavBar(props) {
       </>
       <section className={styles.NavBar}>
         <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
-          <p>Меню</p>
           <div className={styles.NavBarMenu}>
             <span></span>
             <span></span>
@@ -270,7 +269,7 @@ function NavBar(props) {
                     context.setActiveMenu(false);
                   }}
                 >
-                  Админ панель{' '}
+                  Панель администратора{' '}
                   <span className={styles.arowLi}>
                     <img src={ArrowMenu} alt="Arrow" />
                   </span>
