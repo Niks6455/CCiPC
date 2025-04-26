@@ -15,6 +15,7 @@ $w3: 480px;
     padding: torem(50px) torem(80px);
     @media (max-width: $w2) {
       padding: 0;
+      width: 100vw;
     }
     box-sizing: border-box;
     position: relative;

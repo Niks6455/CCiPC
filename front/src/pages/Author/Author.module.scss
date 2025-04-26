@@ -60,6 +60,10 @@ $w4: 480px;
   padding-bottom: torem(10px); // Добавляет небольшой отступ, чтобы скролл не перекрывался
   -webkit-overflow-scrolling: touch; // Улучшает скролл на iOS
   justify-content: center;
+  img {
+    width: torem(24px);
+    height: torem(24px);
+  }
   @include ScrollBar();
   @media (max-width: 890px) {
     gap: torem(15px);

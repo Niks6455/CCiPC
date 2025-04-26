@@ -72,11 +72,11 @@ $w3: 480px;
     flex-direction: column;
     align-items: start;
 
-    &.open .NavBarMenuContainerInner { 
+    &.open .NavBarMenuContainerInner {
       animation: slideIn 0.5s ease-out forwards;
     }
 
-    &.open{
+    &.open {
       animation: opacityOpen 0.3s ease-out forwards;
     }
 
@@ -111,7 +111,7 @@ $w3: 480px;
       align-items: end;
       padding: 0px 20px 15px 20px;
       box-sizing: border-box;
-    
+
       max-height: 90vh;
       overflow-y: auto;
       @include ScrollBar;
@@ -146,6 +146,8 @@ $w3: 480px;
       }
     }
     .NavBarMenuListInnerLi {
+      display: flex;
+      justify-content: center;
       width: 100%;
       img {
         margin-left: 10px;
