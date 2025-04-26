@@ -10,11 +10,8 @@ import { getAllArchiveReport } from '../../apirequests/apirequests.js';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests.js';
-import { decodeFileName, decodeText } from '../../utils/functions/funcions.js';
-import logoHeader from './../../assets/img/logo.png';
 
 function Author({ userRole }) {
-  const navigate = useNavigate();
   const [selectedButton, setSelectedButton] = useState('Registration');
   const [data, setData] = useState([]);
   const conference = useSelector(state => state?.conferences?.data[0]);
@@ -27,7 +24,7 @@ function Author({ userRole }) {
       const response = await fetch(`${server}/${conference?.files?.SAMPLE[0]?.url}`);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
-      const name = decodeText(conference?.files?.SAMPLE[0]?.name);
+      const name = conference?.files?.SAMPLE[0]?.name;
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
       link.download = name || 'default_filename.docx'; // Файл точно сохранится с этим именем

@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styles from './AuthorCollection.module.scss';
 import FolderIcon from '../../assets/img/UI/Folder.svg';
 import { server } from '../../apirequests/apirequests';
-import { decodeFileName } from '../../utils/functions/funcions';
 export default function AuthorCollection({ children, link }) {
   const [isActive, setActive] = useState(false);
   return (

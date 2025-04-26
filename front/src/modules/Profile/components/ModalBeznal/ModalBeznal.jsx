@@ -6,7 +6,6 @@ import { apiUpdateUser } from '../../../../apirequests/apirequests';
 import { fetchUserData } from '../../../../store/userSlice/user.Slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { server } from '../../../../apirequests/apirequests';
-import { decodeFileName } from '../../../../utils/functions/funcions';
 function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
   const dispatch = useDispatch();
   const funPutApiSelf = () => {
