@@ -9,7 +9,7 @@ import {
   updateNews,
   uploadPhoto,
 } from '../../../../apirequests/apirequests';
-import FileComponent from '@components/AdminModuleComponents/FileComponent/FileComponent';
+import FileComponent from '../../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { useDispatch, useSelector } from 'react-redux';
 import trashRed from '@assets/img/AdminPanel/delete.svg';
 import { setSelectNewsData } from '../../../../store/newsSlice/newsSlice';
@@ -134,18 +134,21 @@ function AddNews(props) {
   };
 
   const handleTitleChange = e => {
-    setTitle(e.target.value);
-    if (e.target.value) {
-      setError(prevError => ({ ...prevError, title: '' })); // Очищаем ошибку при изменении
+    const value = e.target.value.slice(0, 100); // Ограничение в 100 символов
+    setTitle(value);
+    if (value) {
+      setError(prevError => ({ ...prevError, title: '' }));
     }
   };
-
+  
   const handleTextChange = e => {
-    setText(e.target.value);
-    if (e.target.value) {
-      setError(prevError => ({ ...prevError, text: '' })); // Очищаем ошибку при изменении
+    const value = e.target.value.slice(0, 750); // Ограничение в 750 символов
+    setText(value);
+    if (value) {
+      setError(prevError => ({ ...prevError, text: '' }));
     }
   };
+  
 
   const funEditPhoto = file => {
     if (file) {
@@ -178,29 +181,35 @@ function AddNews(props) {
       </button>
 
       <div className={styles.addNewsTextAreaOne}>
-        <div className={styles.containerInner}>
-          <label>Заголовок новости</label>
-          <textarea
-            placeholder="Заголовок"
-            value={title}
-            onChange={handleTitleChange} // Используем обработчик для очищения ошибок
-            style={{ borderColor: error.title ? '#B32020' : '' }} // Отображаем ошибку
-          />
-          {error.title && <div className={styles.error}>{error.title}</div>}
-        </div>
+            <div className={styles.containerInner}>
+        <label>Заголовок новости</label>
+        <textarea
+          placeholder="Заголовок"
+          value={title}
+          onChange={handleTitleChange}
+          style={{ borderColor: error.title ? '#B32020' : '' }}
+          maxLength={100}
+        />
+        {error.title && <div className={styles.error}>{error.title}</div>}
+        <div className={styles.counter}>{title.length}/100</div>
+      </div>
+
       </div>
 
       <div className={styles.addNewsTextBlockTwo}>
-        <div className={styles.containerInner}>
-          <label>Текст новости</label>
-          <textarea
-            placeholder="Текст новости"
-            value={text}
-            onChange={handleTextChange} // Используем обработчик для очищения ошибок
-            style={{ borderColor: error.text ? '#B32020' : '' }} // Отображаем ошибку
-          />
-          {error.text && <div className={styles.error}>{error.text}</div>}
-        </div>
+      <div className={styles.containerInner}>
+        <label>Текст новости</label>
+        <textarea
+          placeholder="Текст новости"
+          value={text}
+          onChange={handleTextChange}
+          style={{ borderColor: error.text ? '#B32020' : '' }}
+          maxLength={750}
+        />
+        {error.text && <div className={styles.error}>{error.text}</div>}
+        <div className={styles.counter}>{text.length}/750</div>
+      </div>
+
         <div className={styles.addFile}>
           <label>Фотография для новости</label>
           <div className={styles.file_cont}>
@@ -217,6 +226,7 @@ function AddNews(props) {
                 name={'pngNews'}
                 icon={'png'}
                 text={'Необходимо загрузить<br/> фотографию в формате JPG, PNG'}
+                fileSize={10}
               />
             </div>
           </div>

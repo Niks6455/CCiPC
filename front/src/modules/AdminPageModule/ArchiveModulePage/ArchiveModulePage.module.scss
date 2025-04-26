@@ -23,6 +23,8 @@
       height: torem(52px);
       width: torem(280px);
       margin-bottom: torem(25px);
+      position: relative;
+      left:  torem(-52px);
     }
   }
   .orgCargCont {
@@ -31,11 +33,10 @@
     left: -torem(16px);
     top: -torem(11px);
     .orgCargContCards {
-      margin: torem(11px) torem(16px);
       display: flex;
       flex-wrap: wrap;
       flex-direction: row;
-      gap: torem(32px);
+      gap: torem(16px);
     }
   }
 }

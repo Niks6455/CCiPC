@@ -11,6 +11,7 @@
       font-weight: 500;
       color: #333;
       margin-bottom: torem(25px);
+      margin-top: torem(25px);
     }
     p {
       display: flex;
@@ -44,6 +45,8 @@
         @include ButtonGreen();
         width: torem(290px);
         height: torem(51px);
+        position: relative;
+        left:  torem(-38px);
         img {
           margin-right: torem(8px);
         }
@@ -52,13 +55,11 @@
     .orgCargCont {
       position: relative;
       display: flex;
-      left: torem(-16px);
       .orgCargContCards {
-        margin: torem(11px) torem(16px);
         display: flex;
         flex-wrap: wrap;
         flex-direction: row;
-        gap: torem(32px);
+        gap: torem(16px);
       }
     }
     .orgContInner {
