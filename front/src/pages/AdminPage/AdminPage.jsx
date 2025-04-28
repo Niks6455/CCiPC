@@ -6,6 +6,7 @@ import { useContext } from 'react';
 import DataContext from '../../context';
 import { Outlet } from 'react-router-dom';
 import LeftMenuAdminPage from '../../modules/AdminPageModule/LeftMenuAdminPage/LeftMenuAdminPage';
+import NavBar from '../../components/NavBar/NavBar';
 function AdminPage() {
   const context = useContext(DataContext);
   return (

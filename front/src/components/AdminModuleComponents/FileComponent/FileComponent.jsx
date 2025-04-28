@@ -57,7 +57,7 @@ function FileComponent(props) {
     //! проверка на размер файла
     if (props.fileSize) {
       const maxSizeInBytes = props.fileSize * 1024 * 1024; // 20 MB in bytes
-      if (file && file.size > maxSizeInBytes) {
+      if (file && file.size >= maxSizeInBytes) {
         setErrorSize(true);
         return;
       }

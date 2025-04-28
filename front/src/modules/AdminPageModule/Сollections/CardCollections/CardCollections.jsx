@@ -9,6 +9,9 @@ import {
 } from '../../../../apirequests/apirequests';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import closeIcon from '@assets/img/closeBack.svg';
+import ErrorModal from '../../../../components/ErrorModal/ErrorModal';
+import { motion } from 'framer-motion';
+import SpinnerLoaderGreen from '../../../../components/SpinnerLoaderGreen/SpinnerLoaderGreen';
 
 function CardCollections(props) {
   const fileInputRef = useRef(null);
@@ -19,6 +22,9 @@ function CardCollections(props) {
   const [isChanged, setIsChanged] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [deleteIds, setDeleteIds] = useState([]);
+  const [errorSize, setErrorSize] = useState(false);
+  const [loader, setLoader] = useState(false)
+
   // Убедитесь, что данные обновляются при изменении props.item
   useEffect(() => {
     setDefaultValue({
@@ -69,9 +75,15 @@ function CardCollections(props) {
 
   const handleFileUpload = event => {
     const file = event?.target?.files[0];
-    console.log('file', file);
     if (file) {
-      setDataItem(prev => ({ ...prev, file: file, fileName: file?.name }));
+      const maxSizeInBytes = 200 * 1024 * 1024; // 200 MB in bytes
+      if (file && file.size > maxSizeInBytes) {
+        setErrorSize(true);
+        fileInputRef.current.value = null; 
+        return;
+      }else{
+        setDataItem(prev => ({ ...prev, file: file, fileName: file?.name }));
+      }
     }
   };
 
@@ -97,7 +109,7 @@ function CardCollections(props) {
     }
 
     const data = { name: dataItem.name, type: 1 };
-
+    setLoader(true)
     try {
       const res = await updateArchive(data, props.item.id);
       if (res?.status === 200) {
@@ -111,9 +123,11 @@ function CardCollections(props) {
           apiDeleteMulti({ ids: deleteIds });
         }
         props.updateData();
+        setLoader(false)
       }
     } catch (error) {
       console.error('Ошибка при сохранении:', error);
+      setLoader(false)
     }
   };
 
@@ -162,7 +176,7 @@ function CardCollections(props) {
           </div>
         ) : (
           <button onClick={() => fileInputRef.current.click()} style={{ color: '#b32020' }}>
-            Загрузите PDF-файл
+            Загрузите PDF-файл до 200Мб
           </button>
         )}
         <input
@@ -179,7 +193,7 @@ function CardCollections(props) {
             Отмена
           </button>
           <button className={styles.save} onClick={handleSave}>
-            Сохранить
+            {!loader ?  "Сохранить" :  <SpinnerLoaderGreen/> }
           </button>
         </div>
       ) : (
@@ -187,6 +201,7 @@ function CardCollections(props) {
           Удалить <img src={deletePhotoImg} alt="Удалить" />
         </button>
       )}
+      <ErrorModal open={errorSize} close={setErrorSize} title={"Размер файла превышает 200 Мб!"}/>
     </div>
   );
 }
