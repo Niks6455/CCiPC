@@ -3,17 +3,28 @@ import styles from './AddCollectioonsCard.module.scss';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import { createArchive, uploadPhoto } from '../../../../apirequests/apirequests';
 import closeIcon from '@assets/img/closeBack.svg';
-
+import { motion } from 'framer-motion';
+import ErrorModal from '../../../../components/ErrorModal/ErrorModal';
+import SpinnerLoaderGreen from '../../../../components/SpinnerLoaderGreen/SpinnerLoaderGreen';
 function AddCollectioonsCard(props) {
   const fileInputRef = useRef(null);
   const [fileData, setFileData] = useState(null);
   const [name, setName] = useState('');
   const [errorText, setErrorText] = useState('');
-
+  const [loader, setLoader] = useState(false)
+  const [errorSize, setErrorSize] = useState(false);
   const handleFileChange = event => {
     const file = event.target.files[0];
     if (file) {
-      setFileData(file);
+      const maxSizeInBytes = 200 * 1024 * 1024; // 200 MB in bytes
+      if (file && file.size > maxSizeInBytes) {
+        setErrorSize(true);
+        setFileData(null);
+        fileInputRef.current.value = null; 
+        return;
+      }else{
+        setFileData(file);
+      }
     }
   };
 
@@ -30,6 +41,7 @@ function AddCollectioonsCard(props) {
       setErrorText('Это обязательное поле');
       return;
     }
+    setLoader(true)
     const data = { name, type: 1 };
 
     try {
@@ -55,9 +67,11 @@ function AddCollectioonsCard(props) {
           props.updateData(); // Обновление данных в родительском компоненте
           props.close(); // Закрытие модального окна
         }
+        setLoader(false)
       }
     } catch (error) {
       console.error('Ошибка при создании архива:', error);
+      setLoader(false)
     }
   };
 
@@ -93,10 +107,11 @@ function AddCollectioonsCard(props) {
             accept="application/pdf"
             style={{ display: 'none' }}
             onChange={handleFileChange}
+
           />
           <div className={styles.fileUploadContainer}>
             <button onClick={handleUploadClick} style={{ color: fileData ? '#58B191' : '#b32020' }}>
-              {fileData ? spliseFileName() : 'Загрузите PDF-файл'}
+              {fileData ? spliseFileName() : 'Загрузите PDF-файл до 200Мб'}
             </button>
             {fileData && (
               <button className={styles.removeFile} onClick={removeFile}>
@@ -107,13 +122,14 @@ function AddCollectioonsCard(props) {
         </div>
         <div className={styles.AddCollectioonsCardButton}>
           <button className={styles.save} onClick={createOrg}>
-            Сохранить
+            {!loader ?  "Сохранить" :  <SpinnerLoaderGreen/> }
           </button>
           <button className={styles.delete} onClick={props.close}>
             <img src={deletePhotoImg} alt="Удалить" />
           </button>
         </div>
       </div>
+      <ErrorModal open={errorSize} close={setErrorSize} title={"Размер файла превышает 200 Мб!"}/>
     </div>
   );
 }

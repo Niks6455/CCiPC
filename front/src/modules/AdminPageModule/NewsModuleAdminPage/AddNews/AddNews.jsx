@@ -244,7 +244,7 @@ function AddNews(props) {
                   name={'pngNews'}
                   icon={'png'}
                   text={'Необходимо загрузить<br/> фотографию в формате JPG, PNG'}
-                  fileSize={10}
+                  fileSize={20}
                 />
               </div>
             </div>

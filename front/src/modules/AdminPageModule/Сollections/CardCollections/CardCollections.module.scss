@@ -65,6 +65,9 @@
       @include ButtonGreen();
       width: torem(375px);
       height: torem(54px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .delete {
       @include ButtonRed();
@@ -108,6 +111,9 @@
 
     .save {
       @include ButtonGreen();
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
   .delete {
@@ -152,3 +158,4 @@
     }
   }
 }
+
