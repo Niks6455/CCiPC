@@ -34,7 +34,6 @@ export const models = {
    FileLink
 };
 
-// Подключение к БД с парамтрами из .env
 export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PWD, {
     host: DB_HOST,
     port: DB_PORT,

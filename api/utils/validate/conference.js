@@ -6,14 +6,13 @@ const ajv = new Ajv();
 
 addFormats(ajv);
 
-// Схема для проверки
 const schemaStage = {
     type: "object",
     properties: {
         name: { type: "string" },
         date: {
             type: "string",
-            format: "date"  // Проверка формата даты (YYYY-MM-DD)
+            format: "date"
         },
         type: { type: "number" }
     },
@@ -54,7 +53,7 @@ function checkValidate(objects) {
 
         seenName.add(name);
     }
-    return true; // Дубликатов нет
+    return true;
 }
 
 function checkValidateFee(objects){
@@ -64,7 +63,7 @@ function checkValidateFee(objects){
 
         if(!valid) throw new AppErrorInvalid('fee')
     }
-    return true; // Дубликатов нет
+    return true;
 }
 
 export {

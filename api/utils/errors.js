@@ -11,7 +11,6 @@ const errorStatuses = {
     [errorCodes.NoFileUploaded.errNum]: 400,
 };
 
-// errors for application ui
 export class AppError extends Error {
     constructor(obj, status = null) {
         super(obj.message);
@@ -36,7 +35,6 @@ export class AppError extends Error {
     }
 }
 
-// Отсутствует параметр
 export class AppErrorMissing extends AppError {
     constructor(parameter = 'Some', status, key) {
         super(
@@ -51,7 +49,6 @@ export class AppErrorMissing extends AppError {
     }
 }
 
-// Неправильный параметр (несоответствует проверке)
 export class AppErrorInvalid extends AppError {
     constructor(parameter = 'Some', status, key) {
         super(
@@ -66,21 +63,8 @@ export class AppErrorInvalid extends AppError {
     }
 }
 
-export class AppErrorInvalidReplaceMessage extends AppError {
-    constructor(message = errorCodes.Invalid.message, status, key) {
-        super(
-            {
-                ...errorCodes.Invalid,
-                message,
 
-                key: key ?? toSnakeCase(message).toUpperCase(),
-            },
-            status
-        );
-    }
-}
 
-// Объект уже существует (обычно при создании новых сущностей в БД)
 export class AppErrorAlreadyExists extends AppError {
     constructor(parameter = 'Some', status, key) {
         super(
@@ -95,7 +79,6 @@ export class AppErrorAlreadyExists extends AppError {
     }
 }
 
-// Объект не существует (обычно при запросах к объекту)
 export class AppErrorNotExist extends AppError {
     constructor(parameter = 'Some', status, key) {
         super(
@@ -110,21 +93,6 @@ export class AppErrorNotExist extends AppError {
     }
 }
 
-export class AppErrorDuplicate extends AppError {
-    constructor(field = null, status, key) {
-        super(
-            {
-                ...errorCodes.Duplicate,
-                field,
-
-                key: key ?? `DUPLICATE_${toSnakeCase(field ?? 'some').toUpperCase()}`,
-            },
-            status
-        );
-    }
-}
-
-// Запрещенное действие, нет прав на выполнение
 export class AppErrorForbiddenAction extends AppError {
     constructor(status, key) {
         super(
@@ -159,7 +127,6 @@ export class MultipleError {
     }
 }
 
-// error for developer
 export class SystemError extends Error {
     constructor(status, err) {
         super(err);
@@ -176,7 +143,6 @@ export class SystemError extends Error {
     }
 }
 
-// Позволяет не падать приложению при выбрасывании ошибок
 export function asyncRoute(route) {
     return (req, res, next = console.error) => {
         return Promise.resolve(route(req, res, next)).catch(e => next(e));

@@ -53,28 +53,28 @@ if (app.get('env') === 'production') {
 
 const swaggerOptions = {
     swaggerDefinition: {
-        openapi: '3.0.0', // Версия OpenAPI
+        openapi: '3.0.0',
         info: {
-            title: 'API Documentation', // Заголовок документации
-            version: '1.0.0', // Версия API
-            description: 'API для примера использования Swagger', // Описание
+            title: 'API Documentation',
+            version: '1.0.0',
+            description: 'API для примера использования Swagger',
         },
         components: {
             securitySchemes: {
                 BearerAuth: {
                     type: 'http',
                     scheme: 'Bearer',
-                    bearerFormat: 'JWT', // Формат токена
+                    bearerFormat: 'JWT',
                 },
             },
         },
         servers: [
             {
-                url: 'http://localhost:3000', // URL вашего сервера
+                url: 'http://localhost:3000',
             },
         ],
     },
-    apis: ['./routes/*.js'], // Путь к файлам с аннотациями
+    apis: ['./routes/*.js'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
@@ -85,7 +85,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// ==== on server start functions
 (async function initDb() {
     try {
 
@@ -101,20 +100,16 @@ app.use(cookieParser());
         setTimeout(initDb, 5000);
     }
 })();
-// ====
 
-// CronJob section //
 if (app.get('env') === 'production') {
 
 }
 if (app.get('env') === 'development' || app.get('env') === 'staging') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 }
-// ============== //
 
 app.use(corsMiddleware);
 
-//app.use('/system', systemRoute);
 app.use('/auth', authRoute);
 app.use("/uploads", express.static("./uploads"), uploadsRoute);
 app.use('/reports', reportRoute)
@@ -125,10 +120,8 @@ app.use('/committees', committeeRoute)
 app.use('/archive', archiveRoute)
 app.use('/directions', directionRoute)
 
-// Handle 404 AND 500
 app
     .use((req, res) => res.status(404).json({ type: 'NOT FOUND', code: 404 }))
-    // eslint-disable-next-line no-unused-vars
     .use((error, req, res, next) => {
         if (error instanceof AppError || error instanceof SystemError || error instanceof MultipleError) {
             console.log("err", error)

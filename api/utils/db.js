@@ -4,11 +4,10 @@ import bcrypt from 'bcrypt';
 
 export async function initializeDbModels() {
   for (const model of Object.values(models))
-    if (typeof model.initialize === "function") model.initialize(sequelize);
+  if (typeof model.initialize === "function") model.initialize(sequelize);
   setupAssociations();
   for (const model of Object.values(models)) await model.sync({ alter: true });
 
-  // Логирование, если не в тестовом окружении
   if (process.env.NODE_ENV !== "test") {
     console.log("models initialized");
   }

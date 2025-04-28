@@ -13,17 +13,14 @@ function admin(roles) {
         }
 
         try {
-            // Верифицируем токен и сохраняем результат в локальной переменной
             const userId = jwt.verify(authorization.split(' ')[1]).id;
 
             const admin=await Participant.findByPk(userId)
-
 
             if(!admin) return next(new AppErrorInvalid('not activate', 401));
 
             if (!roles.includes(admin.role))  return next(new AppErrorForbiddenAction());
 
-            // Передаем пользователя через объект `req` в `next()`, не мутируя `req` напрямую
             req.admin=admin
         } catch (e) {
             console.error(e);

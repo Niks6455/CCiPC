@@ -49,5 +49,5 @@ export default function checkValidate(objects) {
         seenEmails.add(email);
 
     }
-    return true; // Дубликатов нет
+    return true;
 }
