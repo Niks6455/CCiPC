@@ -384,6 +384,7 @@ export default {
 
         if(!report) throw new AppErrorInvalid('report')
 
+
         return await report.destroy()
     },
 

@@ -114,15 +114,30 @@ export default {
             where: {
                 participantId: participantId
             },
-            include:{
+            include:[{
                 model: Conference,
                 as: 'conference',
                 required: true,
                 where: {
                     isFinished: false
                 }
-            }
+            },
+                {
+                    model:Participant,
+                    as: 'participant',
+                    required: true,
+                    include: {
+                        model: ParticipantOfReport,
+                        as: 'participantOfReport',
+                        required: true,
+                        where: {
+                            participantId: participantId,
+                        }
+                    }
+                }
+            ]
         })
+
         if(participantInConference.length > 0)  throw new AppErrorInvalid('participant in conference not finished')
 
         return await Participant.destroy({
