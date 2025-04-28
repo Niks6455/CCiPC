@@ -556,9 +556,7 @@ export default {
     for (const file of files) {
       try {
         await fs.promises.unlink(file.url);
-        console.log(`File deleted: ${file.url}`);
       } catch (err) {
-        console.error(`Error deleting file ${file.url}:`, err);
       }
 
       await file.destroy();
