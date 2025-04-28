@@ -411,12 +411,12 @@ function Register() {
           <div className={styles.lineTwo}></div>
         </div>
       </div>
-      <div className={styles.loginButtonSfedu}>
+      {/* <div className={styles.loginButtonSfedu}>
         <button>
           <img src="/img/SfeduLogo.svg" alt="Sfedu Logo" />
           Войти через аккаунт @sfedu
         </button>
-      </div>
+      </div> */}
       <div className={styles.submitButton}>
         <button onClick={handleSubmit}>Зарегистрироваться</button>
       </div>

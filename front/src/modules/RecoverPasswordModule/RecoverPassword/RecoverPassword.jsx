@@ -18,6 +18,7 @@ import {
   funSpecialSymbol,
   validateLatinSymbols,
 } from '../../../utils/functions/PasswordValidation';
+import SpinnerLoaderGreen from '../../../components/SpinnerLoaderGreen/SpinnerLoaderGreen';
 
 function RecoverPassword() {
   //! востановление по почте true по телефону false
@@ -33,7 +34,7 @@ function RecoverPassword() {
   const [timer, setTimer] = useState(59); // Таймер в секундах
   const [isButtonActive, setIsButtonActive] = useState(false); // Состояние кнопки
   const inputsRef = useRef([]);
-
+  const [loader, setLoader] = useState(false)
   const [inputTypes, setInputTypes] = useState({
     newpassword: 'password',
     rewnewpassword: 'password',
@@ -146,6 +147,7 @@ function RecoverPassword() {
     if (newErrors.some(error => error)) {
       return;
     }
+    setLoader(true)
     const fullCode = code.join('');
     //! если код не совпал на сервере
     const data = {
@@ -157,9 +159,12 @@ function RecoverPassword() {
       if (res?.status === 200) {
         setCodStatus(true);
         setCodeConfirmed(true);
+        setLoader(false)
       } else {
         setCodStatus(false);
+        setLoader(false)
       }
+    
     });
   };
 
@@ -313,7 +318,7 @@ function RecoverPassword() {
             </div>
           </div>
           <div className={styles.submitButton}>
-            <button onClick={handleSubmit}>Продолжить</button>
+            <button onClick={handleSubmit}>  {!loader ?  "Продолжить" :  <SpinnerLoaderGreen/> }</button>
             {!codStatus && (
               <div className={styles.errorstatus}>
                 <img src={errorLogo} alt="" />
