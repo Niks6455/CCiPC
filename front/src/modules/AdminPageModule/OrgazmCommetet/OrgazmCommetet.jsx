@@ -21,6 +21,14 @@ function OrgazmCommetet() {
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
   const [filesUrls, setFilesUrls] = useState([]);
 
+  const funSetFilesUrls = (conferenceid, values) => {
+    const prev = filesUrls.find(el => el.id === conferenceid);
+    let fiurl = filesUrls.filter(el => el.id !== conferenceid);
+    setFilesUrls([...fiurl, { ...prev, ...values, id: conferenceid }]);
+  };
+
+  console.log('filesUrls', filesUrls);
+
   useEffect(() => {
     getDataOrg();
   }, [conferenceid]);
@@ -48,13 +56,13 @@ function OrgazmCommetet() {
     setDataCommitetTwo(committeeTwo);
   };
 
-  const updateCardData = (id, newImg) => {
+  const updateCardData = (id, newImg, dat) => {
     const updateData = dataOrgAll.map(confirensis => {
       return {
         ...confirensis,
         committees: confirensis.committees.map(item => {
-          if (item.id === id) {
-            return { ...item, img: newImg };
+          if (item.committeeId === id) {
+            return { ...item, ...dat, img: newImg, id: item.id };
           }
           return item;
         }),
@@ -142,6 +150,7 @@ function OrgazmCommetet() {
                   updateCardData={updateCardData}
                   filesUrls={filesUrls}
                   setFilesUrls={setFilesUrls}
+                  funSetFilesUrls={funSetFilesUrls}
                 />
               ))}
             </div>
@@ -198,6 +207,7 @@ function OrgazmCommetet() {
                   updateCardData={updateCardData}
                   filesUrls={filesUrls}
                   setFilesUrls={setFilesUrls}
+                  funSetFilesUrls={funSetFilesUrls}
                 />
               ))}
             </div>

@@ -14,7 +14,14 @@ import deletePhoto2Img from '@assets/img/AdminPanel/deletePhoto.svg';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
 import ImageCropper from '../../../../components/ImageCropper/ImageCropper';
 
-function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFilesUrls }) {
+function CardOrganization({
+  item,
+  updateCardData,
+  getDataOrg,
+  filesUrls,
+  setFilesUrls,
+  funSetFilesUrls,
+}) {
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
@@ -29,7 +36,6 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
   const [isChanged, setIsChanged] = useState(false);
   const [errorFio, setErrorFio] = useState('');
   const [errorOrganization, setErrorOrganization] = useState('');
-  const [file, setFile] = useState(null);
   const [editPhoto, setEditPhoto] = useState(false);
 
   useEffect(() => {
@@ -68,12 +74,13 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
   // Анимация появления кнопок "Отменить" и "Сохранить"
   useEffect(() => {
     if (buttonContainerRef.current) {
+      const file = filesUrls?.find(it => it.id === item.committeeId);
       gsap.to(buttonContainerRef.current, {
-        opacity: isChanged ? 1 : 0,
-        height: isChanged ? 'auto' : 0,
+        opacity: isChanged || file ? 1 : 0,
+        height: isChanged || file ? 'auto' : 0,
         duration: 0.3,
         ease: 'power2.out',
-        display: isChanged ? 'flex' : 'none',
+        display: isChanged || file ? 'flex' : 'none',
       });
     } else {
       gsap.fromTo(
@@ -82,7 +89,7 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
         { height: '52px', duration: 0.3, ease: 'power2.out' },
       );
     }
-  }, [isChanged]);
+  }, [isChanged, filesUrls?.find(it => it.id === item.committeeId)]);
 
   const handleEditData = (value, key) => {
     setDataItem(prev => ({ ...prev, [key]: value }));
@@ -93,6 +100,8 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
       textareasRef.current.style.height = 'auto';
       textareasRef.current.style.height = `${Math.min(textareasRef.current.scrollHeight, 145)}px`;
     }
+
+    funSetFilesUrls(item.committeeId, { [key]: value });
   };
 
   const handleCancel = () => {
@@ -106,18 +115,19 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
     // setIsChanged(false);
     // setEditPhoto(false);
     let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
-    setFilesUrls([...fiurl, { id: item.committeeId, url: URL.createObjectURL(file) }]);
-    setFile(null);
+    setFilesUrls(fiurl);
     refFile.current.value = null;
   };
 
   const validateFields = () => {
+    const dat = { ...dataItem, ...filesUrls.find(el => el.id === item.committeeId) };
+
     let valid = true;
-    if (!dataItem.fio) {
+    if (!dat.fio) {
       setErrorFio('Это обязательное поле');
       valid = false;
     }
-    if (!dataItem.organization) {
+    if (!dat.organization) {
       setErrorOrganization('Это обязательное поле');
       valid = false;
     }
@@ -126,23 +136,42 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
 
   const handleSave = () => {
     if (validateFields()) {
-      updateOrgCommitet(dataItem, item.id).then(res => {
+      const dat = { ...dataItem, ...filesUrls.find(el => el.id === item.committeeId) };
+      let reqData = {};
+      if (dat?.fio) {
+        reqData.fio = dat.fio;
+      }
+      if (dat?.organization) {
+        reqData.organization = dat.organization;
+      }
+      updateOrgCommitet(reqData, item.id).then(res => {
         if (res?.status === 200) {
-          updateCardData(item.id, dataItem);
           getDataOrg();
-
+          const file = filesUrls?.find(it => it.id === item.committeeId)?.file;
+          console.log('file', file);
           if (file) {
             const formFile = new FormData();
             formFile.append('file', file);
             formFile.append('committeeId', item?.committeeId);
             uploadPhoto(formFile, 'COMMITTEE').then(res => {
               if (res?.status === 200) {
-                updateCardData(item.id, res.data.file);
+                // Сначала обновляем список файлов
+                setFilesUrls(prevFilesUrls => {
+                  const updatedFilesUrls = [
+                    ...prevFilesUrls.filter(el => el.id !== item.committeeId),
+                  ];
+                  updateCardData(item.committeeId, res.data.file, dat);
+                  return updatedFilesUrls; // Возвращаем обновленный список
+                });
                 setIsChanged(false);
               }
             });
           } else {
             setIsChanged(false);
+            setFilesUrls(prevFilesUrls => {
+              const updatedFilesUrls = [...prevFilesUrls.filter(el => el.id !== item.committeeId)];
+              return updatedFilesUrls; // Возвращаем обновленный список
+            });
           }
         }
       });
@@ -160,19 +189,16 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
   const changeFileData = e => {
     const file = e.target.files[0];
     if (file) {
-      setFile(file);
       setEditPhoto(true);
-      let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
-      setFilesUrls([...fiurl, { id: item.committeeId, url: URL.createObjectURL(file) }]);
+      funSetFilesUrls(item.committeeId, { url: URL.createObjectURL(file), file: file });
+
       setIsChanged(true);
     }
   };
 
   const funEditPhoto = file => {
     if (file) {
-      setFile(file);
-      let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
-      setFilesUrls([...fiurl, { id: item.committeeId, url: URL.createObjectURL(file) }]);
+      funSetFilesUrls(item.committeeId, { url: URL.createObjectURL(file), file: file });
       setEditPhoto(false);
     }
   };
@@ -180,11 +206,10 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
   const handleDeleteImg = () => {
     let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
     setFilesUrls([...fiurl]);
-    setFile(null);
 
     apiDeleteMulti({ ids: [item?.img?.id] }).then(res => {
       if (res?.status === 200) {
-        updateCardData(item.id, dataItem);
+        updateCardData(item.committeeId, dataItem);
         getDataOrg();
         setIsChanged(false);
       }
@@ -236,7 +261,7 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
           <div className={styles.CardOrganizationInnerInfo}>
             <label>ФИО</label>
             <input
-              value={dataItem.fio}
+              value={filesUrls.find(it => it.id === item.committeeId)?.fio || dataItem.fio}
               onChange={e => handleEditData(e.target.value, 'fio')}
               style={{ borderColor: errorFio ? '#B32020' : '' }}
             />
@@ -247,14 +272,17 @@ function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFile
             <label>Организация</label>
             <textarea
               ref={textareasRef}
-              value={dataItem.organization}
+              value={
+                filesUrls.find(it => it.id === item.committeeId)?.organization ||
+                dataItem.organization
+              }
               onChange={e => handleEditData(e.target.value, 'organization')}
               style={{ borderColor: errorOrganization ? '#B32020' : '' }}
             />
             {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
           </div>
 
-          {isChanged ? (
+          {isChanged || filesUrls?.find(it => it.id === item.committeeId) ? (
             <div className={styles.buttonContainer} ref={buttonContainerRef}>
               <button className={styles.cancel} onClick={handleCancel}>
                 Отмена
