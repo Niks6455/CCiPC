@@ -35,12 +35,6 @@ function AddOrgPeople(props) {
   const handleTextareaChange = e => {
     setOrganization(e.target.value);
     setErrorOrganization('');
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      const newHeight = Math.min(textareaRef.current.scrollHeight, 145);
-      textareaRef.current.style.height = `${newHeight}px`;
-      textareaRef.current.style.overflowY = newHeight >= 145 ? 'auto' : 'hidden';
-    }
   };
 
   useEffect(() => {
@@ -56,15 +50,21 @@ function AddOrgPeople(props) {
     if (fio.trim() === '') {
       setErrorFio('Это обязательное поле');
       valid = false;
-    } else {
-      setErrorFio('');
     }
 
     if (organization.trim() === '') {
       setErrorOrganization('Это обязательное поле');
       valid = false;
-    } else {
-      setErrorOrganization('');
+    }
+
+    if (organization.length > 250) {
+      setErrorOrganization('Не более 250 символов');
+      valid = false;
+    }
+
+    if (fio.length > 250) {
+      setErrorFio('Не более 250 символов');
+      valid = false;
     }
 
     if (!valid) return;

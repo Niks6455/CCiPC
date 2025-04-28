@@ -131,6 +131,15 @@ function CardOrganization({
       setErrorOrganization('Это обязательное поле');
       valid = false;
     }
+    if (dat.fio.length > 250) {
+      setErrorFio('Не более 250 символов');
+      valid = false;
+    }
+
+    if (dat.organization.length > 250) {
+      setErrorOrganization('Не более 250 символов');
+      valid = false;
+    }
     return valid;
   };
 

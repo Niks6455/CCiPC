@@ -35,11 +35,14 @@
         border: torem(1px) solid #c8d0ce;
         border-radius: torem(10px);
         font-size: torem(18px);
+        @include ScrollBar;
       }
       textarea {
         resize: none;
         font-size: torem(18px);
         overflow-y: auto;
+        max-height: torem(145px);
+        height: torem(145px) !important;
       }
     }
 

@@ -100,11 +100,14 @@
         &::placeholder {
           color: var(--InputTextColor);
         }
+        @include ScrollBar;
       }
 
       textarea {
         height: auto;
         max-height: torem(145px);
+        height: torem(145px) !important;
+
         resize: none;
       }
     }
