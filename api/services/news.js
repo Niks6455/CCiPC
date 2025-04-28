@@ -6,14 +6,11 @@ import File from "../models/file.js";
 
 export default {
     async create(title, description) {
-
         const news=await News.findOne({
             where: { title: title }
 
         })
-
         if(news) throw new AppErrorAlreadyExists('title')
-
         return await News.create({
             title, description
         })
@@ -21,17 +18,17 @@ export default {
 
     async find(year=new Date().getFullYear(), page= undefined, pageSize=undefined){
 
-        const startOfYear = new Date(year, 0, 1); // 1 января текущего года
-        const endOfYear = new Date(year, 11, 31, 23, 59, 59); // 31 декабря текущего года
+        const startOfYear = new Date(year, 0, 1);
+        const endOfYear = new Date(year, 11, 31, 23, 59, 59);
 
         const news = await News.findAll({
             where:{
                 createdAt: {
-                    [Op.between]: [startOfYear, endOfYear], // Фильтр по диапазону дат
+                    [Op.between]: [startOfYear, endOfYear],
                 },
             },
-            ...(pageSize && { limit: pageSize }), // Количество записей на страниц
-            ...(page && { offset: (page - 1) * pageSize }), // Смещение для пагинации
+            ...(pageSize && { limit: pageSize }),
+            ...(page && { offset: (page - 1) * pageSize }),
             order: [['createdAt', 'DESC']],
             include: {
                 model: FileLink,
@@ -48,7 +45,7 @@ export default {
         return {
             currentPage: page ?? null,
             newsLimit: pageSize ?? null,
-            news: news, // Записи новостей для текущей страницы
+            news: news,
         };
     },
 

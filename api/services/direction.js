@@ -2,7 +2,6 @@ import Direction from "../models/direction.js";
 import DirectionInConference from "../models/direction-in-conference.js";
 import Conference from "../models/conference.js";
 import {AppErrorNotExist} from "../utils/errors.js";
-import {Op} from "sequelize";
 
 export default {
     async create(name, conferenceId){
@@ -48,8 +47,8 @@ export default {
         const directions = await Direction.findAll({
             where:{
             },
-            ...(pageSize && { limit: pageSize }), // Количество записей на страниц
-            ...(page && { offset: (page - 1) * pageSize }), // Смещение для пагинации
+            ...(pageSize && { limit: pageSize }),
+            ...(page && { offset: (page - 1) * pageSize }),
             order: [['createdAt', 'DESC']],
 
         })
@@ -57,7 +56,7 @@ export default {
         return {
             currentPage: page ?? null,
             directionLimit: pageSize ?? null,
-            directions: directions, // Записи новостей для текущей страницы
+            directions: directions,
         };
     },
 

@@ -219,6 +219,20 @@ export default {
 
         let directions
         if (conferenceInfo?.directions?.length > 0) {
+            await DirectionInConference.destroy({
+                where: {
+                    conferenceId:conference.id,
+                },
+                include: {
+                    model: Direction,
+                    as: 'directions',
+                    required :true,
+                    where: {
+                        [Op.notIn]: { name: conferenceInfo.directions }
+                    }
+                }
+            })
+
             // Инициализация массива directions
             directions = await Promise.all(conferenceInfo.directions.map(async (direction) => {
                 const [foundDirection] = await Direction.findOrCreate({
@@ -229,15 +243,15 @@ export default {
                         name: direction
                     }
                 });
-                return foundDirection; // Возвращаем найденное или созданное направление
+                return foundDirection;
             }));
 
-            delete conferenceInfo.directions; // Удаляем directions из conferenceInfo
+            delete conferenceInfo.directions;
         }
 
 
         if (directions && directions.length > 0) {
-            const directionsInConference = await Promise.all(directions.map(async (direction) => {
+            await Promise.all(directions.map(async (direction) => {
                 const [foundDirectionInConference] = await DirectionInConference.findOrCreate({
                     where: {
                         directionId: direction.id,
@@ -248,7 +262,7 @@ export default {
                         conferenceId: conference.id,
                     }
                 });
-                return foundDirectionInConference; // Возвращаем найденное или созданное направление в конференции
+                return foundDirectionInConference;
             }));
         }
 
@@ -312,11 +326,11 @@ export default {
                             },
                             {
                                 model: FileLink,
-                                as: 'participantFile', // Уникальный псевдоним для первого пути
+                                as: 'participantFile',
                                 required: false,
                                 include: {
                                     model: File,
-                                    as: 'file', // Уникальный псевдоним для первого пути
+                                    as: 'file',
                                     required: true
                                 }
                             }]
@@ -324,7 +338,6 @@ export default {
             }]
         });
 
-// Проверка результата выборки
 
 
     },
@@ -448,7 +461,7 @@ export default {
     async exportReports(conferenceId) {
         const reports = await Report.findAll({
             where: {
-                conferenceId: conferenceId, // Фильтр по conferenceId
+                conferenceId: conferenceId,
             },
             include: [
                 {
@@ -472,7 +485,6 @@ export default {
         });
 
 
-// Группировка отчетов по направлению
         const groupedReports = Object.values(reports.reduce((acc, report) => {
             const direction = report.direction.name;
 
@@ -490,7 +502,6 @@ export default {
             return acc;
         }, {}));
 
-// Преобразуем объект в массив
 
         const workbook = new ExcelJS.Workbook();
 
@@ -519,7 +530,6 @@ export default {
         data.forEach(data1 => {
             let sheetName = data1.direction;
 
-            // Проверка на существование листа и создание уникального имени
             let existingSheet = workbook.getWorksheet(sheetName);
             if (existingSheet) {
                 let counter = 1;

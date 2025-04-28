@@ -142,7 +142,6 @@ const router = Router();
 
 router.route('/photo')
     .get(asyncRoute(verify.general), asyncRoute(archiveCtrl.findPhoto))
-    //.post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(committeeCtrl.create))
 
 router.route('/report')
     .get(asyncRoute(archiveCtrl.findReport))

@@ -18,10 +18,9 @@ const resetCodes= {};
 function saveVerificationCode(email, code, expirationTime) {
     verificationCodes[email] = {
         code: code,
-        expiresAt: Date.now() + expirationTime // Устанавливаем время истечения
+        expiresAt: Date.now() + expirationTime
     };
 
-    // Устанавливаем таймер для удаления кода после истечения времени
     setTimeout(() => {
         delete verificationCodes[email];
     }, expirationTime);
@@ -56,7 +55,6 @@ export default {
 
         let accessToken;
         try {
-            // Обмен кода на токен доступа у Microsoft Azure
             const { data } = await axios.post(
                 'https://login.microsoftonline.com/19ba435d-e46c-436a-84f2-1b01e693e480/oauth2/v2.0/token',
                 qs.stringify({
@@ -74,7 +72,6 @@ export default {
         } catch (e) {
             throw new AppErrorInvalid('code');
         }
-        // Получение почты и имени пользователя из токена
         const { unique_name: email, name } = jwt.decode(accessToken);
 
 
@@ -88,10 +85,7 @@ export default {
             return { token, participant };
         }
 
-
 /*
-
-
         try {
 
             const {data: {student: studentInfo}} = await sync.get(`/students/tro@sfedu.ru`);

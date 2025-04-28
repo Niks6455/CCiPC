@@ -12,8 +12,8 @@ export default {
                 'type',
                 [sequelize.fn('COUNT', sequelize.col('CommitteeInConference.id')), 'committee_count']
             ],
-            group: ['type'], // Группируем только по 'type'
-            raw: true, // Возвращаем "сырые" данные
+            group: ['type'],
+            raw: true,
         });
 
         const result = await Promise.all(

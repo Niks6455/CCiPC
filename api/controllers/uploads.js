@@ -45,13 +45,12 @@ const updateUrl = async (infoFiles, file) => {
   }
 };
 
-// Проверка расширения файла
 const fileFilter = (req, file, cb) => {
-  const { type } = req.query; // Получаем тип из тела запроса
+  const { type } = req.query;
 
   const extension = path.extname(file.originalname).toLowerCase();
   if (!type) {
-    return cb(new AppError(errorCodes.Missing)); // Если type отсутствует
+    return cb(new AppError(errorCodes.Missing));
   }
 
   if (type in typesFile && acceptedTypesFiles.test(extension)) {
@@ -62,35 +61,31 @@ const fileFilter = (req, file, cb) => {
     return cb(null, true);
   }
 
-  return cb(new AppError(errorCodes.FileExtensionNotAllowed)); // Если тип файла не разрешен
+  return cb(new AppError(errorCodes.FileExtensionNotAllowed));
 };
 
 const multiFileFilter = (req, file, cb) => {
   const extension = path.extname(file.originalname).toLowerCase();
   if (photo.includes(file.fieldname) && acceptedTypesPhoto.test(extension))
-    return cb(null, true); // Accept the file
+    return cb(null, true);
   if (document.includes(file.fieldname) && acceptedTypesFiles.test(extension))
-    return cb(null, true); // Accept the file
-  return cb(new AppError(errorCodes.FileExtensionNotAllowed)); // Reject the file
+    return cb(null, true);
+  return cb(new AppError(errorCodes.FileExtensionNotAllowed));
 };
 
-// Storage configuration for handling file uploads
 const multiStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    // Define the upload path
     const uploadPath = path.join(dir, file.fieldname.toLowerCase());
     try {
-      // Ensure the directory exists
       if (!fs.existsSync(uploadPath)) {
         fs.mkdirSync(uploadPath, { recursive: true });
       }
-      cb(null, uploadPath); // Set the upload path
+      cb(null, uploadPath);
     } catch (err) {
       cb(new AppError(errorCodes.NotExist));
     }
   },
   filename: (req, file, cb) => {
-    // Use the original file name
     cb(null, uuidv4() + path.extname(file.originalname).toLowerCase());
   },
 });
@@ -204,16 +199,16 @@ export default {
     };
     const fileTypes = [];
 
-    if (program.length > 0) fileTypes.push(0); // Предположим, что 1 - это тип для PROGRAM
-    if (letter.length > 0) fileTypes.push(1); // Предположим, что 2 - это тип для LETTER
-    if (collection.length > 0) fileTypes.push(2); // Предположим, что 3 - это тип для COLLECTION
-    if (individual.length > 0) fileTypes.push(7); // Предположим, что 4 - это тип для INDIVIDUAL
-    if (legal.length > 0) fileTypes.push(8); // Предположим, что 5 - это тип для LEGAL
-    if (sample.length > 0) fileTypes.push(3); // Предположим, что 6 - это тип для SAMPLE
-    if (header.length > 0) fileTypes.push(14); // Предположим, что 6 - это тип для SAMPLE
-    if (footer.length > 0) fileTypes.push(15); // Предположим, что 6 - это тип для SAMPLE
-    if (organization.length > 0) fileTypes.push(16); // Предположим, что 7 - это тип для ORGANIZATION
-    if (partner.length > 0) fileTypes.push(17); // Предположим, что 8 - это тип для PARTNER
+    if (program.length > 0) fileTypes.push(0);
+    if (letter.length > 0) fileTypes.push(1);
+    if (collection.length > 0) fileTypes.push(2);
+    if (individual.length > 0) fileTypes.push(7);
+    if (legal.length > 0) fileTypes.push(8);
+    if (sample.length > 0) fileTypes.push(3);
+    if (header.length > 0) fileTypes.push(14);
+    if (footer.length > 0) fileTypes.push(15);
+    if (organization.length > 0) fileTypes.push(16);
+    if (partner.length > 0) fileTypes.push(17);
 
     const filesLink = await File.findAll({
       include: {
@@ -247,36 +242,30 @@ export default {
     }
 
     try {
-      // Создаем массив для хранения промисов
-      const fileIds = []; // Массив для хранения ID загруженных файлов
+      const fileIds = [];
 
-      // Проходим по каждому типу файла в infoFiles
       for (const [key, files] of Object.entries(infoFiles)) {
         for (const file of files) {
-          // Создаем запись для каждого файла
           const fileRecord = {
-            name:  Buffer.from(file.originalname, 'latin1').toString('utf8'), // Сохраняем оригинальное имя файла
-            url: file.path, // Путь к файлу
-            type: typesFiles[key], // Тип файла (например, PROGRAM, LETTER и т.д.)
-            conferenceId: conferenceId, // ID конференции или другой идентификатор
+            name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
+            url: file.path,
+            type: typesFiles[key],
+            conferenceId: conferenceId,
           };
 
-          // Добавляем промис для создания записи в базу данных
           const createdFile = await File.create(fileRecord);
-          fileIds.push({ fileId: createdFile.id, type: fileRecord.type }); // Сохраняем ID созданного файла
+          fileIds.push({ fileId: createdFile.id, type: fileRecord.type })
         }
       }
 
-      // Создаем записи в таблице files_links
       const linkPromises = fileIds.map((fileId) => {
         return FileLink.create({
-          fileId: fileId.fileId, // ID файла
-          conferenceId: conferenceId, // ID конференции
+          fileId: fileId.fileId,
+          conferenceId: conferenceId,
           type: fileId.type,
         });
       });
 
-      // Ожидаем завершения всех промисов для links
       await Promise.all(linkPromises);
     } catch (error) {
       console.error("Error saving files and links to the database:", error);
@@ -398,7 +387,7 @@ export default {
       });
 
       await FileLink.create({
-        fileId: fileCommittee.id, // ID файла
+        fileId: fileCommittee.id,
         committeeId: committee.id,
         type: typesPhoto[type],
       });
@@ -446,7 +435,7 @@ export default {
       });
 
       await FileLink.create({
-        fileId: fileReport.id, // ID файла
+        fileId: fileReport.id,
         reportId: report.id,
         type: typesFile[type],
       });
@@ -543,7 +532,7 @@ export default {
       });
 
       await FileLink.create({
-        fileId: fileParticipantInConference.id, // ID файла
+        fileId: fileParticipantInConference.id,
         participantId: user.id,
         conferenceId: conference.id,
         type: typesFiles[type],
@@ -566,14 +555,12 @@ export default {
 
     for (const file of files) {
       try {
-        //Удаляем физический файл
         await fs.promises.unlink(file.url);
         console.log(`File deleted: ${file.url}`);
       } catch (err) {
         console.error(`Error deleting file ${file.url}:`, err);
       }
 
-      // Удаляем запись из базы данных
       await file.destroy();
     }
 

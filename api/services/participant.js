@@ -1,6 +1,6 @@
 import Participant from "../models/participant.js";
 import Report from "../models/report.js";
-import { AppError, AppErrorAlreadyExists, AppErrorInvalid, AppErrorNotExist } from '../utils/errors.js';
+import { AppErrorAlreadyExists, AppErrorInvalid, AppErrorNotExist } from '../utils/errors.js';
 import sendMail from "./email.js";
 import randomCode from "../utils/random-code.js";
 import Conference from "../models/conference.js";

@@ -99,7 +99,6 @@ export default {
             const participantsExistIds = participantsExist.map(participantExist=> participantExist.id)
 
             if (participantsExistIds.length > 0) {
-                // Create new ParticipantOfReport records for the existing participants
                 await ParticipantOfReport.bulkCreate(
                     participantsExistIds.map(participantId => ({
                         reportId: report.id,
@@ -143,8 +142,6 @@ export default {
             })
 
         }
-
-        console.log(cache)
         return report
     },
 
@@ -249,7 +246,7 @@ export default {
                         required: true,
                         where: {
                             deadline: {
-                                [Op.gte]:  new Date().toISOString().split('T')[0]  // Проверяем, что deadline меньше или равен текущей дате
+                                [Op.gte]:  new Date().toISOString().split('T')[0]
                             }
                         }
                     }
@@ -303,7 +300,6 @@ export default {
                 if(checkParticipantOfReport.length > 0) throw new AppErrorAlreadyExists('coAuthor')
 
                 if (participantsExistIds?.length > 0) {
-                    // Create new ParticipantOfReport records for the existing participants
                     await ParticipantOfReport.bulkCreate(
                         participantsExistIds.map(participantId => ({
                             reportId: report.id,
@@ -362,8 +358,6 @@ export default {
                 reportId: report.id,
             }
         })
-
-        console.log(cache)
 
         await report.update({
             name: reportInfo?.name,

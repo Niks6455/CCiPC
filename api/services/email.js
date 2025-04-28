@@ -4,7 +4,6 @@ import { SystemError } from '../utils/errors.js';
 
 const address = process.env.MAIL_HOST;
 
-// объект для отправления писем на outlook
 const smtp = createTransport({
     host: address,
     port: 465,
@@ -16,13 +15,11 @@ export default function (to, type, ...arg) {
     if (!to) return;
     if (!type) throw new SystemError(500, 'type not specified');
 
-    // из templates по type полает replacement.subject и replacement.template для mail
     const replacement = templates[type];
     if (!replacement) throw new SystemError(500, 'not exist');
 
-    // объект сообщения
     const mail = {
-        from: { name: 'CCPC', address: process.env.MAIL_USER },
+        from: { name: 'ССиПС', address: process.env.MAIL_USER },
         to,
         subject: replacement.subject,
         generateTextFromHTML: true,
@@ -31,9 +28,7 @@ export default function (to, type, ...arg) {
         )}<br><p>Это автоматически сгенерированное сообщение. Не отвечайте на него.</p>`,
     };
 
-    // отправка сообщений на production
     if (process.env.NODE_ENV === 'production') {
-        console.log(mail);
         smtp.sendMail(mail);
     } else {
         console.log(mail);

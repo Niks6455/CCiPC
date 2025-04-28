@@ -14,22 +14,20 @@ export default {
       conference.files = Object.fromEntries(
         Object.entries(
           conference.filesInConference.reduce((acc, a) => {
-            // Проверяем, существует ли уже тип в аккумуляторе
             const entry = Object.entries(typesFiles).find(
               ([key, val]) => val === a.type
             );
 
             if (!acc[entry[0]]) {
-              acc[entry[0]] = []; // Если нет, создаем новый массив
+              acc[entry[0]] = [];
             }
-            // Добавляем файл в соответствующий тип
             acc[entry[0]].push({
               id: a.file.id,
               url: a.file.url,
               name: a.file.name,
             });
-            return acc; // Возвращаем аккумулятор для следующей итерации
-          }, {}) // Инициализируем аккумулятор как пустой объект
+            return acc;
+          }, {})
         )
       );
     }
@@ -43,26 +41,23 @@ export default {
     if (!id) throw new AppErrorMissing("id");
     const conference = await conferenceService.findOne(id);
 
-    // Получаем файлы конференции и группируем их по типу
     conference.files = Object.fromEntries(
       Object.entries(
         conference?.filesInConference.reduce((acc, a) => {
-          // Проверяем, существует ли уже тип в аккумуляторе
           const entry = Object.entries(typesFiles).find(
             ([key, val]) => val === a.type
           );
 
           if (!acc[entry[0]]) {
-            acc[entry[0]] = []; // Если нет, создаем новый массив
+            acc[entry[0]] = [];
           }
-          // Добавляем файл в соответствующий тип
           acc[entry[0]].push({
             id: a.file.id,
             url: a.file.url,
             name: a.file.name,
           });
-          return acc; // Возвращаем аккумулятор для следующей итерации
-        }, {}) // Инициализируем аккумулятор как пустой объект
+          return acc;
+        }, {})
       )
     );
 
@@ -70,10 +65,8 @@ export default {
       Object.entries(
         conference.committeeInConference.reduce((acc, a) => {
           if (!acc[a.type]) {
-            // If not, initialize it as an empty array
             acc[a.type] = [];
           }
-          // Push the committee into the array for that type
           acc[a.type].push({ id: a.id, committee: a.committee });
           return acc;
         }, {})
