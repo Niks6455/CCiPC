@@ -5,21 +5,10 @@ function AboutConference({ data, setData }) {
   const textareaRef = useRef(null);
   const [contextMenu, setContextMenu] = useState({ visible: false });
   const funChangeAbout = e => {
-    setData({ ...data, aboutConference: e.target.value });
+    if (e.target.value?.length <= 2000) {
+      setData({ ...data, aboutConference: e.target.value });
+    }
   };
-
-  // useEffect(() => {
-  //   const handleClickOutside = event => {
-  //     if (textareaRef.current && !textareaRef.current.contains(event.target)) {
-  //       setContextMenu(false);
-  //       handleContextMenu(event);
-  //     }
-  //   };
-  //   document.addEventListener('mousedown', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, []);
 
   // Показать контекстное меню, если есть выделенный текст
   const handleContextMenu = e => {
@@ -92,6 +81,7 @@ function AboutConference({ data, setData }) {
         onMouseEnter={handleContextMenu}
         onKeyDown={handleTab} // Перехватываем нажатие Tab
       />
+      <span>{data?.aboutConference?.length || 0} / 2000</span>
     </div>
   );
 }

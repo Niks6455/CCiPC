@@ -81,7 +81,7 @@ function UniversalTable(props) {
     setTableHeaderData(updatedHeaderData);
   }, [activeIndex, initialTableHeaderData]);
 
-  const checkWidth = () =>{
+  const checkWidth = () => {
     const updatedHeaderData = [...initialTableHeaderData];
     const index = updatedHeaderData.findIndex(item => item.key === 'vizion');
     if (windowWidth <= 580) {
@@ -100,7 +100,7 @@ function UniversalTable(props) {
     }
 
     setTableHeaderData(updatedHeaderData);
-  }
+  };
   useEffect(() => {
     checkWidth();
   }, [windowWidth, initialTableHeaderData]);
@@ -148,15 +148,13 @@ function UniversalTable(props) {
               ))}
             </tr>
           ))}
-          {(!tableBodyData || tableBodyData.length === 0) && (
-            <tr>
-              <td colSpan={tableHeaderData.length} className={styles.tableNotData}>
-                Нет данных
-              </td>
-            </tr>
-          )}
         </tbody>
       </table>
+      {(!tableBodyData || tableBodyData.length === 0) && (
+        <div colSpan={tableHeaderData.length} className={styles.tableNotData}>
+          <div className={styles.text}>Нет данных</div>
+        </div>
+      )}
     </div>
   );
 }

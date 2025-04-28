@@ -133,6 +133,7 @@ function NavBar(props) {
     <div ref={listRef}>
       <>
         <div
+          style={props?.admine ? { display: 'none' } : {}}
           className={`${styles.logo} ${props.login ? styles.loginLogo : ''} ${location.pathname.includes('/account') ? styles.visibleLogo : ''}`}
         >
           <img src={logo} alt="logo" onClick={() => navigate('/')} />

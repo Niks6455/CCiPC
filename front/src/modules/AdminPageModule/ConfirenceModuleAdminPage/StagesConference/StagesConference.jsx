@@ -7,7 +7,7 @@ import { Calendar } from 'primereact/calendar';
 import 'primereact/resources/themes/saga-blue/theme.css';
 import './../style.css';
 
-function StagesConference({ data, setData }) {
+function StagesConference({ data, setData, validateError, setValidateError }) {
   const [editItemIndex, setEditItemIndex] = useState(null);
   const [isEditing, setIsEditing] = useState(false); // состояние для отслеживания редактирования инпута чтобы не происходило сортировки
   const calendarRef = useRef(null);
@@ -51,6 +51,7 @@ function StagesConference({ data, setData }) {
   //! изменение название этапа конференции
   const funSetStagesName = (index, e) => {
     const stage = [...data?.stages];
+    if (e.target.value.length > 120) return;
     stage[index].name = e.target.value;
     setData({ ...data, stages: stage });
   };
@@ -68,7 +69,15 @@ function StagesConference({ data, setData }) {
     };
   }, []);
 
-  console.log('isEditing', isEditing);
+  const onFocusInput = e => {
+    setIsEditing(true);
+    e.target.placeholder = '';
+  };
+
+  const onBlurInput = e => {
+    setIsEditing(false);
+    e.target.placeholder = 'Название этапа';
+  };
 
   return (
     <div className={styles.StagesConference}>
@@ -124,16 +133,10 @@ function StagesConference({ data, setData }) {
                   </span>
                 </div>
                 <div className={styles.point}></div>
-                <div className={styles.info}>
+                <div className={`${styles.info}`}>
                   <input
-                    onFocus={e => {
-                      setIsEditing(true);
-                      e.target.placeholder = '';
-                    }} // Устанавливаем режим редактирования
-                    onBlur={e => {
-                      setIsEditing(false);
-                      e.target.placeholder = 'Название этапа';
-                    }} // Выключаем режим редактирования
+                    onFocus={onFocusInput} // Устанавливаем режим редактирования
+                    onBlur={onBlurInput} // Выключаем режим редактирования
                     type="text"
                     placeholder="Название этапа"
                     className={`${item.name ? '' : styles.edit}`}

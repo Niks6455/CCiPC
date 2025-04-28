@@ -6,7 +6,7 @@ import { formatDateRangePrimereact } from '../../../../utils/functions/funcions'
 import arrowIcon from '@assets/img/UI/arrowMini.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 
-function DateAdsess({ data, setData }) {
+function DateAdsess({ data, setData, setErrorModalTitle }) {
   const [calendarShow, setCalendarShow] = useState(false);
   const [listOpen, setListOpen] = useState(null);
   const calendarRef = useRef(null);
@@ -56,7 +56,16 @@ function DateAdsess({ data, setData }) {
         selectedDates.length === 2 && selectedDates[1]
           ? selectedDates[1]?.toLocaleDateString('ru-RU')
           : '';
-
+      if (formattedDateFirst === formattedDateSecond) {
+        setErrorModalTitle('Дата начала не может быть равна дате окончания!');
+        setCalendarShow(true);
+        setData({
+          ...data,
+          dateFirst: '',
+          dateSecond: '',
+        });
+        return;
+      }
       setData({
         ...data,
         dateFirst: formattedDateFirst,
@@ -86,6 +95,33 @@ function DateAdsess({ data, setData }) {
       setCalendarShow(true);
     }
   };
+
+  useEffect(() => {
+    if (!calendarShow) {
+      if (!data?.dateFirst || !data?.dateSecond) {
+        if ((data?.dateFirst && !data?.dateSecond) || (!data?.dateFirst && data?.dateSecond)) {
+          setErrorModalTitle('Дата окончания не может быть равна дате начала!');
+        }
+        setData({
+          ...data,
+          dateFirst: '',
+          dateSecond: '',
+        });
+      }
+    }
+  }, [calendarShow]);
+
+  useEffect(() => {
+    if (
+      !data?.stages?.map(it => it.date).includes(data.deadlineUploadingReports) &&
+      data.deadlineUploadingReports &&
+      data?.stages?.length > 0
+    ) {
+      console.log('data.stages', data.stages);
+      funChangedeUploading({ target: { value: '' } });
+      setErrorModalTitle('Крайний срок загрузки докладов должен быть равен дате этапа!');
+    }
+  }, [data.stages]);
 
   return (
     <div className={styles.DateAdsess}>
@@ -126,11 +162,11 @@ function DateAdsess({ data, setData }) {
                   <div className={styles.list_box_empty}>Добавьте этапы конференции</div>
                 ) : (
                   <ul>
-                    {data?.stages
-                      ?.filter(item => item.date)
-                      .map((item, index) => (
-                        <li key={index} onClick={() => funLiClick(item.date)}>
-                          {item.date}
+                    {[...new Set(data?.stages?.map(item => item.date))]
+                      ?.filter(date => date) // Убедимся, что дата не пустая
+                      .map((date, index) => (
+                        <li key={index} onClick={() => funLiClick(date)}>
+                          {date}
                         </li>
                       ))}
                   </ul>

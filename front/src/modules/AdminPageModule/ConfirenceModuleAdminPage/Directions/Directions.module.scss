@@ -53,6 +53,9 @@
         line-height: torem(27px);
         letter-spacing: 0%;
         color: #333333;
+        overflow-y: auto;
+        @include ScrollBar;
+        height: torem(124px);
       }
       .add_direction {
         width: 100%;

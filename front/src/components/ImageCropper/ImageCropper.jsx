@@ -34,10 +34,13 @@ const ImageCropper = ({
     const scaleY = image.naturalHeight / image.height;
 
     const canvas = document.createElement('canvas');
-    canvas.width = cropData.width;
-    canvas.height = cropData.height;
+    canvas.width = cropData.width * scaleX; // Учитываем масштаб
+    canvas.height = cropData.height * scaleY; // Учитываем масштаб
 
     const ctx = canvas.getContext('2d');
+
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high'; // Повышаем качество интерполяции
 
     ctx.drawImage(
       image,
@@ -47,8 +50,8 @@ const ImageCropper = ({
       cropData.height * scaleY,
       0,
       0,
-      cropData.width,
-      cropData.height,
+      cropData.width * scaleX,
+      cropData.height * scaleY,
     );
 
     canvas.toBlob(blob => {
@@ -57,8 +60,8 @@ const ImageCropper = ({
         const file = new File([blob], `${new Date().getTime()}cropped.png`, {
           type: 'image/png',
         });
-        funEditPhoto(file); // передаём обрезанный файл в родительский компонент
-        setEditPhoto(false); // закрыть редактор
+        funEditPhoto(file);
+        setEditPhoto(false);
       }
     }, 'image/png');
   };

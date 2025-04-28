@@ -83,6 +83,7 @@ $w3: 480px;
     }
     .image {
       width: 100%;
+      height: torem(400px);
       position: relative;
       @media (max-width: $w3) {
         position: static;
@@ -188,6 +189,7 @@ $w3: 480px;
         height: 100%;
         -o-object-fit: cover;
         object-fit: cover;
+        height: torem(400px);
       }
     }
   }
