@@ -278,9 +278,8 @@ export default {
 
         if (conferenceInfo.deadline ) {
           if (conference?.stages?.length > 0 || conferenceInfo?.stages?.length > 0) {
-              const isDeadlineInStages = conference.stages?.some(item => item.date === conferenceInfo.deadline);
               const isDeadlineInConferenceInfoStages = conferenceInfo.stages?.some(item => item.date === conferenceInfo.deadline);
-              if (!isDeadlineInStages && !isDeadlineInConferenceInfoStages) {
+              if (!isDeadlineInConferenceInfoStages) {
                   throw new AppErrorInvalid('deadline');
               }
           } else throw new AppErrorInvalid('deadline');
