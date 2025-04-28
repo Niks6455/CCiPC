@@ -189,3 +189,14 @@ export const decodeText = text => {
   const bytes = new Uint8Array(text?.split('').map(c => c.charCodeAt(0)));
   return decoder.decode(bytes);
 };
+
+// Функция для проверки дубликатов
+export const hasDuplicates = (array, key) => {
+  let names = [];
+  if (key) {
+    names = array.map(stage => stage?.[key]);
+  } else {
+    names = array.map(stage => stage);
+  }
+  return new Set(names).size !== names.length;
+};

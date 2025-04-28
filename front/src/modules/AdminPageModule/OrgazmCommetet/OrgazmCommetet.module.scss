@@ -1,9 +1,5 @@
 .OrgazmCommetet {
   .OrgazmCommetetInner {
-    img {
-      width: torem(24px);
-      height: torem(24px);
-    }
     .title {
       font-size: torem(32px);
       font-weight: 500;
@@ -33,6 +29,10 @@
         align-items: center;
         justify-content: center;
         img {
+          width: torem(24px);
+          height: torem(24px);
+        }
+        img {
           margin: 0px torem(8px);
         }
       }
@@ -51,6 +51,10 @@
         height: torem(51px);
         position: relative;
         left: torem(-38px);
+        img {
+          width: torem(24px);
+          height: torem(24px);
+        }
         img {
           margin-right: torem(8px);
         }

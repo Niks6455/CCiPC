@@ -16,7 +16,8 @@
       width: torem(110px);
       height: torem(110px);
       cursor: pointer;
-      opacity: 0;
+      transform: translateX(torem(4.5px));
+      // opacity: 0;
     }
     .Title {
       font-size: torem(22px);

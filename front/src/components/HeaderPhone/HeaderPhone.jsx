@@ -50,9 +50,7 @@ function HeaderPhone(props) {
 
   return (
     <div>
-      <div
-        className={`${styles.HeaderPhoneContainer} ${isVisible ? styles.fixedPosition : ''}`}
-      >
+      <div className={`${styles.HeaderPhoneContainer} ${isVisible ? styles.fixedPosition : ''}`}>
         <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(!activeMenu)}>
           <div className={styles.NavBarMenu}>
             <span></span>
@@ -61,7 +59,7 @@ function HeaderPhone(props) {
         </button>
 
         {activeMenu && (
-          <div className={`${styles.NavBarMenuContainer} ${styles.open}`} >
+          <div className={`${styles.NavBarMenuContainer} ${styles.open}`}>
             <div className={styles.NavBarMenuContainerInner} ref={menuRef}>
               <button className={styles.NavBarMenuButton} onClick={() => setActiveMenu(false)}>
                 <div className={styles.NavBarMenu}>
@@ -145,11 +143,7 @@ function HeaderPhone(props) {
                               setActiveMenu(false);
                             }}
                           >
-                            <span>
-                              {item.name.length < 20
-                                ? item.name
-                                : item.name.slice(0, 20) + '...'}
-                            </span>
+                            <span>Доклад №{index + 1}</span>
                           </li>
                         ))}
                       </ul>

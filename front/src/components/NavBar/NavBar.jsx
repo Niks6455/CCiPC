@@ -133,6 +133,7 @@ function NavBar(props) {
     <div ref={listRef}>
       <>
         <div
+          style={props?.admine ? { display: 'none' } : {}}
           className={`${styles.logo} ${props.login ? styles.loginLogo : ''} ${location.pathname.includes('/account') ? styles.visibleLogo : ''}`}
         >
           <img src={logo} alt="logo" onClick={() => navigate('/')} />
@@ -258,9 +259,7 @@ function NavBar(props) {
                                       }}
                                     >
                                       <span>
-                                        {item.name.length < 20
-                                          ? item.name
-                                          : item.name.slice(0, 20) + '...'}
+                                        <span>Доклад №{index + 1}</span>
                                       </span>
                                     </li>
                                   ))}

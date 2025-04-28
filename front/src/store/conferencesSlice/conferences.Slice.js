@@ -52,7 +52,7 @@ const conferencesSlice = createSlice({
               const originalDate = new Date(item?.date?.[0]?.value);
               const oneWeekAgo = new Date(originalDate);
               oneWeekAgo.setDate(originalDate.getDate() - 7);
-              const resultDate = oneWeekAgo.toISOString().split('T')[0];
+              const resultDate = oneWeekAgo?.toISOString()?.split('T')?.[0];
               mass.push({
                 ...item,
                 dedlineReport1: convertDate(resultDate),

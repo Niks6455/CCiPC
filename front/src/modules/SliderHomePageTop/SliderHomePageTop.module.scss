@@ -67,7 +67,7 @@ $w3: 480px;
     }
     li {
       color: var(--GreenColorText);
-      max-width: torem(300px);
+      // max-width: torem(300px);
       display: flex;
       align-items: center;
       font-size: torem(18px);
@@ -78,6 +78,12 @@ $w3: 480px;
         width: -webkit-max-content;
         width: -moz-max-content;
         width: max-content;
+        .text {
+          width: 100%;
+          // word-break: break-all;
+          // overflow-wrap: break-word;
+          text-wrap: nowrap;
+        }
       }
       @media (max-width: $w1) {
         font-size: torem(20px);

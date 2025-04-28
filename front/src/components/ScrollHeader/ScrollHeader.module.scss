@@ -28,6 +28,7 @@ $w3: 480px;
       width: max-content;
       text-align: end;
       color: #004529;
+      filter: invert(0.3); /* Инвертирует цвета */
       padding: torem(5px) torem(10px);
       cursor: pointer;
       @include HoverActive;
@@ -36,6 +37,9 @@ $w3: 480px;
       font-size: torem(18px);
       line-height: 120%;
       letter-spacing: 0%;
+      @media (max-width: $w2) {
+        font-size: torem(14px);
+      }
     }
   }
 }

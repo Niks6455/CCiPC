@@ -6,6 +6,7 @@ function Directions({ data, setData }) {
   const funChangeDirection = (e, index) => {
     const directions = [...data.directions];
     directions[index] = { ...directions[index], name: e.target.value };
+    if (e.target.value.length > 240) return;
     setData({ ...data, directions: directions });
   };
 

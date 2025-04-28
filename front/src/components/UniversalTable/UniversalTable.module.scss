@@ -132,12 +132,19 @@ $w3: 480px;
 }
 
 .tableNotData {
+  position: relative;
   text-align: center;
-  padding: 20px;
   font-size: 18px;
   color: var(--GrayColorInput);
-  background-color: #f7f7f7;
-  width: 100%;
+  // background-color: #f7f7f7;
+  height: torem(300px);
+
+  .text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 
 .arrowTableCont {

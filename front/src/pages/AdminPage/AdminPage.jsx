@@ -1,7 +1,5 @@
 import RightMenuLk from '../../modules/RightMenuLk/RightMenuLk';
-import Layout from '../../ui/Layout/Layout';
 import styles from './AdminPage.module.scss';
-import Footer from '../../components/Footer/Footer';
 import { useContext } from 'react';
 import DataContext from '../../context';
 import { Outlet } from 'react-router-dom';
@@ -12,6 +10,7 @@ function AdminPage() {
   return (
     <>
       <main className={styles.AdminPage}>
+        <NavBar admine={true} />
         <LeftMenuAdminPage />
         <div className={styles.AdminPageContainer}>
           <Outlet />

@@ -17,7 +17,7 @@ import {
 } from '../../../apirequests/apirequests';
 import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from '@tanstack/react-query';
-import { convertDate, convertDateTire } from '../../../utils/functions/funcions';
+import { convertDate, convertDateTire, hasDuplicates } from '../../../utils/functions/funcions';
 import ModalSuccessfully from '../../../components/ModalSuccessfully/ModalSuccessfully';
 import { conferenceDataNull, fileKeys } from './data';
 import ReqError from '../../../components/ReqError/ReqError';
@@ -27,6 +27,7 @@ import {
 } from '../../../store/conferencesSlice/conferences.Slice';
 // import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 import ModalCompleteConference from '../../../components/ModalCompleteConference/ModalCompleteConference';
+import ErrorModal from '../../../components/ErrorModal/ErrorModal';
 
 function ConfirenceModuleAdminPage() {
   const dispatch = useDispatch();
@@ -38,6 +39,8 @@ function ConfirenceModuleAdminPage() {
   const [modalSucces, setModalSucces] = useState(null);
   const [errors, setErrors] = useState([]);
   const [complate, setComplate] = useState(false);
+  const [validateError, setValidateError] = useState(null);
+  const [errorModalTitle, setErrorModalTitle] = useState(null);
 
   const {
     data: conferensetQery,
@@ -109,16 +112,11 @@ function ConfirenceModuleAdminPage() {
     if (files) {
       const formData = new FormData();
       formData.append('conferenceId', conferenseId);
-
-      console.log('data', data);
-      console.log('keys', keys);
       keys.map(key => {
         if (files[key.key]) {
           if (!files[key.key].url) {
             const file = files[key.key]?.value || files[key.key];
-            console.log('file', file, file.length);
             if (file.length > 0) {
-              console.log('file', file[0].value);
               file.map(el => {
                 formData.append(key.name, el.value);
               });
@@ -143,15 +141,39 @@ function ConfirenceModuleAdminPage() {
     }
   };
 
+  const validate = () => {
+    if (hasDuplicates(data.stages, 'name')) {
+      setErrorModalTitle('Повторяющиеся названия этапов!');
+      return false;
+    }
+    if (hasDuplicates(data.directions, 'name')) {
+      setErrorModalTitle('Повторяющиеся названия направлений!');
+      return false;
+    }
+    return true;
+  };
+
   //! отправляем измененные данные на бэк
   const funEditDataApi = () => {
+    if (!validate()) {
+      return;
+    }
+    setData({
+      ...data,
+      stages: data.stages.filter(item => item.date && item.name),
+      directions: data.directions?.filter(item => item?.name),
+    });
+    console.log('data', data);
+
     const dat = {
-      stages: data.stages.map(item => ({
-        date: convertDateTire(item.date),
-        name: item.name,
-      })),
+      stages: data.stages
+        ?.filter(item => item.date && item.name)
+        .map(item => ({
+          date: convertDateTire(item.date),
+          name: item.name,
+        })),
       description: data.aboutConference,
-      directions: data.directions.map(item => item.name),
+      directions: data.directions?.filter(item => item?.name)?.map(item => item?.name),
       directionsIds: data.directionsIds, //! удаление направлений
       date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
@@ -244,8 +266,18 @@ function ConfirenceModuleAdminPage() {
       <ReqError errors={errors.filter(item => !item.succes)} setErrors={setErrors} />
       <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
       <h2 className={styles.title}>Конференция</h2>
-      <StagesConference data={data} setData={setData} />
-      <DateAdsess data={data} setData={setData} />
+      <StagesConference
+        data={data}
+        setData={setData}
+        validateError={validateError}
+        setValidateError={setValidateError}
+      />
+      <ErrorModal
+        open={errorModalTitle}
+        close={() => setErrorModalTitle(null)}
+        title={errorModalTitle}
+      />
+      <DateAdsess data={data} setData={setData} setErrorModalTitle={setErrorModalTitle} />
       <Logotips data={data} setData={setData} />
       <DocumentsModule data={data} setData={setData} />
       <AboutConference data={data} setData={setData} />

@@ -13,6 +13,14 @@ function SliderHomePageTop() {
     setMobile(window.innerWidth < 480);
   }, [useWindowWidth()]);
 
+  const splitName = name => {
+    if (name.length <= 30) return { firstPart: name, secondPart: '' };
+    const midIndex = Math.ceil(name.length / 2); // Находим середину строки
+    const firstPart = name.slice(0, midIndex); // Первая половина
+    const secondPart = name.slice(midIndex); // Вторая половина
+    return { firstPart, secondPart };
+  };
+
   return (
     <div className={styles.SliderHomePageTop}>
       <div>
@@ -31,11 +39,19 @@ function SliderHomePageTop() {
                     <li key={index}>
                       <div className={styles.sliderItem}>
                         <div className={styles.date}>{convertDate(el.date)}</div>
-                        <div>{el.name}</div>
+                        {(() => {
+                          const { firstPart, secondPart } = splitName(el.name);
+                          return (
+                            <>
+                              <p className={styles.text}>{firstPart}</p>
+                              <p className={styles.text}>{secondPart}</p>
+                            </>
+                          );
+                        })()}
                       </div>
                     </li>
                     <div className={styles.sliderLine}>
-                        <img src={LineSlider} />
+                      <img src={LineSlider} />
                     </div>
                   </>
                 ))}

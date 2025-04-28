@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 function ReqError({ errors, setErrors }) {
   const funExit = index => {
-    setErrors(prev => prev.filter((_, i) => i !== index));
+    setErrors(errors.filter((_, i) => i !== index));
   };
   return (
     <div className={styles.ReqError}>
