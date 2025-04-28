@@ -12,8 +12,9 @@ import {
 } from '../../../../apirequests/apirequests';
 import deletePhoto2Img from '@assets/img/AdminPanel/deletePhoto.svg';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
+import ImageCropper from '../../../../components/ImageCropper/ImageCropper';
 
-function CardOrganization({ item, updateCardData, getDataOrg }) {
+function CardOrganization({ item, updateCardData, getDataOrg, filesUrls, setFilesUrls }) {
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
@@ -28,6 +29,8 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
   const [isChanged, setIsChanged] = useState(false);
   const [errorFio, setErrorFio] = useState('');
   const [errorOrganization, setErrorOrganization] = useState('');
+  const [file, setFile] = useState(null);
+  const [editPhoto, setEditPhoto] = useState(false);
 
   useEffect(() => {
     setDataItem({
@@ -100,6 +103,12 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
       fio: item?.fio || '',
       organization: item?.organization || '',
     });
+    // setIsChanged(false);
+    // setEditPhoto(false);
+    let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
+    setFilesUrls([...fiurl, { id: item.committeeId, url: URL.createObjectURL(file) }]);
+    setFile(null);
+    refFile.current.value = null;
   };
 
   const validateFields = () => {
@@ -120,8 +129,21 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
       updateOrgCommitet(dataItem, item.id).then(res => {
         if (res?.status === 200) {
           updateCardData(item.id, dataItem);
-          setIsChanged(false);
           getDataOrg();
+
+          if (file) {
+            const formFile = new FormData();
+            formFile.append('file', file);
+            formFile.append('committeeId', item?.committeeId);
+            uploadPhoto(formFile, 'COMMITTEE').then(res => {
+              if (res?.status === 200) {
+                updateCardData(item.id, res.data.file);
+                setIsChanged(false);
+              }
+            });
+          } else {
+            setIsChanged(false);
+          }
         }
       });
     }
@@ -137,19 +159,29 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
 
   const changeFileData = e => {
     const file = e.target.files[0];
-    const formFile = new FormData();
-    formFile.append('file', file);
-    formFile.append('committeeId', item?.committeeId);
+    if (file) {
+      setFile(file);
+      setEditPhoto(true);
+      let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
+      setFilesUrls([...fiurl, { id: item.committeeId, url: URL.createObjectURL(file) }]);
+      setIsChanged(true);
+    }
+  };
 
-    uploadPhoto(formFile, 'COMMITTEE').then(res => {
-      if (res?.status === 200) {
-        updateCardData(item.id, res.data.file);
-      }
-    });
+  const funEditPhoto = file => {
+    if (file) {
+      setFile(file);
+      let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
+      setFilesUrls([...fiurl, { id: item.committeeId, url: URL.createObjectURL(file) }]);
+      setEditPhoto(false);
+    }
   };
 
   const handleDeleteImg = () => {
-    console.log('item', item);
+    let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
+    setFilesUrls([...fiurl]);
+    setFile(null);
+
     apiDeleteMulti({ ids: [item?.img?.id] }).then(res => {
       if (res?.status === 200) {
         updateCardData(item.id, dataItem);
@@ -158,66 +190,87 @@ function CardOrganization({ item, updateCardData, getDataOrg }) {
       }
     });
   };
-  console.log('dataItem?.img.url', dataItem?.img.url);
   return (
-    <div ref={cardRef} className={styles.CardOrganization}>
-      <div className={styles.CardOrganizationInner}>
-        <div className={styles.CardOrganizationInnerImg}>
-          <img
-            ref={imgRef}
-            className={styles.Img}
-            src={dataItem?.img.url ? `${server}/${dataItem?.img.url}` : notPhoto}
-            alt={dataItem?.fio}
-          />
-          <div className={styles.CardOrganizationInnerImgInput}>
-            <img src={deletePhoto2Img} alt="Удалить" onClick={() => handleDeleteImg()} />
-            <img src={editPhoto2Img} alt="Редактирование" onClick={() => refFile.current.click()} />
+    <>
+      {filesUrls.find(it => it.id === item.committeeId)?.url && (
+        <ImageCropper
+          editPhoto={editPhoto}
+          setEditPhoto={setEditPhoto}
+          urlPhoto={filesUrls.find(it => it.id === item.committeeId)?.url}
+          funEditPhoto={funEditPhoto}
+          circularCrop={false}
+        />
+      )}
+
+      <div ref={cardRef} className={styles.CardOrganization}>
+        <div className={styles.CardOrganizationInner}>
+          <div className={styles.CardOrganizationInnerImg}>
+            <img
+              ref={imgRef}
+              className={styles.Img}
+              src={
+                filesUrls.find(it => it.id === item.committeeId)?.url
+                  ? filesUrls.find(it => it.id === item.committeeId)?.url
+                  : dataItem?.img.url
+                    ? `${server}/${dataItem?.img.url}`
+                    : notPhoto
+              }
+              alt={dataItem?.fio}
+            />
+            <div className={styles.CardOrganizationInnerImgInput}>
+              <img src={deletePhoto2Img} alt="Удалить" onClick={() => handleDeleteImg()} />
+              <img
+                src={editPhoto2Img}
+                alt="Редактирование"
+                onClick={() => refFile.current.click()}
+              />
+            </div>
+            <input
+              ref={refFile}
+              type="file"
+              onChange={e => changeFileData(e)}
+              style={{ display: 'none' }}
+            />
           </div>
-          <input
-            ref={refFile}
-            type="file"
-            onChange={e => changeFileData(e)}
-            style={{ display: 'none' }}
-          />
-        </div>
 
-        <div className={styles.CardOrganizationInnerInfo}>
-          <label>ФИО</label>
-          <input
-            value={dataItem.fio}
-            onChange={e => handleEditData(e.target.value, 'fio')}
-            style={{ borderColor: errorFio ? '#B32020' : '' }}
-          />
-          {errorFio && <span className={styles.error}>{errorFio}</span>}
-        </div>
-
-        <div className={styles.CardOrganizationInnerInfo}>
-          <label>Организация</label>
-          <textarea
-            ref={textareasRef}
-            value={dataItem.organization}
-            onChange={e => handleEditData(e.target.value, 'organization')}
-            style={{ borderColor: errorOrganization ? '#B32020' : '' }}
-          />
-          {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
-        </div>
-
-        {isChanged ? (
-          <div className={styles.buttonContainer} ref={buttonContainerRef}>
-            <button className={styles.cancel} onClick={handleCancel}>
-              Отмена
-            </button>
-            <button className={styles.save} onClick={handleSave}>
-              Сохранить
-            </button>
+          <div className={styles.CardOrganizationInnerInfo}>
+            <label>ФИО</label>
+            <input
+              value={dataItem.fio}
+              onChange={e => handleEditData(e.target.value, 'fio')}
+              style={{ borderColor: errorFio ? '#B32020' : '' }}
+            />
+            {errorFio && <span className={styles.error}>{errorFio}</span>}
           </div>
-        ) : (
-          <button className={styles.delete} onClick={handleDelete} ref={buttonDeleteRef}>
-            Удалить <img src={deletePhotoImg} alt="Удалить" />
-          </button>
-        )}
+
+          <div className={styles.CardOrganizationInnerInfo}>
+            <label>Организация</label>
+            <textarea
+              ref={textareasRef}
+              value={dataItem.organization}
+              onChange={e => handleEditData(e.target.value, 'organization')}
+              style={{ borderColor: errorOrganization ? '#B32020' : '' }}
+            />
+            {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
+          </div>
+
+          {isChanged ? (
+            <div className={styles.buttonContainer} ref={buttonContainerRef}>
+              <button className={styles.cancel} onClick={handleCancel}>
+                Отмена
+              </button>
+              <button className={styles.save} onClick={handleSave}>
+                Сохранить
+              </button>
+            </div>
+          ) : (
+            <button className={styles.delete} onClick={handleDelete} ref={buttonDeleteRef}>
+              Удалить <img src={deletePhotoImg} alt="Удалить" />
+            </button>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

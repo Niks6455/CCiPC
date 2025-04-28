@@ -4,10 +4,10 @@ import { gsap } from 'gsap';
 import React from 'react';
 import CapImg from '@assets/img/Cap.svg';
 import plusLigthImg from '@assets/img/UI/plusLigth.svg';
-import AddOrgPeople from '@components/AdminModuleComponents/AddOrgPeople/AddOrgPeople';
 import { getOrgCommitet } from '../../../apirequests/apirequests';
 import CardOrganization from './CardOrganization/CardOrganization';
 import { useSelector } from 'react-redux';
+import AddOrgPeople from '../../../components/AdminModuleComponents/AddOrgPeople/AddOrgPeople';
 
 function OrgazmCommetet() {
   const [activeButtonFirst, setActiveButtonFirst] = useState(0);
@@ -19,7 +19,8 @@ function OrgazmCommetet() {
   const [dataCommitetTwo, setDataCommitetTwo] = useState([]);
   const addOrgPeopleRef = useRef(null);
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
-  
+  const [filesUrls, setFilesUrls] = useState([]);
+
   useEffect(() => {
     getDataOrg();
   }, [conferenceid]);
@@ -27,7 +28,6 @@ function OrgazmCommetet() {
   const getDataOrg = async () => {
     if (conferenceid) {
       const res = await getOrgCommitet(conferenceid);
-      console.log('res', res)
       if (res?.status === 200) {
         setDataOrgAll(res.data.committee);
         filterCommittees();
@@ -40,26 +40,28 @@ function OrgazmCommetet() {
   }, [dataOrgAll, activeButtonFirst, activeButtonTwoo]);
 
   const filterCommittees = () => {
-    const committeeOne = dataOrgAll?.find(item => item?.type === activeButtonFirst)?.committees || [];
-    const committeeTwo =dataOrgAll?.find(item => item?.type === activeButtonTwoo + 2)?.committees || [];
+    const committeeOne =
+      dataOrgAll?.find(item => item?.type === activeButtonFirst)?.committees || [];
+    const committeeTwo =
+      dataOrgAll?.find(item => item?.type === activeButtonTwoo + 2)?.committees || [];
     setDataCommitetOne(committeeOne);
     setDataCommitetTwo(committeeTwo);
   };
 
   const updateCardData = (id, newImg) => {
-    console.log('newImg', newImg)
     const updateData = dataOrgAll.map(confirensis => {
-        return {...confirensis, committees: confirensis.committees.map(item => {
+      return {
+        ...confirensis,
+        committees: confirensis.committees.map(item => {
           if (item.id === id) {
-            return { ...item, img: newImg }
+            return { ...item, img: newImg };
           }
-          return item
-        })
-      }
+          return item;
+        }),
+      };
     });
-    setDataOrgAll(updateData)
+    setDataOrgAll(updateData);
   };
-
 
   const closeCreateOne = () => {
     if (addOrgPeopleRef.current) {
@@ -138,6 +140,8 @@ function OrgazmCommetet() {
                   getDataOrg={getDataOrg}
                   item={item}
                   updateCardData={updateCardData}
+                  filesUrls={filesUrls}
+                  setFilesUrls={setFilesUrls}
                 />
               ))}
             </div>
@@ -192,6 +196,8 @@ function OrgazmCommetet() {
                   getDataOrg={getDataOrg}
                   item={item}
                   updateCardData={updateCardData}
+                  filesUrls={filesUrls}
+                  setFilesUrls={setFilesUrls}
                 />
               ))}
             </div>

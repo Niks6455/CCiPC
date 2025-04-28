@@ -259,9 +259,7 @@ function NavBar(props) {
                                       }}
                                     >
                                       <span>
-                                        {item.name.length < 20
-                                          ? item.name
-                                          : item.name.slice(0, 20) + '...'}
+                                        <span>Доклад №{index + 1}</span>
                                       </span>
                                     </li>
                                   ))}

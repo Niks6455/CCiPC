@@ -5,6 +5,7 @@ import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import FileComponent from '../FileComponent/FileComponent';
 import { createOrgCommitet, uploadPhoto } from '../../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
+import ImageCropper from '../../ImageCropper/ImageCropper';
 
 function AddOrgPeople(props) {
   const [file, setFile] = useState(null);
@@ -15,16 +16,21 @@ function AddOrgPeople(props) {
   const textareaRef = useRef(null);
   const containerRef = useRef(null);
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
+  const [fileUrl, setFileUrl] = useState(null);
+  const [editPhoto, setEditPhoto] = useState(false);
 
   useEffect(() => {
     gsap.fromTo(
       containerRef.current,
       { opacity: 0, y: 20 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' },
     );
   }, []);
 
-  const handleFileChange = file => setFile(file);
+  const handleFileChange = file => {
+    setFile(file);
+    setFileUrl(URL.createObjectURL(file));
+  };
 
   const handleTextareaChange = e => {
     setOrganization(e.target.value);
@@ -88,71 +94,90 @@ function AddOrgPeople(props) {
     }
   };
 
+  const funEditPhoto = file => {
+    if (file) {
+      setFile(file);
+      setFileUrl(URL.createObjectURL(file));
+      setEditPhoto(false);
+    }
+  };
+
   return (
-    <div ref={containerRef} className={styles.AddOrgPeople}>
-      <div className={styles.AddOrgPeopleInner}>
-        <div className={styles.addFile}>
-          <div
-            className={styles.file_cont}
-            style={{ border: !file ? '2px dashed #C4C4C4' : 'none' }}
-          >
-            <div className={styles.border_inner}>
-              <FileComponent
-                data={file}
-                setData={handleFileChange}
-                typeFile={['image/png', 'image/jpg', 'image/jpeg']}
-                accept={'.png,.jpg'}
-                name={'pngNews'}
-                icon={'png'}
-                text={'Нажмите или перетащите</br> изображение для добавления'}
-              />
+    <>
+      {file && (
+        <ImageCropper
+          editPhoto={editPhoto}
+          setEditPhoto={setEditPhoto}
+          urlPhoto={fileUrl}
+          funEditPhoto={funEditPhoto}
+          circularCrop={false}
+        />
+      )}
+      <div ref={containerRef} className={styles.AddOrgPeople}>
+        <div className={styles.AddOrgPeopleInner}>
+          <div className={styles.addFile}>
+            <div
+              className={styles.file_cont}
+              style={{ border: !file ? '2px dashed #C4C4C4' : 'none' }}
+              onClick={() => setEditPhoto(true)}
+            >
+              <div className={styles.border_inner}>
+                <FileComponent
+                  logoHeader={fileUrl}
+                  data={file}
+                  setData={handleFileChange}
+                  typeFile={['image/png', 'image/jpg', 'image/jpeg']}
+                  accept={'.png,.jpg'}
+                  name={'pngNews'}
+                  icon={'png'}
+                  text={'Нажмите или перетащите</br> изображение для добавления'}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.AddOrgPeopleInput}>
-          <label>ФИО</label>
-          <input
-            type="text"
-            value={fio}
-            onChange={e => {
-              setFio(e.target.value);
-              setErrorFio('');
-            }}
-            style={{ borderColor: errorFio ? '#B32020' : '' }}
-          />
-          {errorFio && <span className={styles.error}>{errorFio}</span>}
-        </div>
+          <div className={styles.AddOrgPeopleInput}>
+            <label>ФИО</label>
+            <input
+              type="text"
+              value={fio}
+              onChange={e => {
+                setFio(e.target.value);
+                setErrorFio('');
+              }}
+              style={{ borderColor: errorFio ? '#B32020' : '' }}
+            />
+            {errorFio && <span className={styles.error}>{errorFio}</span>}
+          </div>
 
-        <div className={styles.AddOrgPeopleInput}>
-          <label>Организация</label>
-          <textarea
-            ref={textareaRef}
-            value={organization}
-            onChange={handleTextareaChange}
-            style={{
-              minHeight: '62px',
-              maxHeight: '145px',
-              overflowY: 'hidden',
-              resize: 'none',
-              borderColor: errorOrganization ? '#B32020' : ''
-            }}
-          />
-          {errorOrganization && (
-            <span className={styles.error}>{errorOrganization}</span>
-          )}
-        </div>
+          <div className={styles.AddOrgPeopleInput}>
+            <label>Организация</label>
+            <textarea
+              ref={textareaRef}
+              value={organization}
+              onChange={handleTextareaChange}
+              style={{
+                minHeight: '62px',
+                maxHeight: '145px',
+                overflowY: 'hidden',
+                resize: 'none',
+                borderColor: errorOrganization ? '#B32020' : '',
+              }}
+            />
+            {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
+          </div>
 
-        <div className={styles.AddOrgPeopleButton}>
-          <button className={styles.save} onClick={createOrg}>
-            Сохранить
-          </button>
-          <button className={styles.delete} onClick={props.closeCreateOne}>
-            <img src={deletePhotoImg} alt="Удалить" />
-          </button>
+          <div className={styles.AddOrgPeopleButton}>
+            <button className={styles.save} onClick={createOrg}>
+              Сохранить
+            </button>
+            <button className={styles.delete} onClick={props.closeCreateOne}>
+              <img src={deletePhotoImg} alt="Удалить" />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

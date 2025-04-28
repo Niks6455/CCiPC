@@ -274,7 +274,10 @@ function ViewReports() {
             </div>
           </div>
           {new Date(convertDateTire(conferense?.dedlineReport2)) > new Date() && (
-            <div className={styles.EditDataReport}>
+            <div
+              className={styles.EditDataReport}
+              style={reportData?.author?.email !== user?.email ? { justifyContent: 'center' } : {}}
+            >
               <button
                 className={styles.button_edit}
                 onClick={() => {
