@@ -1,6 +1,6 @@
 .CardOrganization {
   width: torem(354px);
-  height: torem(579px);
+  height: torem(679px);
   background-color: #fff;
   border-radius: torem(30px);
   position: relative;
@@ -21,7 +21,8 @@
         align-items: center;
         justify-content: center;
         width: torem(322px) !important;
-        height: torem(230px) !important;
+        height: torem(322px) !important;
+        border-radius: torem(10px);
         cursor: pointer;
         transition: 0.1s linear all;
         &:hover {
@@ -43,9 +44,9 @@
     }
     .Img {
       width: torem(322px) !important;
-      height: torem(230px) !important;
-      -o-object-fit: contain;
-      object-fit: contain;
+      height: torem(322px) !important;
+      -o-object-fit: cover;
+      object-fit: cover;
       border-radius: torem(10px);
     }
 

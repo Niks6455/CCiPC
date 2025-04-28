@@ -4,6 +4,7 @@ import FileComponent from '../FileComponent/FileComponent';
 import { useEffect, useRef, useState } from 'react';
 import { createArchive, uploadPhoto } from '../../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
+import ImageCropper from '../../ImageCropper/ImageCropper';
 
 function AddArchive(props) {
   const [file, setFile] = useState(null);
@@ -13,10 +14,20 @@ function AddArchive(props) {
   const [errorUrl, setErrorUrl] = useState('');
   const textareaRef = useRef(null);
   const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
+  const [fileUrl, setFileUrl] = useState(null);
+  const [editPhoto, setEditPhoto] = useState(false);
 
   //! Обработчик выбора файла
   const handleFileChange = file => {
-    setFile(file);
+    if (file) {
+      setFile(file);
+      setFileUrl(URL.createObjectURL(file));
+      setEditPhoto(true);
+    } else {
+      setFile(null);
+      setFileUrl(null);
+      setEditPhoto(false);
+    }
   };
 
   //! Автоматическое изменение высоты textarea
@@ -56,6 +67,15 @@ function AddArchive(props) {
     } else {
       setErrorUrl('');
     }
+    if (name.length > 250) {
+      setErrorName('Не более 250 символов*');
+      valid = false;
+    }
+
+    if (url.length > 250) {
+      setErrorUrl('Не более 250 символов*');
+      valid = false;
+    }
 
     if (!valid) return; // Прерывание, если есть ошибки
 
@@ -92,69 +112,87 @@ function AddArchive(props) {
     }
   };
 
+  const funEditPhoto = file => {
+    if (file) {
+      setFile(file);
+      setFileUrl(URL.createObjectURL(file));
+      setEditPhoto(false);
+    }
+  };
+
   return (
-    <div className={styles.AddOrgPeople}>
-      <div className={styles.AddOrgPeopleInner}>
-        <div className={styles.addFile}>
-          <div
-            className={styles.file_cont}
-            style={{ border: !file ? '2px dashed #C4C4C4' : 'none' }}
-          >
-            <div className={styles.border_inner}>
-              <FileComponent
-                data={file}
-                setData={handleFileChange}
-                typeFile={['image/png', 'image/jpg', 'image/jpeg']}
-                accept={'.png,.jpg'}
-                name={'pngNews'}
-                icon={'png'}
-                text={'Нажмите или перетащите</br> изображение для добавления'}
-              />
+    <>
+      <ImageCropper
+        editPhoto={editPhoto}
+        setEditPhoto={setEditPhoto}
+        urlPhoto={fileUrl}
+        funEditPhoto={funEditPhoto}
+        circularCrop={false}
+      />
+      <div className={styles.AddOrgPeople}>
+        <div className={styles.AddOrgPeopleInner}>
+          <div className={styles.addFile}>
+            <div
+              className={styles.file_cont}
+              style={{ border: !file ? '2px dashed #C4C4C4' : 'none' }}
+            >
+              <div className={styles.border_inner}>
+                <FileComponent
+                  logoHeader={fileUrl}
+                  data={file}
+                  setData={handleFileChange}
+                  typeFile={['image/png', 'image/jpg', 'image/jpeg']}
+                  accept={'.png,.jpg'}
+                  name={'pngNews'}
+                  icon={'png'}
+                  text={'Нажмите или перетащите</br> изображение для добавления'}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className={styles.AddOrgPeopleInput}>
-          <label>Название альбома</label>
-          <input
-            type="text"
-            value={name}
-            onChange={e => {
-              setName(e.target.value);
-              setErrorName('');
-            }}
-            style={{ borderColor: errorName ? '#B32020' : '' }}
-          />
-          {errorName && <span className={styles.error}>{errorName}</span>}
-        </div>
+          <div className={styles.AddOrgPeopleInput}>
+            <label>Название альбома</label>
+            <input
+              type="text"
+              value={name}
+              onChange={e => {
+                setName(e.target.value);
+                setErrorName('');
+              }}
+              style={{ borderColor: errorName ? '#B32020' : '' }}
+            />
+            {errorName && <span className={styles.error}>{errorName}</span>}
+          </div>
 
-        <div className={styles.AddOrgPeopleInput}>
-          <label>Ссылка</label>
-          <textarea
-            ref={textareaRef}
-            value={url}
-            onChange={handleTextareaChange}
-            style={{
-              minHeight: '62px',
-              maxHeight: '135px',
-              overflowY: 'hidden',
-              resize: 'none',
-              borderColor: errorUrl ? '#B32020' : '',
-            }}
-          />
-          {errorUrl && <span className={styles.error}>{errorUrl}</span>}
-        </div>
+          <div className={styles.AddOrgPeopleInput}>
+            <label>Ссылка</label>
+            <textarea
+              ref={textareaRef}
+              value={url}
+              onChange={handleTextareaChange}
+              style={{
+                minHeight: '62px',
+                maxHeight: '135px',
+                overflowY: 'hidden',
+                resize: 'none',
+                borderColor: errorUrl ? '#B32020' : '',
+              }}
+            />
+            {errorUrl && <span className={styles.error}>{errorUrl}</span>}
+          </div>
 
-        <div className={styles.AddOrgPeopleButton}>
-          <button className={styles.save} onClick={createOrg}>
-            Сохранить
-          </button>
-          <button className={styles.delete} onClick={props.close}>
-            <img src={deletePhotoImg} alt="Удалить" />
-          </button>
+          <div className={styles.AddOrgPeopleButton}>
+            <button className={styles.save} onClick={createOrg}>
+              Сохранить
+            </button>
+            <button className={styles.delete} onClick={props.close}>
+              <img src={deletePhotoImg} alt="Удалить" />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 

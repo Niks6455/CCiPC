@@ -4,13 +4,13 @@
     border-radius: torem(28px);
     padding: torem(20px);
     width: torem(354px);
-    height: torem(579px);
+    height: torem(679px);
     box-sizing: border-box;
     position: relative;
     .AddOrgPeopleFile {
       background-image: url('./../../../assets/img/AdminPanel/addPhoto.svg');
       width: torem(322px);
-      height: torem(230px);
+      height: torem(322px);
       background-size: contain;
       background-repeat: no-repeat;
     }
@@ -50,13 +50,15 @@
       width: auto;
       height: auto;
       border: torem(2px) dashed #c8d0ce;
-      height: torem(230px);
+      height: torem(322px);
+
       width: 100%;
       border-radius: torem(10px);
       box-sizing: border-box;
       .border_inner {
         width: 100%;
-        height: torem(230px);
+        height: torem(322px);
+
         border-radius: torem(10px);
         box-sizing: border-box;
       }
