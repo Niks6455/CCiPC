@@ -3,56 +3,69 @@ $w2: 769px;
 $w3: 480px;
 
 .photoGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: torem(10px); /* Убираем отступы между элементами */
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: torem(10px);
   max-width: torem(1300px);
-  margin: 0 auto;
-
+  margin: 0 auto; // Центрирование и сброс отступов
+  padding: 0; // Убираем внутренние отступы
+  height: fit-content;
+  @media (min-width: $w1) {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  
   @media (max-width: $w2) {
-    width: 100vw;
-    padding: torem(90px) torem(30px);
-    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+    padding: 0 torem(10px); // Добавляем небольшие отступы по бокам
+    margin-top: 100px;
   }
-  @media (max-width: $w3) {
-    grid-template-columns: repeat(1, 1fr);
-  }
+
   a {
-    height: max-content;
+    display: block; // Убедимся, что ссылка ведет себя как блок
+    width: 32%;
+    margin-bottom: torem(10px); // Заменим gap на margin-bottom для лучшего контроля
+    max-height: torem(300px);
+    @media (max-width: $w2) {
+      width: 48%;
+      max-height: torem(250px);
+    }
+    
+    @media (max-width: $w3) {
+      width: 100%;
+      max-height: torem(300px);
+    }
   }
+
   .photoItem {
-    width: 100%; /* Растягиваем по ширине колонки */
-    height: torem(300px);
-    overflow: hidden; /* Обрезаем лишнее */
+    width: 100%;
+    height: 100%; // Заменим фиксированную высоту на 100%
+    min-height: torem(250px); // Минимальная высота вместо фиксированной
+    overflow: hidden;
     position: relative;
     transition: 0.1s linear all;
     border-radius: torem(10px);
     cursor: pointer;
-    @media (max-width: 1260px) {
-      height: torem(250px);
-    }
-    @media (max-width: 460px) {
-      height: torem(300px);
-    }
 
+    // Удалим медиа-запросы для высоты, так как используем min-height
     &:hover {
       .photo {
-        scale: 1.1;
+        transform: scale(1.1); // Заменим scale на transform для лучшей производительности
       }
       .linkArrow {
         opacity: 1;
       }
     }
+
     .photo {
-      width: 100%; /* Растягиваем изображение по контейнеру */
-      height: 100%; /* Заполняем контейнер полностью */
-      -o-object-fit: cover;
-      object-fit: cover; /* Обрезаем изображение, чтобы оно полностью заполняло контейнер */
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       border-radius: torem(10px);
-      -o-object-position: top;
-      object-position: top;
       transition: 0.2s linear all;
     }
+
 
     .linkArrow {
       position: absolute;
@@ -63,6 +76,7 @@ $w3: 480px;
       opacity: 0;
       transition: 0.2s linear all;
     }
+
     .photoTitleWrapper {
       position: absolute;
       bottom: 0;
@@ -80,9 +94,11 @@ $w3: 480px;
       padding: torem(5px) torem(10px);
       box-sizing: border-box;
       text-align: center;
+
       @media (max-width: 1260px) {
         height: torem(40px);
       }
+
       .photoTitle {
         width: 100%;
         color: #fff;
@@ -92,6 +108,7 @@ $w3: 480px;
       }
     }
   }
+
   .repName {
     position: fixed;
     max-width: torem(340px);

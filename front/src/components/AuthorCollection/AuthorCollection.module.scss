@@ -1,21 +1,21 @@
 .collection_element {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: torem(10px);
   img {
-    width: 24px;
-    height: 24px;
+    width: torem(24px);
+    height: torem(24px);
   }
   .collection_element_text {
     color: #333333;
     text-decoration: none;
-    font-size: 22px;
+    font-size: torem(22px);
     &:hover{
       color: #005935;
       text-decoration: underline;
     }
     @media (max-width: $w2) {
-      font-size: 18px;
+      font-size: torem(18px);
     }
   }
 }

@@ -5,7 +5,7 @@ $w3: 480px;
 .UniversalTable {
   max-height: 75vh;
   overflow: auto; /* Обеспечивает скроллинг при необходимости */
-  border-radius: 8px;
+  border-radius: torem(8px);
   margin: 0 auto;
   max-width: 90%; /* Делаем таблицу гибкой по ширине */
   box-sizing: border-box;
@@ -20,17 +20,17 @@ $w3: 480px;
 
   /* Добавляем для больших экранов, где может понадобиться фиксированная ширина */
   @media (min-width: 1600px) {
-    max-width: 1635px;
+    max-width: torem(1635px);
   }
 
   table {
-    padding: 0px 20px;
+    padding: 0px torem(20px);
     margin: 0 auto;
     border-collapse: collapse;
-    min-height: 100px;
+    min-height: torem(100px);
     overflow-x: auto;
-    font-size: 16px;
-    min-width: 1368px;
+    font-size: torem(16px);
+    min-width: torem(1368px);
     @media (max-width: 1368px) {
       min-width: 90%;
     }
@@ -42,7 +42,7 @@ $w3: 480px;
       background-color: #e7eae9;
 
       th {
-        padding: 15px;
+        padding: torem(15px);
         z-index: 10;
         border-bottom: 2px solid #ccc;
 
@@ -67,12 +67,12 @@ $w3: 480px;
       }
 
       td {
-        padding: 10px;
+        padding: torem(10px);
         background-color: #f7f7f7;
         border: 1px solid #c8d0ce;
         font-weight: 400;
-        font-size: 16px;
-        line-height: 21px;
+        font-size: torem(16px);
+        line-height: torem(21px);
       }
 
       td[name='number'] {
@@ -80,8 +80,8 @@ $w3: 480px;
       }
 
       .buttonTable {
-        width: 48px;
-        height: 52px;
+        width: torem(48px);
+        height: torem(52px);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -96,8 +96,8 @@ $w3: 480px;
     }
 
     .imgTable {
-      width: 150px;
-      height: 150px;
+      width: torem(150px);
+      height: torem(150px);
       transition: 0.1s all linear;
       &:hover {
         opacity: 0.4;
@@ -107,7 +107,7 @@ $w3: 480px;
 
   /* Стили для скроллбара */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: torem(8px);
   }
 
   ::-webkit-scrollbar-track {
@@ -116,7 +116,7 @@ $w3: 480px;
 
   ::-webkit-scrollbar-thumb {
     background-color: #ccc;
-    border-radius: 4px;
+    border-radius: torem(4px);
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -126,7 +126,7 @@ $w3: 480px;
   /* Адаптивность для маленьких экранов */
   @media (max-width: 768px) {
     table {
-      font-size: 14px;
+      font-size: torem(14px);
     }
   }
 }
@@ -134,7 +134,7 @@ $w3: 480px;
 .tableNotData {
   position: relative;
   text-align: center;
-  font-size: 18px;
+  font-size: torem(18px);
   color: var(--GrayColorInput);
   // background-color: #f7f7f7;
   height: torem(300px);
@@ -151,11 +151,11 @@ $w3: 480px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 180px;
+  width: torem(180px);
   img {
     left: 0px !important;
-    top: 2px !important;
-    margin: 0px 10px;
+    top: torem(2px) !important;
+    margin: 0px torem(10px);
     cursor: pointer;
     transition: 0.1s linear all;
     &:hover {
