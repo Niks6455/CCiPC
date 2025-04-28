@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import styles from './NavBar.module.scss';
 import closeImg from './../../assets/img/closeImg.png';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -25,6 +25,20 @@ function NavBar(props) {
   const [isReports, setIsReports] = useState(false);
   const reports = useSelector(state => state.reportsSlice.data);
   const user = useSelector(state => state.user.user.data);
+
+  const listRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = event => {
+      if (listRef.current && !listRef.current.contains(event.target)) {
+        context.setActiveMenu(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const naviList = [
     {
@@ -116,7 +130,7 @@ function NavBar(props) {
   ];
 
   return (
-    <div>
+    <div ref={listRef}>
       <>
         <div
           className={`${styles.logo} ${props.login ? styles.loginLogo : ''} ${location.pathname.includes('/account') ? styles.visibleLogo : ''}`}

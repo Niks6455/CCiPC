@@ -178,6 +178,7 @@ function HomePage({ userRole }) {
                   alt="Organization1"
                   key={index}
                   onLoad={e => handleImageLoad(e, index, setStyle2)}
+                  onError={e => (e.target.style.display = 'none')}
                 />
               ))}
             </div>
@@ -198,6 +199,7 @@ function HomePage({ userRole }) {
                   alt="Organization1"
                   key={index}
                   onLoad={e => handleImageLoad(e, index, setStyle)}
+                  onError={e => (e.target.style.display = 'none')}
                 />
               ))}
             </div>
