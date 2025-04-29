@@ -190,7 +190,7 @@ function ConfirenceModuleAdminPage() {
           setDeletePartners([]);
           funSetErrors('main', true);
           setModalSucces(true);
-          dispatch(fetchConferences());
+          // dispatch(fetchConferences());
           //! загрузка файлов
           funApiEditFileMulti(data, fileKeys, conferenseId);
           //! удаление файлов
@@ -212,7 +212,6 @@ function ConfirenceModuleAdminPage() {
           funSetErrors('main', true);
           setModalSucces(true);
           dispatch(fetchConferences());
-          console.log('res', res);
           //! загрузка файлов
           funApiEditFileMulti(data, fileKeys, res?.data?.conference?.id);
           // refetchConferense();

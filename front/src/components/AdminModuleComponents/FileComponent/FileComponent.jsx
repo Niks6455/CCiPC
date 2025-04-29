@@ -16,6 +16,8 @@ function FileComponent(props) {
   const [errorSize, setErrorSize] = useState(false);
   const [fileName, setFileName] = useState(null);
 
+  console.log('props.fileName', props.fileName);
+
   async function setFileFromPath(filePath, inputElement) {
     try {
       // Загружаем файл

@@ -44,10 +44,10 @@ function LeftMenuLk({ userRole }) {
   const handleMouseMove = event => {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
-
+  console.log('userRole', userRole);
   return (
     <section className={styles.LeftMenuLk}>
-      {userRole && (
+      {(userRole || userRole === 1 || userRole === 0) && (
         <div className={styles.LeftMenuLkInner} id="leftMenu">
           <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
           <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
