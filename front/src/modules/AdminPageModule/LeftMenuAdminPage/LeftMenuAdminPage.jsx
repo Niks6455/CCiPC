@@ -52,7 +52,7 @@ function LeftMenuAdminPage() {
               Оргвзнос
             </li>
           </Link>
-          <Link to="archive">
+          <Link to="photoalbums">
             <li className={getActiveLi('/adminPage/photoalbums')}>
               <img src={archive} />
               Архив фото
