@@ -2,6 +2,7 @@ import styles from './AddNews.module.scss';
 import goBackImg from '@assets/img/AdminPanel/goBack.svg';
 import { useEffect, useRef, useState } from 'react';
 import {
+  apiDeleteMulti,
   createNews,
   deleteNews,
   getNewsId,
@@ -17,6 +18,7 @@ import ImageCropper from '../../../../components/ImageCropper/ImageCropper';
 import ErrorModal from '../../../../components/ErrorModal/ErrorModal';
 
 function AddNews(props) {
+  const [itemData, setItemData] = useState(null);
   const [title, setTitle] = useState('');
   const [text, setText] = useState('');
   const [file, setFile] = useState(null);
@@ -25,6 +27,7 @@ function AddNews(props) {
   const store = useSelector(state => state.news);
   const dispatch = useDispatch();
   const [errorModal, setErrorModal] = useState(false);
+  const [deleteFile, setDeleteFile] = useState(null);
 
   const [origPhoto, setOrigPhoto] = useState(null);
   const [editPhoto, setEditPhoto] = useState(false);
@@ -32,6 +35,7 @@ function AddNews(props) {
   useEffect(() => {
     getNewsId(store?.selectNewsData).then(response => {
       if (response?.status === 200) {
+        setItemData(response?.data?.news);
         setTitle(response?.data?.news?.title);
         setText(response?.data?.news?.description);
         setLogoHeader(`${server}/${response?.data?.news?.img?.url}`);
@@ -49,6 +53,9 @@ function AddNews(props) {
     } else {
       setFile(null);
       setLogoHeader(null);
+      setError(prevError => ({ ...prevError, file: '' }));
+      console.log('itemData?.img?.id', itemData?.img?.id);
+      setDeleteFile(itemData?.img?.id);
     }
   };
 
@@ -146,6 +153,12 @@ function AddNews(props) {
         if (res?.status === 200) {
           props?.updateNewsData();
           props?.closeAddNews();
+        }
+      });
+    } else {
+      apiDeleteMulti({ ids: [deleteFile] }).then(res => {
+        if (res?.status === 200) {
+          setDeleteFile(null);
         }
       });
     }

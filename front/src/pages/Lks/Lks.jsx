@@ -9,7 +9,7 @@ function Lks(props) {
     <>
       <main className={styles.Lks}>
         <NavBar userRole={props.userRole} />
-        <LeftMenuLk footerRef={props.footerRef} />
+        <LeftMenuLk userRole={props.userRole} />
         <div className={styles.LksContainer}>
           <Outlet />
         </div>

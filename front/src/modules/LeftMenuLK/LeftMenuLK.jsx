@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux';
 
 import plus from '@assets/img/UI/plus.svg';
 
-function LeftMenuLk({ footerRef }) {
+function LeftMenuLk({ userRole }) {
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
   const [dokladOpen, setDokladOpen] = useState(false);
@@ -47,127 +47,145 @@ function LeftMenuLk({ footerRef }) {
 
   return (
     <section className={styles.LeftMenuLk}>
-      <div className={styles.LeftMenuLkInner} id="leftMenu">
-        <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
-        <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
-        <ul className={styles.LeftMenuLkList}>
-          <li
-            className={context.selectFrameLks === 'profile' ? styles.Active : ''}
-            onClick={() => {
-              context.setSelectFrameLks('profile');
-              navigate('profile');
-            }}
-          >
-            <img src={Lk} /> Профиль
-          </li>
-          <li
-            className={context.selectFrameLks === 'documents' ? styles.Active : ''}
-            onClick={() => {
-              setDokladOpen(!dokladOpen);
-            }}
-          >
-            <img src={documentImg} />
-            <span>Мои доклады</span>
-            <BlackArrowBottom className={`${styles.arrow} ${dokladOpen ? styles.open : ''}`} />
-          </li>
-          <div className={`${styles.listSetings} ${dokladOpen && styles.setingOpen}`}>
-            <li
-              className={styles.addDocl}
-              onClick={() => {
-                navigate('documents');
-                context.setSelectFrameLks('documents');
-              }}
-            >
-              <div>
-                <img src={plus} alt="plus" />
-              </div>
-              <span>Добавить доклад</span>
-            </li>
-            {reports.data.map((rep, index) => (
+      {userRole && (
+        <div className={styles.LeftMenuLkInner} id="leftMenu">
+          <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
+          <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
+          <ul className={styles.LeftMenuLkList}>
+            {userRole !== 1 && (
               <li
-                key={index}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={() => handleMouseLeave()}
-                onMouseMove={handleMouseMove}
-                onClick={() => navigate(`viewreports?idReport=${rep.id}&number=${index + 1}`)}
+                className={context.selectFrameLks === 'profile' ? styles.Active : ''}
+                onClick={() => {
+                  context.setSelectFrameLks('profile');
+                  navigate('profile');
+                }}
               >
-                {index === showTooltip && (
-                  <div
-                    style={{
-                      left: coordinates.x + 50,
-                      top: coordinates.y - 20,
-                    }}
-                    className={styles.repName}
-                  >
-                    {rep.name}
-                  </div>
-                )}
-                <span>Доклад №{index + 1}</span>
+                <img src={Lk} /> Профиль
               </li>
-            ))}
-          </div>
-          <li
-            className={context.selectFrameLks === 'ArchivPhoto' ? styles.Active : ''}
-            onClick={() => {
-              context.setSelectFrameLks('ArchivPhoto');
-              navigate('archivephoto');
-            }}
-          >
-            <img src={ArchiveiMG} /> Архив фото
-          </li>
-          <li
-            className={context.selectFrameLks === 'settings' ? styles.Active : ''}
-            onClick={() => {
-              context.setSelectFrameLks('settings');
-              setSetingOpen(!setingOpen);
-              context.setSelectFrameLks('settings');
-            }}
-          >
-            <img src={SettingsImg} />
-            <span>Настройки</span>
-            <BlackArrowBottom className={`${styles.arrow} ${setingOpen ? styles.open : ''}`} />
-          </li>
-          <div className={`${styles.listSetings} ${setingOpen && styles.setingOpen}`}>
-            <li
-              onClick={() => {
-                navigate('settings/profile');
-                context.setSelectFrameLks('settings/profile');
-              }}
-              className={context.selectFrameLks === 'settings/profile' ? styles.Active : ''}
-            >
-              Изменить профиль
-            </li>
-            <li
-              onClick={() => {
-                navigate('settings/changepassword');
-                context.setSelectFrameLks('settings/changepassword');
-              }}
-              className={context.selectFrameLks === 'settings/changepassword' ? styles.Active : ''}
-            >
-              Сменить пароль
-            </li>
-          </div>
+            )}
+            {userRole !== 1 && (
+              <li
+                className={context.selectFrameLks === 'documents' ? styles.Active : ''}
+                onClick={() => {
+                  setDokladOpen(!dokladOpen);
+                }}
+              >
+                <img src={documentImg} />
+                <span>Мои доклады</span>
+                <BlackArrowBottom className={`${styles.arrow} ${dokladOpen ? styles.open : ''}`} />
+              </li>
+            )}
 
-          <li
-            className={context.selectFrameLks === 'ExitAccount' ? styles.Active : ''}
-            onClick={() => {
-              navigate('exitaccount');
-              context.setSelectFrameLks('ExitAccount');
-            }}
-          >
-            <img src={exitImg} /> Выйти из аккаунта
-          </li>
-          <li
-            className={context.selectFrameLks === 'DeleteAccount' ? styles.Active : ''}
-            onClick={() => {
-              navigate('deleteaccount');
-              context.setSelectFrameLks('DeleteAccount');
-            }}
-          >
-            <img src={deleteImg} /> Удалить аккаунт
-          </li>
-        </ul>
-      </div>
+            <div className={`${styles.listSetings} ${dokladOpen && styles.setingOpen}`}>
+              {userRole !== 1 && (
+                <li
+                  className={styles.addDocl}
+                  onClick={() => {
+                    navigate('documents');
+                    context.setSelectFrameLks('documents');
+                  }}
+                >
+                  <div>
+                    <img src={plus} alt="plus" />
+                  </div>
+                  <span>Добавить доклад</span>
+                </li>
+              )}
+              {userRole !== 1 &&
+                reports.data.map((rep, index) => (
+                  <li
+                    key={index}
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={() => handleMouseLeave()}
+                    onMouseMove={handleMouseMove}
+                    onClick={() => navigate(`viewreports?idReport=${rep.id}&number=${index + 1}`)}
+                  >
+                    {index === showTooltip && (
+                      <div
+                        style={{
+                          left: coordinates.x + 50,
+                          top: coordinates.y - 20,
+                        }}
+                        className={styles.repName}
+                      >
+                        {rep.name}
+                      </div>
+                    )}
+                    <span>Доклад №{index + 1}</span>
+                  </li>
+                ))}
+            </div>
+            <li
+              className={context.selectFrameLks === 'ArchivPhoto' ? styles.Active : ''}
+              onClick={() => {
+                context.setSelectFrameLks('ArchivPhoto');
+                navigate('archivephoto');
+              }}
+            >
+              <img src={ArchiveiMG} /> Архив фото
+            </li>
+            {userRole !== 1 && (
+              <li
+                className={context.selectFrameLks === 'settings' ? styles.Active : ''}
+                onClick={() => {
+                  context.setSelectFrameLks('settings');
+                  setSetingOpen(!setingOpen);
+                  context.setSelectFrameLks('settings');
+                }}
+              >
+                <img src={SettingsImg} />
+                <span>Настройки</span>
+                <BlackArrowBottom className={`${styles.arrow} ${setingOpen ? styles.open : ''}`} />
+              </li>
+            )}
+            {userRole !== 1 && (
+              <div className={`${styles.listSetings} ${setingOpen && styles.setingOpen}`}>
+                <li
+                  onClick={() => {
+                    navigate('settings/profile');
+                    context.setSelectFrameLks('settings/profile');
+                  }}
+                  className={context.selectFrameLks === 'settings/profile' ? styles.Active : ''}
+                >
+                  Изменить профиль
+                </li>
+                <li
+                  onClick={() => {
+                    navigate('settings/changepassword');
+                    context.setSelectFrameLks('settings/changepassword');
+                  }}
+                  className={
+                    context.selectFrameLks === 'settings/changepassword' ? styles.Active : ''
+                  }
+                >
+                  Сменить пароль
+                </li>
+              </div>
+            )}
+
+            <li
+              className={context.selectFrameLks === 'ExitAccount' ? styles.Active : ''}
+              onClick={() => {
+                navigate('exitaccount');
+                context.setSelectFrameLks('ExitAccount');
+              }}
+            >
+              <img src={exitImg} /> Выйти из аккаунта
+            </li>
+            {userRole !== 1 && (
+              <li
+                className={context.selectFrameLks === 'DeleteAccount' ? styles.Active : ''}
+                onClick={() => {
+                  navigate('deleteaccount');
+                  context.setSelectFrameLks('DeleteAccount');
+                }}
+              >
+                <img src={deleteImg} /> Удалить аккаунт
+              </li>
+            )}
+          </ul>
+        </div>
+      )}
     </section>
   );
 }
