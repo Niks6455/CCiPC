@@ -6,11 +6,6 @@ import File from "../models/file.js";
 
 export default {
     async create(title, description) {
-        const news=await News.findOne({
-            where: { title: title }
-
-        })
-        if(news) throw new AppErrorAlreadyExists('title')
         return await News.create({
             title, description
         })
@@ -70,18 +65,6 @@ export default {
     async update(id, title, description){
 
         const news= await News.findByPk(id)
-        if(title)
-        {
-            const checkTitle = await News.findOne({
-                where: {
-                    title: title
-                }
-            })
-
-            if(checkTitle && news.title !== title) throw new AppErrorAlreadyExists('title')
-
-        }
-
         if(!news) throw new AppErrorNotExist('news')
 
         return await news.update({

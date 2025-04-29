@@ -12,5 +12,6 @@ export function map(data){
     return{
         ...mapShort(data),
         status: data.status ?? null,
+        comment: data?.report?.commenct ?? null,
     }
 }

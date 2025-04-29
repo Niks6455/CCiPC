@@ -1,4 +1,4 @@
-import { AppErrorInvalid, AppErrorMissing } from '../utils/errors.js';
+import {  AppErrorMissing } from '../utils/errors.js';
 import newsService from "../services/news.js";
 import checkValidate from '../utils/validate/news.js'
 export default {

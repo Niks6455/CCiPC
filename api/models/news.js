@@ -6,7 +6,7 @@ export default class News extends Model {
         News.init(
             {
                 id: { type: DataTypes.UUID, primaryKey: true },
-                title: { type: DataTypes.STRING, allowNull: false, unique: 'title' },
+                title: { type: DataTypes.STRING, allowNull: false },
                 description: { type: DataTypes.TEXT, allowNull: false },
             },
             {
