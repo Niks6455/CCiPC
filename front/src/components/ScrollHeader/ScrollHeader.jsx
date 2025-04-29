@@ -28,7 +28,7 @@ function ScrollHeader({ userRole }) {
     },
     {
       name: 'Оргкомитет',
-      path: '/organizationcomite',
+      path: '/committee',
       active: true,
     },
     {

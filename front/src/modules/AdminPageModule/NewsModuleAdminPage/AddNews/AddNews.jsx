@@ -175,6 +175,10 @@ function AddNews(props) {
     }
   };
 
+  const funDeleteFile = () => {
+    setLogoHeader(null);
+  };
+
   return (
     <>
       <ErrorModal title={errorModal} open={errorModal} close={() => setErrorModal(null)} />
@@ -245,6 +249,7 @@ function AddNews(props) {
                   icon={'png'}
                   text={'Необходимо загрузить<br/> фотографию в формате JPG, PNG'}
                   fileSize={20}
+                  funDeleteFile={funDeleteFile}
                 />
               </div>
             </div>
