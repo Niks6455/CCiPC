@@ -23,15 +23,30 @@ function ExitAccount(props) {
         </div>
         <p>Выйти из аккаунта?</p>
         <div className={styles.ExitAccountButton}>
-          <button
-            onClick={() => {
-              navigate('/account/profile');
-              context.setSelectFrameLks('profile');
-            }}
-          >
-            В профиль
-          </button>
-          <button onClick={funExcit}>Да</button>
+          {context.userRole === 1 ? (
+            <>
+              <button
+                onClick={() => {
+                  navigate(-1);
+                }}
+              >
+                Назад
+              </button>
+              <button onClick={funExcit}>Да</button>
+            </>
+          ) : (
+            <>
+              <button
+                onClick={() => {
+                  navigate('/account/profile');
+                  context.setSelectFrameLks('profile');
+                }}
+              >
+                В профиль
+              </button>
+              <button onClick={funExcit}>Да</button>
+            </>
+          )}
         </div>
       </div>
     </section>

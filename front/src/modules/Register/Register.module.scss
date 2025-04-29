@@ -10,6 +10,7 @@ $w3: 480px;
     width: 100%;
     @media (max-width: $w2) {
       position: fixed;
+      z-index: 1000;
       left: torem(25px);
       top: torem(10px);
       width: -webkit-max-content;

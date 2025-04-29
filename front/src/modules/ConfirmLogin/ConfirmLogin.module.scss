@@ -17,7 +17,7 @@ $w2: 540px;
   }
   @media (max-width: $w1) {
     position: fixed;
-    z-index: 10000;
+    z-index: 1000;
     left: torem(25px);
     top: torem(10px);
     width: -webkit-max-content;

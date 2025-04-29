@@ -1,5 +1,5 @@
 import styles from './HeaderPhone.module.scss';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import arrow from '@assets/img/arrow.svg';
@@ -9,8 +9,11 @@ import logout from '@assets/img/headPhoneIcon/logout.svg';
 import profile from '@assets/img/headPhoneIcon/profile.svg';
 import documents from '@assets/img/headPhoneIcon/documents.svg';
 import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
+import DataContext from '../../context';
 
 function HeaderPhone(props) {
+  const context = useContext(DataContext);
+
   const [activeMenu, setActiveMenu] = useState(false);
   const navigate = useNavigate();
   const [activeMenuListFirst, setActiveMenuListFirst] = useState(false);
@@ -195,14 +198,16 @@ function HeaderPhone(props) {
                       </div>
                     </li>
 
-                    <li onClick={() => navigate('/account/deleteaccount')}>
-                      <div className={styles.NavBarMenuListInnerLiImg}>
-                        <span>
-                          <img src={deleteImg} />
-                        </span>
-                        <p>Удалить аккаунт</p>
-                      </div>
-                    </li>
+                    {context.userRole !== 1 && (
+                      <li onClick={() => navigate('/account/deleteaccount')}>
+                        <div className={styles.NavBarMenuListInnerLiImg}>
+                          <span>
+                            <img src={deleteImg} />
+                          </span>
+                          <p>Удалить аккаунт</p>
+                        </div>
+                      </li>
+                    )}
                   </div>
                 )}
 

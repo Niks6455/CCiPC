@@ -24,7 +24,7 @@ $w4: 480px;
   position: fixed;
   top: torem(25px);
   left: torem(25px);
-  z-index: 10020;
+  z-index: 1000;
   @include HoverActiveOpacity;
   @media (max-width: 990px) {
     width: torem(60px);

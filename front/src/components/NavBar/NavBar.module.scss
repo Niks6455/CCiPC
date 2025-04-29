@@ -2,6 +2,18 @@ $w1: 1366px;
 $w2: 769px;
 $w3: 480px;
 
+.PageBlur {
+  @media (max-width: $w2) {
+    position: fixed;
+    z-index: 7000;
+    background-color: #002d1b57;
+    backdrop-filter: blur(3px);
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+  }
+}
 .absluteLogo {
   display: none !important;
   @media (min-width: 1600px) {
@@ -27,7 +39,7 @@ $w3: 480px;
   position: absolute;
   left: torem(25px);
   top: torem(10px);
-  z-index: 9000;
+  z-index: 2000;
   @include HoverActiveOpacity;
   cursor: pointer;
 
@@ -41,7 +53,7 @@ $w3: 480px;
 }
 
 .NavBar {
-  width: 100vw;
+  width: max-content;
   box-sizing: border-box;
   padding-top: 25px;
   padding-right: 25px;
@@ -49,7 +61,7 @@ $w3: 480px;
   display: flex;
   justify-content: end;
   top: 0;
-  left: 0;
+  right: 0;
   z-index: 8000;
   @media (max-width: $w3) {
     display: none;
@@ -121,9 +133,16 @@ $w3: 480px;
     box-sizing: border-box;
     text-align: end;
     padding: torem(25px) torem(30px);
+
     .menuInner {
       position: relative;
       height: 100vh;
+      @media (max-width: $w2) {
+        overflow-y: auto;
+        max-height: calc(100vh - torem(50px));
+        padding-right: torem(10px);
+        transform: translateX(torem(10px));
+      }
       .RightMenuText {
         @media (max-width: $w2) {
           display: none;

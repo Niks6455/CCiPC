@@ -23,7 +23,7 @@ $w3: 480px;
     max-width: torem(310px);
     padding: torem(10px) 0px 0px torem(20px);
     border-right: torem(1px) solid var(--InputColors);
-    z-index: 9000;
+    z-index: 1000;
     box-sizing: border-box;
     background-color: var(--BodyBgColor);
     @media (min-width: 1600px) {

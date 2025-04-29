@@ -151,7 +151,11 @@ function App() {
                     path="addcoauthor"
                     element={<ProtectedRoute element={<AddCoauthor />} />}
                   />
-                  <Route path="profile" element={<ProtectedRoute element={<Profile />} />} />
+                  {userRole === 1 ? (
+                    <Route path="profile" element={<ProtectedRoute element={<ArchivPhoto />} />} />
+                  ) : (
+                    <Route path="profile" element={<ProtectedRoute element={<Profile />} />} />
+                  )}
                   <Route
                     path="deleteaccount"
                     element={<ProtectedRoute element={<DeleteAccount />} />}

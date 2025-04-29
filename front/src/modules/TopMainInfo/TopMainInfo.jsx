@@ -13,7 +13,7 @@ import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 import { server } from '../../apirequests/apirequests';
 import { AnimatePresence, motion } from 'framer-motion';
 
-function TopMainInfo() {
+function TopMainInfo({ userRole }) {
   const conference = useSelector(state => state?.conferences?.data[0]);
   const userData = useSelector(state => state.user.user.data);
   const arrowRef = useRef(null); // Реф для стрелки
@@ -23,11 +23,15 @@ function TopMainInfo() {
   const [isVisible, setIsVisible] = useState(false);
 
   const funClickRequest = () => {
-    const assetsToken = localStorage.getItem('accessToken');
-    if (assetsToken === null || !userData) {
-      navigate('/login/authorization');
+    if (userRole === 1) {
+      navigate('/account/profile');
     } else {
-      navigate('/account/documents');
+      const assetsToken = localStorage.getItem('accessToken');
+      if (assetsToken === null || !userData) {
+        navigate('/login/authorization');
+      } else {
+        navigate('/account/documents');
+      }
     }
   };
 

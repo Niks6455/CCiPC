@@ -104,7 +104,7 @@ function HomePage({ userRole }) {
       <ScrollHeader userRole={userRole} />
       <HeaderPhone />
       <Header userRole={userRole} />
-      <TopMainInfo />
+      <TopMainInfo userRole={userRole} />
       {conference && conference?.stages?.length > 0 && <SliderHomePageTop />}
       <Layout>
         <section className={styles.textSection}>

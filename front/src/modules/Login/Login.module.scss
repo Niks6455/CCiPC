@@ -16,6 +16,7 @@ $w3: 360px;
       width: -webkit-max-content;
       width: -moz-max-content;
       width: max-content;
+      z-index: 1000;
     }
     @media (max-width: $w2) {
       display: none !important;

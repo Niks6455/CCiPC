@@ -48,7 +48,7 @@ function NavBar(props) {
         setIslks(!islks);
       },
       state: islks,
-      display: user.email,
+      display: user.email && context.userRole !== 1,
 
       list: [
         {
@@ -72,7 +72,7 @@ function NavBar(props) {
       icon: setting,
       action: () => setIsSattings(!isSattings),
       state: isSattings,
-      display: user.email,
+      display: user.email && context.userRole !== 1,
       list: [
         {
           name: 'Изменить профиль',
@@ -94,7 +94,7 @@ function NavBar(props) {
       name: 'Удалить аккаунт',
       icon: deleteImg,
       link: '/account/deleteaccount',
-      display: user.email,
+      display: user.email && context.userRole !== 1,
     },
     {
       name: user.email ? 'Личный кабинет' : 'Вход/Регистрация',
@@ -131,178 +131,185 @@ function NavBar(props) {
   ];
 
   return (
-    <div ref={listRef}>
-      <>
-        <div
-          style={props?.admine ? { display: 'none' } : {}}
-          className={`${styles.logo} ${props.login ? styles.loginLogo : ''} ${location.pathname.includes('/account') ? styles.visibleLogo : ''}`}
-        >
-          <img src={logo} alt="logo" onClick={() => navigate('/')} />
-        </div>
-      </>
-      <section className={styles.NavBar}>
-        <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
-          <div className={styles.NavBarMenu}>
-            <span></span>
-            <span></span>
-            <span></span>
+    <>
+      {context.activeMenu && <div className={styles.PageBlur} />}
+      <div ref={listRef}>
+        <>
+          <div
+            style={props?.admine ? { display: 'none' } : {}}
+            className={`${styles.logo} ${props.login ? styles.loginLogo : ''} ${location.pathname.includes('/account') ? styles.visibleLogo : ''}`}
+          >
+            <img src={logo} alt="logo" onClick={() => navigate('/')} />
           </div>
-        </button>
-        <div className={`${styles.menu} ${context.activeMenu ? styles.active : styles.disable}`}>
-          <div className={styles.menuInner}>
-            <button onClick={() => context.setActiveMenu(false)}>
-              Скрыть <img src={closeImg} alt="Close" />
-            </button>
-            <ul>
-              {naviList.map((item, index) => (
-                <>
-                  <li
-                    className={item.pk ? styles.pk : ''}
-                    key={index}
-                    style={item.display ? {} : { display: 'none' }}
-                    onClick={() => {
-                      if (item.link) {
-                        navigate(item.link);
-                        context.setActiveMenu(false);
-                      }
-                      if (item.action) {
-                        item.action();
-                      }
-                    }}
-                  >
-                    {/* фото слева */}
-                    {item.icon && (
-                      <div className={styles.leftImg}>
-                        <img src={item.icon} alt="item.icon" />
-                      </div>
-                    )}
-                    {/* текст ли */}
-                    <span>{item.name}</span>
-                    {/* стрелка при ховере */}
-                    {!item.list && (
-                      <span className={styles.arowLi}>
-                        <img src={ArrowMenu} alt="Arrow" />
-                      </span>
-                    )}
+        </>
+        <section className={styles.NavBar}>
+          <button className={styles.NavBarButton} onClick={() => context.setActiveMenu(true)}>
+            <div className={styles.NavBarMenu}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </button>
+          <div className={`${styles.menu} ${context.activeMenu ? styles.active : styles.disable}`}>
+            <div className={styles.menuInner}>
+              <button onClick={() => context.setActiveMenu(false)}>
+                Скрыть <img src={closeImg} alt="Close" />
+              </button>
+              <ul>
+                {naviList.map((item, index) => (
+                  <>
+                    <li
+                      className={item.pk ? styles.pk : ''}
+                      key={index}
+                      style={item.display ? {} : { display: 'none' }}
+                      onClick={() => {
+                        if (item.link) {
+                          navigate(item.link);
+                          context.setActiveMenu(false);
+                        }
+                        if (item.action) {
+                          item.action();
+                        }
+                      }}
+                    >
+                      {/* фото слева */}
+                      {item.icon && (
+                        <div className={styles.leftImg}>
+                          <img src={item.icon} alt="item.icon" />
+                        </div>
+                      )}
+                      {/* текст ли */}
+                      <span>{item.name}</span>
+                      {/* стрелка при ховере */}
+                      {!item.list && (
+                        <span className={styles.arowLi}>
+                          <img src={ArrowMenu} alt="Arrow" />
+                        </span>
+                      )}
 
-                    {/* фото справа */}
-                    {item.list && (
-                      <div className={styles.rigthImg}>
-                        <img src={arrow} alt="arrow" className={item.state ? styles.rotate : ''} />
-                      </div>
-                    )}
-                  </li>
-                  {/* списки */}
-                  <AnimatePresence>
-                    {item.state && (
-                      <motion.div
-                        className={styles.list}
-                        initial={{ height: 0 }}
-                        animate={{ height: 'auto' }}
-                        exit={{ height: 0 }}
-                      >
-                        {item.list?.map((item, index) => (
-                          <>
-                            <li
-                              key={index}
-                              onClick={() => {
-                                if (item.link) {
-                                  navigate(item.link);
-                                  context.setActiveMenu(false);
-                                }
-                                if (item.name === 'Мои доклады') {
-                                  setIsReports(!isReports);
-                                }
-                              }}
-                            >
-                              {item.icon && (
-                                <div className={styles.leftImg}>
-                                  <img src={item.icon} alt="item.icon" />
-                                </div>
-                              )}
+                      {/* фото справа */}
+                      {item.list && (
+                        <div className={styles.rigthImg}>
+                          <img
+                            src={arrow}
+                            alt="arrow"
+                            className={item.state ? styles.rotate : ''}
+                          />
+                        </div>
+                      )}
+                    </li>
+                    {/* списки */}
+                    <AnimatePresence>
+                      {item.state && (
+                        <motion.div
+                          className={styles.list}
+                          initial={{ height: 0 }}
+                          animate={{ height: 'auto' }}
+                          exit={{ height: 0 }}
+                        >
+                          {item.list?.map((item, index) => (
+                            <>
+                              <li
+                                key={index}
+                                onClick={() => {
+                                  if (item.link) {
+                                    navigate(item.link);
+                                    context.setActiveMenu(false);
+                                  }
+                                  if (item.name === 'Мои доклады') {
+                                    setIsReports(!isReports);
+                                  }
+                                }}
+                              >
+                                {item.icon && (
+                                  <div className={styles.leftImg}>
+                                    <img src={item.icon} alt="item.icon" />
+                                  </div>
+                                )}
 
-                              <span>{item.name}</span>
-                              {item.name === 'Мои доклады' && (
-                                <div className={styles.rigthImg}>
-                                  <img
-                                    src={arrow}
-                                    alt="arrow"
-                                    className={isReports ? styles.rotate : ''}
-                                  />
-                                </div>
-                              )}
-                            </li>
-                            {/* лист докладов */}
-                            <AnimatePresence>
-                              {item.name === 'Мои доклады' && isReports && (
-                                <motion.ul
-                                  initial={{ height: 0 }}
-                                  animate={{ height: 'auto' }}
-                                  exit={{ height: 0 }}
-                                  className={styles.reports}
-                                >
-                                  <li
-                                    onClick={() => {
-                                      navigate('/account/documents');
-                                      context.setActiveMenu(false);
-                                    }}
+                                <span>{item.name}</span>
+                                {item.name === 'Мои доклады' && (
+                                  <div className={styles.rigthImg}>
+                                    <img
+                                      src={arrow}
+                                      alt="arrow"
+                                      className={isReports ? styles.rotate : ''}
+                                    />
+                                  </div>
+                                )}
+                              </li>
+                              {/* лист докладов */}
+                              <AnimatePresence>
+                                {item.name === 'Мои доклады' && isReports && (
+                                  <motion.ul
+                                    initial={{ height: 0 }}
+                                    animate={{ height: 'auto' }}
+                                    exit={{ height: 0 }}
+                                    className={styles.reports}
                                   >
-                                    <span>+ Добавить доклад</span>
-                                  </li>
-                                  {reports.map((item, index) => (
                                     <li
-                                      key={index}
                                       onClick={() => {
-                                        navigate(
-                                          `/account/viewreports?idReport=${item.id}&number=${index + 1}`,
-                                        );
+                                        navigate('/account/documents');
                                         context.setActiveMenu(false);
                                       }}
                                     >
-                                      <span>
-                                        <span>Доклад №{index + 1}</span>
-                                      </span>
+                                      <span>+ Добавить доклад</span>
                                     </li>
-                                  ))}
-                                </motion.ul>
-                              )}
-                            </AnimatePresence>
-                          </>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </>
-              ))}
-
-              {context.userRole === 1 && !props.admine && (
-                <li
-                  onClick={() => {
-                    navigate('/adminPage/news');
-                    context.setActiveMenu(false);
-                  }}
-                >
-                  Панель администратора{' '}
-                  <span className={styles.arowLi}>
-                    <img src={ArrowMenu} alt="Arrow" />
-                  </span>
-                </li>
-              )}
-            </ul>
-            <div className={styles.RightMenuText}>
-              {stages?.length > 0 &&
-                // stages.map(item => item.name).join(', ').length < 300 &&
-                stages.map((item, index) => (
-                  <div key={index} className={styles.RightMenuTextCont}>
-                    <p className={styles.RightMenuTextGroup}>{convertDate(item.date)}</p>
-                    <p>{item.name}</p>
-                  </div>
+                                    {reports.map((item, index) => (
+                                      <li
+                                        key={index}
+                                        onClick={() => {
+                                          navigate(
+                                            `/account/viewreports?idReport=${item.id}&number=${index + 1}`,
+                                          );
+                                          context.setActiveMenu(false);
+                                        }}
+                                      >
+                                        <span>
+                                          <span>Доклад №{index + 1}</span>
+                                        </span>
+                                      </li>
+                                    ))}
+                                  </motion.ul>
+                                )}
+                              </AnimatePresence>
+                            </>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </>
                 ))}
+
+                {context.userRole === 1 && !props.admine && (
+                  <li
+                    onClick={() => {
+                      navigate('/adminPage/news');
+                      context.setActiveMenu(false);
+                    }}
+                  >
+                    Панель администратора{' '}
+                    <span className={styles.arowLi}>
+                      <img src={ArrowMenu} alt="Arrow" />
+                    </span>
+                  </li>
+                )}
+              </ul>
+              <div className={styles.RightMenuText}>
+                {stages?.length > 0 &&
+                  // stages.map(item => item.name).join(', ').length < 300 &&
+                  stages.map((item, index) => (
+                    <div key={index} className={styles.RightMenuTextCont}>
+                      <p className={styles.RightMenuTextGroup}>{convertDate(item.date)}</p>
+                      <p>{item.name}</p>
+                    </div>
+                  ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </>
   );
 }
 
