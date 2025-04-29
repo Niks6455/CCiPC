@@ -24,6 +24,10 @@ export const tableHeader = [
     key: 'name',
   },
   {
+    name: 'Комментарий',
+    key: 'comment',
+  },
+  {
     name: '',
     key: 'action',
   },
