@@ -1,13 +1,16 @@
 .UnivarsalTableAdmin {
   width: 100%;
   overflow-x: auto;
-  max-height: calc(100vh - torem(525px));
+  max-height: calc(100vh - torem(325px));
+  @include ScrollBar;
+  border-radius: torem(8px);
+  border: torem(1px) solid #e0e0e0;
 
   table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border: torem(1px) solid #e0e0e0;
+    // border: torem(1px) solid #e0e0e0;
     border-radius: torem(8px);
     font-family: 'Arial', sans-serif;
 

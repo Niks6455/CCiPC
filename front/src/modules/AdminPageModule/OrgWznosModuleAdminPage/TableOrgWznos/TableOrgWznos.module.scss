@@ -4,15 +4,16 @@
   border-bottom: torem(1px) solid #c8d0ce;
   border-radius: torem(8px);
   width: calc(100%);
-  min-height: 58vh;
+  min-height: max-content;
   max-height: 58vh;
   @include ScrollBar;
+  border: torem(1px) solid #e0e0e0;
 
   table {
     min-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border: torem(1px) solid #e0e0e0;
+    // border: torem(1px) solid #e0e0e0;
     border-radius: torem(8px);
     font-family: 'Arial', sans-serif;
 
