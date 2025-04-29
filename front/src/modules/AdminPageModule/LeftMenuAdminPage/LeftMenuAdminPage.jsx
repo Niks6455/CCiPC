@@ -46,14 +46,14 @@ function LeftMenuAdminPage() {
               Участники
             </li>
           </Link>
-          <Link to="registrationFee">
-            <li className={getActiveLi('/adminPage/registrationFee')}>
+          <Link to="payment">
+            <li className={getActiveLi('/adminPage/payment')}>
               <img src={orgMoney} />
               Оргвзнос
             </li>
           </Link>
           <Link to="archive">
-            <li className={getActiveLi('/adminPage/archive')}>
+            <li className={getActiveLi('/adminPage/photoalbums')}>
               <img src={archive} />
               Архив фото
             </li>

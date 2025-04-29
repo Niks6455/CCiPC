@@ -210,7 +210,7 @@ function HeaderPhone(props) {
                 <li onClick={() => navigateTo('/author')}>Автору</li>
                 <li onClick={() => navigateTo('/news')}>Новости</li>
                 <li onClick={() => navigateTo('/participants')}>Участники</li>
-                <li onClick={() => navigateTo('/organizationcomite')}>Оргкомитет</li>
+                <li onClick={() => navigateTo('/committee')}>Оргкомитет</li>
               </ul>
             </div>
           </div>

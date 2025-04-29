@@ -2,19 +2,21 @@ const note = 'Не выбрано';
 
 export const zwanieList = [
   { id: '1', text: note },
-  { id: '2', text: 'Профессор' },
-  { id: '3', text: 'Кандидат наук' },
+  { id: '2', text: 'Доцент' },
+  { id: '3', text: 'Профессор' },
   { id: '4', text: 'Академик' },
-  { id: '5', text: 'Корреспондент академии наук' },
-  { id: '6', text: 'Доктор наук' },
-  { id: '7', text: 'Доцент' },
-  // { id: "8", text: "Другое..." },
+  { id: '5', text: 'Член-корреспондент академии наук' },
+  { id: '6', text: 'Старший научный сотрудник' },
+  { id: '7', text: 'Другое' },
 ];
 
 export const stepenList = [
   { id: '1', text: note },
   { id: '2', text: 'Кандидат наук' },
   { id: '3', text: 'Доктор наук' },
+  { id: '4', text: 'PhD' },
+  { id: '5', text: 'Другое' },
+
 ];
 
 export const doljnostList = [

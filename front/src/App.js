@@ -184,16 +184,16 @@ function App() {
                   <Route path="" element={<EnteringEmail />}></Route>
                   <Route path="checkemail" element={<RecoverPassword />}></Route>
                 </Route>
-                <Route path="/organizationcomite" element={<CommitteesPage />}></Route>
+                <Route path="/committee" element={<CommitteesPage />}></Route>
                 {userRole === 1 && (
                   <Route path="/adminPage/*" element={<AdminPage />}>
-                    <Route path="archive" element={<ArchiveModulePage />} />
+                    <Route path="photoalbums" element={<ArchiveModulePage />} />
                     <Route path="collections" element={<Сollections />} />
                     <Route path="participants" element={<ColaboratorsModuleAdminPage />} />
                     <Route path="committee" element={<OrgazmCommetet />} />
                     <Route path="news" element={<NewsModuleAdminPage />} />
                     <Route path="conferences" element={<ConfirenceModuleAdminPage />} />
-                    <Route path="registrationFee" element={<OrgWznosModuleAdminPage />} />
+                    <Route path="payment" element={<OrgWznosModuleAdminPage />} />
                   </Route>
                 )}
               </Routes>

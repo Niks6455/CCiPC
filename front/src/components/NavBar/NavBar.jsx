@@ -124,7 +124,7 @@ function NavBar(props) {
     },
     {
       name: 'Оргкомитет',
-      link: '/organizationcomite',
+      link: '/committee',
       display: true,
     },
   ];

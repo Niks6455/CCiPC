@@ -60,7 +60,7 @@ function Header({ userRole }) {
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
-            <li onClick={() => navigate('/organizationcomite')}>
+            <li onClick={() => navigate('/committee')}>
               Оргкомитет{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
