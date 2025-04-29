@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectDataParticipants } from '../../store/participantsSlice/participantsSlice';
 
 function UniversalTable(props) {
+  console.log('props', props);
   const [tableHeaderData, setTableHeaderData] = useState([]);
   const [tableBodyData, setTableBodyData] = useState([]);
   const [initialTableHeaderData, setInitialTableHeaderData] = useState([]);
@@ -15,12 +16,19 @@ function UniversalTable(props) {
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState(2); // Стартовый индекс для 'Направление'
 
-  const values = [
-    { key: 'organization', value: 'Организация', isActive: true },
-    { key: 'status', value: 'Участие', isActive: true },
-    { key: 'direction', value: 'Направление', isActive: true },
-    { key: 'name', value: 'Доклад', isActive: true },
-  ];
+  const values =
+    props.userRole === 1
+      ? [
+          { key: 'organization', value: 'Организация', isActive: true },
+          { key: 'status', value: 'Участие', isActive: true },
+          { key: 'direction', value: 'Направление', isActive: true },
+          { key: 'name', value: 'Доклад', isActive: true },
+        ]
+      : [
+          { key: 'organization', value: 'Организация', isActive: true },
+          { key: 'direction', value: 'Направление', isActive: true },
+          { key: 'name', value: 'Доклад', isActive: true },
+        ];
 
   useEffect(() => {
     setInitialTableHeaderData(props?.tableHeader);

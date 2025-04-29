@@ -29,6 +29,7 @@ import noglaz from '@assets/img/UI/noglaz.svg';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetData, setDataKey } from '../../store/registrationSlice/registrationSlice';
+import ErrorModal from '../../components/ErrorModal/ErrorModal';
 
 function Register() {
   const dispach = useDispatch();
@@ -37,6 +38,7 @@ function Register() {
   const [openList, setOpenList] = useState('');
   const [passActionFirst, setPassActionFirst] = useState('password');
   const [passActionSecond, setPassActionSecond] = useState('password');
+  const [modalTitle, setModalTitle] = useState(null);
 
   //! При первом рендере сбрасываем данные
   useEffect(() => {
@@ -157,24 +159,6 @@ function Register() {
       isValid = false;
     }
 
-    // if (registration?.data?.password?.length > 16) {
-    //   newErrors.password = 'Пароль превышает 16 символов';
-    //   isValid = false;
-    // }
-    // if (!validatePassword(registration?.data?.password)) {
-    //   newErrors.password = 'Некорректный пароль';
-    //   isValid = false;
-    // }
-    // if (!validatePassword(registration?.data?.confirmPassword)) {
-    //   newErrors.confirmPassword = 'Некорректный пароль';
-    //   isValid = false;
-    // }
-
-    // if (registration?.data?.organization?.length < 1) {
-    //   newErrors.organization = 'Некорректное название';
-    //   isValid = false;
-    // }
-
     if (!validateFIO(registration?.data?.name)) {
       newErrors.name = 'Некорректное имя';
       isValid = false;
@@ -221,6 +205,50 @@ function Register() {
           navigate('/login/confirmLogin');
           context.setMailValue(registration?.data?.email);
           sessionStorage.setItem('confirmEmail', registration?.data?.email);
+        } else {
+          console.log('res', res?.response?.data?.message);
+          if (res?.response?.data?.message === 'email or phone entity already exists') {
+            setModalTitle('Пользователь с таким email или телефоном уже зарегистрирован!');
+            return;
+          }
+          if (res?.response?.data?.message === 'password parameter is invalid') {
+            setModalTitle('Некорректный пароль!');
+            return;
+          }
+          if (res?.response?.data?.message === 'name parameter is invalid') {
+            setModalTitle('Некорректное имя!');
+            return;
+          }
+          if (res?.response?.data?.message === 'surname parameter is invalid') {
+            setModalTitle('Некорректная фамилия!');
+            return;
+          }
+          if (res?.response?.data?.message === 'patronymic parameter is invalid') {
+            setModalTitle('Некорректное отчество!');
+            return;
+          }
+          if (res?.response?.data?.message === 'organization parameter is invalid') {
+            setModalTitle('Некорректное название организации!');
+            return;
+          }
+          if (res?.response?.data?.message === 'position parameter is invalid') {
+            setModalTitle('Некорректная должность!');
+            return;
+          }
+          if (res?.response?.data?.message === 'speciality parameter is invalid') {
+            setModalTitle('Некорректная специальность!');
+            return;
+          }
+          if (res?.response?.data?.message === 'email parameter is invalid') {
+            setModalTitle('Некорректная почта!');
+            return;
+          }
+          if (res?.response?.data?.message === 'phone parameter is invalid') {
+            setModalTitle('Некорректный телефон!');
+            return;
+          }
+
+          setModalTitle('Ошибка при регистрации!');
         }
       });
     }
@@ -270,6 +298,7 @@ function Register() {
 
   return (
     <section className={styles.Login}>
+      <ErrorModal open={modalTitle} close={() => setModalTitle(null)} title={modalTitle} />
       <div className={styles.LoginLogo}>
         <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>

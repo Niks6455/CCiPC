@@ -10,8 +10,22 @@ $w2: 540px;
     width: 150px;
     cursor: pointer;
     @include HoverActiveOpacity;
+    @media (max-width: $w1) {
+      width: torem(60px);
+      height: torem(60px);
+    }
   }
   @media (max-width: $w1) {
+    position: fixed;
+    z-index: 10000;
+    left: torem(25px);
+    top: torem(10px);
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    margin: 0;
+  }
+  @media (max-width: $w2) {
     display: none;
   }
 }

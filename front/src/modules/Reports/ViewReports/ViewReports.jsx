@@ -172,6 +172,7 @@ function ViewReports() {
             <div className={styles.ViewReportsInnerSecond}>
               <div className={styles.ViewReportsSoauthors}>
                 <p className={styles.ViewReportsTitle}>Соавторы:</p>
+
                 {Array.from(
                   { length: reportData?.cacheCoAuthors },
                   (_, index) => index + reportData?.cacheCoAuthors,
@@ -182,6 +183,7 @@ function ViewReports() {
                     }. Данный соавтор еще не зарегистрировался на платформе`}</p>
                   </div>
                 ))}
+
                 {reportData?.coAuthors?.map((item, index) => (
                   <div key={index + 'coAuthors'}>
                     <p className={styles.name}>{`${
@@ -207,6 +209,9 @@ function ViewReports() {
                     </ul>
                   </div>
                 ))}
+                {reportData?.coAuthors?.length === 0 && reportData?.cacheCoAuthors === 0 && (
+                  <p className={styles.name}>Отсутствуют</p>
+                )}
               </div>
             </div>
           </div>

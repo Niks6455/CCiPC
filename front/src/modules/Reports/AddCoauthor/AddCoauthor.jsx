@@ -591,7 +591,9 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
         </button>
       )}
 
-      <div className={styles.srokContainer}>
+      <div
+        className={`${styles.srokContainer} ${soauthorEditing ? styles.srokContainerSoauthorEditing : ''}`}
+      >
         <div className={styles.text}>
           <img src={errorList} alt="img" />
           {/* <span>

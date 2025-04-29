@@ -68,7 +68,7 @@ function Participants({ userRole }) {
                 />
               </div>
             </div>
-            <UniversalTable tableHeader={thead} tableBody={filteredTable} />
+            <UniversalTable tableHeader={thead} tableBody={filteredTable} userRole={userRole} />
           </div>
         </div>
       </main>

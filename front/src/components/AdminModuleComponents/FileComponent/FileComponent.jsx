@@ -46,7 +46,6 @@ function FileComponent(props) {
       setFileFromPath(props.logoHeader, inputElement);
       const fileName = props.logoHeader.split('\\').pop();
       setFileName(fileName);
-      setFileName(fileName);
     }
   }, [props.logoHeader]);
   //! при клике на загрузить логотип хедера открываем инпут для загрузки файла

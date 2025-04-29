@@ -20,7 +20,8 @@ export const apiRegister = async data => {
     const response = await api.post(`${server}/auth/register`, data);
     return response;
   } catch (error) {
-    alert('Регистрация не прошла!');
+    console.log('apiRegister', error);
+    return error;
   }
 };
 

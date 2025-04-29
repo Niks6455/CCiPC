@@ -15,10 +15,12 @@ $w3: 480px;
     }
     @media (max-width: $w2) {
       font-size: torem(14px);
-      padding-left: torem(32px);
+      // padding-left: torem(32px);
     }
     @media (max-width: $w3) {
-      padding-left: torem(20px);
+      &:nth-child(1) {
+        padding-left: torem(20px);
+      }
     }
   }
   .SliderHomePageTopInner {

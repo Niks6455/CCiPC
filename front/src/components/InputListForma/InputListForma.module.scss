@@ -64,6 +64,8 @@ $w3: 480px;
       fill: var(--GreenColorDefault);
       transition: all 0.15s linear;
     }
+    width: torem(40px) !important;
+    height: torem(40px) !important;
   }
   .openArrow {
     transform: translateY(-50%) scaleY(-1);
