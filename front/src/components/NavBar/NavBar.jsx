@@ -14,6 +14,7 @@ import logout from '@assets/img/headPhoneIcon/logout.svg';
 import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
 import arrow from '@assets/img/arrow.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import { convertDate } from '../../utils/functions/funcions';
 
 function NavBar(props) {
   const context = useContext(DataContext);
@@ -288,15 +289,16 @@ function NavBar(props) {
                 </li>
               )}
             </ul>
-            {/* <div className={styles.RightMenuText}>
+            <div className={styles.RightMenuText}>
               {stages?.length > 0 &&
+                // stages.map(item => item.name).join(', ').length < 300 &&
                 stages.map((item, index) => (
                   <div key={index} className={styles.RightMenuTextCont}>
                     <p className={styles.RightMenuTextGroup}>{convertDate(item.date)}</p>
                     <p>{item.name}</p>
                   </div>
                 ))}
-            </div> */}
+            </div>
           </div>
         </div>
       </section>

@@ -15,9 +15,10 @@ function SliderHomePageTop() {
 
   const splitName = name => {
     if (name.length <= 30) return { firstPart: name, secondPart: '' };
-    const midIndex = Math.ceil(name.length / 2); // Находим середину строки
-    const firstPart = name.slice(0, midIndex); // Первая половина
-    const secondPart = name.slice(midIndex); // Вторая половина
+    const words = name.split(' ');
+    const midIndex = Math.ceil(words.length / 2);
+    const firstPart = words.slice(0, midIndex).join(' ');
+    const secondPart = words.slice(midIndex).join(' ');
     return { firstPart, secondPart };
   };
 
