@@ -7,7 +7,7 @@ import File from "../models/file.js";
 export default {
     async create(title, description) {
         return await News.create({
-            title, description
+            title: title,  description: description
         })
     },
 
@@ -66,10 +66,7 @@ export default {
 
         const news= await News.findByPk(id)
         if(!news) throw new AppErrorNotExist('news')
-
-        return await news.update({
-            title , description
-        })
+        return await news.update({ title: title , description: description })
     },
 
     async delete(id){

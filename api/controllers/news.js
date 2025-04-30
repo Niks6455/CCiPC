@@ -1,6 +1,8 @@
-import {  AppErrorMissing } from '../utils/errors.js';
+import { AppErrorInvalid, AppErrorMissing } from '../utils/errors.js';
 import newsService from "../services/news.js";
 import checkValidate from '../utils/validate/news.js'
+import { validateTitle, validateDescription } from '../utils/validate/news.js';
+
 export default {
     async create({body: {title, description}}, res){
         if(!title) throw new AppErrorMissing('title')
@@ -24,6 +26,8 @@ export default {
 
     async update({params: {id}, body:{ title, description }}, res){
         if(!id) throw new AppErrorMissing('id')
+        if(title && !validateTitle(title)) throw new AppErrorInvalid('title')
+        if(description && !validateDescription(description)) throw new AppErrorInvalid('description')
         await newsService.update(id, title, description)
         res.json({status: 'Ok'});
     },
