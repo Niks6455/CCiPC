@@ -41,7 +41,7 @@ const updateUrl = async (infoFiles, file) => {
     fs.unlink(file.url, (err) => {
       if (err) console.log(err);
     });
-    await file.update({ url: infoFile.path, name: infoFile.originalname });
+    await file.update({ url: infoFile.path, name: Buffer.from(infoFile.originalname, 'latin1').toString('utf8') });
   }
 };
 
