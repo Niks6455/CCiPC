@@ -84,6 +84,13 @@ export default {
 
         if(participantInfo?.formPay && participant?.participantInConference) await participant?.participantInConference[0].update({formPay : participantInfo.formPay })
 
+        if(participantInfo?.phone && participantInfo.phone !== participant.phone){
+            const checkPhone = await Participant.findOne({
+                where: { phone: participantInfo.phone },
+            })
+            if(checkPhone) throw new AppErrorAlreadyExists('phone')
+
+        }
         if(participantInfo.email && participantInfo.email !== participant.email) {
 
             const checkParticipant = await Participant.findOne({

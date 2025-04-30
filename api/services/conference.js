@@ -8,8 +8,6 @@ import Report from "../models/report.js";
 import {Op } from "sequelize";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import ExcelJS from 'exceljs';
-import {sequelize} from "../models/index.js";
-
 import Direction from "../models/direction.js";
 import DirectionInConference from "../models/direction-in-conference.js";
 import File from "../models/file.js";
@@ -20,6 +18,7 @@ import typesPhoto from '../config/typesPhoto.js';
 
 
 
+const invalidChars = /[\\\/\*\?\:\[\]]/g;
 
 
 
@@ -527,7 +526,7 @@ export default {
 
 
         data.forEach(data1 => {
-            let sheetName = data1.direction;
+            let sheetName = data1.direction.replace(invalidChars, '');
 
             let existingSheet = workbook.getWorksheet(sheetName);
             if (existingSheet) {
