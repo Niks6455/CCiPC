@@ -1,5 +1,6 @@
 import {AppErrorInvalid} from "../errors.js";
 import Ajv from "ajv";
+import validateName from "../../utils/validate/name.js";
 
 const ajv = new Ajv()
 
@@ -18,10 +19,6 @@ const schemaCoAuthors = {
 }
 
 
-function validateName(name) {
-    const nameRegex = /^[a-zA-Zа-яА-ЯёЁ-]{1,50}$/;
-    return nameRegex.test(name);
-}
 
 function validateEmail(email) {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
