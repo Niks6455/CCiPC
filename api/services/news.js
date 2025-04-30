@@ -1,5 +1,5 @@
 import News from "../models/news.js";
-import {AppErrorAlreadyExists, AppErrorNotExist} from "../utils/errors.js";
+import { AppErrorNotExist} from "../utils/errors.js";
 import {Op} from "sequelize";
 import FileLink from "../models/file-link.js";
 import File from "../models/file.js";
