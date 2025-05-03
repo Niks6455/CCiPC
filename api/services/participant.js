@@ -10,6 +10,7 @@ import FileLink from "../models/file-link.js";
 import File from "../models/file.js";
 import typesFiles from "../config/typesFiles.js";
 import typesPhoto from "../config/typesPhoto.js";
+import roles from '../config/roles.js';
 export default {
 
     async   self(participant){
@@ -111,7 +112,10 @@ export default {
 
     async findByEmail(email){
         return await Participant.findOne({
-            where: { email }
+            where: {
+                email,
+                role: roles.USER
+            }
         })
     },
 

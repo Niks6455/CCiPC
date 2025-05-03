@@ -16,7 +16,6 @@ export async function initializeDbModels() {
 export async function createTestAdmin() {
   const user = await models.Participant.findOne({ where: { email: 'admin@sfedu.ru', role: 1 } });
   if (user) return;
-
   await models.Participant.create({ email: 'admin@sfedu.ru', password: bcrypt.hashSync('dfDk1oQQ6YGV@', 10), role: 1, activate: true,
     name: 'admin',
     surname: 'admin',

@@ -408,7 +408,7 @@ export default {
 
 
 
-       return  reports.map(report=>({path:  report.reportFileLink[0]?.file.url, name : report.name + `.${report.reportFileLink[0]?.file.name.split('.')[1]}`}))
+       return  reports.map(report=>({path:  report.reportFileLink[0]?.file.url, name : report.name + `.${report.reportFileLink[0]?.file.url.split('.')[1]}`}))
 
     },
 
@@ -450,7 +450,7 @@ export default {
         return  participants.map(user=>({
             path:  user.participant.participantFile[0]?.file.url,
             name :  `${user.participant?.surname} ${user.participant?.name} ${user.participant?.patronymic ? user.participant?.patronymic : ''}`.trim() +
-              `.${user.participant.participantFile[0]?.file.name.split('.')[1]}`
+              `.${user.participant.participantFile[0]?.file.url.split('.')[1]}`
         }))
     },
 

@@ -122,17 +122,26 @@ export default {
 
         if(type === typeCheckEmail.CONFIRM)  {
             if(verificationCodes[email]?.code !== code || code === undefined ) throw new AppErrorInvalid('code')
-            if(cache[email] !== undefined) {
-                const participantOfReports = await ParticipantOfReport.bulkCreate(
-                    cache[email]?.map(reportId => ({
-                        reportId: reportId,
-                        participantId: participant.id,
-                        who: 'Соавтор'
-                    })),
-                    { returning: true }
-                )
 
-               const conferences=await Conference.findAll({
+            if (cache[email] !== undefined) {
+                const participantOfReports = await ParticipantOfReport.bulkCreate(
+                  await Promise.all(
+                    cache[email].map(async reportId => {
+                        const report = await Report.findByPk(reportId);
+                        if (report) {
+                            return {
+                                reportId: reportId,
+                                participantId: participant.id,
+                                who: 'Соавтор'
+                            };
+                        }
+                        return null;
+                    })
+                  ).then(results => results.filter(item => item !== null)),
+                  { returning: true }
+                );
+
+            const conferences=await Conference.findAll({
                  include: {
                      model: Report,
                      as: 'reports',

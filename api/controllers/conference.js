@@ -317,7 +317,6 @@ export default {
 
   async finish({ params: { id } }, res) {
     if (!id) throw new AppErrorMissing("conferenceId");
-    console.log("id", id);
     await conferenceService.finish(id);
     res.json({ status: "Ok" });
   },
