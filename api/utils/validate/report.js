@@ -35,6 +35,7 @@ export default function checkValidate(objects) {
         const email = obj.email;
         if(!validateName(obj.name)) throw new AppErrorInvalid('name')
         if(!validateName(obj.surname)) throw new AppErrorInvalid('surname')
+        if(email.trim() === 'admin@sfedu.ru') throw new AppErrorInvalid('email coAuthor')
         if(!validateEmail(email)) throw new AppErrorInvalid('email')
         const valid = validate(obj);
 
