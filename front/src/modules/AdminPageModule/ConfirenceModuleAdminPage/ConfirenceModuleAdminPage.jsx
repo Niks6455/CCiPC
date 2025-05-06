@@ -150,6 +150,26 @@ function ConfirenceModuleAdminPage() {
       setErrorModalTitle('Повторяющиеся названия направлений!');
       return false;
     }
+    if (data.aboutConference === '') {
+      setErrorModalTitle('Заполните поле "О конференции"!');
+      return false;
+    }
+    if (data.dateFirst === '' || data.dateSecond === '') {
+      setErrorModalTitle('Заполните полe "Дата проведения"!');
+      return false;
+    }
+    if (data.address === '') {
+      setErrorModalTitle('Заполните полe "Место проведения"!');
+      return false;
+    }
+    if (data.deadline === '') {
+      setErrorModalTitle('Заполните полe "Крайний срок загрузки докладов"!');
+      return false;
+    }
+    if (data.stages.filter(item => item.date && item.name)?.length === 0) {
+      setErrorModalTitle('Заполните этапы конференции!');
+      return false;
+    }
     return true;
   };
 
@@ -163,7 +183,6 @@ function ConfirenceModuleAdminPage() {
       stages: data.stages.filter(item => item.date && item.name),
       directions: data.directions?.filter(item => item?.name),
     });
-    console.log('data', data);
 
     const dat = {
       stages: data.stages

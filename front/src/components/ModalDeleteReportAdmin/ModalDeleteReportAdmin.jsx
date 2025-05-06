@@ -28,7 +28,7 @@ function ModalDeleteReportAdmin({ data, setData, setOriginalData, originalData }
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
             >
-              <p className={styles.title}>Вы уверены что хотите удалить доклад?</p>
+              <p className={styles.title}>Вы уверены, что хотите удалить доклад?</p>
               <img className={styles.galka} src={error} alt="img" />
               <div className={styles.btns}>
                 <button onClick={() => setData(null)} className={styles.btnred}>

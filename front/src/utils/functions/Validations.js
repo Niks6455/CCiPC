@@ -42,11 +42,13 @@ export const validateFIO = value => {
 
 //! валидациия почты
 export const validateEmail = value => {
-  if (value === '') {
-    return true;
+  // Проверяем, что поле не пустое
+  if (value.trim() === '') {
+    return false; // Возвращаем false, если поле пустое
   }
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return regex.test(value);
+  // Регулярное выражение для проверки формата email
+  const regex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+  return regex.test(value); // Проверяем соответствие формату
 };
 
 //! валидация на колличество символов кроме пробелов

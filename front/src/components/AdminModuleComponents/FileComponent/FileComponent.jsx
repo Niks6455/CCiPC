@@ -19,27 +19,24 @@ function FileComponent(props) {
   console.log('props.fileName', props.fileName);
 
   async function setFileFromPath(filePath, inputElement) {
-    try {
-      // Загружаем файл
-      const response = await fetch(filePath);
-      const blob = await response.blob();
-
-      // Создаем объект File
-      const file = new File([blob], filePath.split('/').pop(), {
-        type: blob.type,
-      });
-
-      // Используем DataTransfer API для вставки в input
-      const dataTransfer = new DataTransfer();
-      dataTransfer.items.add(file);
-      inputElement.files = dataTransfer.files;
-    } catch (error) {
-      console.error('Ошибка при загрузке файла:', error);
+    if (filePath && !filePath?.includes('undefined')) {
+      try {
+        const response = await fetch(filePath);
+        const blob = await response.blob();
+        const file = new File([blob], filePath.split('/').pop(), {
+          type: blob.type,
+        });
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(file);
+        inputElement.files = dataTransfer.files;
+      } catch (error) {
+        console.error('Ошибка при загрузке файла:', error);
+      }
     }
   }
 
   useEffect(() => {
-    if (typeof props.logoHeader === 'string') {
+    if (typeof props.logoHeader === 'string' && !props.logoHeader?.includes('undefined')) {
       setLogoHeader(props.logoHeader);
       setIsVisibleHeader(true);
       const inputElement = document.querySelector('#' + props.name);
@@ -150,7 +147,6 @@ function FileComponent(props) {
       window.open(props.logoHeader, '_blank');
     }
   };
-
   return (
     <div
       className={styles.FileComponent}

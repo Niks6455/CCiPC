@@ -33,14 +33,16 @@ function AddNews(props) {
   const [editPhoto, setEditPhoto] = useState(false);
 
   useEffect(() => {
-    getNewsId(store?.selectNewsData).then(response => {
-      if (response?.status === 200) {
-        setItemData(response?.data?.news);
-        setTitle(response?.data?.news?.title);
-        setText(response?.data?.news?.description);
-        setLogoHeader(`${server}/${response?.data?.news?.img?.url}`);
-      }
-    });
+    if (store?.selectNewsData) {
+      getNewsId(store?.selectNewsData).then(response => {
+        if (response?.status === 200) {
+          setItemData(response?.data?.news);
+          setTitle(response?.data?.news?.title);
+          setText(response?.data?.news?.description);
+          setLogoHeader(`${server}/${response?.data?.news?.img?.url}`);
+        }
+      });
+    }
   }, []);
 
   //! Обработчик выбора файла
@@ -156,11 +158,13 @@ function AddNews(props) {
         }
       });
     } else {
-      apiDeleteMulti({ ids: [deleteFile] }).then(res => {
-        if (res?.status === 200) {
-          setDeleteFile(null);
-        }
-      });
+      if (deleteFile) {
+        apiDeleteMulti({ ids: [deleteFile] }).then(res => {
+          if (res?.status === 200) {
+            setDeleteFile(null);
+          }
+        });
+      }
     }
   };
 

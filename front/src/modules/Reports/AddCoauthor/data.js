@@ -88,3 +88,22 @@ export const inpustTypeSoavtor = [
     valdate: null,
   },
 ];
+
+export const errorsNames = [
+  {
+    key: 'name',
+    error: 'Некорректное название доклада!',
+  },
+  {
+    key: 'surname',
+    error: 'Некорректная фамилия соавтора!',
+  },
+  {
+    key: 'email',
+    error: 'Некорректная почта соавтора!',
+  },
+  {
+    key: 'organization',
+    error: 'Некорректная организация!',
+  },
+];

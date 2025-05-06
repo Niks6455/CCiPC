@@ -176,14 +176,20 @@ $w3: 480px;
       margin-top: torem(10px);
     }
     .containerMoreInfoSecond {
-      margin-left: torem(182px);
+      max-width: 50%;
+      margin-left: torem(80px);
       @media (max-width: $w2) {
         margin: 0;
+        max-width: 100%;
       }
     }
     .containerMoreInfoOne {
       display: flex;
       flex-direction: column;
+      max-width: 50%;
+      @media (max-width: $w3) {
+        max-width: 100%;
+      }
       .info_block {
         p {
           font-size: torem(20px);
@@ -210,7 +216,7 @@ $w3: 480px;
       }
     }
     .containerMoreInfoSecond {
-      width: torem(419px);
+      width: 100%;
       @media (max-width: $w2) {
         width: auto;
       }

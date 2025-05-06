@@ -8,7 +8,7 @@ import DataContext from '../../context';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiDeleteMulti, apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
 import { disEditUser, fetchUserData, setEditUser } from '../../store/userSlice/user.Slice';
-import { inputsData } from './data';
+import { errorsNames, inputsData } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
@@ -17,6 +17,7 @@ import SuccessModal from '../../components/SuccessModal/SuccessModal';
 import ModalPhoto from '../Profile/components/ModalPhoto/ModalPhoto';
 import 'react-image-crop/dist/ReactCrop.css';
 import ImageCropper from '../../components/ImageCropper/ImageCropper';
+import ErrorModal from '../../components/ErrorModal/ErrorModal';
 
 function ProfileEditing() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ function ProfileEditing() {
   const [deleteIdsPhoto, setDeleteIdsPhoto] = useState([]);
   const [origPhoto, setOrigPhoto] = useState(null);
   const [editPhoto, setEditPhoto] = useState(false);
+  const [modalError, setModalError] = useState(null);
 
   useEffect(() => {
     setUrlPhoto(`${server}/${user?.avatar?.url}`);
@@ -159,14 +161,20 @@ function ProfileEditing() {
       apiUpdateUser({ ...formData, phone: `+${formData.phone.replace(/\D/g, '')}` }).then(res => {
         if (res?.status === 200) {
           setModalSucces(true);
-        }
-        if (userPhoto) {
-          const file = new FormData();
-          file.append('file', userPhoto);
-          uploadPhoto(file, 'AVATAR');
-        }
-        if (deleteIdsPhoto.length > 0) {
-          apiDeleteMulti({ ids: deleteIdsPhoto });
+          if (userPhoto) {
+            const file = new FormData();
+            file.append('file', userPhoto);
+            uploadPhoto(file, 'AVATAR');
+          }
+          if (deleteIdsPhoto.length > 0) {
+            apiDeleteMulti({ ids: deleteIdsPhoto });
+          }
+        } else {
+          errorsNames.forEach(item => {
+            if (res?.response?.data?.message?.includes(item.key)) {
+              setModalError(item.error);
+            }
+          });
         }
       });
     }
@@ -209,6 +217,7 @@ function ProfileEditing() {
         funEditPhoto={funEditPhoto}
       />
       <SuccessModal open={modalSucces} close={setModalSucces} />
+      <ErrorModal open={modalError} close={setModalError} title={modalError} />
       <AnimatePresence>
         {popUpSize && (
           <>

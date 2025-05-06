@@ -147,7 +147,7 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
           <div className={styles.sum_container}>
             <input
               className={
-                prewData[indexRow].sumOrgWznos === tableData[indexRow].sumOrgWznos
+                prewData[indexRow]?.sumOrgWznos === tableData[indexRow]?.sumOrgWznos
                   ? ''
                   : styles.edit_data
               }
