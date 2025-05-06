@@ -89,6 +89,9 @@ export default {
     if (!description) throw new AppErrorMissing("description");
     if (!address) throw new AppErrorMissing("address");
 
+    if(!stages?.length < 1) throw new AppErrorMissing("stages")
+    if(!deadline) throw new AppErrorMissing("deadline")
+
     if (stages?.length > 0 && !checkValidate(stages))
       throw new AppErrorInvalid("stages");
     if (
@@ -97,10 +100,8 @@ export default {
     )
       throw new AppErrorInvalid("directions");
 
-    if (deadline && stages?.length > 0) {
-      const doesNotExist = !stages?.some((item) => item.date === deadline);
-      if (doesNotExist) throw new AppErrorInvalid("deadline");
-    }
+    const doesNotExist = !stages?.some((item) => item.date === deadline);
+    if (doesNotExist) throw new AppErrorInvalid("deadline");
 
     const rangeDate = [new Date(date[0]), new Date(date[1])];
     const conference = await conferenceService.create({
