@@ -187,6 +187,7 @@ $w3: 480px;
         background-color: #fff;
         transition: all 0.15s linear;
         cursor: pointer;
+
         &:hover {
           background-color: #0045290a;
           transition: all 0.15s linear;
@@ -222,16 +223,22 @@ $w3: 480px;
         transform: translateX(-50%);
         position: absolute;
         bottom: torem(8px);
-        width: torem(244px);
+        width: torem(320px);
         height: torem(60px);
-        // background-color: var(--BodyBgColor);
         z-index: 10;
         padding-top: torem(5px);
         box-sizing: border-box;
         pointer-events: none;
         overflow: hidden;
+        @media (max-width: $w2) {
+          width: torem(280px);
+        }
+        @media (max-width: $w3) {
+          width: torem(260px);
+        }
 
         span {
+          width: 100%;
           font-family: Overpass, sans-serif;
           font-size: torem(16px);
           font-weight: 400;
@@ -241,6 +248,7 @@ $w3: 480px;
           -webkit-text-decoration-skip-ink: none;
           text-decoration-skip-ink: none;
           color: #858b89;
+          overflow-wrap: break-word;
         }
       }
     }
