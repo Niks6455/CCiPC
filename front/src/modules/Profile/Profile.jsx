@@ -85,7 +85,7 @@ function Profile() {
               <span>Ученое звание:</span> {user?.academicTitle || 'Отсутствует'}
             </p>
             <p>
-              <span>Степень:</span> {user?.degree || 'Отсутствует'}
+              <span>Учёная степень:</span> {user?.degree || 'Отсутствует'}
             </p>
           </div>
         </div>

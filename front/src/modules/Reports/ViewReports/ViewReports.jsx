@@ -22,9 +22,6 @@ function ViewReports() {
   const [searchParams] = useSearchParams(); // Получаем query параметры
   const [reportData, setReportData] = useState(null);
   const [number, setNumber] = useState('');
-  const [showTooltip, setShowTooltip] = useState(null);
-  const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-  const [tooltipTimeout, setTooltipTimeout] = useState(null);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [idReport, setIdReport] = useState(null);
   const conferense = useSelector(state => state.conferences?.data[0]);
@@ -50,25 +47,6 @@ function ViewReports() {
   useEffect(() => {
     setReportData(reportQery?.data?.report);
   }, [reportQery]);
-
-  const handleMouseEnter = index => {
-    // Устанавливаем таймер для задержки
-    const timeout = setTimeout(() => {
-      setShowTooltip(index);
-    }, 500); // Задержка в 300 мс
-
-    setTooltipTimeout(timeout);
-  };
-
-  const handleMouseLeave = () => {
-    // Очищаем таймер и скрываем подсказку
-    clearTimeout(tooltipTimeout);
-    setShowTooltip(null);
-  };
-
-  const handleMouseMove = event => {
-    setCoordinates({ x: event.clientX, y: event.clientY });
-  };
 
   useEffect(() => {
     const idReport = searchParams.get('idReport'); // Получаем idReport из query параметров
@@ -218,9 +196,6 @@ function ViewReports() {
           <div className={styles.fileLouders}>
             <div
               className={styles.fileContur}
-              onMouseEnter={() => handleMouseEnter(1)}
-              onMouseLeave={() => handleMouseLeave()}
-              onMouseMove={handleMouseMove}
             >
               <p className={styles.fileLoudersTitle}>Доклад:</p>
               <div
@@ -232,23 +207,10 @@ function ViewReports() {
                   <span>{reportData?.reportFile?.name || 'Документ.docx'}</span>
                 </div>
               </div>
-              {showTooltip === 1 && (
-                <div
-                  style={{
-                    left: coordinates.x - 380,
-                    top: coordinates.y - 500,
-                  }}
-                  className={styles.repName}
-                >
-                  {reportData?.reportFile ? 'Открыть' : 'Документ отсутствует'}
-                </div>
-              )}
+             
             </div>
             <div
               className={styles.fileContur}
-              onMouseEnter={() => handleMouseEnter(2)}
-              onMouseLeave={() => handleMouseLeave()}
-              onMouseMove={handleMouseMove}
             >
               <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
               <div
@@ -265,17 +227,7 @@ function ViewReports() {
               onClick={() => funOpenFile(reportData?.conclusion)}
             /> */}
               </div>
-              {showTooltip === 2 && (
-                <div
-                  style={{
-                    left: coordinates.x - 1060,
-                    top: coordinates.y - 500,
-                  }}
-                  className={styles.repName}
-                >
-                  {reportData?.conclusion ? 'Открыть' : 'Документ отсутствует'}
-                </div>
-              )}
+              
             </div>
           </div>
           {new Date(convertDateTire(conferense?.dedlineReport2)) > new Date() && (

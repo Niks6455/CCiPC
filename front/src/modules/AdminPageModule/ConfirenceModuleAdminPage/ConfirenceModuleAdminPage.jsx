@@ -28,6 +28,8 @@ import {
 // import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 import ModalCompleteConference from '../../../components/ModalCompleteConference/ModalCompleteConference';
 import ErrorModal from '../../../components/ErrorModal/ErrorModal';
+import { AnimatePresence, motion } from 'framer-motion';
+import SpinnerLoaderGreen from '../../../components/SpinnerLoaderGreen/SpinnerLoaderGreen';
 
 function ConfirenceModuleAdminPage() {
   const dispatch = useDispatch();
@@ -41,6 +43,7 @@ function ConfirenceModuleAdminPage() {
   const [complate, setComplate] = useState(false);
   const [validateError, setValidateError] = useState(null);
   const [errorModalTitle, setErrorModalTitle] = useState(null);
+  const [isSubmit, setIsSubmit ] = useState(false);
 
   const {
     data: conferensetQery,
@@ -158,6 +161,7 @@ function ConfirenceModuleAdminPage() {
     if (!validate()) {
       return;
     }
+    setIsSubmit(true)
     setData({
       ...data,
       stages: data.stages.filter(item => item.date && item.name),
@@ -202,6 +206,7 @@ function ConfirenceModuleAdminPage() {
           funSetErrors('main', false);
           setModalSucces(false);
         }
+        setIsSubmit(false)
       });
     } else {
       //! если конференция еще не создана
@@ -219,6 +224,7 @@ function ConfirenceModuleAdminPage() {
           funSetErrors('main', false);
           setModalSucces(false);
         }
+        setIsSubmit(false)
       });
     }
   };
@@ -257,60 +263,92 @@ function ConfirenceModuleAdminPage() {
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>
-      <ModalCompleteConference
-        open={complate}
-        close={setComplate}
-        funSave={funСompleteConference}
-      />
-      <ReqError errors={errors.filter(item => !item.succes)} setErrors={setErrors} />
-      <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
-      <h2 className={styles.title}>Конференция</h2>
-      <StagesConference
-        data={data}
-        setData={setData}
-        validateError={validateError}
-        setValidateError={setValidateError}
-      />
-      <ErrorModal
-        open={errorModalTitle}
-        close={() => setErrorModalTitle(null)}
-        title={errorModalTitle}
-      />
-      <DateAdsess data={data} setData={setData} setErrorModalTitle={setErrorModalTitle} />
-      <Logotips data={data} setData={setData} />
-      <DocumentsModule data={data} setData={setData} />
-      <AboutConference data={data} setData={setData} />
-      <Directions data={data} setData={setData} />
-      <Organizers
-        data={data}
-        setData={setData}
-        itemKey={'organizers'}
-        name={'Организаторы'}
-        buttonName={'Добавить организатора'}
-        deleteMass={deleteOrganizer}
-        setDeleteMass={setDeleteOrganizer}
-      />
-      <Organizers
-        data={data}
-        setData={setData}
-        itemKey={'partners'}
-        name={'Партнёры'}
-        buttonName={'Добавить партнёра'}
-        deleteMass={deletePartners}
-        setDeleteMass={setDeletePartners}
-      />
-      <div className={styles.buttons}>
-        <div className={styles.left}>
-          {conferenseId && <button onClick={() => setComplate(true)}>Завершить конференцию</button>}
-        </div>
-        <div className={styles.buttons_inner}>
-          <button onClick={funCancelData}>Отмена</button>
-          <button onClick={funEditDataApi}>
-            {' '}
-            {!conferenseId ? 'Создать' : 'Сохранить изменения'}
-          </button>
-        </div>
-      </div>
+      
+            <ModalCompleteConference
+              open={complate}
+              close={setComplate}
+              funSave={funСompleteConference}
+            />
+            <ReqError errors={errors.filter(item => !item.succes)} setErrors={setErrors} />
+            <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
+            <h2 className={styles.title}>Конференция</h2>
+            <StagesConference
+              data={data}
+              setData={setData}
+              validateError={validateError}
+              setValidateError={setValidateError}
+            />
+            <ErrorModal
+              open={errorModalTitle}
+              close={() => setErrorModalTitle(null)}
+              title={errorModalTitle}
+            />
+            <DateAdsess data={data} setData={setData} setErrorModalTitle={setErrorModalTitle} />
+            <Logotips data={data} setData={setData} />
+            <DocumentsModule data={data} setData={setData} />
+            <AboutConference data={data} setData={setData} />
+            <Directions data={data} setData={setData} />
+            <Organizers
+              data={data}
+              setData={setData}
+              itemKey={'organizers'}
+              name={'Организаторы'}
+              buttonName={'Добавить организатора'}
+              deleteMass={deleteOrganizer}
+              setDeleteMass={setDeleteOrganizer}
+            />
+            <Organizers
+              data={data}
+              setData={setData}
+              itemKey={'partners'}
+              name={'Партнёры'}
+              buttonName={'Добавить партнёра'}
+              deleteMass={deletePartners}
+              setDeleteMass={setDeletePartners}
+            />
+            <div className={styles.buttons}>
+              <div className={styles.left}>
+                {conferenseId && <button onClick={() => setComplate(true)}>Завершить конференцию</button>}
+              </div>
+              <div className={styles.buttons_inner}>
+                <button onClick={funCancelData}>Отмена</button>
+                <button onClick={funEditDataApi}>
+                  {' '}
+                  {!conferenseId ? 'Создать' : 'Сохранить изменения'}
+                </button>
+              </div>
+            </div>
+            <AnimatePresence>
+            {!isSubmit && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className={styles.SuccessModal_blur}
+              >
+                <motion.div
+                  className={styles.SuccessModal}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0 }}
+                >
+                <p className={styles.title}>Сохранение изменений</p>
+                  <div className={styles.SpinnerLoaderGreen}>
+                    <motion.div
+                          initial={{ opacity: 0 }}
+                          exit={{ opacity: 0 }}
+                          className={styles.loading}
+                          animate={{ rotate: 360, opacity: 1 }}
+                          transition={{
+                            opacity: { duration: 1 }, // Плавное появление за 1 секунду
+                            rotate: { repeat: Infinity, duration: 1, ease: 'linear' }, // Бесконечное вращение
+                          }}
+                        />
+                </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
     </section>
   );
 }
