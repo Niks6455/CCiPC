@@ -1,7 +1,7 @@
 import styles from './HeaderPhone.module.scss';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import arrow from '@assets/img/arrow.svg';
 import archive from '@assets/img/headPhoneIcon/archive2.svg';
 import setting from '@assets/img/headPhoneIcon/setting.svg';
@@ -38,10 +38,15 @@ function HeaderPhone(props) {
 
   const navigateTo = path => {
     navigate(path);
+    closeMenuActive()
+  };
+
+  const closeMenuActive = () =>{
     setActiveMenu(false);
     setActiveMenuListFirst(false);
     setActiveMenuListSecond(false);
-  };
+  }
+  const location = useLocation();
 
   const updateVisibility = () => {};
 
@@ -88,22 +93,23 @@ function HeaderPhone(props) {
                       />
                     </div>
                   </li>
-                ) : (
+                ) :  (location.pathname !== '/login/authorization' && location.pathname !== "/login/registration") ? (
                   <li
                     onClick={() => {
                       navigate('/login/authorization');
-                      setActiveMenu(false);
+                      closeMenuActive();
                     }}
                   >
                     <div className={styles.NavBarMenuListInnerLi}>
                       <span>Вход/Регистрация</span>
                     </div>
                   </li>
-                )}
+                ) : <></>
+                }
 
                 {activeMenuListFirst && user?.email && (
                   <div className={styles.NavBarMenuListOpener}>
-                    <li onClick={() => navigate('/account/profile')}>
+                    <li onClick={() => {navigate('/account/profile'); closeMenuActive();}}>
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={profile} />
@@ -112,7 +118,9 @@ function HeaderPhone(props) {
                       </div>
                     </li>
 
-                    <li onClick={() => setIsReports(!isReports)}>
+                    <li onClick={() => {
+                      setIsReports(!isReports);
+                     }}>
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={documents} />
@@ -131,7 +139,7 @@ function HeaderPhone(props) {
                         <li
                           onClick={() => {
                             navigate('/account/documents');
-                            setActiveMenu(false);
+                            closeMenuActive();
                           }}
                         >
                           + Добавить доклад
@@ -143,7 +151,7 @@ function HeaderPhone(props) {
                               navigate(
                                 `/account/viewreports?idReport=${item.id}&number=${index + 1}`,
                               );
-                              setActiveMenu(false);
+                              closeMenuActive();
                             }}
                           >
                             <span>Доклад №{index + 1}</span>
@@ -151,7 +159,10 @@ function HeaderPhone(props) {
                         ))}
                       </ul>
                     )}
-                    <li onClick={() => navigate('/account/archivephoto')}>
+                    <li onClick={() => 
+                    {navigate('/account/archivephoto');
+                    closeMenuActive();
+                    }}>
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={archive} />
@@ -175,13 +186,20 @@ function HeaderPhone(props) {
                     </li>
                     {activeMenuListSecond && (
                       <div className={styles.NavBarMenuListOpener}>
-                        <li onClick={() => navigate('/account/settings/profile')}>
+                        <li onClick={() => 
+                        {
+                          navigate('/account/settings/profile')
+                          closeMenuActive();
+                          }}>
                           <div className={styles.NavBarMenuListInnerLiImg}>
                             <span></span>
                             <p>Изменить профиль</p>
                           </div>
                         </li>
-                        <li onClick={() => navigate('/account/settings/changepassword')}>
+                        <li onClick={() => {
+                          navigate('/account/settings/changepassword')
+                          closeMenuActive();
+                        }}>
                           <div className={styles.NavBarMenuListInnerLiImg}>
                             <span></span>
                             <p>Сменить пароль</p>
@@ -189,7 +207,10 @@ function HeaderPhone(props) {
                         </li>
                       </div>
                     )}
-                    <li onClick={() => navigate('/account/exitaccount')}>
+                    <li onClick={() => {
+                      navigate('/account/exitaccount');
+                      closeMenuActive();
+                    }}>
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={logout} />
@@ -199,7 +220,11 @@ function HeaderPhone(props) {
                     </li>
 
                     {context.userRole !== 1 && (
-                      <li onClick={() => navigate('/account/deleteaccount')}>
+                      <li onClick={() => 
+                      {
+                        navigate('/account/deleteaccount')
+                        closeMenuActive();
+                      }}>
                         <div className={styles.NavBarMenuListInnerLiImg}>
                           <span>
                             <img src={deleteImg} />
