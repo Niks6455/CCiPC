@@ -62,7 +62,7 @@ export const inputsData = [
   },
   {
     id: '4',
-    name: 'Степень*',
+    name: 'Учёная степень*',
     title: 'degree',
     required: true,
     list: stepenList,

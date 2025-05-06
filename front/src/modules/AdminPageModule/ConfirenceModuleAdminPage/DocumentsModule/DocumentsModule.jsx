@@ -11,7 +11,7 @@ function DocumentsModule({ data, setData }) {
       accept: '.pdf',
       name: 'programConference',
       icon: 'pdf',
-      text: 'Неободимо загрузить<br/>файл в формате PDF',
+      text: 'Необходимо загрузить<br/>файл в формате PDF',
       title: 'Программа конференции',
     },
     {
@@ -20,7 +20,7 @@ function DocumentsModule({ data, setData }) {
       accept: '.pdf',
       name: 'informationLetter',
       icon: 'pdf',
-      text: 'Неободимо загрузить<br/>файл в формате PDF',
+      text: 'Необходимо загрузить<br/>файл в формате PDF',
       title: 'Информационное письмо',
     },
     {
@@ -29,7 +29,7 @@ function DocumentsModule({ data, setData }) {
       accept: '.pdf',
       name: 'worksCollection',
       icon: 'pdf',
-      text: 'Неободимо загрузить<br/>файл в формате PDF',
+      text: 'Необходимо загрузить<br/>файл в формате PDF',
       title: 'Cборник научных трудов',
     },
     {
@@ -41,7 +41,7 @@ function DocumentsModule({ data, setData }) {
       accept: '.doc,.docx',
       name: 'аrticleTemplate',
       icon: 'doc',
-      text: 'Неободимо загрузить<br/>файл в формате DOC',
+      text: 'Необходимо загрузить<br/>файл в формате DOC',
       title: 'Шаблон статьи',
     },
     {
@@ -53,7 +53,7 @@ function DocumentsModule({ data, setData }) {
       accept: '.doc,.docx',
       name: 'cashlessIndividual',
       icon: 'doc',
-      text: 'Неободимо загрузить<br/>файл в формате DOC',
+      text: 'Необходимо загрузить<br/>файл в формате DOC',
       title: 'Договор оплаты безналичным расчётом для физического лица',
     },
     {
@@ -65,7 +65,7 @@ function DocumentsModule({ data, setData }) {
       accept: '.doc,.docx',
       name: 'cashlessEntities',
       icon: 'doc',
-      text: 'Неободимо загрузить<br/>файл в формате DOC',
+      text: 'Необходимо загрузить<br/>файл в формате DOC',
       title: 'Договор оплаты безналичным расчётом для юридического лица',
     },
   ];

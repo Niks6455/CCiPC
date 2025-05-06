@@ -51,7 +51,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
   const funGetOrgwznos = () => {
     const fee = user?.fee;
     if (fee?.length > 0) {
-      if (!fee[0]?.sum || fee[0]?.sum === 0) {
+      if (fee[0]?.sum === null) {
         return (
           <div className={styles.orgwznos}>
             <div className={styles.title}>
@@ -61,12 +61,20 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
             <p>
               После отправки доклада, ожидайте сообщение
               <br />
-              от администатора на вашей почте, с информацией о дальнейших действиях
+              от администратора на вашу почту с информацией о дальнейших действиях.
             </p>
           </div>
         );
       }
-
+      if(fee[0]?.sum === 0){
+        return (
+          <div className={styles.orgwznos_summ}>
+            <h3>
+              Ваше участие в конференции не требует оплаты
+            </h3>
+          </div>
+        )
+      }
       if (fee[0]?.sum && fee[0]?.formPay === 'Не выбран') {
         return (
           <div className={styles.orgwznos_summ}>
