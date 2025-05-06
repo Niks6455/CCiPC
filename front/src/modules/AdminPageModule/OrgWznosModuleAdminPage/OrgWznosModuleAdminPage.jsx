@@ -22,6 +22,10 @@ function OrgWznosModuleAdminPage() {
   });
 
   useEffect(() => {
+    qery.refetch();
+  }, []);
+
+  useEffect(() => {
     const data = qery?.data?.data?.participants?.map(item => ({
       id: item.id,
       fio: item.fio || '',

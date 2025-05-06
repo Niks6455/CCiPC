@@ -262,6 +262,7 @@ function CardOrganization({
             <input
               ref={refFile}
               type="file"
+              accept="image/png, image/jpg, image/jpeg"
               onChange={e => changeFileData(e)}
               style={{ display: 'none' }}
             />

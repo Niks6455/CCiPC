@@ -22,7 +22,7 @@ import {
   formatPhoneNumber,
   validateEmail,
 } from '../../../utils/functions/Validations';
-import { inpustType, inpustTypeEmail } from './data';
+import { errorsNames, inpustType, inpustTypeEmail } from './data';
 import SameEmail from '../../../components/AddReportModal/SameEmail/SameEmail';
 import SuccessModal from '../../../components/AddReportModal/SuccessModal/SuccessModal';
 import NotFullyFilled from '../../../components/AddReportModal/NotFullyFilled/NotFullyFilled';
@@ -51,6 +51,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const user = useSelector(state => state.user.user.data);
   const [errorModal, setErrorModal] = useState(false);
   const [errorsCoauthor, setErrorsCoauthor] = useState([]);
+  const [modalError, setModalError] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -243,6 +244,12 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
               dispatch(disSetResetReport());
               dispatch(fetchReports());
             });
+          } else {
+            errorsNames.forEach(item => {
+              if (res?.response?.data?.message?.includes(item.key)) {
+                setModalError(item.error);
+              }
+            });
           }
         });
       }
@@ -415,6 +422,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   return (
     <div className={styles.AddCoauthor}>
       <ErrorModal title="Срок подачи докладов истек!" open={errorModal} close={setErrorModal} />
+      <ErrorModal open={modalError} close={setModalError} title={modalError} />
       {report?.openPopUpName && (
         <div className={styles.popups}>
           {report?.openPopUpName === 'SameEmail' && <SameEmail />}

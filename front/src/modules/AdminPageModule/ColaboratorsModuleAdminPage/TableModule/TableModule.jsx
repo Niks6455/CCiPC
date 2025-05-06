@@ -24,15 +24,15 @@ function TableModule({
   //! открыть лист для изменения направления
   const funOpenDirList = (e, index) => {
     e.stopPropagation();
-    const rect = e.target?.getBoundingClientRect(); // Получаем координаты элемента
-    let posY = rect.top + window.scrollY; // Координата сверху элемента
-    let posX = rect.right + window.scrollX + 60; // Координата справа от элемента
-    // Проверяем, выходит ли блок за нижнюю границу экрана
-    if (rect.bottom + 500 > window.innerHeight) {
-      posY = rect.top + window.scrollY - 300; // Поднимаем блок вверх
+    const clickX = e.clientX;
+    const clickY = e.clientY;
+    let posY = clickY + 20;
+    let posX = clickX + 50;
+    if (posY + 300 > window.innerHeight) {
+      posY = window.innerHeight - 300;
     }
     setPosDirList({ x: posX, y: posY });
-    setOpenDirList(prew => (prew === index ? null : index));
+    setOpenDirList(prev => (prev === index ? null : index));
   };
 
   useEffect(() => {
@@ -70,6 +70,7 @@ function TableModule({
           onClick={() => {
             setModalDelete(row);
           }}
+          title="Удалить доклад"
         >
           <img src={trash} alt="Удалить" />
         </button>
@@ -78,6 +79,17 @@ function TableModule({
 
     return row[key];
   };
+
+  //! закрываетм лист при скролле страницы
+  useEffect(() => {
+    const handleScroll = () => {
+      setOpenDirList(null);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <>

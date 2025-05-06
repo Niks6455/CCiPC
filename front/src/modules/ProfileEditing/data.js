@@ -77,3 +77,42 @@ export const inputsData = [
     type: 'text',
   },
 ];
+
+export const errorsNames = [
+  {
+    key: 'name',
+    error: 'Некорректное имя!',
+  },
+  {
+    key: 'surname',
+    error: 'Некорректная фамилия!',
+  },
+  {
+    key: 'email',
+    error: 'Некорректная почта!',
+  },
+  {
+    key: 'phone',
+    error: 'Некорректный номер!',
+  },
+  {
+    key: 'organization',
+    error: 'Некорректная организация!',
+  },
+  {
+    key: 'academicTitle',
+    error: 'Некорректное ученое звание!',
+  },
+  {
+    key: 'degree',
+    error: 'Некорректная степень!',
+  },
+  {
+    key: 'position',
+    error: 'Некорректная должность!',
+  },
+  {
+    key: 'phone entity already exists',
+    error: 'Пользователь с таким номером уже существует!',
+  },
+];

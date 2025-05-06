@@ -89,6 +89,7 @@ export const apiUpdateUser = async data => {
     return response;
   } catch (error) {
     console.log('apiUpdateUserData ', error);
+    return error;
   }
 };
 

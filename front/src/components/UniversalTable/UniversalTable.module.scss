@@ -2,6 +2,14 @@ $w1: 1366px;
 $w2: 769px;
 $w3: 480px;
 
+@mixin thWidth($name, $w) {
+  th[name='#{$name}'] {
+    min-width: torem($w);
+    max-width: torem($w);
+    width: torem($w);
+  }
+}
+
 .UniversalTable {
   max-height: 75vh;
   overflow: auto; /* Обеспечивает скроллинг при необходимости */
@@ -24,6 +32,7 @@ $w3: 480px;
   }
 
   table {
+    width: 100%;
     padding: 0px torem(20px);
     margin: 0 auto;
     border-collapse: collapse;
@@ -53,6 +62,11 @@ $w3: 480px;
           border-radius: 0 8px 0 0;
         }
       }
+      @include thWidth('fio', 200px);
+      @include thWidth('organization', 300px);
+      @include thWidth('status', 100px);
+      @include thWidth('direction', 450px);
+      @include thWidth('name', 500px);
     }
 
     tbody {
