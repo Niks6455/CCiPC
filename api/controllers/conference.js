@@ -89,7 +89,7 @@ export default {
     if (!description) throw new AppErrorMissing("description");
     if (!address) throw new AppErrorMissing("address");
 
-    if(!stages?.length < 1) throw new AppErrorMissing("stages")
+    if(stages?.length < 1) throw new AppErrorMissing("stages")
     if(!deadline) throw new AppErrorMissing("deadline")
 
     if (stages?.length > 0 && !checkValidate(stages))
@@ -195,7 +195,8 @@ export default {
     if (!description) throw new AppErrorMissing("description");
     if (!address) throw new AppErrorMissing("address");
 
-    if(!stages?.length < 1) throw new AppErrorMissing("stages")
+
+    if(stages?.length < 1) throw new AppErrorMissing("stages")
     if(!deadline) throw new AppErrorMissing("deadline")
 
     if (stages?.length > 0 && !checkValidate(stages))
