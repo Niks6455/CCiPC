@@ -2,7 +2,7 @@ $w1: 1366px;
 $w2: 769px;
 $w3: 480px;
 
-header {
+.HeaderContainerBlock {
   height: torem(180px); /* 180px в rem */
   display: flex;
   align-items: center;
@@ -10,7 +10,7 @@ header {
   left: 0;
   top: 0;
   z-index: 1;
-  width: 100vw;
+  width: 99vw;
   @media (max-width: $w2) {
     height: torem(100px); /* 180px в rem */
   }

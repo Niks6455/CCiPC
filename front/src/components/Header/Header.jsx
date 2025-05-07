@@ -10,7 +10,7 @@ function Header({ userRole }) {
   const conference = useSelector(state => state.conferences.data[0]);
   const navigate = useNavigate();
   return (
-    <header>
+    <header className={styles.HeaderContainerBlock}>
       <div className={styles.HeaderContainer} id="top">
         <div className={styles.logo}>
           <img src={LogoHomePage} alt="logo" onClick={() => navigate('/')} />
