@@ -189,6 +189,15 @@ export default {
     },
     res
   ) {
+
+    if (!id) throw new AppErrorMissing("id");
+
+    if (!description) throw new AppErrorMissing("description");
+    if (!address) throw new AppErrorMissing("address");
+
+    if(!stages?.length < 1) throw new AppErrorMissing("stages")
+    if(!deadline) throw new AppErrorMissing("deadline")
+
     if (stages?.length > 0 && !checkValidate(stages))
       throw new AppErrorInvalid("stages");
     if (
@@ -196,8 +205,8 @@ export default {
       new Set(directions).size !== directions.length
     )
       throw new AppErrorInvalid("directions");
-    if (!id) throw new AppErrorMissing("id");
     if (date && date?.length < 1) throw new AppErrorInvalid("date");
+
     if (date) date.sort((a, b) => new Date(a) - new Date(b));
 
     const rangeDate = date ? [new Date(date[0]), new Date(date[1])] : [];
