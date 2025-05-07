@@ -82,7 +82,7 @@ function Profile() {
           <div className={styles.mainSectionInfoPeople}>
             <p>{fioToString(user?.name, user?.surname, user?.patronymic)}</p>
             <p>
-              <span>Ученое звание:</span> {user?.academicTitle || 'Отсутствует'}
+              <span>Учёное звание:</span> {user?.academicTitle || 'Отсутствует'}
             </p>
             <p>
               <span>Учёная степень:</span> {user?.degree || 'Отсутствует'}

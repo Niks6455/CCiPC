@@ -337,7 +337,7 @@ function Register() {
               name="academicTitle"
               onChange={handleChange}
               value={registration?.data?.academicTitle}
-              placeholder="Ученое звание*"
+              placeholder="Учёное звание*"
               open={openList === 'academicTitle'}
               funOpen={funOpenList}
               divRef={refList[1]}

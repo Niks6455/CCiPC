@@ -54,7 +54,7 @@ export const inputsData = [
   },
   {
     id: '3',
-    name: 'Ученое звание*',
+    name: 'Учёное звание*',
     title: 'academicTitle',
     required: true,
     list: zwanieList,

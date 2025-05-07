@@ -112,36 +112,44 @@ function ConfirenceModuleAdminPage() {
 
   //! отправка файлов массивом организаторы и партнеры
   const funApiEditFileMulti = (files, keys, conferenseId) => {
-    if (files) {
-      const formData = new FormData();
-      formData.append('conferenceId', conferenseId);
-      keys.map(key => {
-        if (files[key.key]) {
-          if (!files[key.key].url) {
-            const file = files[key.key]?.value || files[key.key];
-            if (file.length > 0) {
-              file.map(el => {
-                formData.append(key.name, el.value);
-              });
-            } else {
-              formData.append(key.name, file);
+    return new Promise((resolve, reject) => {
+      if (files) {
+        const formData = new FormData();
+        formData.append('conferenceId', conferenseId);
+        keys.map(key => {
+          if (files[key.key]) {
+            if (!files[key.key].url) {
+              const file = files[key.key]?.value || files[key.key];
+              if (file.length > 0) {
+                file.map(el => {
+                  formData.append(key.name, el.value);
+                });
+              } else {
+                formData.append(key.name, file);
+              }
             }
-          }
-        } else {
-          funSetErrors(key.name, true);
-        }
-      });
-      if (formData) {
-        uploadMulti(formData).then(res => {
-          if (res?.status !== 200) {
-            funSetErrors('main', false);
           } else {
-            funSetErrors('main', true);
-            dispatch(fetchConferences());
+            funSetErrors(key.name, true);
           }
         });
+        if (formData) {
+          uploadMulti(formData)
+            .then(res => {
+              if (res?.status !== 200) {
+                funSetErrors('main', false);
+                reject(res);
+              } else {
+                funSetErrors('main', true);
+                dispatch(fetchConferences());
+                resolve(res);
+              }
+            })
+            .catch(error => {
+              reject(error);
+            });
+        }
       }
-    }
+    });
   };
 
   const validate = () => {
@@ -177,17 +185,17 @@ function ConfirenceModuleAdminPage() {
   };
 
   //! отправляем измененные данные на бэк
-  const funEditDataApi = () => {
+  const funEditDataApi = async () => {
     if (!validate()) {
       return;
     }
-    setIsSubmit(true)
+    setIsSubmit(true);
     setData({
       ...data,
       stages: data.stages.filter(item => item.date && item.name),
       directions: data.directions?.filter(item => item?.name),
     });
-
+  
     const dat = {
       stages: data.stages
         ?.filter(item => item.date && item.name)
@@ -197,54 +205,75 @@ function ConfirenceModuleAdminPage() {
         })),
       description: data.aboutConference,
       directions: data.directions?.filter(item => item?.name)?.map(item => item?.name),
-      directionsIds: data.directionsIds, //! удаление направлений
+      directionsIds: data.directionsIds,
       date: [convertDateTire(data.dateFirst), convertDateTire(data.dateSecond)],
       deadline: convertDateTire(data.deadlineUploadingReports) || null,
       address: data.address,
       partner: deletePartners,
       organization: deleteOrganizer,
     };
-
-    //! если конференция создана
-    if (conferenseId) {
-      apiPutConferencesById(dat, conferenseId).then(res => {
-        if (res?.status === 200) {
+  
+    try {
+      let response;
+      
+      // Если конференция создана
+      if (conferenseId) {
+        response = await apiPutConferencesById(dat, conferenseId);
+        
+        if (response?.status === 200) {
           setDeleteOrganizer([]);
           setDeletePartners([]);
-          funSetErrors('main', true);
-          setModalSucces(true);
-          // dispatch(fetchConferences());
-          //! загрузка файлов
-          funApiEditFileMulti(data, fileKeys, conferenseId);
-          //! удаление файлов
-          if (data.deleteIds.length > 0) {
-            apiDeleteMulti({ ids: data.deleteIds });
+          
+          // Создаем массив промисов для всех асинхронных операций
+          const promises = [];
+          
+          // Загрузка файлов
+          if (data && fileKeys && conferenseId) {
+            promises.push(funApiEditFileMulti(data, fileKeys, conferenseId));
           }
-          refetchConferense();
+          
+          // Удаление файлов
+          if (data.deleteIds.length > 0) {
+            promises.push(apiDeleteMulti({ ids: data.deleteIds }));
+          }
+          
+          // Ждем завершения всех операций
+          await Promise.all(promises);
+          
+          // Обновляем данные и показываем успех
+          await refetchConferense();
+          setModalSucces(true);
+          funSetErrors('main', true);
         } else {
-          funSetErrors('main', false);
-          setModalSucces(false);
+          throw new Error('Ошибка при обновлении конференции');
         }
-        setIsSubmit(false)
-      });
-    } else {
-      //! если конференция еще не создана
-      apiCreateConferences(dat).then(res => {
-        if (res?.status === 200) {
+      } else {
+        // Если конференция еще не создана
+        response = await apiCreateConferences(dat);
+        
+        if (response?.status === 200) {
           setDeleteOrganizer([]);
           setDeletePartners([]);
-          funSetErrors('main', true);
+          
+          // Загрузка файлов для новой конференции
+          if (data && fileKeys && response?.data?.conference?.id) {
+            await funApiEditFileMulti(data, fileKeys, response.data.conference.id);
+          }
+          
+          // Обновляем список конференций
+          await dispatch(fetchConferences());
           setModalSucces(true);
-          dispatch(fetchConferences());
-          //! загрузка файлов
-          funApiEditFileMulti(data, fileKeys, res?.data?.conference?.id);
-          // refetchConferense();
+          funSetErrors('main', true);
         } else {
-          funSetErrors('main', false);
-          setModalSucces(false);
+          throw new Error('Ошибка при создании конференции');
         }
-        setIsSubmit(false)
-      });
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+      funSetErrors('main', false);
+      setModalSucces(false);
+    } finally {
+      setIsSubmit(false);
     }
   };
 
