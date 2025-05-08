@@ -26,7 +26,6 @@ function Login(props) {
   const handleChange = e => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-
     // Очистка ошибки при изменении значения
     setErrors({ ...errors, [name]: '' });
   };
@@ -52,7 +51,6 @@ function Login(props) {
   };
 
   const handleSubmit = () => {
-    // navigate("/HomePage");
     if (validate()) {
       LoginFunc(formData).then(data => {
         if (data?.status === 200) {
@@ -67,6 +65,15 @@ function Login(props) {
               }
             });
           } else {
+            console.log('data.response.data', data.response.data);
+            if (data?.response?.data?.message === 'You do not have access to this action') {
+              apiSendConfirm({ email: formData.email }).then(res => {
+                if (res?.status === 200) {
+                  navigate('/login/confirmLogin');
+                }
+              });
+              return;
+            }
             if (data?.response?.data?.errNum === 201) {
               setErrors({ email: 'Неверный логин' });
               return;
@@ -129,7 +136,6 @@ function Login(props) {
             <p
               onClick={() => {
                 navigate('/recoverpassword');
-                // sandResetPassword();
               }}
             >
               Забыли пароль?

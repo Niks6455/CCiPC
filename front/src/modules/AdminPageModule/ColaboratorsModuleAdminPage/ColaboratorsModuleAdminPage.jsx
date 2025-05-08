@@ -21,6 +21,10 @@ function ColaboratorsModuleAdminPage() {
   });
 
   useEffect(() => {
+    qery.refetch();
+  }, []);
+
+  useEffect(() => {
     if (qery?.data?.data) {
       const deepCopy = JSON.parse(JSON.stringify(qery.data.data.participants));
       setTableData([...deepCopy]);

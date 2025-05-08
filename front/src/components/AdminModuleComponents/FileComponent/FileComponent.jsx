@@ -16,8 +16,6 @@ function FileComponent(props) {
   const [errorSize, setErrorSize] = useState(false);
   const [fileName, setFileName] = useState(null);
 
-  console.log('props.fileName', props.fileName);
-
   async function setFileFromPath(filePath, inputElement) {
     if (filePath && !filePath?.includes('undefined')) {
       try {
@@ -153,6 +151,7 @@ function FileComponent(props) {
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
+      name="FileComponent"
     >
       {logoHeader ? (
         <div className={styles.container_file}>
@@ -265,13 +264,14 @@ function FileComponent(props) {
             )}
             {!errorSize ? (
               <span
+                name="text"
                 className={
                   isDragging !== null ? styles.is_dragging_opasity_no : styles.is_dragging_opasity
                 }
                 dangerouslySetInnerHTML={{ __html: props.text }}
               ></span>
             ) : (
-              <span className={styles.error_size}>
+              <span className={styles.error_size} name="error_size">
                 Размер файла превышает
                 <br />
                 допустимый предел в {props.fileSize} Мб*

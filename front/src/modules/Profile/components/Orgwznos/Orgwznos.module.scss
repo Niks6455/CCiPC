@@ -188,6 +188,7 @@ $w3: 480px;
       flex-direction: column;
       margin-top: torem(20px);
       width: torem(224px);
+
       @media (max-width: $w3) {
         width: 100%;
         margin-top: torem(10px);
@@ -231,6 +232,29 @@ $w3: 480px;
           }
         }
       }
+    }
+  }
+
+  span[name='text'] {
+    font-size: torem(14px) !important;
+    line-height: 120% !important;
+    @media (max-width: $w2) {
+      font-size: torem(14px) !important;
+      width: torem(224px) !important;
+    }
+  }
+  span[name='error_size'] {
+    font-size: torem(14px) !important;
+    line-height: 120% !important;
+    @media (max-width: $w2) {
+      font-size: torem(14px) !important;
+      width: torem(224px) !important;
+    }
+  }
+  div[name='FileComponent'] {
+    width: torem(224px) !important;
+    @media (max-width: $w3) {
+      width: 100% !important;
     }
   }
 }

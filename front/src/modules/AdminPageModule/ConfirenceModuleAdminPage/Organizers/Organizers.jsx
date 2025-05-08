@@ -21,6 +21,7 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
   //! Update or delete a file
   const funChangeData = (value, id) => {
     if (value === null) {
+      console.log('data[itemKey]', data[itemKey]);
       const dat = data[itemKey].filter(organizer => organizer.id !== id);
       console.log(' id', id);
       console.log('set', dat);
@@ -54,11 +55,11 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
       <div className={styles.container}>
         {data[itemKey]?.length > 0 &&
           data[itemKey].map((item, index) => (
-            <div className={styles.org_container} key={index}>
+            <div className={styles.org_container} key={item?.id}>
               <img src={borderFile} className={styles.border} />
               <div className={styles.border_inner}>
-                {!item?.id && (
-                  <button className={styles.delete} onClick={() => funChangeData(null, item)}>
+                {!item?.value && !item?.url && (
+                  <button className={styles.delete} onClick={() => funChangeData(null, item?.id)}>
                     <img src={trashIcon} alt="Удалить файл" />
                   </button>
                 )}
@@ -70,7 +71,7 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
                   setData={value => funChangeData(value, item?.id)}
                   typeFile={['image/png']}
                   accept={'.png'}
-                  name={`${itemKey}-${index}`}
+                  name={`${itemKey}-${item?.id}`}
                   icon={'png'}
                   itemKey={item?.url}
                   text={'Загрузите или перетащите<br/>фотографию в формате PNG'}

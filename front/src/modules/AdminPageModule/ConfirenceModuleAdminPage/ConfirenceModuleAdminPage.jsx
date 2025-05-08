@@ -43,7 +43,7 @@ function ConfirenceModuleAdminPage() {
   const [complate, setComplate] = useState(false);
   const [validateError, setValidateError] = useState(null);
   const [errorModalTitle, setErrorModalTitle] = useState(null);
-  const [isSubmit, setIsSubmit ] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   const {
     data: conferensetQery,
@@ -64,6 +64,10 @@ function ConfirenceModuleAdminPage() {
         text: fileKeys?.find(item => item.name === key)?.errorname,
       },
     ]);
+
+    setTimeout(() => {
+      setErrors(errors => errors.filter(item => item.key !== key));
+    }, 6000);
   };
 
   //! запись id конференции
@@ -153,6 +157,7 @@ function ConfirenceModuleAdminPage() {
   };
 
   const validate = () => {
+    console.log('data', data);
     if (hasDuplicates(data.stages, 'name')) {
       setErrorModalTitle('Повторяющиеся названия этапов!');
       return false;
@@ -161,19 +166,19 @@ function ConfirenceModuleAdminPage() {
       setErrorModalTitle('Повторяющиеся названия направлений!');
       return false;
     }
-    if (data.aboutConference === '') {
+    if (!data.aboutConference) {
       setErrorModalTitle('Заполните поле "О конференции"!');
       return false;
     }
-    if (data.dateFirst === '' || data.dateSecond === '') {
+    if (!data.dateFirst || !data.dateSecond) {
       setErrorModalTitle('Заполните полe "Дата проведения"!');
       return false;
     }
-    if (data.address === '') {
+    if (!data.address) {
       setErrorModalTitle('Заполните полe "Место проведения"!');
       return false;
     }
-    if (data.deadline === '') {
+    if (!data.deadlineUploadingReports) {
       setErrorModalTitle('Заполните полe "Крайний срок загрузки докладов"!');
       return false;
     }
@@ -195,7 +200,7 @@ function ConfirenceModuleAdminPage() {
       stages: data.stages.filter(item => item.date && item.name),
       directions: data.directions?.filter(item => item?.name),
     });
-  
+
     const dat = {
       stages: data.stages
         ?.filter(item => item.date && item.name)
@@ -212,34 +217,33 @@ function ConfirenceModuleAdminPage() {
       partner: deletePartners,
       organization: deleteOrganizer,
     };
-  
+
     try {
       let response;
-      
+
       // Если конференция создана
       if (conferenseId) {
         response = await apiPutConferencesById(dat, conferenseId);
-        
         if (response?.status === 200) {
           setDeleteOrganizer([]);
           setDeletePartners([]);
-          
+
           // Создаем массив промисов для всех асинхронных операций
           const promises = [];
-          
+
           // Загрузка файлов
           if (data && fileKeys && conferenseId) {
             promises.push(funApiEditFileMulti(data, fileKeys, conferenseId));
           }
-          
+
           // Удаление файлов
           if (data.deleteIds.length > 0) {
             promises.push(apiDeleteMulti({ ids: data.deleteIds }));
           }
-          
+
           // Ждем завершения всех операций
           await Promise.all(promises);
-          
+
           // Обновляем данные и показываем успех
           await refetchConferense();
           setModalSucces(true);
@@ -250,16 +254,16 @@ function ConfirenceModuleAdminPage() {
       } else {
         // Если конференция еще не создана
         response = await apiCreateConferences(dat);
-        
+
         if (response?.status === 200) {
           setDeleteOrganizer([]);
           setDeletePartners([]);
-          
+
           // Загрузка файлов для новой конференции
           if (data && fileKeys && response?.data?.conference?.id) {
             await funApiEditFileMulti(data, fileKeys, response.data.conference.id);
           }
-          
+
           // Обновляем список конференций
           await dispatch(fetchConferences());
           setModalSucces(true);
@@ -311,92 +315,91 @@ function ConfirenceModuleAdminPage() {
 
   return (
     <section className={styles.ConfirenceModuleAdminPage}>
-      
-            <ModalCompleteConference
-              open={complate}
-              close={setComplate}
-              funSave={funСompleteConference}
-            />
-            <ReqError errors={errors.filter(item => !item.succes)} setErrors={setErrors} />
-            <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
-            <h2 className={styles.title}>Конференция</h2>
-            <StagesConference
-              data={data}
-              setData={setData}
-              validateError={validateError}
-              setValidateError={setValidateError}
-            />
-            <ErrorModal
-              open={errorModalTitle}
-              close={() => setErrorModalTitle(null)}
-              title={errorModalTitle}
-            />
-            <DateAdsess data={data} setData={setData} setErrorModalTitle={setErrorModalTitle} />
-            <Logotips data={data} setData={setData} />
-            <DocumentsModule data={data} setData={setData} />
-            <AboutConference data={data} setData={setData} />
-            <Directions data={data} setData={setData} />
-            <Organizers
-              data={data}
-              setData={setData}
-              itemKey={'organizers'}
-              name={'Организаторы'}
-              buttonName={'Добавить организатора'}
-              deleteMass={deleteOrganizer}
-              setDeleteMass={setDeleteOrganizer}
-            />
-            <Organizers
-              data={data}
-              setData={setData}
-              itemKey={'partners'}
-              name={'Партнёры'}
-              buttonName={'Добавить партнёра'}
-              deleteMass={deletePartners}
-              setDeleteMass={setDeletePartners}
-            />
-            <div className={styles.buttons}>
-              <div className={styles.left}>
-                {conferenseId && <button onClick={() => setComplate(true)}>Завершить конференцию</button>}
-              </div>
-              <div className={styles.buttons_inner}>
-                <button onClick={funCancelData}>Отмена</button>
-                <button onClick={funEditDataApi}>
-                  {' '}
-                  {!conferenseId ? 'Создать' : 'Сохранить изменения'}
-                </button>
-              </div>
-            </div>
-            <AnimatePresence>
-            {isSubmit && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className={styles.SuccessModal_blur}
-              >
+      <ModalCompleteConference
+        open={complate}
+        close={setComplate}
+        funSave={funСompleteConference}
+      />
+      <ReqError errors={errors.filter(item => !item.succes)} setErrors={setErrors} />
+      <ModalSuccessfully open={modalSucces} setOpen={setModalSucces} />
+      <h2 className={styles.title}>Конференция</h2>
+      <StagesConference
+        data={data}
+        setData={setData}
+        validateError={validateError}
+        setValidateError={setValidateError}
+      />
+      <ErrorModal
+        open={errorModalTitle}
+        close={() => setErrorModalTitle(null)}
+        title={errorModalTitle}
+      />
+      <DateAdsess data={data} setData={setData} setErrorModalTitle={setErrorModalTitle} />
+      <Logotips data={data} setData={setData} />
+      <DocumentsModule data={data} setData={setData} />
+      <AboutConference data={data} setData={setData} />
+      <Directions data={data} setData={setData} />
+      <Organizers
+        data={data}
+        setData={setData}
+        itemKey={'organizers'}
+        name={'Организаторы'}
+        buttonName={'Добавить организатора'}
+        deleteMass={deleteOrganizer}
+        setDeleteMass={setDeleteOrganizer}
+      />
+      <Organizers
+        data={data}
+        setData={setData}
+        itemKey={'partners'}
+        name={'Партнёры'}
+        buttonName={'Добавить партнёра'}
+        deleteMass={deletePartners}
+        setDeleteMass={setDeletePartners}
+      />
+      <div className={styles.buttons}>
+        <div className={styles.left}>
+          {conferenseId && <button onClick={() => setComplate(true)}>Завершить конференцию</button>}
+        </div>
+        <div className={styles.buttons_inner}>
+          <button onClick={funCancelData}>Отмена</button>
+          <button onClick={funEditDataApi}>
+            {' '}
+            {!conferenseId ? 'Создать' : 'Сохранить изменения'}
+          </button>
+        </div>
+      </div>
+      <AnimatePresence>
+        {isSubmit && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className={styles.SuccessModal_blur}
+          >
+            <motion.div
+              className={styles.SuccessModal}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0 }}
+            >
+              <p className={styles.title}>Сохранение изменений</p>
+              <div className={styles.SpinnerLoaderGreen}>
                 <motion.div
-                  className={styles.SuccessModal}
-                  initial={{ opacity: 0, scale: 0 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0 }}
-                >
-                <p className={styles.title}>Сохранение изменений</p>
-                  <div className={styles.SpinnerLoaderGreen}>
-                    <motion.div
-                          initial={{ opacity: 0 }}
-                          exit={{ opacity: 0 }}
-                          className={styles.loading}
-                          animate={{ rotate: 360, opacity: 1 }}
-                          transition={{
-                            opacity: { duration: 1 }, // Плавное появление за 1 секунду
-                            rotate: { repeat: Infinity, duration: 1, ease: 'linear' }, // Бесконечное вращение
-                          }}
-                        />
-                </div>
-                </motion.div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+                  initial={{ opacity: 0 }}
+                  exit={{ opacity: 0 }}
+                  className={styles.loading}
+                  animate={{ rotate: 360, opacity: 1 }}
+                  transition={{
+                    opacity: { duration: 1 }, // Плавное появление за 1 секунду
+                    rotate: { repeat: Infinity, duration: 1, ease: 'linear' }, // Бесконечное вращение
+                  }}
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

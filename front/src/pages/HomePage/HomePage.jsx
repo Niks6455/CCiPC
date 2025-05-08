@@ -171,16 +171,19 @@ function HomePage({ userRole }) {
             <div
               className={`${styles.imgSectionInner} ${conference?.files?.ORGANIZATION?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.files?.ORGANIZATION?.map((el, index) => (
-                <img
-                  style={style2[index]}
-                  src={`${server}/${el.url}`}
-                  alt="Organization1"
-                  key={index}
-                  onLoad={e => handleImageLoad(e, index, setStyle2)}
-                  onError={e => (e.target.style.display = 'none')}
-                />
-              ))}
+              {conference?.files?.ORGANIZATION?.map(
+                (el, index) =>
+                  el?.url && (
+                    <img
+                      style={style2[index]}
+                      src={`${server}/${el.url}`}
+                      alt="Organization1"
+                      key={index}
+                      onLoad={e => handleImageLoad(e, index, setStyle2)}
+                      onError={e => (e.target.style.display = 'none')}
+                    />
+                  ),
+              )}
             </div>
           </section>
         )}
@@ -192,16 +195,19 @@ function HomePage({ userRole }) {
             <div
               className={`${styles.imgSectionInner}  ${conference?.files?.PARTNER?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.files?.PARTNER?.map((el, index) => (
-                <img
-                  style={style[index]}
-                  src={`${server}/${el.url}`}
-                  alt="Organization1"
-                  key={index}
-                  onLoad={e => handleImageLoad(e, index, setStyle)}
-                  onError={e => (e.target.style.display = 'none')}
-                />
-              ))}
+              {conference?.files?.PARTNER?.map(
+                (el, index) =>
+                  el?.url && (
+                    <img
+                      style={style[index]}
+                      src={`${server}/${el.url}`}
+                      alt="Organization1"
+                      key={index}
+                      onLoad={e => handleImageLoad(e, index, setStyle)}
+                      onError={e => (e.target.style.display = 'none')}
+                    />
+                  ),
+              )}
             </div>
           </section>
         )}

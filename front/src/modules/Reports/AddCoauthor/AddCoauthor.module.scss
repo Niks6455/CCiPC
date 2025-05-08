@@ -66,7 +66,6 @@ $w3: 480px;
     transform: translateY(torem(-10px));
     @media (max-width: $w2) {
       order: 1;
-      transform: none;
       transform: translateX(torem(-20px));
       position: absolute;
       left: torem(40px);
@@ -174,10 +173,10 @@ $w3: 480px;
       margin: 0 auto;
       text-align: center;
       margin-bottom: torem(100px);
-      transform: translateY(torem(-50px));
+      margin-top: torem(-50px);
     }
     @media (max-width: $w3) {
-      transform: translateY(0);
+      margin-top: 0px;
     }
   }
 
