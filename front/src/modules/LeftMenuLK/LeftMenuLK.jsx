@@ -20,6 +20,7 @@ function LeftMenuLk({ userRole }) {
   const [dokladOpen, setDokladOpen] = useState(false);
   const navigate = useNavigate();
   const reports = useSelector(state => state.reportsSlice);
+  const [path, setPath] = useState(window.location.pathname);
 
   //! появление названия
   const [showTooltip, setShowTooltip] = useState(null);
@@ -44,7 +45,13 @@ function LeftMenuLk({ userRole }) {
   const handleMouseMove = event => {
     setCoordinates({ x: event.clientX, y: event.clientY });
   };
-  console.log('userRole', userRole);
+
+  useEffect(() => {
+    setPath(window.location.pathname);
+  }, [window.location.pathname]);
+
+  console.log('path', path);
+
   return (
     <section className={styles.LeftMenuLk}>
       {(userRole || userRole === 1 || userRole === 0) && (
@@ -54,7 +61,7 @@ function LeftMenuLk({ userRole }) {
           <ul className={styles.LeftMenuLkList}>
             {userRole !== 1 && (
               <li
-                className={context.selectFrameLks === 'profile' ? styles.Active : ''}
+                className={path.includes('account/profile') ? styles.Active : ''}
                 onClick={() => {
                   context.setSelectFrameLks('profile');
                   navigate('profile');
@@ -65,7 +72,9 @@ function LeftMenuLk({ userRole }) {
             )}
             {userRole !== 1 && (
               <li
-                className={context.selectFrameLks === 'documents' ? styles.Active : ''}
+                className={
+                  path.includes('documents') || path.includes('viewreports') ? styles.Active : ''
+                }
                 onClick={() => {
                   setDokladOpen(!dokladOpen);
                 }}
@@ -116,7 +125,7 @@ function LeftMenuLk({ userRole }) {
                 ))}
             </div>
             <li
-              className={context.selectFrameLks === 'ArchivPhoto' ? styles.Active : ''}
+              className={path.includes('archivephoto') ? styles.Active : ''}
               onClick={() => {
                 context.setSelectFrameLks('ArchivPhoto');
                 navigate('archivephoto');
@@ -126,11 +135,10 @@ function LeftMenuLk({ userRole }) {
             </li>
             {userRole !== 1 && (
               <li
-                className={context.selectFrameLks === 'settings' ? styles.Active : ''}
+                className={path.includes('settings') ? styles.Active : ''}
                 onClick={() => {
                   context.setSelectFrameLks('settings');
                   setSetingOpen(!setingOpen);
-                  context.setSelectFrameLks('settings');
                 }}
               >
                 <img src={SettingsImg} />
@@ -145,7 +153,7 @@ function LeftMenuLk({ userRole }) {
                     navigate('settings/profile');
                     context.setSelectFrameLks('settings/profile');
                   }}
-                  className={context.selectFrameLks === 'settings/profile' ? styles.Active : ''}
+                  className={path.includes('settings/profile') ? styles.Active : ''}
                 >
                   Изменить профиль
                 </li>
@@ -154,9 +162,7 @@ function LeftMenuLk({ userRole }) {
                     navigate('settings/changepassword');
                     context.setSelectFrameLks('settings/changepassword');
                   }}
-                  className={
-                    context.selectFrameLks === 'settings/changepassword' ? styles.Active : ''
-                  }
+                  className={path.includes('settings/changepassword') ? styles.Active : ''}
                 >
                   Сменить пароль
                 </li>
@@ -164,7 +170,7 @@ function LeftMenuLk({ userRole }) {
             )}
 
             <li
-              className={context.selectFrameLks === 'ExitAccount' ? styles.Active : ''}
+              className={path.includes('exitaccount') ? styles.Active : ''}
               onClick={() => {
                 navigate('exitaccount');
                 context.setSelectFrameLks('ExitAccount');
@@ -174,7 +180,7 @@ function LeftMenuLk({ userRole }) {
             </li>
             {userRole !== 1 && (
               <li
-                className={context.selectFrameLks === 'DeleteAccount' ? styles.Active : ''}
+                className={path.includes('deleteaccount') ? styles.Active : ''}
                 onClick={() => {
                   navigate('deleteaccount');
                   context.setSelectFrameLks('DeleteAccount');
