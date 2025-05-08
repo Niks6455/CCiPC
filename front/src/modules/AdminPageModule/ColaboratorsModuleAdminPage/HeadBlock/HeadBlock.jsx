@@ -34,7 +34,6 @@ function HeadBlock({ conferenceid, shearchParam, setShearchParam, funSaveTableDa
     setLoadingArchive(true);
     try {
       const response = await api(conferenceid);
-      console.log('response', response);
       const blob = new Blob([response.data], { type: 'application/zip' });
       const name = response?.headers?.['content-disposition'].slice('attachment; filename='.length);
       const url = URL.createObjectURL(blob);

@@ -20,7 +20,6 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
   const funDownloadShablon = async docName => {
     try {
       const response = await fetch(`${server}/${conference?.files?.[docName]?.[0]?.url}`);
-      console.log('response', response);
       if (!response.ok) throw new Error('Ошибка загрузки файла');
       const blob = await response.blob();
       const name = conference?.files?.[docName]?.[0]?.name;

@@ -50,8 +50,6 @@ function LeftMenuLk({ userRole }) {
     setPath(window.location.pathname);
   }, [window.location.pathname]);
 
-  console.log('path', path);
-
   return (
     <section className={styles.LeftMenuLk}>
       {(userRole || userRole === 1 || userRole === 0) && (

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSelectDataParticipants } from '../../store/participantsSlice/participantsSlice';
 
 function UniversalTable(props) {
-  console.log('props', props);
   const [tableHeaderData, setTableHeaderData] = useState([]);
   const [tableBodyData, setTableBodyData] = useState([]);
   const [initialTableHeaderData, setInitialTableHeaderData] = useState([]);

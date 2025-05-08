@@ -107,7 +107,6 @@ function ChangePassword() {
       }
     });
 
-    console.log('errorListPassword', errorListPassword);
     if (errorListPassword.find(el => !el.done)) {
       newErrors.newpassword = 'Некорректный пароль';
       newErrors.rewnewpassword = 'Некорректный пароль';
@@ -145,7 +144,6 @@ function ChangePassword() {
         if (res?.status === 200) {
           setIsModalOpen(true);
         } else {
-          console.log('res', res?.response?.data?.errNum);
           if (res?.response?.data?.errNum === 204) {
             setErrors({
               currentPassword: 'Неверный пароль',

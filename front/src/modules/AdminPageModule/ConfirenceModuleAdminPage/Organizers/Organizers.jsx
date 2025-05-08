@@ -21,10 +21,7 @@ function Organizers({ data, setData, itemKey, name, buttonName, deleteMass, setD
   //! Update or delete a file
   const funChangeData = (value, id) => {
     if (value === null) {
-      console.log('data[itemKey]', data[itemKey]);
       const dat = data[itemKey].filter(organizer => organizer.id !== id);
-      console.log(' id', id);
-      console.log('set', dat);
 
       setDeleteMass([...deleteMass, id]);
       if (Number(id)) {

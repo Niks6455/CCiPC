@@ -11,7 +11,6 @@ const SliderHomePage = () => {
     getAllNews().then(res => {
       if (res?.status === 200) {
         setSlides(res?.data?.news?.splice(0, 5));
-        console.log('res', res);
       }
     });
   }, []);
@@ -29,21 +28,21 @@ const SliderHomePage = () => {
     return currentSlide % 2 === 0 ? 'chet' : 'nechet';
   };
 
-  const getTitle = (title) => {
-    if(title.length > 50) {
+  const getTitle = title => {
+    if (title.length > 50) {
       return title.substring(0, 50) + '...';
-    }else{
-      return title
+    } else {
+      return title;
     }
-  }
+  };
 
-  const getDescriptions = (desc) => {
-    if(desc.length > 550) {
+  const getDescriptions = desc => {
+    if (desc.length > 550) {
       return desc.substring(0, 550) + '...';
-    }else{
-      return desc
+    } else {
+      return desc;
     }
-  }
+  };
 
   const navigate = useNavigate();
   return (

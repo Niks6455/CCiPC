@@ -206,7 +206,6 @@ function Register() {
           context.setMailValue(registration?.data?.email);
           sessionStorage.setItem('confirmEmail', registration?.data?.email);
         } else {
-          console.log('res', res?.response?.data?.message);
           if (res?.response?.data?.message === 'email or phone entity already exists') {
             setModalTitle('Пользователь с таким email или телефоном уже зарегистрирован!');
             return;

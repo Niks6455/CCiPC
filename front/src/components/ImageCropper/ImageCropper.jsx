@@ -56,7 +56,6 @@ const ImageCropper = ({
 
     canvas.toBlob(blob => {
       if (blob) {
-        console.log('blob', blob);
         const file = new File([blob], `${new Date().getTime()}cropped.png`, {
           type: 'image/png',
         });

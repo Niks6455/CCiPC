@@ -43,7 +43,6 @@ function CardArchive({ item, updateData }) {
   }, [item]);
 
   useEffect(() => {
-    console.log('dataItem', dataItem);
     setIsChanged(
       dataItem.name !== item?.name ||
         dataItem.url !== item?.url ||
@@ -145,7 +144,6 @@ function CardArchive({ item, updateData }) {
   };
 
   const handleDeleteImg = item => {
-    console.log('data?.file?.id', item?.file?.id);
     apiDeleteMulti({ ids: [item?.file?.id] }).then(res => {
       if (res?.status === 200) updateData();
     });

@@ -157,7 +157,6 @@ function CardOrganization({
         if (res?.status === 200) {
           getDataOrg();
           const file = filesUrls?.find(it => it.id === item.committeeId)?.file;
-          console.log('file', file);
           if (file) {
             const formFile = new FormData();
             formFile.append('file', file);

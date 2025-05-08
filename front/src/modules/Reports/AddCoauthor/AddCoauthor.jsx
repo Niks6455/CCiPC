@@ -160,7 +160,6 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           })),
       };
       let erroes = [];
-      console.log('report.data?.soauthors', report.data?.soauthors);
       report.data?.soauthors.map((el, index) => {
         if (!el.data.name) {
           erroes.push({

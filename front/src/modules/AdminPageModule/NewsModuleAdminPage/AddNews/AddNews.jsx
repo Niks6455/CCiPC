@@ -56,7 +56,6 @@ function AddNews(props) {
       setFile(null);
       setLogoHeader(null);
       setError(prevError => ({ ...prevError, file: '' }));
-      console.log('itemData?.img?.id', itemData?.img?.id);
       setDeleteFile(itemData?.img?.id);
     }
   };

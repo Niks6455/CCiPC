@@ -65,7 +65,6 @@ function Login(props) {
               }
             });
           } else {
-            console.log('data.response.data', data.response.data);
             if (data?.response?.data?.message === 'You do not have access to this action') {
               apiSendConfirm({ email: formData.email }).then(res => {
                 if (res?.status === 200) {

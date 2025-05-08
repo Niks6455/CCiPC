@@ -117,7 +117,6 @@ function DateAdsess({ data, setData, setErrorModalTitle }) {
       data.deadlineUploadingReports &&
       data?.stages?.length > 0
     ) {
-      console.log('data.stages', data.stages);
       funChangedeUploading({ target: { value: '' } });
       setErrorModalTitle('Крайний срок загрузки докладов должен быть равен дате этапа!');
     }

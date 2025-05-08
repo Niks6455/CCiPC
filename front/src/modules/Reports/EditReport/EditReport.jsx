@@ -29,7 +29,6 @@ function EditReport() {
     const data = reportQery?.data?.report;
     setReportData(data);
     const soauthor = data?.coAuthors?.find(soauthor => soauthor?.email === user?.email);
-    console.log('soauthor', soauthor);
     if (soauthor && data?.author?.email !== user?.email) {
       setSoauthorEditing(soauthor);
     }

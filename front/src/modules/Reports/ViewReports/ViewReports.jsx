@@ -41,7 +41,9 @@ function ViewReports() {
   });
 
   useEffect(() => {
-    refetch();
+    if (idReport) {
+      refetch();
+    }
   }, []);
 
   useEffect(() => {
@@ -194,9 +196,7 @@ function ViewReports() {
             </div>
           </div>
           <div className={styles.fileLouders}>
-            <div
-              className={styles.fileContur}
-            >
+            <div className={styles.fileContur}>
               <p className={styles.fileLoudersTitle}>Доклад:</p>
               <div
                 className={`${styles.blockFile} ${reportData?.reportFile ? '' : styles.blockFileNoFile}`}
@@ -207,11 +207,8 @@ function ViewReports() {
                   <span>{reportData?.reportFile?.name || 'Документ.docx'}</span>
                 </div>
               </div>
-             
             </div>
-            <div
-              className={styles.fileContur}
-            >
+            <div className={styles.fileContur}>
               <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
               <div
                 className={`${styles.blockFile} ${reportData?.conclusion ? '' : styles.blockFileNoFile}`}
@@ -227,7 +224,6 @@ function ViewReports() {
               onClick={() => funOpenFile(reportData?.conclusion)}
             /> */}
               </div>
-              
             </div>
           </div>
           {new Date(convertDateTire(conferense?.dedlineReport2)) > new Date() && (

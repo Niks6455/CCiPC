@@ -27,8 +27,6 @@ function OrgazmCommetet() {
     setFilesUrls([...fiurl, { ...prev, ...values, id: conferenceid }]);
   };
 
-  console.log('filesUrls', filesUrls);
-
   useEffect(() => {
     getDataOrg();
   }, [conferenceid]);

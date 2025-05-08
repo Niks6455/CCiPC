@@ -39,7 +39,6 @@ function ColaboratorsModuleAdminPage() {
         // Create a copy of the item without the id for searching
         const { id, ...searchableItem } = item;
         const flattenedValues = Object.values(searchableItem).flat();
-        console.log('flattenedValues', flattenedValues);
         return Object.values(flattenedValues).some(value => {
           return value.trim().toString().toLowerCase().includes(shearchParam.toLowerCase().trim());
         });

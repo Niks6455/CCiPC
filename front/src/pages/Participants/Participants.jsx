@@ -27,7 +27,6 @@ function Participants({ userRole }) {
     });
   }, []);
   const searchInData = (data, searchText) => {
-    console.log('data', data);
     if (searchText.trim() !== '') {
       const filteredData = data.filter(item =>
         Object.values(item).some(value =>

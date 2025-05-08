@@ -27,8 +27,6 @@ function DocumentsLk() {
     dispatch(disSetResetReport(length + 1));
   };
 
-  console.log('new', new Date(convertDateTire(conferense?.dedlineReport2)) > new Date());
-
   return (
     <section className={styles.DocumentsLk}>
       <div className={styles.notDocument}>

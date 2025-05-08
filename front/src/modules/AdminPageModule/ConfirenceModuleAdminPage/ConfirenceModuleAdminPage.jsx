@@ -157,7 +157,6 @@ function ConfirenceModuleAdminPage() {
   };
 
   const validate = () => {
-    console.log('data', data);
     if (hasDuplicates(data.stages, 'name')) {
       setErrorModalTitle('Повторяющиеся названия этапов!');
       return false;
