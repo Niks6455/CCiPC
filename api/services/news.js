@@ -11,17 +11,8 @@ export default {
         })
     },
 
-    async find(year=new Date().getFullYear(), page= undefined, pageSize=undefined){
-
-        const startOfYear = new Date(year, 0, 1);
-        const endOfYear = new Date(year, 11, 31, 23, 59, 59);
-
+    async find(page= undefined, pageSize=undefined){
         const news = await News.findAll({
-            where:{
-                createdAt: {
-                    [Op.between]: [startOfYear, endOfYear],
-                },
-            },
             ...(pageSize && { limit: pageSize }),
             ...(page && { offset: (page - 1) * pageSize }),
             order: [['createdAt', 'DESC']],

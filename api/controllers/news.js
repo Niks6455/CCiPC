@@ -12,8 +12,8 @@ export default {
         res.json({ news: news });
     },
 
-    async find({query : { year, limit, page }}, res){
-        const { currentPage, newsLimit, news }= await newsService.find(year, page, limit)
+    async find({query : { limit, page }}, res){
+        const { currentPage, newsLimit, news }= await newsService.find(page, limit)
         res.json({ currentPage: currentPage,  limit: newsLimit, news: news.map(n=>({id: n.id, title: n.title,createdAt: n.createdAt, description: n.description, img: n?.newsFile?.file })) ?? null });
     },
 
