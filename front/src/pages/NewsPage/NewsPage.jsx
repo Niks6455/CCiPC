@@ -9,7 +9,6 @@ import { useNavigate } from 'react-router-dom';
 import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 
 function NewsPage({ userRole }) {
-  const navigate = useNavigate();
   const [activeYears, setActiveYears] = useState(new Date().getFullYear() + '');
   const [dataSliderFirstColumn, setDataSliderFirstColumn] = useState([]);
   const [dataSliderTwoColumn, setDataSliderTwoColumn] = useState([]);
@@ -25,10 +24,17 @@ function NewsPage({ userRole }) {
   }, []);
 
   useEffect(() => {
+    setActiveYears(
+      allDataSliders
+        ?.map(item => Number(item?.createdAt?.split('T')?.[0]?.split('-')?.[0]))
+        ?.sort((a, b) => b - a)?.[0] + '' || new Date().getFullYear() + '',
+    );
+  }, [allDataSliders]);
+
+  useEffect(() => {
     const firstColumn = [];
     const secondColumn = [];
     const thirdColumn = [];
-
     allDataSliders
       .filter(item => item.createdAt.split('T')[0].split('-')[0] === activeYears)
       .forEach((item, index) => {
