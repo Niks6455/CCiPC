@@ -167,7 +167,6 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
     }
   };
 
-  console.log('user?.fee[0].accord?.id', user?.fee[0].accord?.id);
   return <div className={styles.Orgwznos}>{funGetOrgwznos()}</div>;
 }
 
