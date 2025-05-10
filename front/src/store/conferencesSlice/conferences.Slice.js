@@ -8,8 +8,7 @@ export const fetchConferences = createAsyncThunk(
     try {
       const response = await apiGetConferences();
       if (response.status === 200) {
-        console.log('response.data.conference', response.data.conference);
-        return response.data.conference?.find(item => !item?.isFinished);
+        return response.data.conference;
       } else {
         return rejectWithValue('Ошибка получения данных');
       }
@@ -47,9 +46,9 @@ const conferencesSlice = createSlice({
       .addCase(fetchConferences.fulfilled, (state, action) => {
         state.status = 'succeeded';
         let mass = [];
-        if (action.payload?.length > 0) {
-          action.payload?.length > 0 &&
-            action.payload?.map(item => {
+        if (action.payload.length > 0) {
+          action.payload.length > 0 &&
+            action.payload.map(item => {
               const originalDate = new Date(item?.date?.[0]?.value);
               const oneWeekAgo = new Date(originalDate);
               oneWeekAgo.setDate(originalDate.getDate() - 7);

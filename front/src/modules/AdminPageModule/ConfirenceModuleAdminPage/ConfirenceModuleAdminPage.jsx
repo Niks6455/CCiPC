@@ -73,13 +73,12 @@ function ConfirenceModuleAdminPage() {
   //! запись id конференции
   useEffect(() => {
     if (conferenses?.[0]?.id) {
-      setConferenseId(conferenses.find(item => !item.isFinished)?.id);
+      setConferenseId(conferenses[0]?.id);
     }
   }, [conferenses]);
 
   const funUpdData = () => {
     const qery = conferensetQery?.data?.conference;
-    console.log('qery', qery);
     if (qery) {
       let data = {
         stages: qery.stages.map(item => ({

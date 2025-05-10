@@ -32,12 +32,10 @@ function OrgazmCommetet() {
   }, [conferenceid]);
 
   const getDataOrg = async () => {
-    if (conferenceid) {
-      const res = await getOrgCommitet(conferenceid);
-      if (res?.status === 200) {
-        setDataOrgAll(res.data.committee);
-        filterCommittees();
-      }
+    const res = await getOrgCommitet(conferenceid);
+    if (res?.status === 200) {
+      setDataOrgAll(res.data.committee);
+      filterCommittees();
     }
   };
 
@@ -126,9 +124,11 @@ function OrgazmCommetet() {
                 Члены комитета <img src={CapImg} alt="cap" />
               </button>
             </div>
-            <button onClick={() => setAddFirstOne(true)} className={styles.ButtonAdd}>
-              <img src={plusLigthImg} alt="plus" /> Добавить сотрудника
-            </button>
+            {conferenceid && (
+              <button onClick={() => setAddFirstOne(true)} className={styles.ButtonAdd}>
+                <img src={plusLigthImg} alt="plus" /> Добавить сотрудника
+              </button>
+            )}
           </div>
           <div className={styles.orgCargCont}>
             <div className={styles.orgCargContCards}>
@@ -183,9 +183,11 @@ function OrgazmCommetet() {
                 Члены комитета <img src={CapImg} alt="cap" />
               </button>
             </div>
-            <button onClick={() => setAddFirstTwo(true)} className={styles.ButtonAdd}>
-              <img src={plusLigthImg} alt="plus" /> Добавить сотрудника
-            </button>
+            {conferenceid && (
+              <button onClick={() => setAddFirstTwo(true)} className={styles.ButtonAdd}>
+                <img src={plusLigthImg} alt="plus" /> Добавить сотрудника
+              </button>
+            )}
           </div>
           <div className={styles.orgCargCont}>
             <div className={styles.orgCargContCards}>

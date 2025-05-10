@@ -38,6 +38,8 @@
       }
       .buttonBlockCont {
         display: flex;
+        height: torem(50px);
+
         .active {
           @include ButtonOrgComActive();
         }
