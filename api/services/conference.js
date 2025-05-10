@@ -27,6 +27,9 @@ export default {
     async find(){
         return await Conference.findAll({
             order: [['createdAt', 'ASC']],
+            where:{
+                isFinished: false
+            },
             include : [{
                     model: CommitteeInConference,
                     as: 'committeeInConference',
