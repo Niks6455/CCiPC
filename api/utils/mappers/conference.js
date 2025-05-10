@@ -16,6 +16,5 @@ export function map(data){
         committee: data?.committee ?? null,
         description: data?.description ?? null,
         files: data?.files ?? null,
-        isFinished: data?.isFinished
     }
 }

@@ -4,9 +4,8 @@ import committeeType from "../config/committee.js";
 import { map } from '../utils/mappers/committee.js'
 export default {
 
-    async find({query: { conferenceId }},res){
-        if(!conferenceId) throw  new AppErrorMissing('conferenceId')
-        const committee=await committeeService.find(conferenceId)
+    async find(req,res){
+        const committee=await committeeService.find()
         res.json({committee: committee.map(c=> map(c))})
     },
 

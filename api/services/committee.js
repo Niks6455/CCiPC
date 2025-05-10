@@ -6,7 +6,7 @@ import {sequelize} from "../models/index.js";
 import FileLink from "../models/file-link.js";
 import File from "../models/file.js";
 export default {
-    async find(conferenceId) {
+    async find() {
         const subquery = await CommitteeInConference.findAll({
             attributes: [
                 'type',
@@ -41,9 +41,6 @@ export default {
                             model: Conference,
                             as: "conference",
                             required: true,
-                            where: {
-                               id: conferenceId
-                            },
                         },
                     ],
                 });
