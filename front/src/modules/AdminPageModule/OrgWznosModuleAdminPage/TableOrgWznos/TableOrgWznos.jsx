@@ -39,7 +39,6 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
 
   const funChangeSumm = (e, index) => {
     let newData = [...originalData];
-    console.log('e.target.value', e.target.value);
     if (e.target.value === '') {
       newData.map(item => item.id === newData[index].id && (item.sumOrgWznos = null));
       setOriginalData(newData);

@@ -3,18 +3,23 @@ import vitalIcon from '@assets/img/UI/vitalIcon.svg';
 import FileComponent from './../../../../components/AdminModuleComponents/FileComponent/FileComponent';
 import { useState } from 'react';
 import { apiDeleteMulti, server, uploadPhoto } from '../../../../apirequests/apirequests';
-import loadIcon from '@assets/img/AdminPanel/greenLoad.svg';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReqError from '../../../../components/ReqError/ReqError';
+import { fetchUserData } from '../../../../store/userSlice/user.Slice';
 
 function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
+  const dispach = useDispatch();
   const [fileAccord, setFileAccord] = useState(null);
   const [fileReceipt, setFileReceipt] = useState(null);
   const conferenseId = useSelector(state => state.conferences?.data[0]?.id);
   const [errors, setErrors] = useState([]);
 
   const funDeleteFile = id => {
-    apiDeleteMulti({ ids: [id] });
+    apiDeleteMulti({ ids: [id] }).then(res => {
+      if (res?.status === 200) {
+        dispach(fetchUserData());
+      }
+    });
   };
 
   const funChangeAccord = (value, name) => {
@@ -35,6 +40,9 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
       file.append('file', value);
       file.append('conferenceId', conferenseId);
       uploadPhoto(file, name).then(res => {
+        if (res?.status === 200) {
+          dispach(fetchUserData());
+        }
         if (res?.status !== 200)
           setErrors(prev => [
             ...prev,
@@ -66,14 +74,12 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
           </div>
         );
       }
-      if(fee[0]?.sum === 0){
+      if (fee[0]?.sum === 0) {
         return (
           <div className={styles.orgwznos_summ}>
-            <h3>
-              Ваше участие в конференции не требует оплаты
-            </h3>
+            <h3>Ваше участие в конференции не требует оплаты</h3>
           </div>
-        )
+        );
       }
       if (fee[0]?.sum && fee[0]?.formPay === 'Не выбран') {
         return (
@@ -128,7 +134,6 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     funDeleteFile={funDeleteFile}
                   />
                 </div>
-               
               </div>
               <div className={styles.file_container}>
                 <div className={styles.file_box}>
@@ -151,7 +156,6 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     funDeleteFile={funDeleteFile}
                   />
                 </div>
-               
               </div>
             </div>
             <button className={styles.btn_change} onClick={funChangeFormPay}>
@@ -162,6 +166,8 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
       }
     }
   };
+
+  console.log('user?.fee[0].accord?.id', user?.fee[0].accord?.id);
   return <div className={styles.Orgwznos}>{funGetOrgwznos()}</div>;
 }
 

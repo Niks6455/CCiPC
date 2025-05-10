@@ -11,7 +11,6 @@ function ClickerYears(props) {
     setDateArray(dates);
   }, [props.data]);
 
-  console.log('activeYears', props.activeYears);
   return (
     <div className={styles.ClickerYears}>
       {dateArray.map(item => (
