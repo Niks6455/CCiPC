@@ -5,7 +5,6 @@ import NavBar from '../../components/NavBar/NavBar';
 import { useEffect, useState } from 'react';
 import { getAllNews } from '../../apirequests/apirequests';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
-import { useNavigate } from 'react-router-dom';
 import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 
 function NewsPage({ userRole }) {
