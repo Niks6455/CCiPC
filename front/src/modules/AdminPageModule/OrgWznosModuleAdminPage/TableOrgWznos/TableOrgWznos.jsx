@@ -39,11 +39,17 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
 
   const funChangeSumm = (e, index) => {
     let newData = [...originalData];
-    let val = e.target.value.replace(/[^0-9]/g, '');
-    if (val <= 99999) {
-      // newData[index].sumOrgWznos = Number(val);
-      newData.map(item => item.id === newData[index].id && (item.sumOrgWznos = Number(val)));
+    console.log('e.target.value', e.target.value);
+    if (e.target.value === '') {
+      newData.map(item => item.id === newData[index].id && (item.sumOrgWznos = null));
       setOriginalData(newData);
+    } else {
+      let val = e.target.value.replace(/[^0-9]/g, '');
+      if (val <= 99999) {
+        // newData[index].sumOrgWznos = Number(val);
+        newData.map(item => item.id === newData[index].id && (item.sumOrgWznos = Number(val)));
+        setOriginalData(newData);
+      }
     }
   };
 
@@ -138,9 +144,9 @@ function TableOrgWznos({ prewData, tableData, setTableData, originalData, setOri
     if (columnKey.key === 'sumOrgWznos') {
       let inpValue = row[columnKey.key];
       if (inputSumEdit === indexRow) {
-        inpValue = inpValue.toString().replace(/[^0-9]/g, '');
+        inpValue = inpValue !== null ? inpValue?.toString()?.replace(/[^0-9]/g, '') : '___';
       } else {
-        inpValue = inpValue + ' ₽';
+        inpValue = inpValue !== null ? inpValue + ' ₽' : '___';
       }
       return (
         <td name={columnKey.key} key={indexCol}>

@@ -34,7 +34,7 @@ function OrgWznosModuleAdminPage() {
       participationForm: item.form || '',
       participationStatus: item.participationStatus || '',
       paymentForm: item.formPay || '',
-      sumOrgWznos: item.sum || 0,
+      sumOrgWznos: item.sum,
       confirmation: item.status || false,
       author: item.who || '',
       contract: item.accord || null,
@@ -68,7 +68,7 @@ function OrgWznosModuleAdminPage() {
       if (!acc.some(existingItem => existingItem.id === item.id)) {
         acc.push({
           id: item.id,
-          sum: item.sumOrgWznos,
+          sum: item.sumOrgWznos === '_____' ? null : item.sumOrgWznos,
           status: item.confirmation,
         });
       }

@@ -1,6 +1,9 @@
 .ClickerYears {
   display: flex;
   font-size: 18px;
+  .Active {
+    opacity: 1 !important;
+  }
   .ClickerYearsEl {
     cursor: pointer;
     border: #001c14 1px solid;
@@ -13,9 +16,9 @@
     align-items: center;
     justify-content: center;
     margin: 0px 12px;
-    .Active {
-      background-color: red;
-    }
+    @include HoverActiveOpasity;
+    opacity: 0.3;
+
     img {
       margin-left: 5px;
       position: relative;

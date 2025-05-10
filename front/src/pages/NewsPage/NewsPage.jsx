@@ -10,6 +10,7 @@ import ClickerYears from '../../ui/ClickerYears/ClickerYears';
 
 function NewsPage({ userRole }) {
   const navigate = useNavigate();
+  const [activeYears, setActiveYears] = useState(new Date().getFullYear() + '');
   const [dataSliderFirstColumn, setDataSliderFirstColumn] = useState([]);
   const [dataSliderTwoColumn, setDataSliderTwoColumn] = useState([]);
   const [dataSliderThreeColumn, setDataSliderThreeColumn] = useState([]);
@@ -28,20 +29,22 @@ function NewsPage({ userRole }) {
     const secondColumn = [];
     const thirdColumn = [];
 
-    allDataSliders.forEach((item, index) => {
-      if (index % 3 === 0) {
-        firstColumn.push(item);
-      } else if (index % 3 === 1) {
-        secondColumn.push(item);
-      } else {
-        thirdColumn.push(item);
-      }
-    });
+    allDataSliders
+      .filter(item => item.createdAt.split('T')[0].split('-')[0] === activeYears)
+      .forEach((item, index) => {
+        if (index % 3 === 0) {
+          firstColumn.push(item);
+        } else if (index % 3 === 1) {
+          secondColumn.push(item);
+        } else {
+          thirdColumn.push(item);
+        }
+      });
 
     setDataSliderFirstColumn(firstColumn);
     setDataSliderTwoColumn(secondColumn);
     setDataSliderThreeColumn(thirdColumn);
-  }, [allDataSliders]);
+  }, [allDataSliders, activeYears]);
 
   return (
     <>
@@ -53,7 +56,11 @@ function NewsPage({ userRole }) {
             <h2>НОВОСТИ</h2>
           </div>
           <div className={styles.ClickerYears}>
-            <ClickerYears data={allDataSliders} />
+            <ClickerYears
+              data={allDataSliders}
+              activeYears={activeYears}
+              setActiveYears={setActiveYears}
+            />
           </div>
           <div className={styles.NewsPageContainer}>
             {allDataSliders.length === 0 && (
