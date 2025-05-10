@@ -333,10 +333,15 @@ export default {
                 }
 
                 emailsNotInDatabase.forEach(email => {
+                    const person= reportInfo.coAuthors.find(user=>user.email === email)
+                    if(person){
+                        sendMail(email, 'report', `${person?.surname} ${person?.name} ${person?.patronymic ? person?.patronymic : ''}`.trim(), email);
+                    }
                     const reportsIds= cache[email] ?? []
                     reportsIds.push(report.id)
                     cache[email]=[...new Set(reportsIds)];
                 })
+
             }
 
             if(reportInfo?.coAuthorsIds?.length > 0){
