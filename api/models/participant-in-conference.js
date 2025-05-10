@@ -7,7 +7,7 @@ export default class ParticipantInConference extends Model {
             {
                 id: { type: DataTypes.UUID, primaryKey: true, unique: true },
                 formPay: {type: DataTypes.ENUM('Безналичный', 'Наличный', 'Не выбран'), allowNull: true, defaultValue: 'Не выбран'},
-                sum: {type: DataTypes.INTEGER, allowNull: true},
+                sum: { type: DataTypes.INTEGER, allowNull: true, defaultValue: null },
                 status : { type: DataTypes.BOOLEAN, allowNull: true, defaultValue: false},
                 comment: { type: DataTypes.STRING, allowNull: true },
             },

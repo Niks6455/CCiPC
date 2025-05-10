@@ -365,11 +365,10 @@ export default {
             foundObject.comment=p.comment
             foundObject.accord=p.accord
             foundObject.receipt=p.receipt
-            if (foundObject.sum == null) foundObject.sum = p.sum;
-            if (foundObject.status == null) foundObject.status = p.status;
+            if (foundObject?.sum === undefined) foundObject.sum = p.sum;
+            if (foundObject?.status === undefined) foundObject.status = p.status;
 
         })
-
         return await ParticipantInConference.bulkCreate(
             feeInfo,
             {
