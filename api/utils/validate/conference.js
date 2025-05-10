@@ -23,7 +23,7 @@ const schemaStage = {
 const schemaFee = {
     type: "object",
     properties: {
-        sum: { type: "number" },
+        sum: { type: ["number", "null"] },
         status: { type: "boolean" },
         id: { type: "string" },
     },
