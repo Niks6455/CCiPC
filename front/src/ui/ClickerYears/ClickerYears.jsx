@@ -4,6 +4,7 @@ import Calendar from './../../assets/img/Calendar.svg';
 function ClickerYears(props) {
   const [activeYears, setActiveYears] = useState(2024);
   const [dateArray, setDateArray] = useState([]);
+  console.log('props', props);
   useEffect(() => {
     const dateArray = props.data.map(item => {
       return item.createdAt.split('T')[0].split('-')[0];

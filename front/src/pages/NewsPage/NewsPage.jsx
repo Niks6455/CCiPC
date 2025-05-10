@@ -2,7 +2,6 @@ import NewsCard from '../../components/NewsCard/NewsCard';
 import styles from './NewsPage.module.scss';
 import Layout from '../../ui/Layout/Layout';
 import NavBar from '../../components/NavBar/NavBar';
-import logoHeader from './../../assets/img/logo.png';
 import { useEffect, useState } from 'react';
 import { getAllNews } from '../../apirequests/apirequests';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
@@ -46,12 +45,6 @@ function NewsPage({ userRole }) {
 
   return (
     <>
-      {/* <img
-        style={{ cursor: 'pointer' }}
-        src={logoHeader}
-        className={styles.logo}
-        onClick={() => navigate('/')}
-      /> */}
       <NavBar userRole={userRole} />
       <HeaderPhone />
       <main className={styles.NewsPage}>
