@@ -190,7 +190,6 @@ $w3: 480px;
         font-size: torem(20px);
         line-height: torem(26px);
         overflow: hidden;
-
         p:first-child {
           overflow: hidden;
           text-overflow: ellipsis;
@@ -227,7 +226,7 @@ $w3: 480px;
           }
         }
 
-        cursor: pointer;
+        cursor: auto;
         transition: 0.05s linear all;
         &:hover {
           background-color: var(--GreenColorText);
