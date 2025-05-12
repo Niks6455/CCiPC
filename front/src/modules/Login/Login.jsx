@@ -4,7 +4,7 @@ import styles from './Login.module.scss';
 import { useNavigate } from 'react-router-dom';
 import logo from './../../assets/img/logo.png';
 import sfeduLogo from './../../assets/img/SfeduLogo.svg';
-import { apiSendConfirm, LoginFunc } from '../../apirequests/apirequests';
+import { apiSendConfirm, LoginFunc, LoginFuncSfedu } from '../../apirequests/apirequests';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
@@ -97,6 +97,12 @@ function Login(props) {
     }
   };
 
+  const funSfeduAuth = () => {
+    LoginFuncSfedu().then(res => {
+      console.log('res', res);
+    });
+  };
+
   return (
     <section className={styles.Login}>
       <ErrorModal title={'Ошибка авторизации!'} open={openModal} close={setOpenModal} />
@@ -151,12 +157,12 @@ function Login(props) {
           <div className={styles.lineTwo}></div>
         </div>
       </div>
-      {/* <div className={styles.loginButtonSfedu}>
+      <div className={styles.loginButtonSfedu} onClick={funSfeduAuth}>
         <button>
           <img src={sfeduLogo} />
           Войти через аккаунт @sfedu
         </button>
-      </div> */}
+      </div>
       <div className={styles.submitButton}>
         <button onClick={handleSubmit}>Войти</button>
       </div>

@@ -59,6 +59,20 @@ export const LoginFunc = async UserData => {
   }
 };
 
+//! сфеду авторизация
+export const LoginFuncSfedu = async () => {
+  try {
+    const response = await api.post(`${server}/auth/login/sfedu`);
+    const { participant, token } = response.data;
+    localStorage.setItem('accessToken', token);
+    localStorage.setItem('userData', JSON.stringify(participant));
+    return response;
+  } catch (error) {
+    // alert('Пользователь не найден!');
+    return error;
+  }
+};
+
 //! Запрос на подтверждение почты
 export const CheckEmail = async Data => {
   try {
