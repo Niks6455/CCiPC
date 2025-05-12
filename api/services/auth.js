@@ -63,7 +63,7 @@ export default {
                     scope: 'openid',
                     code,
                     code_verifier,
-                    redirect_uri: `${process.env.WEB_URL}/login`,
+                    redirect_uri: `${process.env.WEB_URL}/login/authorization`,
                     grant_type: 'authorization_code',
                 })
             );
@@ -76,7 +76,7 @@ export default {
 
 
 
-        const participant=await Participant.findOne({
+        let participant=await Participant.findOne({
             where: { email: email }
         })
 
@@ -85,15 +85,23 @@ export default {
             return { token, participant };
         }
 
-/*
-        try {
 
-            const {data: {student: studentInfo}} = await sync.get(`/students/tro@sfedu.ru`);
-            return studentInfo
+        participant = await Participant.create();
 
-        } catch (e){
-            console.log(e.message)
-        }*/
+        /*
+                try {
+
+                    const {data: {student: studentInfo}} = await sync.get(`/students/tro@sfedu.ru`);
+                    return studentInfo
+
+                } catch (e){
+                    console.log(e.message)
+                }*/
+
+
+        const { jwt: token } = jwt.generate({ id: participant.id });
+        return { token, participant };
+
     },
 
     async login(email, password){

@@ -80,7 +80,7 @@ export default {
         res.json({ participant: participant, jwt: token })
     },
 
-    async loginSfedu({ body: { code, code_verifier } },res) {
+    async   loginSfedu({ body: { code, code_verifier } },res) {
 //        if (!code) throw new AppErrorMissing('code');
 
         const {token, participant } = await authService.loginSfedu(code, code_verifier)
