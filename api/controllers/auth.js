@@ -80,11 +80,10 @@ export default {
         res.json({ participant: participant, jwt: token })
     },
 
-    async   loginSfedu({ body: { code, code_verifier } },res) {
-//        if (!code) throw new AppErrorMissing('code');
-
-        const {token, participant } = await authService.loginSfedu(code, code_verifier)
-        res.json({ participant: participant, jwt: token })
+    async   loginSfedu({ body: { code } },res) {
+        if (!code) throw new AppErrorMissing('code');
+        const {token, participant } = await authService.loginSfedu(code)
+        res.json({ participant: participant, token: token })
     },
 
     async sandCodeChangePassword({body:  { email } }, res){

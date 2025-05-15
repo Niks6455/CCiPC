@@ -51,7 +51,7 @@ export default {
         })
     },
 
-    async loginSfedu(code, code_verifier){
+    async loginSfedu(code){
 
         let accessToken;
         try {
@@ -62,7 +62,6 @@ export default {
                     client_secret: process.env.SFEDU_SECRET,
                     scope: 'openid',
                     code,
-                    code_verifier,
                     redirect_uri: `${process.env.WEB_URL}/login/authorization`,
                     grant_type: 'authorization_code',
                 })
