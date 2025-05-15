@@ -59,6 +59,35 @@ export const LoginFunc = async UserData => {
   }
 };
 
+//! сфеду авторизация
+export const LoginFuncSfedu = async code => {
+  try {
+    const response = await api.post(`${server}/auth/login/sfedu`, { code });
+    const { participant, token } = response.data;
+    localStorage.setItem('accessToken', token);
+    localStorage.setItem('userData', JSON.stringify(participant));
+    return response;
+  } catch (error) {
+    // alert('Пользователь не найден!');
+    return error;
+  }
+};
+
+//! получение кода сфеду для дальнейшей отправи на бэк
+export const apiLoginGetCodeSfedu = async () => {
+  const clientId = process.env.REACT_APP_SFEDU_ID;
+  const tenant = process.env.REACT_APP_TENANT;
+  const scope = 'openid profile email offline_access';
+  const authUrl =
+    `https://login.microsoftonline.com/${tenant}/oauth2/v2.0/authorize` +
+    `?client_id=${clientId}` +
+    `&response_type=code` +
+    `&response_mode=query` +
+    `&scope=${encodeURIComponent(scope)}` +
+    `&state=12345`;
+  window.location.href = authUrl;
+};
+
 //! Запрос на подтверждение почты
 export const CheckEmail = async Data => {
   try {

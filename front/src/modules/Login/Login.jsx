@@ -1,10 +1,15 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Input from '../../ui/Input/Input';
 import styles from './Login.module.scss';
 import { useNavigate } from 'react-router-dom';
 import logo from './../../assets/img/logo.png';
 import sfeduLogo from './../../assets/img/SfeduLogo.svg';
-import { apiSendConfirm, LoginFunc } from '../../apirequests/apirequests';
+import {
+  apiLoginGetCodeSfedu,
+  apiSendConfirm,
+  LoginFunc,
+  LoginFuncSfedu,
+} from '../../apirequests/apirequests';
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
@@ -97,6 +102,28 @@ function Login(props) {
     }
   };
 
+  //! вызываем запрос для получения кода который отправил на бэк
+  const funSfeduAuth = () => {
+    apiLoginGetCodeSfedu();
+  };
+
+  //! проверяем если в url есть код значит авторизация идет через сфеду
+  useEffect(() => {
+    const query = new URLSearchParams(window.location.search);
+    const code = query.get('code');
+
+    if (code) {
+      LoginFuncSfedu(code).then(res => {
+        if (res?.status === 200) {
+          navigate('/');
+          props.funGetAllApi();
+        } else {
+          setOpenModal(true);
+        }
+      });
+    }
+  }, [navigate]);
+
   return (
     <section className={styles.Login}>
       <ErrorModal title={'Ошибка авторизации!'} open={openModal} close={setOpenModal} />
@@ -151,12 +178,12 @@ function Login(props) {
           <div className={styles.lineTwo}></div>
         </div>
       </div>
-      {/* <div className={styles.loginButtonSfedu}>
+      <div className={styles.loginButtonSfedu} onClick={funSfeduAuth}>
         <button>
           <img src={sfeduLogo} />
           Войти через аккаунт @sfedu
         </button>
-      </div> */}
+      </div>
       <div className={styles.submitButton}>
         <button onClick={handleSubmit}>Войти</button>
       </div>
