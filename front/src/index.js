@@ -4,6 +4,7 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import { addLocale } from 'primereact/api';
+import './i18n';
 
 addLocale('ru', {
   firstDayOfWeek: 1, // Понедельник - первый день недели

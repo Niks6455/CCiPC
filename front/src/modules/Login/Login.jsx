@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Input from '../../ui/Input/Input';
 import styles from './Login.module.scss';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,11 @@ import {
 import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import { useTranslation } from 'react-i18next';
+
 function Login(props) {
+  const { t } = useTranslation('login');
+
   const [passActionFirst, setPassActionFirst] = useState('password');
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -39,15 +43,15 @@ function Login(props) {
     let isValid = true;
     const newErrors = {};
     if (!formData.email) {
-      newErrors.email = 'Введите Email*';
+      newErrors.email = t('enterEmail');
       isValid = false;
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Некорректный Email*';
+      newErrors.email = t('incorrectEmail');
       isValid = false;
     }
 
     if (!formData.password) {
-      newErrors.password = 'Введите пароль*';
+      newErrors.password = t('enterPassword');
       isValid = false;
     }
 
@@ -79,11 +83,13 @@ function Login(props) {
               return;
             }
             if (data?.response?.data?.errNum === 201) {
-              setErrors({ email: 'Неверный логин' });
+              setErrors({ email: t('errorLogin') });
               return;
             }
             if (data?.response?.data?.errNum === 204) {
-              setErrors({ password: 'Неверный пароль' });
+              setErrors({
+                password: t('errorPassword'),
+              });
               return;
             } else {
               setOpenModal(true);
@@ -126,13 +132,13 @@ function Login(props) {
 
   return (
     <section className={styles.Login}>
-      <ErrorModal title={'Ошибка авторизации!'} open={openModal} close={setOpenModal} />
+      <ErrorModal title={t('errorAuth')} open={openModal} close={setOpenModal} />
       <div className={styles.LoginLogo}>
         <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>
       <div className={styles.LoginTitle}>
-        <p>Добро пожаловать</p>
-        <p>Войдите в личный кабинет, чтобы начать работу.</p>
+        <p>{t('title')}</p>
+        <p>{t('h2')}</p>
       </div>
       <div className={styles.input}>
         <div className={styles.inputInner}>
@@ -148,7 +154,7 @@ function Login(props) {
             name="password"
             onChange={handleChange}
             value={formData.password}
-            placeholder="Пароль"
+            placeholder={t('password')}
             imgSrc="/img/password.svg"
             error={errors.password}
             type={passActionFirst}
@@ -164,7 +170,7 @@ function Login(props) {
                 navigate('/recoverpassword');
               }}
             >
-              Забыли пароль?
+              {t('forgot')}
             </p>
           </div>
         </div>
@@ -173,7 +179,7 @@ function Login(props) {
         <div className={styles.MaybeInner}>
           <div className={styles.lineOne}></div>
           <div className={styles.CentralContainer}>
-            <p>ИЛИ</p>
+            <p>{t('or')}</p>
           </div>
           <div className={styles.lineTwo}></div>
         </div>
@@ -181,16 +187,16 @@ function Login(props) {
       <div className={styles.loginButtonSfedu} onClick={funSfeduAuth}>
         <button>
           <img src={sfeduLogo} />
-          Войти через аккаунт @sfedu
+          {t('sfedu')}
         </button>
       </div>
       <div className={styles.submitButton}>
-        <button onClick={handleSubmit}>Войти</button>
+        <button onClick={handleSubmit}>{t('login')}</button>
       </div>
       <div className={styles.noAccount}>
-        <p>Еще нет аккаунта?</p>
+        <p>{t('noAccount')}</p>
         <p onClick={() => navigate('/login/registration')} className={styles.link}>
-          Зарегистрируйтесь
+          {t('register')}
         </p>
       </div>
     </section>

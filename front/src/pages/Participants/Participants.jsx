@@ -8,7 +8,10 @@ import { useSelector } from 'react-redux';
 import TableDataAll from '../../components/TableDataAll/TableDataAll.jsx';
 import { getConferencesParticipants } from '../../apirequests/apirequests.js';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone.jsx';
+import { useTranslation } from 'react-i18next';
+
 function Participants({ userRole }) {
+  const { t } = useTranslation('participants');
   const thead = userRole === 1 ? tableHeadAdmin : tableHead;
   const [filter, setFilter] = useState('');
   const [filteredTable, setFilteredTable] = useState([]);
@@ -50,7 +53,7 @@ function Participants({ userRole }) {
       <main className={styles.Participants}>
         <div className={styles.ParticipantsInner}>
           <div className={styles.Title}>
-            <h2>УЧАСТНИКИ КОНФЕРЕНЦИИ</h2>
+            <h2>{t('title')}</h2>
           </div>
           <div className={styles.inputComponentInner}>
             <div className={styles.inputComponentInnerContainer}>
@@ -61,7 +64,7 @@ function Participants({ userRole }) {
 
                 <input
                   className={styles.inputComponent}
-                  placeholder="Поиск"
+                  placeholder={t('search')}
                   onChange={e => setFilter(e.target.value)}
                   value={filter}
                 />

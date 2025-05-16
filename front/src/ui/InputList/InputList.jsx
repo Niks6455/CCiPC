@@ -1,8 +1,11 @@
 import styles from './InputList.module.scss';
 import arrowMini from './../../assets/img/UI/arrowMini.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 function InputList(props) {
+  const { i18n } = useTranslation();
+
   const liClick = item => {
     props.funSelectElement(props?.name, item.text);
     props.funOpen('');
@@ -23,7 +26,11 @@ function InputList(props) {
       <input
         name={props?.name}
         onChange={props?.onChange}
-        value={props?.value}
+        value={
+          i18n.language === 'ru'
+            ? props?.value
+            : props?.list?.find(item => item.text === props?.value)?.textEN
+        }
         placeholder={props?.placeholder}
         className={`${props?.error ? styles.errorInputList : ''} ${
           props?.open && styles.openInput
@@ -60,7 +67,7 @@ function InputList(props) {
                   onClick={() => liClick(item)}
                   className={`${props?.value === item.text && styles.active}`}
                 >
-                  {item.text}
+                  {i18n.language === 'ru' ? item.text : item.textEN}
                 </li>
               ))}
             </ul>

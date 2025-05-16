@@ -1,12 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './UniversalTable.module.scss';
 import { useWindowWidth } from '../../hooks/hooks';
 import glaz from '@assets/img/glaz.svg';
 import arrowTable from '@assets/img/arrowTable.svg';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setSelectDataParticipants } from '../../store/participantsSlice/participantsSlice';
+import { useTranslation } from 'react-i18next';
 
 function UniversalTable(props) {
+  const { i18n } = useTranslation();
+  console.log('i18n', i18n?.language);
   const [tableHeaderData, setTableHeaderData] = useState([]);
   const [tableBodyData, setTableBodyData] = useState([]);
   const [initialTableHeaderData, setInitialTableHeaderData] = useState([]);
@@ -18,15 +21,50 @@ function UniversalTable(props) {
   const values =
     props.userRole === 1
       ? [
-          { key: 'organization', value: 'Организация', isActive: true },
-          { key: 'status', value: 'Участие', isActive: true },
-          { key: 'direction', value: 'Направление', isActive: true },
-          { key: 'name', value: 'Доклад', isActive: true },
+          {
+            key: 'organization',
+            value: 'Организация',
+            valueEN: 'Organization',
+            isActive: true,
+          },
+          {
+            key: 'status',
+            value: 'Участие',
+            valueEN: 'Participation',
+            isActive: true,
+          },
+          {
+            key: 'direction',
+            value: 'Направление',
+            valueEN: 'Direction',
+            isActive: true,
+          },
+          {
+            key: 'name',
+            value: 'Доклад',
+            valueEN: 'Report',
+            isActive: true,
+          },
         ]
       : [
-          { key: 'organization', value: 'Организация', isActive: true },
-          { key: 'direction', value: 'Направление', isActive: true },
-          { key: 'name', value: 'Доклад', isActive: true },
+          {
+            key: 'organization',
+            value: 'Организация',
+            valueEN: 'Organization',
+            isActive: true,
+          },
+          {
+            key: 'direction',
+            value: 'Направление',
+            valueEN: 'Direction',
+            isActive: true,
+          },
+          {
+            key: 'name',
+            value: 'Доклад',
+            valueEN: 'Report',
+            isActive: true,
+          },
         ];
 
   useEffect(() => {
@@ -82,6 +120,7 @@ function UniversalTable(props) {
     updatedHeaderData[2] = {
       key: values[activeIndex].key,
       value: values[activeIndex].value,
+      valueEN: values[activeIndex].valueEN,
       isActive: true,
     };
 
@@ -129,7 +168,7 @@ function UniversalTable(props) {
                   <div>
                     <img src={arrowTable} className={styles.arrowTable} onClick={slidePrev} />
                   </div>
-                  <p>{el.value}</p>
+                  <p>{i18n.language === 'ru' ? el.value : el.valueEN}</p>
                   <div>
                     <img
                       src={arrowTable}
@@ -140,7 +179,7 @@ function UniversalTable(props) {
                   </div>
                 </div>
               ) : (
-                <>{el.value}</>
+                <>{i18n.language === 'ru' ? el.value : el.valueEN}</>
               )}
             </th>
           ))}
@@ -159,7 +198,7 @@ function UniversalTable(props) {
       </table>
       {(!tableBodyData || tableBodyData.length === 0) && (
         <div colSpan={tableHeaderData.length} className={styles.tableNotData}>
-          <div className={styles.text}>Нет данных</div>
+          <div className={styles.text}>{i18n.language === 'ru' ? 'Нет данных' : 'No data'}</div>
         </div>
       )}
     </div>

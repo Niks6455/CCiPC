@@ -1,0 +1,10 @@
+{
+  "title": "application for Participation",
+  "buttonLeft": "Conference Registration",
+  "buttonRight": "Collections from Previous Years",
+  "registration_info": "To participate in the conference, you need to <1>register</1> <3>on the platform and submit an application</3> by filling out the registration form in your <5>personal account</5>",
+  "deadline": ". By {{date}}, you must submit a presentation application by filling in all required fields and uploading the article and the expert review.",
+  "attach_title": "When submitting an application, the following must be attached:",
+  "attach_1": "1) a report formatted according to the <1>template</1> in Word;",
+  "attach_2": "2) a scanned image of the expert review confirming the possibility of publication, signed by the head of the expert committee and stamped by the organization."
+}

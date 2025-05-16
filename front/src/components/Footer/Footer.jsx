@@ -3,7 +3,13 @@ import styles from './Footer.module.scss';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
 import { formatDateRangePrimereact } from '../../utils/functions/funcions';
+import { useTranslation } from 'react-i18next';
+
 function Footer({ footerRef }) {
+  const { t } = useTranslation('footer');
+  const { i18n } = useTranslation();
+  const lang = i18n.language;
+
   const conferense = useSelector(state => state.conferences?.data[0]);
 
   return (
@@ -21,13 +27,21 @@ function Footer({ footerRef }) {
                 {conferense?.files?.FOOTER?.[0].url && (
                   <img src={`${server}/${conferense?.files?.FOOTER?.[0].url}`} alt="logo" />
                 )}
-                Всероссийская научная конференция "Системный синтез и прикладная синергетика"
+                {t('title')}
               </p>
-              {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value) ? (
+              {formatDateRangePrimereact(
+                conferense?.date[0].value,
+                conferense?.date[1].value,
+                lang,
+              ) ? (
                 <p>
                   {' '}
-                  {formatDateRangePrimereact(conferense?.date[0].value, conferense?.date[1].value)}
-                  {' года'} {conferense?.address}
+                  {formatDateRangePrimereact(
+                    conferense?.date[0].value,
+                    conferense?.date[1].value,
+                    lang,
+                  )}
+                  {t('year')} {conferense?.address}
                 </p>
               ) : (
                 <p></p>
@@ -36,7 +50,7 @@ function Footer({ footerRef }) {
           </div>
           <div className={styles.footerLink}>
             <div>
-              <p>Напишите нам:</p>
+              <p>{t('message')}</p>
               <p className={styles.link}>
                 e-mail: <a href="mailto:ssas@ictis.sfedu.ru">ssas@ictis.sfedu.ru</a>
               </p>

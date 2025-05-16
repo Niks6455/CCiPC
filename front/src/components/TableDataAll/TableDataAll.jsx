@@ -4,8 +4,10 @@ import closeBack from '@assets/img/closeBack.svg';
 import gsap from 'gsap';
 import { useDispatch } from 'react-redux';
 import { clearDataParticipants } from '../../store/participantsSlice/participantsSlice';
+import { useTranslation } from 'react-i18next';
 
 function TableDataAll(props) {
+  const { t } = useTranslation('participants');
   const refForm = useRef(null);
   const refBackdrop = useRef(null);
   const dispatch = useDispatch();
@@ -68,7 +70,7 @@ function TableDataAll(props) {
         </div>
         <div className={styles.textCont}>
           <div className={styles.textContTitle}>
-            <p>Организация</p>
+            <p>{t('organization')}</p>
           </div>
           <div className={styles.textContSubtitle}>
             <p>{props?.data?.organization}</p>
@@ -76,7 +78,7 @@ function TableDataAll(props) {
         </div>
         <div className={styles.textCont}>
           <div className={styles.textContTitle}>
-            <p>Направление</p>
+            <p>{t('direction')}</p>
           </div>
           <div className={styles.textContSubtitle}>
             <p>{props?.data?.direction}</p>
@@ -84,7 +86,7 @@ function TableDataAll(props) {
         </div>
         <div className={styles.textCont}>
           <div className={styles.textContTitle}>
-            <p>Доклад</p>
+            <p>{t('report')}</p>
           </div>
           <div className={styles.textContSubtitle}>
             <p>{props?.data?.name}</p>

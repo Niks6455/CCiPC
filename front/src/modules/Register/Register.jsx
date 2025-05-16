@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import Input from '../../ui/Input/Input';
 import styles from './Register.module.scss';
 import DataContext from '../../context';
@@ -15,7 +15,6 @@ import {
   funSixteenSymbols,
   funSpecialSymbol,
   validateLatinSymbols,
-  validatePassword,
 } from '../../utils/functions/PasswordValidation';
 import { apiRegister } from '../../apirequests/apirequests';
 import {
@@ -30,8 +29,10 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { resetData, setDataKey } from '../../store/registrationSlice/registrationSlice';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import { useTranslation } from 'react-i18next';
 
 function Register() {
+  const { t } = useTranslation('register');
   const dispach = useDispatch();
   const registration = useSelector(state => state.registration);
   const context = useContext(DataContext);
@@ -55,48 +56,55 @@ function Register() {
     phone: '',
   });
 
-  const [errorListPassword, setErrorListPassword] = useState([
+  const errorList = [
     {
       id: '0',
-      text: 'Не менее 8 символов',
+      text: t('validate1'),
+      loc: 'validate1',
       done: false,
       functionCheck: funEightSymbols,
     },
     {
       id: '4',
-      text: 'Не более 16 символов',
+      text: t('validate2'),
+      loc: 'validate2',
       done: true,
       functionCheck: funSixteenSymbols,
     },
     {
       id: '1',
-      text: 'Не менее 1 заглавной буквы',
+      text: t('validate3'),
+      loc: 'validate3',
       done: false,
       functionCheck: funCapitalLetter,
     },
     {
       id: '2',
-      text: 'Не менее 1 цифры',
+      text: t('validate4'),
+      loc: 'validate4',
       done: false,
       functionCheck: funDigit,
     },
     {
       id: '3',
-      text: 'Не менее 1 спецсимвола: !@#$%&?',
+      text: t('validate5'),
+      loc: 'validate5',
       done: false,
       functionCheck: funSpecialSymbol,
     },
     {
       id: '5',
-      text: 'Только латинские буквы',
+      text: t('validate6'),
+      loc: 'validate6',
       done: false,
       functionCheck: validateLatinSymbols,
     },
-  ]);
+  ];
+
+  const [errorListPassword, setErrorListPassword] = useState(errorList);
 
   const funSelectedElement = (key, value) => {
     setErrors({ ...errors, [key]: '' });
-    // setFormData({ ...formData, [key]: value });
     dispach(setDataKey({ key, value }));
   };
 
@@ -131,13 +139,13 @@ function Register() {
       'degree',
     ].forEach(field => {
       if (!registration?.data?.[field]) {
-        newErrors[field] = 'Поле обязательно для заполнения';
+        newErrors[field] = t('error1');
         isValid = false;
       }
     });
     // Проверка корректности Email
     if (registration?.data?.email && !/\S+@\S+\.\S+/.test(registration?.data?.email)) {
-      newErrors.email = 'Некорректный Email';
+      newErrors.email = t('invalidEmail');
       isValid = false;
     }
     // Проверка номера телефона
@@ -145,12 +153,12 @@ function Register() {
       registration?.data?.phone &&
       !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(registration?.data?.phone)
     ) {
-      newErrors.phone = 'Некорректный номер';
+      newErrors.phone = t('invalidPhone');
       isValid = false;
     }
     // Проверка совпадения паролей
     if (registration?.data?.password !== registration?.data?.confirmPassword) {
-      newErrors.confirmPassword = 'Пароли не совпадают';
+      newErrors.confirmPassword = t('passwordNotEqual');
       isValid = false;
     }
     const paseerors = errorListPassword.find(el => !el.done);
@@ -160,30 +168,30 @@ function Register() {
     }
 
     if (!validateFIO(registration?.data?.name)) {
-      newErrors.name = 'Некорректное имя';
+      newErrors.name = t('invalidName');
       isValid = false;
     }
 
     if (!validateFIO(registration?.data?.surname)) {
-      newErrors.surname = 'Некорректная фамилия';
+      newErrors.surname = t('invalidSurname');
       isValid = false;
     }
 
     if (!validateFIO(registration?.data?.patronymic)) {
-      newErrors.patronymic = 'Некорректное отчество';
+      newErrors.patronymic = t('invalidPatronymic');
       isValid = false;
     }
 
     if (!validateLength(registration?.data?.surname, 2, 50)) {
-      newErrors.surname = 'Некорректная фамилия';
+      newErrors.surname = t('invalidSurname');
       isValid = false;
     }
     if (!validateLength(registration?.data?.name, 2, 50)) {
-      newErrors.name = 'Некорректное имя';
+      newErrors.name = t('invalidName');
       isValid = false;
     }
     if (!validateLength(registration?.data?.patronymic, 5, 50)) {
-      newErrors.patronymic = 'Некорректное отчество';
+      newErrors.patronymic = t('invalidPatronymic');
       isValid = false;
     }
 
@@ -207,47 +215,47 @@ function Register() {
           sessionStorage.setItem('confirmEmail', registration?.data?.email);
         } else {
           if (res?.response?.data?.message === 'email or phone entity already exists') {
-            setModalTitle('Пользователь с таким email или телефоном уже зарегистрирован!');
+            setModalTitle(t('alreadyExists'));
             return;
           }
           if (res?.response?.data?.message === 'password parameter is invalid') {
-            setModalTitle('Некорректный пароль!');
+            setModalTitle(t('invalidPassword'));
             return;
           }
           if (res?.response?.data?.message === 'name parameter is invalid') {
-            setModalTitle('Некорректное имя!');
+            setModalTitle(`${t('invalidName')}!`);
             return;
           }
           if (res?.response?.data?.message === 'surname parameter is invalid') {
-            setModalTitle('Некорректная фамилия!');
+            setModalTitle(`${t('invalidSurname')}!`);
             return;
           }
           if (res?.response?.data?.message === 'patronymic parameter is invalid') {
-            setModalTitle('Некорректное отчество!');
+            setModalTitle(`${t('invalidPatronymic')}!`);
             return;
           }
           if (res?.response?.data?.message === 'organization parameter is invalid') {
-            setModalTitle('Некорректное название организации!');
+            setModalTitle(t('invalidOrganization'));
             return;
           }
           if (res?.response?.data?.message === 'position parameter is invalid') {
-            setModalTitle('Некорректная должность!');
+            setModalTitle(t('invalidPosition'));
             return;
           }
           if (res?.response?.data?.message === 'speciality parameter is invalid') {
-            setModalTitle('Некорректная специальность!');
+            setModalTitle(t('invalidSpeciality'));
             return;
           }
           if (res?.response?.data?.message === 'email parameter is invalid') {
-            setModalTitle('Некорректная почта!');
+            setModalTitle(t('invalidEmail2'));
             return;
           }
           if (res?.response?.data?.message === 'phone parameter is invalid') {
-            setModalTitle('Некорректный телефон!');
+            setModalTitle(t('invalidPhone2'));
             return;
           }
 
-          setModalTitle('Ошибка при регистрации!');
+          setModalTitle(t('errorRegister'));
         }
       });
     }
@@ -302,8 +310,8 @@ function Register() {
         <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>
       <div className={styles.LoginTitle}>
-        <p>Добро пожаловать</p>
-        <p>Зарегистрируйтесь, чтобы начать работу.</p>
+        <p>{t('title')}</p>
+        <p>{t('h2')}</p>
       </div>
       <div className={styles.input}>
         <div className={styles.inputInner}>
@@ -312,7 +320,7 @@ function Register() {
               name="name"
               onChange={handleChange}
               value={registration?.data?.name}
-              placeholder="Имя*"
+              placeholder={t('name')}
               error={errors.name}
               autoComplete={'new-password'}
             />
@@ -320,7 +328,7 @@ function Register() {
               name="surname"
               onChange={handleChange}
               value={registration?.data?.surname}
-              placeholder="Фамилия*"
+              placeholder={t('surname')}
               error={errors.surname}
               autoComplete={'new-password'}
             />
@@ -328,7 +336,7 @@ function Register() {
               name="patronymic"
               onChange={handleChange}
               value={registration?.data?.patronymic}
-              placeholder="Отчество"
+              placeholder={t('patronymic')}
               error={errors.patronymic}
               autoComplete={'new-password'}
             />
@@ -336,7 +344,7 @@ function Register() {
               name="academicTitle"
               onChange={handleChange}
               value={registration?.data?.academicTitle}
-              placeholder="Учёное звание*"
+              placeholder={t('academicTitle')}
               open={openList === 'academicTitle'}
               funOpen={funOpenList}
               divRef={refList[1]}
@@ -348,7 +356,7 @@ function Register() {
               name="degree"
               onChange={handleChange}
               value={registration?.data?.degree}
-              placeholder="Учёная степень*"
+              placeholder={t('degree')}
               open={openList === 'degree'}
               funOpen={funOpenList}
               divRef={refList[2]}
@@ -361,7 +369,7 @@ function Register() {
               name="position"
               onChange={handleChange}
               value={registration?.data?.position}
-              placeholder="Должность*"
+              placeholder={t('position')}
               open={openList === 'position'}
               funOpen={funOpenList}
               divRef={refList[3]}
@@ -375,7 +383,7 @@ function Register() {
               name="organization"
               onChange={handleChange}
               value={registration?.data?.organization}
-              placeholder="Организация*"
+              placeholder={t('organization')}
               error={errors.organization}
               autoComplete={'new-password'}
             />
@@ -383,7 +391,7 @@ function Register() {
               name="email"
               onChange={handleChange}
               value={registration?.data?.email}
-              placeholder="Email (логин)*"
+              placeholder={t('email')}
               error={errors.email}
               autoComplete={'new-password'}
             />
@@ -391,7 +399,7 @@ function Register() {
               name="phone"
               onChange={handleChange}
               value={registration?.data?.phone}
-              placeholder="Номер телефона*"
+              placeholder={t('phone')}
               error={errors.phone}
               autoComplete={'new-password'}
             />
@@ -399,7 +407,7 @@ function Register() {
               name="password"
               onChange={handleChange}
               value={registration?.data?.password}
-              placeholder="Придумайте пароль*"
+              placeholder={t('password')}
               error={errors.password}
               errorList={errorListPassword}
               setErrorList={setErrorListPassword}
@@ -417,7 +425,7 @@ function Register() {
               name="confirmPassword"
               onChange={handleChange}
               value={registration?.data?.confirmPassword}
-              placeholder="Повторите пароль*"
+              placeholder={t('confirmPassword')}
               error={errors.confirmPassword}
               type={passActionSecond}
               imgSrc={lock}
@@ -434,24 +442,24 @@ function Register() {
         <div className={styles.MaybeInner}>
           <div className={styles.lineOne}></div>
           <div className={styles.CentralContainer}>
-            <p>ИЛИ</p>
+            <p>{t('or')}</p>
           </div>
           <div className={styles.lineTwo}></div>
         </div>
       </div>
-      {/* <div className={styles.loginButtonSfedu}>
+      <div className={styles.loginButtonSfedu}>
         <button>
           <img src="/img/SfeduLogo.svg" alt="Sfedu Logo" />
-          Войти через аккаунт @sfedu
+          {t('sfedu')}
         </button>
-      </div> */}
+      </div>
       <div className={styles.submitButton}>
-        <button onClick={handleSubmit}>Зарегистрироваться</button>
+        <button onClick={handleSubmit}>{t('register')}</button>
       </div>
       <div className={styles.noAccount}>
-        <p>Уже есть аккаунт?</p>
+        <p>{t('alreadyAccount')}</p>
         <p onClick={() => navigate('/login/authorization')} className={styles.link}>
-          Авторизируйтесь
+          {t('authorization')}
         </p>
       </div>
     </section>

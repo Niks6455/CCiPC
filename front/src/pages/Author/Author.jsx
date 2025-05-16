@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../../ui/Layout/Layout';
 import styles from './Author.module.scss';
 import AuthorCollection from '../../components/AuthorCollection/AuthorCollection';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import NavBar from '../../components/NavBar/NavBar.jsx';
 import Book from '../../assets/img/Book.svg';
 import Cap from '../../assets/img/Cap.svg';
@@ -10,8 +10,10 @@ import { getAllArchiveReport } from '../../apirequests/apirequests.js';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests.js';
+import { Trans, useTranslation } from 'react-i18next';
 
 function Author({ userRole }) {
+  const { t } = useTranslation('author');
   const [selectedButton, setSelectedButton] = useState('Registration');
   const [data, setData] = useState([]);
   const conference = useSelector(state => state?.conferences?.data[0]);
@@ -39,17 +41,11 @@ function Author({ userRole }) {
 
   return (
     <main>
-      {/* <img
-        style={{ cursor: 'pointer' }}
-        src={logoHeader}
-        className={styles.logo}
-        onClick={() => navigate('/')}
-      /> */}
       <NavBar userRole={userRole} />
       <HeaderPhone />
       <Layout>
         <div className={styles.author}>
-          <h1 className={styles.h1}>заявка на участие</h1>
+          <h1 className={styles.h1}>{t('title')}</h1>
           <div className={styles.buttons}>
             <div
               className={`${styles.button} ${
@@ -57,7 +53,7 @@ function Author({ userRole }) {
               }`}
               onClick={() => setSelectedButton('Registration')}
             >
-              <span className={`${styles.button_text}`}>Оформление участия в конференции</span>
+              <span className={`${styles.button_text}`}>{t('buttonLeft')}</span>
               <img src={Cap} alt="Cap"></img>
             </div>
             <div
@@ -66,48 +62,42 @@ function Author({ userRole }) {
               }`}
               onClick={() => setSelectedButton('Collection')}
             >
-              <span>Сборники прошлых лет</span>
+              <span>{t('buttonRight')}</span>
               <img src={Book} alt="Book"></img>
             </div>
           </div>
           {selectedButton === 'Registration' && (
             <div className={styles.registration}>
               <p className={styles.registration_text_1}>
-                Для участия в конференции необходимо{' '}
-                <Link className={styles.green_link} to="/login/authorization">
-                  зарегистрироваться
-                </Link>
-                <span className={styles.bold}> на платформе и подать заявку</span>,
-                заполнив регистрационную форму в{' '}
-                <Link className={styles.green_link} to="/account/profile">
-                  {' '}
-                  личном кабинете
-                </Link>
-                {/* . В срок до {conference?.dedlineReport1 || 'XXXX-XX-XX'} необходимо прислать заявку
-                на доклад, заполнив обязательные поля, а в срок до{' '}
-                {conference?.dedlineReport2 || 'XXXX-XX-XX'} загрузить статью и экспертное
-                заключение. */}
-                {conference?.dedlineReport2 && (
-                  <>
-                    . В срок до {conference?.dedlineReport2} необходимо прислать заявку на доклад,
-                    заполнив обязательные поля, а также загрузить статью и экспертное заключение.
-                  </>
-                )}
+                <Trans
+                  i18nKey="registration_info"
+                  components={{
+                    1: <Link className={styles.green_link} to="/login/authorization" />,
+                    3: <span className={styles.bold} />,
+                    5: <Link className={styles.green_link} to="/account/profile" />,
+                  }}
+                />
+
+                <Trans i18nKey="deadline" values={{ date: conference?.dedlineReport2 }} />
               </p>
               <p className={styles.registration_text_2}>
-                <span className={styles.bold}>При подаче заявки прикрепляются:</span>
+                <span className={styles.bold}>{t('attach_title')}</span>
               </p>
               <p className={styles.registration_text_3}>
-                1) доклад, оформленный по{' '}
-                <a onClick={funDownloadShablon} target="_blank" className={styles.green_link}>
-                  шаблону
-                </a>{' '}
-                в Word;
+                <Trans
+                  i18nKey="attach_1"
+                  components={{
+                    1: (
+                      <a
+                        onClick={funDownloadShablon}
+                        target="_blank"
+                        className={styles.green_link}
+                      />
+                    ),
+                  }}
+                />
               </p>
-              <p className={styles.registration_text_4}>
-                2) файл с отсканированным изображением экспертного заключения о возможности
-                публикации с подписью председателя экспертной комиссии и печатью организации.
-              </p>
+              <p className={styles.registration_text_4}>{t('attach_2')}</p>
             </div>
           )}
           {selectedButton === 'Collection' && (

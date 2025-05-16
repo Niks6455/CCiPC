@@ -1,0 +1,17 @@
+{
+  "title": "Welcome",
+  "h2": "Log in to your account to get started.",
+  "password": "Password",
+  "forgot": "Forgot your password?",
+  "or": "OR",
+  "sfedu": "Sign in with @sfedu account",
+  "login": "Log In",
+  "noAccount": "Don't have an account yet?",
+  "register": "Register",
+  "errorAuth": "Authentication error!",
+  "errorLogin": "Incorrect login",
+  "errorPassword": "Incorrect password",
+  "enterEmail": "Enter your email*",
+  "incorrectEmail": "Invalid email*",
+  "enterPassword": "Enter your password*"
+}
