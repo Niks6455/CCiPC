@@ -118,7 +118,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <main>
-            {/* <LanguageSwitcher /> */}
+            <LanguageSwitcher />
 
             <div id="#main_inner">
               <Routes>
