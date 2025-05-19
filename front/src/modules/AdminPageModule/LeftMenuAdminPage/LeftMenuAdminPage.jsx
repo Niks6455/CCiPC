@@ -22,43 +22,43 @@ function LeftMenuAdminPage() {
         <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
         <p className={styles.Title}>Панель администратора</p>
         <ul className={styles.LeftMenuLkList}>
-          <Link to="news">
+          <Link to="/adminPage/news">
             <li className={getActiveLi('/adminPage/news')}>
               <img src={news} />
               Новости
             </li>
           </Link>
-          <Link to="conferences">
+          <Link to="/adminPage/conferences">
             <li className={getActiveLi('/adminPage/conferences')}>
               <img src={conference} />
               Конференция
             </li>
           </Link>
-          <Link to="committee">
+          <Link to="/adminPage/committee">
             <li className={getActiveLi('/adminPage/committee')}>
               <img src={org} />
               Оргкомитет
             </li>
           </Link>
-          <Link to="participants">
+          <Link to="/adminPage/participants">
             <li className={getActiveLi('/adminPage/participants')}>
               <img src={colaborators} />
               Участники
             </li>
           </Link>
-          <Link to="payment">
+          <Link to="/adminPage/payment">
             <li className={getActiveLi('/adminPage/payment')}>
               <img src={orgMoney} />
               Оргвзнос
             </li>
           </Link>
-          <Link to="photoalbums">
+          <Link to="/adminPage/photoalbums">
             <li className={getActiveLi('/adminPage/photoalbums')}>
               <img src={archive} />
               Архив фото
             </li>
           </Link>
-          <Link to="collections">
+          <Link to="/adminPage/collections">
             <li className={getActiveLi('/adminPage/collections')}>
               <img src={archive} />
               Архив сборников

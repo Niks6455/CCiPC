@@ -10,6 +10,7 @@ import committeeEN from '@assets/locales/en/committee.json';
 import navbarEN from '@assets/locales/en/navbar.json';
 import profileEN from '@assets/locales/en/profile.json';
 import leftMenuEN from '@assets/locales/en/leftMenu.json';
+import viewReportsEN from '@assets/locales/en/viewReports.json';
 
 import authorRU from '@assets/locales/ru/author.json';
 import footerRU from '@assets/locales/ru/footer.json';
@@ -20,6 +21,7 @@ import committeeRU from '@assets/locales/ru/committee.json';
 import navbarRU from '@assets/locales/ru/navbar.json';
 import profileRU from '@assets/locales/ru/profile.json';
 import leftMenuRU from '@assets/locales/ru/leftMenu.json';
+import viewReportsRU from '@assets/locales/ru/viewReports.json';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -33,6 +35,7 @@ i18n.use(initReactI18next).init({
       navbar: navbarEN,
       profile: profileEN,
       leftMenu: leftMenuEN,
+      viewReports: viewReportsEN,
     },
     ru: {
       author: authorRU,
@@ -44,6 +47,7 @@ i18n.use(initReactI18next).init({
       navbar: navbarRU,
       profile: profileRU,
       leftMenu: leftMenuRU,
+      viewReports: viewReportsRU,
     },
   },
   lng: 'ru',
@@ -58,6 +62,7 @@ i18n.use(initReactI18next).init({
     'navbar',
     'profile',
     'leftMenu',
+    'viewReports',
   ],
   defaultNS: 'author',
   interpolation: {

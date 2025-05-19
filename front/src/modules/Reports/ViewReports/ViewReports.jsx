@@ -15,7 +15,7 @@ import CircleLoader from '../../../components/CircleLoader/CircleLoader';
 import { useTranslation } from 'react-i18next';
 
 function ViewReports() {
-  // const {t} = useTranslation("");
+  const { t } = useTranslation('viewReports');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user.data);
@@ -106,17 +106,13 @@ function ViewReports() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.6 }}
                 >
-                  <h2>
-                    Вы действительно хотите удалить доклад
-                    <br /> "{reportData?.name}”? <br />
-                    Отменить это действие будет невозможно.
-                  </h2>
+                  <h2>{t('confirmDeleteTitle', { name: reportData?.name })}</h2>
                   <div className={styles.button_container}>
                     <button className={styles.cancle} onClick={() => setIsModalDelete(false)}>
-                      Назад
+                      {t('back')}
                     </button>
                     <button className={styles.delete} onClick={funDeleteReport}>
-                      Удалить
+                      {t('deleteConfirm')}
                     </button>
                   </div>
                 </motion.div>
@@ -127,42 +123,43 @@ function ViewReports() {
           <div className={styles.ViewReportsInner}>
             <div className={styles.ViewReportsInnerFirst}>
               <div className={styles.ViewReportsBlock}>
-                <p className={styles.ViewReportsTitle}>Автор:</p>
+                <p className={styles.ViewReportsTitle}>{t('author')}:</p>
                 <p>{reportData?.author?.fio}</p>
               </div>
               <div className={styles.ViewReportsBlock}>
-                <p className={styles.ViewReportsTitle}>Название доклада № {number}:</p>
+                <p className={styles.ViewReportsTitle}>{t('reportTitle', { number })}:</p>
                 <p>{reportData?.name}</p>
               </div>
               <div className={styles.ViewReportsBlock}>
-                <p className={styles.ViewReportsTitle}>Направление конференции:</p>
+                <p className={styles.ViewReportsTitle}>{t('direction')}:</p>
                 <p>{reportData?.direction?.name}</p>
               </div>
               <div className={styles.ViewReportsBlock}>
-                <p className={styles.ViewReportsTitle}>Форма участия:</p>
+                <p className={styles.ViewReportsTitle}>{t('form')}:</p>
                 <p>{reportData?.author?.form}</p>
               </div>
               <div className={styles.ViewReportsBlock}>
-                <p className={styles.ViewReportsTitle}>Статус участия:</p>
+                <p className={styles.ViewReportsTitle}>{t('status')}:</p>
                 <p>{reportData?.author?.status}</p>
               </div>
               <div className={styles.ViewReportsBlock}>
-                <p className={styles.ViewReportsTitle}>Комментарий:</p>
+                <p className={styles.ViewReportsTitle}>{t('comment')}:</p>
                 <p>{reportData?.comment}</p>
               </div>
             </div>
+
             <div className={styles.ViewReportsInnerSecond}>
               <div className={styles.ViewReportsSoauthors}>
-                <p className={styles.ViewReportsTitle}>Соавторы:</p>
+                <p className={styles.ViewReportsTitle}>{t('coauthors')}:</p>
 
                 {Array.from(
                   { length: reportData?.cacheCoAuthors },
                   (_, index) => index + reportData?.cacheCoAuthors,
                 ).map((_, index) => (
                   <div key={index}>
-                    <p className={styles.name}>{`${
-                      index + 1
-                    }. Данный соавтор еще не зарегистрировался на платформе`}</p>
+                    <p className={styles.name}>
+                      {t('coauthorNotRegistered', { index: index + 1 })}
+                    </p>
                   </div>
                 ))}
 
@@ -173,45 +170,49 @@ function ViewReports() {
                     }. ${item.fio}`}</p>
                     <ul>
                       <li>
-                        <span>Организация:</span>
-                        <p>{item?.organization || 'Отсутствует'}</p>
+                        <span>{t('organization')}:</span>
+                        <p>{item?.organization || t('noCoauthors')}</p>
                       </li>
                       <li>
-                        <span>Email:</span> <p>{item?.email || 'Отсутствует'}</p>
+                        <span>{t('email')}:</span>
+                        <p>{item?.email || t('noCoauthors')}</p>
                       </li>
                       <li>
-                        <span>Телефон:</span> <p>{item?.phone || 'Отсутствует'}</p>
+                        <span>{t('phone')}:</span>
+                        <p>{item?.phone || t('noCoauthors')}</p>
                       </li>
                       <li>
-                        <span>Статус участия:</span> <p>{item?.status || 'Отсутствует'}</p>
+                        <span>{t('participationStatus')}:</span>
+                        <p>{item?.status || t('noCoauthors')}</p>
                       </li>
                       <li>
-                        <span>Форма участия:</span> <p>{item?.form || 'Отсутствует'}</p>
+                        <span>{t('participationForm')}:</span>
+                        <p>{item?.form || t('noCoauthors')}</p>
                       </li>
                     </ul>
                   </div>
                 ))}
                 {reportData?.coAuthors?.length === 0 && reportData?.cacheCoAuthors === 0 && (
-                  <p className={styles.name}>Отсутствуют</p>
+                  <p className={styles.name}>{t('noCoauthors')}</p>
                 )}
               </div>
             </div>
           </div>
           <div className={styles.fileLouders}>
             <div className={styles.fileContur}>
-              <p className={styles.fileLoudersTitle}>Доклад:</p>
+              <p className={styles.fileLoudersTitle}>{t('reportFile')}:</p>
               <div
                 className={`${styles.blockFile} ${reportData?.reportFile ? '' : styles.blockFileNoFile}`}
                 onClick={() => funOpenFile(reportData?.reportFile)}
               >
                 <img src={DOC} alt="img" />
                 <div className={styles.fileName}>
-                  <span>{reportData?.reportFile?.name || 'Документ.docx'}</span>
+                  <span>{reportData?.reportFile?.name || `${t('doc')}.docx`}</span>
                 </div>
               </div>
             </div>
             <div className={styles.fileContur}>
-              <p className={styles.fileLoudersTitle}>Экспертное заключение:</p>
+              <p className={styles.fileLoudersTitle}>{t('conclusionFile')}:</p>
               <div
                 className={`${styles.blockFile} ${reportData?.conclusion ? '' : styles.blockFileNoFile}`}
                 onClick={() => funOpenFile(reportData?.conclusion)}
@@ -219,12 +220,8 @@ function ViewReports() {
                 <img src={BlockFile} alt="img" />
 
                 <div className={styles.fileName}>
-                  <span>{reportData?.conclusion?.name || 'Документ.pdf'}</span>
+                  <span>{reportData?.conclusion?.name || `${t('doc')}.pdf`}</span>
                 </div>
-                {/* <BlockFile
-              className={styles.blockFile}
-              onClick={() => funOpenFile(reportData?.conclusion)}
-            /> */}
               </div>
             </div>
           </div>
@@ -240,11 +237,11 @@ function ViewReports() {
                   navigate(`/account/editreport?idReport=${idReport}&number=${number}`);
                 }}
               >
-                Редактировать данные
+                {t('edit')}
               </button>
               {reportData?.author?.email === user?.email && (
                 <button className={styles.button_delete} onClick={deleteReportOpenModal}>
-                  <span>Удалить доклад</span>
+                  <span>{t('delete')}</span>
                   <Trash />
                 </button>
               )}
