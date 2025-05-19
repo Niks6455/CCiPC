@@ -7,7 +7,6 @@ import errorList from './../../../assets/img/UI/errorZnak.svg';
 import {
   addSoauthors,
   deleteCoauthor,
-  disSeteEditData,
   disSetResetReport,
   funSaveDataState,
   setCoauthorAutocompletion,
@@ -40,8 +39,11 @@ import InputListForma from '../../../components/InputListForma/InputListForma';
 import { formParticipationList, participationStatus } from '../../../utils/Lists/List';
 import ErrorModal from '../../../components/ErrorModal/ErrorModal';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
+  const { t } = useTranslation('addCoauthor');
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
@@ -165,28 +167,28 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           erroes.push({
             index: index,
             key: 'name',
-            error: 'Поле обязательно для заполнения!',
+            error: t('par1'),
           });
         }
         if (!el.data.surname) {
           erroes.push({
             index: index,
             key: 'surname',
-            error: 'Поле обязательно для заполнения!',
+            error: t('par1'),
           });
         }
         if (!el.data.email) {
           erroes.push({
             index: index,
             key: 'email',
-            error: 'Поле обязательно для заполнения!',
+            error: t('par1'),
           });
         }
         if (!validateEmail(el.data.email)) {
           erroes.push({
             index: index,
             key: 'email',
-            error: 'Некорректная почта',
+            error: t('par2'),
           });
         }
       });
@@ -278,28 +280,28 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           erroes.push({
             index: index,
             key: 'name',
-            error: 'Поле обязательно для заполнения!',
+            error: t('par1'),
           });
         }
         if (!el.surname) {
           erroes.push({
             index: index,
             key: 'surname',
-            error: 'Поле обязательно для заполнения!',
+            error: t('par1'),
           });
         }
         if (!el.email) {
           erroes.push({
             index: index,
             key: 'email',
-            error: 'Поле обязательно для заполнения!',
+            error: t('par1'),
           });
         }
         if (!validateEmail(el.email)) {
           erroes.push({
             index: index,
             key: 'email',
-            error: 'Некорректная почта',
+            error: t('par2'),
           });
         }
       });
@@ -330,7 +332,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
               dispatch(
                 setOpenPopUpName({
                   name: 'FildeModal',
-                  text: 'Доклад с таким названием уже существует!',
+                  text: t('par3'),
                 }),
               );
             } else {
@@ -341,7 +343,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                 dispatch(
                   setOpenPopUpName({
                     name: 'FildeModal',
-                    text: 'Доклад с таким названием уже существует!',
+                    text: t('par3'),
                   }),
                 );
               } else {
@@ -377,9 +379,9 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     ) {
       return (
         <div className={styles.modalEmail}>
-          <p>Данный пользователь уже является соавтором этого доклада.</p>
+          <p>{t('par4')}</p>
           <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
-            <span>Удалить</span>
+            <span>{t('par5')}</span>
           </button>
         </div>
       );
@@ -387,9 +389,9 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     if (!soauthtor.data?.id && soauthtor?.data?.email === user?.email) {
       return (
         <div className={styles.modalEmail}>
-          <p>Вы уже являетесь автором данного доклада.</p>
+          <p>{t('par6')}</p>
           <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
-            <span>Удалить</span>
+            <span>{t('par5')}</span>
           </button>
         </div>
       );
@@ -397,22 +399,16 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     if (soauthtor.autocompletion === 'noemail') {
       return (
         <div className={styles.modalEmail}>
-          <p>
-            Пользователь с такой почтой не найден на платформе. Необходимо внести данные о соавторе
-            вручную.
-          </p>
-          <button onClick={() => funNoEmail(index, false)}>Продолжить</button>
+          <p>{t('par7')}</p>
+          <button onClick={() => funNoEmail(index, false)}>{t('par8')}</button>
         </div>
       );
     }
     if (soauthtor.autocompletion === 'emailhave') {
       return (
         <div className={styles.modalEmail}>
-          <p>
-            Пользователь с такой почтой найден на платформе. Данные о соавторе заполнятся
-            автоматически, кроме его формы участия.
-          </p>
-          <button onClick={() => funNoEmail(index, true)}>Продолжить</button>
+          <p>{t('par9')}</p>
+          <button onClick={() => funNoEmail(index, true)}>{t('par8')}</button>
         </div>
       );
     }
@@ -420,7 +416,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
 
   return (
     <div className={styles.AddCoauthor}>
-      <ErrorModal title="Срок подачи докладов истек!" open={errorModal} close={setErrorModal} />
+      <ErrorModal title={t('par10')} open={errorModal} close={setErrorModal} />
       <ErrorModal open={modalError} close={setModalError} title={modalError} />
       {report?.openPopUpName && (
         <div className={styles.popups}>
@@ -438,7 +434,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
 
       {!soauthorEditing && (
         <div className={styles.head}>
-          <h2 className={styles.title}>Соавторы</h2>
+          <h2 className={styles.title}>{t('par11')}</h2>
           {!edit && (
             <div className={styles.backImg}>
               <img src={leftArrow} alt="назад" draggable="false" onClick={() => navigate(-1)} />
@@ -463,7 +459,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
         <div className={styles.soauthorEditing}>
           <div className={styles.inputbox}>
             <InputLabel
-              label={'Имя соавтора*'}
+              label={t('par12')}
               type={'text'}
               value={soauthorEditing.fio.split(' ')[1]}
               readOnly={true}
@@ -471,7 +467,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           </div>
           <div className={styles.inputbox}>
             <InputLabel
-              label={'Фамилия соавтора*'}
+              label={t('par13')}
               type={'text'}
               value={soauthorEditing.fio.split(' ')[0]}
               readOnly={true}
@@ -481,7 +477,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           {soauthorEditing.fio.split(' ')[2] && (
             <div className={styles.inputbox}>
               <InputLabel
-                label={'Отчество соавтора'}
+                label={t('par14')}
                 type={'text'}
                 value={soauthorEditing.fio.split(' ')[2]}
                 readOnly={true}
@@ -490,7 +486,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           )}
           <div className={styles.inputbox}>
             <InputListForma
-              name={'Форма участия'}
+              name={t('par15')}
               list={formParticipationList}
               itemKey={'form'}
               value={soauthorEditing?.form}
@@ -499,23 +495,22 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           </div>
           <div className={styles.inputbox}>
             <InputListForma
-              name={'Статус участия'}
+              name={t('par16')}
               list={participationStatus}
               itemKey={'status'}
               value={soauthorEditing.status}
               handleChangeForm={handleChangeForm}
-              // error={funGetError(errors, 'participationStatus')}
             />
           </div>
           <div className={`${styles.input_organization}`}>
-            <span>Организация</span>
+            <span>{t('par17')}</span>
             <input
               type="text"
               value={soauthorEditing.organization}
               onChange={e => handleChangeForm('organization', e.target.value)}
-              placeholder="Ваша организация"
+              placeholder={t('par18')}
               onFocus={e => (e.target.placeholder = '')}
-              onBlur={e => (e.target.placeholder = 'Ваша организация')}
+              onBlur={e => (e.target.placeholder = t('par18'))}
             />
           </div>
         </div>
@@ -525,7 +520,10 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
             <div key={index} className={styles.inputContainer}>
               <div className={styles.deletecoauthor}>
                 <button onClick={() => funDeleteCoauthor(index, soauthtor.data.id)}>
-                  <span>Удалить соавтора №{index + 1}</span>
+                  <span>
+                    {t('par19')}
+                    {index + 1}
+                  </span>
                   <img src={trash} alt="удалить" />
                 </button>
               </div>
@@ -533,16 +531,19 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
               {inpustTypeEmail.map(inp => (
                 <div className={styles.inputbox} key={inp.id}>
                   <InputLabel
-                    label={inp.label}
+                    label={i18n.language === 'ru' ? inp.label : inp.labelEn}
                     type={inp.type}
                     index={index}
                     itemKey={inp.key}
                     value={soauthtor.data?.[inp.key]}
                     funChange={funChangeInput}
-                    placeholder={inp.placeholder}
+                    placeholder={i18n.language === 'ru' ? inp.placeholder : inp.placeholderEn}
                     error={
-                      errorsCoauthor.find(item => item.key === inp.key && item.index === index)
-                        ?.error
+                      i18n.language === 'ru'
+                        ? errorsCoauthor.find(item => item.key === inp.key && item.index === index)
+                            ?.error
+                        : errorsCoauthor.find(item => item.key === inp.key && item.index === index)
+                            ?.errorEn
                     }
                     errorShow={true}
                     readOnly={!!soauthtor?.data?.id}
@@ -561,17 +562,21 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
                     ) : (
                       <div className={styles.inputbox} key={inp.id}>
                         <InputLabel
-                          label={inp.label}
+                          label={i18n.language === 'ru' ? inp.label : inp.labelEn}
                           type={inp.type}
                           index={index}
                           itemKey={inp.key}
                           value={soauthtor.data[inp.key]}
                           funChange={funChangeInput}
-                          placeholder={inp.placeholder}
+                          placeholder={i18n.language === 'ru' ? inp.placeholder : inp.placeholderEn}
                           error={
-                            errorsCoauthor.find(
-                              item => item.key === inp.key && item.index === index,
-                            )?.error
+                            i18n.language === 'ru'
+                              ? errorsCoauthor.find(
+                                  item => item.key === inp.key && item.index === index,
+                                )?.error
+                              : errorsCoauthor.find(
+                                  item => item.key === inp.key && item.index === index,
+                                )?.errorEn
                           }
                           errorShow={true}
                           readOnly={
@@ -593,7 +598,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
           className={`${styles.addsoaftor} ${report?.data.soauthors.length === 0 ? styles.addsoaftorNone : ''}`}
           onClick={() => dispatch(addSoauthors())}
         >
-          <span>Добавить соавтора</span>
+          <span>{t('par20')}</span>
           <img src={plus} alt="+" />
         </button>
       )}
@@ -603,16 +608,9 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
       >
         <div className={styles.text}>
           <img src={errorList} alt="img" />
-          {/* <span>
-            В срок до {conference?.dedlineReport1} необходимо прислать заявку на доклад, а в срок до{' '}
-            {conference?.dedlineReport2} загрузить статью и экспертное заключение.
-          </span> */}
-          <span>
-            В срок до {conference?.dedlineReport2} необходимо прислать заявку на доклад, загрузить
-            статью и экспертное заключение.
-          </span>
+          <span>{t('par21', { dedlineReport2: conference?.dedlineReport2 })}</span>
         </div>
-        <button onClick={funSaveData}>{edit ? 'Сохранить изменения' : 'Сохранить'}</button>
+        <button onClick={funSaveData}>{edit ? t('par22') : t('par23')}</button>
       </div>
     </div>
   );

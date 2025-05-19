@@ -1,0 +1,33 @@
+{
+  "uploadPhoto": "Upload new photo",
+  "deletePhoto": "Delete photo",
+  "saveChanges": "Save changes",
+  "exitWithoutSaving": "Exit without saving",
+  "photoTooLarge": "The photo size exceeds the 10 MB limit",
+  "requiredField": "This field is required",
+  "invalidEmail": "Invalid email",
+  "invalidPhone": "Phone number must be in the format +7 (XXX) XXX-XX-XX",
+  "back": "Back",
+  "form": {
+    "name": "Your first name*",
+    "surname": "Your last name*",
+    "patronymic": "Your patronymic",
+    "organization": "Organization*",
+    "email": "Email*",
+    "phone": "Phone number*",
+    "academicTitle": "Academic title*",
+    "degree": "Academic degree*",
+    "position": "Position*"
+  },
+  "errors": {
+    "name": "Invalid first name!",
+    "surname": "Invalid last name!",
+    "email": "Invalid email!",
+    "phone": "Invalid phone number!",
+    "organization": "Invalid organization!",
+    "academicTitle": "Invalid academic title!",
+    "degree": "Invalid degree!",
+    "position": "Invalid position!",
+    "phoneExists": "A user with this phone number already exists!"
+  }
+}

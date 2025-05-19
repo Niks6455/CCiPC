@@ -6,13 +6,16 @@ import plus from './../../../assets/img/UI/plusLigth.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
 import { convertDateTire } from '../../../utils/functions/funcions';
+import { useTranslation } from 'react-i18next';
 
 function DocumentsLk() {
+  const { t } = useTranslation('documentsLk');
   const conferense = useSelector(state => state.conferences?.data[0]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const reports = useSelector(state => state.reportsSlice.data);
   const [length, setLength] = useState(reports.length);
+
   useEffect(() => {
     setLength(reports.length);
   }, [reports]);
@@ -35,43 +38,23 @@ function DocumentsLk() {
             <img src={document} alt="Документ" />
           </div>
           <div className={styles.notDocumentTitle}>
-            <p>{length > 0 ? 'Добавьте доклад' : 'Создайте доклад'}</p>
+            <p>{length > 0 ? t('addReport') : t('createReport')}</p>
           </div>
           <div className={styles.notDocumentSubTitle}>
-            {length === 0 && <p>У Вас пока нет зарегистрированных докладов</p>}
+            {length === 0 && <p>{t('noReports')}</p>}
           </div>
 
           <div className={styles.notDocumentButton}>
             {new Date(convertDateTire(conferense?.dedlineReport2)) > new Date() ? (
               <button onClick={creatReaport}>
-                <img src={plus} alt="+" /> <span>Создать</span>
+                <img src={plus} alt="+" /> <span>{t('buttonCreate')}</span>
               </button>
             ) : (
-              <span className={styles.dedline}>
-                В данный период доступ для подачи
-                <br />
-                докладов на конференцию закрыт
-              </span>
+              <span className={styles.dedline}>{t('deadlineClosed')}</span>
             )}
           </div>
         </div>
       </div>
-      {/* <div className={styles.phone_repots}>
-        <h2>Мои доклады</h2>
-        <div className={styles.reports}>
-          {reports.map((item, index) => (
-            <div
-              key={index}
-              className={styles.report_item}
-              onClick={() =>
-                navigate(`/account/viewreports?idReport=${item.id}&number=${index + 1}`)
-              }
-            >
-              {index + 1}. {item.name}
-            </div>
-          ))}
-        </div>
-      </div> */}
     </section>
   );
 }

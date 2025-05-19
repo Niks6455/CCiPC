@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './ArchivPhoto.module.scss';
 import linkArrow from '../../assets/img/linkArrow.png';
 import { getAllArchivePhoto } from '../../apirequests/apirequests';
 import noPhoto from '@assets/img/noPhoto.png';
 import { server } from '../../apirequests/apirequests';
+import { useTranslation } from 'react-i18next';
 const ArchivPhoto = () => {
+  const { i18n } = useTranslation();
+
   const [showTooltip, setShowTooltip] = useState(null);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
@@ -64,7 +67,7 @@ const ArchivPhoto = () => {
               }}
               className={styles.repName}
             >
-              Перейти в альбом
+              {i18n.language === 'ru' ? 'Перейти в альбом' : 'Go to album'}
             </div>
           )}
         </a>

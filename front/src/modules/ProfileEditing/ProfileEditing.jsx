@@ -7,8 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import DataContext from '../../context';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiDeleteMulti, apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
-import { disEditUser, fetchUserData, setEditUser } from '../../store/userSlice/user.Slice';
-import { errorsNames, inputsData } from './data';
+import { disEditUser, setEditUser } from '../../store/userSlice/user.Slice';
+import { useErrorMessages, useInputsData } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
@@ -18,8 +18,13 @@ import ModalPhoto from '../Profile/components/ModalPhoto/ModalPhoto';
 import 'react-image-crop/dist/ReactCrop.css';
 import ImageCropper from '../../components/ImageCropper/ImageCropper';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
+import { useTranslation } from 'react-i18next';
 
 function ProfileEditing() {
+  const inputsData = useInputsData();
+  const errorsNames = useErrorMessages();
+
+  const { t } = useTranslation('profileEditing');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const ref1 = useRef(null);
@@ -115,20 +120,20 @@ function ProfileEditing() {
       'phone',
     ].forEach(field => {
       if (!formData[field]) {
-        newErrors[field] = 'Поле обязательно для заполнения';
+        newErrors[field] = t('requiredField');
         isValid = false;
       }
     });
 
     // Проверка корректности Email
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Некорректный Email';
+      newErrors.email = t('invalidEmail');
       isValid = false;
     }
 
     // Проверка номера телефона
     if (formData.phone && !/^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/.test(formData.phone)) {
-      newErrors.phone = 'Номер должен быть в формате +7 (XXX) XXX-XX-XX';
+      newErrors.phone = t('invalidPhone');
       isValid = false;
     }
     setErrors(newErrors);
@@ -242,9 +247,9 @@ function ProfileEditing() {
                 transform: 'translate(-50%, -50%) scale(0)',
               }}
             >
-              <h2>Размер фотографии превышает допустимый предел в 10 Мб</h2>
+              <h2>{t('photoTooLarge')}</h2>
               <img src={redxIcon} alt="x" />
-              <button onClick={() => setPopUpSize(false)}>Назад</button>
+              <button onClick={() => setPopUpSize(false)}>{t('back')}</button>
             </motion.div>
           </>
         )}
@@ -282,10 +287,10 @@ function ProfileEditing() {
         />
         <div className={styles.buttons}>
           <button className={styles.btn1} onClick={funUploadPhoto}>
-            Загрузить новое фото
+            {t('uploadPhoto')}
           </button>
           <button className={styles.btn2} onClick={funDeletePhoto}>
-            Удалить фото
+            {t('deletePhoto')}
           </button>
         </div>
       </div>
@@ -330,7 +335,7 @@ function ProfileEditing() {
               ),
           )}
           <button type="button" className={styles.SaveButton} onClick={handleSubmit}>
-            Сохранить изменения
+            {t('saveChanges')}
           </button>
           <button
             className={styles.noSaveButton}
@@ -339,7 +344,7 @@ function ProfileEditing() {
               navigate('/account/profile');
             }}
           >
-            Выйти без сохранения
+            {t('exitWithoutSaving')}
           </button>
         </div>
       </div>

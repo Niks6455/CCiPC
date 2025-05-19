@@ -1,118 +1,126 @@
+import { useTranslation } from 'react-i18next';
 import { doljnostList, stepenList, zwanieList } from '../../utils/Lists/List';
 
-export const inputsData = [
-  {
-    id: '0',
-    name: 'Ваше имя*',
-    title: 'name',
-    required: true,
-    list: null,
-    type: 'text',
-  },
-  {
-    id: '1',
-    name: 'Ваша фамилия*',
-    title: 'surname',
-    required: true,
-    list: null,
-    type: 'text',
-  },
-  {
-    id: '2',
-    name: 'Ваше отчество',
-    title: 'patronymic',
-    required: false,
-    list: null,
-    type: 'text',
-  },
+export const useInputsData = () => {
+  const { t } = useTranslation('profileEditing');
 
-  {
-    id: '6',
-    name: 'Организация*',
-    title: 'organization',
-    required: true,
-    list: null,
-    type: 'text',
-  },
-  {
-    id: '7',
-    name: 'Email*',
-    title: 'email',
-    required: true,
-    list: null,
-    type: 'email',
-    disabled: true,
-    readOnly: true,
-  },
-  {
-    id: '8',
-    name: 'Номер*',
-    title: 'phone',
-    required: true,
-    list: null,
-    type: 'text',
-  },
-  {
-    id: '3',
-    name: 'Учёное звание*',
-    title: 'academicTitle',
-    required: true,
-    list: zwanieList,
-    type: 'text',
-  },
-  {
-    id: '4',
-    name: 'Учёная степень*',
-    title: 'degree',
-    required: true,
-    list: stepenList,
-    type: 'text',
-  },
-  {
-    id: '5',
-    name: 'Должность*',
-    title: 'position',
-    required: true,
-    list: doljnostList,
-    type: 'text',
-  },
-];
+  return [
+    {
+      id: '0',
+      name: t('form.name'), // локализованное название
+      title: 'name',
+      required: true,
+      list: null,
+      type: 'text',
+    },
+    {
+      id: '1',
+      name: t('form.surname'),
+      title: 'surname',
+      required: true,
+      list: null,
+      type: 'text',
+    },
+    {
+      id: '2',
+      name: t('form.patronymic'),
+      title: 'patronymic',
+      required: false,
+      list: null,
+      type: 'text',
+    },
+    {
+      id: '6',
+      name: t('form.organization'),
+      title: 'organization',
+      required: true,
+      list: null,
+      type: 'text',
+    },
+    {
+      id: '7',
+      name: t('form.email'),
+      title: 'email',
+      required: true,
+      list: null,
+      type: 'email',
+      disabled: true,
+      readOnly: true,
+    },
+    {
+      id: '8',
+      name: t('form.phone'),
+      title: 'phone',
+      required: true,
+      list: null,
+      type: 'text',
+    },
+    {
+      id: '3',
+      name: t('form.academicTitle'),
+      title: 'academicTitle',
+      required: true,
+      list: zwanieList,
+      type: 'text',
+    },
+    {
+      id: '4',
+      name: t('form.degree'),
+      title: 'degree',
+      required: true,
+      list: stepenList,
+      type: 'text',
+    },
+    {
+      id: '5',
+      name: t('form.position'),
+      title: 'position',
+      required: true,
+      list: doljnostList,
+      type: 'text',
+    },
+  ];
+};
 
-export const errorsNames = [
-  {
-    key: 'name',
-    error: 'Некорректное имя!',
-  },
-  {
-    key: 'surname',
-    error: 'Некорректная фамилия!',
-  },
-  {
-    key: 'email',
-    error: 'Некорректная почта!',
-  },
-  {
-    key: 'phone',
-    error: 'Некорректный номер!',
-  },
-  {
-    key: 'organization',
-    error: 'Некорректная организация!',
-  },
-  {
-    key: 'academicTitle',
-    error: 'Некорректное ученое звание!',
-  },
-  {
-    key: 'degree',
-    error: 'Некорректная степень!',
-  },
-  {
-    key: 'position',
-    error: 'Некорректная должность!',
-  },
-  {
-    key: 'phone entity already exists',
-    error: 'Пользователь с таким номером уже существует!',
-  },
-];
+export const useErrorMessages = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      key: 'name',
+      error: t('errors.name'),
+    },
+    {
+      key: 'surname',
+      error: t('errors.surname'),
+    },
+    {
+      key: 'email',
+      error: t('errors.email'),
+    },
+    {
+      key: 'phone',
+      error: t('errors.phone'),
+    },
+    {
+      key: 'organization',
+      error: t('errors.organization'),
+    },
+    {
+      key: 'academicTitle',
+      error: t('errors.academicTitle'),
+    },
+    {
+      key: 'degree',
+      error: t('errors.degree'),
+    },
+    {
+      key: 'position',
+      error: t('errors.position'),
+    },
+    {
+      key: 'phone entity already exists',
+      error: t('errors.phoneExists'),
+    },
+  ];
+};

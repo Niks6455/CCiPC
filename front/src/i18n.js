@@ -11,6 +11,11 @@ import navbarEN from '@assets/locales/en/navbar.json';
 import profileEN from '@assets/locales/en/profile.json';
 import leftMenuEN from '@assets/locales/en/leftMenu.json';
 import viewReportsEN from '@assets/locales/en/viewReports.json';
+import documentsLkEN from '@assets/locales/en/documentsLk.json';
+import createReportEN from '@assets/locales/en/createReport.json';
+import addCoauthorEN from '@assets/locales/en/addCoauthor.json';
+import profileEditingEN from '@assets/locales/en/profileEditing.json';
+import changePasswordEN from '@assets/locales/en/changePassword.json';
 
 import authorRU from '@assets/locales/ru/author.json';
 import footerRU from '@assets/locales/ru/footer.json';
@@ -22,6 +27,11 @@ import navbarRU from '@assets/locales/ru/navbar.json';
 import profileRU from '@assets/locales/ru/profile.json';
 import leftMenuRU from '@assets/locales/ru/leftMenu.json';
 import viewReportsRU from '@assets/locales/ru/viewReports.json';
+import documentsLkRU from '@assets/locales/ru/documentsLk.json';
+import createReportRU from '@assets/locales/ru/createReport.json';
+import addCoauthorRU from '@assets/locales/ru/addCoauthor.json';
+import profileEditingRU from '@assets/locales/ru/profileEditing.json';
+import changePasswordRU from '@assets/locales/ru/changePassword.json';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -36,6 +46,11 @@ i18n.use(initReactI18next).init({
       profile: profileEN,
       leftMenu: leftMenuEN,
       viewReports: viewReportsEN,
+      documentsLk: documentsLkEN,
+      createReport: createReportEN,
+      addCoauthor: addCoauthorEN,
+      profileEditing: profileEditingEN,
+      changePassword: changePasswordEN,
     },
     ru: {
       author: authorRU,
@@ -48,6 +63,11 @@ i18n.use(initReactI18next).init({
       profile: profileRU,
       leftMenu: leftMenuRU,
       viewReports: viewReportsRU,
+      documentsLk: documentsLkRU,
+      createReport: createReportRU,
+      addCoauthor: addCoauthorRU,
+      profileEditing: profileEditingRU,
+      changePassword: changePasswordRU,
     },
   },
   lng: 'ru',
@@ -63,6 +83,11 @@ i18n.use(initReactI18next).init({
     'profile',
     'leftMenu',
     'viewReports',
+    'documentsLk',
+    'createReport',
+    'addCoauthor',
+    'profileEditing',
+    'changePassword',
   ],
   defaultNS: 'author',
   interpolation: {

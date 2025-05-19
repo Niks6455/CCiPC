@@ -10,8 +10,10 @@ import FileComponent from '../../../components/AdminModuleComponents/FileCompone
 import { server } from '../../../apirequests/apirequests';
 import { funGetError, funValidateAll } from './functions';
 import arrow from '@assets/img/UI/download.svg';
+import { useTranslation } from 'react-i18next';
 
 function CreateReport({ edit }) {
+  const { t } = useTranslation('createReport');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const report = useSelector(state => state.reportCreateSlice);
@@ -96,7 +98,9 @@ function CreateReport({ edit }) {
 
   return (
     <div className={styles.CreateReport}>
-      <h2 className={styles.title}>Доклад №{report.data.number}</h2>
+      <h2 className={styles.title}>
+        {t('report')} №{report.data.number}
+      </h2>
       {!edit && (
         <div className={styles.slider}>
           <div
@@ -109,7 +113,7 @@ function CreateReport({ edit }) {
         </div>
       )}
 
-      <p className={styles.nameReport}>Полное название доклада</p>
+      <p className={styles.nameReport}>{t('fullReportName')}</p>
 
       <div className={styles.name_report_container}>
         {funGetError(errors, 'name') && (
@@ -127,7 +131,7 @@ function CreateReport({ edit }) {
 
       <div className={styles.inputsContainer}>
         <InputListForma
-          name={'Направление конференции'}
+          name={t('par1')}
           list={conference?.directions.map(el => ({ text: el.name, id: el.id }))}
           itemKey={'directionConference'}
           value={report.data.directionConference}
@@ -135,7 +139,7 @@ function CreateReport({ edit }) {
           error={funGetError(errors, 'directionConference')}
         />
         <InputListForma
-          name={'Форма участия'}
+          name={t('par2')}
           list={formParticipationList}
           itemKey={'formParticipation'}
           value={report.data.formParticipation}
@@ -143,18 +147,18 @@ function CreateReport({ edit }) {
           error={funGetError(errors, 'formParticipation')}
         />
         <div className={`${styles.input_organization} ${styles.organization_mobile}`}>
-          <span>Организация</span>
+          <span>{t('organization')}</span>
           <input
             type="text"
             value={report.data.organization}
             onChange={e => handleChangeForm('organization', e.target.value)}
-            placeholder="Ваша организация"
+            placeholder={t('par3')}
             onFocus={e => (e.target.placeholder = '')}
-            onBlur={e => (e.target.placeholder = 'Ваша организация')}
+            onBlur={e => (e.target.placeholder = t('par3'))}
           />
         </div>
         <InputListForma
-          name={'Статус участия'}
+          name={t('par4')}
           list={participationStatus}
           itemKey={'participationStatus'}
           value={report.data.participationStatus}
@@ -164,7 +168,7 @@ function CreateReport({ edit }) {
       </div>
       <div className={styles.inputsContainer}>
         <div className={`${styles.input_organization} ${styles.organization_pc}`}>
-          <span>Организация</span>
+          <span>{t('organization')}</span>
           <div className={styles.input_organization_block}>
             {funGetError(errors, 'organization') && (
               <span className={styles.error}>{funGetError(errors, 'organization')}</span>
@@ -174,9 +178,9 @@ function CreateReport({ edit }) {
               type="text"
               value={report.data.organization}
               onChange={e => handleChangeForm('organization', e.target.value)}
-              placeholder="Ваша организация"
+              placeholder={t('par3')}
               onFocus={e => (e.target.placeholder = '')}
-              onBlur={e => (e.target.placeholder = 'Ваша организация')}
+              onBlur={e => (e.target.placeholder = t('par3'))}
             />
           </div>
         </div>
@@ -184,7 +188,7 @@ function CreateReport({ edit }) {
 
       <div className={styles.fileContainer}>
         <div className={styles.box}>
-          <p>Добавить файл со статьёй</p>
+          <p>{t('addArticleFile')}</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
               <FileComponent
@@ -204,7 +208,7 @@ function CreateReport({ edit }) {
                 icon={'doc'}
                 itemKey={'fileArticle'}
                 fileSize={20} // размер файла
-                text={'Необходимо загрузить<br/>файл в формате DOC или DOCX'}
+                text={t('par5')}
                 fileName={
                   edit && report.data.fileArticle?.name ? report.data.fileArticle?.name : null
                 }
@@ -212,13 +216,13 @@ function CreateReport({ edit }) {
             </div>
             <div className={styles.downloadShablon}>
               <span className={styles.shablon} onClick={funDownloadShablon}>
-                Шаблон <img src={arrow} alt="arrow" />
+                {t('template')} <img src={arrow} alt="arrow" />
               </span>
             </div>
           </div>
         </div>
         <div className={styles.box}>
-          <p>Добавить файл с экспертным заключением</p>
+          <p>{t('addExpertFile')}</p>
           <div className={styles.fileContur}>
             <div className={styles.file_block}>
               <FileComponent
@@ -235,7 +239,7 @@ function CreateReport({ edit }) {
                 icon={'pdf'}
                 itemKey={'fileExpertOpinion'}
                 fileSize={20} // размер файла
-                text={'Необходимо загрузить<br/>файл в формате PDF'}
+                text={t('par6')}
                 fileName={
                   edit && report.data.fileExpertOpinion?.name
                     ? report.data.fileExpertOpinion?.name
@@ -247,7 +251,7 @@ function CreateReport({ edit }) {
         </div>
       </div>
       <div className={styles.context}>
-        <p>Комментарий (пожелания по прибытию, по расселению; свободное текстовое поле)</p>
+        <p>{t('commentLabel')}</p>
         <div className={styles.input_comments_block}>
           {funGetError(errors, 'comments') && (
             <span className={styles.error}>{funGetError(errors, 'comments')}</span>
@@ -255,9 +259,9 @@ function CreateReport({ edit }) {
           <textarea
             className={funGetError(errors, 'comments') ? styles.error_textarea : ''}
             type="text"
-            placeholder="Ваш комментарий"
+            placeholder={t('par7')}
             onFocus={e => (e.target.placeholder = '')}
-            onBlur={e => (e.target.placeholder = 'Ваш комментарий')}
+            onBlur={e => (e.target.placeholder = t('par7'))}
             value={report.data.comments}
             onChange={event => {
               dispatch(setValue({ key: 'comments', value: event.target.value }));
@@ -273,12 +277,9 @@ function CreateReport({ edit }) {
         <div className={styles.srokContainer}>
           <div className={styles.text}>
             <img src={errorList} alt="img" />
-            <span>
-              В срок до {conference?.dedlineReport2} необходимо прислать заявку на доклад, загрузить
-              статью и экспертное заключение.
-            </span>
+            <span>{t('deadlineText', { date: conference?.dedlineReport2 })}</span>
           </div>
-          <button onClick={() => funNextStep()}>Следующий шаг</button>
+          <button onClick={() => funNextStep()}>{t('nextStep')}</button>
         </div>
       )}
     </div>

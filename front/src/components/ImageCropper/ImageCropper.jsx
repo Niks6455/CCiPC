@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import styles from './ImageCropper.module.scss';
+import { useTranslation } from 'react-i18next';
 
 const ImageCropper = ({
   editPhoto,
@@ -13,6 +14,7 @@ const ImageCropper = ({
   width = 100,
   height = 100,
 }) => {
+  const { i18n } = useTranslation();
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -71,7 +73,7 @@ const ImageCropper = ({
         <div className={styles.ImageCropper}>
           <div className={styles.editPhoto}>
             <div className={styles.container}>
-              <h2>Редактирование фото</h2>
+              <h2>{i18n?.language === 'en' ? 'Edit photo' : 'Редактирование фото'}</h2>
               <ReactCrop
                 crop={crop}
                 onChange={c => setCrop(c)}
@@ -80,7 +82,9 @@ const ImageCropper = ({
               >
                 <img ref={imgRef} src={urlPhoto} alt="Source" />
               </ReactCrop>
-              <button onClick={getCroppedImg}>Сохранить</button>
+              <button onClick={getCroppedImg}>
+                {i18n?.language === 'en' ? 'Save' : 'Сохранить'}
+              </button>
               <canvas ref={canvasRef} style={{ display: 'none' }} />
             </div>
           </div>

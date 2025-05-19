@@ -1,8 +1,10 @@
 import styles from './ErrorModal.module.scss';
 import error from '@assets/img/UI/error.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 function ErrorModal({ title, open, close }) {
+  const { i18n } = useTranslation();
   return (
     <>
       <AnimatePresence>
@@ -22,7 +24,7 @@ function ErrorModal({ title, open, close }) {
               <p className={styles.title}>{title}</p>
               <img className={styles.galka} src={error} alt="img" />
               <button onClick={() => close(false)} className={styles.btnred}>
-                Закрыть
+                {i18n.language === 'ru' ? 'Закрыть' : 'Close'}
               </button>
             </motion.div>
           </motion.div>

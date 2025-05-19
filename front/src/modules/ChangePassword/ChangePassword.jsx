@@ -12,14 +12,15 @@ import {
   funSixteenSymbols,
   funSpecialSymbol,
   validateLatinSymbols,
-  validatePassword,
 } from '../../utils/functions/PasswordValidation';
 import { apiChangePassword } from '../../apirequests/apirequests';
 import confitmIcon from '@assets/img/confirm.svg';
 import { useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 function ChangePassword() {
+  const { t } = useTranslation('changePassword');
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -44,37 +45,37 @@ function ChangePassword() {
   const [errorListPassword, setErrorListPassword] = useState([
     {
       id: '0',
-      text: 'Не менее 8 символов',
+      text: t('rules.min8'),
       done: false,
       functionCheck: funEightSymbols,
     },
     {
       id: '4',
-      text: 'Не более 16 символов',
+      text: t('rules.min16'),
       done: true,
       functionCheck: funSixteenSymbols,
     },
     {
       id: '1',
-      text: 'Не менее 1 заглавной буквы',
+      text: t('rules.capitalLetter'),
       done: false,
       functionCheck: funCapitalLetter,
     },
     {
       id: '2',
-      text: 'Не менее 1 цифры',
+      text: t('rules.digit'),
       done: false,
       functionCheck: funDigit,
     },
     {
       id: '3',
-      text: 'Не менее 1 спецсимвола: !@#$%&?',
+      text: t('rules.specialSymbol'),
       done: false,
       functionCheck: funSpecialSymbol,
     },
     {
       id: '5',
-      text: 'Только латинские буквы',
+      text: t('rules.latinOnly'),
       done: false,
       functionCheck: validateLatinSymbols,
     },
@@ -102,31 +103,22 @@ function ChangePassword() {
     // Проверка обязательных полей
     ['currentPassword', 'newpassword', 'rewnewpassword'].forEach(field => {
       if (!formData[field]) {
-        newErrors[field] = 'Поле обязательно для заполнения';
+        newErrors[field] = t('fieldRequired');
         isValid = false;
       }
     });
 
     if (errorListPassword.find(el => !el.done)) {
-      newErrors.newpassword = 'Некорректный пароль';
-      newErrors.rewnewpassword = 'Некорректный пароль';
+      newErrors.newpassword = t('invalidPassword');
+      newErrors.rewnewpassword = t('invalidPassword');
       isValid = false;
     }
     // Проверка совпадения паролей
     if (formData.newpassword !== formData.rewnewpassword) {
-      newErrors.newpassword = 'Пароли не совпадают';
-      newErrors.rewnewpassword = 'Пароли не совпадают';
+      newErrors.newpassword = t('passwordsMismatch');
+      newErrors.rewnewpassword = t('passwordsMismatch');
       isValid = false;
     }
-
-    // if (!validatePassword(formData?.newpassword)) {
-    //   newErrors.newpassword = 'Некорректный пароль';
-    //   isValid = false;
-    // }
-    // if (!validatePassword(formData?.rewnewpassword)) {
-    //   newErrors.rewnewpassword = 'Некорректный пароль';
-    //   isValid = false;
-    // }
 
     setErrors(newErrors);
     return isValid;
@@ -146,7 +138,7 @@ function ChangePassword() {
         } else {
           if (res?.response?.data?.errNum === 204) {
             setErrors({
-              currentPassword: 'Неверный пароль',
+              currentPassword: t('wrongPassword'),
             });
           }
         }
@@ -170,9 +162,9 @@ function ChangePassword() {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.6 }}
             >
-              <h2 className={styles.modalText}>Пароль успешно изменен!</h2>
+              <h2 className={styles.modalText}>{t('modalSuccess')}</h2>
               <img src={confitmIcon} alt="✅" />
-              <button onClick={funClickCloseModal}>Перейти в профиль</button>
+              <button onClick={funClickCloseModal}>{t('goToProfile')}</button>
             </motion.div>
           </div>
         )}
@@ -184,7 +176,7 @@ function ChangePassword() {
           value={formData.currentPassword}
           placeholder=""
           error={errors.currentPassword}
-          labelText={'Текущий пароль*'}
+          labelText={t('currentPassword')}
           type={inputTypes.currentPassword}
           rigthImg={glaz}
           rigthImgActive={noglaz}
@@ -202,7 +194,7 @@ function ChangePassword() {
           value={formData.newpassword}
           placeholder=""
           error={errors.newpassword}
-          labelText={'Придумайте новый пароль*'}
+          labelText={t('newPassword')}
           type={inputTypes.newpassword}
           rigthImg={glaz}
           rigthImgActive={noglaz}
@@ -216,7 +208,7 @@ function ChangePassword() {
           value={formData.rewnewpassword}
           placeholder=""
           error={errors.rewnewpassword}
-          labelText={'Повторите новый пароль*'}
+          labelText={t('repeatPassword')}
           type={inputTypes.rewnewpassword}
           rigthImg={glaz}
           rigthImgActive={noglaz}
@@ -225,7 +217,7 @@ function ChangePassword() {
           autoComplete={'off'}
         />
         <button className={styles.changebtn} onClick={funEditPassword}>
-          Изменить
+          {t('title')}
         </button>
       </div>
     </div>

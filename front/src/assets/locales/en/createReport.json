@@ -1,0 +1,22 @@
+{
+  "report": "Report",
+  "fullReportName": "Full report title",
+  "conferenceDirection": "Conference direction",
+  "formParticipation": "Form of participation",
+  "organization": "Organization",
+  "participationStatus": "Participation status",
+  "addArticleFile": "Add article file",
+  "addExpertFile": "Add expert opinion file",
+  "template": "Template",
+  "commentLabel": "Comment (wishes on arrival, accommodation; free text field)",
+  "commentPlaceholder": "Your comment",
+  "deadlineText": "By {{date}}, you must submit a report request, upload the article and expert opinion.",
+  "nextStep": "Next step",
+  "par1": "Conference direction",
+  "par2": "Form of participation",
+  "par3": "Your organization",
+  "par4": "Participation status",
+  "par5": "You must upload a file<br/>in DOC or DOCX format",
+  "par6": "You must upload a file<br/>in PDF format",
+  "par7": "Your comment"
+}

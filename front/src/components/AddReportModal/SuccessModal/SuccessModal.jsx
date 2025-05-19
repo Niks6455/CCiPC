@@ -6,8 +6,11 @@ import {
   setOpenPopUpName,
 } from '../../../store/reportCreateSlice/reportCreateSlice';
 import circleGalka from './../../../assets/img/UI/circleGalka.svg';
+import { useTranslation } from 'react-i18next';
 
 function SuccessModal({ name }) {
+  const { i18n } = useTranslation();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const funCloseModal = () => {
@@ -17,10 +20,16 @@ function SuccessModal({ name }) {
   };
   return (
     <div className={styles.SuccessModal}>
-      <p className={styles.title}>Вы успешно подали доклад {name && `"${name}"`}.</p>
+      <p className={styles.title}>
+        {' '}
+        {i18n.language === 'en'
+          ? 'You successfully submitted the report'
+          : 'Вы успешно подали доклад'}{' '}
+        {name && `"${name}"`}.
+      </p>
       <img className={styles.galka} src={circleGalka} alt="img" />
       <button onClick={funCloseModal} className={styles.btnred}>
-        Перейти в профиль
+        {i18n.language === 'en' ? 'Go to profile' : 'Перейти в профиль'}
       </button>
     </div>
   );
