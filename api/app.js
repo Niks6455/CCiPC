@@ -14,12 +14,12 @@ import archiveRoute from './routes/archive.js'
 import directionRoute from './routes/direction.js'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
-
+import passport from 'passport';
 import corsMiddleware from './middlewares/cors.js';
 import errorCodes from './config/error-codes.js';
 import 'dotenv/config'
 
-
+import passportSetup from './config/passport-setup.js';
 import cookieParser from 'cookie-parser';
 
 const app = express();
@@ -109,6 +109,7 @@ if (app.get('env') === 'development' || app.get('env') === 'staging') {
 }
 
 app.use(corsMiddleware);
+app.use(passport.initialize());
 
 app.use('/auth', authRoute);
 app.use("/uploads", express.static("./uploads"), uploadsRoute);

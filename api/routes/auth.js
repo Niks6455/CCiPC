@@ -5,6 +5,7 @@ import authCtrl from '../controllers/auth.js';
 import { asyncRoute } from '../utils/errors.js';
 import verify from "../middlewares/verify-token.js";
 import roles from "../config/roles.js";
+import passport from 'passport';
 const router = Router();
 
 
@@ -242,7 +243,7 @@ const router = Router();
 
 router.route('/login').post(asyncRoute(authCtrl.login));
 
-router.route('/login/sfedu').post(asyncRoute(authCtrl.loginSfedu));
+router.route('/login/sfedu').get(passport.authenticate('azure_ad_oauth2', { failureRedirect: '/login/authorization' }), asyncRoute(authCtrl.loginSfedu));
 
 router.route('/register').post(asyncRoute(authCtrl.register))
 
