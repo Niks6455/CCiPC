@@ -51,49 +51,11 @@ export default {
         })
     },
 
-    async loginSfedu(code, code_verifier){
+    async loginSfedu(user){
 
-        let accessToken;
-        try {
-            const { data } = await axios.post(
-                'https://login.microsoftonline.com/19ba435d-e46c-436a-84f2-1b01e693e480/oauth2/v2.0/token',
-                qs.stringify({
-                    client_id: process.env.SFEDU_ID,
-                    client_secret: process.env.SFEDU_SECRET,
-                    scope: 'openid',
-                    code,
-                    code_verifier,
-                    redirect_uri: `${process.env.WEB_URL}/login`,
-                    grant_type: 'authorization_code',
-                })
-            );
+        const { jwt: token } = jwt.generate({ id: user.id });
+        return { token, user };
 
-            accessToken = data.access_token;
-        } catch (e) {
-            throw new AppErrorInvalid('code');
-        }
-        const { unique_name: email, name } = jwt.decode(accessToken);
-
-
-
-        const participant=await Participant.findOne({
-            where: { email: email }
-        })
-
-        if(participant) {
-            const { jwt: token } = jwt.generate({ id: participant.id });
-            return { token, participant };
-        }
-
-/*
-        try {
-
-            const {data: {student: studentInfo}} = await sync.get(`/students/tro@sfedu.ru`);
-            return studentInfo
-
-        } catch (e){
-            console.log(e.message)
-        }*/
     },
 
     async login(email, password){
