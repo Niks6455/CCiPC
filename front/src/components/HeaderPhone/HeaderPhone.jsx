@@ -10,8 +10,11 @@ import profile from '@assets/img/headPhoneIcon/profile.svg';
 import documents from '@assets/img/headPhoneIcon/documents.svg';
 import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
 import DataContext from '../../context';
+import { useTranslation } from 'react-i18next';
 
 function HeaderPhone(props) {
+  const { t } = useTranslation('homePage');
+
   const context = useContext(DataContext);
 
   const [activeMenu, setActiveMenu] = useState(false);
@@ -38,14 +41,14 @@ function HeaderPhone(props) {
 
   const navigateTo = path => {
     navigate(path);
-    closeMenuActive()
+    closeMenuActive();
   };
 
-  const closeMenuActive = () =>{
+  const closeMenuActive = () => {
     setActiveMenu(false);
     setActiveMenuListFirst(false);
     setActiveMenuListSecond(false);
-  }
+  };
   const location = useLocation();
 
   const updateVisibility = () => {};
@@ -85,7 +88,7 @@ function HeaderPhone(props) {
                     }}
                   >
                     <div className={styles.NavBarMenuListInnerLi}>
-                      <span> Личный кабинет</span>
+                      <span>{t('par9')}</span>
                       <img
                         style={activeMenuListFirst ? { transform: 'rotate(180deg)' } : {}}
                         src={arrow}
@@ -93,7 +96,8 @@ function HeaderPhone(props) {
                       />
                     </div>
                   </li>
-                ) :  (location.pathname !== '/login/authorization' && location.pathname !== "/login/registration") ? (
+                ) : location.pathname !== '/login/authorization' &&
+                  location.pathname !== '/login/registration' ? (
                   <li
                     onClick={() => {
                       navigate('/login/authorization');
@@ -101,31 +105,39 @@ function HeaderPhone(props) {
                     }}
                   >
                     <div className={styles.NavBarMenuListInnerLi}>
-                      <span>Вход/Регистрация</span>
+                      <span>{t('par11')}</span>
                     </div>
                   </li>
-                ) : <></>
-                }
+                ) : (
+                  <></>
+                )}
 
                 {activeMenuListFirst && user?.email && (
                   <div className={styles.NavBarMenuListOpener}>
-                    <li onClick={() => {navigate('/account/profile'); closeMenuActive();}}>
+                    <li
+                      onClick={() => {
+                        navigate('/account/profile');
+                        closeMenuActive();
+                      }}
+                    >
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={profile} />
                         </span>
-                        <p>{user?.email ? 'Профиль' : 'Вход/Регистрация'}</p>
+                        <p>{user?.email ? t('par12') : t('par11')}</p>
                       </div>
                     </li>
 
-                    <li onClick={() => {
-                      setIsReports(!isReports);
-                     }}>
+                    <li
+                      onClick={() => {
+                        setIsReports(!isReports);
+                      }}
+                    >
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={documents} />
                         </span>
-                        <p>Мои доклады</p>
+                        <p>{t('par13')}</p>
                         <img
                           className={styles.arrow_rep}
                           style={isReports ? { transform: 'rotate(180deg)' } : {}}
@@ -142,7 +154,7 @@ function HeaderPhone(props) {
                             closeMenuActive();
                           }}
                         >
-                          + Добавить доклад
+                          {t('par14')}
                         </li>
                         {reports.map((item, index) => (
                           <li
@@ -154,20 +166,25 @@ function HeaderPhone(props) {
                               closeMenuActive();
                             }}
                           >
-                            <span>Доклад №{index + 1}</span>
+                            <span>
+                              {t('par15')}
+                              {index + 1}
+                            </span>
                           </li>
                         ))}
                       </ul>
                     )}
-                    <li onClick={() => 
-                    {navigate('/account/archivephoto');
-                    closeMenuActive();
-                    }}>
+                    <li
+                      onClick={() => {
+                        navigate('/account/archivephoto');
+                        closeMenuActive();
+                      }}
+                    >
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={archive} />
                         </span>
-                        <p>Архив фото</p>
+                        <p>{t('par16')}</p>
                       </div>
                     </li>
 
@@ -175,7 +192,7 @@ function HeaderPhone(props) {
                       <div className={styles.NavBarMenuListInnerLi}>
                         <span style={{ display: 'flex', alignItems: 'center' }}>
                           <img src={setting} style={{ marginRight: '5px' }} />
-                          Настройки
+                          {t('par17')}
                         </span>
                         <img
                           style={activeMenuListSecond ? { transform: 'rotate(180deg)' } : {}}
@@ -186,61 +203,67 @@ function HeaderPhone(props) {
                     </li>
                     {activeMenuListSecond && (
                       <div className={styles.NavBarMenuListOpener}>
-                        <li onClick={() => 
-                        {
-                          navigate('/account/settings/profile')
-                          closeMenuActive();
-                          }}>
+                        <li
+                          onClick={() => {
+                            navigate('/account/settings/profile');
+                            closeMenuActive();
+                          }}
+                        >
                           <div className={styles.NavBarMenuListInnerLiImg}>
                             <span></span>
-                            <p>Изменить профиль</p>
+                            <p>{t('par18')}</p>
                           </div>
                         </li>
-                        <li onClick={() => {
-                          navigate('/account/settings/changepassword')
-                          closeMenuActive();
-                        }}>
+                        <li
+                          onClick={() => {
+                            navigate('/account/settings/changepassword');
+                            closeMenuActive();
+                          }}
+                        >
                           <div className={styles.NavBarMenuListInnerLiImg}>
                             <span></span>
-                            <p>Сменить пароль</p>
+                            <p>{t('par19')}</p>
                           </div>
                         </li>
                       </div>
                     )}
-                    <li onClick={() => {
-                      navigate('/account/exitaccount');
-                      closeMenuActive();
-                    }}>
+                    <li
+                      onClick={() => {
+                        navigate('/account/exitaccount');
+                        closeMenuActive();
+                      }}
+                    >
                       <div className={styles.NavBarMenuListInnerLiImg}>
                         <span>
                           <img src={logout} />
                         </span>
-                        <p>Выйти из аккаунта</p>
+                        <p>{t('par20')}</p>
                       </div>
                     </li>
 
                     {context.userRole !== 1 && (
-                      <li onClick={() => 
-                      {
-                        navigate('/account/deleteaccount')
-                        closeMenuActive();
-                      }}>
+                      <li
+                        onClick={() => {
+                          navigate('/account/deleteaccount');
+                          closeMenuActive();
+                        }}
+                      >
                         <div className={styles.NavBarMenuListInnerLiImg}>
                           <span>
                             <img src={deleteImg} />
                           </span>
-                          <p>Удалить аккаунт</p>
+                          <p>{t('par21')}</p>
                         </div>
                       </li>
                     )}
                   </div>
                 )}
 
-                <li onClick={() => navigateTo('/')}>Главная</li>
-                <li onClick={() => navigateTo('/author')}>Автору</li>
-                <li onClick={() => navigateTo('/news')}>Новости</li>
-                <li onClick={() => navigateTo('/participants')}>Участники</li>
-                <li onClick={() => navigateTo('/committee')}>Оргкомитет</li>
+                <li onClick={() => navigateTo('/')}>{t('par22')}</li>
+                <li onClick={() => navigateTo('/author')}>{t('par6')}</li>
+                <li onClick={() => navigateTo('/news')}>{t('par23')}</li>
+                <li onClick={() => navigateTo('/participants')}>{t('par7')}</li>
+                <li onClick={() => navigateTo('/committee')}>{t('par8')}</li>
               </ul>
             </div>
           </div>

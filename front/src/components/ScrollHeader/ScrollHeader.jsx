@@ -3,8 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 function ScrollHeader({ userRole }) {
+  const { t } = useTranslation('homePage');
+
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const navigate = useNavigate();
   const [show, setShow] = useState(false);
@@ -12,27 +15,27 @@ function ScrollHeader({ userRole }) {
 
   const navi = [
     {
-      name: 'Панель администратора',
+      name: t('par5'),
       path: '/adminPage/news',
       active: userRole === 1,
     },
     {
-      name: 'Автору',
+      name: t('par6'),
       path: '/author',
       active: true,
     },
     {
-      name: 'Участники',
+      name: t('par7'),
       path: '/participants',
       active: true,
     },
     {
-      name: 'Оргкомитет',
+      name: t('par8'),
       path: '/committee',
       active: true,
     },
     {
-      name: autorisation ? 'Личный кабинет' : 'Вход',
+      name: autorisation ? t('par9') : t('par10'),
       path: autorisation ? '/account/profile' : '/login/authorization',
       active: true,
     },

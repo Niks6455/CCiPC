@@ -17,10 +17,13 @@ export const funCopyText = async text => {
 };
 
 //! Форматирование даты
-export const formatDate = date => {
+export const formatDate = (date, language = 'ru') => {
   if (!date) date = new Date();
   const eventDate = new Date(date); // преобразование строки в объект Date
   const options = { day: 'numeric', month: 'long' };
+  if (language === 'en') {
+    return eventDate.toLocaleDateString('en-US', options);
+  }
   return eventDate.toLocaleDateString('ru-RU', options);
 };
 

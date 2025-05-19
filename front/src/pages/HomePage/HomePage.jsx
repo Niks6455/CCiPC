@@ -12,8 +12,10 @@ import { useEffect, useState } from 'react';
 import LoadingComponent from '../../components/LoadingComponent/LoadingComponent';
 import ScrollHeader from '../../components/ScrollHeader/ScrollHeader';
 import Header from '../../components/Header/Header';
+import { Trans, useTranslation } from 'react-i18next';
 
 function HomePage({ userRole }) {
+  const { t } = useTranslation('homePage');
   const conferencesStatus = useSelector(state => state.conferences.status);
   const [loading, setLoading] = useState(false);
   const conference = useSelector(state => state.conferences.data[0]);
@@ -111,9 +113,12 @@ function HomePage({ userRole }) {
           <div className={styles.textSectionIner}>
             <div className={styles.Title}>
               <p>
-                НАШИ КОНФЕРЕНЦИИ ПРОХОДЯТ
-                <br /> С ПОЛЬЗОЙ НЕ ТОЛЬКО ДЛЯ <br />
-                РАЗВИТИЯ, НО И ДЛЯ ЗДОРОВЬЯ!
+                <Trans
+                  i18nKey="homePage:par1"
+                  components={{
+                    1: <br />,
+                  }}
+                />
               </p>
             </div>
             {conference && conference?.description && (
@@ -130,7 +135,7 @@ function HomePage({ userRole }) {
           <section className={styles.clickerSection}>
             <div>
               <div className={styles.Title}>
-                <p>НАПРАВЛЕНИЯ РАБОТЫ КОНФЕРЕНЦИИ</p>
+                <p>{t('par2')}</p>
               </div>
               <div className={`${styles.blockTextCompetitionsInner} ${styles.pc}`}>
                 {conference &&
@@ -166,7 +171,7 @@ function HomePage({ userRole }) {
         {conference && conference?.files?.ORGANIZATION?.length > 0 && (
           <section className={`${styles.imgSection}`}>
             <div className={styles.Title}>
-              <p>Организаторы</p>
+              <p>{t('par3')}</p>
             </div>
             <div
               className={`${styles.imgSectionInner} ${conference?.files?.ORGANIZATION?.length === 2 ? styles.two : ''}`}
@@ -190,7 +195,7 @@ function HomePage({ userRole }) {
         {conference && conference?.files?.PARTNER?.length > 0 && (
           <section className={styles.imgSection}>
             <div className={styles.Title}>
-              <p>Партнёры</p>
+              <p>{t('par4')}</p>
             </div>
             <div
               className={`${styles.imgSectionInner}  ${conference?.files?.PARTNER?.length === 2 ? styles.two : ''}`}

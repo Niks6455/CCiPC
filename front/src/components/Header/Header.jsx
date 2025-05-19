@@ -4,8 +4,11 @@ import LogoHomePage from './../../assets/img/logo.png';
 import ArrowMenu from './../../assets/img/ArrowMenu.png';
 import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
+import { Trans, useTranslation } from 'react-i18next';
 
 function Header({ userRole }) {
+  const { t } = useTranslation('homePage');
+
   const autorisation = useSelector(state => state.user.status) === 'succeeded';
   const conference = useSelector(state => state.conferences.data[0]);
   const navigate = useNavigate();
@@ -31,8 +34,12 @@ function Header({ userRole }) {
           )}
 
           <p>
-            Всероссийская научная конференция
-            <br /> "Системный синтез и прикладная синергетика"
+            <Trans
+              i18nKey={'homePage:par24'}
+              components={{
+                1: <br />,
+              }}
+            />
           </p>
         </div>
       </div>
@@ -41,7 +48,7 @@ function Header({ userRole }) {
           <ul>
             {userRole === 1 && (
               <li onClick={() => navigate('/adminPage/news')}>
-                Панель администратора{' '}
+                {t('par25')}{' '}
                 <span className={styles.arowLi}>
                   <img src={ArrowMenu} alt="Arrow" />
                 </span>
@@ -49,19 +56,19 @@ function Header({ userRole }) {
             )}
 
             <li onClick={() => navigate('/author')}>
-              Автору{' '}
+              {t('par6')}{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
             <li onClick={() => navigate('/participants')}>
-              Участники{' '}
+              {t('par7')}{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
             </li>
             <li onClick={() => navigate('/committee')}>
-              Оргкомитет{' '}
+              {t('par8')}{' '}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
@@ -71,7 +78,7 @@ function Header({ userRole }) {
                 autorisation ? navigate('/account/profile') : navigate('/login/authorization')
               }
             >
-              {autorisation ? 'Личный кабинет' : 'Вход/Регистрация'}
+              {autorisation ? t('par9') : t('par11')}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>

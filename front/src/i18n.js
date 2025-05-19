@@ -1,4 +1,3 @@
-// i18n.js
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 import authorEN from '@assets/locales/en/author.json';
@@ -16,6 +15,7 @@ import createReportEN from '@assets/locales/en/createReport.json';
 import addCoauthorEN from '@assets/locales/en/addCoauthor.json';
 import profileEditingEN from '@assets/locales/en/profileEditing.json';
 import changePasswordEN from '@assets/locales/en/changePassword.json';
+import homePageEN from '@assets/locales/en/homePage.json';
 
 import authorRU from '@assets/locales/ru/author.json';
 import footerRU from '@assets/locales/ru/footer.json';
@@ -32,6 +32,7 @@ import createReportRU from '@assets/locales/ru/createReport.json';
 import addCoauthorRU from '@assets/locales/ru/addCoauthor.json';
 import profileEditingRU from '@assets/locales/ru/profileEditing.json';
 import changePasswordRU from '@assets/locales/ru/changePassword.json';
+import homePageRU from '@assets/locales/ru/homePage.json';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -51,6 +52,7 @@ i18n.use(initReactI18next).init({
       addCoauthor: addCoauthorEN,
       profileEditing: profileEditingEN,
       changePassword: changePasswordEN,
+      homePage: homePageEN,
     },
     ru: {
       author: authorRU,
@@ -68,6 +70,7 @@ i18n.use(initReactI18next).init({
       addCoauthor: addCoauthorRU,
       profileEditing: profileEditingRU,
       changePassword: changePasswordRU,
+      homePage: homePageRU,
     },
   },
   lng: 'ru',
@@ -88,6 +91,7 @@ i18n.use(initReactI18next).init({
     'addCoauthor',
     'profileEditing',
     'changePassword',
+    'homePage',
   ],
   defaultNS: 'author',
   interpolation: {

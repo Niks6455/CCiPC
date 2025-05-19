@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react';
 import { getAllNews } from '../../apirequests/apirequests';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import ClickerYears from '../../ui/ClickerYears/ClickerYears';
+import { useTranslation } from 'react-i18next';
 
 function NewsPage({ userRole }) {
+  const { i18n } = useTranslation();
   const [activeYears, setActiveYears] = useState(new Date().getFullYear() + '');
   const [dataSliderFirstColumn, setDataSliderFirstColumn] = useState([]);
   const [dataSliderTwoColumn, setDataSliderTwoColumn] = useState([]);
@@ -58,7 +60,7 @@ function NewsPage({ userRole }) {
       <main className={styles.NewsPage}>
         <Layout>
           <div className={styles.Title}>
-            <h2>НОВОСТИ</h2>
+            <h2>{i18n.language === 'ru' ? 'НОВОСТИ' : 'NEWS'}</h2>
           </div>
           <div className={styles.ClickerYears}>
             <ClickerYears
@@ -69,7 +71,9 @@ function NewsPage({ userRole }) {
           </div>
           <div className={styles.NewsPageContainer}>
             {allDataSliders.length === 0 && (
-              <div className={styles.NoNews}>Новости отсутствуют :(</div>
+              <div className={styles.NoNews}>
+                {i18n.language === 'ru' ? 'Новости отсутствуют' : 'There are no news'} :(
+              </div>
             )}
             <div className={styles.NewsPageContainerInner}>
               {dataSliderFirstColumn.map((el, index) => (
