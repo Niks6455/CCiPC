@@ -6,12 +6,20 @@ import footerEN from '@assets/locales/en/footer.json';
 import loginEN from '@assets/locales/en/login.json';
 import reginsterEN from '@assets/locales/en/register.json';
 import participantsEN from '@assets/locales/en/participants.json';
+import committeeEN from '@assets/locales/en/committee.json';
+import navbarEN from '@assets/locales/en/navbar.json';
+import profileEN from '@assets/locales/en/profile.json';
+import leftMenuEN from '@assets/locales/en/leftMenu.json';
 
 import authorRU from '@assets/locales/ru/author.json';
 import footerRU from '@assets/locales/ru/footer.json';
 import loginRU from '@assets/locales/ru/login.json';
 import reginsterRU from '@assets/locales/ru/register.json';
 import participantsRU from '@assets/locales/ru/participants.json';
+import committeeRU from '@assets/locales/ru/committee.json';
+import navbarRU from '@assets/locales/ru/navbar.json';
+import profileRU from '@assets/locales/ru/profile.json';
+import leftMenuRU from '@assets/locales/ru/leftMenu.json';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -21,6 +29,10 @@ i18n.use(initReactI18next).init({
       login: loginEN,
       register: reginsterEN,
       participants: participantsEN,
+      committee: committeeEN,
+      navbar: navbarEN,
+      profile: profileEN,
+      leftMenu: leftMenuEN,
     },
     ru: {
       author: authorRU,
@@ -28,11 +40,25 @@ i18n.use(initReactI18next).init({
       login: loginRU,
       register: reginsterRU,
       participants: participantsRU,
+      committee: committeeRU,
+      navbar: navbarRU,
+      profile: profileRU,
+      leftMenu: leftMenuRU,
     },
   },
   lng: 'ru',
   fallbackLng: 'en',
-  ns: ['author', 'footer', 'login', 'register', 'participants'],
+  ns: [
+    'author',
+    'footer',
+    'login',
+    'register',
+    'participants',
+    'committee',
+    'navbar',
+    'profile',
+    'leftMenu',
+  ],
   defaultNS: 'author',
   interpolation: {
     escapeValue: false,

@@ -1,0 +1,13 @@
+{
+  "personalCabinet": "Личный кабинет",
+  "profile": "Профиль",
+  "myReports": "Мои доклады",
+  "addReport": "Добавить доклад",
+  "reportNumber": "Доклад №",
+  "photoArchive": "Архив фото",
+  "settings": "Настройки",
+  "editProfile": "Изменить профиль",
+  "changePassword": "Сменить пароль",
+  "logout": "Выйти из аккаунта",
+  "deleteAccount": "Удалить аккаунт"
+}

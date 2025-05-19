@@ -10,8 +10,10 @@ import { getOrgCommitet } from '../../apirequests/apirequests';
 import { useSelector } from 'react-redux';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 export default function CommitteesPage({ userRole }) {
+  const { t } = useTranslation('committee');
   const [organizationComite, setOrganizationComite] = useState(0);
   const [programmingComite, setProgrammingComite] = useState(0);
   const [dataOrgAll, setDataOrgAll] = useState([]);
@@ -23,30 +25,30 @@ export default function CommitteesPage({ userRole }) {
 
   const ButtonOneDats = [
     {
-      text: 'Сопредседатели',
+      text: t('cochairman'),
       Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
-      text: 'Члены комитета',
+      text: t('chairman'),
       Icon: () => <img src={Cap} alt="Cap" />,
     },
   ];
 
   const ButtonSecondDats = [
     {
-      text: 'Почетный председатель',
+      text: t('honoraryChairman'),
       Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
-      text: 'Cопредседатели',
+      text: t('cochairman'),
       Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
-      text: 'Заместитель председателя',
+      text: t('viceChairman'),
       Icon: () => <img src={Cap} alt="Cap" />,
     },
     {
-      text: 'Члены комитета',
+      text: t('chairman'),
       Icon: () => <img src={Cap} alt="Cap" />,
     },
   ];
@@ -98,14 +100,14 @@ export default function CommitteesPage({ userRole }) {
         <Layout>
           <main className={styles.organizationComiteMain}>
             <div className={styles.organizationComite}>
-              <h2>ОРГАНИЗАЦИОННЫЙ КОМИТЕТ</h2>
+              <h2>{t('title')}</h2>
               <div className={styles.organizationComiteButtons}>
                 <ChangeButtons buttonArray={ButtonOneDats} setIndex={setOrganizationComite} />
               </div>
               <div className={styles.organizationComiteImages}>
                 {datePeopleOne?.length === 0 && (
                   <div className={styles.organizationComiteImagesEmpty}>
-                    <p>Комитет еще не сформирован</p>
+                    <p>{t('notFoundCommittee')}</p>
                   </div>
                 )}
                 {datePeopleOne?.map((el, index) => (
@@ -114,7 +116,7 @@ export default function CommitteesPage({ userRole }) {
               </div>
             </div>
             <div className={styles.programmingComite}>
-              <h2>ПРОГРАММНЫЙ КОМИТЕТ</h2>
+              <h2>{t('programmingCommittee')}</h2>
               <div className={styles.programmingComiteButtons}>
                 <ChangeButtons buttonArray={ButtonSecondDats} setIndex={setProgrammingComite} />
               </div>
@@ -124,7 +126,7 @@ export default function CommitteesPage({ userRole }) {
                 ))}
                 {datePeopleSecond?.length === 0 && (
                   <div className={styles.organizationComiteImagesEmpty}>
-                    <p>Комитет еще не сформирован</p>
+                    <p>{t('notFoundCommittee')}</p>
                   </div>
                 )}
               </div>

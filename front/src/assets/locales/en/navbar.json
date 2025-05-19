@@ -1,0 +1,21 @@
+{
+  "lk": "Personal Account",
+  "profile": "Profile",
+  "myReports": "My Reports",
+  "archivPhoto": "Photo Archive",
+  "settings": "Settings",
+  "editProfile": "Edit Profile",
+  "changePassword": "Change Password",
+  "exitAccount": "Log Out",
+  "deleteAccount": "Delete Account",
+  "authorization": "Login / Register",
+  "home": "Home",
+  "author": "For Author",
+  "news": "News",
+  "participants": "Participants",
+  "committee": "Organizing Committee",
+  "hide": "Hide",
+  "addReport": "+ Add Report",
+  "numberReport": "Report №",
+  "adminPanel": "Admin Panel"
+}

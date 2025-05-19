@@ -12,8 +12,10 @@ import { useQuery } from '@tanstack/react-query';
 import { convertDateTire } from '../../../utils/functions/funcions';
 import { disSetResetReport } from '../../../store/reportCreateSlice/reportCreateSlice';
 import CircleLoader from '../../../components/CircleLoader/CircleLoader';
+import { useTranslation } from 'react-i18next';
 
 function ViewReports() {
+  // const {t} = useTranslation("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(state => state.user.user.data);

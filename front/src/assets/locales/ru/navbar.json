@@ -1,0 +1,21 @@
+{
+  "lk": "Личный кабинет",
+  "profile": "Профиль",
+  "myReports": "Мои доклады",
+  "archivPhoto": "Архив фото",
+  "settings": "Настройки",
+  "editProfile": "Изменить профиль",
+  "changePassword": "Сменить пароль",
+  "exitAccount": "Выйти из аккаунта",
+  "deleteAccount": "Удалить аккаунт",
+  "authorization": "Вход/Регистрация",
+  "home": "Главная",
+  "author": "Автору",
+  "news": "Новости",
+  "participants": "Участники",
+  "committee": "Оргкомитет",
+  "hide": "Скрыть",
+  "addReport": "+ Добавить доклад",
+  "numberReport": "Доклад №",
+  "adminPanel": "Панель администратора"
+}

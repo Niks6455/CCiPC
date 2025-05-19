@@ -6,8 +6,10 @@ import { apiDeleteMulti, server, uploadPhoto } from '../../../../apirequests/api
 import { useDispatch, useSelector } from 'react-redux';
 import ReqError from '../../../../components/ReqError/ReqError';
 import { fetchUserData } from '../../../../store/userSlice/user.Slice';
+import { useTranslation } from 'react-i18next';
 
 function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
+  const { t } = useTranslation('profile');
   const dispach = useDispatch();
   const [fileAccord, setFileAccord] = useState(null);
   const [fileReceipt, setFileReceipt] = useState(null);
@@ -27,7 +29,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
     if (value) {
       const renamedFile = new File(
         [value],
-        `Скан квитанции ${user.name} ${user.surname} ${user.patronymic}`,
+        `${t('receipt')} ${user.name} ${user.surname} ${user.patronymic}`,
         { type: value.type },
       );
       if (name === 'AGREEMENT') {
@@ -49,7 +51,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
             {
               key: name,
               succes: false,
-              text: 'Ошибка при загрузке договора',
+              text: t('errorDownload'),
             },
           ]);
       });
@@ -64,12 +66,12 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
           <div className={styles.orgwznos}>
             <div className={styles.title}>
               <img src={vitalIcon} alt="❗" />
-              <h3>Оргвзнос:</h3>
+              <h3>{t('orgVznos')}</h3>
             </div>
             <p>
-              После отправки доклада ожидайте сообщение
+              {t('message')}
               <br />
-              от администратора на вашу почту с информацией о дальнейших действиях.
+              {t('message2')}
             </p>
           </div>
         );
@@ -77,7 +79,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
       if (fee[0]?.sum === 0) {
         return (
           <div className={styles.orgwznos_summ}>
-            <h3>Ваше участие в конференции не требует оплаты</h3>
+            <h3>{t('message3')}</h3>
           </div>
         );
       }
@@ -85,11 +87,11 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
         return (
           <div className={styles.orgwznos_summ}>
             <h3>
-              Счет для оплаты оргвзноса: <span>{fee[0]?.sum + ' '}₽ </span>
+              {t('formPay')} <span>{fee[0]?.sum + ' '}₽ </span>
             </h3>
             <div className={styles.buttons}>
-              <button onClick={funNal}>Наличный расчёт</button>
-              <button onClick={funBeznal}>Безналичный расчёт</button>
+              <button onClick={funNal}>{t('nal')}</button>
+              <button onClick={funBeznal}>{t('beznal')}</button>
             </div>
           </div>
         );
@@ -98,10 +100,10 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
         return (
           <div className={styles.orgwznos_summ}>
             <h3>
-              Счет для оплаты оргвзноса: <span>{fee[0]?.sum + ' '}₽ </span>
+              {t('formPay')} <span>{fee[0]?.sum + ' '}₽ </span>
             </h3>
             <button className={styles.btn_change} onClick={funChangeFormPay}>
-              Сменить способ оплаты
+              {t('changeFormPay')}
             </button>
           </div>
         );
@@ -110,8 +112,8 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
         return (
           <div className={styles.orgwznos_files}>
             <ReqError errors={errors} setErrors={setErrors} />
-            <h3>Оргвзнос:</h3>
-            <span>Прикрепите подписанный скан договора и скан квитанции</span>
+            <h3>{t('orgVznos')}</h3>
+            <span>{t('message4')}</span>
             <div className={styles.files}>
               <div className={styles.file_container}>
                 <div className={styles.file_box}>
@@ -127,9 +129,9 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     itemKey={'AGREEMENT'}
                     accept={'.pdf'}
                     name={'fileAccord'}
-                    fileName={`Скан договора ${user.surname} ${user.name} ${user.patronymic}`}
+                    fileName={`${t('agreement')} ${user.surname} ${user.name} ${user.patronymic}`}
                     icon={'pdf'}
-                    text={'Загрузите скан договора<br/>в формате PDF'}
+                    text={t('uploadAgreement')}
                     idFile={user?.fee[0].accord?.id}
                     funDeleteFile={funDeleteFile}
                   />
@@ -148,10 +150,10 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
                     typeFile={['application/pdf']}
                     accept={'.pdf'}
                     itemKey={'RECEIPT'}
-                    fileName={`Скан квитанции ${user.surname} ${user.name} ${user.patronymic}`}
+                    fileName={`${t('receipt')} ${user.surname} ${user.name} ${user.patronymic}`}
                     name={'fileReceipt'}
                     icon={'pdf'}
-                    text={'Загрузите скан квитанции<br/>в формате PDF'}
+                    text={t('uploadReceipt')}
                     idFile={user?.fee[0].receipt?.id}
                     funDeleteFile={funDeleteFile}
                   />
@@ -159,7 +161,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
               </div>
             </div>
             <button className={styles.btn_change} onClick={funChangeFormPay}>
-              Сменить способ оплаты
+              {t('changeFormPay')}
             </button>
           </div>
         );

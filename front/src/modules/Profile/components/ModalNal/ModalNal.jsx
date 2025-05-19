@@ -1,8 +1,10 @@
 import styles from './ModalNal.module.scss';
 import greenGalkaIcon from '@assets/img/UI/circleGalka.svg';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 function ModalNal(props) {
+  const { t } = useTranslation('profile');
   return (
     <div className={styles.ModalNal}>
       <AnimatePresence>
@@ -28,12 +30,9 @@ function ModalNal(props) {
                 transform: 'scale(0)',
               }}
             >
-              <h2>
-                Вы успешно выбрали способ оплаты оргвзноса наличными. Оплата будет происходить во
-                время регистрации на площадке конференции
-              </h2>
+              <h2>{t('m6')}</h2>
               <img src={greenGalkaIcon} alt="✅" />
-              <button onClick={() => props.setOpenModal(false)}>Перейти в профиль</button>
+              <button onClick={() => props.setOpenModal(false)}>{t('goToProfile')}</button>
             </motion.div>
           </motion.div>
         )}

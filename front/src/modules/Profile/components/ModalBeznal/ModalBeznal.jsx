@@ -6,7 +6,9 @@ import { apiUpdateUser } from '../../../../apirequests/apirequests';
 import { fetchUserData } from '../../../../store/userSlice/user.Slice';
 import { useDispatch, useSelector } from 'react-redux';
 import { server } from '../../../../apirequests/apirequests';
+import { useTranslation } from 'react-i18next';
 function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
+  const { t } = useTranslation('profile');
   const dispatch = useDispatch();
   const funPutApiSelf = () => {
     apiUpdateUser({ formPay: 'Безналичный' }).then(res => {
@@ -20,7 +22,7 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
   const funDownloadShablon = async docName => {
     try {
       const response = await fetch(`${server}/${conference?.files?.[docName]?.[0]?.url}`);
-      if (!response.ok) throw new Error('Ошибка загрузки файла');
+      if (!response.ok) throw new Error(t('m7'));
       const blob = await response.blob();
       const name = conference?.files?.[docName]?.[0]?.name;
       const link = document.createElement('a');
@@ -61,15 +63,13 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
               }}
             >
               <h2 className={styles.title}>
-                Просим вас скачать шаблон договора, заполнить поля и{' '}
-                <span>загрузить подписанный скан договора и скан квитанции</span> об оплате в личный
-                кабинет
+                {t('m8')} <span>{t('m9')}</span> {t('m10')}
               </h2>
               <div className={styles.file_container}>
                 <button className={styles.inner} onClick={() => funDownloadShablon('INDIVIDUAL')}>
                   <img src={docIcon} alt="doc" />
                   <div className={styles.doc_name}>
-                    <span>Для ФИЗИЧЕСКОГО лица</span>
+                    <span>{t('m11')}</span>
                     <button className={styles.load}>
                       <img src={loadIcon} alt="Скачать" />
                     </button>
@@ -78,7 +78,7 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
                 <button className={styles.inner} onClick={() => funDownloadShablon('LEGAL')}>
                   <img src={docIcon} alt="doc" />
                   <div className={styles.doc_name}>
-                    <span>Для ЮРИДИЧЕСКОГО лица</span>
+                    <span>{t('m12')}</span>
                     <button className={styles.load}>
                       <img src={loadIcon} alt="Скачать" />
                     </button>
@@ -86,8 +86,8 @@ function ModalBeznal({ openModalBeznal, setOpenModalBeznal }) {
                 </button>
               </div>
               <div className={styles.buttons}>
-                <button onClick={() => setOpenModalBeznal(false)}>Сменить способ оплаты</button>
-                <button onClick={funPutApiSelf}>Продолжить</button>
+                <button onClick={() => setOpenModalBeznal(false)}>{t('changeFormPay')}</button>
+                <button onClick={funPutApiSelf}>{t('m13')}</button>
               </div>
             </motion.div>
           </motion.div>

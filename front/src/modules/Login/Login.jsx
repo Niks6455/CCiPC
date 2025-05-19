@@ -110,7 +110,8 @@ function Login(props) {
 
   //! вызываем запрос для получения кода который отправил на бэк
   const funSfeduAuth = () => {
-    apiLoginGetCodeSfedu();
+    // apiLoginGetCodeSfedu();
+    LoginFuncSfedu();
   };
 
   //! проверяем если в url есть код значит авторизация идет через сфеду

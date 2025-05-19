@@ -60,9 +60,9 @@ export const LoginFunc = async UserData => {
 };
 
 //! сфеду авторизация
-export const LoginFuncSfedu = async code => {
+export const LoginFuncSfedu = async () => {
   try {
-    const response = await api.post(`${server}/auth/login/sfedu`, { code });
+    const response = await api.get(`${server}/auth/login/sfedu`);
     const { participant, token } = response.data;
     localStorage.setItem('accessToken', token);
     localStorage.setItem('userData', JSON.stringify(participant));

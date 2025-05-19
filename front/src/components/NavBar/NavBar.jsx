@@ -15,8 +15,10 @@ import deleteImg from '@assets/img/headPhoneIcon/delete.svg';
 import arrow from '@assets/img/arrow.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { convertDate } from '../../utils/functions/funcions';
+import { useTranslation } from 'react-i18next';
 
 function NavBar(props) {
+  const { t } = useTranslation('navbar');
   const context = useContext(DataContext);
   const navigate = useNavigate();
   const stages = useSelector(state => state.conferences.data[0]?.stages);
@@ -43,7 +45,7 @@ function NavBar(props) {
 
   const naviList = [
     {
-      name: 'Личный кабинет',
+      name: t('lk'),
       action: () => {
         setIslks(!islks);
       },
@@ -52,79 +54,79 @@ function NavBar(props) {
 
       list: [
         {
-          name: 'Профиль',
+          name: t('profile'),
           icon: profile,
           link: '/account/profile',
         },
         {
-          name: 'Мои доклады',
+          name: t('myReports'),
           icon: documents,
         },
         {
-          name: 'Архив фото',
+          name: t('archivPhoto'),
           icon: archive,
           link: '/account/archivephoto',
         },
       ],
     },
     {
-      name: 'Настройки',
+      name: t('settings'),
       icon: setting,
       action: () => setIsSattings(!isSattings),
       state: isSattings,
       display: user.email && context.userRole !== 1,
       list: [
         {
-          name: 'Изменить профиль',
+          name: t('editProfile'),
           link: '/account/settings/profile',
         },
         {
-          name: 'Сменить пароль',
+          name: t('changePassword'),
           link: '/account/settings/changepassword',
         },
       ],
     },
     {
-      name: 'Выйти из аккаунта',
+      name: t('exitAccount'),
       link: '/account/exitaccount',
       icon: logout,
       display: user.email,
     },
     {
-      name: 'Удалить аккаунт',
+      name: t('deleteAccount'),
       icon: deleteImg,
       link: '/account/deleteaccount',
       display: user.email && context.userRole !== 1,
     },
     {
-      name: user.email ? 'Личный кабинет' : 'Вход/Регистрация',
+      name: user.email ? t('lk') : t('authorization'),
       link: user.email ? '/account/profile' : '/login/authorization',
       pk: true,
       display: !location.pathname.includes('login') && !location.pathname.includes('account'),
     },
 
     {
-      name: 'Главная',
+      name: t('home'),
       link: '/',
       display: true,
     },
     {
-      name: 'Автору',
+      name: t('author'),
       link: '/author',
       display: true,
     },
     {
-      name: 'Новости',
+      name: t('news'),
       link: '/news',
       display: true,
     },
     {
-      name: 'Участники',
+      name: t('participants'),
       link: '/participants',
       display: true,
     },
     {
-      name: 'Оргкомитет',
+      name: t('committee'),
       link: '/committee',
       display: true,
     },
@@ -152,7 +154,7 @@ function NavBar(props) {
           <div className={`${styles.menu} ${context.activeMenu ? styles.active : styles.disable}`}>
             <div className={styles.menuInner}>
               <button onClick={() => context.setActiveMenu(false)}>
-                Скрыть <img src={closeImg} alt="Close" />
+                {t('hide')} <img src={closeImg} alt="Close" />
               </button>
               <ul>
                 {naviList.map((item, index) => (
@@ -215,7 +217,7 @@ function NavBar(props) {
                                     navigate(item.link);
                                     context.setActiveMenu(false);
                                   }
-                                  if (item.name === 'Мои доклады') {
+                                  if (item.name === t('myReports')) {
                                     setIsReports(!isReports);
                                   }
                                 }}
@@ -227,7 +229,7 @@ function NavBar(props) {
                                 )}
 
                                 <span>{item.name}</span>
-                                {item.name === 'Мои доклады' && (
+                                {item.name === t('myReports') && (
                                   <div className={styles.rigthImg}>
                                     <img
                                       src={arrow}
@@ -239,7 +241,7 @@ function NavBar(props) {
                               </li>
                               {/* лист докладов */}
                               <AnimatePresence>
-                                {item.name === 'Мои доклады' && isReports && (
+                                {item.name === t('myReports') && isReports && (
                                   <motion.ul
                                     initial={{ height: 0 }}
                                     animate={{ height: 'auto' }}
@@ -252,7 +254,7 @@ function NavBar(props) {
                                         context.setActiveMenu(false);
                                       }}
                                     >
-                                      <span>+ Добавить доклад</span>
+                                      <span>{t('addReport')}</span>
                                     </li>
                                     {reports.map((item, index) => (
                                       <li
@@ -265,7 +267,10 @@ function NavBar(props) {
                                         }}
                                       >
                                         <span>
-                                          <span>Доклад №{index + 1}</span>
+                                          <span>
+                                            {t('numberReport')}
+                                            {index + 1}
+                                          </span>
                                         </span>
                                       </li>
                                     ))}
@@ -287,7 +292,7 @@ function NavBar(props) {
                       context.setActiveMenu(false);
                     }}
                   >
-                    Панель администратора{' '}
+                    {t('adminPanel')}{' '}
                     <span className={styles.arowLi}>
                       <img src={ArrowMenu} alt="Arrow" />
                     </span>

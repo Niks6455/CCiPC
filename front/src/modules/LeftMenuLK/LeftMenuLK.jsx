@@ -13,8 +13,10 @@ import { ReactComponent as BlackArrowBottom } from './../../assets/img/UI/blackA
 import { useSelector } from 'react-redux';
 
 import plus from '@assets/img/UI/plus.svg';
+import { useTranslation } from 'react-i18next';
 
 function LeftMenuLk({ userRole }) {
+  const { t } = useTranslation('leftMenu');
   const context = useContext(DataContext);
   const [setingOpen, setSetingOpen] = useState(false);
   const [dokladOpen, setDokladOpen] = useState(false);
@@ -22,22 +24,18 @@ function LeftMenuLk({ userRole }) {
   const reports = useSelector(state => state.reportsSlice);
   const [path, setPath] = useState(window.location.pathname);
 
-  //! появление названия
   const [showTooltip, setShowTooltip] = useState(null);
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [tooltipTimeout, setTooltipTimeout] = useState(null);
 
   const handleMouseEnter = index => {
-    // Устанавливаем таймер для задержки
     const timeout = setTimeout(() => {
       setShowTooltip(index);
-    }, 500); // Задержка в 300 мс
-
+    }, 500);
     setTooltipTimeout(timeout);
   };
 
   const handleMouseLeave = () => {
-    // Очищаем таймер и скрываем подсказку
     clearTimeout(tooltipTimeout);
     setShowTooltip(null);
   };
@@ -55,7 +53,7 @@ function LeftMenuLk({ userRole }) {
       {(userRole || userRole === 1 || userRole === 0) && (
         <div className={styles.LeftMenuLkInner} id="leftMenu">
           <img src={logo} className={styles.LogoImg} onClick={() => navigate('/')} />
-          <p className={styles.LeftMenuLkTitle}>Личный кабинет</p>
+          <p className={styles.LeftMenuLkTitle}>{t('personalCabinet')}</p>
           <ul className={styles.LeftMenuLkList}>
             {userRole !== 1 && (
               <li
@@ -65,7 +63,7 @@ function LeftMenuLk({ userRole }) {
                   navigate('profile');
                 }}
               >
-                <img src={Lk} /> Профиль
+                <img src={Lk} /> {t('profile')}
               </li>
             )}
             {userRole !== 1 && (
@@ -78,7 +76,7 @@ function LeftMenuLk({ userRole }) {
                 }}
               >
                 <img src={documentImg} />
-                <span>Мои доклады</span>
+                <span>{t('myReports')}</span>
                 <BlackArrowBottom className={`${styles.arrow} ${dokladOpen ? styles.open : ''}`} />
               </li>
             )}
@@ -95,7 +93,7 @@ function LeftMenuLk({ userRole }) {
                   <div>
                     <img src={plus} alt="plus" />
                   </div>
-                  <span>Добавить доклад</span>
+                  <span>{t('addReport')}</span>
                 </li>
               )}
               {userRole !== 1 &&
@@ -103,7 +101,7 @@ function LeftMenuLk({ userRole }) {
                   <li
                     key={index}
                     onMouseEnter={() => handleMouseEnter(index)}
-                    onMouseLeave={() => handleMouseLeave()}
+                    onMouseLeave={handleMouseLeave}
                     onMouseMove={handleMouseMove}
                     onClick={() => navigate(`viewreports?idReport=${rep.id}&number=${index + 1}`)}
                   >
@@ -118,10 +116,11 @@ function LeftMenuLk({ userRole }) {
                         {rep.name}
                       </div>
                     )}
-                    <span>Доклад №{index + 1}</span>
+                    <span>{t('reportNumber') + (index + 1)}</span>
                   </li>
                 ))}
             </div>
+
             <li
               className={path.includes('archivephoto') ? styles.Active : ''}
               onClick={() => {
@@ -129,8 +128,9 @@ function LeftMenuLk({ userRole }) {
                 navigate('archivephoto');
               }}
             >
-              <img src={ArchiveiMG} /> Архив фото
+              <img src={ArchiveiMG} /> {t('photoArchive')}
             </li>
+
             {userRole !== 1 && (
               <li
                 className={path.includes('settings') ? styles.Active : ''}
@@ -140,10 +140,11 @@ function LeftMenuLk({ userRole }) {
                 }}
               >
                 <img src={SettingsImg} />
-                <span>Настройки</span>
+                <span>{t('settings')}</span>
                 <BlackArrowBottom className={`${styles.arrow} ${setingOpen ? styles.open : ''}`} />
               </li>
             )}
+
             {userRole !== 1 && (
               <div className={`${styles.listSetings} ${setingOpen && styles.setingOpen}`}>
                 <li
@@ -153,7 +154,7 @@ function LeftMenuLk({ userRole }) {
                   }}
                   className={path.includes('settings/profile') ? styles.Active : ''}
                 >
-                  Изменить профиль
+                  {t('editProfile')}
                 </li>
                 <li
                   onClick={() => {
@@ -162,7 +163,7 @@ function LeftMenuLk({ userRole }) {
                   }}
                   className={path.includes('settings/changepassword') ? styles.Active : ''}
                 >
-                  Сменить пароль
+                  {t('changePassword')}
                 </li>
               </div>
             )}
@@ -174,8 +175,9 @@ function LeftMenuLk({ userRole }) {
                 context.setSelectFrameLks('ExitAccount');
               }}
             >
-              <img src={exitImg} /> Выйти из аккаунта
+              <img src={exitImg} /> {t('logout')}
             </li>
+
             {userRole !== 1 && (
               <li
                 className={path.includes('deleteaccount') ? styles.Active : ''}
@@ -184,7 +186,7 @@ function LeftMenuLk({ userRole }) {
                   context.setSelectFrameLks('DeleteAccount');
                 }}
               >
-                <img src={deleteImg} /> Удалить аккаунт
+                <img src={deleteImg} /> {t('deleteAccount')}
               </li>
             )}
           </ul>

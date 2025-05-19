@@ -12,11 +12,13 @@ import ModalNal from './components/ModalNal/ModalNal';
 import ModalPhoto from './components/ModalPhoto/ModalPhoto';
 import Orgwznos from './components/Orgwznos/Orgwznos';
 import ModalBeznal from './components/ModalBeznal/ModalBeznal';
+import { useTranslation } from 'react-i18next';
 
 function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(state => state.user.user.data);
+  const { t } = useTranslation('profile');
 
   const [showProfilePhoto, setShowProfilePhoto] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -82,10 +84,10 @@ function Profile() {
           <div className={styles.mainSectionInfoPeople}>
             <p>{fioToString(user?.name, user?.surname, user?.patronymic)}</p>
             <p>
-              <span>Учёное звание:</span> {user?.academicTitle || 'Отсутствует'}
+              <span>{t('academicTitle')}</span> {user?.academicTitle || t('notPresent')}
             </p>
             <p>
-              <span>Учёная степень:</span> {user?.degree || 'Отсутствует'}
+              <span>{t('academicDegree')}</span> {user?.degree || t('notPresent')}
             </p>
           </div>
         </div>
@@ -95,16 +97,16 @@ function Profile() {
         <div className={styles.containerMoreInfoOne}>
           <div className={styles.info_block}>
             <p>
-              <span>Организация:</span> {user?.organization || 'Отсутствует'}
+              <span>{t('organization')}</span> {user?.organization || t('notPresent')}
             </p>
             <p>
-              <span>Должность:</span> {user?.position || 'Отсутствует'}
+              <span>{t('position')}</span> {user?.position || t('notPresent')}
             </p>
             <p>
-              <span>Email:</span> {user?.email || 'Отсутствует'}
+              <span>Email:</span> {user?.email || t('notPresent')}
             </p>
             <p>
-              <span>Телефон:</span> {user?.phone || 'Отсутствует'}
+              <span>{t('phone')}</span> {user?.phone || t('notPresent')}
             </p>
           </div>
           <Orgwznos
@@ -118,14 +120,18 @@ function Profile() {
           {user?.reports?.length > 0 ? (
             user?.reports?.map((el, index) => (
               <div key={index} className={styles.containerMoreInfoSecondText}>
-                <p>Название доклада №{index + 1}:</p>
-                <p>{el.name || 'Отсутствует'}</p>
+                <p>
+                  {t('reportName')}
+                  {index + 1}:
+                </p>
+                <p>{el.name || t('notPresent')}</p>
               </div>
             ))
           ) : (
             <div className={styles.containerMoreInfoSecondText}>
               <p>
-                Доклад №1: <span> отсутствует</span>
+                {t('reportNumber')}
+                <span>{t('notPresentSmall')}</span>
               </p>
             </div>
           )}
