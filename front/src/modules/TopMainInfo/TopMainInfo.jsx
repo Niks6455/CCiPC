@@ -12,8 +12,10 @@ import { useSelector } from 'react-redux';
 import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 import { server } from '../../apirequests/apirequests';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Trans, useTranslation } from 'react-i18next';
 
 function TopMainInfo({ userRole }) {
+  const { t } = useTranslation('homePage');
   const conference = useSelector(state => state?.conferences?.data[0]);
   const userData = useSelector(state => state.user.user.data);
   const arrowRef = useRef(null); // Реф для стрелки
@@ -89,7 +91,12 @@ function TopMainInfo({ userRole }) {
                           }
                           rel="noreferrer"
                         >
-                          Программа <br /> конференции
+                          <Trans
+                            i18nKey={'homePage:par26'}
+                            components={{
+                              1: <br />,
+                            }}
+                          />
                         </a>
                         <a
                           target="_blank"
@@ -114,7 +121,12 @@ function TopMainInfo({ userRole }) {
                           }
                           rel="noreferrer"
                         >
-                          Информационное <br /> письмо
+                          <Trans
+                            i18nKey={'homePage:par27'}
+                            components={{
+                              1: <br />,
+                            }}
+                          />
                         </a>
                         <a
                           target="_blank"
@@ -139,7 +151,12 @@ function TopMainInfo({ userRole }) {
                           }
                           rel="noreferrer"
                         >
-                          Сборник <br /> научных трудов
+                          <Trans
+                            i18nKey={'homePage:par28'}
+                            components={{
+                              1: <br />,
+                            }}
+                          />
                         </a>
                         <a
                           target="_blank"
@@ -161,7 +178,7 @@ function TopMainInfo({ userRole }) {
           <div className={styles.buttonClicker}>
             <div className={styles.buttonClickerInner}>
               <img className={styles.leftBot} src={rect} alt="Background" />
-              <Button text={'Подать заявку'} funClick={funClickRequest} />
+              <Button text={t('par29')} funClick={funClickRequest} />
               <img className={styles.leftTop} src={rect} alt="Background" />
             </div>
           </div>
@@ -200,7 +217,7 @@ function TopMainInfo({ userRole }) {
                 }
                 rel="noreferrer"
               >
-                Программа конференции
+                {t('par30')}
               </a>
               <a
                 target="_blank"
@@ -224,7 +241,7 @@ function TopMainInfo({ userRole }) {
                 }
                 rel="noreferrer"
               >
-                Информационное письмо
+                {t('par31')}
               </a>
               <a
                 target="_blank"
@@ -248,7 +265,7 @@ function TopMainInfo({ userRole }) {
                 }
                 rel="noreferrer"
               >
-                Сборник научных трудов
+                {t('par32')}
               </a>
               <a
                 target="_blank"

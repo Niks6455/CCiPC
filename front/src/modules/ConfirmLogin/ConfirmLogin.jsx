@@ -10,7 +10,9 @@ import { useNavigate } from 'react-router-dom';
 import { useClipboardDigits } from '../../hooks/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { setTimer } from '../../store/registrationSlice/registrationSlice';
+import { useTranslation } from 'react-i18next';
 function ConfirmLogin(props) {
+  const { t } = useTranslation('confirmLogin');
   const dispach = useDispatch();
   const navigate = useNavigate();
   const registration = useSelector(state => state.registration);
@@ -107,7 +109,7 @@ function ConfirmLogin(props) {
         <img src={logo} alt="Logo" onClick={() => navigate('/')} />
       </div>
       <div className={styles.ConfirmLoginTitle}>
-        <p>Подтвердите адрес электронной почты</p>
+        <p>{t('par1')}</p>
       </div>
       <div className={styles.ConfirmLoginGalca}>
         <div>
@@ -115,14 +117,12 @@ function ConfirmLogin(props) {
             <img src={confirm} alt="Confirm Icon" />
           </div>
           <p>
-            На адрес вашей электронной почты{' '}
-            <span className={styles.mail}>{registration?.data?.email}</span> отправлено письмо с
-            проверочным кодом. Введите полученный код в поле ниже и нажмите "Войти".
+            {t('par2')} <span className={styles.mail}>{registration?.data?.email}</span> {t('par3')}
           </p>
         </div>
       </div>
       <div className={styles.code}>
-        <p>Проверочный код:</p>
+        <p>{t('par4')}</p>
       </div>
       <div className={styles.codeInput}>
         <div className={styles.codeInputInner}>
@@ -151,7 +151,7 @@ function ConfirmLogin(props) {
             }}
             disabled={!isButtonActive}
           >
-            Повторно выслать код
+            {t('par5')}
           </button>
           <p className={styles.CodeTimer}>
             {registration?.timer > 0 ? `0:${registration?.timer}` : ''}
@@ -159,7 +159,7 @@ function ConfirmLogin(props) {
         </div>
       </div>
       <div className={styles.submitButton}>
-        <button onClick={handleSubmit}>Войти</button>
+        <button onClick={handleSubmit}>{t('par6')}</button>
         <AnimatePresence>
           {errorAuth && (
             <motion.div
@@ -169,7 +169,7 @@ function ConfirmLogin(props) {
               className={styles.error_auth}
             >
               <img src={errorItem} alt="❗" />
-              <span>Ошибка подтверждения</span>
+              <span>{t('par7')}</span>
             </motion.div>
           )}
         </AnimatePresence>

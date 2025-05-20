@@ -2,8 +2,10 @@ import styles from './ModalDeleteReportAdmin.module.scss';
 import error from '@assets/img/UI/error.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import { apiDeleteReport } from '../../apirequests/apirequests';
+import { useTranslation } from 'react-i18next';
 
 function ModalDeleteReportAdmin({ data, setData, setOriginalData, originalData }) {
+  const { t } = useTranslation('global');
   const funDelete = () => {
     apiDeleteReport(data.id).then(res => {
       if (res?.status === 200) {
@@ -28,14 +30,14 @@ function ModalDeleteReportAdmin({ data, setData, setOriginalData, originalData }
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}
             >
-              <p className={styles.title}>Вы уверены, что хотите удалить доклад?</p>
+              <p className={styles.title}>{t('par5')}</p>
               <img className={styles.galka} src={error} alt="img" />
               <div className={styles.btns}>
                 <button onClick={() => setData(null)} className={styles.btnred}>
-                  Отмена
+                  {t('par6')}
                 </button>
                 <button onClick={() => funDelete()} className={styles.btnred}>
-                  Удалить
+                  {t('par7')}
                 </button>
               </div>
             </motion.div>

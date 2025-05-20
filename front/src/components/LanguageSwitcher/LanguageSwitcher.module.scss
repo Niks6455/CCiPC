@@ -1,0 +1,75 @@
+$w1: 1366px;
+$w2: 769px;
+$w3: 480px;
+
+.LanguageSwitcher {
+  width: max-content;
+  position: absolute;
+  right: torem(102px);
+  top: torem(20px);
+  z-index: 100100;
+  @media (max-width: $w2) {
+    right: auto;
+    left: torem(25px);
+    top: torem(120px);
+  }
+  @media (max-width: $w3) {
+    top: torem(10px);
+    left: torem(16px);
+  }
+
+  .button_open {
+    width: max-content;
+    height: torem(24px);
+    border: none;
+    background: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    @include HoverActiveOpasity;
+
+    span {
+      font-weight: 700;
+      font-size: torem(18px);
+      color: #fff;
+      padding-top: torem(2px);
+      @media (max-width: $w2) {
+        font-size: torem(14px);
+      }
+    }
+    img {
+      width: torem(24px);
+      height: torem(24px);
+    }
+  }
+  .list {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: start;
+    padding-top: torem(10px);
+    @media (max-width: $w3) {
+      transform: translateY(torem(-5px));
+    }
+    button {
+      border: none;
+      background: none;
+      color: #fff;
+      font-weight: 700;
+      font-size: torem(18px);
+      color: #fff;
+      cursor: pointer;
+      @include HoverActiveOpasity;
+      margin-bottom: torem(5px);
+      @media (max-width: $w2) {
+        font-size: torem(14px);
+        margin-bottom: 0;
+      }
+      @media (max-width: $w3) {
+        margin-bottom: torem(5px);
+      }
+    }
+  }
+}

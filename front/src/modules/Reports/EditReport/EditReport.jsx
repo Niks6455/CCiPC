@@ -8,8 +8,10 @@ import { disEditReport } from '../../../store/reportCreateSlice/reportCreateSlic
 import { useQuery } from '@tanstack/react-query';
 import { apiGetReportId } from '../../../apirequests/apirequests';
 import CircleLoader from '../../../components/CircleLoader/CircleLoader';
+import { useTranslation } from 'react-i18next';
 
 function EditReport() {
+  const { i18n } = useTranslation();
   const dispatch = useDispatch();
   const [soauthorEditing, setSoauthorEditing] = useState(null);
   const [searchParams] = useSearchParams(); // Получаем query параметры
@@ -84,7 +86,11 @@ function EditReport() {
 
   return (
     <section className={styles.EditReport}>
-      {soauthorEditing && <h2 className={styles.title}>Доклад №{number}</h2>}
+      {soauthorEditing && (
+        <h2 className={styles.title}>
+          {i18n?.language === 'en' ? 'Report' : 'Доклад'} №{number}
+        </h2>
+      )}
       {!soauthorEditing && <CreateReport edit={true} />}
       <div className={styles.otstup}></div>
       <AddCoauthor

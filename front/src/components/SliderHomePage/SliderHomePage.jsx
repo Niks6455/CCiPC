@@ -4,8 +4,11 @@ import { getAllNews, server } from '../../apirequests/apirequests';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import noPhoto from '@assets/img/noPhoto.png';
+import { useTranslation } from 'react-i18next';
+import newsArrIcon from '@assets/img/UI/newsArr.svg';
 
 const SliderHomePage = () => {
+  const { t } = useTranslation('homePage');
   const [slides, setSlides] = useState([]);
   useEffect(() => {
     getAllNews().then(res => {
@@ -48,10 +51,7 @@ const SliderHomePage = () => {
   return (
     <div className={styles.SliderHomePage}>
       <div className={styles.sliderContainer}>
-        <div
-          className={styles.sliderWrapper}
-          // style={{ transform: `translateX(-${currentSlide * 100}%)` }}
-        >
+        <div className={styles.sliderWrapper}>
           {slides?.map(slide => (
             <div
               key={slide.id}
@@ -75,6 +75,7 @@ const SliderHomePage = () => {
               </div>
               <div className={styles.Sliderimage}>
                 <img
+                  className={styles.SliderImageInner}
                   src={
                     slides[currentSlide].img?.url
                       ? ` ${server}/${slides[currentSlide].img?.url}`
@@ -82,7 +83,11 @@ const SliderHomePage = () => {
                   }
                   alt={slide.title}
                 />
-                <div className={styles.allNews} onClick={() => navigate('/news')}></div>
+                {/* <div className={styles.allNews} onClick={() => navigate('/news')}></div> */}
+                <button className={styles.allNews} onClick={() => navigate('/news')}>
+                  <span>{t('par34')}</span>
+                  <img src={newsArrIcon} alt="img" />
+                </button>
               </div>
             </div>
           ))}

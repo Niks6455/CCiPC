@@ -5,7 +5,10 @@ import { useSelector } from 'react-redux';
 import { useWindowWidth } from '../../hooks/hooks';
 import { useEffect, useState } from 'react';
 import { convertDate } from '../../utils/functions/funcions';
+import { useTranslation } from 'react-i18next';
+
 function SliderHomePageTop() {
+  const { t } = useTranslation('homePage');
   const [mobile, setMobile] = useState(false);
   // Дублируем массив данных для бесконечного скролла
   const conferenceStages = useSelector(state => state.conferences.data[0].stages);
@@ -26,7 +29,7 @@ function SliderHomePageTop() {
     <div className={styles.SliderHomePageTop}>
       <div>
         <Layout>
-          <p>/ ЭТАПЫ ПРОВЕДЕНИЯ КОНФЕРЕНЦИИ /</p>
+          <p>{t('par33')}</p>
         </Layout>
         <div className={styles.line}></div>
         <div className={styles.SliderHomePageTopInner}>

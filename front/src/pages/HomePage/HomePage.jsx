@@ -13,6 +13,7 @@ import LoadingComponent from '../../components/LoadingComponent/LoadingComponent
 import ScrollHeader from '../../components/ScrollHeader/ScrollHeader';
 import Header from '../../components/Header/Header';
 import { Trans, useTranslation } from 'react-i18next';
+import LanguageSwitcher from '../../components/LanguageSwitcher/LanguageSwitcher';
 
 function HomePage({ userRole }) {
   const { t } = useTranslation('homePage');
@@ -102,6 +103,7 @@ function HomePage({ userRole }) {
 
   return (
     <div className={styles.HomePage}>
+      <LanguageSwitcher />
       {loading && <LoadingComponent setLoading={setLoading} status={conferencesStatus} />}
       <ScrollHeader userRole={userRole} />
       <HeaderPhone />

@@ -19,8 +19,11 @@ import {
   validateLatinSymbols,
 } from '../../../utils/functions/PasswordValidation';
 import SpinnerLoaderGreen from '../../../components/SpinnerLoaderGreen/SpinnerLoaderGreen';
+import { useTranslation } from 'react-i18next';
 
 function RecoverPassword() {
+  const { t } = useTranslation('recoveryPassword');
+
   //! востановление по почте true по телефону false
   const [isRecoverType, setIsRecoverType] = useState(true);
   const [email, setEmail] = useState();
@@ -34,7 +37,7 @@ function RecoverPassword() {
   const [timer, setTimer] = useState(59); // Таймер в секундах
   const [isButtonActive, setIsButtonActive] = useState(false); // Состояние кнопки
   const inputsRef = useRef([]);
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const [inputTypes, setInputTypes] = useState({
     newpassword: 'password',
     rewnewpassword: 'password',
@@ -54,37 +57,37 @@ function RecoverPassword() {
   const [errorListPassword, setErrorListPassword] = useState([
     {
       id: '0',
-      text: 'Не менее 8 символов',
+      text: t('par5'),
       done: false,
       functionCheck: funEightSymbols,
     },
     {
       id: '4',
-      text: 'Не более 16 символов',
+      text: t('par6'),
       done: true,
       functionCheck: funSixteenSymbols,
     },
     {
       id: '1',
-      text: 'Не менее 1 заглавной буквы',
+      text: t('par7'),
       done: false,
       functionCheck: funCapitalLetter,
     },
     {
       id: '2',
-      text: 'Не менее 1 цифры',
+      text: t('par8'),
       done: false,
       functionCheck: funDigit,
     },
     {
       id: '3',
-      text: 'Не менее 1 спецсимвола: !@#$%&?',
+      text: t('par9'),
       done: false,
       functionCheck: funSpecialSymbol,
     },
     {
       id: '5',
-      text: 'Только латинские буквы',
+      text: t('par10'),
       done: false,
       functionCheck: validateLatinSymbols,
     },
@@ -147,7 +150,7 @@ function RecoverPassword() {
     if (newErrors.some(error => error)) {
       return;
     }
-    setLoader(true)
+    setLoader(true);
     const fullCode = code.join('');
     //! если код не совпал на сервере
     const data = {
@@ -159,12 +162,11 @@ function RecoverPassword() {
       if (res?.status === 200) {
         setCodStatus(true);
         setCodeConfirmed(true);
-        setLoader(false)
+        setLoader(false);
       } else {
         setCodStatus(false);
-        setLoader(false)
+        setLoader(false);
       }
-    
     });
   };
 
@@ -179,19 +181,19 @@ function RecoverPassword() {
     // Проверка обязательных полей
     ['newpassword', 'rewnewpassword'].forEach(field => {
       if (!formData[field]) {
-        newErrors[field] = 'Поле обязательно для заполнения';
+        newErrors[field] = t('par11');
         isValid = false;
       }
     });
 
     // Проверка совпадения паролей
     if (formData.newpassword !== formData.rewnewpassword) {
-      newErrors.newpassword = 'Пароли не совпадают';
+      newErrors.newpassword = t('par12');
       isValid = false;
     }
 
     if (errorListPassword.find(el => !el.done)) {
-      newErrors.newpassword = 'Некорректный пароль';
+      newErrors.newpassword = t('par13');
       isValid = false;
     }
 
@@ -250,7 +252,7 @@ function RecoverPassword() {
             <img src={logo} alt="Logo" onClick={() => navigate('/')} />
           </div>
           <div className={styles.ConfirmLoginTitle}>
-            <p>Введите код для восстановления пароля</p>
+            <p>{t('par14')}</p>
           </div>
           <div className={styles.ConfirmLoginGalca}>
             <div>
@@ -259,31 +261,22 @@ function RecoverPassword() {
               </div>
               {isRecoverType ? (
                 <p className={styles.ConfirmLoginGalcaText}>
-                  На адрес вашей электронной почты{' '}
+                  {t('par15')}{' '}
                   <span className={styles.mail}>
                     {context?.mailValue || email || store.emailSend}
                   </span>{' '}
-                  отправлено письмо с проверочным кодом. Введите полученный код в поле ниже и
-                  нажмите “Продолжить”.
+                  {t('par16')}
                 </p>
               ) : (
                 <p className={styles.ConfirmLoginGalcaText}>
-                  На номер вашего телефона{' '}
-                  <span className={styles.mail}>+{context?.numberValue}</span> отправлено сообщение
-                  с проверочным кодом. Введите полученный код в поле ниже и нажмите “Продолжить”.
+                  {t('par17')} <span className={styles.mail}>+{context?.numberValue}</span>{' '}
+                  {t('par18')}
                 </p>
               )}
             </div>
           </div>
-          {/* <div className={styles.netDostupa}>
-            <p onClick={funRetype}>
-              {isRecoverType
-                ? "У меня нет доступа к электронной почте"
-                : "Вернуться к восстановлению пароля через электронную почту"}
-            </p>
-          </div> */}
           <div className={styles.code}>
-            <p>Проверочный код:</p>
+            <p>{t('par19')}</p>
           </div>
           <div className={styles.codeInput}>
             <div className={styles.codeInputInner}>
@@ -312,17 +305,17 @@ function RecoverPassword() {
                 }}
                 disabled={!isButtonActive}
               >
-                Повторно выслать код
+                {t('par20')}
               </button>
               <p className={styles.CodeTimer}>{timer > 0 ? `0:${timer}` : ''}</p>
             </div>
           </div>
           <div className={styles.submitButton}>
-            <button onClick={handleSubmit}>  {!loader ?  "Продолжить" :  <SpinnerLoaderGreen/> }</button>
+            <button onClick={handleSubmit}> {!loader ? t('par21') : <SpinnerLoaderGreen />}</button>
             {!codStatus && (
               <div className={styles.errorstatus}>
                 <img src={errorLogo} alt="" />
-                <p>Ошибка подтверждения</p>
+                <p>{t('par22')}</p>
               </div>
             )}
           </div>
@@ -333,10 +326,10 @@ function RecoverPassword() {
             <img src={logo} alt="Logo" onClick={() => navigate('/')} />
           </div>
           <div className={styles.ConfirmLoginTitle}>
-            <p>Восстановление пароля</p>
+            <p>{t('par23')}</p>
           </div>
           <div className={styles.newPasseordText}>
-            <p>Введите свой новый пароль.</p>
+            <p>{t('par24')}</p>
           </div>
           <div className={styles.InputContainer}>
             <div className={styles.InputBox}>
@@ -344,7 +337,7 @@ function RecoverPassword() {
                 name={'newpassword'}
                 onChange={handleChangePassword}
                 value={formData.newpassword}
-                placeholder="Придумайте пароль"
+                placeholder={t('par25')}
                 error={errorsPassword.newpassword}
                 setErrorList={setErrorListPassword}
                 errorListImgHover={listErrorOnHover}
@@ -363,7 +356,7 @@ function RecoverPassword() {
                 name={'rewnewpassword'}
                 onChange={handleChangePassword}
                 value={formData.rewnewpassword}
-                placeholder="Повторите пароль"
+                placeholder={t('par26')}
                 errorList={errorListPassword}
                 setErrorList={setErrorListPassword}
                 errorListImgHover={listErrorOnHover}
@@ -379,7 +372,7 @@ function RecoverPassword() {
             </div>
           </div>
           <div className={styles.submitButtonPassword}>
-            <button onClick={handleSubmitPassword}>Продолжить</button>
+            <button onClick={handleSubmitPassword}>{t('par21')}</button>
           </div>
         </div>
       )}

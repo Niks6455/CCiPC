@@ -16,6 +16,10 @@ import addCoauthorEN from '@assets/locales/en/addCoauthor.json';
 import profileEditingEN from '@assets/locales/en/profileEditing.json';
 import changePasswordEN from '@assets/locales/en/changePassword.json';
 import homePageEN from '@assets/locales/en/homePage.json';
+import globalEN from '@assets/locales/en/global.json';
+import confirmLoginEN from '@assets/locales/en/confirmLogin.json';
+import recoveryPasswordEN from '@assets/locales/en/recoveryPassword.json';
+import noteFoundEN from '@assets/locales/en/noteFound.json';
 
 import authorRU from '@assets/locales/ru/author.json';
 import footerRU from '@assets/locales/ru/footer.json';
@@ -33,6 +37,10 @@ import addCoauthorRU from '@assets/locales/ru/addCoauthor.json';
 import profileEditingRU from '@assets/locales/ru/profileEditing.json';
 import changePasswordRU from '@assets/locales/ru/changePassword.json';
 import homePageRU from '@assets/locales/ru/homePage.json';
+import globalRU from '@assets/locales/ru/global.json';
+import confirmLoginRU from '@assets/locales/ru/confirmLogin.json';
+import recoveryPasswordRU from '@assets/locales/ru/recoveryPassword.json';
+import noteFoundRU from '@assets/locales/ru/noteFound.json';
 
 i18n.use(initReactI18next).init({
   resources: {
@@ -53,6 +61,10 @@ i18n.use(initReactI18next).init({
       profileEditing: profileEditingEN,
       changePassword: changePasswordEN,
       homePage: homePageEN,
+      global: globalEN,
+      confirmLogin: confirmLoginEN,
+      recoveryPassword: recoveryPasswordEN,
+      noteFound: noteFoundEN,
     },
     ru: {
       author: authorRU,
@@ -71,6 +83,10 @@ i18n.use(initReactI18next).init({
       profileEditing: profileEditingRU,
       changePassword: changePasswordRU,
       homePage: homePageRU,
+      global: globalRU,
+      confirmLogin: confirmLoginRU,
+      recoveryPassword: recoveryPasswordRU,
+      noteFound: noteFoundRU,
     },
   },
   lng: 'ru',
@@ -92,6 +108,10 @@ i18n.use(initReactI18next).init({
     'profileEditing',
     'changePassword',
     'homePage',
+    'global',
+    'confirmLogin',
+    'recoveryPassword',
+    'noteFound',
   ],
   defaultNS: 'author',
   interpolation: {

@@ -6,8 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import newsArrIcon from '@assets/img/UI/newsArr.svg';
 import { ReactComponent as SlideArrowIcon } from '@assets/img/UI/slideArrow.svg';
 import noPhoto from '@assets/img/noPhoto.png';
+import { useTranslation } from 'react-i18next';
 
 function SliderHomePageMobile() {
+  const { t } = useTranslation('homePage');
   const navigate = useNavigate();
   const [slides, setSlides] = useState([]);
   const containerRef = useRef(null);
@@ -97,7 +99,7 @@ function SliderHomePageMobile() {
                 alt="img"
               />
               <button className={styles.allNews} onClick={() => navigate('/news')}>
-                <span>Все новости</span>
+                <span>{t('par34')}</span>
                 <img src={newsArrIcon} alt="img" />
               </button>
             </div>

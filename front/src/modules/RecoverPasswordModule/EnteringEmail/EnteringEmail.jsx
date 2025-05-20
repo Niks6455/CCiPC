@@ -7,8 +7,10 @@ import { useState } from 'react';
 import { apiSandReset } from '../../../apirequests/apirequests';
 import { useDispatch } from 'react-redux';
 import { setEmailSand } from '../../../store/userSlice/user.Slice';
+import { useTranslation } from 'react-i18next';
 
 function EnteringEmail() {
+  const { t } = useTranslation('recoveryPassword');
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const [error, setError] = useState(false);
@@ -46,12 +48,12 @@ function EnteringEmail() {
         <div className={styles.logo}>
           <img src={logoIcon} alt="Логотип" onClick={() => navigate('/')} />
         </div>
-        <h2>Забыли пароль?</h2>
-        <p>Чтобы задать новый пароль, введите электронную почту своего аккаунта</p>
+        <h2>{t('par1')}</h2>
+        <p>{t('par2')}</p>
         <div className={`${styles.email_input_container} ${error ? styles.error_box : ''}`}>
           {error && (
             <div className={styles.error}>
-              <span>Некорректный email*</span>
+              <span>{t('par3')}</span>
             </div>
           )}
           <Men className={error ? styles.error_icon : ''} />
@@ -66,7 +68,7 @@ function EnteringEmail() {
           />
         </div>
         <button className={styles.next_button} onClick={funNextClick}>
-          Далее
+          {t('par4')}
         </button>
       </div>
     </div>

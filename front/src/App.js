@@ -43,7 +43,6 @@ import Login from './modules/Login/Login';
 import Register from './modules/Register/Register';
 import ConfirmLogin from './modules/ConfirmLogin/ConfirmLogin';
 import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
-import LanguageSwitcher from './components/LanguageSwitcher/LanguageSwitcher';
 
 function App() {
   const dispatch = useDispatch();
@@ -118,8 +117,6 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <main>
-            <LanguageSwitcher />
-
             <div id="#main_inner">
               <Routes>
                 <Route path="/" element={<HomePage userRole={userRole} />}></Route>
