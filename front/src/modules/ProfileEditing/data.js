@@ -75,8 +75,8 @@ export const useInputsData = () => {
       id: '5',
       name: t('form.position'),
       title: 'position',
-      required: true,
-      list: doljnostList,
+      required: false,
+      list: null,
       type: 'text',
     },
   ];

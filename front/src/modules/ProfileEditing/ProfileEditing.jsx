@@ -109,21 +109,14 @@ function ProfileEditing() {
     const newErrors = {};
 
     // Проверка обязательных полей
-    [
-      'name',
-      'surname',
-      'academicTitle',
-      'degree',
-      'position',
-      'organization',
-      'email',
-      'phone',
-    ].forEach(field => {
-      if (!formData[field]) {
-        newErrors[field] = t('requiredField');
-        isValid = false;
-      }
-    });
+    ['name', 'surname', 'academicTitle', 'degree', 'organization', 'email', 'phone'].forEach(
+      field => {
+        if (!formData[field]) {
+          newErrors[field] = t('requiredField');
+          isValid = false;
+        }
+      },
+    );
 
     // Проверка корректности Email
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
@@ -316,7 +309,20 @@ function ProfileEditing() {
         <div className={styles.boxRigth}>
           {inputsData.map(
             (item, index) =>
-              index > 5 && (
+              index > 5 &&
+              (item?.title === 'position' ? (
+                <div className={styles.item}>
+                  <Input
+                    name={item.title}
+                    onChange={handleChange}
+                    value={formData[item.title]}
+                    placeholder=""
+                    error={errors[item.title]}
+                    labelText={item.name}
+                    readOnly={item.readOnly}
+                  />
+                </div>
+              ) : (
                 <div className={styles.item}>
                   <InputList
                     name={item.title}
@@ -332,7 +338,7 @@ function ProfileEditing() {
                     error={errors[item.title]}
                   />
                 </div>
-              ),
+              )),
           )}
           <button type="button" className={styles.SaveButton} onClick={handleSubmit}>
             {t('saveChanges')}

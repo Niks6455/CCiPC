@@ -89,6 +89,7 @@ function Orgwznos({ user, funNal, funBeznal, funChangeFormPay }) {
             <h3>
               {t('formPay')} <span>{fee[0]?.sum + ' '}₽ </span>
             </h3>
+            <h4>Выберите способ оплаты:</h4>
             <div className={styles.buttons}>
               <button onClick={funNal}>{t('nal')}</button>
               <button onClick={funBeznal}>{t('beznal')}</button>

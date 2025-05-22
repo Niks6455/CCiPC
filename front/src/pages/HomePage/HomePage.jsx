@@ -103,7 +103,8 @@ function HomePage({ userRole }) {
 
   return (
     <div className={styles.HomePage}>
-      <LanguageSwitcher />
+      {/* Локализация */}
+      {/* <LanguageSwitcher /> */}
       {loading && <LoadingComponent setLoading={setLoading} status={conferencesStatus} />}
       <ScrollHeader userRole={userRole} />
       <HeaderPhone />

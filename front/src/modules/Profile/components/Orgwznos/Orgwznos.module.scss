@@ -91,6 +91,21 @@ $w3: 480px;
         }
       }
     }
+    h4 {
+      color: #006d49;
+      margin-bottom: torem(10px);
+      padding: 0;
+      font-family: Overpass, sans-serif;
+      font-weight: 500;
+      font-size: torem(20px);
+      @media (max-width: $w2) {
+        margin-bottom: 0;
+      }
+      @media (max-width: $w3) {
+        font-size: torem(16px);
+        font-weight: 600;
+      }
+    }
     .buttons {
       display: flex;
       flex-direction: row;

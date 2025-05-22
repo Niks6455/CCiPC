@@ -17,7 +17,7 @@
     "phone": "Phone number*",
     "academicTitle": "Academic title*",
     "degree": "Academic degree*",
-    "position": "Position*"
+    "position": "Position"
   },
   "errors": {
     "name": "Invalid first name!",
