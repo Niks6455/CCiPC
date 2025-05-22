@@ -27,7 +27,7 @@
   "patronymic": "Patronymic",
   "academicTitle": "Academic Title*",
   "degree": "Academic Degree*",
-  "position": "Position*",
+  "position": "Position",
   "organization": "Organization*",
   "email": "Email (login)*",
   "phone": "Phone number*",

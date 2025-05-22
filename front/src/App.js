@@ -43,6 +43,7 @@ import Login from './modules/Login/Login';
 import Register from './modules/Register/Register';
 import ConfirmLogin from './modules/ConfirmLogin/ConfirmLogin';
 import ProtectedRoute from './pages/ProtectedRoute/ProtectedRoute';
+import OrganizersPartners from './modules/AdminPageModule/OrganizersPartners/OrganizersPartners';
 
 function App() {
   const dispatch = useDispatch();
@@ -200,6 +201,7 @@ function App() {
                     <Route path="news" element={<NewsModuleAdminPage />} />
                     <Route path="conferences" element={<ConfirenceModuleAdminPage />} />
                     <Route path="payment" element={<OrgWznosModuleAdminPage />} />
+                    <Route path="organizerspartners" element={<OrganizersPartners />} />
                   </Route>
                 )}
               </Routes>

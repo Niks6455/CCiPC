@@ -64,6 +64,12 @@ function LeftMenuAdminPage() {
               Архив сборников
             </li>
           </Link>
+          <Link to="/adminPage/organizerspartners">
+            <li className={getActiveLi('/adminPage/organizerspartners')}>
+              <img src={colaborators} />
+              Организаторы и партнёры
+            </li>
+          </Link>
         </ul>
       </div>
     </section>

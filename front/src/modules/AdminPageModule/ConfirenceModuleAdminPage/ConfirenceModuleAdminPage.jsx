@@ -338,7 +338,7 @@ function ConfirenceModuleAdminPage() {
       <DocumentsModule data={data} setData={setData} />
       <AboutConference data={data} setData={setData} />
       <Directions data={data} setData={setData} />
-      <Organizers
+      {/* <Organizers
         data={data}
         setData={setData}
         itemKey={'organizers'}
@@ -355,7 +355,7 @@ function ConfirenceModuleAdminPage() {
         buttonName={'Добавить партнёра'}
         deleteMass={deletePartners}
         setDeleteMass={setDeletePartners}
-      />
+      /> */}
       <div className={styles.buttons}>
         <div className={styles.left}>
           {conferenseId && <button onClick={() => setComplate(true)}>Завершить конференцию</button>}

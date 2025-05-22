@@ -1,0 +1,167 @@
+.Card {
+  width: torem(358px);
+  height: torem(737px);
+  background-color: #fff;
+  border-radius: torem(30px);
+  position: relative;
+  padding: torem(20px);
+  box-sizing: border-box;
+
+  .CardOrganizationInner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .CardOrganizationInnerImg {
+      position: relative;
+      .CardOrganizationInnerImgInput {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: torem(322px) !important;
+        height: torem(322px) !important;
+        cursor: pointer;
+        transition: 0.1s linear all;
+        border-radius: torem(10px);
+
+        &:hover {
+          opacity: 1;
+          -webkit-backdrop-filter: blur(torem(5px));
+          backdrop-filter: blur(torem(5px));
+        }
+        img {
+          width: torem(50px) !important;
+          height: torem(50px) !important;
+          margin: torem(0px) torem(10px);
+          -o-object-fit: cover;
+          object-fit: cover;
+          cursor: pointer;
+          transition: 0.1s linear all;
+          border-radius: torem(10px);
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+    .Img {
+      width: torem(322px) !important;
+      height: torem(322px) !important;
+      -o-object-fit: cover;
+      object-fit: cover;
+      border-radius: torem(10px);
+    }
+
+    .CardOrganizationInnerInfo {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-top: torem(10px);
+      position: relative;
+      .error {
+        position: absolute;
+        color: var(--ErrorColor);
+        background-color: #fff;
+        padding: torem(5px);
+        top: torem(16px);
+        right: torem(15px);
+      }
+      label {
+        font-size: torem(18px);
+        margin-bottom: torem(10px);
+        font-weight: 500;
+      }
+
+      input,
+      textarea {
+        position: relative;
+        font-size: torem(18px);
+        padding: torem(20px);
+        border: torem(1px) solid var(--InputColors);
+        color: #333;
+        border-radius: torem(10px);
+        outline: none;
+        &::-webkit-input-placeholder {
+          color: var(--InputTextColor);
+        }
+        &::-moz-placeholder {
+          color: var(--InputTextColor);
+        }
+        &:-ms-input-placeholder {
+          color: var(--InputTextColor);
+        }
+        &::-ms-input-placeholder {
+          color: var(--InputTextColor);
+        }
+        &::placeholder {
+          color: var(--InputTextColor);
+        }
+        @include ScrollBar;
+      }
+
+      textarea {
+        height: auto;
+        max-height: torem(145px);
+        height: torem(145px) !important;
+
+        resize: none;
+      }
+    }
+
+    .buttonContainer {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      gap: torem(10px);
+      margin-top: torem(20px);
+      opacity: 0; // Начальное состояние для анимации
+      height: 0;
+      overflow: hidden;
+      position: absolute;
+      bottom: torem(17px);
+      width: calc(100% - torem(40px));
+      button {
+        width: 100%;
+        padding: torem(15px);
+        font-size: torem(20px);
+        border-radius: torem(10px);
+        border: none;
+        cursor: pointer;
+        font-weight: 500;
+      }
+
+      .cancel {
+        background-color: #00452914;
+        color: #333;
+
+        &:hover {
+          background-color: #cfcfcf;
+        }
+      }
+
+      .save {
+        @include ButtonGreen();
+      }
+    }
+
+    .delete {
+      position: absolute;
+      bottom: torem(20px);
+      width: calc(100% - torem(40px));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: torem(54px) !important;
+      @include ButtonRedBorder();
+      img {
+        width: torem(24px) !important;
+        height: torem(24px) !important;
+        margin-left: torem(10px);
+      }
+    }
+  }
+}

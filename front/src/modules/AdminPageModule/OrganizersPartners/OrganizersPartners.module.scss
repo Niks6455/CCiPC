@@ -1,0 +1,70 @@
+.OrganizersPartners {
+  .OrgazmCommetetInner {
+    .title {
+      font-size: torem(32px);
+      font-weight: 500;
+      margin-bottom: torem(40px);
+      color: #333;
+    }
+    .subtitle {
+      font-size: torem(24px);
+      font-weight: 500;
+      color: #333;
+      margin-bottom: torem(25px);
+      margin-top: torem(25px);
+    }
+    p {
+      display: flex;
+      justify-content: start;
+      text-align: start;
+    }
+    .buttonBlock {
+      display: flex;
+      justify-content: end;
+      margin-bottom: torem(25px);
+      button {
+        background: none;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width: torem(24px);
+          height: torem(24px);
+        }
+        img {
+          margin: 0px torem(8px);
+        }
+      }
+
+      .ButtonAdd {
+        @include ButtonGreen();
+        width: torem(290px);
+        height: torem(51px);
+        position: relative;
+        left: torem(-38px);
+        margin-left: torem(20px);
+        img {
+          width: torem(24px);
+          height: torem(24px);
+        }
+        img {
+          margin-right: torem(8px);
+        }
+      }
+    }
+    .orgCargCont {
+      position: relative;
+      display: flex;
+      .orgCargContCards {
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        gap: torem(16px);
+      }
+    }
+    .orgContInner {
+      color: #000;
+    }
+  }
+}

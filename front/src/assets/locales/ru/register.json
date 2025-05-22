@@ -27,7 +27,7 @@
   "patronymic": "Отчество",
   "academicTitle": "Учёное звание*",
   "degree": "Учёная степень*",
-  "position": "Должность*",
+  "position": "Должность",
   "organization": "Организация*",
   "email": "Email (логин)*",
   "phone": "Номер телефона*",

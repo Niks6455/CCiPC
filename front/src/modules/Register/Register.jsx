@@ -129,7 +129,6 @@ function Register() {
     [
       'name',
       'surname',
-      'position',
       'organization',
       'email',
       'phone',
@@ -218,31 +217,31 @@ function Register() {
             setModalTitle(t('alreadyExists'));
             return;
           }
-          if (res?.response?.data?.message === 'password parameter is invalid') {
+          if (res?.response?.data?.message?.includes('password')) {
             setModalTitle(t('invalidPassword'));
             return;
           }
-          if (res?.response?.data?.message === 'name parameter is invalid') {
+          if (res?.response?.data?.message?.includes('name')) {
             setModalTitle(`${t('invalidName')}!`);
             return;
           }
-          if (res?.response?.data?.message === 'surname parameter is invalid') {
+          if (res?.response?.data?.message?.includes('surname')) {
             setModalTitle(`${t('invalidSurname')}!`);
             return;
           }
-          if (res?.response?.data?.message === 'patronymic parameter is invalid') {
+          if (res?.response?.data?.message?.includes('patronymic')) {
             setModalTitle(`${t('invalidPatronymic')}!`);
             return;
           }
-          if (res?.response?.data?.message === 'organization parameter is invalid') {
+          if (res?.response?.data?.message?.includes('organization')) {
             setModalTitle(t('invalidOrganization'));
             return;
           }
-          if (res?.response?.data?.message === 'position parameter is invalid') {
+          if (res?.response?.data?.message?.includes('position')) {
             setModalTitle(t('invalidPosition'));
             return;
           }
-          if (res?.response?.data?.message === 'speciality parameter is invalid') {
+          if (res?.response?.data?.message?.includes('speciality')) {
             setModalTitle(t('invalidSpeciality'));
             return;
           }
@@ -365,17 +364,13 @@ function Register() {
               funSelectElement={funSelectedElement}
             />
 
-            <InputList
+            <Input
               name="position"
               onChange={handleChange}
               value={registration?.data?.position}
               placeholder={t('position')}
-              open={openList === 'position'}
-              funOpen={funOpenList}
-              divRef={refList[3]}
-              list={doljnostList}
-              funSelectElement={funSelectedElement}
               error={errors.position}
+              autoComplete={'new-password'}
             />
           </div>
           <div className={styles.secind}>

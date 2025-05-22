@@ -193,6 +193,7 @@ function FileComponent(props) {
                   src={props.icon === 'doc' ? docIcon : pdfIconImport}
                   alt="Файл загружен"
                 />
+
                 <span name="file_name" onClick={funOpenFile}>
                   {props.fileName || props.data?.name || fileName}
                 </span>
@@ -263,13 +264,19 @@ function FileComponent(props) {
               />
             )}
             {!errorSize ? (
-              <span
-                name="text"
-                className={
-                  isDragging !== null ? styles.is_dragging_opasity_no : styles.is_dragging_opasity
-                }
-                dangerouslySetInnerHTML={{ __html: props.text }}
-              ></span>
+              props.errorText ? (
+                <span name="file_name" style={{ color: '#B32020' }} onClick={funOpenFile}>
+                  {props.errorText}
+                </span>
+              ) : (
+                <span
+                  name="text"
+                  className={
+                    isDragging !== null ? styles.is_dragging_opasity_no : styles.is_dragging_opasity
+                  }
+                  dangerouslySetInnerHTML={{ __html: props.text }}
+                ></span>
+              )
             ) : (
               <span className={styles.error_size} name="error_size">
                 Размер файла превышает
