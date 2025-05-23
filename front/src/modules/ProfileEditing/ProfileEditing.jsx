@@ -21,7 +21,8 @@ import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import { useTranslation } from 'react-i18next';
 
 function ProfileEditing() {
-  const inputsData = useInputsData();
+  const isMicrosoft = useSelector(state => state.user.user.data.isMicrosoft);
+  const inputsData = useInputsData(isMicrosoft);
   const errorsNames = useErrorMessages();
 
   const { t } = useTranslation('profileEditing');
@@ -301,6 +302,7 @@ function ProfileEditing() {
                     error={errors[item.title]}
                     labelText={item.name}
                     readOnly={item.readOnly}
+                    labelLock={item.readOnly}
                   />
                 </div>
               ),

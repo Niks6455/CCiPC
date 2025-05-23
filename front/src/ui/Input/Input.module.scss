@@ -109,6 +109,13 @@ $w3: 480px;
     flex-direction: row;
     align-items: center;
     position: relative;
+    .lockIcon {
+      width: torem(24px);
+      height: torem(24px);
+      margin-right: torem(5px);
+      transform: translateY(torem(-3px));
+    }
+
     .errorListLabel {
       margin-left: torem(10px);
       width: torem(24px);

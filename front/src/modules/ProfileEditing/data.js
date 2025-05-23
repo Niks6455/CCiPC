@@ -1,9 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import { doljnostList, stepenList, zwanieList } from '../../utils/Lists/List';
 
-export const useInputsData = () => {
+export const useInputsData = isMicrosoft => {
   const { t } = useTranslation('profileEditing');
-
+  console.log('isMicrosoft', isMicrosoft);
   return [
     {
       id: '0',
@@ -12,6 +12,7 @@ export const useInputsData = () => {
       required: true,
       list: null,
       type: 'text',
+      readOnly: isMicrosoft,
     },
     {
       id: '1',
@@ -20,6 +21,7 @@ export const useInputsData = () => {
       required: true,
       list: null,
       type: 'text',
+      readOnly: isMicrosoft,
     },
     {
       id: '2',
@@ -28,6 +30,7 @@ export const useInputsData = () => {
       required: false,
       list: null,
       type: 'text',
+      readOnly: isMicrosoft,
     },
     {
       id: '6',
@@ -36,6 +39,7 @@ export const useInputsData = () => {
       required: true,
       list: null,
       type: 'text',
+      readOnly: isMicrosoft,
     },
     {
       id: '7',

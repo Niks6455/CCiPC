@@ -3,6 +3,7 @@ import styles from './Input.module.scss';
 import galka from './../../assets/img/UI/galka.svg';
 import krest from './../../assets/img/UI/krest.svg';
 import MobileDetect from 'mobile-detect';
+import lockIcon from '@assets/img/UI/lockBely.svg';
 
 function Input(props) {
   const md = new MobileDetect(window.navigator.userAgent);
@@ -97,6 +98,7 @@ function Input(props) {
       {errorListShow && !props.labelText && getListErrorContainer()}
       {props.labelText && (
         <div className={styles.labelText}>
+          {props?.labelLock && <img className={styles.lockIcon} src={lockIcon} alt="🔒" />}
           <span>{props.labelText}</span>
           {props.errorList && props.labelText && (
             <img
