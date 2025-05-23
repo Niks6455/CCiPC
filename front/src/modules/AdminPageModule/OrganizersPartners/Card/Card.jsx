@@ -153,7 +153,7 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
     <>
       <div ref={cardRef} className={styles.Card}>
         <div className={styles.CardOrganizationInner}>
-          <div className={styles.CardOrganizationInnerImg}>
+          <div className={styles.CardOrganizationInnerImg} onClick={() => refFile.current.click()}>
             <img
               ref={fileRef}
               className={styles.Img}

@@ -61,6 +61,7 @@ function AddCard(props) {
                   icon={'png'}
                   text={'Нажмите или перетащите</br> изображение для добавления'}
                   errorText={props.errors?.file}
+                  fileSize={10}
                 />
               </div>
             </div>
