@@ -54,8 +54,6 @@ router.route('/multi').post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(
         { name: 'LEGAL', maxCount: 1 },
         { name: 'HEADER', maxCount: 1 },
         { name: 'FOOTER', maxCount: 1 },
-        { name: 'ORGANIZATION', maxCount: 10 },
-        { name: 'PARTNER', maxCount: 10 },
     ])
 ), asyncRoute(uploadCtrl.afterMultipleUpload));
 

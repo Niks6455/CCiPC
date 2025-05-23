@@ -25,6 +25,7 @@ import ParticipantInConference from "../models/participant-in-conference.js";
 import { Op } from "sequelize";
 import FileLink from "../models/file-link.js";
 import File from "../models/file.js";
+import Collaborator from '../models/collaborator.js';
 const dir = "./uploads";
 const photo = ["HEADER", "FOOTER", "ORGANIZATION", "PARTNER"];
 const document = [
@@ -104,6 +105,7 @@ const storage = multer.diskStorage({
         typesPhoto[type] === 2 ||
         typesPhoto[type] === 7 ||
         typesPhoto[type] === 8 ||
+        typesPhoto[type] === 9 ||
         typesFile[type] === 0 ||
         typesFile[type] === 1 ||
         typesFile[type] === 2 ||
@@ -169,8 +171,6 @@ export default {
     const sample = files["SAMPLE"] || [];
     const header = files["HEADER"] || [];
     const footer = files["FOOTER"] || [];
-    const organization = files["ORGANIZATION"] || [];
-    const partner = files["PARTNER"] || [];
 
     const infoFiles = {
       PROGRAM: program,
@@ -181,8 +181,6 @@ export default {
       SAMPLE: sample,
       HEADER: header,
       FOOTER: footer,
-      ORGANIZATION: organization,
-      PARTNER: partner,
     };
 
     const helpTypes = {
@@ -207,8 +205,6 @@ export default {
     if (sample.length > 0) fileTypes.push(3);
     if (header.length > 0) fileTypes.push(14);
     if (footer.length > 0) fileTypes.push(15);
-    if (organization.length > 0) fileTypes.push(16);
-    if (partner.length > 0) fileTypes.push(17);
 
     const filesLink = await File.findAll({
       include: {
@@ -275,7 +271,7 @@ export default {
   },
   async afterUpload(
     {
-      body: { reportId, newsId, committeeId, conferenceId, archiveId },
+      body: { reportId, newsId, committeeId, conferenceId, archiveId, collaboratorId },
       query: { type },
       file,
       user,
@@ -312,12 +308,50 @@ export default {
       });
 
       await FileLink.create({
-        fileId: fileParticipant.id, // ID файла
+        fileId: fileParticipant.id,
         participantId: participant.id,
         type: typesPhoto[type],
       });
 
       return res.json({ file: fileParticipant });
+    }
+
+    if(typesPhoto[type] === 9 && !collaboratorId) throw new AppErrorMissing("collaboratorId");
+
+    if(collaboratorId){
+      const collaborator=await Collaborator.findByPk(collaboratorId)
+      if(!collaborator) throw new AppErrorNotExist("collaborator");
+
+      const collaboratorFile = await File.findOne({
+        include: {
+          model: FileLink,
+          as: "fileLinks",
+          required: true,
+          where: {
+            type: typesPhoto[type],
+            newsId: collaborator.id,
+          },
+        },
+      });
+
+
+      if (collaboratorFile) {
+        await collaboratorFile.update({ url: file.path, name: Buffer.from(file.originalname, 'latin1').toString('utf8') });
+        return res.json({ file: collaboratorFile });
+      }
+
+      const fileCollaborator = await File.create({
+        name:  Buffer.from(file.originalname, 'latin1').toString('utf8'),
+        url: file.path,
+      });
+
+      await FileLink.create({
+        fileId: fileCollaborator.id,
+        collaboratorId: collaborator.id,
+        type: typesPhoto[type],
+      });
+
+      return res.json({ file: fileCollaborator});
     }
 
     if (typesPhoto[type] === 1 && !newsId) throw new AppErrorMissing("newsId");

@@ -6,9 +6,11 @@ import typesFiles from "../config/typesFiles.js";
 import { checkValidateFee } from "../utils/validate/conference.js";
 import { checkValidate } from "../utils/validate/conference.js";
 import { saveArchive } from "../utils/createArchive.js";
+
 export default {
   async find(req, res) {
-    const conferences = await conferenceService.find();
+    const { conferences, collaborators } = await conferenceService.find();
+
 
     for (const conference of conferences) {
       conference.files = Object.fromEntries(
@@ -30,7 +32,13 @@ export default {
           }, {})
         )
       );
+
+
+      conference.partner= collaborators.filter((col) => col.type === 1).sort((a, b) => a.index-b.index);
+      conference.organization= collaborators.filter((col) => col.type === 0).sort((a, b) => a.index-b.index);
+
     }
+
 
     res.json({
       conference: conferences.map((conference) => mapConf(conference)),
@@ -39,7 +47,7 @@ export default {
 
   async findOne({ params: { id } }, res) {
     if (!id) throw new AppErrorMissing("id");
-    const conference = await conferenceService.findOne(id);
+    const { conference, collaborators}  = await conferenceService.findOne(id);
 
     conference.files = Object.fromEntries(
       Object.entries(
@@ -72,6 +80,11 @@ export default {
         }, {})
       )
     );
+
+
+
+    conference.partner= collaborators.filter((col) => col.type === 1).sort((a, b) => a.index-b.index);
+    conference.organization= collaborators.filter((col) => col.type === 0).sort((a, b) => a.index-b.index);
 
     res.json({ conference: mapConf(conference) });
   },

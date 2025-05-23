@@ -51,10 +51,10 @@ export default {
         })
     },
 
-    async loginSfedu(user){
+    async loginSfedu(participant){
 
-        const { jwt: token } = jwt.generate({ id: user.id });
-        return { token, user };
+        const { jwt: token } = jwt.generate({ id: participant.id });
+        return { token, participant };
 
     },
 

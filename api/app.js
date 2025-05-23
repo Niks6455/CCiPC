@@ -3,6 +3,7 @@ import logger from 'morgan';
 import { MulterError } from 'multer';
 import { createTestAdmin, initializeDbModels } from './utils/db.js';
 import { AppError, MultipleError, SystemError } from './utils/errors.js';
+import session from 'express-session';
 import uploadsRoute from './routes/upload.js';
 import authRoute from './routes/auth.js';
 import reportRoute from './routes/report.js';
@@ -12,6 +13,7 @@ import newsRoute from './routes/news.js';
 import committeeRoute from './routes/committee.js'
 import archiveRoute from './routes/archive.js'
 import directionRoute from './routes/direction.js'
+import collaboratorRoute from './routes/collaborator.js'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
 import passport from 'passport';
@@ -110,6 +112,11 @@ if (app.get('env') === 'development' || app.get('env') === 'staging') {
 
 app.use(corsMiddleware);
 app.use(passport.initialize());
+app.use(session({
+    secret: process.env.JWT_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}))
 
 app.use('/auth', authRoute);
 app.use("/uploads", express.static("./uploads"), uploadsRoute);
@@ -120,6 +127,7 @@ app.use('/news', newsRoute)
 app.use('/committees', committeeRoute)
 app.use('/archive', archiveRoute)
 app.use('/directions', directionRoute)
+app.use('/collaborators', collaboratorRoute)
 
 app
     .use((req, res) => res.status(404).json({ type: 'NOT FOUND', code: 404 }))

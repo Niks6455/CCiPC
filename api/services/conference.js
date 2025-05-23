@@ -15,6 +15,7 @@ import FileLink from "../models/file-link.js";
 import typesFiles from "../config/typesFiles.js";
 import sendMail from "./email.js";
 import typesPhoto from '../config/typesPhoto.js';
+import Collaborator from '../models/collaborator.js';
 
 
 
@@ -25,7 +26,7 @@ const invalidChars = /[\\\/\*\?\:\[\]]/g;
 export default {
 
     async find(){
-        return await Conference.findAll({
+      const [conferences, collaborators] =  await Promise.all([Conference.findAll({
             order: [['createdAt', 'ASC']],
             where:{
                 isFinished: false
@@ -55,11 +56,25 @@ export default {
                         required: true,
                     }
                 }],
-        })
+        }),
+           Collaborator.findAll({
+               include: {
+                   model: FileLink,
+                   as: 'collaboratorFile',
+                   required: true,
+                   include: {
+                       model: File,
+                       as: 'file',
+                       required: true
+                   }
+               }
+           })])
+
+        return { conferences, collaborators }
     },
 
     async findOne(id){
-        return await Conference.findByPk(id, {
+        const [conference, collaborators] = await Promise.all([Conference.findByPk(id, {
             include: [
                 {
                     model: CommitteeInConference,
@@ -87,7 +102,22 @@ export default {
                     }
                 }
             ],
-        });
+        }),
+          Collaborator.findAll({
+              include: {
+                  model: FileLink,
+                  as: 'collaboratorFile',
+                  required: true,
+                  include: {
+                      model: File,
+                      as: 'file',
+                      required: true
+                  }
+              }
+          })])
+
+        if(!conference) throw new AppErrorNotExist('conference');
+        return { conference, collaborators }
     },
 
 
@@ -95,7 +125,6 @@ export default {
 
         let directions
         if (conferenceInfo?.directions?.length > 0) {
-            // Инициализация массива directions
             directions = await Promise.all(conferenceInfo.directions.map(async (direction) => {
                 const [foundDirection] = await Direction.findOrCreate({
                     where: {
@@ -105,10 +134,10 @@ export default {
                         name: direction
                     }
                 });
-                return foundDirection; // Возвращаем найденное или созданное направление
+                return foundDirection;
             }));
 
-            delete conferenceInfo.directions; // Удаляем directions из conferenceInfo
+            delete conferenceInfo.directions;
         }
 
         const conference = await Conference.create({ ...conferenceInfo });
@@ -126,7 +155,7 @@ export default {
                         conferenceId: conference.id,
                     }
                 });
-                return foundDirectionInConference; // Возвращаем найденное или созданное направление в конференции
+                return foundDirectionInConference;
             }));
         }
 
@@ -509,10 +538,10 @@ export default {
                    who: p.who,
                    org: p.organization,
                    email: p.participant.email,
-                   academicTitle: p.participant.academicTitle,
-                   degree: p.participant.degree,
-                   position: p.participant.position,
-                   phone: p.participant.phone,
+                   academicTitle: p.participant?.academicTitle,
+                   degree: p.participant?.degree,
+                   position: p.participant?.position,
+                   phone: p.participant?.phone,
                    status: p.status,
                    form: p.form,
                    fio: `${p.participant.surname} ${p.participant.name} ${p.participant?.patronymic ?? ''}`.trim(),
@@ -560,10 +589,10 @@ export default {
                   person.fio,
                   person.org,
                   person.email,
-                  person.phone,
+                  person?.phone,
                   person.academicTitle,
                   person.degree,
-                  person.position,
+                  person?.position,
                   person.status,
                   person.form,
                   name,

@@ -52,7 +52,6 @@ export default {
 
         if(!academicTitle) throw new AppErrorMissing('academicTitle')
         if(!degree) throw new AppErrorMissing('degree')
-        if(!position) throw new AppErrorMissing('position')
 
         if(!organization) throw new AppErrorMissing('organization')
         if(!validateOrganization(organization)) throw new AppErrorInvalid('organization')
@@ -82,6 +81,7 @@ export default {
 
     async   loginSfedu({ user }, res) {
         const {token, participant } = await authService.loginSfedu(user)
+
         res.json({ participant: participant, token: token })
     },
 
