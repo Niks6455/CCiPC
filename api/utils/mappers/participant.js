@@ -21,6 +21,7 @@ export function map(participant){
         position: participant.position,
         organization: participant.organization,
         phone: participant.phone,
+        isMicrosoft: participant.isMicrosoft,
         avatar: participant?.avatar[0]?.file ?? null,
         reports: participant?.conference?.reports?.map(report=>({
           name: report.name,
