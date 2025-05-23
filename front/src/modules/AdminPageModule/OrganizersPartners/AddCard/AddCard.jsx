@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import styles from './AddCard.module.scss';
 import FileComponent from '../../../../components/AdminModuleComponents/FileComponent/FileComponent';
+import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 
 function AddCard(props) {
   const containerRef = useRef(null);
@@ -96,8 +97,14 @@ function AddCard(props) {
           </div>
 
           <div className={styles.AddCardButton}>
-            <button className={styles.save} onClick={props.closeCreateOne}>
-              Отменить
+            <button
+              className={styles.save}
+              onClick={() => props.funSaveData(props.type, props.data)}
+            >
+              Сохранить
+            </button>
+            <button className={styles.delete} onClick={props.closeCreateOne}>
+              <img src={deletePhotoImg} alt="Удалить" />
             </button>
           </div>
         </div>

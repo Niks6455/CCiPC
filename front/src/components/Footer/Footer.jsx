@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { server } from '../../apirequests/apirequests';
 import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 import { useTranslation } from 'react-i18next';
+import userManualDocument from '@assets/docs/user_manual.pdf';
 
 function Footer({ footerRef }) {
   const { t } = useTranslation('footer');
@@ -56,6 +57,12 @@ function Footer({ footerRef }) {
               </p>
             </div>
           </div>
+        </div>
+        <div className={styles.doc_container}>
+          <span>Сайт разработан Центром исследований и разработки ИКТИБ</span>
+          <a target="_blank" href={userManualDocument}>
+            Ознакомиться с руководством пользователя
+          </a>
         </div>
       </Layout>
     </footer>

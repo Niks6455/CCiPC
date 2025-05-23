@@ -75,7 +75,7 @@
       bottom: torem(20px);
       width: calc(100% - torem(40px));
       .save {
-        @include ButtonLightBorder();
+        @include ButtonGreen();
         width: 100%;
         height: torem(54px);
       }

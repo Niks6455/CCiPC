@@ -154,6 +154,7 @@ function OrganizersPartners() {
                   setData={setAddOrganizer}
                   errors={errorsAddOrganizer}
                   setErrors={setErrorsAddOrganizer}
+                  funSaveData={funSaveData}
                 />
               )}
               {organizers.map(item => (
@@ -194,6 +195,7 @@ function OrganizersPartners() {
                   setData={setAddPartner}
                   errors={errorsAddPartner}
                   setErrors={setErrorsAddPartner}
+                  funSaveData={funSaveData}
                 />
               )}
               {partners.map(item => (
