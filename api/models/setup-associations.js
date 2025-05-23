@@ -1,4 +1,5 @@
 import { models } from './index.js';
+import Collaborator from './collaborator.js';
 const { Archive, Participant, Report, Conference, ParticipantInConference, Direction, DirectionInConference, News, Committee, CommitteeInConference, ParticipantOfReport, FileLink, File } = models;
 
 export default function () {
@@ -208,6 +209,16 @@ export default function () {
         as: 'news'
     });
 
+    Collaborator.hasOne(FileLink, {
+        foreignKey: { name: 'collaboratorId', allowNull: true },
+        as: 'collaboratorFile'
+    })
+
+    FileLink.belongsTo(Collaborator, {
+        foreignKey: { name: 'collaboratorId', allowNull: true },
+        as: 'collaborator'
+    })
+
     Archive.hasOne(FileLink, {
         foreignKey: { name: 'archiveId', allowNull: true },
         as: 'archiveFile'
@@ -216,7 +227,6 @@ export default function () {
         foreignKey: { name: 'archiveId', allowNull: true },
         as: 'archive'
     });
-
 
     Direction.hasMany(Report, {foreignKey: {name: 'directionId', allowNull: false}, as: 'reports' })
     Report.belongsTo(Direction, { foreignKey: { name: 'directionId', allowNull: false }, as: 'direction' });

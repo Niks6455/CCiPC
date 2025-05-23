@@ -62,7 +62,7 @@ export const inpustTypeSoavtor = [
   {
     id: '5',
     label: 'Организация*',
-    labelEn: 'Organization*',
+    labelEn: 'Collaborator*',
     placeholder: 'Не заполнено',
     placeholderEn: 'Not filled',
     type: 'text',

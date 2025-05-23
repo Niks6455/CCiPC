@@ -13,6 +13,7 @@ import Direction from "./direction.js";
 import DirectionInConference from "./direction-in-conference.js";
 import File from "./file.js";
 import FileLink from "./file-link.js";
+import Collaborator from './collaborator.js';
 import 'dotenv/config'
 
 
@@ -22,6 +23,7 @@ export const models = {
    Participant,
    Conference,
    News,
+   Collaborator,
    Committee,
    Archive,
    Direction,
@@ -31,7 +33,7 @@ export const models = {
    ParticipantInConference,
    ParticipantOfReport,
    DirectionInConference,
-   FileLink
+   FileLink,
 };
 
 export const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PWD, {
