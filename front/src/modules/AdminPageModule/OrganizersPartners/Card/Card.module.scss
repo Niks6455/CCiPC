@@ -25,6 +25,13 @@
         height: torem(322px) !important;
         transition: 0.1s linear all;
         border-radius: torem(10px);
+        cursor: pointer;
+
+        &:hover {
+          opacity: 1;
+          -webkit-backdrop-filter: blur(torem(5px));
+          backdrop-filter: blur(torem(5px));
+        }
 
         img {
           width: torem(50px) !important;

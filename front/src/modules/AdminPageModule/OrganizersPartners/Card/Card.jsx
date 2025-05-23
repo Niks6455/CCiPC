@@ -6,6 +6,7 @@ import {
   apiDeleteOrganizersPartners,
   apiUpdateOrganizersPartners,
   server,
+  uploadPhoto,
 } from '../../../../apirequests/apirequests';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
 
@@ -23,10 +24,13 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
   });
   const [isChanged, setIsChanged] = useState(false);
   const [errors, setErrors] = useState({ file: '', url: '', number: '' });
+  const [fileUrl, setFileUrl] = useState(null);
 
   const funSetErrors = (key, value) => {
     setErrors(prev => ({ ...prev, [key]: value }));
   };
+
+  const funSetDataItem = (key, value) => setDataItem(prev => ({ ...prev, [key]: value }));
 
   useEffect(() => {
     setDataItem({
@@ -35,6 +39,7 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
       url: item?.url || '',
     });
     setErrors({ file: '', url: '', number: '' });
+    setFileUrl(null);
   }, [item]);
 
   useEffect(() => {
@@ -87,6 +92,7 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
   };
 
   const handleCancel = () => {
+    setFileUrl(null);
     setErrors({ file: '', url: '', number: '' });
     setDataItem({
       file: item?.file || '',
@@ -110,6 +116,8 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
     const file = e.target.files[0];
     if (file) {
       setIsChanged(true);
+      funSetDataItem('file', file);
+      setFileUrl(URL.createObjectURL(file));
     }
   };
 
@@ -124,7 +132,18 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
     };
     apiUpdateOrganizersPartners(formData, item?.id).then(res => {
       if (res?.status === 200) {
-        getDataOrg();
+        if (dataItem?.file) {
+          const fileData = new FormData();
+          fileData.append('file', dataItem?.file);
+          fileData.append('collaboratorId', item?.id);
+          uploadPhoto(fileData, 'COLLABORATOR').then(res => {
+            if (res?.status === 200) {
+              getDataOrg();
+            }
+          });
+        } else {
+          getDataOrg();
+        }
       }
     });
     if (!valid) return;
@@ -138,11 +157,11 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
             <img
               ref={fileRef}
               className={styles.Img}
-              src={`${server}/${dataItem?.file}`}
+              src={fileUrl ? fileUrl : `${server}/${dataItem?.file}`}
               alt={dataItem?.number}
             />
             <div className={styles.CardOrganizationInnerImgInput}>
-              <file
+              <img
                 src={editPhoto2Img}
                 alt="Редактирование"
                 onClick={() => refFile.current.click()}
