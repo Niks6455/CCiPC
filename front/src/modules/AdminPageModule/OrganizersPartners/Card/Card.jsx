@@ -132,7 +132,7 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
     };
     apiUpdateOrganizersPartners(formData, item?.id).then(res => {
       if (res?.status === 200) {
-        if (dataItem?.file) {
+        if (dataItem?.file !== item?.file) {
           const fileData = new FormData();
           fileData.append('file', dataItem?.file);
           fileData.append('collaboratorId', item?.id);
