@@ -171,20 +171,21 @@ function HomePage({ userRole }) {
       <SliderHomePage />
       <SliderHomePageMobile />
       <Layout>
-        {conference && conference?.files?.ORGANIZATION?.length > 0 && (
+        {conference && conference?.organization?.length > 0 && (
           <section className={`${styles.imgSection}`}>
             <div className={styles.Title}>
               <p>{t('par3')}</p>
             </div>
             <div
-              className={`${styles.imgSectionInner} ${conference?.files?.ORGANIZATION?.length === 2 ? styles.two : ''}`}
+              className={`${styles.imgSectionInner} ${conference?.organization?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.files?.ORGANIZATION?.map(
+              {conference?.organization?.map(
                 (el, index) =>
                   el?.url && (
                     <img
                       style={style2[index]}
-                      src={`${server}/${el.url}`}
+                      src={`${server}/${el.file}`}
+                      onClick={() => window.open(el.url, '_blank')}
                       alt="Organization1"
                       key={index}
                       onLoad={e => handleImageLoad(e, index, setStyle2)}
@@ -195,22 +196,23 @@ function HomePage({ userRole }) {
             </div>
           </section>
         )}
-        {conference && conference?.files?.PARTNER?.length > 0 && (
+        {conference && conference?.partner?.length > 0 && (
           <section className={styles.imgSection}>
             <div className={styles.Title}>
               <p>{t('par4')}</p>
             </div>
             <div
-              className={`${styles.imgSectionInner}  ${conference?.files?.PARTNER?.length === 2 ? styles.two : ''}`}
+              className={`${styles.imgSectionInner}  ${conference?.partner?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.files?.PARTNER?.map(
+              {conference?.partner?.map(
                 (el, index) =>
                   el?.url && (
                     <img
                       style={style[index]}
-                      src={`${server}/${el.url}`}
+                      src={`${server}/${el.file}`}
                       alt="Organization1"
                       key={index}
+                      onClick={() => window.open(el.url, '_blank')}
                       onLoad={e => handleImageLoad(e, index, setStyle)}
                       onError={e => (e.target.style.display = 'none')}
                     />

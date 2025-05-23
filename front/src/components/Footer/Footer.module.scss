@@ -191,6 +191,7 @@ $w3: 480px;
     padding: torem(20px) 0;
     padding-bottom: torem(40px);
     a {
+      width: max-content;
       text-decoration: underline;
       -webkit-text-decoration-style: solid;
       text-decoration-style: solid;

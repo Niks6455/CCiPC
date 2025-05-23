@@ -568,3 +568,43 @@ export const apiFinishConfirm = async id => {
     console.log('apiFinishConfirm ', error);
   }
 };
+
+//! получение партнеров и организаторов
+export const apiGetOrganizersPartners = async () => {
+  try {
+    const response = await api.get(`${server}/collaborators`);
+    return response;
+  } catch (error) {
+    console.log('apiGetOrganizersPartners ', error);
+  }
+};
+
+//! создание организатора партнера
+export const apiCreateOrganizersPartners = async data => {
+  try {
+    const response = await api.post(`${server}/collaborators`, data);
+    return response;
+  } catch (error) {
+    console.log('apiCreateOrganizersPartners ', error);
+  }
+};
+
+//! удаление организатора партнера
+export const apiDeleteOrganizersPartners = async id => {
+  try {
+    const response = await api.delete(`${server}/collaborators/${id}`);
+    return response;
+  } catch (error) {
+    console.log('apiDeleteOrganizersPartners ', error);
+  }
+};
+
+//! обновление организатора партнера
+export const apiUpdateOrganizersPartners = async (data, id) => {
+  try {
+    const response = await api.put(`${server}/collaborators/${id}`, data);
+    return response;
+  } catch (error) {
+    console.log('apiUpdateOrganizersPartners ', error);
+  }
+};

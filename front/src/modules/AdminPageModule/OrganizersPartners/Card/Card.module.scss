@@ -23,15 +23,9 @@
         justify-content: center;
         width: torem(322px) !important;
         height: torem(322px) !important;
-        cursor: pointer;
         transition: 0.1s linear all;
         border-radius: torem(10px);
 
-        &:hover {
-          opacity: 1;
-          -webkit-backdrop-filter: blur(torem(5px));
-          backdrop-filter: blur(torem(5px));
-        }
         img {
           width: torem(50px) !important;
           height: torem(50px) !important;
@@ -51,8 +45,8 @@
     .Img {
       width: torem(322px) !important;
       height: torem(322px) !important;
-      -o-object-fit: cover;
-      object-fit: cover;
+      -o-object-fit: contain;
+      object-fit: contain;
       border-radius: torem(10px);
     }
 

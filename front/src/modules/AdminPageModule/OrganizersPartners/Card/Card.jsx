@@ -1,54 +1,51 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import styles from './Card.module.scss';
-import notPhoto from '@assets/img/notPhoto.svg';
 import deletePhotoImg from '@assets/img/AdminPanel/delete.svg';
 import {
-  apiDeleteMulti,
-  deleteOrgCommitet,
+  apiDeleteOrganizersPartners,
+  apiUpdateOrganizersPartners,
   server,
-  updateOrgCommitet,
-  uploadPhoto,
 } from '../../../../apirequests/apirequests';
-import deletePhoto2Img from '@assets/img/AdminPanel/deletePhoto.svg';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
-import ImageCropper from '../../../../components/ImageCropper/ImageCropper';
 
-function Card({ item, getDataOrg, filesUrls, setFilesUrls, funSetFilesUrls }) {
+function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
   const cardRef = useRef(null);
-  const imgRef = useRef(null);
+  const fileRef = useRef(null);
   const refFile = useRef(null);
   const [dataItem, setDataItem] = useState({
-    img: item?.img || '',
-    fio: item?.fio || '',
-    organization: item?.organization || '',
+    file: item?.file || '',
+    number: item?.number || '',
+    url: item?.url || '',
   });
   const [isChanged, setIsChanged] = useState(false);
-  const [errorFio, setErrorFio] = useState('');
-  const [errorOrganization, setErrorOrganization] = useState('');
+  const [errors, setErrors] = useState({ file: '', url: '', number: '' });
+
+  const funSetErrors = (key, value) => {
+    setErrors(prev => ({ ...prev, [key]: value }));
+  };
 
   useEffect(() => {
     setDataItem({
-      img: item?.img || '',
-      fio: item?.fio || '',
-      organization: item?.organization || '',
+      file: item?.file || '',
+      number: item?.number || '',
+      url: item?.url || '',
     });
-    setErrorFio('');
-    setErrorOrganization('');
+    setErrors({ file: '', url: '', number: '' });
   }, [item]);
 
   useEffect(() => {
     setIsChanged(
-      dataItem.fio !== item?.fio ||
-        dataItem.organization !== item?.organization ||
-        dataItem?.img?.id !== item?.img?.id,
+      dataItem.number !== item?.number ||
+        dataItem.file !== item?.file ||
+        dataItem?.url !== item?.url,
     );
   }, [dataItem, item]);
 
-  // Анимация появления карточки
+  //! Анимация появления карточки
   useEffect(() => {
     gsap.fromTo(
       cardRef.current,
@@ -57,13 +54,13 @@ function Card({ item, getDataOrg, filesUrls, setFilesUrls, funSetFilesUrls }) {
     );
 
     gsap.fromTo(
-      imgRef.current,
+      fileRef.current,
       { opacity: 0, scale: 0.8 },
       { opacity: 1, scale: 1, duration: 0.5, ease: 'power2.out', delay: 0.2 },
     );
   }, []);
 
-  // Анимация появления кнопок "Отменить" и "Сохранить"
+  //! Анимация появления кнопок "Отменить" и "Сохранить"
   useEffect(() => {
     if (buttonContainerRef.current) {
       const file = filesUrls?.find(it => it.id === item.committeeId);
@@ -85,23 +82,16 @@ function Card({ item, getDataOrg, filesUrls, setFilesUrls, funSetFilesUrls }) {
 
   const handleEditData = (value, key) => {
     setDataItem(prev => ({ ...prev, [key]: value }));
-    if (key === 'fio') setErrorFio('');
-    if (key === 'organization') setErrorOrganization('');
-
-    if (key === 'organization' && textareasRef.current) {
-      textareasRef.current.style.height = 'auto';
-      textareasRef.current.style.height = `${Math.min(textareasRef.current.scrollHeight, 145)}px`;
-    }
-    funSetFilesUrls(item.committeeId, { [key]: value });
+    if (key === 'number') funSetErrors('number', '');
+    if (key === 'url') funSetErrors('url', '');
   };
 
   const handleCancel = () => {
-    setErrorFio('');
-    setErrorOrganization('');
+    setErrors({ file: '', url: '', number: '' });
     setDataItem({
-      img: item?.img || '',
-      fio: item?.fio || '',
-      organization: item?.organization || '',
+      file: item?.file || '',
+      number: item?.number || '',
+      url: item?.url || '',
     });
     let fiurl = filesUrls.filter(el => el.id !== item.committeeId);
     setFilesUrls(fiurl);
@@ -109,7 +99,7 @@ function Card({ item, getDataOrg, filesUrls, setFilesUrls, funSetFilesUrls }) {
   };
 
   const handleDelete = () => {
-    deleteOrgCommitet(item.id).then(res => {
+    apiDeleteOrganizersPartners(item.id).then(res => {
       if (res?.status === 200) {
         getDataOrg();
       }
@@ -119,9 +109,25 @@ function Card({ item, getDataOrg, filesUrls, setFilesUrls, funSetFilesUrls }) {
   const changeFileData = e => {
     const file = e.target.files[0];
     if (file) {
-      funSetFilesUrls(item.committeeId, { url: URL.createObjectURL(file), file: file });
       setIsChanged(true);
     }
+  };
+
+  const funUpdateData = data => {
+    const { valid, errors } = validate(data);
+    setErrors(errors);
+
+    const formData = {
+      url: data?.url,
+      index: Number(data?.number),
+      type: type === 'organizers' ? 0 : 1,
+    };
+    apiUpdateOrganizersPartners(formData, item?.id).then(res => {
+      if (res?.status === 200) {
+        getDataOrg();
+      }
+    });
+    if (!valid) return;
   };
 
   return (
@@ -130,19 +136,13 @@ function Card({ item, getDataOrg, filesUrls, setFilesUrls, funSetFilesUrls }) {
         <div className={styles.CardOrganizationInner}>
           <div className={styles.CardOrganizationInnerImg}>
             <img
-              ref={imgRef}
+              ref={fileRef}
               className={styles.Img}
-              src={
-                filesUrls.find(it => it.id === item.committeeId)?.url
-                  ? filesUrls.find(it => it.id === item.committeeId)?.url
-                  : dataItem?.img.url
-                    ? `${server}/${dataItem?.img.url}`
-                    : notPhoto
-              }
-              alt={dataItem?.fio}
+              src={`${server}/${dataItem?.file}`}
+              alt={dataItem?.number}
             />
             <div className={styles.CardOrganizationInnerImgInput}>
-              <img
+              <file
                 src={editPhoto2Img}
                 alt="Редактирование"
                 onClick={() => refFile.current.click()}
@@ -160,34 +160,37 @@ function Card({ item, getDataOrg, filesUrls, setFilesUrls, funSetFilesUrls }) {
           <div className={styles.CardOrganizationInnerInfo}>
             <label>Порядковый номер</label>
             <input
-              value={filesUrls.find(it => it.id === item.committeeId)?.number || dataItem.number}
+              value={dataItem?.number}
               onChange={e => handleEditData(e.target.value, 'number')}
-              style={{ borderColor: errorFio ? '#B32020' : '' }}
+              style={{ borderColor: errors?.number ? '#B32020' : '' }}
               type="number"
             />
-            {errorFio && <span className={styles.error}>{errorFio}</span>}
+            {errors?.number && <span className={styles.error}>{errors?.number}</span>}
           </div>
 
           <div className={styles.CardOrganizationInnerInfo}>
             <label>Ссылка</label>
             <textarea
               ref={textareasRef}
-              value={filesUrls.find(it => it.id === item.committeeId)?.url || dataItem.url}
+              value={dataItem?.url}
               onChange={e => handleEditData(e.target.value, 'url')}
-              style={{ borderColor: errorOrganization ? '#B32020' : '' }}
+              style={{ borderColor: errors?.url ? '#B32020' : '' }}
             />
-            {errorOrganization && <span className={styles.error}>{errorOrganization}</span>}
+            {errors?.url && <span className={styles.error}>{errors?.url}</span>}
           </div>
 
-          {isChanged || filesUrls?.find(it => it.id === item.committeeId) ? (
+          {isChanged ? (
             <div className={styles.buttonContainer} ref={buttonContainerRef}>
               <button className={styles.cancel} onClick={handleCancel}>
                 Отмена
               </button>
+              <button className={styles.save} onClick={() => funUpdateData(dataItem)}>
+                Сохранить
+              </button>
             </div>
           ) : (
             <button className={styles.delete} onClick={handleDelete} ref={buttonDeleteRef}>
-              Удалить <img src={deletePhotoImg} alt="Удалить" />
+              Удалить <file src={deletePhotoImg} alt="Удалить" />
             </button>
           )}
         </div>

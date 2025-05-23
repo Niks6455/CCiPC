@@ -2,12 +2,18 @@ import styles from './OrganizersPartners.module.scss';
 import { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 import plusLigthImg from '@assets/img/UI/plusLigth.svg';
-import { getOrgCommitet } from '../../../apirequests/apirequests';
+import {
+  apiCreateOrganizersPartners,
+  apiGetOrganizersPartners,
+  uploadPhoto,
+} from '../../../apirequests/apirequests';
 import Card from './Card/Card';
-import { useSelector } from 'react-redux';
 import AddCard from './AddCard/AddCard';
 
 function OrganizersPartners() {
+  //! данные с бд
+  const [partners, setPartners] = useState([]);
+  const [organizers, setOrganizers] = useState([]);
   //! добавлегние организатора или партнера
   const [addOrganizer, setAddOrganizer] = useState({
     file: null,
@@ -18,39 +24,37 @@ function OrganizersPartners() {
   const [addPartner, setAddPartner] = useState({ file: null, url: '', number: '' });
   const [errorsAddPartner, setErrorsAddPartner] = useState({ file: '', url: '', number: '' });
 
-  //! данные с бд
-  const [partners, setPartners] = useState([]);
-  const [organizers, setOrganizers] = useState([]);
-
   const [addFirstOne, setAddFirstOne] = useState(false);
   const [addFirstTwo, setAddFirstTwo] = useState(false);
 
-  const [dataOrgAll, setDataOrgAll] = useState([]);
   const addOrgPeopleRef = useRef(null);
-  const conferenceid = useSelector(state => state.conferences?.data[0]?.id);
   const [filesUrls, setFilesUrls] = useState([]);
 
-  const funSetFilesUrls = (conferenceid, values) => {
-    const prev = filesUrls.find(el => el.id === conferenceid);
-    let fiurl = filesUrls.filter(el => el.id !== conferenceid);
-    setFilesUrls([...fiurl, { ...prev, ...values, id: conferenceid }]);
-  };
-
+  //! получение данных с бэка
   useEffect(() => {
     getDataOrg();
-  }, [conferenceid]);
-
-  const getDataOrg = async () => {
-    const res = await getOrgCommitet(conferenceid);
-    if (res?.status === 200) {
-      setDataOrgAll(res.data.committee);
-    }
-  };
+  }, []);
 
   useEffect(() => {
-    setPartners(dataOrgAll?.find(item => item?.type === 0)?.committees || []);
-    setOrganizers(dataOrgAll?.find(item => item?.type === 0 + 2)?.committees || []);
-  }, [dataOrgAll]);
+    setAddOrganizer({ ...addOrganizer, number: organizers.length + 1 });
+  }, [organizers]);
+
+  useEffect(() => {
+    setAddPartner({ ...addPartner, number: partners.length + 1 });
+  }, [partners]);
+
+  const getDataOrg = async () => {
+    apiGetOrganizersPartners().then(res => {
+      if (res?.status === 200) {
+        setPartners(
+          res?.data?.partner?.map(el => ({ ...el, number: el?.index, file: el?.file?.url })),
+        );
+        setOrganizers(
+          res?.data?.organization?.map(el => ({ ...el, number: el?.index, file: el?.file?.url })),
+        );
+      }
+    });
+  };
 
   const closeCreateOne = () => {
     if (addOrgPeopleRef.current) {
@@ -88,7 +92,7 @@ function OrganizersPartners() {
     }
   };
 
-  const funSaveData = (type, data) => {
+  const validate = data => {
     let valid = true;
     const errors = {};
     if (!data?.number) {
@@ -111,19 +115,38 @@ function OrganizersPartners() {
       errors.number = 'Не более 10000';
       valid = false;
     }
-    if (type === 'organizers') setErrorsAddOrganizer(errors);
-    if (type === 'partners') setErrorsAddPartner(errors);
-
-    const formData = {
-      ...data,
-      type: type,
-    };
-    console.log('formData', formData);
-    if (!valid) return;
+    return { valid, errors };
   };
 
-  console.log('errorsAddOrganizer', errorsAddOrganizer);
-  console.log('errorsAddPartner', errorsAddPartner);
+  const funSaveData = (type, data) => {
+    const { valid, errors } = validate(data);
+    if (type === 'organizers') setErrorsAddOrganizer(errors);
+    if (type === 'partners') setErrorsAddPartner(errors);
+    if (!valid) return;
+
+    const formData = {
+      url: data?.url,
+      index: Number(data?.number),
+      type: type === 'organizers' ? 0 : 1,
+    };
+
+    apiCreateOrganizersPartners(formData).then(res => {
+      if (res?.status === 200) {
+        const fileData = new FormData();
+        fileData.append('file', data?.file);
+        fileData.append('collaboratorId', res?.data?.collaborator?.id);
+        uploadPhoto(fileData, 'COLLABORATOR').then(res => {
+          if (res?.status === 200) {
+            if (type === 'organizers') closeCreateOne();
+            if (type === 'partners') closeCreateTwo();
+            setAddOrganizer({ file: null, url: '', number: '' });
+            setAddPartner({ file: null, url: '', number: '' });
+          }
+        });
+      }
+    });
+    if (!valid) return;
+  };
 
   return (
     <section className={styles.OrganizersPartners}>
@@ -134,12 +157,6 @@ function OrganizersPartners() {
           <div className={styles.buttonBlock}>
             <button onClick={() => setAddFirstOne(true)} className={styles.ButtonAdd}>
               <img src={plusLigthImg} alt="plus" /> Добавить организатора
-            </button>
-            <button
-              onClick={() => funSaveData('organizers', addOrganizer)}
-              className={styles.ButtonAdd}
-            >
-              Сохранить
             </button>
           </div>
           <div className={styles.orgCargCont}>
@@ -162,9 +179,10 @@ function OrganizersPartners() {
                   key={item.id}
                   getDataOrg={getDataOrg}
                   item={item}
+                  type={'organizers'}
                   filesUrls={filesUrls}
                   setFilesUrls={setFilesUrls}
-                  funSetFilesUrls={funSetFilesUrls}
+                  validate={validate}
                 />
               ))}
             </div>
@@ -175,12 +193,6 @@ function OrganizersPartners() {
           <div className={styles.buttonBlock}>
             <button onClick={() => setAddFirstTwo(true)} className={styles.ButtonAdd}>
               <img src={plusLigthImg} alt="plus" /> Добавить партнёры
-            </button>
-            <button
-              onClick={() => funSaveData('partners', addPartner)}
-              className={styles.ButtonAdd}
-            >
-              Сохранить
             </button>
           </div>
           <div className={styles.orgCargCont}>
@@ -203,9 +215,10 @@ function OrganizersPartners() {
                   key={item.id}
                   getDataOrg={getDataOrg}
                   item={item}
+                  type={'partners'}
                   filesUrls={filesUrls}
                   setFilesUrls={setFilesUrls}
-                  funSetFilesUrls={funSetFilesUrls}
+                  validate={validate}
                 />
               ))}
             </div>
