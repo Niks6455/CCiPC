@@ -7,8 +7,6 @@ export default {
 
   async create(collaboratorInfo) {
 
-
-    if(collaboratorInfo.index) {
       const checkCollaborator = await Collaborator.findOne({
         where: {
           type: collaboratorInfo.type,
@@ -16,6 +14,7 @@ export default {
           id: { [Op.not]: collaboratorInfo.id },
         }
       });
+
 
       if (checkCollaborator) {
         await Collaborator.update(
@@ -28,7 +27,7 @@ export default {
           }
         );
       }
-    }
+
       return await Collaborator.create({
          index: collaboratorInfo.index,
          url: collaboratorInfo.url,
@@ -42,6 +41,13 @@ export default {
     if(!collaborator) throw new AppErrorNotExist('collaborator');
 
     if(collaboratorInfo.index) {
+
+      const collaborators = await Collaborator.findAll({})
+
+      const Index=collaborators.map(c=>c.index)
+
+
+
       const checkCollaborator = await Collaborator.findOne({
         where: {
           type: collaborator.type,
