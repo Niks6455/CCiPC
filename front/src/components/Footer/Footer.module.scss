@@ -10,7 +10,7 @@ $w3: 480px;
   justify-content: space-between;
   width: 100%;
   @media (max-width: $w2) {
-    height: torem(208px);
+    height: max-content;
   }
   @media (max-width: $w3) {
     height: auto;
@@ -19,19 +19,20 @@ $w3: 480px;
   .footerContainer {
     display: flex;
     width: torem(1345px);
-    height: torem(265px);
-    padding: torem(40px) 0;
+    height: torem(215px);
+    padding: torem(30px) 0;
     padding-bottom: 0;
     box-sizing: border-box;
     @media (max-width: $w2) {
       width: 100vw;
-      height: torem(208px);
+      height: max-content;
       padding: torem(40px) torem(30px);
     }
     @media (max-width: $w3) {
       height: auto;
       width: 100vw;
       padding: torem(40px) torem(25px);
+      padding-bottom: torem(20px);
       flex-direction: column;
     }
     .footerContainerLeft {
@@ -45,8 +46,8 @@ $w3: 480px;
       }
       .logo {
         display: flex;
-        width: torem(270px);
-        height: torem(195px);
+        width: torem(250px);
+        height: torem(175px);
         overflow: visible;
         @media (max-width: $w2) {
           width: torem(159px);
@@ -189,7 +190,15 @@ $w3: 480px;
     display: flex;
     flex-direction: column;
     padding: torem(20px) 0;
-    padding-bottom: torem(40px);
+    padding-bottom: torem(20px);
+    @media (max-width: $w2) {
+      padding: torem(20px) torem(30px);
+    }
+    @media (max-width: $w3) {
+      padding-top: 0;
+      padding-left: torem(25px);
+      max-width: 80%;
+    }
     a {
       width: max-content;
       text-decoration: underline;
@@ -197,21 +206,25 @@ $w3: 480px;
       text-decoration-style: solid;
       text-decoration-thickness: 0%;
       color: var(--ColorLink);
-      font-size: torem(20px);
+      font-size: torem(18px);
       font-weight: 400;
       cursor: pointer;
       &:hover {
         opacity: 0.6;
       }
+      @media (max-width: $w2) {
+        font-size: torem(14px);
+        max-width: 100%;
+      }
     }
     span {
-      font-size: torem(20px);
+      font-size: torem(18px);
       font-weight: 400;
       margin-bottom: torem(5px);
       color: #fff;
       @media (max-width: $w2) {
         font-weight: 400;
-        font-size: torem(16px);
+        font-size: torem(14px);
         line-height: 130%;
         letter-spacing: 0%;
       }

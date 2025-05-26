@@ -26,6 +26,7 @@
         transition: 0.1s linear all;
         border-radius: torem(10px);
         cursor: pointer;
+        border: torem(1px) solid var(--InputColors);
 
         &:hover {
           opacity: 1;
@@ -56,6 +57,8 @@
       -o-object-fit: contain;
       object-fit: contain;
       border-radius: torem(10px);
+      border: torem(1px) solid var(--InputColors);
+      padding: torem(10px);
     }
 
     .CardOrganizationInnerInfo {
