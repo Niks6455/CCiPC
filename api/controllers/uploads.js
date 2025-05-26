@@ -329,7 +329,7 @@ export default {
           required: true,
           where: {
             type: typesPhoto[type],
-            newsId: collaborator.id,
+            collaboratorId: collaborator.id,
           },
         },
       });
