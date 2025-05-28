@@ -22,6 +22,8 @@ export default {
         if(surname && !validateName(surname)) throw new AppErrorInvalid('surname')
         if(patronymic && !validateName(patronymic)) throw new AppErrorInvalid('patronymic')
 
+        if(position && (position.length < 1 || position.length > 200)) throw new AppErrorInvalid('position')
+
         if(phone && !validatePhoneNumber(phone)) throw new AppErrorInvalid('phone')
         if(organization && !validateOrganization(organization)) throw new AppErrorInvalid('organization')
 

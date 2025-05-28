@@ -349,7 +349,8 @@ export default {
                     include: [{
                         model: ParticipantInConference,
                         as: 'participantInConference',
-                        required: false,
+                        where: { conferenceId: conferenceId },
+                        required: true,
                             },
                             {
                                 model: FileLink,

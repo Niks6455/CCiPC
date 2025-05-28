@@ -19,7 +19,7 @@ export default function (to, type, ...arg) {
     if (!replacement) throw new SystemError(500, 'not exist');
 
     const mail = {
-        from: { name: 'ССиПС', address: process.env.MAIL_USER },
+        from: { name: 'ССПС', address: process.env.MAIL_USER },
         to,
         subject: replacement.subject,
         generateTextFromHTML: true,

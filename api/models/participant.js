@@ -43,6 +43,7 @@ export default class Participant extends Model {
     }
 
     validatePassword(password) {
-        return bcrypt.compareSync(password, this.password);
+        if(this?.password === null) return false
+        return bcrypt.compareSync(password, this?.password ?? null);
     }
 }

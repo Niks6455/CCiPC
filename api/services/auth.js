@@ -67,9 +67,13 @@ export default {
         if(!participant) throw new AppErrorNotExist('email')
         if (!participant || !participant.validatePassword(password)) throw new AppErrorInvalid('Login or password', 403);
 
+        console.log(33);
         if(!participant.activate) throw new AppErrorForbiddenAction(403,'no activate');
+
+        console.log(22);
         const { jwt: token } = jwt.generate({ id: participant.id });
 
+        console.log(11);
         return {participant, token};
 
     },
