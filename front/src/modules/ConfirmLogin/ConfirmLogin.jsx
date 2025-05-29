@@ -50,7 +50,7 @@ function ConfirmLogin(props) {
   const handleResendCode = () => {
     if (!isButtonActive) return;
     apiSendConfirm({
-      email: registration?.data?.email || sessionStorage.getItem('confirmEmail'),
+      email: registration?.data?.email,
     }).then(res => {
       if (res?.status === 200) {
         dispach(setTimer(60)); // Сбрасываем таймер

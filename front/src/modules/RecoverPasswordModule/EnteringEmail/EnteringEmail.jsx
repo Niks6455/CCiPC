@@ -8,11 +8,12 @@ import { apiSandReset } from '../../../apirequests/apirequests';
 import { useDispatch } from 'react-redux';
 import { setEmailSand } from '../../../store/userSlice/user.Slice';
 import { useTranslation } from 'react-i18next';
+import { setDataKey } from '../../../store/registrationSlice/registrationSlice';
 
 function EnteringEmail() {
   const { t } = useTranslation('recoveryPassword');
   const navigate = useNavigate();
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   const [error, setError] = useState(false);
   const dispatch = useDispatch();
   const funChangeEmail = e => {
@@ -30,6 +31,7 @@ function EnteringEmail() {
       apiSandReset(data).then(res => {
         if (res?.status === 200) {
           dispatch(setEmailSand({ email: email }));
+          dispatch(setDataKey({ key: 'email', value: email }));
           sessionStorage.setItem('confirmEmail', email);
           setError(false);
           navigate('checkemail');

@@ -12,7 +12,7 @@ import { useErrorMessages, useInputsData } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
-import { formatPhoneNumber } from '../../utils/functions/Validations';
+import { formatPhoneNumber, validateLength } from '../../utils/functions/Validations';
 import SuccessModal from '../../components/SuccessModal/SuccessModal';
 import ModalPhoto from '../Profile/components/ModalPhoto/ModalPhoto';
 import 'react-image-crop/dist/ReactCrop.css';
@@ -130,6 +130,12 @@ function ProfileEditing() {
       newErrors.phone = t('invalidPhone');
       isValid = false;
     }
+
+    if (!validateLength(formData.position, 0, 200)) {
+      newErrors.position = 'Не более 200 символов!';
+      isValid = false;
+    }
+
     setErrors(newErrors);
     return isValid;
   };

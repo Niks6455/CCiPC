@@ -193,6 +193,10 @@ function Register() {
       newErrors.patronymic = t('invalidPatronymic');
       isValid = false;
     }
+    if (!validateLength(registration?.data?.position, 0, 200)) {
+      newErrors.position = 'Не более 200 символов!';
+      isValid = false;
+    }
 
     setErrors(newErrors);
 

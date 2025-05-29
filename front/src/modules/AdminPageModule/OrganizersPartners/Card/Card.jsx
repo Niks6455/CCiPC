@@ -9,8 +9,11 @@ import {
   uploadPhoto,
 } from '../../../../apirequests/apirequests';
 import editPhoto2Img from '@assets/img/AdminPanel/editPhoto.svg';
+import { fetchConferences } from '../../../../store/conferencesSlice/conferences.Slice';
+import { useDispatch } from 'react-redux';
 
 function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
+  const dispatch = useDispatch();
   const textareasRef = useRef(null);
   const buttonContainerRef = useRef(null);
   const buttonDeleteRef = useRef(null);
@@ -139,10 +142,12 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
           uploadPhoto(fileData, 'COLLABORATOR').then(res => {
             if (res?.status === 200) {
               getDataOrg();
+              dispatch(fetchConferences());
             }
           });
         } else {
           getDataOrg();
+          dispatch(fetchConferences());
         }
       }
     });

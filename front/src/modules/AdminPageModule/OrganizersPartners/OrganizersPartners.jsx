@@ -9,8 +9,11 @@ import {
 } from '../../../apirequests/apirequests';
 import Card from './Card/Card';
 import AddCard from './AddCard/AddCard';
+import { fetchConferences } from '../../../store/conferencesSlice/conferences.Slice';
+import { useDispatch } from 'react-redux';
 
 function OrganizersPartners() {
+  const dispatch = useDispatch();
   //! данные с бд
   const [partners, setPartners] = useState([]);
   const [organizers, setOrganizers] = useState([]);
@@ -141,6 +144,7 @@ function OrganizersPartners() {
             if (type === 'partners') closeCreateTwo();
             setAddOrganizer({ file: null, url: '', number: '' });
             setAddPartner({ file: null, url: '', number: '' });
+            dispatch(fetchConferences());
           }
         });
       }
@@ -192,7 +196,7 @@ function OrganizersPartners() {
           <p className={styles.subtitle}>Партнёры</p>
           <div className={styles.buttonBlock}>
             <button onClick={() => setAddFirstTwo(true)} className={styles.ButtonAdd}>
-              <img src={plusLigthImg} alt="plus" /> Добавить партнёры
+              <img src={plusLigthImg} alt="plus" /> Добавить партнёра
             </button>
           </div>
           <div className={styles.orgCargCont}>

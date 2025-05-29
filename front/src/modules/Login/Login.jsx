@@ -14,10 +14,12 @@ import glaz from '@assets/img/UI/glaz.svg';
 import noglaz from '@assets/img/UI/noglaz.svg';
 import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
+import { setDataKey } from '../../store/registrationSlice/registrationSlice';
 
 function Login(props) {
   const { t } = useTranslation('login');
-
+  const dispach = useDispatch();
   const [passActionFirst, setPassActionFirst] = useState('password');
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -71,6 +73,7 @@ function Login(props) {
             apiSendConfirm({ email: formData.email }).then(res => {
               if (res?.status === 200) {
                 navigate('/login/confirmLogin');
+                dispach(setDataKey({ key: 'email', value: formData.email }));
               }
             });
           } else {
@@ -78,6 +81,7 @@ function Login(props) {
               apiSendConfirm({ email: formData.email }).then(res => {
                 if (res?.status === 200) {
                   navigate('/login/confirmLogin');
+                  dispach(setDataKey({ key: 'email', value: formData.email }));
                 }
               });
               return;

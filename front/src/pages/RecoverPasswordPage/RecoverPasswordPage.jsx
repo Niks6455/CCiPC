@@ -5,7 +5,7 @@ import { useState } from 'react';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 
 function RecoverPasswordPage() {
-  const [email, setEmail] = useState(localStorage.getItem('confirmEmail') || '');
+  const [email, setEmail] = useState('');
 
   return (
     <div className={styles.RecoverPasswordPage}>

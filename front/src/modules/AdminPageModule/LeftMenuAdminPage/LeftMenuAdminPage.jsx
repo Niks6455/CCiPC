@@ -7,6 +7,9 @@ import conference from './../../../assets/img/AdminPanel/conference.svg';
 import news from './../../../assets/img/AdminPanel/news.svg';
 import org from './../../../assets/img/AdminPanel/org.svg';
 import orgMoney from './../../../assets/img/AdminPanel/orgMoney.svg';
+import arhive from './../../../assets/img/AdminPanel/arhive.svg';
+import orgpartner from './../../../assets/img/AdminPanel/orgpartner.svg';
+
 function LeftMenuAdminPage() {
   const navigate = useNavigate();
   const getActiveLi = patch => {
@@ -60,13 +63,13 @@ function LeftMenuAdminPage() {
           </Link>
           <Link to="/adminPage/collections">
             <li className={getActiveLi('/adminPage/collections')}>
-              <img src={archive} />
+              <img src={arhive} />
               Архив сборников
             </li>
           </Link>
           <Link to="/adminPage/organizerspartners">
             <li className={getActiveLi('/adminPage/organizerspartners')}>
-              <img src={colaborators} />
+              <img src={orgpartner} />
               Организаторы и партнёры
             </li>
           </Link>
