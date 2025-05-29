@@ -336,6 +336,9 @@ export default {
 
 
       if (collaboratorFile) {
+        fs.unlink(collaboratorFile.url, (err) => {
+          if (err) console.log(err);
+        });
         await collaboratorFile.update({ url: file.path, name: Buffer.from(file.originalname, 'latin1').toString('utf8') });
         return res.json({ file: collaboratorFile });
       }
