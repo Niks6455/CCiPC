@@ -6,16 +6,17 @@ import SliderHomePage from '../../components/SliderHomePage/SliderHomePage';
 import SliderHomePageMobile from '../../components/SliderHomePageMobile/SliderHomePageMobile';
 import HeaderPhone from '../../components/HeaderPhone/HeaderPhone';
 import { useSelector } from 'react-redux';
-import { server } from '../../apirequests/apirequests';
+import { apiGetOrganizersPartners, server } from '../../apirequests/apirequests';
 import { useEffect, useState } from 'react';
 
 import LoadingComponent from '../../components/LoadingComponent/LoadingComponent';
 import ScrollHeader from '../../components/ScrollHeader/ScrollHeader';
 import Header from '../../components/Header/Header';
 import { Trans, useTranslation } from 'react-i18next';
-import LanguageSwitcher from '../../components/LanguageSwitcher/LanguageSwitcher';
 
 function HomePage({ userRole }) {
+  const [organizatorsPartners, setOrganizatorsPartners] = useState({});
+
   const { t } = useTranslation('homePage');
   const conferencesStatus = useSelector(state => state.conferences.status);
   const [loading, setLoading] = useState(false);
@@ -43,6 +44,14 @@ function HomePage({ userRole }) {
     }
   }, [conferencesStatus]);
 
+  useEffect(() => {
+    apiGetOrganizersPartners().then(res => {
+      if (res?.status === 200) {
+        setOrganizatorsPartners(res?.data);
+      }
+    });
+  }, []);
+  console.log('organizatorsPartners', organizatorsPartners?.organization);
   const [style, setStyle] = useState([]);
   const [style2, setStyle2] = useState([]);
 
@@ -171,15 +180,15 @@ function HomePage({ userRole }) {
       <SliderHomePage />
       <SliderHomePageMobile />
       <Layout>
-        {conference && conference?.organization?.length > 0 && (
+        {organizatorsPartners?.organization?.length > 0 && (
           <section className={`${styles.imgSection}`}>
             <div className={styles.Title}>
               <p>{t('par3')}</p>
             </div>
             <div
-              className={`${styles.imgSectionInner} ${conference?.organization?.length === 2 ? styles.two : ''}`}
+              className={`${styles.imgSectionInner} ${organizatorsPartners?.organization?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.organization?.map(
+              {organizatorsPartners?.organization?.map(
                 (el, index) =>
                   el?.url && (
                     <img
@@ -196,15 +205,15 @@ function HomePage({ userRole }) {
             </div>
           </section>
         )}
-        {conference && conference?.partner?.length > 0 && (
+        {organizatorsPartners?.partner?.length > 0 && (
           <section className={styles.imgSection}>
             <div className={styles.Title}>
               <p>{t('par4')}</p>
             </div>
             <div
-              className={`${styles.imgSectionInner}  ${conference?.partner?.length === 2 ? styles.two : ''}`}
+              className={`${styles.imgSectionInner}  ${organizatorsPartners?.partner?.length === 2 ? styles.two : ''}`}
             >
-              {conference?.partner?.map(
+              {organizatorsPartners?.partner?.map(
                 (el, index) =>
                   el?.url && (
                     <img

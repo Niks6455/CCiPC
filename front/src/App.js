@@ -48,7 +48,6 @@ import OrganizersPartners from './modules/AdminPageModule/OrganizersPartners/Org
 function App() {
   const dispatch = useDispatch();
   const queryClient = new QueryClient();
-
   const user = useSelector(state => state.user.user.data);
   const [authPage, setAuthPage] = useState('Auth');
   const [mailValue, setMailValue] = useState('');
