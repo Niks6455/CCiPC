@@ -76,11 +76,18 @@ export default {
             include: {
                 model: ParticipantInConference,
                 as: 'participantInConference',
-                required: false
+                required: false,
+                include: {
+                    model: Conference,
+                    as: 'conference',
+                    required: true,
+                    where: {
+                        isFinished: false
+                    }
+                }
             }
         });
         if(!participant) throw new AppErrorNotExist('participant')
-
 
 
         if(participantInfo?.formPay && participant?.participantInConference) await participant?.participantInConference[0].update({formPay : participantInfo.formPay })

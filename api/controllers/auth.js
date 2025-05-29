@@ -56,6 +56,8 @@ export default {
         if(!organization) throw new AppErrorMissing('organization')
         if(!validateOrganization(organization)) throw new AppErrorInvalid('organization')
 
+        if(position && (position.length < 1 || position.length > 200)) throw new AppErrorInvalid('position')
+
         if(!phone) throw new AppErrorMissing('phone')
         if(!validatePhoneNumber(phone)) throw new AppErrorInvalid('phone')
 

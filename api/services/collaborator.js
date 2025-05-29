@@ -11,10 +11,8 @@ export default {
         where: {
           type: collaboratorInfo.type,
           index: collaboratorInfo.index,
-          id: { [Op.not]: collaboratorInfo.id },
         }
       });
-
 
       if (checkCollaborator) {
         await Collaborator.update(
@@ -42,12 +40,6 @@ export default {
 
     if(collaboratorInfo.index) {
 
-      const collaborators = await Collaborator.findAll({})
-
-      const Index=collaborators.map(c=>c.index)
-
-
-
       const checkCollaborator = await Collaborator.findOne({
         where: {
           type: collaborator.type,
@@ -56,15 +48,30 @@ export default {
         }
       });
       if (checkCollaborator) {
-        await Collaborator.update(
-          { index: Sequelize.literal('index + 1') },
-          {
-            where: {
-              type: collaborator.type,
-              index: { [Op.gte]: collaboratorInfo.index },
-            },
-          }
-        )
+
+        if(collaboratorInfo.index < collaborator.index) {
+          await Collaborator.update(
+            { index: Sequelize.literal('index + 1') },
+            {
+              where: {
+                type: collaborator.type,
+                index: { [Op.and]: [{ [Op.gte]: collaboratorInfo.index }, { [Op.lt]: collaborator.index }] },
+              },
+            }
+          )
+        }
+        if(collaboratorInfo.index > collaborator.index) {
+          await Collaborator.update(
+            { index: Sequelize.literal('index - 1') },
+            {
+              where: {
+                type: collaborator.type,
+                index: { [Op.and]: [{ [Op.gte]: collaborator.index }, { [Op.lte]: collaboratorInfo.index }] },
+              },
+            }
+          )
+        }
+
       }
     }
 
