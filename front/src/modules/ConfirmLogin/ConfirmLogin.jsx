@@ -1,6 +1,5 @@
-import { useContext, useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import styles from './ConfirmLogin.module.scss';
-import DataContext from '../../context';
 import logo from './../../assets/img/logo.png';
 import confirm from './../../assets/img/confirm.svg';
 import errorItem from '@assets/img/UI/error.svg';
@@ -16,7 +15,6 @@ function ConfirmLogin(props) {
   const dispach = useDispatch();
   const navigate = useNavigate();
   const registration = useSelector(state => state.registration);
-  const context = useContext(DataContext);
   const navigete = useNavigate();
   const [code, setCode] = useState(['', '', '', '', '', '']); // Для кода
   const [errorAuth, setErrorAuth] = useState(false);
@@ -88,7 +86,7 @@ function ConfirmLogin(props) {
     }
     const fullCode = code.join('');
     const data = {
-      email: context?.mailValue || sessionStorage.getItem('confirmEmail'),
+      email: registration?.data?.email,
       code: fullCode,
       type: 0,
     };

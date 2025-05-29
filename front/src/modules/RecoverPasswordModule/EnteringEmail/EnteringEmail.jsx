@@ -32,7 +32,7 @@ function EnteringEmail() {
         if (res?.status === 200) {
           dispatch(setEmailSand({ email: email }));
           dispatch(setDataKey({ key: 'email', value: email }));
-          sessionStorage.setItem('confirmEmail', email);
+          // sessionStorage.setItem('confirmEmail', email);
           setError(false);
           navigate('checkemail');
         } else {

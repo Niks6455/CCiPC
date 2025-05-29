@@ -16,7 +16,6 @@ import { Trans, useTranslation } from 'react-i18next';
 
 function HomePage({ userRole }) {
   const [organizatorsPartners, setOrganizatorsPartners] = useState({});
-
   const { t } = useTranslation('homePage');
   const conferencesStatus = useSelector(state => state.conferences.status);
   const [loading, setLoading] = useState(false);
@@ -51,7 +50,6 @@ function HomePage({ userRole }) {
       }
     });
   }, []);
-  console.log('organizatorsPartners', organizatorsPartners?.organization);
   const [style, setStyle] = useState([]);
   const [style2, setStyle2] = useState([]);
 
@@ -193,7 +191,7 @@ function HomePage({ userRole }) {
                   el?.url && (
                     <img
                       style={style2[index]}
-                      src={`${server}/${el.file}`}
+                      src={`${server}/${el?.file?.url}`}
                       onClick={() => window.open(el.url, '_blank')}
                       alt="Organization1"
                       key={index}
@@ -218,7 +216,7 @@ function HomePage({ userRole }) {
                   el?.url && (
                     <img
                       style={style[index]}
-                      src={`${server}/${el.file}`}
+                      src={`${server}/${el?.file?.url}`}
                       alt="Organization1"
                       key={index}
                       onClick={() => window.open(el.url, '_blank')}

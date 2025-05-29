@@ -26,9 +26,8 @@ function RecoverPassword() {
 
   //! востановление по почте true по телефону false
   const [isRecoverType, setIsRecoverType] = useState(true);
-  const [email, setEmail] = useState();
+  const [email, setEmail] = useState('');
   const store = useSelector(store => store.user);
-
   const context = useContext(DataContext);
   const [code, setCode] = useState(['', '', '', '', '', '']); // Для кода
   const [codStatus, setCodStatus] = useState(true); // статус ошибки (код неверный)
@@ -107,12 +106,12 @@ function RecoverPassword() {
   }, [timer]);
 
   useEffect(() => {
-    setEmail(store.emailSend || sessionStorage.getItem('confirmEmail'));
+    setEmail(store.emailSend);
   }, []);
   const handleResendCode = () => {
     if (!isButtonActive) return;
     const data = {
-      email: email || localStorage.getItem('confirmEmail'),
+      email: email,
     };
     apiSandReset(data).then(res => {
       if (res?.status === 200) {

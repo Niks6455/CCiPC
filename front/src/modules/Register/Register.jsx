@@ -214,8 +214,8 @@ function Register() {
       apiRegister(data).then(res => {
         if (res?.status === 200) {
           navigate('/login/confirmLogin');
-          context.setMailValue(registration?.data?.email);
-          sessionStorage.setItem('confirmEmail', registration?.data?.email);
+          // context.setMailValue(registration?.data?.email);
+          // sessionStorage.setItem('confirmEmail', registration?.data?.email);
         } else {
           if (res?.response?.data?.message === 'email or phone entity already exists') {
             setModalTitle(t('alreadyExists'));
