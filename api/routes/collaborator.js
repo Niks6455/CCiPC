@@ -8,7 +8,7 @@ const router = Router();
 
 router.route('/')
   .post(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(collaboratorCtrl.create))
-  .get(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(collaboratorCtrl.find))
+  .get(asyncRoute(collaboratorCtrl.find))
 
 router.route('/:id')
   .put(asyncRoute(verify.admin([roles.ADMIN])), asyncRoute(collaboratorCtrl.update))
