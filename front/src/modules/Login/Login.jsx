@@ -181,20 +181,20 @@ function Login(props) {
         </div>
       </div>
       <div className={styles.Maybe}>
-        <div className={styles.MaybeInner}>
+        {/* <div className={styles.MaybeInner}>
           <div className={styles.lineOne}></div>
           <div className={styles.CentralContainer}>
             <p>{t('or')}</p>
           </div>
           <div className={styles.lineTwo}></div>
-        </div>
+        </div> */}
       </div>
-      <div className={styles.loginButtonSfedu} onClick={funSfeduAuth}>
+      {/* <div className={styles.loginButtonSfedu} onClick={funSfeduAuth}>
         <button>
           <img src={sfeduLogo} />
           {t('sfedu')}
         </button>
-      </div>
+      </div> */}
       <div className={styles.submitButton}>
         <button onClick={handleSubmit}>{t('login')}</button>
       </div>

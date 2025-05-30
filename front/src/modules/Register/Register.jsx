@@ -438,20 +438,20 @@ function Register() {
         </div>
       </div>
       <div className={styles.Maybe}>
-        <div className={styles.MaybeInner}>
+        {/* <div className={styles.MaybeInner}>
           <div className={styles.lineOne}></div>
           <div className={styles.CentralContainer}>
             <p>{t('or')}</p>
           </div>
           <div className={styles.lineTwo}></div>
-        </div>
+        </div> */}
       </div>
-      <div className={styles.loginButtonSfedu}>
+      {/* <div className={styles.loginButtonSfedu}>
         <button>
           <img src="/img/SfeduLogo.svg" alt="Sfedu Logo" />
           {t('sfedu')}
         </button>
-      </div>
+      </div> */}
       <div className={styles.submitButton}>
         <button onClick={handleSubmit}>{t('register')}</button>
       </div>
