@@ -2,18 +2,17 @@ import jwt from '../utils/jwt.js';
 import {AppErrorForbiddenAction, AppErrorInvalid, asyncRoute, SystemError} from '../utils/errors.js';
 import Participant from "../models/participant.js";
 import rolesCheck from "../config/roles.js";
+
 function admin(roles) {
     if (!roles) throw new SystemError();
     return async (req, res, next) => {
 
         if(roles === rolesCheck.PUBLIC ) next ()
-        const authorization = req.headers.authorization;
-        if (authorization?.split(' ')[0] !== 'Bearer') {
-            return next(new AppErrorInvalid('token', 401));
-        }
+        const token = req.cookies.jwt;
+        if (!token) return next(new AppErrorInvalid('token', 401));
 
         try {
-            const userId = jwt.verify(authorization.split(' ')[1]).id;
+            const userId = jwt.verify(token).id;
 
             const admin=await Participant.findByPk(userId)
 
@@ -49,11 +48,12 @@ function combine(...verifications) {
 
 
 async function general(req, res, next) {
-    const authorization = req.headers.authorization;
-    if (authorization?.split(' ')[0] !== 'Bearer') throw new AppErrorInvalid('token', 401);
+
+    const token = req.cookies.jwt;
+    if (!token) throw new AppErrorInvalid('token', 401);
 
     try {
-        const userId = jwt.verify(authorization.split(' ')[1]).id;
+        const userId = jwt.verify(token).id
 
         const user=await Participant.findByPk(userId)
 
@@ -68,8 +68,10 @@ async function general(req, res, next) {
     }
 }
 
+
 export default {
     general,
     admin,
-    combine
+    combine,
+
 };

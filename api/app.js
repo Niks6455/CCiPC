@@ -3,7 +3,6 @@ import logger from 'morgan';
 import { MulterError } from 'multer';
 import { createTestAdmin, initializeDbModels } from './utils/db.js';
 import { AppError, MultipleError, SystemError } from './utils/errors.js';
-import session from 'express-session';
 import uploadsRoute from './routes/upload.js';
 import authRoute from './routes/auth.js';
 import reportRoute from './routes/report.js';
@@ -82,6 +81,7 @@ const swaggerOptions = {
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
 
+app.use(corsMiddleware)
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -110,13 +110,9 @@ if (app.get('env') === 'development' || app.get('env') === 'staging') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 }
 
-app.use(corsMiddleware);
+
 app.use(passport.initialize());
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: false,
-}))
+
 
 app.use('/auth', authRoute);
 app.use("/uploads", express.static("./uploads"), uploadsRoute);

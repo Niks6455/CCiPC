@@ -4,6 +4,7 @@ import { Router } from 'express';
 import participantCtrl from '../controllers/participant.js';
 import { asyncRoute } from '../utils/errors.js';
 import verify from '../middlewares/verify-token.js'
+import passport from 'passport';
 const router = Router();
 
 /**

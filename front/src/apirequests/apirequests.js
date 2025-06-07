@@ -61,7 +61,8 @@ export const LoginFunc = async UserData => {
 
 //! сфеду авторизация
 export const LoginFuncSfedu = async () => {
-  try {
+  window.location.href=`${server}/auth/login/sfedu`
+ /* try {
     const response = await api.get(`${server}/auth/login/sfedu`);
     const { participant, token } = response.data;
     localStorage.setItem('accessToken', token);
@@ -70,7 +71,7 @@ export const LoginFuncSfedu = async () => {
   } catch (error) {
     // alert('Пользователь не найден!');
     return error;
-  }
+  }*/
 };
 
 //! получение кода сфеду для дальнейшей отправи на бэк

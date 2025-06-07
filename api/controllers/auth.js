@@ -21,7 +21,15 @@ export default {
         if(!password) throw new AppErrorMissing('password')
 
         const {participant, token} = await authService.login(email, password);
-        res.json({ participant, token: token });
+
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Lax',
+            maxAge: 3600000
+        });
+
+        res.json({ participant });
     },
 
 
@@ -78,13 +86,29 @@ export default {
         if(!code) throw new AppErrorMissing('code')
         if(type === undefined) throw new AppErrorMissing('type')
         const { participant, token } = await authService.checkEmail(email, code, type)
+
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Lax',
+            maxAge: 3600000
+        });
+
         res.json({ participant: participant, jwt: token })
     },
 
-    async   loginSfedu({ user }, res) {
-        const {token, participant } = await authService.loginSfedu(user)
+    async   loginSfedu(req, res) {
+        const {token, participant } = await authService.loginSfedu(req.user)
 
-        res.json({ participant: participant, token: token })
+        res.cookie('jwt', token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'Lax',
+            maxAge: 3600000
+        });
+
+
+        res.redirect('http://localhost:3001/');
     },
 
     async sandCodeChangePassword({body:  { email } }, res){

@@ -7,7 +7,9 @@ import verify from "../middlewares/verify-token.js";
 import roles from "../config/roles.js";
 import passport from 'passport';
 const router = Router();
-
+import 'dotenv/config'
+import * as querystring from 'node:querystring';
+import axios from 'axios';
 
 /**
  * @swagger
@@ -243,9 +245,10 @@ const router = Router();
 
 router.route('/login').post(asyncRoute(authCtrl.login));
 
-router.route('/login/sfedu').get(passport.authenticate('azure_ad_oauth2', { failureRedirect: '/login/authorization' }));
+router.route('/login/sfedu').get(passport.authenticate('azuread-oauth2', { failureRedirect: '/login/authorization', scope: ['profile'] }));
 
-router.route('/login/sfedu/callback').get(passport.authenticate('azure_ad_oauth2', {failureRedirect: '/login/authorization' }),  asyncRoute(authCtrl.loginSfedu))
+router.route('/login/sfedu/callback').get(passport.authenticate('azuread-oauth2', {failureRedirect: '/login/authorization', session: false }),  asyncRoute(authCtrl.loginSfedu))
+
 
 router.route('/register').post(asyncRoute(authCtrl.register))
 
