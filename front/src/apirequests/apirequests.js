@@ -105,7 +105,8 @@ export const CheckEmail = async Data => {
 //! получение данных пользователя
 export const apiGetUserData = async () => {
   try {
-    const response = await api.get(`${server}/participants/self`);
+    const response = await api.get(`${server}/participants/self`,{
+    });
     return response;
   } catch (error) {
     console.log('apiGetUserData ', error);

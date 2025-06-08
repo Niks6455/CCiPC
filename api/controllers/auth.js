@@ -25,9 +25,10 @@ export default {
         res.cookie('jwt', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'Lax',
-            maxAge: 3600000
+            sameSite: 'None',
+            maxAge: 7200000
         });
+
 
         res.json({ participant });
     },
@@ -90,8 +91,8 @@ export default {
         res.cookie('jwt', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'Lax',
-            maxAge: 3600000
+            sameSite: 'None',
+            maxAge: 7200000
         });
 
         res.json({ participant: participant, jwt: token })
@@ -103,12 +104,12 @@ export default {
         res.cookie('jwt', token, {
             httpOnly: true,
             secure: true,
-            sameSite: 'Lax',
+            sameSite: 'None',
             maxAge: 3600000
         });
 
 
-        res.redirect('http://localhost:3001/');
+        res.redirect(`${process.env.WEB_URL}/`);
     },
 
     async sandCodeChangePassword({body:  { email } }, res){

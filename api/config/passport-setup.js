@@ -9,8 +9,8 @@ passport.use(
   "azuread-oauth2",
   new AzureAdOAuth2Strategy(
     {
-      callbackURL: `http://localhost:3000/auth/login/sfedu/callback`,
-      // callbackURL: `${process.env.WEB_URL}/api/auth/login/sfedu/callback`,
+      //callbackURL: `http://localhost:3000/auth/login/sfedu/callback`,
+      callbackURL: `${process.env.WEB_URL}/api/auth/login/sfedu/callback`,
       clientID: process.env.SFEDU_ID,
       clientSecret: process.env.SFEDU_SECRET,
       resource: "https://graph.microsoft.com",
