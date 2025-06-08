@@ -57,13 +57,10 @@ function App() {
   const [userRole, setUserRole] = useState(null);
 
   const funGetAllApi = () => {
-    const token = localStorage.getItem('accessToken');
-    if (token) {
-      //! получение данных пользователя
-      dispatch(fetchUserData()); // Вызов асинхронного действия
-      //! получение докладов пользователя
-      dispatch(fetchReports());
-    }
+    //! получение данных пользователя
+    dispatch(fetchUserData()); // Вызов асинхронного действия
+    //! получение докладов пользователя
+    dispatch(fetchReports());
     //! получение всех конференций
     dispatch(fetchConferences());
   };
@@ -78,7 +75,7 @@ function App() {
   useEffect(() => {
     const userData = localStorage.getItem('userData');
     const userRole = userData && userData !== 'undefined' ? JSON.parse(userData)?.role : null;
-    setUserRole(userRole);
+    setUserRole(userRole || 0);
   }, [useLocalStorage('userData'), user]);
 
   useEffect(() => {

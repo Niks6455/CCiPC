@@ -9,9 +9,10 @@ import { Trans, useTranslation } from 'react-i18next';
 function Header({ userRole }) {
   const { t } = useTranslation('homePage');
 
-  const autorisation = useSelector(state => state.user.status) === 'succeeded';
+  const autorisation = useSelector(state => state.user.user.data.email);
   const conference = useSelector(state => state.conferences.data[0]);
   const navigate = useNavigate();
+  console.log('autorisation', autorisation);
   return (
     <header className={styles.HeaderContainerBlock}>
       <div className={styles.HeaderContainer} id="top">
@@ -75,10 +76,10 @@ function Header({ userRole }) {
             </li>
             <li
               onClick={() =>
-                autorisation ? navigate('/account/profile') : navigate('/login/authorization')
+                !!autorisation ? navigate('/account/profile') : navigate('/login/authorization')
               }
             >
-              {autorisation ? t('par9') : t('par11')}
+              {!!autorisation ? t('par9') : t('par11')}
               <span className={styles.arowLi}>
                 <img src={ArrowMenu} alt="Arrow" />
               </span>
