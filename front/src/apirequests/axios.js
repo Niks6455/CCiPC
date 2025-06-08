@@ -6,6 +6,7 @@ URL.includes('localhost') ? (server = 'http://localhost:3000') : (server = `${UR
 
 const api = axios.create({
   baseURL: server,
+  withCredentials: true,
 });
 
 // Добавляем interceptor для автоматического подставления токена
