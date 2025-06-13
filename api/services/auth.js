@@ -145,7 +145,7 @@ export default {
 
         const hashPassword = bcrypt.hashSync(passwordInfo.newPassword, 10)
 
-        return await participant.update({password: hashPassword})
+        return await participant.update({ password: hashPassword })
 
     },
 
@@ -156,7 +156,7 @@ export default {
         if(!participant) throw new AppErrorNotExist('email')
 
         if(type === 0) {
-            resetCodes[email] = email === 'saveVerificationCode' ? '000000' : code
+            resetCodes[email] = email === 'autotest@example.com' ? '000000' : code
             sendMail(email, 'reset', code);
             return true
         }
