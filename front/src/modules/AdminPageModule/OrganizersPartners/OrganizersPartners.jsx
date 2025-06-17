@@ -103,10 +103,6 @@ function OrganizersPartners() {
       errors.file = 'Это обязательное поле';
       valid = false;
     }
-    if (data?.url?.trim() === '') {
-      errors.url = 'Это обязательное поле';
-      valid = false;
-    }
     if (data?.url?.length > 250) {
       errors.url = 'Не более 250 символов';
       valid = false;
