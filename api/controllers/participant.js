@@ -15,7 +15,7 @@ export default {
     async update({body: {email, name, surname, patronymic, academicTitle, degree, position, organization, phone,formPay}, user}, res){
 
         if(user.isMicrosoft) {
-            if(name || surname || patronymic || email || organization) throw  new AppErrorInvalid('isMicrosoft')
+            if(name || surname || patronymic || email) throw  new AppErrorInvalid('isMicrosoft')
         }
 
         if(name && !validateName(name)) throw new AppErrorInvalid('name')

@@ -28,7 +28,7 @@ export default {
 
       return await Collaborator.create({
          index: collaboratorInfo.index,
-         url: collaboratorInfo.url,
+         url: collaboratorInfo?.url,
          type: collaboratorInfo.type,
       });
     },
@@ -77,7 +77,7 @@ export default {
 
     return await collaborator.update({
       index: collaboratorInfo.index,
-      url: collaboratorInfo.url,
+      url: collaboratorInfo?.url,
     })
   },
 

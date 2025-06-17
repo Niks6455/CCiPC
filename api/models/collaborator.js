@@ -10,7 +10,7 @@ export default class Collaborator extends Model {
         type: { type: DataTypes.SMALLINT,   validate: {
             isIn: [[0, 1]]
           }},
-        url: { type: DataTypes.STRING, allowNull: false },
+        url: { type: DataTypes.STRING, allowNull: true },
       },
       {
         sequelize,

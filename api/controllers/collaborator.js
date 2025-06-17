@@ -1,10 +1,11 @@
 import { AppErrorInvalid, AppErrorMissing } from '../utils/errors.js';
 import collaboratorService from "../services/collaborator.js";
+const isValidUrl = /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([\/\w .-]*)*\/?$/;
 
 export default {
   async create({body: { url , index, type }}, res){
-    if(!url) throw new AppErrorMissing('url');
     if(!index) throw new AppErrorMissing('index');
+    if(url && !isValidUrl.test(url)) throw new AppErrorInvalid(url);
     if(type===undefined) throw new AppErrorMissing('type');
     if(type !== 0 && type !== 1) throw new AppErrorInvalid('type');
     const collaborator = await collaboratorService.create({url, index, type});
@@ -25,6 +26,7 @@ export default {
   },
 
   async update({params: { id }, body:{ url, index }}, res){
+    if(url && !isValidUrl.test(url)) throw new AppErrorInvalid('url');
     await collaboratorService.update({ url, index, id })
     res.json({status: 'Ok'});
   },
