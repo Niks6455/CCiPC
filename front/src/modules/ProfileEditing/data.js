@@ -79,3 +79,47 @@ export const getInputsData = isMicrosoft => [
     type: 'text',
   },
 ];
+
+
+export const useErrorMessages = () => {
+  const { t } = useTranslation();
+
+  return [
+    {
+      key: 'name',
+      error: t('errors.name'),
+    },
+    {
+      key: 'surname',
+      error: t('errors.surname'),
+    },
+    {
+      key: 'email',
+      error: t('errors.email'),
+    },
+    {
+      key: 'phone',
+      error: t('errors.phone'),
+    },
+    {
+      key: 'organization',
+      error: t('errors.organization'),
+    },
+    {
+      key: 'academicTitle',
+      error: t('errors.academicTitle'),
+    },
+    {
+      key: 'degree',
+      error: t('errors.degree'),
+    },
+    {
+      key: 'position',
+      error: t('errors.position'),
+    },
+    {
+      key: 'phone entity already exists',
+      error: t('errors.phoneExists'),
+    },
+  ];
+};

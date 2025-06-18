@@ -8,7 +8,7 @@ import DataContext from '../../context';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiDeleteMulti, apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
 import { disEditUser, setEditUser } from '../../store/userSlice/user.Slice';
-import { getInputsData, useErrorMessages, useInputsData } from './data';
+import { getInputsData, useErrorMessages } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
