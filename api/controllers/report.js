@@ -33,9 +33,20 @@ export default {
     async update({body: { name, organization, form, status,  comment, coAuthors, coAuthorsIds,directionId }, params: { id }, user }, res) {
         if(!id) throw new AppErrorMissing('id')
 
-        if(comment && comment.length > 300) throw new AppErrorInvalid('comment')
-        if(organization && (organization.length > 200 || organization.trim().length === 0)) throw new AppErrorInvalid('organization')
-        if(name && (name.length > 300 || name.trim().length === 0)) throw new AppErrorInvalid('name')
+
+        if (name?.trim()?.length === 0 || name?.trim()?.length > 300) {
+            throw new AppErrorInvalid('name');
+        }
+
+        if (organization?.trim()?.length === 0 || organization?.trim()?.length > 200) {
+            throw new AppErrorInvalid('name organization');
+        }
+
+
+        if (comment?.trim()?.length === 0 || comment?.trim()?.length > 300) {
+            throw new AppErrorInvalid('comment');
+        }
+
 
         if(status && !statusReport.includes(status)) throw new AppErrorInvalid('status')
         if(form && !formReport.includes(form)) throw new AppErrorInvalid('form')

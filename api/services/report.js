@@ -365,9 +365,9 @@ export default {
         })
 
         await report.update({
-            name: reportInfo?.name,
+            name: reportInfo?.name?.trim(),
             directionId: reportInfo?.directionId,
-            comment: reportInfo?.comment,
+            comment: reportInfo?.comment?.trim(),
         })
 
         return report
