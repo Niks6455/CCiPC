@@ -16,7 +16,7 @@ import {
   funSpecialSymbol,
   validateLatinSymbols,
 } from '../../utils/functions/PasswordValidation';
-import { apiRegister } from '../../apirequests/apirequests';
+import { LoginFuncSfedu, apiRegister } from '../../apirequests/apirequests';
 import {
   capitalizeFirstLetter,
   formatPhoneNumber,
@@ -306,6 +306,12 @@ function Register() {
     }
   };
 
+    //! вызываем запрос для получения кода который отправил на бэк
+    const funSfeduAuth = () => {
+      // apiLoginGetCodeSfedu();
+      LoginFuncSfedu();
+    };
+
   return (
     <section className={styles.Login}>
       <ErrorModal open={modalTitle} close={() => setModalTitle(null)} title={modalTitle} />
@@ -446,7 +452,7 @@ function Register() {
           <div className={styles.lineTwo}></div>
         </div>
       </div>
-      <div className={styles.loginButtonSfedu}>
+      <div className={styles.loginButtonSfedu} onClick={funSfeduAuth}>
         <button>
           <img src="/img/SfeduLogo.svg" alt="Sfedu Logo" />
           {t('sfedu')}

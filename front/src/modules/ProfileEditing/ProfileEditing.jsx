@@ -8,7 +8,7 @@ import DataContext from '../../context';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiDeleteMulti, apiUpdateUser, server, uploadPhoto } from '../../apirequests/apirequests';
 import { disEditUser, setEditUser } from '../../store/userSlice/user.Slice';
-import { useErrorMessages, useInputsData } from './data';
+import { getInputsData, useErrorMessages } from './data';
 import cameraIcon from '@assets/img/UI/camera.svg';
 import { AnimatePresence, motion } from 'framer-motion';
 import redxIcon from '@assets/img/UI/redX.svg';
@@ -21,8 +21,16 @@ import ErrorModal from '../../components/ErrorModal/ErrorModal';
 import { useTranslation } from 'react-i18next';
 
 function ProfileEditing() {
-  const isMicrosoft = useSelector(state => state.user.user.data.isMicrosoft);
-  const inputsData = useInputsData(isMicrosoft);
+  const isMicrosoft = useSelector(state => state.user.user.data?.isMicrosoft);
+  const [inputsData, setInputsData] = useState([]);
+
+  useEffect(() => {
+    if (isMicrosoft !== undefined) {
+      const data = getInputsData(isMicrosoft);
+      setInputsData(data);
+    }
+  }, [isMicrosoft, t]);
+
   const errorsNames = useErrorMessages();
 
   const { t } = useTranslation('profileEditing');
