@@ -1,6 +1,7 @@
 import { stepenList, zwanieList } from '../../utils/Lists/List';
+import { useTranslation } from 'react-i18next';
 
-export const getInputsData = isMicrosoft => [
+export const getInputsData = (t, isMicrosoft) => [
   {
     id: '0',
     name: t('form.name'),
@@ -80,10 +81,7 @@ export const getInputsData = isMicrosoft => [
   },
 ];
 
-
-export const useErrorMessages = () => {
-  const { t } = useTranslation();
-
+export const useErrorMessages = t => {
   return [
     {
       key: 'name',

@@ -22,18 +22,19 @@ import { useTranslation } from 'react-i18next';
 
 function ProfileEditing() {
   const isMicrosoft = useSelector(state => state.user.user.data?.isMicrosoft);
+  const { t } = useTranslation('profileEditing');
+
   const [inputsData, setInputsData] = useState([]);
 
   useEffect(() => {
     if (isMicrosoft !== undefined) {
-      const data = getInputsData(isMicrosoft);
+      const data = getInputsData(t, isMicrosoft);
       setInputsData(data);
     }
   }, [isMicrosoft, t]);
 
-  const errorsNames = useErrorMessages();
+  const errorsNames = useErrorMessages(t);
 
-  const { t } = useTranslation('profileEditing');
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const ref1 = useRef(null);

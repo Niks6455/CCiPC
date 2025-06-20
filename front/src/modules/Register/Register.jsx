@@ -197,6 +197,10 @@ function Register() {
       newErrors.position = 'Не более 200 символов!';
       isValid = false;
     }
+    if (!validateLength(registration?.data?.organization, 0, 200)) {
+      newErrors.organization = 'Не более 200 символов!';
+      isValid = false;
+    }
 
     setErrors(newErrors);
 
@@ -306,11 +310,11 @@ function Register() {
     }
   };
 
-    //! вызываем запрос для получения кода который отправил на бэк
-    const funSfeduAuth = () => {
-      // apiLoginGetCodeSfedu();
-      LoginFuncSfedu();
-    };
+  //! вызываем запрос для получения кода который отправил на бэк
+  const funSfeduAuth = () => {
+    // apiLoginGetCodeSfedu();
+    LoginFuncSfedu();
+  };
 
   return (
     <section className={styles.Login}>
