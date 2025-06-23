@@ -20,6 +20,7 @@ function EditReport() {
   const [number, setNumber] = useState('');
   const [idReport, setIdReport] = useState(null);
   const user = useSelector(state => state.user.user.data);
+  const [errors, setErrors] = useState([]);
 
   const { data: reportQery, isPending: isLoading } = useQuery({
     queryKey: [`${idReport}`, idReport],
@@ -94,6 +95,7 @@ function EditReport() {
       {!soauthorEditing && <CreateReport edit={true} />}
       <div className={styles.otstup}></div>
       <AddCoauthor
+        setErrors={setErrors}
         edit={true}
         number={number}
         soauthorEditing={soauthorEditing}

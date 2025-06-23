@@ -65,6 +65,12 @@ function CreateReport({ edit }) {
     }
   };
 
+  useEffect(() => {
+    if (edit) {
+      setErrors(funValidateAll(report.data));
+    }
+  }, [report.editData]);
+
   const funNextStep = () => {
     setErrors(funValidateAll(report.data));
     if (funValidateAll(report.data).length === 0) {

@@ -40,8 +40,9 @@ import { formParticipationList, participationStatus } from '../../../utils/Lists
 import ErrorModal from '../../../components/ErrorModal/ErrorModal';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { funValidateAll } from '../CreateReport/functions';
 
-function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
+function AddCoauthor({ setErrors, edit, number, soauthorEditing, setSoauthorEditing }) {
   const { t } = useTranslation('addCoauthor');
   const { i18n } = useTranslation();
   const navigate = useNavigate();
@@ -54,7 +55,6 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
   const [errorModal, setErrorModal] = useState(false);
   const [errorsCoauthor, setErrorsCoauthor] = useState([]);
   const [modalError, setModalError] = useState(null);
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -147,6 +147,7 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
     }
     if (edit) {
       //! редактирование доклада
+
       let temp = {
         ...report.editData,
         coAuthorsIds: report.data?.coAuthorsIds,
@@ -220,6 +221,10 @@ function AddCoauthor({ edit, number, soauthorEditing, setSoauthorEditing }) {
             status: report.editData?.participationStatus,
           };
         }
+        const allerr = funValidateAll(report.data);
+        setErrors(allerr);
+        if (allerr.length > 0) return;
+
         apiEditReport(report.data.id, temp).then(res => {
           if (res?.status === 200) {
             dispatch(fetchReports());

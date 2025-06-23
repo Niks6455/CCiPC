@@ -17,7 +17,7 @@ export const funValidateAll = data => {
     }
   });
   ['name', 'comments'].map(key => {
-    if (data[key].length > 300) {
+    if (data[key]?.length > 300) {
       errors.push({
         key: key,
         error: 'Поле не должно превышать 300 символов',
