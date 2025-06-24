@@ -15,7 +15,7 @@ $w3: 480px;
     height: torem(100px); /* 180px в rem */
   }
   @media (max-width: $w3) {
-    top: torem(270px);
+    top: torem(250px);
   }
   .logo {
     cursor: pointer;

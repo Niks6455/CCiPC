@@ -76,6 +76,59 @@ $w3: 480px;
       }
     }
   }
+  .guide {
+    padding: torem(10px) torem(20px);
+    border-radius: torem(15px);
+    background: #ffffff40;
+    backdrop-filter: blur(6px);
+    border: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: torem(15px);
+    cursor: pointer;
+    @include HoverActiveOpacity;
+    @media (max-width: $w2) {
+      margin-top: torem(10px);
+      padding: torem(8px) torem(10px);
+      margin-left: torem(30px);
+      &:hover {
+        opacity: 1;
+      }
+      &:active {
+        opacity: 1;
+      }
+    }
+    @media (max-width: $w3) {
+      margin-top: torem(-10px);
+      padding: torem(5px) torem(10px);
+      margin-left: torem(20px);
+      margin-bottom: 10px;
+    }
+    img {
+      width: torem(24px);
+      height: torem(24px);
+      margin-right: torem(10px);
+      @media (max-width: $w2) {
+        width: torem(16px);
+        height: torem(16px);
+        margin-right: torem(6px);
+      }
+    }
+    span {
+      font-family: 'Overpass', sans-serif;
+      font-weight: 400;
+      font-size: torem(18px);
+      color: #fff;
+      @media (max-width: $w2) {
+        font-size: torem(14px);
+      }
+      @media (max-width: $w3) {
+        font-size: torem(12px);
+        padding-top: torem(2px);
+      }
+    }
+  }
   .mainTopList {
     @media (max-width: $w3) {
       display: none;

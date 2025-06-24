@@ -13,6 +13,8 @@ import { formatDateRangePrimereact } from '../../utils/functions/funcions';
 import { server } from '../../apirequests/apirequests';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Trans, useTranslation } from 'react-i18next';
+import guideIcon from '@assets/img/UI/guide.svg';
+import userManualDocument from '@assets/docs/user_manual.pdf';
 
 function TopMainInfo({ userRole }) {
   const { t } = useTranslation('homePage');
@@ -28,8 +30,7 @@ function TopMainInfo({ userRole }) {
     if (userRole === 1) {
       navigate('/account/profile');
     } else {
-      const assetsToken = localStorage.getItem('accessToken');
-      if (assetsToken === null || !userData) {
+      if (!userData.email) {
         navigate('/login/authorization');
       } else {
         navigate('/account/documents');
@@ -78,6 +79,12 @@ function TopMainInfo({ userRole }) {
                     <p></p>
                   )}
                 </div>
+                <button
+                  className={styles.guide}
+                  onClick={() => window.open(userManualDocument, '_blank')}
+                >
+                  <img src={guideIcon} alt="guideIcon" /> <span>Руководство пользователя</span>
+                </button>
                 <div className={styles.mainTopList}>
                   <ul>
                     {conference?.files?.PROGRAM?.[0]?.url && (
