@@ -61,8 +61,8 @@ export const LoginFunc = async UserData => {
 
 //! сфеду авторизация
 export const LoginFuncSfedu = async () => {
-  window.location.href=`${server}/auth/login/sfedu`
- /* try {
+  window.location.href = `${server}/auth/login/sfedu`;
+  /* try {
     const response = await api.get(`${server}/auth/login/sfedu`);
     const { participant, token } = response.data;
     localStorage.setItem('accessToken', token);
@@ -105,8 +105,7 @@ export const CheckEmail = async Data => {
 //! получение данных пользователя
 export const apiGetUserData = async () => {
   try {
-    const response = await api.get(`${server}/participants/self`,{
-    });
+    const response = await api.get(`${server}/participants/self`, {});
     return response;
   } catch (error) {
     console.log('apiGetUserData ', error);
@@ -607,6 +606,6 @@ export const apiUpdateOrganizersPartners = async (data, id) => {
     const response = await api.put(`${server}/collaborators/${id}`, data);
     return response;
   } catch (error) {
-    console.log('apiUpdateOrganizersPartners ', error);
+    return error;
   }
 };

@@ -16,11 +16,11 @@ export const funValidateAll = data => {
       });
     }
   });
-  ['name', 'comments'].map(key => {
+  ['name', 'comments', 'organization'].map(key => {
     if (data[key]?.length > 300) {
       errors.push({
         key: key,
-        error: 'Поле не должно превышать 300 символов',
+        error: 'Не более 300 символов',
       });
     }
   });

@@ -144,6 +144,10 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
         } else {
           getDataOrg();
         }
+      } else {
+        if (res?.response?.data?.message === 'url parameter is invalid') {
+          setErrors(prev => ({ ...prev, url: 'Некорректная ссылка' }));
+        }
       }
     });
     if (!valid) return;
@@ -193,7 +197,9 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
               ref={textareasRef}
               value={dataItem?.url}
               onChange={e => handleEditData(e.target.value, 'url')}
+              style={{ borderColor: errors?.url ? '#B32020' : '' }}
             />
+            {errors?.url && <span className={styles.error}>{errors?.url}</span>}
           </div>
 
           {isChanged ? (
