@@ -155,6 +155,14 @@ function Register() {
       newErrors.phone = t('invalidPhone');
       isValid = false;
     }
+    if (
+      registration?.data?.organization &&
+      /^[a-zA-Zа-яА-ЯёЁ0-9.,'"() -№]$/.test(registration?.data?.organization)
+    ) {
+      newErrors.organization = 'Недопустимые символы';
+      isValid = false;
+    }
+
     // Проверка совпадения паролей
     if (registration?.data?.password !== registration?.data?.confirmPassword) {
       newErrors.confirmPassword = t('passwordNotEqual');
@@ -197,11 +205,17 @@ function Register() {
       newErrors.position = 'Не более 200 символов!';
       isValid = false;
     }
-    if (!validateLength(registration?.data?.organization, 0, 200)) {
-      newErrors.organization = 'Не более 200 символов!';
+    if (!validateLength(registration?.data?.organization, 0, 300)) {
+      newErrors.organization = 'Не более 300 символов!';
       isValid = false;
     }
-
+    if (
+      registration?.data?.organization?.length < 3 &&
+      registration?.data?.organization?.length > 0
+    ) {
+      newErrors.organization = 'Не менее 3 символов!';
+      isValid = false;
+    }
     setErrors(newErrors);
 
     return isValid;
