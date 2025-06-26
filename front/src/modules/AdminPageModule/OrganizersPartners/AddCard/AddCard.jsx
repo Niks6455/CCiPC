@@ -91,8 +91,10 @@ function AddCard(props) {
                 maxHeight: '145px',
                 overflowY: 'hidden',
                 resize: 'none',
+                borderColor: props.errors?.url ? '#B32020' : '' 
               }}
             />
+            {props.errors?.url && <span className={styles.error}>{props.errors?.url}</span>}
           </div>
 
           <div className={styles.AddCardButton}>

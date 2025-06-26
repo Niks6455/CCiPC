@@ -188,11 +188,21 @@ function HomePage({ userRole }) {
             >
               {organizatorsPartners?.organization?.map(
                 (el, index) =>
-                  el?.url && (
+                  el?.url ? (
                     <img
                       style={style2[index]}
                       src={`${server}/${el?.file?.url}`}
                       onClick={() => window.open(el.url, '_blank')}
+                      alt="Organization1"
+                      key={index}
+                      onLoad={e => handleImageLoad(e, index, setStyle2)}
+                      onError={e => (e.target.style.display = 'none')}
+                    />
+                  ):
+                  (
+                    <img
+                      style={style2[index]}
+                      src={`${server}/${el?.file?.url}`}
                       alt="Organization1"
                       key={index}
                       onLoad={e => handleImageLoad(e, index, setStyle2)}

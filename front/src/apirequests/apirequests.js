@@ -586,7 +586,7 @@ export const apiCreateOrganizersPartners = async data => {
     const response = await api.post(`${server}/collaborators`, data);
     return response;
   } catch (error) {
-    console.log('apiCreateOrganizersPartners ', error);
+   return error
   }
 };
 
