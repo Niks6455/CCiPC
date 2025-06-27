@@ -269,7 +269,7 @@ $w3: 480px;
       }
 
       img {
-        cursor: pointer;
+        // cursor: pointer;
         margin-bottom: torem(80px);
         display: flex;
         padding: torem(20px);
@@ -298,6 +298,9 @@ $w3: 480px;
           margin-bottom: torem(35px);
           overflow: visible;
         }
+      }
+      .cursor {
+        cursor: pointer;
       }
       .image {
         &.square {
