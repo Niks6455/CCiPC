@@ -118,7 +118,7 @@ function OrganizersPartners() {
     }
 
     if (data?.url?.length > 0 && !regUrl.test(data.url)) {
-      errors.url = 'Не валидная ссылка';
+      errors.url = 'Некорректная ссылка';
       valid = false;
     }
 
