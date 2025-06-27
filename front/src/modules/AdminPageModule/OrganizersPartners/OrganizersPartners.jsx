@@ -72,6 +72,8 @@ function OrganizersPartners() {
       setAddFirstOne(false);
       getDataOrg();
     }
+    setAddOrganizer({ file: null, url: '', number: '' });
+    setErrorsAddOrganizer({ file: '', url: '', number: '' });
   };
 
   const closeCreateTwo = () => {
@@ -90,44 +92,43 @@ function OrganizersPartners() {
       setAddFirstTwo(false);
       getDataOrg();
     }
+    setAddPartner({ file: null, url: '', number: '' });
+    setErrorsAddPartner({ file: '', url: '', number: '' });
   };
 
   const validate = data => {
     let valid = true;
-    const regUrl = /^(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])$/;
+    const regUrl =
+      /^(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])$/;
     const errors = {};
-  
+
     if (!data?.number) {
       errors.number = 'Это обязательное поле';
       valid = false;
     }
-  
+
     if (!data?.file) {
       errors.file = 'Это обязательное поле';
       valid = false;
     }
-  
+
     if (data?.url?.length > 250) {
       errors.url = 'Не более 250 символов';
       valid = false;
     }
-  
-    if (
-      data?.url?.length > 0 &&
-      !regUrl.test(data.url)
-    ) {
+
+    if (data?.url?.length > 0 && !regUrl.test(data.url)) {
       errors.url = 'Не валидная ссылка';
       valid = false;
     }
-  
+
     if (data?.number > 10000) {
       errors.number = 'Не более 10000';
       valid = false;
     }
-  
+
     return { valid, errors };
   };
-  
 
   const funSaveData = (type, data) => {
     const { valid, errors } = validate(data);
@@ -154,8 +155,7 @@ function OrganizersPartners() {
             setAddPartner({ file: null, url: '', number: '' });
           }
         });
-      }
-      else {
+      } else {
         console.log(res.response?.data?.message);
         if (res?.response?.data?.message.includes('parameter is invalid')) {
           console.log('apiCreateReport');

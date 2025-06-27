@@ -38,7 +38,7 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
       number: item?.number || '',
       url: item?.url || '',
     });
-    setErrors({ file: '', url: '', number: '' });
+    // setErrors({ file: '', url: '', number: '' });
     setFileUrl(null);
   }, [item]);
 
@@ -120,7 +120,6 @@ function Card({ item, type, getDataOrg, filesUrls, setFilesUrls, validate }) {
       setFileUrl(URL.createObjectURL(file));
     }
   };
-
   const funUpdateData = data => {
     const { valid, errors } = validate(data);
     setErrors(errors);
