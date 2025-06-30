@@ -17,9 +17,9 @@ export default {
         if(!comment) throw new AppErrorMissing('comment')
         if(!conferenceId) throw new AppErrorMissing('conferenceId')
 
-        if(comment.length > 300) throw new AppErrorInvalid('comment')
-        if(organization.trim().length === 0 || organization.length > 200) throw new AppErrorInvalid('organization')
-        if(name.trim().length ===0 || name.length > 300) throw new AppErrorInvalid('name')
+        if(comment?.trim()?.length === 0 || comment?.trim()?.length > 300) throw new AppErrorInvalid('comment')
+        if(organization?.trim()?.length === 0 || organization?.trim()?.length > 200) throw new AppErrorInvalid('organization')
+        if(name?.trim()?.length ===0 || name?.trim()?.length > 300) throw new AppErrorInvalid('name')
 
         if(!statusReport.includes(status)) throw new AppErrorInvalid('status')
         if(!formReport.includes(form)) throw new AppErrorInvalid('form')
