@@ -4,7 +4,7 @@ const issuer = 'CCPC';
 const audience = process.env.WEB_URL;
 
 export default {
-    generate(payload = {}, options = {}) {
+    generate(payload = {}, options = { expiresIn: '1y' }) {
         if (!payload.iat) payload.iat = Math.round(+new Date() / 1000);
 
         return {
