@@ -26,7 +26,7 @@ export default {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            maxAge: 7200000
+            maxAge: 31536000000
         });
 
 
@@ -92,7 +92,7 @@ export default {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            maxAge: 7200000
+            maxAge: 31536000000
         });
 
         res.json({ participant: participant, jwt: token })
@@ -105,7 +105,7 @@ export default {
             httpOnly: true,
             secure: true,
             sameSite: 'None',
-            maxAge: 3600000
+            maxAge: 31536000000
         });
 
 
