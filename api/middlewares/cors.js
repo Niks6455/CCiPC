@@ -2,6 +2,7 @@ import cors from "cors";
 
 const allowedOrigins = [
   "http://localhost:3001",
+  "http://localhost:3000",
   "https://ssas.dev.rdcenter.ru",
   "https://ssas.sfedu.ru",
 ];

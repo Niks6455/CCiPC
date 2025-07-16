@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import { MulterError } from 'multer';
 import { createTestAdmin, initializeDbModels } from './utils/db.js';
+import { createClient } from "redis";
 import { AppError, MultipleError, SystemError } from './utils/errors.js';
 import uploadsRoute from './routes/upload.js';
 import authRoute from './routes/auth.js';
@@ -18,10 +19,12 @@ import swaggerJsDoc from 'swagger-jsdoc'
 import passport from 'passport';
 import corsMiddleware from './middlewares/cors.js';
 import errorCodes from './config/error-codes.js';
+import passportSetup from './config/passport-setup.js';
+
 import 'dotenv/config'
 
-import passportSetup from './config/passport-setup.js';
 import cookieParser from 'cookie-parser';
+import { initCache } from './utils/cache.js';
 
 const app = express();
 
@@ -103,10 +106,23 @@ app.use(cookieParser());
     }
 })();
 
+(async function createRedis() {
+    try {
+        await initCache()
+    } catch (e){
+        if(app.get('env') === 'test') {
+            console.log(e);
+            console.log('COULD NOT CONNECT TO THE REDIS');
+        }
+        setTimeout(createRedis, 5000)
+    }
+})()
+
+
 if (app.get('env') === 'production') {
 
 }
-if (app.get('env') === 'development' || app.get('env') === 'staging') {
+if (app.get('env') === 'production' || app.get('env') === 'staging') {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 }
 

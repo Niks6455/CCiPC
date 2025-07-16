@@ -1,5 +1,10 @@
 import jwt from '../utils/jwt.js';
-import {AppErrorForbiddenAction, AppErrorInvalid, asyncRoute, SystemError} from '../utils/errors.js';
+import {
+    AppErrorForbiddenAction,
+    AppErrorInvalid,
+    asyncRoute,
+    SystemError,
+} from '../utils/errors.js';
 import Participant from "../models/participant.js";
 import rolesCheck from "../config/roles.js";
 
@@ -8,11 +13,12 @@ function admin(roles) {
     return async (req, res, next) => {
 
         if(roles === rolesCheck.PUBLIC ) next ()
-        const token = req.cookies.jwt;
-        if (!token) return next(new AppErrorInvalid('token', 401));
+        const access_token = req.cookies['access_token'];
+        const refresh_token = req.cookies['refresh_token'];
+        if (!access_token || !refresh_token) return next(new AppErrorInvalid('tokens', 401));
 
         try {
-            const userId = jwt.verify(token).id;
+            const userId = jwt.verify(res, access_token, refresh_token).id;
 
             const admin=await Participant.findByPk(userId)
 
@@ -22,7 +28,6 @@ function admin(roles) {
 
             req.admin=admin
         } catch (e) {
-            console.error(e);
             return next(new AppErrorInvalid('token', 401));
         }
         next()
@@ -49,21 +54,21 @@ function combine(...verifications) {
 
 async function general(req, res, next) {
 
-    const token = req.cookies.jwt;
-    if (!token) throw new AppErrorInvalid('token', 401);
+    const access_token = req.cookies['access_token'];
+    const refresh_token = req.cookies['refresh_token'];
+
+
+    if (!access_token && !refresh_token) return next(new AppErrorInvalid('tokens', 401));
 
     try {
-        const userId = jwt.verify(token).id
-
+        const userId = jwt.verify(res,access_token, refresh_token).id
         const user=await Participant.findByPk(userId)
-
         if(!user || !user.activate) return next(new AppErrorInvalid('not activate', 401));
 
         req.user = user;
         next()
 
     } catch (e) {
-        console.log(e);
         throw new AppErrorInvalid('token', 401);
     }
 }
@@ -73,5 +78,4 @@ export default {
     general,
     admin,
     combine,
-
 };

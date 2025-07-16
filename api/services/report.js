@@ -4,7 +4,7 @@ import Report from "../models/report.js";
 import {Op} from "sequelize";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import ParticipantOfReport from "../models/participant-of-report.js";
-import cache from "../utils/cache.js";
+import cache, { getValue } from '../utils/cache.js';
 import Participant from "../models/participant.js";
 import sendMail from "./email.js";
 import Direction from "../models/direction.js";
@@ -131,15 +131,17 @@ export default {
                 emailsNotInDatabase = emails
             }
 
-            emailsNotInDatabase.forEach(email => {
+            for (const email of emailsNotInDatabase) {
                 const person= reportInfo.coAuthors.find(user=>user.email === email)
                 if(person){
                     sendMail(email, 'report', `${person?.surname} ${person?.name} ${person?.patronymic ? person?.patronymic : ''}`.trim(), email);
                 }
-                const reportsIds= cache[email] ?? []
+                const  value = await getValue(email)
+                const reportsIds = value?.coAuthors ?? []
                 reportsIds.push(report.id)
-                cache[email]=[...new Set(reportsIds)];
-            })
+                value.coAuthors = [...new Set(reportsIds)]
+                await cache.set(email, JSON.stringify(value));
+            }
 
         }
         return report
@@ -332,15 +334,17 @@ export default {
                     emailsNotInDatabase = emails
                 }
 
-                emailsNotInDatabase.forEach(email => {
+                for (const email of emailsNotInDatabase) {
                     const person= reportInfo.coAuthors.find(user=>user.email === email)
                     if(person){
                         sendMail(email, 'report', `${person?.surname} ${person?.name} ${person?.patronymic ? person?.patronymic : ''}`.trim(), email);
                     }
-                    const reportsIds= cache[email] ?? []
+                    const  value = await getValue(email)
+                    const reportsIds = value?.coAuthors ?? []
                     reportsIds.push(report.id)
-                    cache[email]=[...new Set(reportsIds)];
-                })
+                    value.coAuthors = [...new Set(reportsIds)]
+                    await cache.set(email, JSON.stringify(value));
+                }
 
             }
 

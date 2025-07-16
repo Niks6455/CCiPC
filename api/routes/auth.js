@@ -83,7 +83,7 @@ import axios from 'axios';
  *               position:
  *                 type: string
  *                 example: Профессор
- *               organization.prisma:
+ *               organization :
  *                 type: string
  *                 example: МГУ
  *               phone:

@@ -21,11 +21,25 @@ services:
      image: postgres:17-alpine
      environment:
       - POSTGRES_USER=${DB_USER}
-        - POSTGRES_PASSWORD=${DB_PWD}
+      - POSTGRES_PASSWORD=${DB_PWD}
      volumes:
        - /srv/ccipc/postgres:/var/lib/postgresql/data
      ports:
        - '5432'
      restart: always
+
+  redis:
+     image: redis:latest
+     environment:
+       - REDIS_PASSWORD=${REDIS_PASSWORD}
+     ports:
+       - '6379:6379'
+     healthcheck:
+       test: [ "CMD", "redis-cli", "-a", "$REDIS_PASSWORD", "ping" ]
+       interval: 30s
+       timeout: 10s
+       retries: 5
+     restart: unless-stopped
+
 
 

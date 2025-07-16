@@ -5,24 +5,40 @@ import sendMail from '../services/email.js';
 import bcrypt from "bcrypt";
 import typeCheckEmail from "../config/typeCheckEmail.js";
 import cache from "../utils/cache.js";
+import { getValue } from "../utils/cache.js";
 import ParticipantOfReport from "../models/participant-of-report.js";
 import ParticipantInConference from "../models/participant-in-conference.js";
 import Conference from "../models/conference.js";
 import Report from "../models/report.js";
 import {Op} from "sequelize";
-const verificationCodes= {};
-const resetCodes= {};
+import 'dotenv/config'
 
-function saveVerificationCode(email, code, expirationTime) {
-    verificationCodes[email] = {
-        code: code,
-        expiresAt: Date.now() + expirationTime
-    };
-
-    setTimeout(() => {
-        delete verificationCodes[email];
+async function saveVerificationCode(email, code, expirationTime) {
+    const value = await getValue(email)
+    if(process.env.NODE_ENV !== "production" && email === 'autotest@example.com' ) {
+        value.verificationCode = { code: '000000', expiresAt: Date.now() + expirationTime };
+        await cache.set(email, JSON.stringify(value));
+    }else {
+        value.verificationCodes = { code: code, expiresAt: Date.now() + expirationTime }
+        await cache.set(email, JSON.stringify(value));
+    }
+    setTimeout(async () => {
+        const value = await getValue(email)
+        delete value?.verificationCodes;
+        await cache.set(email, JSON.stringify(value));
     }, expirationTime);
 
+}
+
+async function resetCode(email,code){
+    const value = await getValue(email)
+    if(process.env.NODE_ENV !== "production" && email === 'autotest@example.com' ) {
+        value.resetCodes = { code: '000000'}
+        await cache.set(email, JSON.stringify(value));
+    }else {
+        value.resetCodes = { code: code }
+        await cache.set(email, JSON.stringify(value));
+    }
 }
 export default {
     async register(participant, code){
@@ -38,9 +54,7 @@ export default {
 
         if(checkParticipant) throw new AppErrorAlreadyExists('email or phone')
 
-
-
-        saveVerificationCode(participant.email, participant.email === 'autotest@example.com' ? '000000': code, 300000)
+        await saveVerificationCode(participant.email, code, 300000)
 
         sendMail(participant.email, 'registration', code);
 
@@ -52,8 +66,8 @@ export default {
 
     async loginSfedu(participant){
 
-        const { jwt: token } = jwt.generate({ id: participant.id });
-        return { token, participant };
+        const { access_token, refresh_token } = jwt.generate({ id: participant.id });
+        return { access_token, refresh_token };
 
     },
 
@@ -68,9 +82,9 @@ export default {
 
         if(!participant.activate) throw new AppErrorForbiddenAction(403,'no activate');
 
-        const { jwt: token } = jwt.generate({ id: participant.id });
+        const { access_token, refresh_token } = jwt.generate({ id: participant.id });
 
-        return {participant, token};
+        return {participant, access_token, refresh_token };
 
     },
 
@@ -83,12 +97,13 @@ export default {
 
 
         if(type === typeCheckEmail.CONFIRM)  {
-            if(verificationCodes[email]?.code !== code || code === undefined ) throw new AppErrorInvalid('code')
-            console.log(cache);
-            if (cache[email] !== undefined) {
+            const value = await getValue(email);
+            if(value?.verificationCodes?.code !== code || code === undefined ) throw new AppErrorInvalid('code')
+            if (value?.coAuthors !== undefined) {
+                const coAuthorsCache = value.coAuthors
                 const participantOfReports = await ParticipantOfReport.bulkCreate(
                   await Promise.all(
-                    cache[email].map(async reportId => {
+                    coAuthorsCache.map(async reportId => {
                         const report = await Report.findByPk(reportId);
                         if (report) {
                             return {
@@ -118,17 +133,20 @@ export default {
                     conferenceId: conference.id,
                     participantId: participant.id
                 })))
-                delete cache[email]
+
+                delete value.coAuthors;
+                await cache.set(email, JSON.stringify(value));
             }
 
             await participant.update({activate: true})
-            const { jwt: token } = jwt.generate({ id: participant.id });
+            const { access_token, refresh_token } = jwt.generate({ id: participant.id });
 
-            return { participant, token }
+            return { participant, access_token, refresh_token }
         }
 
         if(type === typeCheckEmail.RESET){
-            if(resetCodes[email] !== code || code === undefined ) throw new AppErrorInvalid('code')
+            const value = await getValue(email);
+            if(value?.resetCodes?.code !== code || code === undefined ) throw new AppErrorInvalid('code')
             return true
         }
 
@@ -141,10 +159,11 @@ export default {
         if(user) participant = await Participant.findByPk(user.id)
         else participant = await Participant.findOne({ where : { email: passwordInfo.email } })
         if(passwordInfo.currentPassword) if (!participant || !participant.validatePassword(passwordInfo.currentPassword)) throw new AppErrorInvalid('password');
-        if(!user && (resetCodes[participant?.email] !== passwordInfo.code || passwordInfo.code === undefined )) throw new AppErrorInvalid('code')
-
+        const value = await getValue(participant.email)
+        if(!user && (value?.resetCodes?.code !== passwordInfo.code || passwordInfo.code === undefined )) {
+            throw new AppErrorInvalid('code')
+        }
         const hashPassword = bcrypt.hashSync(passwordInfo.newPassword, 10)
-
         return await participant.update({ password: hashPassword })
 
     },
@@ -154,15 +173,13 @@ export default {
             where: { email: email }
         })
         if(!participant) throw new AppErrorNotExist('email')
-
         if(type === 0) {
-            resetCodes[email] = email === 'autotest@example.com' ? '000000' : code
+            await resetCode(participant.email, code)
             sendMail(email, 'reset', code);
             return true
         }
-
         if(type === 1){
-            saveVerificationCode(participant.email, participant.email === 'autotest@example.com' ? '000000' : code, 300000)
+            await saveVerificationCode(participant.email, code, 300000)
             sendMail(participant.email, 'registration', code);
         }
 

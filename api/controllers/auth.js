@@ -6,7 +6,7 @@ import validateEmail from "../utils/validate/email.js";
 import validateName from "../utils/validate/name.js";
 import validatePhoneNumber from "../utils/validate/phone.js";
 import validateOrganization from "../utils/validate/organization.js";
-
+import jwt from '../utils/jwt.js'
 const atLeastOneDigit = /\d/,
     atLeastOneLowerLetter = /[a-z]/,
     atLeastOneUpperLetter = /[A-Z]/,
@@ -19,17 +19,8 @@ export default {
 
         if(!email) throw new AppErrorMissing('email')
         if(!password) throw new AppErrorMissing('password')
-
-        const {participant, token} = await authService.login(email, password);
-
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            maxAge: 31536000000
-        });
-
-
+        const { participant, access_token, refresh_token } = await authService.login(email, password);
+        jwt.setCookie(res, access_token, refresh_token)
         res.json({ participant });
     },
 
@@ -86,29 +77,14 @@ export default {
 
         if(!code) throw new AppErrorMissing('code')
         if(type === undefined) throw new AppErrorMissing('type')
-        const { participant, token } = await authService.checkEmail(email, code, type)
-
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            maxAge: 31536000000
-        });
-
-        res.json({ participant: participant, jwt: token })
+        const { participant, access_token, refresh_token } = await authService.checkEmail(email, code, type)
+        jwt.setCookie(res, access_token, refresh_token)
+        res.json({ participant: participant })
     },
 
     async   loginSfedu(req, res) {
-        const {token, participant } = await authService.loginSfedu(req.user)
-
-        res.cookie('jwt', token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: 'None',
-            maxAge: 31536000000
-        });
-
-
+        const { access_token, refresh_token } = await authService.loginSfedu(req.user)
+        jwt.setCookie(res, access_token, refresh_token)
         res.redirect(`${process.env.WEB_URL}/`);
     },
 
