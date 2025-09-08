@@ -51,7 +51,7 @@ function ChangePassword() {
     },
     {
       id: '4',
-      text: t('rules.min16'),
+      text: t('rules.max16'),
       done: true,
       functionCheck: funSixteenSymbols,
     },
